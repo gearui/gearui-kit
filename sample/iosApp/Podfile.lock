@@ -1,0 +1,29 @@
+PODS:
+  - gearui_sample (1.0)
+  - OpenKuiklyIOSRender (2.15.2)
+  - SDWebImage (5.20.1):
+    - SDWebImage/Core (= 5.20.1)
+  - SDWebImage/Core (5.20.1)
+
+DEPENDENCIES:
+  - gearui_sample (from `../`)
+  - OpenKuiklyIOSRender (~> 2.15.2)
+  - SDWebImage (~> 5.20.1)
+
+SPEC REPOS:
+  trunk:
+    - OpenKuiklyIOSRender
+    - SDWebImage
+
+EXTERNAL SOURCES:
+  gearui_sample:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  gearui_sample: c66dea8c6e09d758a50125fa8dad83271ed23e40
+  OpenKuiklyIOSRender: 265f6cbb09c277fcea1c171899e50ceac43066fb
+  SDWebImage: 33d0f23bddeb5d209ae959153883247be6703713
+
+PODFILE CHECKSUM: 3ff3460d59bffdeb4c8bc8d65d6d34c4cbcdc94a
+
+COCOAPODS: 1.16.2

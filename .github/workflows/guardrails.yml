@@ -1,0 +1,29 @@
+name: Guardrails
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  architecture-guardrails:
+    name: Architecture Guardrails
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Hardcoded color guard (components)
+        run: ./scripts/ci/check_component_hardcoded_colors.sh
+
+      - name: Runtime boundary guard (sample)
+        run: ./scripts/ci/check_sample_runtime_boundary.sh

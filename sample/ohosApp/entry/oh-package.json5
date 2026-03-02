@@ -1,0 +1,13 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "GearUI sample HarmonyOS entry module",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@kuikly-open/render": "2.0.0",
+    "libkuikly_entry.so": "file:./src/main/cpp/types/kuikly_entry",
+    "@tencent/libpag": "4.4.25"
+  }
+}

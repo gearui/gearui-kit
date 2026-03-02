@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sdk-guard:
+    name: SDK Guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure no Showcase sources in SDK
+        run: |
+          if find gearui-kit/src/commonMain/kotlin/com/gearui/components -name '*Showcase.kt' | grep -q .; then
+            echo "Showcase files must not exist in gearui-kit SDK sources."
+            exit 1
+          fi
+
+      - name: Verify sample example index consistency
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          root = Path(".")
+          config = (root / "sample/src/commonMain/kotlin/com/gearui/sample/config/ComponentConfig.kt").read_text()
+          nav = (root / "sample/src/commonMain/kotlin/com/gearui/sample/navigation/NavigationManager.kt").read_text()
+          example_dirs = {
+              p.name for p in (root / "sample/src/commonMain/kotlin/com/gearui/sample/examples").iterdir()
+              if p.is_dir()
+          }
+
+          config_ids = set(re.findall(r'ComponentInfo\("([a-z0-9]+)"', config))
+          nav_ids = set(re.findall(r'"([a-z0-9]+)"\s*->', nav))
+          sdk_component_ids = {
+              p.name for p in (root / "gearui-kit/src/commonMain/kotlin/com/gearui/components").iterdir()
+              if p.is_dir()
+          }
+
+          errors = []
+          if config_ids != nav_ids:
+              errors.append(f"config vs nav mismatch: config-only={sorted(config_ids - nav_ids)}, nav-only={sorted(nav_ids - config_ids)}")
+          if config_ids != example_dirs:
+              errors.append(f"config vs examples mismatch: config-only={sorted(config_ids - example_dirs)}, example-only={sorted(example_dirs - config_ids)}")
+          if not sdk_component_ids.issubset(config_ids):
+              errors.append(f"sdk components missing in sample index: missing={sorted(sdk_component_ids - config_ids)}")
+
+          if errors:
+              print("\n".join(errors))
+              raise SystemExit(1)
+          print(f"Sample index consistency verified. total={len(config_ids)}")
+          PY
+
+  android-build:
+    name: Android Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build Android targets
+        run: ./gradlew --no-daemon :gearui-kit:assemble :sample:assembleDebug
+
+  ios-build:
+    name: iOS Build
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build iOS simulator targets
+        run: ./gradlew --no-daemon :gearui-kit:linkDebugFrameworkIosSimulatorArm64 :sample:linkDebugFrameworkIosSimulatorArm64

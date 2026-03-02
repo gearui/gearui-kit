@@ -1,0 +1,22 @@
+name: GearUISample
+options:
+  bundleIdPrefix: com.gearui.kit
+  deploymentTarget:
+    iOS: "14.0"
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: .
+        excludes:
+          - "Pods"
+          - "build"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.gearui.kit.sample
+      SWIFT_OBJC_BRIDGING_HEADER: iosApp-Bridging-Header.h
+      INFOPLIST_FILE: Info.plist
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - framework: Pods/Pods.xcodeproj
+        embed: false

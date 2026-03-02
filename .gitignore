@@ -1,0 +1,39 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.kotlin/
+
+# CocoaPods
+sample/iosApp/Pods/
+sample/gearui_sample.podspec
+
+# Android
+*.apk
+*.ap_
+*.dex
+local.properties
+.navigation/
+captures/
+output.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# macOS
+.DS_Store
+
+# Build outputs
+**/build/
+**/out/
+
+# Kotlin Native
+*.kexe
+*.klib
+
+# Compose
+.compose/

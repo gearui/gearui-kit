@@ -5,12 +5,17 @@ import androidx.compose.runtime.remember
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.text.KeyboardActions
+import com.tencent.kuikly.compose.foundation.text.KeyboardOptions
 import com.tencent.kuikly.compose.foundation.text.BasicTextField as KuiklyBasicTextField
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
+import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
+import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
+import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 
 /**
@@ -31,6 +36,9 @@ fun BasicTextField(
     singleLine: Boolean = false,
     minLines: Int = 1,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    imeAction: ImeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
+    blurOnImeDone: Boolean = singleLine,
+    onImeDone: (() -> Unit)? = null,
     textStyle: TextStyle = TextStyle(
         fontSize = Typography.BodyMedium.fontSize,
         fontWeight = Typography.BodyMedium.fontWeight
@@ -39,6 +47,8 @@ fun BasicTextField(
 ) {
     val colors = Theme.colors
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     KuiklyBasicTextField(
         value = value,
@@ -49,6 +59,16 @@ fun BasicTextField(
         singleLine = singleLine,
         minLines = minLines,
         maxLines = maxLines,
+        keyboardOptions = KeyboardOptions(imeAction = imeAction),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (blurOnImeDone) {
+                    focusManager.clearFocus(force = true)
+                    keyboardController?.hide()
+                }
+                onImeDone?.invoke()
+            }
+        ),
         textStyle = textStyle.copy(
             color = if (enabled) colors.textPrimary else colors.textDisabled
         ),

@@ -68,6 +68,24 @@ dependencies {
 }
 ```
 
+### 4. Release to Maven Central (Sonatype)
+
+Set credentials and signing keys in environment variables:
+
+```bash
+export OSSRH_USERNAME=your_sonatype_username
+export OSSRH_PASSWORD=your_sonatype_password
+export SIGNING_KEY_ID=your_gpg_key_id
+export SIGNING_KEY='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
+export SIGNING_PASSWORD=your_gpg_passphrase
+```
+
+Then publish:
+
+```bash
+./gradlew :gearui-kit:publish
+```
+
 ## Basic Usage
 
 ```kotlin

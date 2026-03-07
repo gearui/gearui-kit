@@ -8,6 +8,8 @@ import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
+import com.tencent.kuikly.compose.foundation.text.KeyboardActions
+import com.tencent.kuikly.compose.foundation.text.KeyboardOptions
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -16,7 +18,10 @@ import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
+import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
+import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
+import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.text.input.PasswordVisualTransformation
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
@@ -62,6 +67,7 @@ fun Input(
     maxLength: Int? = null,
     showCounter: Boolean = false,
     maxLines: Int = 1,
+    blurOnImeDone: Boolean = maxLines == 1,
     isPassword: Boolean = false,
     textAlign: TextAlign = TextAlign.Start,
     clearable: Boolean = false,
@@ -72,6 +78,8 @@ fun Input(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val interactionSource = remember { createMutableInteractionSource() }
     val inputFocusRequester = remember { FocusRequester() }
@@ -230,6 +238,17 @@ fun Input(
                             textAlign = textAlign
                         ),
                         cursorBrush = SolidColor(colors.primary),
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = if (maxLines == 1) ImeAction.Done else ImeAction.Default
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                if (blurOnImeDone && maxLines == 1) {
+                                    focusManager.clearFocus(force = true)
+                                    keyboardController?.hide()
+                                }
+                            }
+                        ),
                         singleLine = maxLines == 1,
                         maxLines = maxLines,
                         readOnly = readOnly,

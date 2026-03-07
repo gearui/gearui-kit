@@ -1,4 +1,5 @@
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.plugins.signing.Sign
 
 plugins {
     kotlin("multiplatform")
@@ -6,6 +7,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     `maven-publish`
+    signing
 }
 
 kotlin {
@@ -95,6 +97,29 @@ android {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "sonatype"
+            val releasesRepoUrl = providers.gradleProperty("SONATYPE_RELEASE_URL")
+                .orElse("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                .get()
+            val snapshotsRepoUrl = providers.gradleProperty("SONATYPE_SNAPSHOT_URL")
+                .orElse("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                .get()
+            url = uri(
+                if (project.version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+            )
+            credentials {
+                username = providers.gradleProperty("OSSRH_USERNAME")
+                    .orElse(providers.environmentVariable("OSSRH_USERNAME"))
+                    .orNull
+                password = providers.gradleProperty("OSSRH_PASSWORD")
+                    .orElse(providers.environmentVariable("OSSRH_PASSWORD"))
+                    .orNull
+            }
+        }
+    }
+
     publications.withType<MavenPublication>().configureEach {
         groupId = providers.gradleProperty("POM_GROUP_ID").orElse(project.group.toString()).get()
         version = providers.gradleProperty("POM_VERSION").orElse(project.version.toString()).get()
@@ -140,6 +165,44 @@ publishing {
                     )
                 }
             }
+            scm {
+                url.set(
+                    providers.gradleProperty("POM_SCM_URL")
+                        .orElse("https://github.com/gearui/gearui-kit")
+                )
+                connection.set(
+                    providers.gradleProperty("POM_SCM_CONNECTION")
+                        .orElse("scm:git:https://github.com/gearui/gearui-kit.git")
+                )
+                developerConnection.set(
+                    providers.gradleProperty("POM_SCM_DEV_CONNECTION")
+                        .orElse("scm:git:ssh://git@github.com/gearui/gearui-kit.git")
+                )
+            }
         }
+    }
+}
+
+signing {
+    val signingKeyId = providers.gradleProperty("SIGNING_KEY_ID")
+        .orElse(providers.environmentVariable("SIGNING_KEY_ID"))
+        .orNull
+    val signingKey = providers.gradleProperty("SIGNING_KEY")
+        .orElse(providers.environmentVariable("SIGNING_KEY"))
+        .orNull
+    val signingPassword = providers.gradleProperty("SIGNING_PASSWORD")
+        .orElse(providers.environmentVariable("SIGNING_PASSWORD"))
+        .orNull
+
+    if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign(publishing.publications)
+    }
+}
+
+tasks.withType<Sign>().configureEach {
+    onlyIf {
+        (name.contains("publish", ignoreCase = true) || name.contains("sign", ignoreCase = true)) &&
+            !name.contains("MavenLocal")
     }
 }

@@ -1,20 +1,29 @@
 package com.gearui.sample.examples.empty
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.empty.EmptyState
+import com.gearui.components.icon.Icons
+import com.gearui.components.toast.Toast
+import com.gearui.foundation.primitives.Icon
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.padding
+import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.unit.dp
 
-/**
- * Empty 空状态组件示例
- */
 @Composable
 fun EmptyExample(
     component: ComponentInfo,
@@ -26,67 +35,72 @@ fun EmptyExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础空状态
-        ExampleSection(
-            title = "基础空状态",
-            description = "暂无数据提示"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(text = "📭", style = Typography.HeadlineLarge, color = colors.textPlaceholder)
-                Text(text = "暂无数据", style = Typography.BodyMedium, color = colors.textSecondary)
-            }
+        ExampleSection(title = "图标空状态", description = "默认图标 + 描述文案") {
+            EmptyState(message = "描述文字")
         }
 
-        // 搜索无结果
-        ExampleSection(
-            title = "搜索无结果",
-            description = "搜索结果为空"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(text = "🔍", style = Typography.HeadlineLarge, color = colors.textPlaceholder)
-                Text(text = "未找到相关内容", style = Typography.BodyMedium, color = colors.textSecondary)
-                Text(text = "换个关键词试试", style = Typography.BodySmall, color = colors.textPlaceholder)
-            }
+        ExampleSection(title = "自定义图标空状态", description = "自定义 icon 形态") {
+            EmptyState(
+                message = "描述文字",
+                icon = {
+                    Icon(
+                        name = Icons.hourglass_empty,
+                        size = 36.dp,
+                        tint = colors.textPlaceholder
+                    )
+                }
+            )
         }
 
-        // 网络错误
-        ExampleSection(
-            title = "网络错误",
-            description = "网络连接失败"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(text = "📡", style = Typography.HeadlineLarge, color = colors.textPlaceholder)
-                Text(text = "网络连接失败", style = Typography.BodyMedium, color = colors.textSecondary)
-                Text(text = "点击重试", style = Typography.BodySmall, color = colors.primary)
-            }
+        ExampleSection(title = "自定义图片空状态", description = "自定义 image 区域") {
+            EmptyState(
+                message = "描述文字",
+                icon = {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceVariant)
+                            .padding(horizontal = 24.dp, vertical = 16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            name = Icons.image,
+                            size = 48.dp,
+                            tint = colors.textPlaceholder
+                        )
+                    }
+                }
+            )
         }
 
-        // 自定义图标和文字
-        ExampleSection(
-            title = "自定义内容",
-            description = "自定义图标和提示文字"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(text = "🎉", style = Typography.HeadlineLarge, color = colors.textPlaceholder)
-                Text(text = "太棒了！", style = Typography.BodyMedium, color = colors.textPrimary)
-                Text(text = "你已完成所有任务", style = Typography.BodySmall, color = colors.textSecondary)
-            }
+        ExampleSection(title = "带操作空状态", description = "默认操作按钮") {
+            EmptyState(
+                message = "描述文字",
+                actionText = "操作按钮",
+                onAction = {
+                    Toast.show("点击了操作按钮")
+                }
+            )
+        }
+
+        ExampleSection(title = "自定义带操作空状态", description = "使用 customAction 自定义操作区") {
+            EmptyState(
+                message = "描述文字",
+                customAction = {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Button(
+                            text = "自定义操作按钮",
+                            theme = ButtonTheme.DANGER,
+                            size = ButtonSize.MEDIUM,
+                            onClick = { Toast.show("点击了自定义操作按钮") }
+                        )
+                    }
+                }
+            )
         }
     }
 }

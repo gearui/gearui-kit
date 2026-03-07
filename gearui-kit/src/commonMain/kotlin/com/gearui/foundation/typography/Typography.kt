@@ -21,7 +21,7 @@ data class TextStyle(
 /**
  * Typography - 语义化排版系统
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_fonts.dart
+ * 参考: 内部字体规范
  *
  * 层级体系:
  * - Display: 超大标题 (64sp/48sp) - 营销页面

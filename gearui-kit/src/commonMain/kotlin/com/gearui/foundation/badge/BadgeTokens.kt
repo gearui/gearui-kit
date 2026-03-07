@@ -8,7 +8,7 @@ import com.gearui.foundation.BadgeSpecs
 /**
  * Badge 尺寸规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/badge/td_badge.dart
+ * 参考: 内部组件规范badge/td_badge.dart
  *
  * 语义：
  * Dot   → 在线/状态提示

@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 /**
  * GearUI Framework 语义颜色系统
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_default_theme.dart
+ * 参考: 内部主题规范
  *
  * ⚠️ 规则：
  * 组件层 ONLY 使用这些语义颜色

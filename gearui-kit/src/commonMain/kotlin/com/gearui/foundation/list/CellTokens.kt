@@ -9,7 +9,7 @@ import com.gearui.foundation.CellSpecs
  *
  * Cell = List 生态的核心交互单元
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/cell/td_cell_style.dart
+ * 参考: 内部组件规范cell/td_cell_style.dart
  *
  * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
  */

@@ -33,7 +33,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Icon 组件示例（对标 tdesign-flutter icon page）
+ * Icon 组件示例（图标展示页）
  */
 @Composable
 fun IconExample(

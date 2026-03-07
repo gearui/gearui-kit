@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * Spacing - 全局间距规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_spacers.dart
+ * 参考: 内部间距规范
  *
  * 基于 8px 网格系统:
  * - spacer4:   4px  (0.5倍)

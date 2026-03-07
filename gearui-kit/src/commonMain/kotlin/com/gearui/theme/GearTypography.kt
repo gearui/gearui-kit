@@ -8,7 +8,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 /**
  * GearUI Framework 语义排版系统
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_fonts.dart
+ * 参考: 内部字体规范
  *
  * ⚠️ 规则：
  * 组件层 ONLY 使用这些语义文本样式

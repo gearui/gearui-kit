@@ -24,13 +24,15 @@ import com.gearui.sample.examples.cascader.CascaderExample
 import com.gearui.sample.examples.transfer.TransferExample
 import com.gearui.sample.examples.treeselect.TreeSelectExample
 import com.gearui.sample.examples.navbar.NavbarExample
-import com.gearui.sample.examples.tab.TabExample
+import com.gearui.sample.examples.bottomnavbar.BottomNavBarExample
+import com.gearui.sample.examples.tab.TabsExample
+import com.gearui.sample.examples.navigationmenu.NavigationMenuExample
 import com.gearui.sample.examples.sidebar.SidebarExample
-import com.gearui.sample.examples.tabbar.TabBarExample
 import com.gearui.sample.examples.cell.CellExample
 import com.gearui.sample.examples.drawer.DrawerExample
 import com.gearui.sample.examples.steps.StepsExample
 import com.gearui.sample.examples.breadcrumb.BreadcrumbExample
+import com.gearui.sample.examples.pagination.PaginationExample
 import com.gearui.sample.examples.anchor.AnchorExample
 import com.gearui.sample.examples.segmented.SegmentedExample
 import com.gearui.sample.examples.list.ListExample
@@ -51,6 +53,8 @@ import com.gearui.sample.examples.swipecell.SwipeCellExample
 import com.gearui.sample.examples.actionsheet.ActionSheetExample
 import com.gearui.sample.examples.toast.ToastExample
 import com.gearui.sample.examples.dialog.DialogExample
+import com.gearui.sample.examples.tooltip.TooltipExample
+import com.gearui.sample.examples.contextmenu.ContextMenuExample
 import com.gearui.sample.examples.loading.LoadingExample
 import com.gearui.sample.examples.notification.NotificationExample
 import com.gearui.sample.examples.snackbar.SnackbarExample
@@ -63,6 +67,14 @@ import com.gearui.sample.examples.swiper.SwiperExample
 import com.gearui.sample.examples.searchbar.SearchBarExample
 import com.gearui.sample.examples.bottomsheet.BottomSheetExample
 import com.gearui.sample.examples.backtop.BackTopExample
+import com.gearui.sample.examples.common.ComingSoonExample
+import com.gearui.sample.examples.dropdownmenu.DropdownMenuExample
+import com.gearui.sample.examples.fab.FabExample
+import com.gearui.sample.examples.link.LinkExample
+import com.gearui.sample.examples.message.MessageExample
+import com.gearui.sample.examples.noticebar.NoticeBarExample
+import com.gearui.sample.examples.refresh.RefreshExample
+import com.gearui.sample.examples.upload.UploadExample
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
@@ -90,6 +102,11 @@ object NavigationManager {
             "button" -> ButtonExample(component, onBack)
             "icon" -> IconExample(component, onBack)
             "icon-render" -> IconExample(component, onBack)
+            "font" -> ComingSoonExample(component, onBack)
+            "radius" -> ComingSoonExample(component, onBack)
+            "shadows" -> ComingSoonExample(component, onBack)
+            "theme" -> ComingSoonExample(component, onBack)
+            "link" -> LinkExample(component, onBack)
             "text" -> TextExample(component, onBack)
             "tag" -> TagExample(component, onBack)
             "badge" -> BadgeExample(component, onBack)
@@ -107,6 +124,8 @@ object NavigationManager {
             "select" -> SelectExample(component, onBack)
             "picker" -> PickerExample(component, onBack)
             "datepicker" -> DatePickerExample(component, onBack)
+            "dropdownmenu" -> DropdownMenuExample(component, onBack)
+            "upload" -> UploadExample(component, onBack)
             "form" -> FormExample(component, onBack)
             "cascader" -> CascaderExample(component, onBack)
             "transfer" -> TransferExample(component, onBack)
@@ -114,14 +133,18 @@ object NavigationManager {
 
             // 导航组件 (9个)
             "navbar" -> NavbarExample(component, onBack)
-            "tab" -> TabExample(component, onBack)
+            "bottom-navbar" -> BottomNavBarExample(component, onBack)
+            "tabs" -> TabsExample(component, onBack)
+            "navigation-menu" -> NavigationMenuExample(component, onBack)
             "sidebar" -> SidebarExample(component, onBack)
-            "tabbar" -> TabBarExample(component, onBack)
+            "indexes" -> ComingSoonExample(component, onBack)
             "drawer" -> DrawerExample(component, onBack)
             "steps" -> StepsExample(component, onBack)
+            "pagination" -> PaginationExample(component, onBack)
             "breadcrumb" -> BreadcrumbExample(component, onBack)
             "anchor" -> AnchorExample(component, onBack)
             "segmented" -> SegmentedExample(component, onBack)
+            "fab" -> FabExample(component, onBack)
 
             // 数据展示组件 (15个)
             "list" -> ListExample(component, onBack)
@@ -136,8 +159,10 @@ object NavigationManager {
             "empty" -> EmptyExample(component, onBack)
             "skeleton" -> SkeletonExample(component, onBack)
             "timeline" -> TimelineExample(component, onBack)
+            "timecounter" -> ComingSoonExample(component, onBack)
             "tree" -> TreeExample(component, onBack)
             "calendar" -> CalendarExample(component, onBack)
+            "footer" -> ComingSoonExample(component, onBack)
             "watermark" -> WatermarkExample(component, onBack)
 
             // 反馈组件 (11个)
@@ -145,7 +170,11 @@ object NavigationManager {
             "actionsheet" -> ActionSheetExample(component, onBack)
             "toast" -> ToastExample(component, onBack)
             "dialog" -> DialogExample(component, onBack)
+            "tooltip" -> TooltipExample(component, onBack)
+            "context-menu" -> ContextMenuExample(component, onBack)
             "loading" -> LoadingExample(component, onBack)
+            "message" -> MessageExample(component, onBack)
+            "noticebar" -> NoticeBarExample(component, onBack)
             "notification" -> NotificationExample(component, onBack)
             "snackbar" -> SnackbarExample(component, onBack)
             "popup" -> PopupExample(component, onBack)
@@ -157,6 +186,7 @@ object NavigationManager {
             "grid" -> GridExample(component, onBack)
             "swiper" -> SwiperExample(component, onBack)
             "searchbar" -> SearchBarExample(component, onBack)
+            "refresh" -> RefreshExample(component, onBack)
             "bottomsheet" -> BottomSheetExample(component, onBack)
             "backtop" -> BackTopExample(component, onBack)
 

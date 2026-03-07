@@ -7,7 +7,7 @@ import com.gearui.foundation.layout.Spacing
 /**
  * SwipeCellTokens - SwipeCell 组件设计规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/swipe_cell/td_swipe_cell_style.dart
+ * 参考: 内部组件规范swipe_cell/td_swipe_cell_style.dart
  *
  * 设计原则：
  * - 所有尺寸、间距使用语义化 Token

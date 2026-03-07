@@ -45,7 +45,7 @@ fun RadioButton(
         RadioSize.MEDIUM -> 20.dp
         RadioSize.SMALL -> 16.dp
     }
-    // 选中点收敛到更小比例，贴近 shadcn 层次
+    // 选中点收敛到更小比例，统一视觉层次
     val innerSize = outerSize * 0.38f
 
     // ⭐ 颜色映射：Theme 语义 → Radio 视觉

@@ -3,21 +3,16 @@ package com.gearui.sample.pages
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
-import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
-import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
-import com.gearui.sample.config.localizedName
 import com.gearui.theme.Theme
 
 /**
@@ -37,25 +32,17 @@ fun ExamplePage(
     val colors = Theme.colors
     val shapes = Theme.shapes
     val settingsState = LocalSettingsState.current
-    val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
     val listState = rememberLazyListState()
-    val focusManager = LocalFocusManager.current
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.background)
-            .pointerInput(Unit) {
-                awaitEachGesture {
-                    awaitFirstDown(requireUnconsumed = false)
-                    focusManager.clearFocus()
-                }
-            }
     ) {
         // 顶部导航栏 - 使用 NavBar
         NavBar(
-            title = component.localizedName(isEnglish),
+            title = component.nameEn,
             centerTitle = true,
             useDefaultBack = true,
             onBackClick = onBack,

@@ -425,7 +425,7 @@ private fun IntPickerColumn(
         }
     }
 
-    // 滚动结束时吸附到最近项，并更新选中值（tdesign 风格）
+    // 滚动结束时吸附到最近项，并更新选中值（标准交互）
     LaunchedEffect(listState.isScrollInProgress) {
         if (!listState.isScrollInProgress && items.isNotEmpty()) {
             val firstIndex = listState.firstVisibleItemIndex
@@ -445,7 +445,7 @@ private fun IntPickerColumn(
             .clip(shapes.small)
             .background(colors.surfaceVariant)
     ) {
-        // 居中选中高亮层（对齐 shadcn 的层次感）
+        // 居中选中高亮层（统一视觉层次）
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -473,7 +473,7 @@ private fun IntPickerColumn(
                         .background(colors.surfaceVariant)
                         .clickable {
                             scope.launch {
-                                // Align with tdesign: tap first scrolls into selection window,
+                                // Tap first scrolls into selection window,
                                 // then final selected value is committed by snap logic.
                                 listState.animateScrollToItem(index)
                             }

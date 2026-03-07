@@ -49,7 +49,7 @@ fun TagExample(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "浅色标签（临时示例）",
+                    text = "浅色标签",
                     style = Typography.BodyMedium,
                     color = colors.textSecondary
                 )

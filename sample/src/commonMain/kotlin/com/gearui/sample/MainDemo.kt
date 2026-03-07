@@ -1,10 +1,7 @@
 package com.gearui.sample
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.Box
-import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
-import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.core.annotations.Page
 import com.gearui.View
 import com.gearui.GearApp
@@ -124,43 +121,36 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
     // 首页列表滚动状态
     val homeListState = rememberLazyListState()
 
-    // 使用 Box 叠加页面，保持 HomePage 始终存在（只是被遮挡）
-    Box(modifier = Modifier.fillMaxSize()) {
-        // 首页始终存在，保持滚动状态
-        HomePage(
-            listState = homeListState,
-            onComponentClick = { component ->
-                currentComponent = component
-                currentPage = AppPage.COMPONENT_DETAIL
-            },
-            onSettingsClick = {
-                currentPage = AppPage.SETTINGS
-            }
-        )
-
-        // 子页面叠加在首页之上
-        when (currentPage) {
-            AppPage.HOME -> {
-                // 首页已经在下面显示，这里不需要做任何事
-            }
-
-            AppPage.COMPONENT_DETAIL -> {
-                // 显示组件详情页
-                currentComponent?.let { component ->
-                    NavigationManager.getExamplePage(
-                        component = component,
-                        onBack = { currentPage = AppPage.HOME }
-                    )
+    when (currentPage) {
+        AppPage.HOME -> {
+            HomePage(
+                listState = homeListState,
+                onComponentClick = { component ->
+                    currentComponent = component
+                    currentPage = AppPage.COMPONENT_DETAIL
+                },
+                onSettingsClick = {
+                    currentPage = AppPage.SETTINGS
                 }
-            }
+            )
+        }
 
-            AppPage.SETTINGS -> {
-                // 显示设置页面
-                SettingsPage(
-                    settingsState = settingsState,
+        AppPage.COMPONENT_DETAIL -> {
+            currentComponent?.let { component ->
+                NavigationManager.getExamplePage(
+                    component = component,
                     onBack = { currentPage = AppPage.HOME }
                 )
+            } ?: run {
+                currentPage = AppPage.HOME
             }
+        }
+
+        AppPage.SETTINGS -> {
+            SettingsPage(
+                settingsState = settingsState,
+                onBack = { currentPage = AppPage.HOME }
+            )
         }
     }
 }

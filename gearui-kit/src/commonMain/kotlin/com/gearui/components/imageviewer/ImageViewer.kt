@@ -17,6 +17,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
+import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.image.GearImage
 import com.gearui.components.image.ImageFit
@@ -91,6 +92,8 @@ fun ImageViewer(
     state: ImageViewerState,
     modifier: Modifier = Modifier,
     labels: List<String>? = null,
+    width: Dp? = null,
+    height: Dp? = null,
     showIndex: Boolean = true,
     showCloseBtn: Boolean = true,
     showDeleteBtn: Boolean = false,
@@ -102,6 +105,9 @@ fun ImageViewer(
     onTap: ((Int) -> Unit)? = null
 ) {
     if (!state.isVisible || images.isEmpty()) return
+    require(labels == null || labels.size == images.size) {
+        "labels.size must equal images.size"
+    }
 
     val colors = Theme.colors
     val scope = rememberCoroutineScope()
@@ -145,10 +151,16 @@ fun ImageViewer(
                 // 图片或占位符
                 val painter = images.getOrNull(page)
                 if (painter != null) {
+                    val imageModifier = when {
+                        width != null && height != null -> Modifier.size(width, height)
+                        width != null -> Modifier.width(width).fillMaxHeight()
+                        height != null -> Modifier.fillMaxWidth().height(height)
+                        else -> Modifier.fillMaxSize()
+                    }
                     GearImage(
                         painter = painter,
                         fit = ImageFit.CONTAIN,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = imageModifier
                     )
                 } else {
                     // 占位符

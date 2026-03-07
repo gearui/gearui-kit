@@ -12,7 +12,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.layout.boundsInWindow
+import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -24,6 +24,7 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberGearOverlay
 import com.gearui.theme.Theme
 import com.gearui.Spacing
+import kotlinx.coroutines.delay
 
 /**
  * PopoverTheme - 气泡主题
@@ -174,9 +175,17 @@ fun Popover(
                     },
                     modal = false,
                     maskColor = null,
-                    dismissPolicy = OverlayDismissPolicy.Dropdown.copy(
-                        outsideClick = currentCloseOnClickOutside
-                    )
+                    dismissPolicy = if (currentCloseOnClickOutside) {
+                        OverlayDismissPolicy.Dropdown.copy(outsideClick = true)
+                    } else {
+                        OverlayDismissPolicy(
+                            outsideClick = false,
+                            scroll = false,
+                            backPress = true,
+                            routeChange = true,
+                            anchorDetached = true
+                        )
+                    }
                 ),
                 onDismiss = {
                     state.isVisible = false
@@ -202,7 +211,7 @@ fun Popover(
     Box(
         modifier = modifier
             .onGloballyPositioned { coordinates ->
-                triggerBounds = coordinates.boundsInWindow()
+                triggerBounds = coordinates.boundsInRoot()
             }
     ) {
         trigger {
@@ -432,13 +441,24 @@ fun Tooltip(
     modifier: Modifier = Modifier,
     placement: PopoverPlacement = PopoverPlacement.BOTTOM,
     theme: PopoverTheme = PopoverTheme.DARK,
+    autoDismissMillis: Long = 1500L,
     trigger: @Composable (onClick: () -> Unit) -> Unit
 ) {
+    LaunchedEffect(state.isVisible, autoDismissMillis) {
+        if (state.isVisible && autoDismissMillis > 0) {
+            delay(autoDismissMillis)
+            if (state.isVisible) {
+                state.hide()
+            }
+        }
+    }
+
     Popover(
         state = state,
         modifier = modifier,
         placement = placement,
         theme = theme,
+        closeOnClickOutside = true,
         content = {
             Text(
                 text = text,
@@ -446,7 +466,11 @@ fun Tooltip(
                 color = LocalPopoverTextColor.current
             )
         },
-        trigger = trigger
+        trigger = { _ ->
+            trigger {
+                state.toggle()
+            }
+        }
     )
 }
 

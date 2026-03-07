@@ -9,7 +9,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * GearUI Framework 语义形状系统
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_radius.dart
+ * 参考: 内部圆角规范
  *
  * ⚠️ 规则：
  * 组件层 ONLY 使用这些语义形状

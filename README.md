@@ -1,18 +1,25 @@
 # GearUI Kit
 
-基于 Kuikly (Tencent Compose) 构建的 Kotlin Multiplatform UI 组件库。
+[English](./README.md) | [简体中文](./README.zh-Hans.md)
 
-## 发布信息
+A Kotlin Multiplatform UI component library built on Kuikly.
 
-- 坐标：`com.gearui:gearui-kit:1.0.0-beta1`
-- 官网：[https://gearui.com](https://gearui.com)
-- License：Apache License 2.0
+## Release Information
 
-## 快速接入
+- Coordinates: `com.gearui:gearui-kit:1.0.0-beta1`
+- Website: [https://gearui.com](https://gearui.com)
+- License: Apache License 2.0
 
-### 1. 发布版依赖（推荐）
+## Author Information
 
-如果版本已发布到远端仓库（如 Maven Central）：
+- Author: `zoujiaqing`
+- Email: `zoujiaqing@gmail.com`
+
+## Quick Integration
+
+### 1. Published Dependency (Recommended)
+
+If the version is published to a remote repository (such as Maven Central):
 
 ```kotlin
 repositories {
@@ -28,15 +35,15 @@ kotlin {
 }
 ```
 
-### 2. 本地联调依赖（mavenLocal）
+### 2. Local Development Dependency (`mavenLocal`)
 
-先在 `gearui-kit` 工程发布到本地仓库：
+First publish from the `gearui-kit` project to your local Maven repository:
 
 ```bash
 ./gradlew :gearui-kit:publishToMavenLocal
 ```
 
-然后在业务工程引入：
+Then add it in your app project:
 
 ```kotlin
 repositories {
@@ -53,7 +60,7 @@ kotlin {
 }
 ```
 
-### 3. 同仓库模块依赖（开发期）
+### 3. In-Repo Module Dependency (During Development)
 
 ```kotlin
 dependencies {
@@ -61,7 +68,7 @@ dependencies {
 }
 ```
 
-## 基础使用
+## Basic Usage
 
 ```kotlin
 @Page("MainPage")
@@ -93,30 +100,36 @@ private fun MainPageContent() {
 }
 ```
 
-## 工程说明
+## Project Notes
 
-- 组件层位于：`gearui-kit/src/commonMain/kotlin/com/gearui/components`
-- 当前组件目录规模：`50+`（以源码为准）
-- Sample 工程：`sample/`
+- Component layer path: `gearui-kit/src/commonMain/kotlin/com/gearui/components`
+- Current component directory scale: `50+` (source of truth is the code)
+- Sample project: `sample/`
 
-## 文档入口
+## Component Convergence Strategy
 
-- 架构总览：[ARCHITECTURE.md](./ARCHITECTURE.md)
-- 规范入口：[docs/SPEC.md](./docs/SPEC.md)
+- For navigation, only the core entry is kept: `Tabs` (content switching).
+- Accordion mode is unified into: `Collapse.Accordion` (no standalone `Accordion` component maintained).
+- No synonymous wrapper components are kept, to avoid duplicate APIs and duplicate sample pages.
 
-## 开发命令
+## Documentation Entry
+
+- Architecture overview: [ARCHITECTURE.md](./ARCHITECTURE.md)
+- Spec entry: [docs/SPEC.md](./docs/SPEC.md)
+
+## Development Commands
 
 ```bash
-# 编译 Android 目标
+# Build Android target
 ./gradlew :gearui-kit:compileDebugKotlinAndroid
 
-# 编译 iOS 目标
+# Build iOS target
 ./gradlew :gearui-kit:compileKotlinIosSimulatorArm64
 
-# 运行示例应用（Android）
+# Run sample app (Android)
 ./gradlew :sample:installDebug
 ```
 
-## 许可证
+## License
 
 Apache License 2.0

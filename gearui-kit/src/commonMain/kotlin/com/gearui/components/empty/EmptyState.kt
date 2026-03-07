@@ -33,11 +33,11 @@ fun EmptyState(
     description: String? = null,
     icon: (@Composable () -> Unit)? = null,
     actionText: String? = null,
-    onAction: (() -> Unit)? = null
+    onAction: (() -> Unit)? = null,
+    customAction: (@Composable () -> Unit)? = null
 ) {
     // ⭐ Framework Rule #1: 第一行永远是这三个
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Column(
@@ -78,8 +78,11 @@ fun EmptyState(
             )
         }
 
-        // 操作按钮
-        if (actionText != null && onAction != null) {
+        // 操作区域（优先自定义）
+        if (customAction != null) {
+            Spacer(modifier = Modifier.height(24.dp))
+            customAction()
+        } else if (actionText != null && onAction != null) {
             Spacer(modifier = Modifier.height(24.dp))
             Box(
                 modifier = Modifier
@@ -106,7 +109,8 @@ fun EmptyStatePreset(
     type: EmptyStateType,
     modifier: Modifier = Modifier,
     actionText: String? = null,
-    onAction: (() -> Unit)? = null
+    onAction: (() -> Unit)? = null,
+    customAction: (@Composable () -> Unit)? = null
 ) {
     val (message, description, iconName) = when (type) {
         EmptyStateType.NO_DATA -> Triple("暂无数据", "当前没有可显示的内容", Icons.image)
@@ -131,6 +135,7 @@ fun EmptyStatePreset(
         },
         actionText = actionText,
         onAction = onAction,
+        customAction = customAction,
         modifier = modifier
     )
 }

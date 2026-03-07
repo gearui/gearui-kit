@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * Radius - 全局圆角规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/theme/td_radius.dart
+ * 参考: 内部圆角规范
  *
  * 圆角层级:
  * - radiusSmall:       3dp  (小圆角，细节元素)

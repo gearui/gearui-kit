@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * GearUI 组件规格系统
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/
+ * 参考: 内部组件规范
  *
  * 所有组件统一使用这些规格，确保视觉一致性
  */
@@ -144,8 +144,7 @@ object DividerSpecs {
 }
 
 /* ========================================
- * TabBar 标签栏规格
- * 参考: td_tab_bar.dart
+ * Tabs 选项卡规格
  * ======================================== */
 
 object TabSpecs {
@@ -170,7 +169,7 @@ object CardSpecs {
     // 圆角 (radiusLarge = 9dp)
     val radius: Dp = 9.dp
 
-    // 内边距（收敛到 shadcn 常用的紧凑卡片节奏）
+    // 内边距（收敛到 统一紧凑卡片节奏）
     val padding: Dp = 12.dp
 
     // 边框宽度

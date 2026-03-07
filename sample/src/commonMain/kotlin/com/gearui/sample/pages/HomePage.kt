@@ -26,7 +26,6 @@ import com.gearui.sample.i18n.SampleStrings
 import com.gearui.sample.config.ComponentCategory
 import com.gearui.sample.config.ComponentConfig
 import com.gearui.sample.config.ComponentInfo
-import com.gearui.sample.config.localizedName
 import com.gearui.sample.config.localizedDescription
 import com.gearui.theme.Theme
 
@@ -284,7 +283,7 @@ private fun ComponentListItem(
     showDivider: Boolean = false
 ) {
     val colors = Theme.colors
-    val name = component.localizedName(isEnglish)
+    val name = component.nameEn
     val description = component.localizedDescription(isEnglish)
 
     Column(

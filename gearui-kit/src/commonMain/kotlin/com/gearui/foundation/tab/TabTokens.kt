@@ -6,7 +6,7 @@ import com.gearui.foundation.TabSpecs
 /**
  * Tab 尺寸规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/tabbar/td_tab_bar.dart
+ * 参考: GearUI 组件尺寸规范
  *
  * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
  */

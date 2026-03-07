@@ -8,7 +8,7 @@ import com.gearui.foundation.layout.Radius
 /**
  * Avatar 尺寸规范
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/avatar/td_avatar.dart
+ * 参考: 内部组件规范avatar/td_avatar.dart
  *
  * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
  */

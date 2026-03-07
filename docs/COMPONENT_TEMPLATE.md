@@ -18,12 +18,12 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.theme.GearTheme
+import com.gearui.theme.Theme
 
 /**
- * MyComponent - 100% GearTheme 驱动
+ * MyComponent - 100% Theme 驱动
  *
- * ✅ 规则：第一行永远是 val colors = GearTheme.colors
+ * ✅ 规则：第一行永远是 val colors = Theme.colors
  * ❌ 禁止：Color(0x...) / 硬编码颜色
  *
  * @param text 显示的文本
@@ -39,7 +39,7 @@ fun MyComponent(
     onClick: (() -> Unit)? = null
 ) {
     // ⭐ Framework Rule #1: 第一行永远是这个
-    val colors = GearTheme.colors
+    val colors = Theme.colors
     
     // 组件实现
     Box(
@@ -76,7 +76,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.theme.GearTheme
+import com.gearui.theme.Theme
 
 /**
  * MyComponent - 支持多种主题
@@ -90,9 +90,9 @@ fun MyComponent(
     disabled: Boolean = false
 ) {
     // ⭐ Framework Rule #1
-    val colors = GearTheme.colors
+    val colors = Theme.colors
     
-    // ⭐ 颜色映射：GearTheme 语义 → 组件视觉
+    // ⭐ 颜色映射：Theme 语义 → 组件视觉
     val (themeColor, themeLightColor) = when (theme) {
         MyComponentTheme.PRIMARY -> colors.primary to colors.primaryLight
         MyComponentTheme.SUCCESS -> colors.success to colors.successLight
@@ -146,7 +146,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.theme.GearTheme
+import com.gearui.theme.Theme
 
 /**
  * MyComponent - 完整示例
@@ -167,7 +167,7 @@ fun MyComponent(
     onClick: (() -> Unit)? = null,
     icon: (@Composable () -> Unit)? = null
 ) {
-    val colors = GearTheme.colors
+    val colors = Theme.colors
     
     // 尺寸参数
     val (height, horizontalPadding, textStyle) = when (size) {
@@ -230,14 +230,14 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.theme.GearTheme
+import com.gearui.theme.Theme
 
 /**
  * MyComponentShowcase - 组件展示页
  */
 @Composable
 fun MyComponentShowcase() {
-    val colors = GearTheme.colors
+    val colors = Theme.colors
     
     Column(
         modifier = Modifier
@@ -304,7 +304,7 @@ fun MyComponentShowcase() {
 
 @Composable
 private fun SectionTitle(text: String) {
-    val colors = GearTheme.colors
+    val colors = Theme.colors
     
     Text(
         text = text,
@@ -327,13 +327,14 @@ private fun SectionTitle(text: String) {
 - [ ] `com.tencent.kuikly.compose.ui.*` ✅
 - [ ] `com.gearui.foundation.primitives.Text` ✅
 - [ ] `com.gearui.foundation.typography.Typography` ✅
-- [ ] `com.gearui.theme.GearTheme` ✅
+- [ ] `com.gearui.theme.Theme` ✅
 - [ ] ❌ NO `androidx.compose.foundation.*`
 - [ ] ❌ NO `androidx.compose.ui.*`
 - [ ] ❌ NO `com.tencent.kuikly.compose.material3.Text`
 
 ### 代码规范
-- [ ] 第一行是 `val colors = GearTheme.colors`
+- [ ] 第一行是 `val colors = Theme.colors`
+- [ ] Wrapper 组件例外：仅做代理转发且不直接绘制 UI 时，可不声明 `val colors`
 - [ ] 使用 `Text` from `com.gearui.foundation.primitives`
 - [ ] Typography 首字母大写 (`Typography.BodyMedium`)
 - [ ] 所有颜色来自 `colors.*`

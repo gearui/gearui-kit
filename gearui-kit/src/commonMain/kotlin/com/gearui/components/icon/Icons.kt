@@ -1,7 +1,7 @@
 package com.gearui.components.icon
 
 /**
- * Icons registry (aligned with tdesign-flutter style).
+ * Icons registry (aligned with internal icon style).
  *
  * Usage:
  * - `Icons.home` -> icon name

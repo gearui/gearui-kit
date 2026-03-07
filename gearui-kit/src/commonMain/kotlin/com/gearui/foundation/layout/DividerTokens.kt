@@ -7,7 +7,7 @@ import com.gearui.foundation.DividerSpecs
 /**
  * DividerTokens - 分割线尺寸 Token
  *
- * 参考: tdesign-flutter/tdesign-component/lib/src/components/divider/td_divider.dart
+ * 参考: 内部组件规范divider/td_divider.dart
  *
  * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors.divider
  */

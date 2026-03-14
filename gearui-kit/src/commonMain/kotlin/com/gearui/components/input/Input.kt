@@ -22,6 +22,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
+import com.tencent.kuikly.compose.ui.text.input.KeyboardType
 import com.tencent.kuikly.compose.ui.text.input.PasswordVisualTransformation
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
@@ -73,6 +74,7 @@ fun Input(
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
     cardStyle: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
     prefix: (@Composable () -> Unit)? = null,
     suffix: (@Composable () -> Unit)? = null
 ) {
@@ -239,6 +241,7 @@ fun Input(
                         ),
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
+                            keyboardType = keyboardType,
                             imeAction = if (maxLines == 1) ImeAction.Done else ImeAction.Default
                         ),
                         keyboardActions = KeyboardActions(

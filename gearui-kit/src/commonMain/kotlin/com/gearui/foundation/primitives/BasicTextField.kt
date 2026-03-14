@@ -1,7 +1,6 @@
 package com.gearui.foundation.primitives
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Box
@@ -11,6 +10,8 @@ import com.tencent.kuikly.compose.foundation.text.BasicTextField as KuiklyBasicT
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
+import com.tencent.kuikly.compose.ui.graphics.Brush
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
@@ -39,6 +40,9 @@ fun BasicTextField(
     imeAction: ImeAction = if (singleLine) ImeAction.Done else ImeAction.Default,
     blurOnImeDone: Boolean = singleLine,
     onImeDone: (() -> Unit)? = null,
+    focusRequester: FocusRequester? = null,
+    cursorBrush: Brush? = null,
+    decorationBox: (@Composable (innerTextField: @Composable () -> Unit) -> Unit)? = null,
     textStyle: TextStyle = TextStyle(
         fontSize = Typography.BodyMedium.fontSize,
         fontWeight = Typography.BodyMedium.fontWeight
@@ -46,14 +50,26 @@ fun BasicTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     val colors = Theme.colors
-    val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val effectiveModifier = if (focusRequester != null) {
+        modifier.focusRequester(focusRequester)
+    } else {
+        modifier
+    }
+    val effectiveTextStyle = textStyle.copy(
+        color = when {
+            !enabled -> colors.textDisabled
+            textStyle.color != Color.Unspecified -> textStyle.color
+            else -> colors.textPrimary
+        }
+    )
 
     KuiklyBasicTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.focusRequester(focusRequester),
+        modifier = effectiveModifier,
         enabled = enabled,
         readOnly = readOnly,
         singleLine = singleLine,
@@ -69,12 +85,10 @@ fun BasicTextField(
                 onImeDone?.invoke()
             }
         ),
-        textStyle = textStyle.copy(
-            color = if (enabled) colors.textPrimary else colors.textDisabled
-        ),
-        cursorBrush = SolidColor(colors.primary),
+        textStyle = effectiveTextStyle,
+        cursorBrush = cursorBrush ?: SolidColor(colors.primary),
         visualTransformation = visualTransformation,
-        decorationBox = { innerTextField ->
+        decorationBox = decorationBox ?: { innerTextField ->
             Box {
                 if (value.isEmpty() && placeholder.isNotEmpty()) {
                     Text(

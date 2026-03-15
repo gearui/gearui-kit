@@ -5,8 +5,10 @@
 ## 必读（对外有效）
 
 1. `GEARUI_SPEC_2026.md`
-2. `ARCHITECTURE_GUARDRAILS.md`
-3. `SPEC_CI_MAPPING.md`
+2. `SPEC_CI_MAPPING.md`
+
+说明：
+- `ARCHITECTURE_GUARDRAILS.md` 已并入 `GEARUI_SPEC_2026.md` 第 11 节，仅保留兼容跳转。
 
 ## 主题与用色规范
 

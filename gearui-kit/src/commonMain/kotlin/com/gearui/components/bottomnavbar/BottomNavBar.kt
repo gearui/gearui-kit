@@ -44,6 +44,7 @@ fun BottomNavBar(
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
     useSafeArea: Boolean = true,
+    safeAreaExtraBottom: Dp = 0.dp,
     showTopDivider: Boolean = true,
     height: Dp = 56.dp,
     backgroundColor: Color? = null,
@@ -53,7 +54,11 @@ fun BottomNavBar(
     val colors = Theme.colors
     val shapes = Theme.shapes
     val configuration = LocalConfiguration.current
-    val safeAreaBottom = if (useSafeArea) configuration.safeAreaInsets.bottom.dp else 0.dp
+    val safeAreaBottom = if (useSafeArea) {
+        configuration.safeAreaInsets.bottom.dp + safeAreaExtraBottom
+    } else {
+        0.dp
+    }
     val selected = selectedId ?: items.firstOrNull()?.id.orEmpty()
     val barBackground = backgroundColor ?: colors.surface
     val selectedColor = activeColor ?: colors.primary

@@ -106,6 +106,59 @@ Overlay 属于 Runtime 一等能力，而非组件实现细节。
 - 删除 Overlay Runtime 后，相关组件无法编译。
 - Overlay 行为在 sample 中可统一验证。
 
+### 4.5 Runtime Environment & Insets Pipeline（新增基线）
+
+GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分散处理。
+
+统一数据流：
+1. Platform（Android/iOS/Web）采集原始系统信息。
+2. Runtime 归一化为 `RuntimeEnvironment`。
+3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
+4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
+
+职责边界：
+- Runtime 负责采集与同步：
+  - window metrics（width/height/activity size/density/orientation）
+  - insets（status/navigation/gesture/ime）
+  - safeArea（top/bottom/left/right，作为 insets 的派生视图）
+  - theme state（dark mode / contrast）
+- GearUI Kit 负责消费规则：
+  - 不直接调用平台 API
+  - 不在组件中实现平台分支采集逻辑
+
+强约束：
+- 安全区主来源必须是 Runtime；初始化传入仅可作为 override/fallback。
+- 业务页面禁止手写系统安全区补丁（如 `padding(top = safeArea.top)` 作为常态方案）。
+- 横屏与异形屏必须支持 `left/right` 安全区，不得只实现 `top/bottom`。
+
+建议数据模型（规范性）：
+- `RuntimeEnvironment`
+  - `window`: `widthPx/heightPx/activityWidthPx/activityHeightPx/density/orientation`
+  - `insets`: `statusBarTop/navigationBarBottom/gestureBottom/imeBottom/left/right`
+  - `safeArea`: `top/bottom/left/right`
+  - `theme`: `darkMode/contrastMode`
+
+验收标准：
+- sample 中可看到 `LocalRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
+- Runtime insets 变化（旋转、系统栏变化、键盘变化）可触发组件正确重算。
+- 业务 demo 不再依赖页面级 safe area 手工补丁。
+
+### 4.6 Fullscreen Container Contract（新增硬约束）
+
+GearUI Kit 默认运行前提：根容器必须具备全屏渲染优先级（edge-to-edge compatible）。
+
+规范要求：
+- GearApp/Root Host 必须 attach 到 fullscreen container（match-parent）。
+- 非全屏容器会导致 insets/safeArea/overlay/keyboard 计算失真，视为架构错误。
+
+运行时策略：
+- Debug：检测到非全屏容器时，直接 fail-fast（抛错或阻断渲染）。
+- Release：输出严重告警日志并上报 telemetry（`fullscreen_contract_violation`）。
+
+验收标准：
+- sample 提供全屏契约检测开关与可视化日志。
+- Android/iOS Host 模板文档明确 edge-to-edge 与 fullscreen 必填项。
+
 ---
 
 ## 5. 性能规范
@@ -254,3 +307,64 @@ Overlay 属于 Runtime 一等能力，而非组件实现细节。
 ### 截止 2026-12-31
 - Brand Pack 机制可用。
 - 组件级 Token 覆盖能力在核心组件稳定落地。
+
+---
+
+## 11. Architecture Guardrails（PR Gate）
+
+本文档内规则即 PR 审查硬规则。命中任一 `REJECT`，默认拒绝合并（除非架构 owner 明确豁免）。
+
+### 11.1 REJECT（不可违规）
+
+1. Runtime 边界
+- `REJECT`：组件直接监听系统级事件（scroll / back / route）。
+- `REJECT`：组件自行实现 Overlay 关闭策略。
+- `REJECT`：组件绕过 Runtime 直接修改全局主题、语言或路由状态。
+- `REJECT`：组件或业务页面直接调用平台 API 采集 insets/safeArea（应由 Runtime 统一提供）。
+- `REJECT`：业务页面长期手写 safe area padding 作为系统安全区主方案。
+
+2. Token 与样式
+- `REJECT`：组件层新增硬编码颜色值（`Color(0x...)`）替代语义 Token。
+- `REJECT`：整体替换 `ThemeSpec` 造成未声明 Token 丢失。
+- `REJECT`：绕过 Token 体系直接写死样式分支。
+- `REJECT`：交互组件缺失统一状态映射（`default/hover/active/focus/disabled/invalid`）。
+- `REJECT`：组件直接耦合全局语义色，未通过组件角色 Token 中转。
+- `REJECT`：新增 `Theme.colors` 字段不遵循语义成对规则。
+
+3. Overlay
+- `REJECT`：Overlay 不经过 Runtime 创建与销毁。
+- `REJECT`：Overlay 内直接操作路由或全局状态。
+- `REJECT`：Overlay 通过组件私有监听逻辑实现关闭。
+- `REJECT`：Overlay 遮罩不覆盖全屏容器（状态栏/手势区未纳入同一遮罩层级）。
+
+4. Fullscreen Contract
+- `REJECT`：GearApp/Root Host 未以全屏容器（match-parent/edge-to-edge）挂载。
+- `REJECT`：在非全屏前提下继续以“页面补丁”规避系统栏与安全区问题。
+- `REJECT`：缺失全屏契约检测（Debug fail-fast 或 Release telemetry 其一都没有）。
+
+5. API 兼容
+- `REJECT`：公共 API 破坏性变更无兼容方案与迁移说明。
+- `REJECT`：同名参数在不同组件语义不一致。
+- `REJECT`：已公开参数语义被改写但未升级版本等级。
+
+6. Sample 与文档
+- `REJECT`：新增 Runtime 能力未在 sample 提供真实使用路径。
+- `REJECT`：新增组件无最小示例和迁移说明。
+- `REJECT`：sample 中出现绕过 Runtime 的临时代码。
+- `REJECT`：主题/配色改造 PR 未更新语义映射文档。
+- `REJECT`：组件配色改造 PR 未更新角色用色矩阵。
+
+### 11.2 WARN（需说明）
+
+- `WARN`：核心路径新增对象分配，可能扩大重组范围。
+- `WARN`：Overlay 行为依赖平台分支，未给出一致性验证。
+- `WARN`：主题扩展点新增但无可回归样例。
+
+### 11.3 Reviewer Checklist
+
+1. 是否遵守 Runtime 责任边界。
+2. 是否保持 Token 合并制与语义完整性。
+3. 是否通过 Overlay Runtime 统一策略。
+4. 是否满足 API 兼容与迁移约束。
+5. 是否补齐 sample 验证与文档说明。
+6. 是否给出性能影响说明（至少定性）。

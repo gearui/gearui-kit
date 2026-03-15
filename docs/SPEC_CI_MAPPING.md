@@ -11,7 +11,7 @@
 1. 组件硬编码颜色护栏  
 SPEC 映射：
 - 4.1 Token 治理（禁止组件层硬编码颜色）
-- ARCHITECTURE_GUARDRAILS.md 2.2
+- 11.1 REJECT / 2. Token 与样式
 
 实现：
 - 脚本：`scripts/ci/check_component_hardcoded_colors.sh`
@@ -69,4 +69,3 @@ SPEC 映射：
 计划：
 - 记录主题切换重组范围、Overlay 影响范围。
 - 先夜跑告警，再逐步升级阻断阈值。
-

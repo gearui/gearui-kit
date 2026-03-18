@@ -159,6 +159,39 @@ GearUI Kit 默认运行前提：根容器必须具备全屏渲染优先级（edg
 - sample 提供全屏契约检测开关与可视化日志。
 - Android/iOS Host 模板文档明确 edge-to-edge 与 fullscreen 必填项。
 
+### 4.7 KuiklyUI Runtime Compatibility（新增）
+
+GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 KuiklyUI Runtime 的兼容稳定性。
+
+1. Single Source of Truth
+- 系统环境数据唯一来源为 KuiklyUI Runtime（`LocalConfiguration` / `pageData`）。
+- 禁止在 gearui-kit 内并行维护第二套 insets/safeArea 状态源。
+
+2. Backward Compatibility
+- 不得破坏现有 runtime 事件与字段语义，包括但不限于：
+  - `safeAreaInsets`
+  - `rootViewSizeDidChanged`
+  - `windowSizeDidChanged`
+  - `densityInfo`
+- 若需扩展字段，必须采用向后兼容新增，不允许重定义旧字段含义。
+
+3. Progressive Rollout
+- 新的系统环境能力按“可选开关 -> 默认开启”渐进发布：
+  - 阶段 1：feature flag（默认关闭）+ fallback 到旧路径
+  - 阶段 2：灰度开启并监控
+  - 阶段 3：默认开启，保留回退开关一个小版本周期
+
+4. Fail Strategy
+- Fullscreen Contract 冲突处理必须分环境：
+  - Debug：fail-fast（抛错/阻断渲染）
+  - Release：telemetry + 显式告警 + 可降级渲染
+- 禁止在 Release 直接 crash 作为默认策略。
+
+验收标准：
+- 新能力上线后，历史 sample 与业务 demo 无需改代码即可运行。
+- 兼容回归覆盖 `safeAreaInsets`、尺寸变化事件与密度变化事件。
+- 文档中存在明确回退方案与开关生命周期说明。
+
 ---
 
 ## 5. 性能规范

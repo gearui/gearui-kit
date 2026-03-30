@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
+import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalGearRuntimeFlags
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -43,7 +45,6 @@ fun BottomNavBar(
     selectedId: String?,
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
-    useSafeArea: Boolean = true,
     safeAreaExtraBottom: Dp = 0.dp,
     showTopDivider: Boolean = true,
     height: Dp = 56.dp,
@@ -53,11 +54,17 @@ fun BottomNavBar(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
-    val safeAreaBottom = if (useSafeArea) {
-        configuration.safeAreaInsets.bottom.dp + safeAreaExtraBottom
+    val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.bottomNavBarConsumesBottomSafeArea) {
+            runtimeEnvironment.safeArea.bottom + safeAreaExtraBottom
+        } else {
+            safeAreaExtraBottom
+        }
     } else {
-        0.dp
+        configuration.safeAreaInsets.bottom.dp + safeAreaExtraBottom
     }
     val selected = selectedId ?: items.firstOrNull()?.id.orEmpty()
     val barBackground = backgroundColor ?: colors.surface

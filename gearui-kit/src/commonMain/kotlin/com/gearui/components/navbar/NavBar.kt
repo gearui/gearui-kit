@@ -14,6 +14,8 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
+import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalGearRuntimeFlags
 import com.gearui.theme.Theme
 
 /**
@@ -46,7 +48,6 @@ fun NavBar(
     rightItems: List<NavBarItem> = emptyList(),
     titleWidget: (@Composable () -> Unit)? = null,
     belowTitleWidget: (@Composable () -> Unit)? = null,
-    useSafeArea: Boolean = true,
     showBottomDivider: Boolean = true
 ) {
     val colors = Theme.colors
@@ -54,8 +55,15 @@ fun NavBar(
     val textColor = titleColor ?: colors.textPrimary
 
     // 获取安全区域
+    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
-    val safeAreaTop = if (useSafeArea) configuration.safeAreaInsets.top.dp else 0.dp
+    val safeAreaTop = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.navBarConsumesTopSafeArea) runtimeEnvironment.safeArea.top else 0.dp
+    } else {
+        configuration.safeAreaInsets.top.dp
+    }
+    val actionSlotWidth = 56.dp
 
     Column(
         modifier = modifier
@@ -63,7 +71,7 @@ fun NavBar(
             .background(bgColor)
     ) {
         // 顶部安全区域填充
-        if (useSafeArea && safeAreaTop > 0.dp) {
+        if (safeAreaTop > 0.dp) {
             Spacer(modifier = Modifier.height(safeAreaTop))
         }
         if (centerTitle) {
@@ -91,42 +99,55 @@ fun NavBar(
                 }
 
                 // 上层：左侧操作区域
+                val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
                 Row(
                     modifier = Modifier
+                        .width((leftCount * actionSlotWidth.value).dp)
                         .fillMaxHeight()
                         .align(Alignment.CenterStart),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     if (useDefaultBack) {
                         NavBarIconButton(
                             icon = Icons.chevron_left,
                             iconColor = textColor,
-                            onClick = onBackClick
+                            onClick = onBackClick,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
                         )
                     }
                     leftItems.forEach { item ->
                         NavBarIconButton(
                             icon = item.icon,
                             iconColor = item.iconColor ?: textColor,
-                            onClick = item.onClick
+                            onClick = item.onClick,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
                         )
                     }
                 }
 
                 // 上层：右侧操作区域
+                val rightCount = rightItems.size
                 Row(
                     modifier = Modifier
+                        .width((rightCount * actionSlotWidth.value).dp)
                         .fillMaxHeight()
                         .align(Alignment.CenterEnd),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.End
                 ) {
                     rightItems.forEach { item ->
                         NavBarIconButton(
                             icon = item.icon,
                             iconColor = item.iconColor ?: textColor,
-                            onClick = item.onClick
+                            onClick = item.onClick,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
                         )
                     }
                 }
@@ -145,17 +166,21 @@ fun NavBar(
                     NavBarIconButton(
                         icon = Icons.chevron_left,
                         iconColor = textColor,
-                        onClick = onBackClick
+                        onClick = onBackClick,
+                        modifier = Modifier
+                            .width(actionSlotWidth)
+                            .fillMaxHeight()
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
                 }
                 leftItems.forEach { item ->
                     NavBarIconButton(
                         icon = item.icon,
                         iconColor = item.iconColor ?: textColor,
-                        onClick = item.onClick
+                        onClick = item.onClick,
+                        modifier = Modifier
+                            .width(actionSlotWidth)
+                            .fillMaxHeight()
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
                 }
 
                 // 标题区域
@@ -176,11 +201,13 @@ fun NavBar(
 
                 // 右侧按钮区域
                 rightItems.forEach { item ->
-                    Spacer(modifier = Modifier.width(8.dp))
                     NavBarIconButton(
                         icon = item.icon,
                         iconColor = item.iconColor ?: textColor,
-                        onClick = item.onClick
+                        onClick = item.onClick,
+                        modifier = Modifier
+                            .width(actionSlotWidth)
+                            .fillMaxHeight()
                     )
                 }
             }
@@ -209,11 +236,13 @@ fun NavBar(
 private fun NavBarIconButton(
     icon: String,
     iconColor: Color,
-    onClick: (() -> Unit)?
+    onClick: (() -> Unit)?,
+    modifier: Modifier = Modifier
+        .fillMaxHeight()
+        .widthIn(min = 56.dp)
 ) {
     Box(
-        modifier = Modifier
-            .size(44.dp)
+        modifier = modifier
             .then(
                 if (onClick != null) {
                     Modifier.clickable { onClick() }

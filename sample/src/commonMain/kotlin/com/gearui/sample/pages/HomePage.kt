@@ -14,13 +14,13 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.gearui.components.navbar.NavBar
 import com.gearui.components.navbar.NavBarItem
 import com.gearui.components.icon.Icons
 import com.gearui.components.searchbar.SearchBar
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
+import com.gearui.runtime.LocalGearRuntimeEnvironment
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.sample.i18n.SampleStrings
 import com.gearui.sample.config.ComponentCategory
@@ -53,8 +53,7 @@ fun HomePage(
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
 
     // 获取安全区域
-    val configuration = LocalConfiguration.current
-    val safeAreaBottom = configuration.safeAreaInsets.bottom.dp
+    val safeAreaBottom = LocalGearRuntimeEnvironment.current.safeArea.bottom
 
     val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
 

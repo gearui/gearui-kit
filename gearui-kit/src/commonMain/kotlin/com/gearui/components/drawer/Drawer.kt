@@ -23,6 +23,8 @@ import com.gearui.overlay.GearOverlayOptions
 import com.gearui.overlay.GearOverlayPlacement
 import com.gearui.overlay.LocalGearOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
+import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalGearRuntimeFlags
 import com.gearui.theme.Theme
 
 /**
@@ -73,7 +75,6 @@ fun Drawer(
     footer: (@Composable () -> Unit)? = null,
     showOverlay: Boolean = true,
     closeOnOverlayClick: Boolean = true,
-    useSafeArea: Boolean = true,
     backgroundColor: Color? = null,
     bordered: Boolean = true,
     onItemClick: ((index: Int, item: DrawerItem) -> Unit)? = null,
@@ -133,7 +134,6 @@ fun Drawer(
                     bordered = bordered,
                     onItemClick = onItemClick,
                     customContent = content,
-                    useSafeArea = useSafeArea,
                     onDismiss = onDismiss,
                     modifier = modifier
                 )
@@ -174,7 +174,6 @@ private fun DrawerOverlayContent(
     bordered: Boolean,
     onItemClick: ((index: Int, item: DrawerItem) -> Unit)?,
     customContent: (@Composable () -> Unit)?,
-    useSafeArea: Boolean,
     onDismiss: () -> Unit,
     modifier: Modifier
 ) {
@@ -255,7 +254,6 @@ private fun DrawerOverlayContent(
                     footer = footer,
                     bordered = bordered,
                     onItemClick = onItemClick,
-                    useSafeArea = useSafeArea,
                     onDismiss = onDismiss
                 )
             }
@@ -275,14 +273,22 @@ private fun DrawerContent(
     footer: (@Composable () -> Unit)?,
     bordered: Boolean,
     onItemClick: ((index: Int, item: DrawerItem) -> Unit)?,
-    useSafeArea: Boolean,
     onDismiss: () -> Unit
 ) {
     val colors = Theme.colors
+    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
-    val safeInsets = configuration.safeAreaInsets
-    val topInset = if (useSafeArea) safeInsets.top.dp else 0.dp
-    val bottomInset = if (useSafeArea) safeInsets.bottom.dp else 0.dp
+    val topInset = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.drawerConsumesVerticalSafeArea) runtimeEnvironment.safeArea.top else 0.dp
+    } else {
+        configuration.safeAreaInsets.top.dp
+    }
+    val bottomInset = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.drawerConsumesVerticalSafeArea) runtimeEnvironment.safeArea.bottom else 0.dp
+    } else {
+        configuration.safeAreaInsets.bottom.dp
+    }
 
     Column(
         modifier = Modifier
@@ -447,7 +453,6 @@ fun DrawerWithHeader(
     modifier: Modifier = Modifier,
     placement: DrawerPlacement = DrawerPlacement.LEFT,
     width: Dp = 280.dp,
-    useSafeArea: Boolean = true,
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
@@ -459,7 +464,6 @@ fun DrawerWithHeader(
         onDismiss = onDismiss,
         placement = placement,
         width = width,
-        useSafeArea = useSafeArea,
         modifier = modifier
     ) {
         Column(modifier = Modifier.fillMaxSize()) {

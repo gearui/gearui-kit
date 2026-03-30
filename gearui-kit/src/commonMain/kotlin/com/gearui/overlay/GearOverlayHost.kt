@@ -19,6 +19,8 @@ import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.*
 import com.tencent.kuikly.compose.ui.zIndex
+import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalGearRuntimeFlags
 import kotlinx.coroutines.delay
 
 /**
@@ -72,6 +74,8 @@ private fun GearOverlayItemLayout(
 ) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
+    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
     val options = item.options
     val policy = options.dismissPolicy
 
@@ -173,11 +177,42 @@ private fun GearOverlayItemLayout(
         // 内容区域需要拦截点击，防止事件穿透到背景层导致关闭
         if (options.placement == GearOverlayPlacement.Fullscreen) {
             // Fullscreen 模式：直接填满整个屏幕，不需要位置计算
-            val safeInsets = configuration.safeAreaInsets
-            val safeTop = if (options.safeAreaTop) safeInsets.top.dp else 0.dp
-            val safeBottom = if (options.safeAreaBottom) safeInsets.bottom.dp else 0.dp
-            val safeLeft = if (options.safeAreaLeft) safeInsets.left.dp else 0.dp
-            val safeRight = if (options.safeAreaRight) safeInsets.right.dp else 0.dp
+            val safeTop = if (options.safeAreaTop) {
+                if (runtimeFlags.unifiedSafeAreaPipeline) {
+                    runtimeEnvironment.safeArea.top
+                } else {
+                    configuration.safeAreaInsets.top.dp
+                }
+            } else {
+                0.dp
+            }
+            val safeBottom = if (options.safeAreaBottom) {
+                if (runtimeFlags.unifiedSafeAreaPipeline) {
+                    runtimeEnvironment.safeArea.bottom
+                } else {
+                    configuration.safeAreaInsets.bottom.dp
+                }
+            } else {
+                0.dp
+            }
+            val safeLeft = if (options.safeAreaLeft) {
+                if (runtimeFlags.unifiedSafeAreaPipeline) {
+                    runtimeEnvironment.safeArea.left
+                } else {
+                    configuration.safeAreaInsets.left.dp
+                }
+            } else {
+                0.dp
+            }
+            val safeRight = if (options.safeAreaRight) {
+                if (runtimeFlags.unifiedSafeAreaPipeline) {
+                    runtimeEnvironment.safeArea.right
+                } else {
+                    configuration.safeAreaInsets.right.dp
+                }
+            } else {
+                0.dp
+            }
             Box(
                 Modifier
                     .fillMaxSize()

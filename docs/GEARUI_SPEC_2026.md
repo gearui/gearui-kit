@@ -113,8 +113,13 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
 统一数据流：
 1. Platform（Android/iOS/Web）采集原始系统信息。
 2. Runtime 归一化为 `RuntimeEnvironment`。
-3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
+3. Compose/Kit 通过 `LocalGearRuntimeEnvironment`（或等价上下文）读取。
 4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
+
+GearApp 入口约束（强制）：
+- 每个页面树只允许一个 `GearApp` 根入口作为 Runtime 生效点（single runtime root）。
+- 禁止同一页面树出现双层 `GearApp` 嵌套，避免 `runtimeFlags` 与 `RuntimeEnvironment` 被内层默认值覆盖。
+- 如页面需自行管理 GearApp（业务自定义 theme/runtimeFlags），必须关闭基类自动包装（等价于 `autoWrapGearApp=false`），保证入口唯一。
 
 职责边界：
 - Runtime 负责采集与同步：
@@ -126,10 +131,21 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
   - 不直接调用平台 API
   - 不在组件中实现平台分支采集逻辑
 
+Host -> Runtime 动态桥接约束（Android/iOS）：
+- Host 必须提供“首帧注入 + 动态更新”双路径：
+1. initial bootstrap：首帧前注入初始 safeArea，避免首帧抖动。
+2. dynamic update：系统栏/手势栏/方向变化时持续调用 Runtime 更新接口。
+- bottom safeArea 计算不得只依赖单一来源（如 `navigationBars`）；应采用多来源 max 合并（system bars / gestures / tappable / stable insets 等平台等价字段）。
+
 强约束：
 - 安全区主来源必须是 Runtime；初始化传入仅可作为 override/fallback。
 - 业务页面禁止手写系统安全区补丁（如 `padding(top = safeArea.top)` 作为常态方案）。
 - 横屏与异形屏必须支持 `left/right` 安全区，不得只实现 `top/bottom`。
+- 安全区只作用于“内容布局层”，不得作为根容器尺寸裁剪策略。
+- 根容器与 Overlay 宿主必须保持 `fillMaxSize`，禁止因安全区导致画布缩小。
+- 全屏页面（直播/短视频/全屏图等）允许内容铺满屏幕；其前景控件（按钮、标题、操作条）按 safeArea 约束布局。
+- Overlay（弹窗/菜单/抽屉）必须维持全屏坐标系，安全区仅用于其内容偏移，不改变 Overlay 根层尺寸。
+- NavBar/BottomNavBar/Drawer/ActionSheet 不允许暴露页面级 `useSafeArea` 参数，安全区消费策略必须由 Runtime Flags 统一控制。
 
 建议数据模型（规范性）：
 - `RuntimeEnvironment`
@@ -139,9 +155,10 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
   - `theme`: `darkMode/contrastMode`
 
 验收标准：
-- sample 中可看到 `LocalRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
+- sample 中可看到 `LocalGearRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
 - Runtime insets 变化（旋转、系统栏变化、键盘变化）可触发组件正确重算。
 - 业务 demo 不再依赖页面级 safe area 手工补丁。
+- 全屏页面与 Overlay 仍为全屏画布，且前景内容不被刘海/手势区遮挡。
 
 ### 4.6 Fullscreen Container Contract（新增硬约束）
 
@@ -150,6 +167,7 @@ GearUI Kit 默认运行前提：根容器必须具备全屏渲染优先级（edg
 规范要求：
 - GearApp/Root Host 必须 attach 到 fullscreen container（match-parent）。
 - 非全屏容器会导致 insets/safeArea/overlay/keyboard 计算失真，视为架构错误。
+- 禁止在 GearApp 根节点施加全局 safeArea padding。
 
 运行时策略：
 - Debug：检测到非全屏容器时，直接 fail-fast（抛错或阻断渲染）。
@@ -355,6 +373,9 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 - `REJECT`：组件绕过 Runtime 直接修改全局主题、语言或路由状态。
 - `REJECT`：组件或业务页面直接调用平台 API 采集 insets/safeArea（应由 Runtime 统一提供）。
 - `REJECT`：业务页面长期手写 safe area padding 作为系统安全区主方案。
+- `REJECT`：在根容器或 Overlay 宿主上施加安全区 padding，导致全屏画布被裁剪。
+- `REJECT`：通过页面级参数手动切换 NavBar/BottomNavBar/Drawer/ActionSheet 的安全区策略（必须由 Runtime 统一决策）。
+- `REJECT`：同一页面树出现双层 `GearApp`（或等价双 Runtime 根）导致 `runtimeFlags`/safeArea 语义漂移。
 
 2. Token 与样式
 - `REJECT`：组件层新增硬编码颜色值（`Color(0x...)`）替代语义 Token。

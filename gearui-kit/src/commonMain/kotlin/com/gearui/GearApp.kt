@@ -5,6 +5,8 @@ import com.gearui.components.toast.ToastHost
 import com.gearui.foundation.keyboard.KeyboardDismissContainer
 import com.gearui.foundation.keyboard.KeyboardDismissMode
 import com.gearui.overlay.GearOverlayRoot
+import com.gearui.runtime.GearRuntimeFlags
+import com.gearui.runtime.ProvideGearRuntimeEnvironment
 import com.gearui.theme.ProvideSystemDarkMode
 import com.gearui.theme.Theme
 import com.gearui.theme.ThemeMode
@@ -58,6 +60,7 @@ fun GearApp(
     themeMode: ThemeMode = ThemeMode.Light,
     isSystemDark: Boolean = false,
     theme: ThemeSpec? = null,
+    runtimeFlags: GearRuntimeFlags = GearRuntimeFlags(),
     keyboardDismissMode: KeyboardDismissMode = KeyboardDismissMode.OnTapOrScroll,
     content: @Composable () -> Unit
 ) {
@@ -65,20 +68,22 @@ fun GearApp(
     ProvideSystemDarkMode(isSystemDark = isSystemDark) {
         // 2. 应用主题
         Theme(mode = themeMode, theme = theme) {
-            // 3. 全局背景容器（使用主题背景色）
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Theme.colors.background)
-            ) {
-                KeyboardDismissContainer(mode = keyboardDismissMode) {
-                    // 4. Overlay 层级管理
-                    GearOverlayRoot {
-                        // 应用主内容
-                        content()
+            ProvideGearRuntimeEnvironment(flags = runtimeFlags) {
+                // 3. 全局背景容器（使用主题背景色）
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Theme.colors.background)
+                ) {
+                    KeyboardDismissContainer(mode = keyboardDismissMode) {
+                        // 4. Overlay 层级管理
+                        GearOverlayRoot {
+                            // 应用主内容
+                            content()
 
-                        // 全局浮层 - Toast
-                        ToastHost()
+                            // 全局浮层 - Toast
+                            ToastHost()
+                        }
                     }
                 }
             }

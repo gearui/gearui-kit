@@ -70,6 +70,7 @@ import com.gearui.sample.examples.backtop.BackTopExample
 import com.gearui.sample.examples.common.ComingSoonExample
 import com.gearui.sample.examples.dropdownmenu.DropdownMenuExample
 import com.gearui.sample.examples.fab.FabExample
+import com.gearui.sample.examples.runtime.InsetsDebugExample
 import com.gearui.sample.examples.link.LinkExample
 import com.gearui.sample.examples.message.MessageExample
 import com.gearui.sample.examples.noticebar.NoticeBarExample
@@ -145,6 +146,7 @@ object NavigationManager {
             "anchor" -> AnchorExample(component, onBack)
             "segmented" -> SegmentedExample(component, onBack)
             "fab" -> FabExample(component, onBack)
+            "runtime-insets" -> InsetsDebugExample(component, onBack)
 
             // 数据展示组件 (15个)
             "list" -> ListExample(component, onBack)

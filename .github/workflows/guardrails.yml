@@ -27,3 +27,9 @@ jobs:
 
       - name: Runtime boundary guard (sample)
         run: ./scripts/ci/check_sample_runtime_boundary.sh
+
+      - name: SafeArea runtime contract guard
+        run: ./scripts/ci/check_safearea_runtime_contract.sh
+
+      - name: Single GearApp root guard
+        run: ./scripts/ci/check_single_gearapp_root.sh

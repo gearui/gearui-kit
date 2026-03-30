@@ -3,6 +3,7 @@ package com.gearui
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.ComposeContainer
 import com.tencent.kuikly.compose.setContent
+import com.gearui.runtime.GearRuntimeFlags
 import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
 
@@ -53,6 +54,17 @@ abstract class View : ComposeContainer() {
     open fun themeMode(): ThemeMode? = null
 
     /**
+     * Runtime feature flags（用于渐进启用 runtime 规范能力）
+     */
+    open fun runtimeFlags(): GearRuntimeFlags = GearRuntimeFlags()
+
+    /**
+     * 是否由 View 基类自动包装 GearApp。
+     * 默认开启；如页面需要自行控制唯一 GearApp 入口，可覆写为 false。
+     */
+    open fun autoWrapGearApp(): Boolean = true
+
+    /**
      * 界面内容（子类必须实现）
      */
     @Composable
@@ -62,10 +74,15 @@ abstract class View : ComposeContainer() {
         super.didInit()
 
         setContent {
-            GearApp(
-                themeMode = themeMode() ?: ThemeMode.Light,
-                theme = themeSpec()
-            ) {
+            if (autoWrapGearApp()) {
+                GearApp(
+                    themeMode = themeMode() ?: ThemeMode.Light,
+                    theme = themeSpec(),
+                    runtimeFlags = runtimeFlags()
+                ) {
+                    Content()
+                }
+            } else {
                 Content()
             }
         }

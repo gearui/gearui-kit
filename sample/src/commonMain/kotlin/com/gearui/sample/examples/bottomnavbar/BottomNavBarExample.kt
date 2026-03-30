@@ -62,8 +62,7 @@ fun BottomNavBarExample(
                         )
                     ),
                     selectedId = selectedId,
-                    onSelect = { selectedId = it },
-                    useSafeArea = false
+                    onSelect = { selectedId = it }
                 )
 
                 Text(
@@ -87,8 +86,7 @@ fun BottomNavBarExample(
                     BottomNavItem(id = "profile", label = "Profile", icon = Icons.person)
                 ),
                 selectedId = selectedId,
-                onSelect = { selectedId = it },
-                useSafeArea = false
+                onSelect = { selectedId = it }
             )
         }
     }

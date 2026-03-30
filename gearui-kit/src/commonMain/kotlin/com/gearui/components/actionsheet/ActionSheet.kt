@@ -20,6 +20,8 @@ import com.gearui.overlay.LocalGearOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
+import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalGearRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.Spacing
 
@@ -263,8 +265,18 @@ private fun ActionSheetSurface(
     onDismiss: () -> Unit
 ) {
     val colors = Theme.colors
+    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
-    val safeAreaBottom = configuration.safeAreaInsets.bottom.dp
+    val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.actionSheetConsumesBottomSafeArea) {
+            runtimeEnvironment.safeArea.bottom
+        } else {
+            0.dp
+        }
+    } else {
+        configuration.safeAreaInsets.bottom.dp
+    }
     val bottomInset = if (safeAreaBottom > Spacing.spacer16.dp) safeAreaBottom else Spacing.spacer16.dp
 
     Box(

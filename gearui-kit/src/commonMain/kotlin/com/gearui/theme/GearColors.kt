@@ -150,10 +150,11 @@ object Themes {
         colors = GearColors(
 
             background = Color(0xFF09090B),
-            surface = Color(0xFF09090B),
-            surfaceVariant = Color(0xFF18181B),
-            surfaceComponent = Color(0xFF18181B),
-            overlay = Color(0xFF18181B),
+            // Dark mode needs visible surface elevation; do not collapse surface onto background.
+            surface = Color(0xFF111217),
+            surfaceVariant = Color(0xFF1A1C24),
+            surfaceComponent = Color(0xFF212533),
+            overlay = Color(0xFF1A1C24),
             mask = Color(0x99000000),
 
             // Brand 品牌色 - 暗色调整
@@ -175,13 +176,13 @@ object Themes {
             iconSecondary = Color(0xFFA1A1AA),
 
             // Border / Divider - 暗色 Gray 色阶
-            border = Color(0xFF27272A),
-            stroke = Color(0xFF27272A),
-            divider = Color(0xFF27272A),
+            border = Color(0xFF2F3340),
+            stroke = Color(0xFF2F3340),
+            divider = Color(0xFF2F3340),
 
             // State 状态色
             disabled = Color(0xFF52525B),
-            disabledContainer = Color(0xFF18181B),
+            disabledContainer = Color(0xFF1A1C24),
 
             // Feedback 反馈色 - 暗色调整
             success = Color(0xFF22C55E),

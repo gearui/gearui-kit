@@ -48,7 +48,7 @@ kotlin {
             // ============================================================================
 
             // KuiklyUI Compose Runtime
-            api("com.tencent.kuikly-open:compose:2.15.2-2.1.21")
+            api("com.tencent.kuikly-open:compose:2.16.0-2.1.21")
 
             // Compose dependencies (needed for UI components)
             implementation(compose.runtime)

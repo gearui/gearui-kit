@@ -18,8 +18,8 @@ kotlin {
     sourceSets {
         val jsMain by getting {
             dependencies {
-                implementation("com.tencent.kuikly-open.core-render-web:base:2.15.2-2.1.21")
-                implementation("com.tencent.kuikly-open.core-render-web:h5:2.15.2-2.1.21")
+                implementation("com.tencent.kuikly-open.core-render-web:base:2.16.0-2.1.21")
+                implementation("com.tencent.kuikly-open.core-render-web:h5:2.16.0-2.1.21")
             }
         }
     }

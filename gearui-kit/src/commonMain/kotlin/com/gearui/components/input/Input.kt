@@ -76,7 +76,8 @@ fun Input(
     cardStyle: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     prefix: (@Composable () -> Unit)? = null,
-    suffix: (@Composable () -> Unit)? = null
+    suffix: (@Composable () -> Unit)? = null,
+    onFocusChanged: ((Boolean) -> Unit)? = null,
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -262,6 +263,7 @@ fun Input(
                             .focusRequester(inputFocusRequester)
                             .onFocusChanged { focusState ->
                                 isFocused = focusState.isFocused
+                                onFocusChanged?.invoke(focusState.isFocused)
                             },
                         decorationBox = { innerTextField ->
                             Box(

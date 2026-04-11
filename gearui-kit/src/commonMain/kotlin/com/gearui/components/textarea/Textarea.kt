@@ -13,6 +13,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
+import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -263,10 +264,13 @@ private fun TextareaInputArea(
     indicator: Boolean,
     bordered: Boolean,
     additionInfo: String?,
-    autosize: Boolean
+    autosize: Boolean,
+    focusRequester: FocusRequester? = null,
+    onFocusChanged: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
 ) {
     val colors = Theme.colors
-    val inputFocusRequester = remember { FocusRequester() }
+    val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
     val canFocus = enabled && !readOnly
     var focusRequestTick by remember { mutableStateOf(0) }
 
@@ -285,12 +289,13 @@ private fun TextareaInputArea(
     // autosize == true 时，maxLines = null（无限制）
     // 否则 maxLines = widget.maxLines ?? minLines
     val effectiveMaxLines = when {
+        autosize && maxLines != null -> maxLines
         autosize -> Int.MAX_VALUE
         maxLines != null -> maxLines
         else -> minLines
     }
 
-    Column {
+    Column(modifier = modifier) {
         // 输入框容器
         Box(
             modifier = Modifier
@@ -307,6 +312,9 @@ private fun TextareaInputArea(
                             .padding(12.dp)
                     } else {
                         Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colors.surfaceVariant)
+                            .padding(horizontal = 10.dp, vertical = 8.dp)
                     }
                 )
         ) {
@@ -334,7 +342,12 @@ private fun TextareaInputArea(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(inputFocusRequester),
+                        .focusRequester(inputFocusRequester)
+                        .then(
+                            if (onFocusChanged != null) {
+                                Modifier.onFocusChanged { onFocusChanged(it.isFocused) }
+                            } else Modifier
+                        ),
                     enabled = enabled,
                     readOnly = readOnly,
                     textStyle = TextStyle(
@@ -409,16 +422,27 @@ fun AutoResizeTextarea(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     placeholder: String = "",
-    maxLength: Int? = null
+    maxLength: Int? = null,
+    maxLines: Int? = null,
+    onFocusChanged: ((Boolean) -> Unit)? = null,
 ) {
-    Textarea(
+    val inputFocusRequester = remember { FocusRequester() }
+
+    TextareaInputArea(
         value = value,
         onValueChange = onValueChange,
+        enabled = enabled,
+        readOnly = false,
         placeholder = placeholder,
         maxLength = maxLength,
-        indicator = maxLength != null,
         minLines = 1,
+        maxLines = maxLines,
+        indicator = false,
+        bordered = false,
+        additionInfo = null,
         autosize = true,
-        modifier = modifier
+        focusRequester = inputFocusRequester,
+        onFocusChanged = onFocusChanged,
+        modifier = modifier,
     )
 }

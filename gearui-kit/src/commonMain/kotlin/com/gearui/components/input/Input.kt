@@ -75,6 +75,7 @@ fun Input(
     onClear: (() -> Unit)? = null,
     cardStyle: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
+    onSend: (() -> Unit)? = null,
     prefix: (@Composable () -> Unit)? = null,
     suffix: (@Composable () -> Unit)? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
@@ -243,9 +244,14 @@ fun Input(
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = keyboardType,
-                            imeAction = if (maxLines == 1) ImeAction.Done else ImeAction.Default
+                            imeAction = when {
+                                onSend != null -> ImeAction.Send
+                                maxLines == 1 -> ImeAction.Done
+                                else -> ImeAction.Default
+                            }
                         ),
                         keyboardActions = KeyboardActions(
+                            onSend = { onSend?.invoke() },
                             onDone = {
                                 if (blurOnImeDone && maxLines == 1) {
                                     focusManager.clearFocus(force = true)

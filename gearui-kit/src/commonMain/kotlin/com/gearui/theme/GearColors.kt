@@ -67,6 +67,13 @@ data class GearColors(
     val info: Color,                 // 信息色 (= primary)
     val infoLight: Color,            // 信息浅色背景
 
+    /* ---------------- Chat Bubble 聊天气泡 ---------------- */
+
+    val bubbleSelf: Color,           // 自己发送的消息气泡背景
+    val onBubbleSelf: Color,         // 自己气泡内的文字/图标色
+    val bubbleOther: Color,          // 对方消息气泡背景
+    val onBubbleOther: Color,        // 对方气泡内的文字/图标色
+
     /* ---------------- Inverse 反转色 (用于 Toast 等) ---------------- */
 
     val inverseSurface: Color,       // 反转背景 (用于 Toast)
@@ -136,6 +143,12 @@ object Themes {
             info = Color(0xFF2563EB),
             infoLight = Color(0xFFDBEAFE),
 
+            // Chat Bubble - Light: 自己=近黑色，对方=白色容器
+            bubbleSelf = Color(0xFF18181B),
+            onBubbleSelf = Color(0xFFFFFFFF),
+            bubbleOther = Color(0xFFFFFFFF),
+            onBubbleOther = Color(0xFF09090B),
+
             // Inverse 反转色 - 用于 Toast 等浮层
             inverseSurface = Color(0xFF18181B),
             inverseOnSurface = Color(0xFFFAFAFA),
@@ -193,6 +206,12 @@ object Themes {
             dangerLight = Color(0xFF7F1D1D),
             info = Color(0xFF60A5FA),
             infoLight = Color(0xFF1E3A8A),
+
+            // Chat Bubble - Dark: 自己=中灰（zinc-600），对方=提升的暗色面
+            bubbleSelf = Color(0xFF3F3F46),
+            onBubbleSelf = Color(0xFFFAFAFA),
+            bubbleOther = Color(0xFF1A1C24),
+            onBubbleOther = Color(0xFFFAFAFA),
 
             // Inverse 反转色 - 用于 Toast 等浮层 (暗色主题下用亮色)
             inverseSurface = Color(0xFFF4F4F5),

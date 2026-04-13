@@ -424,9 +424,17 @@ fun AutoResizeTextarea(
     placeholder: String = "",
     maxLength: Int? = null,
     maxLines: Int? = null,
+    autoFocus: Boolean = false,
+    focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
 ) {
-    val inputFocusRequester = remember { FocusRequester() }
+    val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
+
+    if (autoFocus) {
+        LaunchedEffect(Unit) {
+            inputFocusRequester.requestFocus()
+        }
+    }
 
     TextareaInputArea(
         value = value,

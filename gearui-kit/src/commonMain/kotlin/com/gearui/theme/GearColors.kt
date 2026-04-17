@@ -103,7 +103,7 @@ object Themes {
         colors = GearColors(
 
             background = Color(0xFFFFFFFF),
-            surface = Color(0xFFF9F9FA),
+            surface = Color(0xFFFFFFFF),
             surfaceVariant = Color(0xFFF4F4F5),
             surfaceComponent = Color(0xFFFAFAFA),
             overlay = Color(0xFFFFFFFF),

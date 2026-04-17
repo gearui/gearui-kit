@@ -103,7 +103,7 @@ object Themes {
         colors = GearColors(
 
             background = Color(0xFFFFFFFF),
-            surface = Color(0xFFFFFFFF),
+            surface = Color(0xFFF9F9FA),
             surfaceVariant = Color(0xFFF4F4F5),
             surfaceComponent = Color(0xFFFAFAFA),
             overlay = Color(0xFFFFFFFF),
@@ -143,10 +143,10 @@ object Themes {
             info = Color(0xFF2563EB),
             infoLight = Color(0xFFDBEAFE),
 
-            // Chat Bubble - Light: 自己=近黑色，对方=白色容器
+            // Chat Bubble - Light: 自己=近黑色，对方=浅灰容器（与白色背景形成层次）
             bubbleSelf = Color(0xFF18181B),
             onBubbleSelf = Color(0xFFFFFFFF),
-            bubbleOther = Color(0xFFFFFFFF),
+            bubbleOther = Color(0xFFF4F4F5),
             onBubbleOther = Color(0xFF09090B),
 
             // Inverse 反转色 - 用于 Toast 等浮层

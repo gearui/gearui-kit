@@ -2,10 +2,15 @@ package com.gearui.sample.examples.textarea
 
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
+import com.tencent.kuikly.compose.foundation.text.BasicTextField as KuiklyBasicTextField
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.graphics.SolidColor
+import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.components.textarea.Textarea
 import com.gearui.components.textarea.TextareaLayout
 import com.gearui.sample.config.ComponentInfo
@@ -42,10 +47,39 @@ fun TextareaExample(
     var labelIconText by remember { mutableStateOf("") }
     var requiredText by remember { mutableStateOf("") }
 
+    // 原始 Kuikly BasicTextField 对照测试
+    var rawText by remember { mutableStateOf("") }
+
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
+        // 原始 Kuikly BasicTextField（无 gearui-kit 包装）
+        ExampleSection(
+            title = "原始 BasicTextField（对照组）",
+            description = "直接用 Kuikly BasicTextField，无任何 gearui 包装"
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, Theme.colors.border, RoundedCornerShape(8.dp))
+                    .padding(12.dp)
+            ) {
+                KuiklyBasicTextField(
+                    value = rawText,
+                    onValueChange = { rawText = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        color = Theme.colors.textPrimary
+                    ),
+                    cursorBrush = SolidColor(Theme.colors.primary),
+                    singleLine = false,
+                    minLines = 3,
+                )
+            }
+        }
+
         // 组件类型
         ExampleSection(
             title = "组件类型",

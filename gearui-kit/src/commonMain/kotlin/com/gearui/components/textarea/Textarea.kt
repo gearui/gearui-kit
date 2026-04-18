@@ -318,18 +318,7 @@ private fun TextareaInputArea(
                     }
                 )
         ) {
-            // Focus catcher: keep the whole bordered area focusable.
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .clickable(enabled = canFocus) {
-                        requestInputFocus()
-                    }
-            )
-
             Column {
-                // 设置固定的 fontSize 和 lineHeight，确保空行和有文字的行高度一致
-                // lineHeight = fontSize * 1.5 是常用的比例
                 val fontSize = 16.sp
                 val lineHeight = 24.sp
 
@@ -360,14 +349,7 @@ private fun TextareaInputArea(
                     minLines = minLines,
                     maxLines = effectiveMaxLines,
                     decorationBox = { innerTextField ->
-                        // 占位符和输入框放在同一个 Box 中
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(enabled = canFocus) {
-                                    requestInputFocus()
-                                }
-                        ) {
+                        Box(modifier = Modifier.fillMaxWidth()) {
                             if (value.isEmpty() && placeholder.isNotEmpty()) {
                                 Text(
                                     text = placeholder,

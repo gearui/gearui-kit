@@ -79,6 +79,7 @@ fun Input(
     prefix: (@Composable () -> Unit)? = null,
     suffix: (@Composable () -> Unit)? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
+    autoFocus: Boolean = false,
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -89,6 +90,13 @@ fun Input(
     val inputFocusRequester = remember { FocusRequester() }
     var isFocused by remember { mutableStateOf(false) }
     val hasError = errorText != null
+
+    // 自动聚焦
+    if (autoFocus) {
+        LaunchedEffect(Unit) {
+            inputFocusRequester.requestFocus()
+        }
+    }
 
     when {
         disabled -> interactionSource.updateState(InteractionState.Disabled)

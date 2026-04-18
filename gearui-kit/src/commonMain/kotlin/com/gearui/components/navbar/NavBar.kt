@@ -48,6 +48,7 @@ fun NavBar(
     rightItems: List<NavBarItem> = emptyList(),
     titleWidget: (@Composable () -> Unit)? = null,
     belowTitleWidget: (@Composable () -> Unit)? = null,
+    rightWidget: (@Composable () -> Unit)? = null,
     showBottomDivider: Boolean = true
 ) {
     val colors = Theme.colors
@@ -80,11 +81,20 @@ fun NavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height)
-                    .padding(horizontal = 16.dp)
             ) {
-                // 底层：标题区域（绝对居中）
+                // 上层：左侧操作区域
+                val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
+                val rightCount = rightItems.size
+                // 标题两侧留白：取左右操作区域中较大的宽度，确保标题居中不被遮挡
+                val leftSlotWidth = (leftCount * actionSlotWidth.value).dp
+                val rightSlotWidth = if (rightWidget != null) actionSlotWidth else (rightCount * actionSlotWidth.value).dp
+                val titlePadding = maxOf(leftSlotWidth, rightSlotWidth)
+
+                // 底层：标题区域（绝对居中，避开左右按钮）
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = titlePadding),
                     contentAlignment = Alignment.Center
                 ) {
                     if (titleWidget != null) {
@@ -97,9 +107,6 @@ fun NavBar(
                         )
                     }
                 }
-
-                // 上层：左侧操作区域
-                val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
                 Row(
                     modifier = Modifier
                         .width((leftCount * actionSlotWidth.value).dp)
@@ -131,24 +138,35 @@ fun NavBar(
                 }
 
                 // 上层：右侧操作区域
-                val rightCount = rightItems.size
-                Row(
-                    modifier = Modifier
-                        .width((rightCount * actionSlotWidth.value).dp)
-                        .fillMaxHeight()
-                        .align(Alignment.CenterEnd),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    rightItems.forEach { item ->
-                        NavBarIconButton(
-                            icon = item.icon,
-                            iconColor = item.iconColor ?: textColor,
-                            onClick = item.onClick,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                        )
+                if (rightWidget != null) {
+                    Box(
+                        modifier = Modifier
+                            .width(actionSlotWidth)
+                            .fillMaxHeight()
+                            .align(Alignment.CenterEnd),
+                        contentAlignment = Alignment.CenterEnd
+                    ) {
+                        rightWidget()
+                    }
+                } else {
+                    Row(
+                        modifier = Modifier
+                            .width((rightCount * actionSlotWidth.value).dp)
+                            .fillMaxHeight()
+                            .align(Alignment.CenterEnd),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        rightItems.forEach { item ->
+                            NavBarIconButton(
+                                icon = item.icon,
+                                iconColor = item.iconColor ?: textColor,
+                                onClick = item.onClick,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                            )
+                        }
                     }
                 }
             }
@@ -157,8 +175,7 @@ fun NavBar(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(height)
-                    .padding(horizontal = 16.dp),
+                    .height(height),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // 左侧按钮区域
@@ -200,15 +217,26 @@ fun NavBar(
                 }
 
                 // 右侧按钮区域
-                rightItems.forEach { item ->
-                    NavBarIconButton(
-                        icon = item.icon,
-                        iconColor = item.iconColor ?: textColor,
-                        onClick = item.onClick,
+                if (rightWidget != null) {
+                    Box(
                         modifier = Modifier
                             .width(actionSlotWidth)
-                            .fillMaxHeight()
-                    )
+                            .fillMaxHeight(),
+                        contentAlignment = Alignment.CenterEnd
+                    ) {
+                        rightWidget()
+                    }
+                } else {
+                    rightItems.forEach { item ->
+                        NavBarIconButton(
+                            icon = item.icon,
+                            iconColor = item.iconColor ?: textColor,
+                            onClick = item.onClick,
+                            modifier = Modifier
+                                .width(actionSlotWidth)
+                                .fillMaxHeight()
+                        )
+                    }
                 }
             }
         }

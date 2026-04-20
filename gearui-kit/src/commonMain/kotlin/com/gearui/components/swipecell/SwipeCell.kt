@@ -76,6 +76,9 @@ class SwipeCellState internal constructor(
     internal val offsetX = Animatable(0f)
     internal var currentDirection by mutableStateOf(SwipeCellDirection.NONE)
 
+    val isOpen: Boolean
+        get() = currentDirection != SwipeCellDirection.NONE || offsetX.value != 0f
+
     suspend fun close() {
         offsetX.animateTo(
             targetValue = 0f,
@@ -140,6 +143,13 @@ class SwipeCellGroupState {
     suspend fun closeOthers(except: SwipeCellState) {
         cells.filter { it != except }.forEach { it.close() }
     }
+
+    suspend fun closeAll() {
+        cells.forEach { it.close() }
+    }
+
+    val isAnyOpen: Boolean
+        get() = cells.any { it.isOpen }
 }
 
 /**

@@ -6,6 +6,8 @@ import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
+import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.tencent.kuikly.compose.foundation.text.KeyboardActions
@@ -18,6 +20,8 @@ import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
+import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
+import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
@@ -117,10 +121,10 @@ fun Input(
         InputSize.SMALL -> shapes.small
     }
 
+    // 不让 borderColor 依赖 isFocused：Kuikly 下 modifier 链在 focus 瞬间重建，
+    // 会让底层 EditText 被重建，恰好发生在 tap 处理过程中就会表现为"偶发失焦"。
     val borderColor = when {
         hasError -> colors.danger
-        isFocused -> colors.primary
-        !interactionSource.currentState.isInteractive -> colors.border
         else -> colors.border
     }
 
@@ -173,22 +177,28 @@ fun Input(
                 .then(borderModifier)
         }
 
+        // 关键：用 pointerInput + requireUnconsumed=false 拦住所有 tap。
+        // Compose 的 clickable 在子 composable（BasicTextField）消费事件时不会触发，
+        // 所以点击输入框本体时外层 clickable 完全收不到事件 —— 靠 clickable 抢焦点
+        // 只能覆盖 padding 点击，无法兜底 Kuikly EditText 内部的偶发失焦。
+        // 用 pointerInput 忽略消费状态，在 UP 时无条件 requestInputFocus 抢回焦点。
         Box(
             modifier = containerModifier
-                .clickable(enabled = canFocus) {
-                    requestInputFocus()
+                .pointerInput(canFocus) {
+                    if (!canFocus) return@pointerInput
+                    awaitEachGesture {
+                        val down = awaitFirstDown(requireUnconsumed = false)
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            val change = event.changes.firstOrNull { it.id == down.id }
+                            if (change == null || !change.pressed) {
+                                requestInputFocus()
+                                break
+                            }
+                        }
+                    }
                 }
         ) {
-            // Focus catcher: ensures any tappable area inside border can request focus,
-            // including left label/text regions.
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable(enabled = canFocus) {
-                        requestInputFocus()
-                    }
-            )
-
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -224,6 +234,11 @@ fun Input(
                 }
 
                 // 输入区域
+                // 架构要点：
+                // 1) BasicTextField 用 fillMaxWidth，不要 fillMaxSize，否则 tap 落不到外层。
+                // 2) placeholder 放回 decorationBox 里：它是 BasicTextField 自己的渲染树，
+                //    tap 打在 placeholder 上和 tap 打在 innerTextField 上被 BasicTextField 统一处理，
+                //    不会像 sibling Text 那样截走焦点。
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -273,7 +288,7 @@ fun Input(
                         enabled = !disabled,
                         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
                             .focusRequester(inputFocusRequester)
                             .onFocusChanged { focusState ->
                                 isFocused = focusState.isFocused
@@ -281,11 +296,6 @@ fun Input(
                             },
                         decorationBox = { innerTextField ->
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clickable(enabled = canFocus) {
-                                        requestInputFocus()
-                                    },
                                 contentAlignment = when (textAlign) {
                                     TextAlign.Center -> Alignment.Center
                                     TextAlign.End -> Alignment.CenterEnd
@@ -306,6 +316,9 @@ fun Input(
                 }
 
                 // 清除按钮
+                // 用 pointerInput 在 Initial pass 消费 down 事件，避免事件冒到底层 native
+                // EditText 触发"失焦→IME 隐藏→再 requestFocus→IME 弹出"的可见闪烁。
+                // 只在 tap（非拖动）时触发清除；点完再 requestInputFocus 以防万一。
                 if (clearable && value.isNotEmpty() && !disabled && !readOnly) {
                     Spacer(modifier = Modifier.width(8.dp))
                     Box(
@@ -313,9 +326,25 @@ fun Input(
                             .size(20.dp)
                             .clip(shapes.circle)
                             .background(colors.surfaceVariant)
-                            .clickable {
-                                onClear?.invoke()
-                                onValueChange("")
+                            .pointerInput(Unit) {
+                                awaitEachGesture {
+                                    val down = awaitFirstDown(
+                                        requireUnconsumed = false,
+                                        pass = PointerEventPass.Initial,
+                                    )
+                                    down.consume()
+                                    while (true) {
+                                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                                        val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                                        change.consume()
+                                        if (!change.pressed) {
+                                            onClear?.invoke()
+                                            onValueChange("")
+                                            requestInputFocus()
+                                            break
+                                        }
+                                    }
+                                }
                             },
                         contentAlignment = Alignment.Center
                     ) {

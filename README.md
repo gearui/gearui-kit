@@ -8,7 +8,7 @@ A Kotlin Multiplatform UI component library built on Kuikly.
 
 - Coordinates: `com.gearui:gearui-kit:1.0.0-beta1`
 - Website: [https://gearui.com](https://gearui.com)
-- License: Apache License 2.0
+- License: BSD 3-Clause License
 
 ## Author Information
 
@@ -68,22 +68,27 @@ dependencies {
 }
 ```
 
-### 4. Release to Maven Central (Sonatype)
+### 4. Release to Maven Central (Central Portal)
 
-Set credentials and signing keys in environment variables:
+Publishing is wired through `com.vanniktech.maven.publish` and Sonatype Central Portal.
+Set credentials and signing keys as Gradle properties or env vars:
 
 ```bash
-export OSSRH_USERNAME=your_sonatype_username
-export OSSRH_PASSWORD=your_sonatype_password
-export SIGNING_KEY_ID=your_gpg_key_id
-export SIGNING_KEY='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
-export SIGNING_PASSWORD=your_gpg_passphrase
+export ORG_GRADLE_PROJECT_mavenCentralUsername=<central_portal_token_name>
+export ORG_GRADLE_PROJECT_mavenCentralPassword=<central_portal_token_secret>
+export ORG_GRADLE_PROJECT_signingInMemoryKey='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
+export ORG_GRADLE_PROJECT_signingInMemoryKeyId=<short_key_id>
+export ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=<gpg_passphrase>
 ```
 
 Then publish:
 
 ```bash
-./gradlew :gearui-kit:publish
+# Upload to a Portal staging deployment; close + release manually on the Portal UI
+./gradlew :gearui-kit:publishToMavenCentral
+
+# Or upload and auto-release in one shot
+./gradlew :gearui-kit:publishAndReleaseToMavenCentral
 ```
 
 ## Basic Usage
@@ -150,4 +155,4 @@ private fun MainPageContent() {
 
 ## License
 
-Apache License 2.0
+BSD 3-Clause License — see [LICENSE](./LICENSE).

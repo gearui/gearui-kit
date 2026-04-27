@@ -8,7 +8,7 @@
 
 - 坐标：`com.gearui:gearui-kit:1.0.0-beta1`
 - 官网：[https://gearui.com](https://gearui.com)
-- License：Apache License 2.0
+- License：BSD 3-Clause License
 
 ## 快速接入
 
@@ -63,22 +63,27 @@ dependencies {
 }
 ```
 
-### 4. 发布到 Maven Central（Sonatype）
+### 4. 发布到 Maven Central（Central Portal）
 
-先配置环境变量（账号和签名）：
+发布通过 `com.vanniktech.maven.publish` 接入 Sonatype Central Portal。
+凭证和签名密钥通过环境变量或 Gradle property 注入：
 
 ```bash
-export OSSRH_USERNAME=你的_sonatype_用户名
-export OSSRH_PASSWORD=你的_sonatype_密码
-export SIGNING_KEY_ID=你的_gpg_key_id
-export SIGNING_KEY='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
-export SIGNING_PASSWORD=你的_gpg_口令
+export ORG_GRADLE_PROJECT_mavenCentralUsername=<Central_Portal_Token_名称>
+export ORG_GRADLE_PROJECT_mavenCentralPassword=<Central_Portal_Token_密码>
+export ORG_GRADLE_PROJECT_signingInMemoryKey='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
+export ORG_GRADLE_PROJECT_signingInMemoryKeyId=<short_key_id>
+export ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=<GPG_口令>
 ```
 
 然后执行发布：
 
 ```bash
-./gradlew :gearui-kit:publish
+# 上传到 Central Portal staging deployment；在 Portal 网页手动 close + release
+./gradlew :gearui-kit:publishToMavenCentral
+
+# 或上传并自动 release
+./gradlew :gearui-kit:publishAndReleaseToMavenCentral
 ```
 
 ## 基础使用
@@ -145,4 +150,4 @@ private fun MainPageContent() {
 
 ## 许可证
 
-Apache License 2.0
+BSD 3-Clause License，详见 [LICENSE](./LICENSE)。

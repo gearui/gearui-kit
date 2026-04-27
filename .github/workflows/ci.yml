@@ -103,3 +103,23 @@ jobs:
 
       - name: Build iOS simulator targets
         run: ./gradlew --no-daemon :gearui-kit:linkDebugFrameworkIosSimulatorArm64 :sample:linkDebugFrameworkIosSimulatorArm64
+
+  api-compat-check:
+    name: Public API Compatibility (SPEC 4.2)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Verify public API surface against frozen baseline
+        run: ./gradlew --no-daemon :gearui-kit:apiCheck

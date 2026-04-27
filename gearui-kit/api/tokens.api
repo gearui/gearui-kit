@@ -1,0 +1,160 @@
+# GearUI Token Schema Snapshot v1
+# SPEC 4.1 token-compat-check baseline.
+# Refresh with:  ./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api
+# DO NOT edit by hand.
+
+[fields] GearColors
+  background
+  border
+  bubbleOther
+  bubbleSelf
+  danger
+  dangerLight
+  disabled
+  disabledContainer
+  divider
+  iconPrimary
+  iconSecondary
+  info
+  infoLight
+  inverseOnSurface
+  inverseSurface
+  mask
+  onBubbleOther
+  onBubbleSelf
+  onPrimary
+  overlay
+  primary
+  primaryActive
+  primaryDisabled
+  primaryHover
+  primaryLight
+  stroke
+  success
+  successLight
+  surface
+  surfaceComponent
+  surfaceVariant
+  textAnti
+  textBrand
+  textDisabled
+  textPlaceholder
+  textPrimary
+  textSecondary
+  warning
+  warningLight
+
+[fields] GearTypography
+  bodyExtraLarge
+  bodyExtraSmall
+  bodyLarge
+  bodyMedium
+  bodySmall
+  caption
+  displayLarge
+  displayMedium
+  headlineLarge
+  headlineMedium
+  headlineSmall
+  label
+  linkLarge
+  linkMedium
+  linkSmall
+  markExtraSmall
+  markLarge
+  markMedium
+  markSmall
+  titleExtraLarge
+  titleLarge
+  titleMedium
+  titleSmall
+
+[fields] GearShapes
+  circle
+  default
+  extraLarge
+  large
+  round
+  small
+
+[preset] Themes.Light.colors
+  background = Color(0xFFFFFFFF)
+  border = Color(0xFFE4E4E7)
+  bubbleOther = Color(0xFFF4F4F5)
+  bubbleSelf = Color(0xFF18181B)
+  danger = Color(0xFFDC2626)
+  dangerLight = Color(0xFFFEE2E2)
+  disabled = Color(0xFFA1A1AA)
+  disabledContainer = Color(0xFFF4F4F5)
+  divider = Color(0xFFE4E4E7)
+  iconPrimary = Color(0xFF09090B)
+  iconSecondary = Color(0xFF52525B)
+  info = Color(0xFF2563EB)
+  infoLight = Color(0xFFDBEAFE)
+  inverseOnSurface = Color(0xFFFAFAFA)
+  inverseSurface = Color(0xFF18181B)
+  mask = Color(0x6609090B)
+  onBubbleOther = Color(0xFF09090B)
+  onBubbleSelf = Color(0xFFFFFFFF)
+  onPrimary = Color.White
+  overlay = Color(0xFFFFFFFF)
+  primary = Color(0xFF18181B)
+  primaryActive = Color(0xFF09090B)
+  primaryDisabled = Color(0xFFD4D4D8)
+  primaryHover = Color(0xFF27272A)
+  primaryLight = Color(0xFFF4F4F5)
+  stroke = Color(0xFFE4E4E7)
+  success = Color(0xFF16A34A)
+  successLight = Color(0xFFDCFCE7)
+  surface = Color(0xFFFFFFFF)
+  surfaceComponent = Color(0xFFFAFAFA)
+  surfaceVariant = Color(0xFFF4F4F5)
+  textAnti = Color(0xFFFFFFFF)
+  textBrand = Color(0xFF18181B)
+  textDisabled = Color(0xFFB4B4BC)
+  textPlaceholder = Color(0xFFA1A1AA)
+  textPrimary = Color(0xFF09090B)
+  textSecondary = Color(0xFF52525B)
+  warning = Color(0xFFF59E0B)
+  warningLight = Color(0xFFFEF3C7)
+
+[preset] Themes.Dark.colors
+  background = Color(0xFF09090B)
+  border = Color(0xFF2F3340)
+  bubbleOther = Color(0xFF1A1C24)
+  bubbleSelf = Color(0xFF3F3F46)
+  danger = Color(0xFFF87171)
+  dangerLight = Color(0xFF7F1D1D)
+  disabled = Color(0xFF52525B)
+  disabledContainer = Color(0xFF1A1C24)
+  divider = Color(0xFF2F3340)
+  iconPrimary = Color(0xFFFAFAFA)
+  iconSecondary = Color(0xFFA1A1AA)
+  info = Color(0xFF60A5FA)
+  infoLight = Color(0xFF1E3A8A)
+  inverseOnSurface = Color(0xFF09090B)
+  inverseSurface = Color(0xFFF4F4F5)
+  mask = Color(0x99000000)
+  onBubbleOther = Color(0xFFFAFAFA)
+  onBubbleSelf = Color(0xFFFAFAFA)
+  onPrimary = Color(0xFF09090B)
+  overlay = Color(0xFF1A1C24)
+  primary = Color(0xFFFAFAFA)
+  primaryActive = Color(0xFFE4E4E7)
+  primaryDisabled = Color(0xFF3F3F46)
+  primaryHover = Color(0xFFF4F4F5)
+  primaryLight = Color(0xFF27272A)
+  stroke = Color(0xFF2F3340)
+  success = Color(0xFF22C55E)
+  successLight = Color(0xFF14532D)
+  surface = Color(0xFF111217)
+  surfaceComponent = Color(0xFF212533)
+  surfaceVariant = Color(0xFF1A1C24)
+  textAnti = Color(0xFFFFFFFF)
+  textBrand = Color(0xFFFAFAFA)
+  textDisabled = Color(0xFF52525B)
+  textPlaceholder = Color(0xFF71717A)
+  textPrimary = Color(0xFFFAFAFA)
+  textSecondary = Color(0xFFA1A1AA)
+  warning = Color(0xFFF59E0B)
+  warningLight = Color(0xFF78350F)

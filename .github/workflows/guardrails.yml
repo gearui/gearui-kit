@@ -33,3 +33,6 @@ jobs:
 
       - name: Single GearApp root guard
         run: ./scripts/ci/check_single_gearapp_root.sh
+
+      - name: Token schema compatibility (SPEC 4.1)
+        run: ./scripts/ci/check_token_compat.sh

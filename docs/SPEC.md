@@ -17,7 +17,12 @@
 
 ## 开发模板
 
-1. `COMPONENT_TEMPLATE.md`
+1. `COMPONENT_TEMPLATE.md`（kotlin 代码骨架）
+2. `COMPONENT_DOC_TEMPLATE.md`（对外文档结构 — SPEC 6.2）
+
+## 组件文档
+
+1. `components/README.md`（核心 10 组件文档索引与状态）
 
 ## 清理原则
 

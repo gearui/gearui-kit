@@ -422,3 +422,50 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 4. 是否满足 API 兼容与迁移约束。
 5. 是否补齐 sample 验证与文档说明。
 6. 是否给出性能影响说明（至少定性）。
+
+---
+
+## 12. I18n 分层架构
+
+GearUI Kit 不集中托管所有库的语言包。每个库自定义强类型 strings，共享 GearUI Kit 提供的语言运行时。详见 [`I18N_INTEGRATION.md`](./I18N_INTEGRATION.md)。
+
+### 12.1 运行时职责
+
+GearUI Kit 提供：
+- `LocalLanguageTag`：当前 BCP47 语言 tag（normalized）
+- `LocalFallbackLanguageTag`：fallback tag，所有库共用
+- `I18nRoot(languageTag, fallbackLanguageTag, content)`：唯一语言入口
+- `normalizeLanguageTag(tag)` / `resolveLanguagePack(tag, packs, defaultTag)`：复用工具
+- `GearApp(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `GearI18nProvider`
+
+GearUI Kit 不提供：
+- 全局 `Map<String, String>` registry
+- 跨库共享的 `Strings` data class
+- 字符串 key 查找 API
+
+### 12.2 上层库职责
+
+每个库必须独立提供：
+1. `XxxStrings` data class（强类型，全字段非 null）
+2. `XxxStringsPatch` data class（字段级覆盖，全字段 nullable）
+3. `XxxStringsPatch.isEmpty` 扩展（判别空 patch）
+4. `XxxStrings.merge(patch: XxxStringsPatch?): XxxStrings`（patch 空时返回 receiver，零分配）
+5. `XxxStringPacks.builtIn: Map<String, XxxStrings>` 内置语言映射
+6. `XxxI18nProvider(overrides, content)`：从 `LocalLanguageTag` 读语言、解析、merge、缓存
+7. `object XxxI18n { val strings @Composable get }`：组件访问点
+
+### 12.3 REJECT（不可违规）
+
+- `REJECT`：上层库自己再造一个 `LocalLanguageTag` / `LocalFallbackLanguageTag`，与 gearui-kit 并存。
+- `REJECT`：上层 `XxxI18nProvider` 接收 `languageTag` 作为参数（必须从 `LocalLanguageTag` 读）。
+- `REJECT`：应用层在 `GearApp` 之外再嵌套 `I18nRoot(...)`（GearApp 已挂载）。
+- `REJECT`：用 `Map<String, String>` + 字符串 key 访问文案。
+- `REJECT`：在每次组件重组中调用 `resolveLanguagePack` / `normalizeLanguageTag`（必须 `remember` 缓存）。
+- `REJECT`：在 `XxxStrings.merge` 中无条件 `copy()`（patch 为 null/empty 必须直接返回 receiver）。
+
+### 12.4 验收标准
+
+- 上层库的 `XxxI18nProvider` 不接收 `languageTag` 参数。
+- `LocalLanguageTag` 单点切换时所有层 strings 同步重组（不需要业务侧手动同步）。
+- BCV baseline 包含每层 strings 的字段集合，删除/重命名字段触发 CI 失败。
+- sample 中存在至少一处 `stringsOverrides` 字段级覆盖示例（可在 `MainDemo` 或专门的设置页演示）。

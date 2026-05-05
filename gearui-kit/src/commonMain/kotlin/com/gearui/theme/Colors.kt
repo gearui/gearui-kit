@@ -13,7 +13,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
  * 禁止出现 Color(xxx) / 硬编码值
  */
 @Immutable
-data class GearColors(
+data class Colors(
 
     /* ---------------- Surface 层级 ---------------- */
 
@@ -86,7 +86,7 @@ data class GearColors(
 
 @Immutable
 data class ThemeSpec(
-    val colors: GearColors
+    val colors: Colors
 )
 
 /* --------------------------------------------------------- */
@@ -100,7 +100,7 @@ object Themes {
      *
      */
     val Light = ThemeSpec(
-        colors = GearColors(
+        colors = Colors(
 
             background = Color(0xFFFFFFFF),
             surface = Color(0xFFFFFFFF),
@@ -160,7 +160,7 @@ object Themes {
      *
      */
     val Dark = ThemeSpec(
-        colors = GearColors(
+        colors = Colors(
 
             background = Color(0xFF09090B),
             // Dark mode needs visible surface elevation; do not collapse surface onto background.

@@ -131,7 +131,7 @@ fun Result(
     }
 }
 
-private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.GearColors): Pair<String?, Color> {
+private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<String?, Color> {
     return when (status) {
         ResultStatus.SUCCESS -> Icons.check to colors.success
         ResultStatus.ERROR -> Icons.close to colors.danger

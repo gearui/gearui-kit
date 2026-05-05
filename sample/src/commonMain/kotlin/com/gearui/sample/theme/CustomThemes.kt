@@ -1,7 +1,7 @@
 package com.gearui.sample.theme
 
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.gearui.theme.GearColors
+import com.gearui.theme.Colors
 import com.gearui.theme.ThemeSpec
 
 /**
@@ -21,7 +21,7 @@ object CustomThemes {
      * - 中性色全部带冷紫倾向，风格统一
      */
     val DarkPurple = ThemeSpec(
-        colors = GearColors(
+        colors = Colors(
 
             // Surface 层级 - 内容中性暗紫（品牌紫交给导航/强调）
             background = Color(0xFF181427),           // 页面背景

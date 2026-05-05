@@ -72,7 +72,7 @@ SPEC 映射：
 - CI：`.github/workflows/guardrails.yml`
 
 策略：
-- 覆盖 `GearColors` / `GearTypography` / `GearShapes` 三个 data class 的字段集合（删除/重命名 → fail）。
+- 覆盖 `Colors` / `Typography` / `Shapes` 三个 data class 的字段集合（删除/重命名 → fail）。
 - 覆盖 `Themes.Light` / `Themes.Dark` 颜色预设字面值（语义漂移 → fail）。
 - `ColorTokens`（`const val` 调色板）由 BCV 覆盖，不重复。
 - 任何变更必须显式刷新 baseline：`./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api`。

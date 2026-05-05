@@ -21,8 +21,8 @@ enum class ThemeMode {
 /* --------------------------------------------------------- */
 
 val LocalThemeColors = staticCompositionLocalOf { Themes.Light.colors }
-val LocalThemeTypography = staticCompositionLocalOf { GearTypographies.Default }
-val LocalThemeShapes = staticCompositionLocalOf { GearShapesDefault.Default }
+val LocalThemeTypography = staticCompositionLocalOf { Typographies.Default }
+val LocalThemeShapes = staticCompositionLocalOf { ShapesDefault.Default }
 
 /** 系统深色模式状态（由平台层提供） */
 val LocalSystemDarkMode = staticCompositionLocalOf { false }
@@ -75,8 +75,8 @@ private fun resolveThemeSpec(isDark: Boolean): ThemeSpec {
 fun Theme(
     mode: ThemeMode = ThemeMode.Light,
     theme: ThemeSpec? = null,
-    typography: GearTypography = GearTypographies.Default,
-    shapes: GearShapes = GearShapesDefault.Default,
+    typography: Typography = Typographies.Default,
+    shapes: Shapes = ShapesDefault.Default,
     content: @Composable () -> Unit
 ) {
     // 解析最终主题
@@ -111,14 +111,14 @@ fun ProvideSystemDarkMode(
 
 object Theme {
     /** 当前主题颜色 */
-    val colors: GearColors
+    val colors: Colors
         @Composable get() = LocalThemeColors.current
 
     /** 当前排版系统 */
-    val typography: GearTypography
+    val typography: Typography
         @Composable get() = LocalThemeTypography.current
 
     /** 当前形状系统 */
-    val shapes: GearShapes
+    val shapes: Shapes
         @Composable get() = LocalThemeShapes.current
 }

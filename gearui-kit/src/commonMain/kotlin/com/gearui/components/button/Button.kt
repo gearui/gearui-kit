@@ -203,7 +203,7 @@ private fun getButtonColors(
     theme: ButtonTheme,
     type: ButtonType,
     disabled: Boolean,
-    colors: com.gearui.theme.GearColors
+    colors: com.gearui.theme.Colors
 ): Triple<Color, Color, Color> {
     // 主题基础色
     val primaryColor: Color

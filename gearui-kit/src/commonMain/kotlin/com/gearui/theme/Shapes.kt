@@ -20,7 +20,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * Modifier.clip(shapes.default)
  */
 @Immutable
-data class GearShapes(
+data class Shapes(
 
     /** 3dp - 小圆角 (按钮、小组件边角) */
     val small: Shape,
@@ -44,14 +44,14 @@ data class GearShapes(
 /* --------------------------------------------------------- */
 /* --------------------------------------------------------- */
 
-object GearShapesDefault {
+object ShapesDefault {
 
     /**
      * Default Shapes - 默认形状系统
      *
      * 圆角值完全对齐
      */
-    val Default = GearShapes(
+    val Default = Shapes(
         small = RoundedCornerShape(3.dp),
         default = RoundedCornerShape(6.dp),
         large = RoundedCornerShape(9.dp),

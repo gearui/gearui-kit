@@ -19,7 +19,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
  * Text(text, style = Typography.BodyMedium)
  */
 @Immutable
-data class GearTypography(
+data class Typography(
 
     /* ---------- Display (超大标题) ---------- */
 
@@ -108,14 +108,14 @@ data class GearTypography(
 /* --------------------------------------------------------- */
 /* --------------------------------------------------------- */
 
-object GearTypographies {
+object Typographies {
 
     /**
      * Default Typography - 默认排版
      *
      * 字号/行高/字重完全对齐
      */
-    val Default = GearTypography(
+    val Default = Typography(
 
         // Display (超大标题)
         displayLarge = TextStyle(

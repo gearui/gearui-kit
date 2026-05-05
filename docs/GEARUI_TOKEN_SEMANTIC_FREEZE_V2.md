@@ -38,7 +38,7 @@ Domain extensions (kept):
 
 ## 3. Transitional Mapping (Current -> v2 Semantic)
 
-| v2 token | current GearColors source |
+| v2 token | current Colors source |
 |---|---|
 | `background` | `background` |
 | `foreground` | `textPrimary` |

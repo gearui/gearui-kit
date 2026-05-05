@@ -22,7 +22,7 @@ ALLOWLIST=(
   "$KIT_DIR/com/gearui/components/bottomnavbar/BottomNavBar.kt"
   "$KIT_DIR/com/gearui/components/drawer/Drawer.kt"
   "$KIT_DIR/com/gearui/components/actionsheet/ActionSheet.kt"
-  "$KIT_DIR/com/gearui/overlay/GearOverlayHost.kt"
+  "$KIT_DIR/com/gearui/overlay/OverlayHost.kt"
   "$SAMPLE_DIR/com/gearui/sample/examples/runtime/InsetsDebugExample.kt"
 )
 

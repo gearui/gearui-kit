@@ -3,7 +3,7 @@ package com.gearui
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.ComposeContainer
 import com.tencent.kuikly.compose.setContent
-import com.gearui.runtime.GearRuntimeFlags
+import com.gearui.runtime.RuntimeFlags
 import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
 
@@ -56,7 +56,7 @@ abstract class View : ComposeContainer() {
     /**
      * Runtime feature flags（用于渐进启用 runtime 规范能力）
      */
-    open fun runtimeFlags(): GearRuntimeFlags = GearRuntimeFlags()
+    open fun runtimeFlags(): RuntimeFlags = RuntimeFlags()
 
     /**
      * 是否由 View 基类自动包装 GearApp。

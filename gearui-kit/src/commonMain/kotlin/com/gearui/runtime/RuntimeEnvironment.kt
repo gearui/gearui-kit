@@ -9,7 +9,7 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 @Immutable
-data class GearSafeArea(
+data class SafeArea(
     val top: Dp = 0.dp,
     val bottom: Dp = 0.dp,
     val left: Dp = 0.dp,
@@ -17,12 +17,12 @@ data class GearSafeArea(
 )
 
 @Immutable
-data class GearRuntimeEnvironment(
-    val safeArea: GearSafeArea = GearSafeArea()
+data class RuntimeEnvironment(
+    val safeArea: SafeArea = SafeArea()
 )
 
 @Immutable
-data class GearRuntimeFlags(
+data class RuntimeFlags(
     // Spec phase-1: feature-flag gated rollout.
     val unifiedSafeAreaPipeline: Boolean = false,
     // Component safe-area consumption policy (runtime-owned, app-wide).
@@ -32,30 +32,30 @@ data class GearRuntimeFlags(
     val actionSheetConsumesBottomSafeArea: Boolean = true
 )
 
-val LocalGearRuntimeEnvironment = staticCompositionLocalOf { GearRuntimeEnvironment() }
-val LocalGearRuntimeFlags = staticCompositionLocalOf { GearRuntimeFlags() }
+val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }
+val LocalRuntimeFlags = staticCompositionLocalOf { RuntimeFlags() }
 
 @Composable
-fun ProvideGearRuntimeEnvironment(
-    flags: GearRuntimeFlags = GearRuntimeFlags(),
+fun ProvideRuntimeEnvironment(
+    flags: RuntimeFlags = RuntimeFlags(),
     content: @Composable () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val safeInsets = configuration.safeAreaInsets
-    val baseSafeArea = GearSafeArea(
+    val baseSafeArea = SafeArea(
         top = safeInsets.top.dp,
         bottom = safeInsets.bottom.dp,
         left = safeInsets.left.dp,
         right = safeInsets.right.dp
     )
-    val mergedSafeArea = GearRuntimeInsetsBridge.mergeWith(baseSafeArea)
-    val environment = GearRuntimeEnvironment(
+    val mergedSafeArea = RuntimeInsetsBridge.mergeWith(baseSafeArea)
+    val environment = RuntimeEnvironment(
         safeArea = mergedSafeArea
     )
 
     CompositionLocalProvider(
-        LocalGearRuntimeEnvironment provides environment,
-        LocalGearRuntimeFlags provides flags
+        LocalRuntimeEnvironment provides environment,
+        LocalRuntimeFlags provides flags
     ) {
         content()
     }

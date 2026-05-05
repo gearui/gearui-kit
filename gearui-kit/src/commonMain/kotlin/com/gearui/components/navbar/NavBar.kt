@@ -14,8 +14,8 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalGearRuntimeEnvironment
-import com.gearui.runtime.LocalGearRuntimeFlags
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 
 /**
@@ -56,8 +56,8 @@ fun NavBar(
     val textColor = titleColor ?: colors.textPrimary
 
     // 获取安全区域
-    val runtimeFlags = LocalGearRuntimeFlags.current
-    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
+    val runtimeFlags = LocalRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
     val safeAreaTop = if (runtimeFlags.unifiedSafeAreaPipeline) {
         if (runtimeFlags.navBarConsumesTopSafeArea) runtimeEnvironment.safeArea.top else 0.dp

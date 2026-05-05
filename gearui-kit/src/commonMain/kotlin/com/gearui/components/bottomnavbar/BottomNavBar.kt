@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalGearRuntimeEnvironment
-import com.gearui.runtime.LocalGearRuntimeFlags
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -54,8 +54,8 @@ fun BottomNavBar(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
-    val runtimeFlags = LocalGearRuntimeFlags.current
-    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
+    val runtimeFlags = LocalRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
     val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
         if (runtimeFlags.bottomNavBarConsumesBottomSafeArea) {

@@ -113,7 +113,7 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
 统一数据流：
 1. Platform（Android/iOS/Web）采集原始系统信息。
 2. Runtime 归一化为 `RuntimeEnvironment`。
-3. Compose/Kit 通过 `LocalGearRuntimeEnvironment`（或等价上下文）读取。
+3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
 4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
 
 GearApp 入口约束（强制）：
@@ -155,7 +155,7 @@ Host -> Runtime 动态桥接约束（Android/iOS）：
   - `theme`: `darkMode/contrastMode`
 
 验收标准：
-- sample 中可看到 `LocalGearRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
+- sample 中可看到 `LocalRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
 - Runtime insets 变化（旋转、系统栏变化、键盘变化）可触发组件正确重算。
 - 业务 demo 不再依赖页面级 safe area 手工补丁。
 - 全屏页面与 Overlay 仍为全屏画布，且前景内容不被刘海/手势区遮挡。

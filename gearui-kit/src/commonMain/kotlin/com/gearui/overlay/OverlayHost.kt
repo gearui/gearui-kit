@@ -19,8 +19,8 @@ import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.*
 import com.tencent.kuikly.compose.ui.zIndex
-import com.gearui.runtime.LocalGearRuntimeEnvironment
-import com.gearui.runtime.LocalGearRuntimeFlags
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 import kotlinx.coroutines.delay
 
 /**
@@ -74,8 +74,8 @@ private fun OverlayItemLayout(
 ) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
-    val runtimeFlags = LocalGearRuntimeFlags.current
-    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
+    val runtimeFlags = LocalRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
     val options = item.options
     val policy = options.dismissPolicy
 

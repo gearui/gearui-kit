@@ -23,8 +23,8 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.runtime.LocalGearRuntimeEnvironment
-import com.gearui.runtime.LocalGearRuntimeFlags
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 
 /**
@@ -276,8 +276,8 @@ private fun DrawerContent(
     onDismiss: () -> Unit
 ) {
     val colors = Theme.colors
-    val runtimeFlags = LocalGearRuntimeFlags.current
-    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
+    val runtimeFlags = LocalRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
     val topInset = if (runtimeFlags.unifiedSafeAreaPipeline) {
         if (runtimeFlags.drawerConsumesVerticalSafeArea) runtimeEnvironment.safeArea.top else 0.dp

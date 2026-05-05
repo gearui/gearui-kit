@@ -20,7 +20,7 @@ import com.gearui.components.icon.Icons
 import com.gearui.components.searchbar.SearchBar
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalGearRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.sample.i18n.SampleStrings
 import com.gearui.sample.config.ComponentCategory
@@ -53,7 +53,7 @@ fun HomePage(
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
 
     // 获取安全区域
-    val safeAreaBottom = LocalGearRuntimeEnvironment.current.safeArea.bottom
+    val safeAreaBottom = LocalRuntimeEnvironment.current.safeArea.bottom
 
     val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
 

@@ -121,7 +121,7 @@ SPEC 映射：
 
 计划：
 - 静态检查禁止在 `GearApp` 根容器与 `OverlayHost` 根层引入 safeArea padding。
-- 静态检查关键组件（NavBar/BottomNavBar/Drawer/ActionSheet）优先读取 `LocalGearRuntimeEnvironment`。
+- 静态检查关键组件（NavBar/BottomNavBar/Drawer/ActionSheet）优先读取 `LocalRuntimeEnvironment`。
 - 先告警模式上线，稳定后升级为阻断。
 
 4. App 层 Single Root 扩展检查（P1）

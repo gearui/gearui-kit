@@ -8,8 +8,8 @@ import com.gearui.i18n.I18nProvider
 import com.gearui.i18n.StringsPatch
 import com.gearui.i18n.I18nRoot
 import com.gearui.overlay.OverlayRoot
-import com.gearui.runtime.GearRuntimeFlags
-import com.gearui.runtime.ProvideGearRuntimeEnvironment
+import com.gearui.runtime.RuntimeFlags
+import com.gearui.runtime.ProvideRuntimeEnvironment
 import com.gearui.theme.ProvideSystemDarkMode
 import com.gearui.theme.Theme
 import com.gearui.theme.ThemeMode
@@ -40,7 +40,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     ↓
  * Theme (resolved dark boolean → colors)
  *     ↓
- * ProvideGearRuntimeEnvironment
+ * ProvideRuntimeEnvironment
  *     ↓
  * OverlayRoot + ToastHost
  *     ↓
@@ -83,7 +83,7 @@ fun GearApp(
     languageTag: String = "en-US",
     fallbackLanguageTag: String = "en-US",
     stringsOverrides: Map<String, StringsPatch> = emptyMap(),
-    runtimeFlags: GearRuntimeFlags = GearRuntimeFlags(),
+    runtimeFlags: RuntimeFlags = RuntimeFlags(),
     keyboardDismissMode: KeyboardDismissMode = KeyboardDismissMode.OnTapOrScroll,
     content: @Composable () -> Unit,
 ) {
@@ -91,7 +91,7 @@ fun GearApp(
         I18nProvider(overrides = stringsOverrides) {
             ProvideSystemDarkMode(isSystemDark = isSystemDark) {
                 Theme(mode = themeMode, theme = theme) {
-                    ProvideGearRuntimeEnvironment(flags = runtimeFlags) {
+                    ProvideRuntimeEnvironment(flags = runtimeFlags) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()

@@ -3,8 +3,8 @@ package com.gearui.sample.examples.runtime
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalGearRuntimeEnvironment
-import com.gearui.runtime.LocalGearRuntimeFlags
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -19,8 +19,8 @@ fun InsetsDebugExample(
     val colors = Theme.colors
     val configuration = LocalConfiguration.current
     val rawInsets = configuration.safeAreaInsets
-    val runtimeEnvironment = LocalGearRuntimeEnvironment.current
-    val runtimeFlags = LocalGearRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
+    val runtimeFlags = LocalRuntimeFlags.current
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(

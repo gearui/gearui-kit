@@ -100,7 +100,7 @@ public final class com/gearui/ColorTokens {
 }
 
 public final class com/gearui/GearAppKt {
-	public static final fun GearApp (Lcom/gearui/theme/ThemeMode;ZLcom/gearui/theme/ThemeSpec;Lcom/gearui/runtime/GearRuntimeFlags;Lcom/gearui/foundation/keyboard/KeyboardDismissMode;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GearApp (Lcom/gearui/theme/ThemeMode;ZLcom/gearui/theme/ThemeSpec;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/gearui/runtime/GearRuntimeFlags;Lcom/gearui/foundation/keyboard/KeyboardDismissMode;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/Radius {
@@ -3306,6 +3306,13 @@ public final class com/gearui/gestures/SwipeBackKt {
 	public static synthetic fun swipeBack$default (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
+public final class com/gearui/i18n/GearI18n {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/i18n/GearI18n;
+	public final fun getLanguageTag (Landroidx/compose/runtime/Composer;I)Ljava/lang/String;
+	public final fun getStrings (Landroidx/compose/runtime/Composer;I)Lcom/gearui/i18n/GearStrings;
+}
+
 public final class com/gearui/i18n/GearStringPacks {
 	public static final field $stable I
 	public static final field CHINESE_SIMPLIFIED_TAG Ljava/lang/String;
@@ -3314,50 +3321,12 @@ public final class com/gearui/i18n/GearStringPacks {
 	public static final field ENGLISH_TAG Ljava/lang/String;
 	public static final field INSTANCE Lcom/gearui/i18n/GearStringPacks;
 	public final fun getBuiltIn ()Ljava/util/Map;
-	public final fun getChineseSimplified ()Lcom/gearui/i18n/Strings;
-	public final fun getChineseTraditional ()Lcom/gearui/i18n/Strings;
-	public final fun getEnglish ()Lcom/gearui/i18n/Strings;
+	public final fun getChineseSimplified ()Lcom/gearui/i18n/GearStrings;
+	public final fun getChineseTraditional ()Lcom/gearui/i18n/GearStrings;
+	public final fun getEnglish ()Lcom/gearui/i18n/GearStrings;
 }
 
-public final class com/gearui/i18n/GearStrings_en_USKt {
-	public static final fun getGearStringsEnUs ()Lcom/gearui/i18n/Strings;
-}
-
-public final class com/gearui/i18n/GearStrings_zh_HansKt {
-	public static final fun getGearStringsZhHans ()Lcom/gearui/i18n/Strings;
-}
-
-public final class com/gearui/i18n/GearStrings_zh_HantKt {
-	public static final fun getGearStringsZhHant ()Lcom/gearui/i18n/Strings;
-}
-
-public final class com/gearui/i18n/I18n {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/i18n/I18n;
-	public final fun getLanguageTag (Landroidx/compose/runtime/Composer;I)Ljava/lang/String;
-	public final fun getStrings (Landroidx/compose/runtime/Composer;I)Lcom/gearui/i18n/Strings;
-}
-
-public final class com/gearui/i18n/I18nKt {
-	public static final fun I18n (Lcom/gearui/i18n/Strings;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun I18n (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun getLocalLanguageTag ()Landroidx/compose/runtime/ProvidableCompositionLocal;
-	public static final fun getLocalStrings ()Landroidx/compose/runtime/ProvidableCompositionLocal;
-}
-
-public final class com/gearui/i18n/LanguageTagKt {
-	public static final fun normalizeLanguageTag (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun resolveLanguagePack (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Ljava/lang/Object;
-}
-
-public final class com/gearui/i18n/StringSets {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/i18n/StringSets;
-	public final fun getChinese ()Lcom/gearui/i18n/Strings;
-	public final fun getEnglish ()Lcom/gearui/i18n/Strings;
-}
-
-public final class com/gearui/i18n/Strings {
+public final class com/gearui/i18n/GearStrings {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -3367,8 +3336,8 @@ public final class com/gearui/i18n/Strings {
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/lang/String;
 	public final fun component7 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/Strings;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/Strings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/Strings;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/GearStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/GearStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/GearStrings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getButtonCancel ()Ljava/lang/String;
 	public final fun getButtonConfirm ()Ljava/lang/String;
@@ -3379,6 +3348,65 @@ public final class com/gearui/i18n/Strings {
 	public final fun getTheme ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/GearStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/GearStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/GearStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/GearStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getButtonCancel ()Ljava/lang/String;
+	public final fun getButtonConfirm ()Ljava/lang/String;
+	public final fun getDark ()Ljava/lang/String;
+	public final fun getLanguage ()Ljava/lang/String;
+	public final fun getLight ()Ljava/lang/String;
+	public final fun getSystem ()Ljava/lang/String;
+	public final fun getTheme ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/GearStringsPatchKt {
+	public static final fun isEmpty (Lcom/gearui/i18n/GearStringsPatch;)Z
+	public static final fun merge (Lcom/gearui/i18n/GearStrings;Lcom/gearui/i18n/GearStringsPatch;)Lcom/gearui/i18n/GearStrings;
+}
+
+public final class com/gearui/i18n/GearStrings_en_USKt {
+	public static final fun getGearStringsEnUs ()Lcom/gearui/i18n/GearStrings;
+}
+
+public final class com/gearui/i18n/GearStrings_zh_HansKt {
+	public static final fun getGearStringsZhHans ()Lcom/gearui/i18n/GearStrings;
+}
+
+public final class com/gearui/i18n/GearStrings_zh_HantKt {
+	public static final fun getGearStringsZhHant ()Lcom/gearui/i18n/GearStrings;
+}
+
+public final class com/gearui/i18n/I18nKt {
+	public static final fun GearI18nProvider (Ljava/util/Map;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalGearStrings ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class com/gearui/i18n/I18nRootKt {
+	public static final fun I18nRoot (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalFallbackLanguageTag ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalLanguageTag ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class com/gearui/i18n/LanguageTagKt {
+	public static final fun normalizeLanguageTag (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun resolveLanguagePack (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Ljava/lang/Object;
 }
 
 public final class com/gearui/overlay/GearOverlayController {

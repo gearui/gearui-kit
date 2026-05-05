@@ -154,7 +154,7 @@ fun GearImage(
  * Image with loading state
  */
 @Composable
-fun GearImageWithState(
+fun ImageWithState(
     painter: Painter?,
     loadState: ImageLoadState,
     modifier: Modifier = Modifier,
@@ -235,7 +235,7 @@ fun GearImageWithState(
  * Avatar image component
  */
 @Composable
-fun GearAvatar(
+fun Avatar(
     painter: Painter?,
     modifier: Modifier = Modifier,
     size: Dp = 40.dp,

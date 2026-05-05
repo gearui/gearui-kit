@@ -11,11 +11,11 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.image.GearImage
-import com.gearui.components.image.GearAvatar
+import com.gearui.components.image.Avatar
 import com.gearui.components.image.ImagePlaceholder
 import com.gearui.components.image.ImageShape
 import com.gearui.components.image.ImageFit
-import com.gearui.components.image.GearImageWithState
+import com.gearui.components.image.ImageWithState
 import com.gearui.components.image.ImageLoadState
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -312,7 +312,7 @@ fun ImageExample(
                         color = colors.textPrimary
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    GearImageWithState(
+                    ImageWithState(
                         painter = null,
                         loadState = ImageLoadState.Error(""),
                         shape = ImageShape.ROUNDED,
@@ -362,7 +362,7 @@ fun ImageExample(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    GearAvatar(
+                    Avatar(
                         painter = null,
                         size = 32.dp,
                         fallbackText = "小"
@@ -378,7 +378,7 @@ fun ImageExample(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    GearAvatar(
+                    Avatar(
                         painter = null,
                         size = 48.dp,
                         fallbackText = "中"
@@ -394,7 +394,7 @@ fun ImageExample(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    GearAvatar(
+                    Avatar(
                         painter = null,
                         size = 64.dp,
                         fallbackText = "大"
@@ -410,7 +410,7 @@ fun ImageExample(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    GearAvatar(
+                    Avatar(
                         painter = null,
                         size = 80.dp,
                         fallbackText = "张三"

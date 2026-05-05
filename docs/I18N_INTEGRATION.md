@@ -13,7 +13,7 @@ GearApp (languageTag, fallbackLanguageTag, stringsOverrides)
   └── I18nRoot                                                  ← gearui-kit 提供
         ├── LocalLanguageTag         (BCP47, normalized)
         └── LocalFallbackLanguageTag (BCP47, normalized)
-              ├── GearI18nProvider   (LocalGearStrings)         ← gearui-kit 自己用
+              ├── I18nProvider   (LocalStrings)         ← gearui-kit 自己用
               ├── PrivChatUiI18nProvider (LocalPrivChatUiStrings) ← 上层库自己挂
               ├── ...                                           ← 任意层
               └── content
@@ -179,7 +179,7 @@ fun App() {
         languageTag = lang,
         // 可选：覆盖 GearUI 内置文案
         stringsOverrides = mapOf(
-            "zh-Hans" to GearStringsPatch(buttonConfirm = "确定一下"),
+            "zh-Hans" to StringsPatch(buttonConfirm = "确定一下"),
         ),
     ) {
         // 可选：覆盖 privchat-ui 内置文案

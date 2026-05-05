@@ -8,9 +8,9 @@ package com.gearui.i18n
  */
 fun normalizeLanguageTag(tag: String): String {
     val cleaned = tag.trim().replace('_', '-')
-    if (cleaned.isEmpty()) return GearStringPacks.DEFAULT_LANGUAGE_TAG
+    if (cleaned.isEmpty()) return StringPacks.DEFAULT_LANGUAGE_TAG
     val parts = cleaned.split('-').filter { it.isNotBlank() }
-    if (parts.isEmpty()) return GearStringPacks.DEFAULT_LANGUAGE_TAG
+    if (parts.isEmpty()) return StringPacks.DEFAULT_LANGUAGE_TAG
 
     val normalized = mutableListOf<String>()
     normalized += parts.first().lowercase()

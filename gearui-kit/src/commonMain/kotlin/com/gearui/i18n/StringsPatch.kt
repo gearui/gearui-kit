@@ -3,12 +3,12 @@ package com.gearui.i18n
 import androidx.compose.runtime.Immutable
 
 /**
- * Field-level override for [GearStrings]. Every field is nullable; null means
+ * Field-level override for [Strings]. Every field is nullable; null means
  * "inherit from base pack". Apps supply patches keyed by language tag via
- * [GearI18nProvider] (or the `stringsOverrides` parameter of `GearApp`).
+ * [I18nProvider] (or the `stringsOverrides` parameter of `GearApp`).
  */
 @Immutable
-data class GearStringsPatch(
+data class StringsPatch(
     val buttonConfirm: String? = null,
     val buttonCancel: String? = null,
     val theme: String? = null,
@@ -18,7 +18,7 @@ data class GearStringsPatch(
     val system: String? = null,
 )
 
-val GearStringsPatch.isEmpty: Boolean
+val StringsPatch.isEmpty: Boolean
     get() = buttonConfirm == null &&
         buttonCancel == null &&
         theme == null &&
@@ -31,7 +31,7 @@ val GearStringsPatch.isEmpty: Boolean
  * Apply [patch] on top of base strings. Returns the receiver unchanged when
  * [patch] is `null` or all-null, so the hot path allocates nothing.
  */
-fun GearStrings.merge(patch: GearStringsPatch?): GearStrings {
+fun Strings.merge(patch: StringsPatch?): Strings {
     if (patch == null || patch.isEmpty) return this
     return copy(
         buttonConfirm = patch.buttonConfirm ?: buttonConfirm,

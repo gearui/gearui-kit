@@ -1,6 +1,6 @@
 package com.gearui.i18n
 
-val GearStringsEnUs = GearStrings(
+val StringsEnUs = Strings(
     buttonConfirm = "Confirm",
     buttonCancel = "Cancel",
     theme = "Theme",

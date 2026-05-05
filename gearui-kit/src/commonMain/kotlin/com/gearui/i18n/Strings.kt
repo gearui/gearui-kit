@@ -9,7 +9,7 @@ import androidx.compose.runtime.Immutable
  * exposed by [I18nRoot]. See `docs/I18N_INTEGRATION.md`.
  */
 @Immutable
-data class GearStrings(
+data class Strings(
     val buttonConfirm: String,
     val buttonCancel: String,
     val theme: String,

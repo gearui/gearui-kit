@@ -5,18 +5,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 
-val LocalGearStrings = staticCompositionLocalOf { GearStringPacks.English }
+val LocalStrings = staticCompositionLocalOf { StringPacks.English }
 
 /**
  * Provider for GearUI Kit's own strings. Reads [LocalLanguageTag] /
  * [LocalFallbackLanguageTag] set by [I18nRoot], resolves the matching pack
- * from [GearStringPacks.builtIn], and applies any [overrides] keyed by
+ * from [StringPacks.builtIn], and applies any [overrides] keyed by
  * language tag. Apps usually do not call this directly; [com.gearui.GearApp]
  * mounts it automatically.
  */
 @Composable
-fun GearI18nProvider(
-    overrides: Map<String, GearStringsPatch> = emptyMap(),
+fun I18nProvider(
+    overrides: Map<String, StringsPatch> = emptyMap(),
     content: @Composable () -> Unit,
 ) {
     val tag = LocalLanguageTag.current
@@ -24,17 +24,17 @@ fun GearI18nProvider(
     val strings = remember(tag, fallback, overrides) {
         val base = resolveLanguagePack(
             languageTag = tag,
-            packs = GearStringPacks.builtIn,
+            packs = StringPacks.builtIn,
             defaultTag = fallback,
         )
         base.merge(resolvePatch(tag, fallback, overrides))
     }
-    CompositionLocalProvider(LocalGearStrings provides strings, content = content)
+    CompositionLocalProvider(LocalStrings provides strings, content = content)
 }
 
-object GearI18n {
-    val strings: GearStrings
-        @Composable get() = LocalGearStrings.current
+object I18n {
+    val strings: Strings
+        @Composable get() = LocalStrings.current
 
     val languageTag: String
         @Composable get() = LocalLanguageTag.current
@@ -43,13 +43,13 @@ object GearI18n {
 /**
  * Resolve a patch using the same fallback chain as [resolveLanguagePack]
  * (e.g. zh-Hant-HK → zh-Hant → zh → fallback). Returns null when no
- * applicable patch is found, so [GearStrings.merge] short-circuits.
+ * applicable patch is found, so [Strings.merge] short-circuits.
  */
 private fun resolvePatch(
     languageTag: String,
     fallbackTag: String,
-    overrides: Map<String, GearStringsPatch>,
-): GearStringsPatch? {
+    overrides: Map<String, StringsPatch>,
+): StringsPatch? {
     if (overrides.isEmpty()) return null
     val normalized = overrides.entries.associate { normalizeLanguageTag(it.key) to it.value }
 

@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import com.gearui.components.toast.ToastHost
 import com.gearui.foundation.keyboard.KeyboardDismissContainer
 import com.gearui.foundation.keyboard.KeyboardDismissMode
-import com.gearui.i18n.GearI18nProvider
-import com.gearui.i18n.GearStringsPatch
+import com.gearui.i18n.I18nProvider
+import com.gearui.i18n.StringsPatch
 import com.gearui.i18n.I18nRoot
 import com.gearui.overlay.GearOverlayRoot
 import com.gearui.runtime.GearRuntimeFlags
@@ -34,7 +34,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     ↓
  * I18nRoot (LocalLanguageTag / LocalFallbackLanguageTag)
  *     ↓
- * GearI18nProvider (LocalGearStrings)
+ * I18nProvider (LocalStrings)
  *     ↓
  * ProvideSystemDarkMode (系统深色状态)
  *     ↓
@@ -54,7 +54,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     themeMode = ThemeMode.System,
  *     isSystemDark = StatusBarControllerImpl.isSystemDarkMode(),
  *     stringsOverrides = mapOf(
- *         "zh-Hans" to GearStringsPatch(buttonConfirm = "确定一下"),
+ *         "zh-Hans" to StringsPatch(buttonConfirm = "确定一下"),
  *     ),
  * ) {
  *     MainPage()
@@ -82,13 +82,13 @@ fun GearApp(
     theme: ThemeSpec? = null,
     languageTag: String = "en-US",
     fallbackLanguageTag: String = "en-US",
-    stringsOverrides: Map<String, GearStringsPatch> = emptyMap(),
+    stringsOverrides: Map<String, StringsPatch> = emptyMap(),
     runtimeFlags: GearRuntimeFlags = GearRuntimeFlags(),
     keyboardDismissMode: KeyboardDismissMode = KeyboardDismissMode.OnTapOrScroll,
     content: @Composable () -> Unit,
 ) {
     I18nRoot(languageTag = languageTag, fallbackLanguageTag = fallbackLanguageTag) {
-        GearI18nProvider(overrides = stringsOverrides) {
+        I18nProvider(overrides = stringsOverrides) {
             ProvideSystemDarkMode(isSystemDark = isSystemDark) {
                 Theme(mode = themeMode, theme = theme) {
                     ProvideGearRuntimeEnvironment(flags = runtimeFlags) {

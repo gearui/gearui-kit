@@ -436,7 +436,7 @@ GearUI Kit 提供：
 - `LocalFallbackLanguageTag`：fallback tag，所有库共用
 - `I18nRoot(languageTag, fallbackLanguageTag, content)`：唯一语言入口
 - `normalizeLanguageTag(tag)` / `resolveLanguagePack(tag, packs, defaultTag)`：复用工具
-- `GearApp(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `GearI18nProvider`
+- `GearApp(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `I18nProvider`
 
 GearUI Kit 不提供：
 - 全局 `Map<String, String>` registry

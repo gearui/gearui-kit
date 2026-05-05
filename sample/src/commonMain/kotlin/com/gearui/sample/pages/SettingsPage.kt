@@ -14,7 +14,7 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.radio.RadioButton
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.i18n.GearI18n
+import com.gearui.i18n.I18n
 import com.gearui.sample.i18n.DefaultSampleLanguageOptions
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.theme.Theme
@@ -56,7 +56,7 @@ fun SettingsPage(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
-    val coreStrings = GearI18n.strings
+    val coreStrings = I18n.strings
     val sampleStrings = SampleI18n.strings
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
     val languageOptions = DefaultSampleLanguageOptions

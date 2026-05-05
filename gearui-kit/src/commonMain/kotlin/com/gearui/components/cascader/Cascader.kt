@@ -22,10 +22,10 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 
 /**
@@ -41,7 +41,7 @@ data class CascaderOption(
 /**
  * Cascader - 级联选择器
  *
- * 基于 GearOverlay 系统实现
+ * 基于 Overlay 系统实现
  *
  * Features:
  * - 多级选择
@@ -60,7 +60,7 @@ fun Cascader(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     val density = LocalDensity.current
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
@@ -96,8 +96,8 @@ fun Cascader(
 
         overlayId = overlay.show(
             anchorBounds = bounds,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.BottomLeft,
+            options = OverlayOptions(
+                placement = OverlayPlacement.BottomLeft,
                 offsetY = 4.dp,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown

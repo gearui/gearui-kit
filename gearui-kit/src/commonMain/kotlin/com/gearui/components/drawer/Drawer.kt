@@ -19,9 +19,9 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.runtime.LocalGearRuntimeEnvironment
 import com.gearui.runtime.LocalGearRuntimeFlags
@@ -82,7 +82,7 @@ fun Drawer(
 ) {
     val colors = Theme.colors
     val effectiveBackgroundColor = backgroundColor ?: colors.surface
-    val controller = LocalGearOverlayController.current
+    val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
     // 共享的动画目标状态
@@ -110,8 +110,8 @@ fun Drawer(
         if (shouldShowOverlay && overlayId == null) {
             overlayId = controller.show(
                 anchorBounds = null,
-                options = GearOverlayOptions(
-                    placement = GearOverlayPlacement.Fullscreen,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.Fullscreen,
                     modal = true,
                     maskColor = Color.Transparent,
                     dismissPolicy = OverlayDismissPolicy.Sheet.copy(

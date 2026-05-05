@@ -17,9 +17,9 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.Spacing
-import com.gearui.overlay.LocalGearOverlayController
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.LocalOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 
@@ -309,7 +309,7 @@ fun SnackbarHost(
  */
 @Composable
 fun rememberSnackbarController(): SnackbarController {
-    val overlayController = LocalGearOverlayController.current
+    val overlayController = LocalOverlayController.current
     return remember { SnackbarController(overlayController) }
 }
 
@@ -317,7 +317,7 @@ fun rememberSnackbarController(): SnackbarController {
  * Snackbar 控制器 - 通过 Overlay 系统显示 Snackbar
  */
 class SnackbarController internal constructor(
-    private val overlayController: com.gearui.overlay.GearOverlayController
+    private val overlayController: com.gearui.overlay.OverlayController
 ) {
     private var currentOverlayId: Long? = null
 
@@ -338,8 +338,8 @@ class SnackbarController internal constructor(
         dismiss()
 
         currentOverlayId = overlayController.show(
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.Fullscreen,
+            options = OverlayOptions(
+                placement = OverlayPlacement.Fullscreen,
                 modal = false,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )

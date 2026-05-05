@@ -12,10 +12,10 @@ import com.gearui.components.popover.PopoverTheme
 import com.gearui.components.popover.rememberPopoverState
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
@@ -71,7 +71,7 @@ fun ContextMenu(
     trigger: @Composable (onOpen: () -> Unit) -> Unit
 ) {
     val state = rememberPopoverState()
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     val colors = Theme.colors
     val shapes = Theme.shapes
     var triggerBounds by remember { mutableStateOf<Rect?>(null) }
@@ -82,7 +82,7 @@ fun ContextMenu(
         DisposableEffect(bounds, placement) {
             val overlayId = overlay.show(
                 anchorBounds = bounds,
-                options = GearOverlayOptions(
+                options = OverlayOptions(
                     placement = placementToOverlay(placement),
                     offsetY = Spacing.spacer4.dp,
                     modal = false,
@@ -171,19 +171,19 @@ fun ContextMenu(
     }
 }
 
-private fun placementToOverlay(placement: PopoverPlacement): GearOverlayPlacement {
+private fun placementToOverlay(placement: PopoverPlacement): OverlayPlacement {
     return when (placement) {
-        PopoverPlacement.TOP_LEFT -> GearOverlayPlacement.TopLeft
-        PopoverPlacement.TOP -> GearOverlayPlacement.TopCenter
-        PopoverPlacement.TOP_RIGHT -> GearOverlayPlacement.TopRight
-        PopoverPlacement.BOTTOM_LEFT -> GearOverlayPlacement.BottomLeft
-        PopoverPlacement.BOTTOM -> GearOverlayPlacement.BottomCenter
-        PopoverPlacement.BOTTOM_RIGHT -> GearOverlayPlacement.BottomRight
-        PopoverPlacement.LEFT_TOP -> GearOverlayPlacement.LeftTop
-        PopoverPlacement.LEFT -> GearOverlayPlacement.LeftCenter
-        PopoverPlacement.LEFT_BOTTOM -> GearOverlayPlacement.LeftBottom
-        PopoverPlacement.RIGHT_TOP -> GearOverlayPlacement.RightTop
-        PopoverPlacement.RIGHT -> GearOverlayPlacement.RightCenter
-        PopoverPlacement.RIGHT_BOTTOM -> GearOverlayPlacement.RightBottom
+        PopoverPlacement.TOP_LEFT -> OverlayPlacement.TopLeft
+        PopoverPlacement.TOP -> OverlayPlacement.TopCenter
+        PopoverPlacement.TOP_RIGHT -> OverlayPlacement.TopRight
+        PopoverPlacement.BOTTOM_LEFT -> OverlayPlacement.BottomLeft
+        PopoverPlacement.BOTTOM -> OverlayPlacement.BottomCenter
+        PopoverPlacement.BOTTOM_RIGHT -> OverlayPlacement.BottomRight
+        PopoverPlacement.LEFT_TOP -> OverlayPlacement.LeftTop
+        PopoverPlacement.LEFT -> OverlayPlacement.LeftCenter
+        PopoverPlacement.LEFT_BOTTOM -> OverlayPlacement.LeftBottom
+        PopoverPlacement.RIGHT_TOP -> OverlayPlacement.RightTop
+        PopoverPlacement.RIGHT -> OverlayPlacement.RightCenter
+        PopoverPlacement.RIGHT_BOTTOM -> OverlayPlacement.RightBottom
     }
 }

@@ -18,16 +18,16 @@ enum class OverlayEvent {
 }
 
 /**
- * GearOverlayController - Overlay 核心状态管理器
+ * OverlayController - Overlay 核心状态管理器
  *
  * 这是 Overlay 系统的唯一真相来源（Single Source of Truth）
  * 所有关闭逻辑通过 DismissPolicy 声明，由 Runtime 统一调度
  */
 @Stable
-class GearOverlayController {
+class OverlayController {
 
-    private val _items = mutableStateListOf<GearOverlayItem>()
-    internal val items: List<GearOverlayItem> get() = _items
+    private val _items = mutableStateListOf<OverlayItem>()
+    internal val items: List<OverlayItem> get() = _items
 
     private var nextId = 0L
 
@@ -42,13 +42,13 @@ class GearOverlayController {
      */
     fun show(
         anchorBounds: Rect? = null,
-        options: GearOverlayOptions = GearOverlayOptions(),
+        options: OverlayOptions = OverlayOptions(),
         onDismiss: (() -> Unit)? = null,
         content: @Composable () -> Unit
     ): Long {
         val id = nextId++
 
-        _items += GearOverlayItem(
+        _items += OverlayItem(
             id = id,
             anchorBounds = anchorBounds,
             options = options,
@@ -131,10 +131,10 @@ class GearOverlayController {
 /**
  * Overlay 项数据
  */
-internal data class GearOverlayItem(
+internal data class OverlayItem(
     val id: Long,
     val anchorBounds: Rect?,
-    val options: GearOverlayOptions,
+    val options: OverlayOptions,
     val content: @Composable () -> Unit,
     val onDismiss: (() -> Unit)? = null
 )
@@ -142,8 +142,8 @@ internal data class GearOverlayItem(
 /**
  * 全局 Overlay Controller（通过 CompositionLocal 注入）
  */
-val LocalGearOverlayController = staticCompositionLocalOf<GearOverlayController> {
-    error("GearOverlayController not provided. Did you forget to wrap your app with GearOverlayRoot?")
+val LocalOverlayController = staticCompositionLocalOf<OverlayController> {
+    error("OverlayController not provided. Did you forget to wrap your app with OverlayRoot?")
 }
 
 /**
@@ -153,12 +153,12 @@ val LocalGearOverlayController = staticCompositionLocalOf<GearOverlayController>
  * 事件源在组件层，消费在 Overlay Runtime
  */
 object OverlayManager {
-    private var controller: GearOverlayController? = null
+    private var controller: OverlayController? = null
 
     /**
      * 内部方法：绑定 Controller
      */
-    internal fun bind(controller: GearOverlayController) {
+    internal fun bind(controller: OverlayController) {
         println("[GearUI] OverlayManager.bind controller=$controller")
         this.controller = controller
     }

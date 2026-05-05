@@ -16,7 +16,7 @@ import com.gearui.components.button.ButtonType
 import com.gearui.components.popup.Popup
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -81,7 +81,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showTopPopup,
                 anchorBounds = topAnchor,
-                placement = GearOverlayPlacement.TopLeft,
+                placement = OverlayPlacement.TopLeft,
                 onDismiss = { showTopPopup = false }
             ) {
                 Box(
@@ -118,7 +118,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showLeftPopup,
                 anchorBounds = leftAnchor,
-                placement = GearOverlayPlacement.LeftTop,
+                placement = OverlayPlacement.LeftTop,
                 onDismiss = { showLeftPopup = false }
             ) {
                 Box(
@@ -153,7 +153,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showCenterPopup,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showCenterPopup = false }
             ) {
                 Box(
@@ -191,7 +191,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomPopup,
                 anchorBounds = bottomAnchor,
-                placement = GearOverlayPlacement.BottomLeft,
+                placement = OverlayPlacement.BottomLeft,
                 onDismiss = { showBottomPopup = false }
             ) {
                 Box(
@@ -228,7 +228,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showRightPopup,
                 anchorBounds = rightAnchor,
-                placement = GearOverlayPlacement.RightTop,
+                placement = OverlayPlacement.RightTop,
                 onDismiss = { showRightPopup = false }
             ) {
                 Box(
@@ -265,7 +265,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomWithTitleAndOp,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showBottomWithTitleAndOp = false }
             ) {
                 Column(
@@ -326,7 +326,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomWithOp,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showBottomWithOp = false }
             ) {
                 Column(
@@ -382,7 +382,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomWithTitleAndClose,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showBottomWithTitleAndClose = false }
             ) {
                 Column(
@@ -438,7 +438,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomWithClose,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showBottomWithClose = false }
             ) {
                 Column(
@@ -488,7 +488,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showBottomWithTitle,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 onDismiss = { showBottomWithTitle = false }
             ) {
                 Column(
@@ -536,7 +536,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showCenterWithClose,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 dismissOnOutside = false,
                 onDismiss = { showCenterWithClose = false }
             ) {
@@ -576,7 +576,7 @@ fun PopupExample(
             Popup.Host(
                 visible = showCenterWithUnderClose,
                 anchorBounds = null,
-                placement = GearOverlayPlacement.Center,
+                placement = OverlayPlacement.Center,
                 dismissOnOutside = false,
                 onDismiss = { showCenterWithUnderClose = false }
             ) {

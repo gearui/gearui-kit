@@ -9,9 +9,9 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
 
@@ -50,7 +50,7 @@ object Popup {
     fun Host(
         visible: Boolean,
         anchorBounds: Rect?,
-        placement: GearOverlayPlacement = GearOverlayPlacement.BottomStart,
+        placement: OverlayPlacement = OverlayPlacement.BottomStart,
         offsetX: Dp = 0.dp,
         offsetY: Dp = 4.dp,
         dismissOnOutside: Boolean = true,
@@ -58,7 +58,7 @@ object Popup {
         onDismiss: () -> Unit = {},
         content: @Composable () -> Unit
     ) {
-        val controller = LocalGearOverlayController.current
+        val controller = LocalOverlayController.current
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
         // 记录打开时的锚点位置，用于检测滚动
@@ -72,8 +72,8 @@ object Popup {
             if (visible) {
                 // 居中弹出时 anchorBounds 可以为 null
                 // 锚点弹出时需要 anchorBounds
-                val needsAnchor = placement != GearOverlayPlacement.Center &&
-                                  placement != GearOverlayPlacement.Fullscreen
+                val needsAnchor = placement != OverlayPlacement.Center &&
+                                  placement != OverlayPlacement.Fullscreen
 
                 if (needsAnchor && anchorBounds == null) {
                     // 需要锚点但没有，不显示
@@ -82,7 +82,7 @@ object Popup {
 
                 overlayId = controller.show(
                     anchorBounds = anchorBounds,
-                    options = GearOverlayOptions(
+                    options = OverlayOptions(
                         placement = placement,
                         offsetX = offsetX,
                         offsetY = offsetY,

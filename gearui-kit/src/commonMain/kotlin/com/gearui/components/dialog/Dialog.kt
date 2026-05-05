@@ -9,9 +9,9 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
 import com.gearui.Spacing
@@ -52,7 +52,7 @@ object Dialog {
         content: @Composable () -> Unit
     ) {
         val colors = Theme.colors
-        val controller = LocalGearOverlayController.current
+        val controller = LocalOverlayController.current
         val effectiveMaskColor = maskColor ?: colors.mask
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
@@ -60,8 +60,8 @@ object Dialog {
             if (visible) {
                 overlayId = controller.show(
                     anchorBounds = null,
-                    options = GearOverlayOptions(
-                        placement = GearOverlayPlacement.Center,
+                    options = OverlayOptions(
+                        placement = OverlayPlacement.Center,
                         modal = true,
                         maskColor = effectiveMaskColor,
                         dismissPolicy = OverlayDismissPolicy.Modal.copy(

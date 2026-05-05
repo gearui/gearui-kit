@@ -14,9 +14,9 @@ import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.Spacing
-import com.gearui.overlay.LocalGearOverlayController
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.LocalOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.foundation.typography.Typography
@@ -279,7 +279,7 @@ fun rememberNotificationHostState(): NotificationHostState {
  */
 @Composable
 fun rememberNotificationController(): NotificationController {
-    val overlayController = LocalGearOverlayController.current
+    val overlayController = LocalOverlayController.current
     return remember { NotificationController(overlayController) }
 }
 
@@ -287,7 +287,7 @@ fun rememberNotificationController(): NotificationController {
  * NotificationController - 通过 Overlay 系统显示通知
  */
 class NotificationController internal constructor(
-    private val overlayController: com.gearui.overlay.GearOverlayController
+    private val overlayController: com.gearui.overlay.OverlayController
 ) {
     private var currentOverlayId: Long? = null
 
@@ -308,8 +308,8 @@ class NotificationController internal constructor(
         dismiss()
 
         currentOverlayId = overlayController.show(
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.Fullscreen,
+            options = OverlayOptions(
+                placement = OverlayPlacement.Fullscreen,
                 modal = false,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )

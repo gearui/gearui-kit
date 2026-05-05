@@ -14,9 +14,9 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
 import com.gearui.Spacing as GearSpacing
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 
@@ -117,11 +117,11 @@ object Toast {
 /**
  * ToastHost - Toast 宿主组件
  *
- * 必须放在 GearOverlayRoot 内部，用于显示全局 Toast
+ * 必须放在 OverlayRoot 内部，用于显示全局 Toast
  *
  * ```kotlin
  * GearApp {
- *     GearOverlayRoot {
+ *     OverlayRoot {
  *         ToastHost()
  *         // ... 其他内容
  *     }
@@ -130,7 +130,7 @@ object Toast {
  */
 @Composable
 fun ToastHost() {
-    val controller = LocalGearOverlayController.current
+    val controller = LocalOverlayController.current
 
     // 当前显示的 overlay id
     var currentOverlayId by remember { mutableStateOf<Long?>(null) }
@@ -150,8 +150,8 @@ fun ToastHost() {
 
         val id = controller.show(
             anchorBounds = null,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.Center,
+            options = OverlayOptions(
+                placement = OverlayPlacement.Center,
                 modal = false,
                 zIndex = 100f, // Toast 最高层级
                 dismissPolicy = OverlayDismissPolicy.toast(toast.duration)

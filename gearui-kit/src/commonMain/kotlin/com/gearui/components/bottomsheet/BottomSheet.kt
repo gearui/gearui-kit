@@ -18,9 +18,9 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.Spacing
 
@@ -63,15 +63,15 @@ fun BottomSheet(
     onItemClick: (BottomSheetItem, Int) -> Unit
 ) {
     val colors = Theme.colors
-    val controller = LocalGearOverlayController.current
+    val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
     LaunchedEffect(visible) {
         if (visible) {
             overlayId = controller.show(
                 anchorBounds = null,
-                options = GearOverlayOptions(
-                    placement = GearOverlayPlacement.Fullscreen,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.Fullscreen,
                     modal = true,
                     maskColor = colors.mask,
                     dismissPolicy = OverlayDismissPolicy.Sheet.copy(
@@ -338,15 +338,15 @@ object BottomSheet {
         content: @Composable () -> Unit
     ) {
         val colors = Theme.colors
-        val controller = LocalGearOverlayController.current
+        val controller = LocalOverlayController.current
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
         LaunchedEffect(visible) {
             if (visible) {
                 overlayId = controller.show(
                     anchorBounds = null,
-                    options = GearOverlayOptions(
-                        placement = GearOverlayPlacement.Fullscreen,
+                    options = OverlayOptions(
+                        placement = OverlayPlacement.Fullscreen,
                         modal = true,
                         maskColor = colors.mask,
                         dismissPolicy = OverlayDismissPolicy.Sheet.copy(

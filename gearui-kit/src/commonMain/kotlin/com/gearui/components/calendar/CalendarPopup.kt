@@ -23,7 +23,7 @@ import com.gearui.theme.Theme
  *
  * 以弹出层形式展示日历选择器
  *
- * 注意：此组件需要配合 GearOverlayRoot 使用
+ * 注意：此组件需要配合 OverlayRoot 使用
  *
  * Example:
  * ```kotlin

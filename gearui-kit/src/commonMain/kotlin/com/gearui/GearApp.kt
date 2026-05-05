@@ -7,7 +7,7 @@ import com.gearui.foundation.keyboard.KeyboardDismissMode
 import com.gearui.i18n.I18nProvider
 import com.gearui.i18n.StringsPatch
 import com.gearui.i18n.I18nRoot
-import com.gearui.overlay.GearOverlayRoot
+import com.gearui.overlay.OverlayRoot
 import com.gearui.runtime.GearRuntimeFlags
 import com.gearui.runtime.ProvideGearRuntimeEnvironment
 import com.gearui.theme.ProvideSystemDarkMode
@@ -25,7 +25,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  * 整合所有 GearUI 基础设施：
  * - I18n（语言运行时，对所有库共享）
  * - Theme（视觉 runtime）
- * - GearOverlayRoot（层级 runtime）
+ * - OverlayRoot（层级 runtime）
  * - ToastHost（全局轻提示）
  *
  * 架构层级：
@@ -42,7 +42,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     ↓
  * ProvideGearRuntimeEnvironment
  *     ↓
- * GearOverlayRoot + ToastHost
+ * OverlayRoot + ToastHost
  *     ↓
  * 应用内容
  * ```
@@ -98,7 +98,7 @@ fun GearApp(
                                 .background(Theme.colors.background)
                         ) {
                             KeyboardDismissContainer(mode = keyboardDismissMode) {
-                                GearOverlayRoot {
+                                OverlayRoot {
                                     content()
                                     ToastHost()
                                 }

@@ -284,7 +284,7 @@ fun CascaderExample(
                     color = colors.textSecondary
                 )
                 Text(
-                    text = "5. 基于 GearOverlay 实现真正的浮层",
+                    text = "5. 基于 Overlay 实现真正的浮层",
                     style = Typography.BodyMedium,
                     color = colors.textSecondary
                 )

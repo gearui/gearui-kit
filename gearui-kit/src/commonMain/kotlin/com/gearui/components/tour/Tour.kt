@@ -13,9 +13,9 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
-import com.gearui.overlay.LocalGearOverlayController
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
 
@@ -31,7 +31,7 @@ data class TourStep(
 /**
  * Tour - 漫游式引导组件
  *
- * 基于 GearOverlay 系统实现
+ * 基于 Overlay 系统实现
  *
  * Features:
  * - 分步引导
@@ -61,7 +61,7 @@ fun Tour(
     onSkip: (() -> Unit)? = null
 ) {
     val colors = Theme.colors
-    val controller = LocalGearOverlayController.current
+    val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
     val currentStep = state.currentStep
@@ -81,8 +81,8 @@ fun Tour(
 
             overlayId = controller.show(
                 anchorBounds = null,
-                options = GearOverlayOptions(
-                    placement = GearOverlayPlacement.Center,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.Center,
                     modal = true,
                     maskColor = Color.Black.copy(alpha = 0.5f),
                     dismissPolicy = OverlayDismissPolicy.Manual

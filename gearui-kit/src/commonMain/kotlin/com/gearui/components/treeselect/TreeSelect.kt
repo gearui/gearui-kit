@@ -21,16 +21,16 @@ import com.gearui.components.tree.TreeNode
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 
 /**
  * TreeSelect - 树形选择器
  *
- * 基于 GearOverlay 系统实现的树形下拉选择器
+ * 基于 Overlay 系统实现的树形下拉选择器
  *
  * Features:
  * - 下拉树形视图
@@ -49,7 +49,7 @@ fun TreeSelect(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     val density = LocalDensity.current
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
@@ -81,8 +81,8 @@ fun TreeSelect(
 
         overlayId = overlay.show(
             anchorBounds = bounds,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.BottomLeft,
+            options = OverlayOptions(
+                placement = OverlayPlacement.BottomLeft,
                 offsetY = 4.dp,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
@@ -174,7 +174,7 @@ fun TreeSelectMultiple(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     val density = LocalDensity.current
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
@@ -204,8 +204,8 @@ fun TreeSelectMultiple(
 
         overlayId = overlay.show(
             anchorBounds = bounds,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.BottomLeft,
+            options = OverlayOptions(
+                placement = OverlayPlacement.BottomLeft,
                 offsetY = 4.dp,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown

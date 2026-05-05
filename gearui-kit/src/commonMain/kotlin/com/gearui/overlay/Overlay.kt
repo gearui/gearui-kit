@@ -3,7 +3,7 @@ package com.gearui.overlay
 import androidx.compose.runtime.*
 
 /**
- * GearOverlayRoot - App 根节点包装器
+ * OverlayRoot - App 根节点包装器
  *
  * 必须在 App 最外层使用，提供 Overlay 能力
  *
@@ -11,22 +11,22 @@ import androidx.compose.runtime.*
  * ```kotlin
  * @Composable
  * fun App() {
- *     GearOverlayRoot {
+ *     OverlayRoot {
  *         MainAppContent()
  *     }
  * }
  * ```
  */
 @Composable
-fun GearOverlayRoot(
+fun OverlayRoot(
     content: @Composable () -> Unit
 ) {
-    val controller = remember { GearOverlayController() }
+    val controller = remember { OverlayController() }
 
     CompositionLocalProvider(
-        LocalGearOverlayController provides controller
+        LocalOverlayController provides controller
     ) {
-        GearOverlayHost(controller, content)
+        OverlayHost(controller, content)
     }
 }
 
@@ -35,7 +35,7 @@ fun GearOverlayRoot(
  *
  * 使用方式：
  * ```kotlin
- * val overlay = rememberGearOverlay()
+ * val overlay = rememberOverlay()
  *
  * overlay.show(anchorBounds) {
  *     DropdownMenu { ... }
@@ -43,6 +43,6 @@ fun GearOverlayRoot(
  * ```
  */
 @Composable
-fun rememberGearOverlay(): GearOverlayController {
-    return LocalGearOverlayController.current
+fun rememberOverlay(): OverlayController {
+    return LocalOverlayController.current
 }

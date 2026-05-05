@@ -12,7 +12,7 @@ import com.gearui.theme.ThemeSpec
  *
  * 自动挂载 GearUI Runtime：
  * - Theme（主题）
- * - GearOverlayRoot（浮层容器）
+ * - OverlayRoot（浮层容器）
  * - ToastHost（轻提示）
  *
  * 使用方式：

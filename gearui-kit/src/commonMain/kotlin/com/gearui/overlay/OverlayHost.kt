@@ -24,7 +24,7 @@ import com.gearui.runtime.LocalGearRuntimeFlags
 import kotlinx.coroutines.delay
 
 /**
- * GearOverlayHost - Overlay 渲染宿主
+ * OverlayHost - Overlay 渲染宿主
  *
  * 这是整个 Overlay 系统最关键的组件
  * 所有 Overlay 都在这里渲染，永远在最顶层
@@ -37,8 +37,8 @@ import kotlinx.coroutines.delay
  * - 绑定 OverlayManager 供外部通知事件
  */
 @Composable
-fun GearOverlayHost(
-    controller: GearOverlayController,
+fun OverlayHost(
+    controller: OverlayController,
     content: @Composable () -> Unit
 ) {
     // 绑定 OverlayManager
@@ -56,7 +56,7 @@ fun GearOverlayHost(
         // Overlay 层（永远在最顶层）
         // 滚动关闭由 GearLazyColumn 等组件通过 OverlayManager.notifyScroll() 触发
         controller.items.forEach { item ->
-            GearOverlayItemLayout(
+            OverlayItemLayout(
                 item = item,
                 controller = controller
             )
@@ -68,9 +68,9 @@ fun GearOverlayHost(
  * Overlay 项布局（处理定位）
  */
 @Composable
-private fun GearOverlayItemLayout(
-    item: GearOverlayItem,
-    controller: GearOverlayController
+private fun OverlayItemLayout(
+    item: OverlayItem,
+    controller: OverlayController
 ) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
@@ -175,7 +175,7 @@ private fun GearOverlayItemLayout(
 
         // ===== Overlay 内容（在点击层之上）=====
         // 内容区域需要拦截点击，防止事件穿透到背景层导致关闭
-        if (options.placement == GearOverlayPlacement.Fullscreen) {
+        if (options.placement == OverlayPlacement.Fullscreen) {
             // Fullscreen 模式：直接填满整个屏幕，不需要位置计算
             val safeTop = if (options.safeAreaTop) {
                 if (runtimeFlags.unifiedSafeAreaPipeline) {
@@ -266,18 +266,18 @@ private fun computeOffset(
     anchor: Rect?,
     popupSize: IntSize,
     screenSize: IntSize,
-    options: GearOverlayOptions,
+    options: OverlayOptions,
     density: Density
 ): IntOffset {
 
     if (anchor == null) {
         // 无锚点，使用屏幕居中
         return when (options.placement) {
-            GearOverlayPlacement.Center -> IntOffset(
+            OverlayPlacement.Center -> IntOffset(
                 ((screenSize.width - popupSize.width) / 2).coerceAtLeast(0),
                 ((screenSize.height - popupSize.height) / 2).coerceAtLeast(0)
             )
-            GearOverlayPlacement.Fullscreen -> IntOffset.Zero
+            OverlayPlacement.Fullscreen -> IntOffset.Zero
             else -> IntOffset.Zero
         }
     }
@@ -293,24 +293,24 @@ private fun computeOffset(
 
     // 判断是否需要翻转（基于弹出方向）
     val isVerticalPlacement = options.placement in listOf(
-        GearOverlayPlacement.TopLeft, GearOverlayPlacement.TopCenter, GearOverlayPlacement.TopRight, GearOverlayPlacement.TopStart,
-        GearOverlayPlacement.BottomLeft, GearOverlayPlacement.BottomCenter, GearOverlayPlacement.BottomRight, GearOverlayPlacement.BottomStart
+        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight, OverlayPlacement.TopStart,
+        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight, OverlayPlacement.BottomStart
     )
 
     val isTopPlacement = options.placement in listOf(
-        GearOverlayPlacement.TopLeft, GearOverlayPlacement.TopCenter, GearOverlayPlacement.TopRight, GearOverlayPlacement.TopStart
+        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight, OverlayPlacement.TopStart
     )
 
     val isBottomPlacement = options.placement in listOf(
-        GearOverlayPlacement.BottomLeft, GearOverlayPlacement.BottomCenter, GearOverlayPlacement.BottomRight, GearOverlayPlacement.BottomStart
+        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight, OverlayPlacement.BottomStart
     )
 
     val isLeftPlacement = options.placement in listOf(
-        GearOverlayPlacement.LeftTop, GearOverlayPlacement.LeftCenter, GearOverlayPlacement.LeftBottom
+        OverlayPlacement.LeftTop, OverlayPlacement.LeftCenter, OverlayPlacement.LeftBottom
     )
 
     val isRightPlacement = options.placement in listOf(
-        GearOverlayPlacement.RightTop, GearOverlayPlacement.RightCenter, GearOverlayPlacement.RightBottom
+        OverlayPlacement.RightTop, OverlayPlacement.RightCenter, OverlayPlacement.RightBottom
     )
 
     // 决定实际弹出方向（考虑自动翻转）
@@ -344,26 +344,26 @@ private fun computeOffset(
     // 计算 X 坐标
     val x = when (options.placement) {
         // 上方/下方 - 左对齐
-        GearOverlayPlacement.TopLeft,
-        GearOverlayPlacement.BottomLeft,
-        GearOverlayPlacement.TopStart,
-        GearOverlayPlacement.BottomStart ->
+        OverlayPlacement.TopLeft,
+        OverlayPlacement.BottomLeft,
+        OverlayPlacement.TopStart,
+        OverlayPlacement.BottomStart ->
             (anchor.left + offsetX).toInt()
 
         // 上方/下方 - 居中
-        GearOverlayPlacement.TopCenter,
-        GearOverlayPlacement.BottomCenter ->
+        OverlayPlacement.TopCenter,
+        OverlayPlacement.BottomCenter ->
             (anchor.center.x - popupSize.width / 2f + offsetX).toInt()
 
         // 上方/下方 - 右对齐
-        GearOverlayPlacement.TopRight,
-        GearOverlayPlacement.BottomRight ->
+        OverlayPlacement.TopRight,
+        OverlayPlacement.BottomRight ->
             (anchor.right - popupSize.width + offsetX).toInt()
 
         // 左侧 - popup 在 anchor 左边
-        GearOverlayPlacement.LeftTop,
-        GearOverlayPlacement.LeftCenter,
-        GearOverlayPlacement.LeftBottom -> {
+        OverlayPlacement.LeftTop,
+        OverlayPlacement.LeftCenter,
+        OverlayPlacement.LeftBottom -> {
             if (actuallyLeft) {
                 // 弹层在锚点左边，右边缘对齐锚点左边缘，再减去偏移
                 (anchor.left - popupSize.width - offsetX).toInt()
@@ -374,9 +374,9 @@ private fun computeOffset(
         }
 
         // 右侧 - popup 在 anchor 右边
-        GearOverlayPlacement.RightTop,
-        GearOverlayPlacement.RightCenter,
-        GearOverlayPlacement.RightBottom -> {
+        OverlayPlacement.RightTop,
+        OverlayPlacement.RightCenter,
+        OverlayPlacement.RightBottom -> {
             if (!actuallyLeft) {
                 (anchor.right + offsetX).toInt()
             } else {
@@ -385,19 +385,19 @@ private fun computeOffset(
             }
         }
 
-        GearOverlayPlacement.Center ->
+        OverlayPlacement.Center ->
             ((screenSize.width - popupSize.width) / 2f).toInt()
 
-        GearOverlayPlacement.Fullscreen -> 0
+        OverlayPlacement.Fullscreen -> 0
     }
 
     // 计算 Y 坐标
     val y = when (options.placement) {
         // 上方 - popup 在 anchor 上面
-        GearOverlayPlacement.TopLeft,
-        GearOverlayPlacement.TopCenter,
-        GearOverlayPlacement.TopRight,
-        GearOverlayPlacement.TopStart -> {
+        OverlayPlacement.TopLeft,
+        OverlayPlacement.TopCenter,
+        OverlayPlacement.TopRight,
+        OverlayPlacement.TopStart -> {
             if (actuallyAbove) {
                 (anchor.top - popupSize.height + offsetY).toInt()
             } else {
@@ -407,10 +407,10 @@ private fun computeOffset(
         }
 
         // 下方 - popup 在 anchor 下面
-        GearOverlayPlacement.BottomLeft,
-        GearOverlayPlacement.BottomCenter,
-        GearOverlayPlacement.BottomRight,
-        GearOverlayPlacement.BottomStart -> {
+        OverlayPlacement.BottomLeft,
+        OverlayPlacement.BottomCenter,
+        OverlayPlacement.BottomRight,
+        OverlayPlacement.BottomStart -> {
             if (!actuallyAbove) {
                 (anchor.bottom + offsetY).toInt()
             } else {
@@ -420,24 +420,24 @@ private fun computeOffset(
         }
 
         // 左侧/右侧 - 顶部对齐
-        GearOverlayPlacement.LeftTop,
-        GearOverlayPlacement.RightTop ->
+        OverlayPlacement.LeftTop,
+        OverlayPlacement.RightTop ->
             (anchor.top + offsetY).toInt()
 
         // 左侧/右侧 - 垂直居中
-        GearOverlayPlacement.LeftCenter,
-        GearOverlayPlacement.RightCenter ->
+        OverlayPlacement.LeftCenter,
+        OverlayPlacement.RightCenter ->
             (anchor.center.y - popupSize.height / 2f + offsetY).toInt()
 
         // 左侧/右侧 - 底部对齐
-        GearOverlayPlacement.LeftBottom,
-        GearOverlayPlacement.RightBottom ->
+        OverlayPlacement.LeftBottom,
+        OverlayPlacement.RightBottom ->
             (anchor.bottom - popupSize.height + offsetY).toInt()
 
-        GearOverlayPlacement.Center ->
+        OverlayPlacement.Center ->
             ((screenSize.height - popupSize.height) / 2f).toInt()
 
-        GearOverlayPlacement.Fullscreen -> 0
+        OverlayPlacement.Fullscreen -> 0
     }
 
     // 边界约束 - 核心修复

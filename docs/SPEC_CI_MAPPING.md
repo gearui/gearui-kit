@@ -32,7 +32,7 @@ SPEC 映射：
 
 策略：
 - 强制 `MainDemo` 使用 `GearApp` 入口。
-- 禁止 sample 直接挂 `Theme(...)` 和 `GearOverlayRoot(...)`。
+- 禁止 sample 直接挂 `Theme(...)` 和 `OverlayRoot(...)`。
 
 3. SafeArea Runtime Contract 护栏  
 SPEC 映射：
@@ -120,7 +120,7 @@ SPEC 映射：
 - 4.6 Fullscreen Container Contract
 
 计划：
-- 静态检查禁止在 `GearApp` 根容器与 `GearOverlayHost` 根层引入 safeArea padding。
+- 静态检查禁止在 `GearApp` 根容器与 `OverlayHost` 根层引入 safeArea padding。
 - 静态检查关键组件（NavBar/BottomNavBar/Drawer/ActionSheet）优先读取 `LocalGearRuntimeEnvironment`。
 - 先告警模式上线，稳定后升级为阻断。
 

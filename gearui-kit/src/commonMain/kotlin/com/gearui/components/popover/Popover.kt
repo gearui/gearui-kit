@@ -18,10 +18,10 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.Spacing
 import kotlinx.coroutines.delay
@@ -110,7 +110,7 @@ fun Popover(
     trigger: @Composable (onClick: () -> Unit) -> Unit
 ) {
     val colors = Theme.colors
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
 
     // 触发元素的边界
     var triggerBounds by remember { mutableStateOf<Rect?>(null) }
@@ -161,7 +161,7 @@ fun Popover(
         DisposableEffect(bounds, currentPlacement, currentOffset) {
             val overlayId = overlay.show(
                 anchorBounds = bounds,
-                options = GearOverlayOptions(
+                options = OverlayOptions(
                     placement = placementToOverlay(currentPlacement),
                     offsetX = when (currentPlacement) {
                         PopoverPlacement.LEFT, PopoverPlacement.LEFT_TOP, PopoverPlacement.LEFT_BOTTOM -> -currentOffset
@@ -403,26 +403,26 @@ private fun TriangleShape(direction: ArrowDirection) = when (direction) {
 }
 
 /**
- * 将 PopoverPlacement 转换为 GearOverlayPlacement
+ * 将 PopoverPlacement 转换为 OverlayPlacement
  */
-private fun placementToOverlay(placement: PopoverPlacement): GearOverlayPlacement {
+private fun placementToOverlay(placement: PopoverPlacement): OverlayPlacement {
     return when (placement) {
         // 上方
-        PopoverPlacement.TOP_LEFT -> GearOverlayPlacement.TopLeft
-        PopoverPlacement.TOP -> GearOverlayPlacement.TopCenter
-        PopoverPlacement.TOP_RIGHT -> GearOverlayPlacement.TopRight
+        PopoverPlacement.TOP_LEFT -> OverlayPlacement.TopLeft
+        PopoverPlacement.TOP -> OverlayPlacement.TopCenter
+        PopoverPlacement.TOP_RIGHT -> OverlayPlacement.TopRight
         // 下方
-        PopoverPlacement.BOTTOM_LEFT -> GearOverlayPlacement.BottomLeft
-        PopoverPlacement.BOTTOM -> GearOverlayPlacement.BottomCenter
-        PopoverPlacement.BOTTOM_RIGHT -> GearOverlayPlacement.BottomRight
+        PopoverPlacement.BOTTOM_LEFT -> OverlayPlacement.BottomLeft
+        PopoverPlacement.BOTTOM -> OverlayPlacement.BottomCenter
+        PopoverPlacement.BOTTOM_RIGHT -> OverlayPlacement.BottomRight
         // 左侧
-        PopoverPlacement.LEFT_TOP -> GearOverlayPlacement.LeftTop
-        PopoverPlacement.LEFT -> GearOverlayPlacement.LeftCenter
-        PopoverPlacement.LEFT_BOTTOM -> GearOverlayPlacement.LeftBottom
+        PopoverPlacement.LEFT_TOP -> OverlayPlacement.LeftTop
+        PopoverPlacement.LEFT -> OverlayPlacement.LeftCenter
+        PopoverPlacement.LEFT_BOTTOM -> OverlayPlacement.LeftBottom
         // 右侧
-        PopoverPlacement.RIGHT_TOP -> GearOverlayPlacement.RightTop
-        PopoverPlacement.RIGHT -> GearOverlayPlacement.RightCenter
-        PopoverPlacement.RIGHT_BOTTOM -> GearOverlayPlacement.RightBottom
+        PopoverPlacement.RIGHT_TOP -> OverlayPlacement.RightTop
+        PopoverPlacement.RIGHT -> OverlayPlacement.RightCenter
+        PopoverPlacement.RIGHT_BOTTOM -> OverlayPlacement.RightBottom
     }
 }
 

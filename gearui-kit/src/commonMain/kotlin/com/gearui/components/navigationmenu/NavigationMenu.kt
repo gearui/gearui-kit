@@ -12,10 +12,10 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -60,7 +60,7 @@ fun NavigationMenu(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     val triggerBounds = remember { mutableStateMapOf<String, Rect>() }
     var expandedSectionId by remember { mutableStateOf<String?>(null) }
 
@@ -71,8 +71,8 @@ fun NavigationMenu(
         DisposableEffect(expandedSection.id, anchorBounds) {
             val overlayId = overlay.show(
                 anchorBounds = anchorBounds,
-                options = GearOverlayOptions(
-                    placement = GearOverlayPlacement.BottomLeft,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.BottomLeft,
                     offsetY = Spacing.spacer8.dp,
                     modal = false,
                     maskColor = null,

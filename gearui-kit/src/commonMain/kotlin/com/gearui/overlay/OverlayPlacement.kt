@@ -8,7 +8,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 /**
  * Popup 停靠位置策略（对齐 anchor）
  */
-enum class GearOverlayPlacement {
+enum class OverlayPlacement {
     // 上方
     TopLeft,        // 上左 - 左对齐，在上方
     TopCenter,      // 上中 - 居中，在上方
@@ -130,9 +130,9 @@ data class OverlayDismissPolicy(
 /**
  * Overlay 行为配置
  */
-data class GearOverlayOptions(
+data class OverlayOptions(
     /** 弹层位置 */
-    val placement: GearOverlayPlacement = GearOverlayPlacement.BottomLeft,
+    val placement: OverlayPlacement = OverlayPlacement.BottomLeft,
 
     /** X 轴偏移 */
     val offsetX: Dp = 0.dp,

@@ -21,10 +21,10 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.overlay.GearOverlayOptions
-import com.gearui.overlay.GearOverlayPlacement
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberGearOverlay
+import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 
 /**
@@ -51,7 +51,7 @@ fun <T> Select(
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
     val colors = Theme.colors
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
@@ -83,8 +83,8 @@ fun <T> Select(
 
         overlayId = overlay.show(
             anchorBounds = bounds,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.BottomLeft,
+            options = OverlayOptions(
+                placement = OverlayPlacement.BottomLeft,
                 offsetY = panelMode.offsetY(),
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
@@ -296,7 +296,7 @@ fun <T> MultiSelect(
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
     val colors = Theme.colors
-    val overlay = rememberGearOverlay()
+    val overlay = rememberOverlay()
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
@@ -323,8 +323,8 @@ fun <T> MultiSelect(
 
         overlayId = overlay.show(
             anchorBounds = bounds,
-            options = GearOverlayOptions(
-                placement = GearOverlayPlacement.BottomLeft,
+            options = OverlayOptions(
+                placement = OverlayPlacement.BottomLeft,
                 offsetY = panelMode.offsetY(),
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown

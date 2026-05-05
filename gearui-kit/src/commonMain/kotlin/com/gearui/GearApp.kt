@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import com.gearui.components.toast.ToastHost
 import com.gearui.foundation.keyboard.KeyboardDismissContainer
 import com.gearui.foundation.keyboard.KeyboardDismissMode
+import com.gearui.i18n.GearI18nProvider
+import com.gearui.i18n.GearStringsPatch
+import com.gearui.i18n.I18nRoot
 import com.gearui.overlay.GearOverlayRoot
 import com.gearui.runtime.GearRuntimeFlags
 import com.gearui.runtime.ProvideGearRuntimeEnvironment
@@ -20,17 +23,24 @@ import com.tencent.kuikly.compose.ui.Modifier
  * GearApp - GearUI 应用统一入口
  *
  * 整合所有 GearUI 基础设施：
+ * - I18n（语言运行时，对所有库共享）
  * - Theme（视觉 runtime）
  * - GearOverlayRoot（层级 runtime）
  * - ToastHost（全局轻提示）
  *
  * 架构层级：
  * ```
- * GearApp (ThemeMode + isSystemDark)
+ * GearApp (languageTag + themeMode + ...)
+ *     ↓
+ * I18nRoot (LocalLanguageTag / LocalFallbackLanguageTag)
+ *     ↓
+ * GearI18nProvider (LocalGearStrings)
  *     ↓
  * ProvideSystemDarkMode (系统深色状态)
  *     ↓
  * Theme (resolved dark boolean → colors)
+ *     ↓
+ * ProvideGearRuntimeEnvironment
  *     ↓
  * GearOverlayRoot + ToastHost
  *     ↓
@@ -39,20 +49,30 @@ import com.tencent.kuikly.compose.ui.Modifier
  *
  * 使用方式：
  * ```kotlin
- * setContent {
- *     val isSystemDark = StatusBarControllerImpl.isSystemDarkMode()
- *     GearApp(
- *         themeMode = ThemeMode.System,
- *         isSystemDark = isSystemDark
- *     ) {
- *         MainPage()
- *     }
+ * GearApp(
+ *     languageTag = userLanguage,
+ *     themeMode = ThemeMode.System,
+ *     isSystemDark = StatusBarControllerImpl.isSystemDarkMode(),
+ *     stringsOverrides = mapOf(
+ *         "zh-Hans" to GearStringsPatch(buttonConfirm = "确定一下"),
+ *     ),
+ * ) {
+ *     MainPage()
  * }
  * ```
+ *
+ * 上层库（privchat-ui 等）只需在内部读 `LocalLanguageTag.current` 即可
+ * 自动响应语言切换；不需要应用层重复传 languageTag。详见
+ * `docs/I18N_INTEGRATION.md`。
  *
  * @param themeMode 主题模式 (Light/Dark/System)
  * @param isSystemDark 系统是否为深色模式（仅当 themeMode 为 System 时生效）
  * @param theme 自定义主题规格（可选）
+ * @param languageTag BCP47 语言标签（如 "zh-Hans"、"en-US"）
+ * @param fallbackLanguageTag 当 [languageTag] 没有匹配语言包时的 fallback；
+ *   作用于 GearUI 自身和所有上层库
+ * @param stringsOverrides 字段级覆盖 GearUI 内置文案，按语言 tag 分组
+ * @param runtimeFlags Runtime 行为开关
  * @param keyboardDismissMode 输入框失焦策略（默认点击空白或滚动时自动收起键盘）
  */
 @Composable
@@ -60,29 +80,29 @@ fun GearApp(
     themeMode: ThemeMode = ThemeMode.Light,
     isSystemDark: Boolean = false,
     theme: ThemeSpec? = null,
+    languageTag: String = "en-US",
+    fallbackLanguageTag: String = "en-US",
+    stringsOverrides: Map<String, GearStringsPatch> = emptyMap(),
     runtimeFlags: GearRuntimeFlags = GearRuntimeFlags(),
     keyboardDismissMode: KeyboardDismissMode = KeyboardDismissMode.OnTapOrScroll,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    // 1. 提供系统深色模式状态
-    ProvideSystemDarkMode(isSystemDark = isSystemDark) {
-        // 2. 应用主题
-        Theme(mode = themeMode, theme = theme) {
-            ProvideGearRuntimeEnvironment(flags = runtimeFlags) {
-                // 3. 全局背景容器（使用主题背景色）
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Theme.colors.background)
-                ) {
-                    KeyboardDismissContainer(mode = keyboardDismissMode) {
-                        // 4. Overlay 层级管理
-                        GearOverlayRoot {
-                            // 应用主内容
-                            content()
-
-                            // 全局浮层 - Toast
-                            ToastHost()
+    I18nRoot(languageTag = languageTag, fallbackLanguageTag = fallbackLanguageTag) {
+        GearI18nProvider(overrides = stringsOverrides) {
+            ProvideSystemDarkMode(isSystemDark = isSystemDark) {
+                Theme(mode = themeMode, theme = theme) {
+                    ProvideGearRuntimeEnvironment(flags = runtimeFlags) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Theme.colors.background)
+                        ) {
+                            KeyboardDismissContainer(mode = keyboardDismissMode) {
+                                GearOverlayRoot {
+                                    content()
+                                    ToastHost()
+                                }
+                            }
                         }
                     }
                 }

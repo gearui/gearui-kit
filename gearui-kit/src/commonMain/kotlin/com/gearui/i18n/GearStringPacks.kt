@@ -6,11 +6,11 @@ object GearStringPacks {
     const val CHINESE_SIMPLIFIED_TAG: String = "zh-Hans"
     const val CHINESE_TRADITIONAL_TAG: String = "zh-Hant"
 
-    val English: Strings = GearStringsEnUs
-    val ChineseSimplified: Strings = GearStringsZhHans
-    val ChineseTraditional: Strings = GearStringsZhHant
+    val English: GearStrings = GearStringsEnUs
+    val ChineseSimplified: GearStrings = GearStringsZhHans
+    val ChineseTraditional: GearStrings = GearStringsZhHant
 
-    val builtIn: Map<String, Strings> = mapOf(
+    val builtIn: Map<String, GearStrings> = mapOf(
         ENGLISH_TAG to English,
         CHINESE_SIMPLIFIED_TAG to ChineseSimplified,
         CHINESE_TRADITIONAL_TAG to ChineseTraditional,

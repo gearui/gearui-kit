@@ -4,7 +4,7 @@
 SPEC 4.1 / SPEC_CI_MAPPING token-compat-check.
 
 Detects:
-  1. Deletion or rename of fields on GearColors / GearTypography / GearShapes.
+  1. Deletion or rename of fields on Colors / Typography / Shapes.
   2. Semantic drift of Themes.Light / Themes.Dark color presets
      (field value changed without bumping the schema).
 
@@ -20,12 +20,12 @@ ROOT = Path(__file__).resolve().parents[2]
 THEME_DIR = ROOT / "gearui-kit/src/commonMain/kotlin/com/gearui/theme"
 
 DATA_CLASSES = [
-    ("GearColors", THEME_DIR / "GearColors.kt"),
-    ("GearTypography", THEME_DIR / "GearTypography.kt"),
-    ("GearShapes", THEME_DIR / "GearShapes.kt"),
+    ("Colors", THEME_DIR / "Colors.kt"),
+    ("Typography", THEME_DIR / "Typography.kt"),
+    ("Shapes", THEME_DIR / "Shapes.kt"),
 ]
 
-THEME_PRESETS_FILE = THEME_DIR / "GearColors.kt"
+THEME_PRESETS_FILE = THEME_DIR / "Colors.kt"
 THEME_PRESETS = ["Light", "Dark"]
 
 VAL_FIELD_RE = re.compile(r"^\s*val\s+(\w+)\s*:\s*\w", re.MULTILINE)
@@ -81,14 +81,14 @@ def extract_assignments(body: str) -> list[tuple[str, str]]:
 
 
 def extract_theme_preset(source: str, preset: str) -> list[tuple[str, str]]:
-    """Extract `Themes.<preset> = ThemeSpec(colors = GearColors(...))` leaf assignments."""
+    """Extract `Themes.<preset> = ThemeSpec(colors = Colors(...))` leaf assignments."""
     spec_body = find_balanced_block(
         source, rf"\bval\s+{preset}\s*=\s*ThemeSpec\s*\("
     )
     if spec_body is None:
         sys.stderr.write(f"ERROR: Themes.{preset} not found\n")
         sys.exit(2)
-    colors_body = find_balanced_block(spec_body, r"colors\s*=\s*GearColors\s*\(")
+    colors_body = find_balanced_block(spec_body, r"colors\s*=\s*Colors\s*\(")
     if colors_body is None:
         sys.stderr.write(f"ERROR: Themes.{preset}.colors block not found\n")
         sys.exit(2)

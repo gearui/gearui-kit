@@ -3,7 +3,7 @@
 # Refresh with:  ./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api
 # DO NOT edit by hand.
 
-[fields] GearColors
+[fields] Colors
   background
   border
   bubbleOther
@@ -44,7 +44,7 @@
   warning
   warningLight
 
-[fields] GearTypography
+[fields] Typography
   bodyExtraLarge
   bodyExtraSmall
   bodyLarge
@@ -69,7 +69,7 @@
   titleMedium
   titleSmall
 
-[fields] GearShapes
+[fields] Shapes
   circle
   default
   extraLarge

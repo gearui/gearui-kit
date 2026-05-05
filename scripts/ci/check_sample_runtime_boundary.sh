@@ -10,9 +10,9 @@ if [[ ! -f "$MAIN_DEMO" ]]; then
   exit 1
 fi
 
-# Rule 1: sample entry must use GearApp runtime wrapper.
-if ! rg -n 'GearApp\(' "$MAIN_DEMO" >/dev/null; then
-  echo "Runtime boundary violation: MainDemo must use GearApp as unified runtime entry."
+# Rule 1: sample entry must use App runtime wrapper.
+if ! rg -n 'App\(' "$MAIN_DEMO" >/dev/null; then
+  echo "Runtime boundary violation: MainDemo must use App as unified runtime entry."
   exit 1
 fi
 

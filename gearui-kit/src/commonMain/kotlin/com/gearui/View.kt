@@ -59,10 +59,10 @@ abstract class View : ComposeContainer() {
     open fun runtimeFlags(): RuntimeFlags = RuntimeFlags()
 
     /**
-     * 是否由 View 基类自动包装 GearApp。
-     * 默认开启；如页面需要自行控制唯一 GearApp 入口，可覆写为 false。
+     * 是否由 View 基类自动包装 App。
+     * 默认开启；如页面需要自行控制唯一 App 入口，可覆写为 false。
      */
-    open fun autoWrapGearApp(): Boolean = true
+    open fun autoWrapApp(): Boolean = true
 
     /**
      * 界面内容（子类必须实现）
@@ -74,8 +74,8 @@ abstract class View : ComposeContainer() {
         super.didInit()
 
         setContent {
-            if (autoWrapGearApp()) {
-                GearApp(
+            if (autoWrapApp()) {
+                App(
                     themeMode = themeMode() ?: ThemeMode.Light,
                     theme = themeSpec(),
                     runtimeFlags = runtimeFlags()

@@ -20,7 +20,7 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
 
 /**
- * GearApp - GearUI 应用统一入口
+ * App - GearUI 应用统一入口
  *
  * 整合所有 GearUI 基础设施：
  * - I18n（语言运行时，对所有库共享）
@@ -30,7 +30,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *
  * 架构层级：
  * ```
- * GearApp (languageTag + themeMode + ...)
+ * App (languageTag + themeMode + ...)
  *     ↓
  * I18nRoot (LocalLanguageTag / LocalFallbackLanguageTag)
  *     ↓
@@ -49,7 +49,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *
  * 使用方式：
  * ```kotlin
- * GearApp(
+ * App(
  *     languageTag = userLanguage,
  *     themeMode = ThemeMode.System,
  *     isSystemDark = StatusBarControllerImpl.isSystemDarkMode(),
@@ -76,7 +76,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  * @param keyboardDismissMode 输入框失焦策略（默认点击空白或滚动时自动收起键盘）
  */
 @Composable
-fun GearApp(
+fun App(
     themeMode: ThemeMode = ThemeMode.Light,
     isSystemDark: Boolean = false,
     theme: ThemeSpec? = null,

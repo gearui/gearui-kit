@@ -11,7 +11,7 @@ val LocalStrings = staticCompositionLocalOf { StringPacks.English }
  * Provider for GearUI Kit's own strings. Reads [LocalLanguageTag] /
  * [LocalFallbackLanguageTag] set by [I18nRoot], resolves the matching pack
  * from [StringPacks.builtIn], and applies any [overrides] keyed by
- * language tag. Apps usually do not call this directly; [com.gearui.GearApp]
+ * language tag. Apps usually do not call this directly; [com.gearui.App]
  * mounts it automatically.
  */
 @Composable

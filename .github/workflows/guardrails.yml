@@ -31,8 +31,8 @@ jobs:
       - name: SafeArea runtime contract guard
         run: ./scripts/ci/check_safearea_runtime_contract.sh
 
-      - name: Single GearApp root guard
-        run: ./scripts/ci/check_single_gearapp_root.sh
+      - name: Single App root guard
+        run: ./scripts/ci/check_single_app_root.sh
 
       - name: Token schema compatibility (SPEC 4.1)
         run: ./scripts/ci/check_token_compat.sh

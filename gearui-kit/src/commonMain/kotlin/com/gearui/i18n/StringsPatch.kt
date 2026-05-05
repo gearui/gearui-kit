@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 /**
  * Field-level override for [Strings]. Every field is nullable; null means
  * "inherit from base pack". Apps supply patches keyed by language tag via
- * [I18nProvider] (or the `stringsOverrides` parameter of `GearApp`).
+ * [I18nProvider] (or the `stringsOverrides` parameter of `App`).
  */
 @Immutable
 data class StringsPatch(

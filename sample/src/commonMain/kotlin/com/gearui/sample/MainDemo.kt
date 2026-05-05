@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.core.annotations.Page
 import com.gearui.View
-import com.gearui.GearApp
+import com.gearui.App
 import com.gearui.sample.i18n.SampleI18nProvider
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.HomePage
@@ -62,8 +62,8 @@ fun MainDemoContent() {
         ThemeStyle.SYSTEM -> ThemeMode.System to null
     }
 
-    // 使用 GearApp 统一入口（整合 i18n + Theme + Overlay + Toast）
-    GearApp(
+    // 使用 App 统一入口（整合 i18n + Theme + Overlay + Toast）
+    App(
         themeMode = themeMode,
         isSystemDark = isSystemDark,
         theme = customTheme,
@@ -72,7 +72,7 @@ fun MainDemoContent() {
         // 更新状态栏颜色
         StatusBarEffect(themeStyle = settingsState.themeStyle)
 
-        // sample 自身的语言包，依赖 GearApp 已挂的 LocalLanguageTag
+        // sample 自身的语言包，依赖 App 已挂的 LocalLanguageTag
         SampleI18nProvider {
             CompositionLocalProvider(LocalSettingsState provides settingsState) {
                 MainDemoContentInner(settingsState = settingsState)

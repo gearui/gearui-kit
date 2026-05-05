@@ -59,7 +59,7 @@ internal data class ToastData(
  *
  * 使用方式：
  * ```kotlin
- * // 在 GearApp 内使用（需要先放置 ToastHost）
+ * // 在 App 内使用（需要先放置 ToastHost）
  * Toast.show("保存成功")
  * Toast.success("操作成功")
  * Toast.error("操作失败")
@@ -120,7 +120,7 @@ object Toast {
  * 必须放在 OverlayRoot 内部，用于显示全局 Toast
  *
  * ```kotlin
- * GearApp {
+ * App {
  *     OverlayRoot {
  *         ToastHost()
  *         // ... 其他内容

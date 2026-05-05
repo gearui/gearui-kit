@@ -116,10 +116,10 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
 3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
 4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
 
-GearApp 入口约束（强制）：
-- 每个页面树只允许一个 `GearApp` 根入口作为 Runtime 生效点（single runtime root）。
-- 禁止同一页面树出现双层 `GearApp` 嵌套，避免 `runtimeFlags` 与 `RuntimeEnvironment` 被内层默认值覆盖。
-- 如页面需自行管理 GearApp（业务自定义 theme/runtimeFlags），必须关闭基类自动包装（等价于 `autoWrapGearApp=false`），保证入口唯一。
+App 入口约束（强制）：
+- 每个页面树只允许一个 `App` 根入口作为 Runtime 生效点（single runtime root）。
+- 禁止同一页面树出现双层 `App` 嵌套，避免 `runtimeFlags` 与 `RuntimeEnvironment` 被内层默认值覆盖。
+- 如页面需自行管理 App（业务自定义 theme/runtimeFlags），必须关闭基类自动包装（等价于 `autoWrapApp=false`），保证入口唯一。
 
 职责边界：
 - Runtime 负责采集与同步：
@@ -165,9 +165,9 @@ Host -> Runtime 动态桥接约束（Android/iOS）：
 GearUI Kit 默认运行前提：根容器必须具备全屏渲染优先级（edge-to-edge compatible）。
 
 规范要求：
-- GearApp/Root Host 必须 attach 到 fullscreen container（match-parent）。
+- App/Root Host 必须 attach 到 fullscreen container（match-parent）。
 - 非全屏容器会导致 insets/safeArea/overlay/keyboard 计算失真，视为架构错误。
-- 禁止在 GearApp 根节点施加全局 safeArea padding。
+- 禁止在 App 根节点施加全局 safeArea padding。
 
 运行时策略：
 - Debug：检测到非全屏容器时，直接 fail-fast（抛错或阻断渲染）。
@@ -375,7 +375,7 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 - `REJECT`：业务页面长期手写 safe area padding 作为系统安全区主方案。
 - `REJECT`：在根容器或 Overlay 宿主上施加安全区 padding，导致全屏画布被裁剪。
 - `REJECT`：通过页面级参数手动切换 NavBar/BottomNavBar/Drawer/ActionSheet 的安全区策略（必须由 Runtime 统一决策）。
-- `REJECT`：同一页面树出现双层 `GearApp`（或等价双 Runtime 根）导致 `runtimeFlags`/safeArea 语义漂移。
+- `REJECT`：同一页面树出现双层 `App`（或等价双 Runtime 根）导致 `runtimeFlags`/safeArea 语义漂移。
 
 2. Token 与样式
 - `REJECT`：组件层新增硬编码颜色值（`Color(0x...)`）替代语义 Token。
@@ -392,7 +392,7 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 - `REJECT`：Overlay 遮罩不覆盖全屏容器（状态栏/手势区未纳入同一遮罩层级）。
 
 4. Fullscreen Contract
-- `REJECT`：GearApp/Root Host 未以全屏容器（match-parent/edge-to-edge）挂载。
+- `REJECT`：App/Root Host 未以全屏容器（match-parent/edge-to-edge）挂载。
 - `REJECT`：在非全屏前提下继续以“页面补丁”规避系统栏与安全区问题。
 - `REJECT`：缺失全屏契约检测（Debug fail-fast 或 Release telemetry 其一都没有）。
 
@@ -436,7 +436,7 @@ GearUI Kit 提供：
 - `LocalFallbackLanguageTag`：fallback tag，所有库共用
 - `I18nRoot(languageTag, fallbackLanguageTag, content)`：唯一语言入口
 - `normalizeLanguageTag(tag)` / `resolveLanguagePack(tag, packs, defaultTag)`：复用工具
-- `GearApp(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `I18nProvider`
+- `App(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `I18nProvider`
 
 GearUI Kit 不提供：
 - 全局 `Map<String, String>` registry
@@ -458,7 +458,7 @@ GearUI Kit 不提供：
 
 - `REJECT`：上层库自己再造一个 `LocalLanguageTag` / `LocalFallbackLanguageTag`，与 gearui-kit 并存。
 - `REJECT`：上层 `XxxI18nProvider` 接收 `languageTag` 作为参数（必须从 `LocalLanguageTag` 读）。
-- `REJECT`：应用层在 `GearApp` 之外再嵌套 `I18nRoot(...)`（GearApp 已挂载）。
+- `REJECT`：应用层在 `App` 之外再嵌套 `I18nRoot(...)`（App 已挂载）。
 - `REJECT`：用 `Map<String, String>` + 字符串 key 访问文案。
 - `REJECT`：在每次组件重组中调用 `resolveLanguagePack` / `normalizeLanguageTag`（必须 `remember` 缓存）。
 - `REJECT`：在 `XxxStrings.merge` 中无条件 `copy()`（patch 为 null/empty 必须直接返回 receiver）。

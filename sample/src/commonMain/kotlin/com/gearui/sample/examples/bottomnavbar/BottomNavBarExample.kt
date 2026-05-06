@@ -74,6 +74,23 @@ fun BottomNavBarExample(
         }
 
         ExampleSection(
+            title = "Badge Count Overflow",
+            description = "Verifies badge layout for single digit / two digits / >99 (must show 99+ without truncation)."
+        ) {
+            var selectedId by remember { mutableStateOf("five") }
+
+            BottomNavBar(
+                items = listOf(
+                    BottomNavItem(id = "five", label = "Few", icon = Icons.forum, badgeCount = 5),
+                    BottomNavItem(id = "ninetynine", label = "Edge", icon = Icons.notifications, badgeCount = 99),
+                    BottomNavItem(id = "overflow", label = "Overflow", icon = Icons.mail, badgeCount = 120)
+                ),
+                selectedId = selectedId,
+                onSelect = { selectedId = it }
+            )
+        }
+
+        ExampleSection(
             title = "Disabled Item",
             description = "Disabled tabs are visible but not clickable."
         ) {

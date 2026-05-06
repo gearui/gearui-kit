@@ -20,7 +20,6 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxHeight
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.layout.size
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
@@ -112,35 +111,56 @@ fun BottomNavBar(
                                 Modifier
                             }
                         )
-                        .padding(top = 6.dp, bottom = 4.dp),
+                        .padding(top = 2.dp, bottom = 2.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    val iconBox: @Composable () -> Unit = {
-                        Box(
-                            modifier = Modifier.size(24.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
+                    // icon + badge 联合布局（自定义 Layout）：
+                    // - layout 尺寸**恒定**（不随 badge 出现/消失变化），所有 tab 一致
+                    // - icon 视觉**居中**于 layout（左右各预留 badge 半宽空间，badge 占满右半）
+                    // - badge 中心对齐 icon 右上角，完全落在 bounds 内（绕开 Kuikly 裁剪）
+                    //
+                    // 数学：layout = (iconW + badgeMaxW, iconH + badgeMaxH/2)
+                    //   "99+" 场景：(24 + 30, 24 + 8) = (54, 32)
+                    //   icon 中心点 = (27, 20) = layout 几何中心 → 视觉上 tab 内严格居中
+                    //   badge 中心 = (27 + 12, 20 - 12) = (39, 8) = icon 右上角 → 视觉漂浮
+                    val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
+                    val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
+                    com.tencent.kuikly.compose.ui.layout.Layout(
+                        content = {
                             Icon(
                                 name = iconName,
-                                size = 22.dp,
+                                size = 24.dp,
                                 tint = contentColor
                             )
+                            when {
+                                item.badgeCount > 0 -> Badge(
+                                    type = BadgeType.Message,
+                                    count = item.badgeCount,
+                                    maxCount = 99
+                                )
+                                item.showBadgeDot -> Badge(type = BadgeType.RedPoint)
+                            }
                         }
-                    }
-
-                    when {
-                        item.badgeCount > 0 -> Badge(
-                            type = BadgeType.Message,
-                            count = item.badgeCount,
-                            maxCount = 99,
-                            content = iconBox
-                        )
-                        item.showBadgeDot -> Badge(
-                            type = BadgeType.RedPoint,
-                            content = iconBox
-                        )
-                        else -> iconBox()
+                    ) { measurables, constraints ->
+                        val iconP = measurables[0].measure(constraints)
+                        val badgeP = measurables.getOrNull(1)
+                            ?.measure(com.tencent.kuikly.compose.ui.unit.Constraints())
+                        val reservedW = reservedBadgeW.roundToPx()
+                        val reservedH = reservedBadgeH.roundToPx()
+                        val totalW = iconP.width + reservedW           // = 54
+                        val totalH = iconP.height + reservedH / 2      // = 32
+                        layout(totalW, totalH) {
+                            // icon 水平居中：左侧留 reservedW/2，右侧留 reservedW/2
+                            // icon 垂直顶部留 reservedH/2，下方贴底
+                            val iconX = reservedW / 2
+                            val iconY = reservedH / 2
+                            iconP.place(iconX, iconY)
+                            badgeP?.place(
+                                iconX + iconP.width - badgeP.width / 2,
+                                iconY - badgeP.height / 2
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(2.dp))

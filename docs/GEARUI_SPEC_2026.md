@@ -440,6 +440,9 @@ GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的
 - `REJECT`：components 层重复实现 primitives 层已存在的基础能力（如 Badge / Divider / Surface / Text / Icon / Spacer），导致行为、尺寸、Token 或边界条件不一致。
 - `REJECT`：components 层手写 badge 数字溢出（`99+` / `maxCount`）、红点尺寸、Surface 圆角、Text 字号语义等已被 primitives 覆盖的边界逻辑。
 - `REJECT`：primitives 层组件外的代码绕过 primitive 直接使用 `Color(0x...)` / 硬编码 dp 重新拼装等价能力。
+- `REJECT`：导航栏（BottomNavBar / Tabs / 工具栏）等**固定槽位**组件依赖 Badge 视觉溢出 anchor 边界（如直接把 Badge 放在 `Modifier.size(iconSize)` 的 Box 内 align(TopEnd)）。Kuikly Compose native 渲染层会按 anchor 容器的尺寸裁剪溢出子节点，无法稳定渲染 `99+` 等多字符徽标。
+  - 槽位组件必须为 icon + badge 显式预留**包含 badge 完整尺寸**的容器（典型 36dp×28dp），icon 居中、badge align 角点，badge 完全落在容器 bounds 内。这是组件自身布局责任，不应外推为通用 primitive。
+- `REJECT`：计数徽标（`Badge(count = ...)`）出现文本省略（如 `9...` / `99...`）。计数徽标语义是数字摘要，必须通过 `maxCount` 归一化为 `99+` 等稳定文本，并由调用方保证容器宽度足够（不能放进比 badge 自身更窄的 anchor 容器）。
 
   原则：primitives 是组件库内部基础能力的 single source of truth；components 只能组合 primitives，不得复制其布局、状态、样式或边界逻辑。除非有明确架构豁免并在 PR 中说明。
 

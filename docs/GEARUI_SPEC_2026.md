@@ -210,6 +210,28 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 - 兼容回归覆盖 `safeAreaInsets`、尺寸变化事件与密度变化事件。
 - 文档中存在明确回退方案与开关生命周期说明。
 
+### 4.8 Built-in Assets Integration Contract
+
+GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的一部分，不属于业务 App 的临时资源。
+
+规范要求：
+- 内置资产必须在首次 clean build 后即可被 Android / iOS / Web 对应宿主正确加载。
+- 消费方不得自行猜测 GearUI Kit 内部资源目录结构。
+- iOS CocoaPods / Framework 集成链路必须保证资源复制在 framework 同步后稳定执行。
+- 资源复制不得使用会清空目标目录并造成竞态的同步策略，除非该策略已在目标平台验证无竞态。
+- GearUI Kit sample 与业务 App 必须共享同一套资源集成逻辑，禁止长期维护两套不同脚本。
+- 所有内置资产必须具备可校验清单或等价完整性检查。
+
+推荐实现：
+- P1：提供共享 Gradle 脚本 `gradle/gearui-resources.gradle.kts`。
+- P2：提供 `gearui-gradle-plugin`，暴露 `id("com.gearui.kit.integration")`。
+- P2：提供 `verifyGearuiResources` 任务，检查宿主 bundle 中资源完整性。
+
+验收标准：
+- clean build + 首次安装后，内置图标正常显示，无需二次构建。
+- iOS `.app/compose-resources/icons/` 中资源数量与 GearUI Kit 内置图标清单一致。
+- Android / Web 后续接入时必须提供等价资源校验。
+
 ---
 
 ## 5. 性能规范
@@ -408,11 +430,19 @@ GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 Kui
 - `REJECT`：主题/配色改造 PR 未更新语义映射文档。
 - `REJECT`：组件配色改造 PR 未更新角色用色矩阵。
 
+7. Built-in Assets
+- `REJECT`：消费方长期维护与 GearUI Kit sample 不一致的内置资产复制逻辑。
+- `REJECT`：首次 clean build 后内置图标 / 字体 / 动画资源缺失。
+- `REJECT`：资源复制任务存在已知竞态但无校验或 fallback。
+- `REJECT`：组件直接依赖业务 App 资源路径加载 GearUI Kit 内置资产。
+
 ### 11.2 WARN（需说明）
 
 - `WARN`：核心路径新增对象分配，可能扩大重组范围。
 - `WARN`：Overlay 行为依赖平台分支，未给出一致性验证。
 - `WARN`：主题扩展点新增但无可回归样例。
+- `WARN`：新增内置资产但未更新资源清单或校验任务。
+- `WARN`：新增平台 target 但未定义内置资产打包策略。
 
 ### 11.3 Reviewer Checklist
 

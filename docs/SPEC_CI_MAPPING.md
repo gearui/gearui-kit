@@ -132,3 +132,14 @@ SPEC 映射：
 计划：
 - 将 single-root 检查从 sample 扩展到业务 App 代码仓（跨仓 guard）。
 - 若页面覆盖 `View` 自动包装，必须显式声明（如 `autoWrapApp=false`）并保留唯一 `App` 入口。
+
+5. Built-in assets verification（P1/P2）
+SPEC 映射：
+- 4.8 Built-in Assets Integration Contract
+- 11.1 REJECT / Built-in Assets
+
+计划：
+- P1：抽出共享 Gradle 脚本 `gradle/gearui-resources.gradle.kts`，sample 与业务 App 共用。
+- P2：发布 `gearui-gradle-plugin`（`id("com.gearui.kit.integration")`），统一注册资源复制 + 平台 bundle 接入。
+- P2：新增 `verifyGearuiResources` 任务，校验 iOS `.app/compose-resources/icons/`、Android assets、Web static 资源数量与 GearUI 内置清单一致。
+- 先夜跑告警，稳定后升级为发布阻断。

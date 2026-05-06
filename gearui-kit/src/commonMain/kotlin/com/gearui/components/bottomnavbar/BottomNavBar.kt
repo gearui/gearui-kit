@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
+import com.gearui.primitives.Badge
+import com.gearui.primitives.BadgeType
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
@@ -17,13 +19,10 @@ import com.tencent.kuikly.compose.foundation.layout.Spacer
 import com.tencent.kuikly.compose.foundation.layout.fillMaxHeight
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
-import com.tencent.kuikly.compose.foundation.layout.offset
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.foundation.layout.size
-import com.tencent.kuikly.compose.foundation.layout.widthIn
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
@@ -53,7 +52,6 @@ fun BottomNavBar(
     inactiveColor: Color? = null
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
     val runtimeFlags = LocalRuntimeFlags.current
     val runtimeEnvironment = LocalRuntimeEnvironment.current
     val configuration = LocalConfiguration.current
@@ -118,47 +116,31 @@ fun BottomNavBar(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Box(
-                        modifier = Modifier.size(24.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            name = iconName,
-                            size = 22.dp,
-                            tint = contentColor
-                        )
-
-                        if (item.badgeCount > 0 || item.showBadgeDot) {
-                            val badgeText = if (item.badgeCount > 99) "99+" else item.badgeCount.toString()
-                            if (item.badgeCount > 0) {
-                                Box(
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .offset(x = 8.dp, y = (-8).dp)
-                                        .clip(shapes.round)
-                                        .background(colors.danger)
-                                        .height(16.dp)
-                                        .widthIn(min = 16.dp)
-                                        .padding(horizontal = 4.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = badgeText,
-                                        style = Typography.Label,
-                                        color = colors.textAnti
-                                    )
-                                }
-                            } else {
-                                Box(
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .offset(x = 4.dp, y = (-4).dp)
-                                        .size(8.dp)
-                                        .clip(shapes.circle)
-                                        .background(colors.danger)
-                                )
-                            }
+                    val iconBox: @Composable () -> Unit = {
+                        Box(
+                            modifier = Modifier.size(24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                name = iconName,
+                                size = 22.dp,
+                                tint = contentColor
+                            )
                         }
+                    }
+
+                    when {
+                        item.badgeCount > 0 -> Badge(
+                            type = BadgeType.Message,
+                            count = item.badgeCount,
+                            maxCount = 99,
+                            content = iconBox
+                        )
+                        item.showBadgeDot -> Badge(
+                            type = BadgeType.RedPoint,
+                            content = iconBox
+                        )
+                        else -> iconBox()
                     }
 
                     Spacer(modifier = Modifier.height(2.dp))

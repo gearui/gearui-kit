@@ -436,6 +436,13 @@ GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的
 - `REJECT`：资源复制任务存在已知竞态但无校验或 fallback。
 - `REJECT`：组件直接依赖业务 App 资源路径加载 GearUI Kit 内置资产。
 
+8. Primitive Reuse Boundary
+- `REJECT`：components 层重复实现 primitives 层已存在的基础能力（如 Badge / Divider / Surface / Text / Icon / Spacer），导致行为、尺寸、Token 或边界条件不一致。
+- `REJECT`：components 层手写 badge 数字溢出（`99+` / `maxCount`）、红点尺寸、Surface 圆角、Text 字号语义等已被 primitives 覆盖的边界逻辑。
+- `REJECT`：primitives 层组件外的代码绕过 primitive 直接使用 `Color(0x...)` / 硬编码 dp 重新拼装等价能力。
+
+  原则：primitives 是组件库内部基础能力的 single source of truth；components 只能组合 primitives，不得复制其布局、状态、样式或边界逻辑。除非有明确架构豁免并在 PR 中说明。
+
 ### 11.2 WARN（需说明）
 
 - `WARN`：核心路径新增对象分配，可能扩大重组范围。

@@ -6,8 +6,6 @@
 [fields] Colors
   background
   border
-  bubbleOther
-  bubbleSelf
   danger
   dangerLight
   disabled
@@ -20,8 +18,6 @@
   inverseOnSurface
   inverseSurface
   mask
-  onBubbleOther
-  onBubbleSelf
   onPrimary
   overlay
   primary
@@ -80,8 +76,6 @@
 [preset] Themes.Light.colors
   background = Color(0xFFFFFFFF)
   border = Color(0xFFE4E4E7)
-  bubbleOther = Color(0xFFF4F4F5)
-  bubbleSelf = Color(0xFF18181B)
   danger = Color(0xFFDC2626)
   dangerLight = Color(0xFFFEE2E2)
   disabled = Color(0xFFA1A1AA)
@@ -94,8 +88,6 @@
   inverseOnSurface = Color(0xFFFAFAFA)
   inverseSurface = Color(0xFF18181B)
   mask = Color(0x6609090B)
-  onBubbleOther = Color(0xFF09090B)
-  onBubbleSelf = Color(0xFFFFFFFF)
   onPrimary = Color.White
   overlay = Color(0xFFFFFFFF)
   primary = Color(0xFF18181B)
@@ -121,8 +113,6 @@
 [preset] Themes.Dark.colors
   background = Color(0xFF09090B)
   border = Color(0xFF2F3340)
-  bubbleOther = Color(0xFF1A1C24)
-  bubbleSelf = Color(0xFF3F3F46)
   danger = Color(0xFFF87171)
   dangerLight = Color(0xFF7F1D1D)
   disabled = Color(0xFF52525B)
@@ -135,8 +125,6 @@
   inverseOnSurface = Color(0xFF09090B)
   inverseSurface = Color(0xFFF4F4F5)
   mask = Color(0x99000000)
-  onBubbleOther = Color(0xFFFAFAFA)
-  onBubbleSelf = Color(0xFFFAFAFA)
   onPrimary = Color(0xFF09090B)
   overlay = Color(0xFF1A1C24)
   primary = Color(0xFFFAFAFA)

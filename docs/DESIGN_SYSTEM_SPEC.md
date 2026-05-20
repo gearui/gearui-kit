@@ -8,19 +8,18 @@ Mode: Design baseline only. No component implementation changes are implied by t
 
 These decisions must be resolved before Phase 2 audit expansion and before component-family implementation starts.
 
-### 0.1 Visual Lineage - Decided
+### 0.1 Visual Identity - Decided
 
-GearUI Kit adopts an Apple UIKit-inspired mobile visual language, a TDesign Flutter-inspired component architecture, and shadcn-inspired semantic surface tokens.
+GearUI Kit defines its own mobile-first design system: the **GearUI Design Language**.
 
-This means:
+Existing influences are treated as implementation history and design references, not as final visual identity:
 
-- Visual direction: mobile-first, restrained, premium, native-like.
-- Component taxonomy: aligned with TDesign-style full component coverage.
-- Engineering structure: TDesign Flutter is the main reference for component families, state matrices, examples, and spec discipline.
-- Token semantics: closer to shadcn's `background`, `foreground`, `card`, `popover`, `muted`, `border`, `input`, and `ring` model.
-- Runtime behavior: centralized like a native UI framework, especially for safe area, keyboard, overlay, focus, and navigation.
+- **TDesign** contributes component architecture, coverage, and documentation discipline.
+- **Apple / UIKit** contributes mobile interaction quality, native-like hierarchy, safe-area awareness, keyboard behavior, and restrained motion.
+- **shadcn** contributes semantic token clarity, especially surface, foreground, muted, border, input, and ring role naming.
+- **KuiklyUI** defines the runtime implementation boundary across Kotlin KMP targets.
 
-GearUI should not copy Apple branding, TDesign visual styling, or shadcn's Web/CSS/Tailwind implementation model. The target positioning is: Apple-like mobile quality, TDesign-like engineering structure, shadcn-like semantic clarity.
+The final output must look and behave like **GearUI**, not like a clone of TDesign, shadcn, or UIKit. GearUI may reuse existing component capabilities and color assets, but all public presentation must be normalized through GearUI tokens, GearUI component tokens, and GearUI runtime contracts.
 
 ### 0.2 Core `Colors` Footprint - Direction Decided
 
@@ -72,11 +71,11 @@ Rules:
 
 ## 1. Design Principles
 
-GearUI Kit should be a general-purpose UI kit with a coherent mobile-first design language. It may learn from shadcn/ui's hierarchy and restraint, but it should not be a web-token clone.
+GearUI Kit is a general-purpose mobile-first UI kit with one coherent design language. Influences are absorbed into GearUI's own system; no upstream framework should remain visible at the API or visual layer.
 
 - Minimal but expressive: visual weight should come from hierarchy, spacing, type, border, and state, not decoration.
 - Mobile-first, desktop-ready: default density and touch targets should work on iOS and Android first.
-- Shadcn-inspired, not shadcn-cloned: keep the clean surface/border/state model, but adapt it to Kuikly mobile constraints.
+- One design language: TDesign / Apple / shadcn references are normalized into GearUI conventions; downstream code should not need to know which influence shaped which token.
 - Token-first: components should consume component tokens, not raw primitive values.
 - Border and surface before shadow: cards and controls should prefer subtle border/surface changes. Heavy shadows are exceptional.
 - Runtime consistency over component freedom: keyboard dismiss, safe area, overlay stacking, and inset behavior are runtime policies.
@@ -149,9 +148,9 @@ Use surfaces to communicate layering before using shadow.
 - `disabled`: disabled state.
 - `invalid`: validation error state.
 
-## 4. Core Color Semantics
+## 4. GearUI Semantic Color Model
 
-The target semantic color model should be close to this shape. The final public field list must be frozen before `1.0.0-rc1`.
+The GearUI semantic color model uses surface / content / interaction roles. Field names below follow GearUI conventions; while some are inspired by shadcn role naming, the model itself is GearUI's. The final public field list must be frozen before `1.0.0-rc1`.
 
 ```kotlin
 data class Colors(
@@ -281,7 +280,7 @@ Rules:
 
 ## 9. Elevation Policy
 
-GearUI should prefer shadcn-like surface discipline:
+GearUI prefers surface/border discipline over heavy shadow:
 
 - Cards default to border, not shadow.
 - Heavy shadows are not a default container affordance.

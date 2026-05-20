@@ -13,7 +13,7 @@ The working tree already contained unrelated modified files from ongoing work. T
 
 ## Executive Summary
 
-GearUI Kit already has useful foundations: `GearApp` owns theme/runtime/i18n/overlay/keyboard dismissal, the current color values are moving toward a clean shadcn-like surface model, and several token/spec files exist.
+GearUI Kit already has useful foundations: `GearApp` owns theme/runtime/i18n/overlay/keyboard dismissal, the current color values are converging on a clean surface/content/interaction semantic model, and several token/spec files exist.
 
 The main issue is governance: token layers are not yet enforceable. Components can still mix `Theme.colors`, component specs, direct dp values, local focus behavior, and one-off runtime logic. That makes the design language fragile even if individual screens look acceptable.
 
@@ -71,7 +71,7 @@ Evidence:
 
 Current state:
 
-`Shapes.kt` says components must not hardcode `RoundedCornerShape(xx.dp)`, but `Button.kt` directly uses `RoundedCornerShape(8.dp)`. The current shape scale is `3/6/9/12/full`, while desired shadcn-like mobile radius needs a first-class `8dp` level.
+`Shapes.kt` says components must not hardcode `RoundedCornerShape(xx.dp)`, but `Button.kt` directly uses `RoundedCornerShape(8.dp)`. The current shape scale is `3/6/9/12/full`, while the GearUI mobile design language requires a first-class `8dp` level.
 
 Impact:
 
@@ -332,7 +332,7 @@ Evidence:
 
 Current state:
 
-The values are increasingly shadcn-like, but names still mix TDesign-style states (`primaryHover`, `primaryActive`), content roles (`textPrimary`), and surface roles (`surfaceComponent`).
+The values are converging on the GearUI semantic surface model, but names still mix TDesign-style states (`primaryHover`, `primaryActive`), content roles (`textPrimary`), and surface roles (`surfaceComponent`).
 
 Impact:
 

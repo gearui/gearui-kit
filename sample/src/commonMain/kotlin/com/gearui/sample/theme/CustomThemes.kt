@@ -69,12 +69,6 @@ object CustomThemes {
             info = Color(0xFFB89CFF),                 // 信息色
             infoLight = Color(0xFF3A2E5D),
 
-            // Chat Bubble
-            bubbleSelf = Color(0xFF6C3AFF),
-            onBubbleSelf = Color(0xFFFFFFFF),
-            bubbleOther = Color(0xFF2A2040),
-            onBubbleOther = Color(0xFFF5EEFF),
-
             // Inverse 反转色
             inverseSurface = Color(0xFFF5EEFF),       // 浅紫背景
             inverseOnSurface = Color(0xFF1D1333),     // 深紫文字

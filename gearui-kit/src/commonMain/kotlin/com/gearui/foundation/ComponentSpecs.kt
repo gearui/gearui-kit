@@ -16,6 +16,10 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * 参考: td_button.dart
  * ======================================== */
 
+@Deprecated(
+    message = "ButtonSpecs is deprecated. Use the matching component-family tokens (e.g. ButtonTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object ButtonSpecs {
     // 高度规格
     object Height {
@@ -61,6 +65,10 @@ object ButtonSpecs {
  * 参考: td_cell_style.dart
  * ======================================== */
 
+@Deprecated(
+    message = "CellSpecs is deprecated. Use the matching component-family tokens (e.g. CellTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object CellSpecs {
     // 内边距 (使用 spacer16 = 16dp)
     val padding: Dp = 16.dp
@@ -92,6 +100,10 @@ object CellSpecs {
  * 参考: td_avatar.dart
  * ======================================== */
 
+@Deprecated(
+    message = "AvatarSpecs is deprecated. Use the matching component-family tokens (e.g. AvatarTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object AvatarSpecs {
     object Size {
         val large: Dp = 64.dp
@@ -111,6 +123,10 @@ object AvatarSpecs {
  * 参考: td_badge.dart
  * ======================================== */
 
+@Deprecated(
+    message = "BadgeSpecs is deprecated. Use the matching component-family tokens (e.g. BadgeTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object BadgeSpecs {
     object Size {
         val large: Dp = 20.dp
@@ -132,6 +148,10 @@ object BadgeSpecs {
  * 参考: td_divider.dart
  * ======================================== */
 
+@Deprecated(
+    message = "DividerSpecs is deprecated. Use the matching component-family tokens (e.g. DividerTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object DividerSpecs {
     // 默认高度
     val height: Dp = 0.5.dp
@@ -147,6 +167,10 @@ object DividerSpecs {
  * Tabs 选项卡规格
  * ======================================== */
 
+@Deprecated(
+    message = "TabSpecs is deprecated. Use the matching component-family tokens (e.g. TabTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object TabSpecs {
     // 默认高度
     val height: Dp = 48.dp
@@ -165,6 +189,10 @@ object TabSpecs {
  * Card 卡片规格
  * ======================================== */
 
+@Deprecated(
+    message = "CardSpecs is deprecated. Use the matching component-family tokens (e.g. CardTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object CardSpecs {
     // 圆角 (radiusLarge = 9dp)
     val radius: Dp = 9.dp
@@ -181,6 +209,10 @@ object CardSpecs {
  * 参考: td_input.dart, td_input_spacer.dart
  * ======================================== */
 
+@Deprecated(
+    message = "InputSpecs is deprecated. Use the matching component-family tokens (e.g. InputTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object InputSpecs {
     object Height {
         val large: Dp = 48.dp
@@ -204,6 +236,10 @@ object InputSpecs {
  * SectionHeader 区块标题规格
  * ======================================== */
 
+@Deprecated(
+    message = "SectionHeaderSpecs is deprecated. Use the matching component-family tokens (e.g. SectionHeaderTokens) after that batch lands.",
+    level = DeprecationLevel.WARNING
+)
 object SectionHeaderSpecs {
     // 上边距
     val paddingTop: Dp = 24.dp

@@ -25,6 +25,12 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    // Web target — spike for browser support (1.0 requirement).
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
     targets.all {
         compilations.all {
             kotlinOptions {

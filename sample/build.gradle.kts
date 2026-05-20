@@ -23,6 +23,22 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    // Web target — sample is the business bundle (nativevue2.js).
+    // The h5App sub-module is the host that loads this bundle from port 8083.
+    js(IR) {
+        moduleName = "nativevue2"
+        browser {
+            webpackTask {
+                outputFileName = "nativevue2.js"
+            }
+            commonWebpackConfig {
+                output?.library = null
+                devtool = "source-map"
+            }
+        }
+        binaries.executable()
+    }
+
     cocoapods {
         summary = "GearUI-KuiklyUI Sample - GearUI Component Demo"
         homepage = "https://github.com/zoujiaqing/tdesign-kuikly"
@@ -42,8 +58,8 @@ kotlin {
                 implementation(project(":gearui-kit"))
 
                 // KuiklyUI Core（用于 @Page 注解和 ComposeContainer）
-                implementation("com.tencent.kuikly-open:core:2.16.0-2.1.21")
-                implementation("com.tencent.kuikly-open:core-annotations:2.16.0-2.1.21")
+                implementation("com.tencent.kuikly-open:core:2.19.0-2.1.21")
+                implementation("com.tencent.kuikly-open:core-annotations:2.19.0-2.1.21")
 
                 // Compose runtime
                 implementation(compose.runtime)
@@ -55,7 +71,7 @@ kotlin {
 
         androidMain.dependencies {
             // KuiklyUI Android 渲染支持
-            implementation("com.tencent.kuikly-open:core-render-android:2.16.0-2.1.21")
+            implementation("com.tencent.kuikly-open:core-render-android:2.19.0-2.1.21")
             implementation("androidx.appcompat:appcompat:1.6.1")
         }
 
@@ -68,6 +84,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
+
     }
 }
 
@@ -108,10 +125,11 @@ android {
 
 // KSP 配置
 dependencies {
-    add("kspAndroid", "com.tencent.kuikly-open:core-ksp:2.16.0-2.1.21")
-    add("kspIosX64", "com.tencent.kuikly-open:core-ksp:2.16.0-2.1.21")
-    add("kspIosArm64", "com.tencent.kuikly-open:core-ksp:2.16.0-2.1.21")
-    add("kspIosSimulatorArm64", "com.tencent.kuikly-open:core-ksp:2.16.0-2.1.21")
+    add("kspAndroid", "com.tencent.kuikly-open:core-ksp:2.19.0-2.1.21")
+    add("kspIosX64", "com.tencent.kuikly-open:core-ksp:2.19.0-2.1.21")
+    add("kspIosArm64", "com.tencent.kuikly-open:core-ksp:2.19.0-2.1.21")
+    add("kspIosSimulatorArm64", "com.tencent.kuikly-open:core-ksp:2.19.0-2.1.21")
+    add("kspJs", "com.tencent.kuikly-open:core-ksp:2.19.0-2.1.21")
 }
 
 val syncSharedAssetsToPodResources by tasks.registering(Copy::class) {

@@ -2718,6 +2718,16 @@ public final class com/gearui/foundation/list/CellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/motion/MotionTokens {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/motion/MotionTokens;
+	public static final field emphasized I
+	public static final field fast I
+	public static final field instant I
+	public static final field normal I
+	public static final field slow I
+}
+
 public final class com/gearui/foundation/primitives/BasicTextFieldKt {
 	public static final fun BasicTextField-4bD4X2E (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZZIIIZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lcom/tencent/kuikly/compose/ui/graphics/Brush;Lkotlin/jvm/functions/Function3;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/input/VisualTransformation;Landroidx/compose/runtime/Composer;III)V
 }

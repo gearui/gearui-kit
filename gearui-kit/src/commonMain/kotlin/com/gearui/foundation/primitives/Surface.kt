@@ -74,9 +74,11 @@ fun Surface(
     // =========================
     // Surface Node (Primitive View)
     // =========================
+    // height = 0.dp 表示"高度由内容决定"（自适应），不施加固定高度。
+    // Card / 包装容器类组件依赖此语义；其它定高组件（Button / Tag 等）传具体高度。
     Box(
         modifier = modifier
-            .height(tokens.height)
+            .then(if (tokens.height > 0.dp) Modifier.height(tokens.height) else Modifier)
             .scale(targetScale)
             .clip(RoundedCornerShape(tokens.radius))
             .background(backgroundColor)

@@ -1,8 +1,14 @@
 # GearUI Token Freeze Decisions
 
-Status: Draft  
+Status: Approved for 1.0 token freeze  
 Branch: `codex/design-system-audit-2026`  
-Mode: Decision document only. No component implementation changes are implied here. Component-family rollout happens after these decisions are accepted.
+Mode: Decision document only. No component implementation changes are implied here. Component-family rollout begins next.
+
+## Approval Status
+
+Approved for 1.0 token freeze implementation.
+
+After Batch 1 starts, changes to public token names require explicit migration notes and API baseline review. Amendments to this document must be recorded as new dated entries below, not in-place edits to approved sections.
 
 ## Background
 
@@ -179,7 +185,7 @@ These decisions affect the following ownership areas. Implementation happens bat
 
 ## Acceptance
 
-These five decisions are the GearUI 1.0 token freeze. After this document is signed off:
+These five decisions are the GearUI 1.0 token freeze. This document is now signed off:
 
 - Public token names defined here cannot change before 1.0 GA without a separate decision record amending this file.
 - Component-family rollout (Batch 1: Theme/Spacing/Radius/Motion/Elevation) starts on the basis of these decisions.

@@ -22,7 +22,7 @@ import com.gearui.theme.Theme
  * Avatar - 100% Theme 驱动的身份表达容器
  *
  * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：AvatarColorTokens / 硬编码颜色
+ * ❌ 禁止：硬编码颜色
  *
  * 改造要点：
  * - 使用 Theme.colors.surfaceVariant 作为背景

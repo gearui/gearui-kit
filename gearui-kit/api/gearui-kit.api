@@ -2397,27 +2397,6 @@ public final class com/gearui/foundation/animation/AnimationDelay {
 	public static synthetic fun calculateStaggerDelay$default (Lcom/gearui/foundation/animation/AnimationDelay;IIILjava/lang/Object;)I
 }
 
-public final class com/gearui/foundation/avatar/AvatarColorTokens {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/avatar/AvatarColorTokens;
-	public final fun getDefault ()Lcom/gearui/foundation/avatar/AvatarColors;
-	public final fun getPrimary ()Lcom/gearui/foundation/avatar/AvatarColors;
-}
-
-public final class com/gearui/foundation/avatar/AvatarColors {
-	public static final field $stable I
-	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-cs37B9Y ()J
-	public final fun component2-cs37B9Y ()J
-	public final fun copy-HMauSbA (JJ)Lcom/gearui/foundation/avatar/AvatarColors;
-	public static synthetic fun copy-HMauSbA$default (Lcom/gearui/foundation/avatar/AvatarColors;JJILjava/lang/Object;)Lcom/gearui/foundation/avatar/AvatarColors;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBackground-cs37B9Y ()J
-	public final fun getContent-cs37B9Y ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/gearui/foundation/avatar/AvatarSizeTokens {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/avatar/AvatarSizeTokens;
@@ -2442,29 +2421,6 @@ public final class com/gearui/foundation/avatar/AvatarTokens {
 	public final fun getRadius-UdJoRJA ()F
 	public final fun getSize-UdJoRJA ()F
 	public final fun getTextSizeSp ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/gearui/foundation/badge/BadgeColorTokens {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/badge/BadgeColorTokens;
-	public final fun getError ()Lcom/gearui/foundation/badge/BadgeColors;
-	public final fun getNeutral ()Lcom/gearui/foundation/badge/BadgeColors;
-	public final fun getPrimary ()Lcom/gearui/foundation/badge/BadgeColors;
-	public final fun getSuccess ()Lcom/gearui/foundation/badge/BadgeColors;
-}
-
-public final class com/gearui/foundation/badge/BadgeColors {
-	public static final field $stable I
-	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-cs37B9Y ()J
-	public final fun component2-cs37B9Y ()J
-	public final fun copy-HMauSbA (JJ)Lcom/gearui/foundation/badge/BadgeColors;
-	public static synthetic fun copy-HMauSbA$default (Lcom/gearui/foundation/badge/BadgeColors;JJILjava/lang/Object;)Lcom/gearui/foundation/badge/BadgeColors;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBackground-cs37B9Y ()J
-	public final fun getContent-cs37B9Y ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

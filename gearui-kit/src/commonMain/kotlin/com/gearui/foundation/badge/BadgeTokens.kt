@@ -3,19 +3,16 @@ package com.gearui.foundation.badge
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
-import com.gearui.foundation.BadgeSpecs
 
 /**
- * Badge 尺寸规范
+ * Badge size tokens.
  *
- * 参考: 内部组件规范badge/td_badge.dart
+ * Semantics:
+ *   Dot   → online / status indicator
+ *   Small → 1-2 digit count
+ *   Large → 3+ digit count
  *
- * 语义：
- * Dot   → 在线/状态提示
- * Small → 1~2 位数字
- * Large → 3 位以上
- *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
+ * Colors are NOT defined here — components should read from `Theme.colors`.
  */
 data class BadgeTokens(
     val minSize: Dp,
@@ -28,26 +25,26 @@ data class BadgeTokens(
 object BadgeSizeTokens {
 
     val Dot = BadgeTokens(
-        minSize = BadgeSpecs.dotSize,
+        minSize = 8.dp,
         horizontalPadding = 0.dp,
         fontSizeSp = 0,
         fontWeight = FontWeight.Normal,
-        radius = BadgeSpecs.dotSize / 2
+        radius = 4.dp,
     )
 
     val Small = BadgeTokens(
-        minSize = BadgeSpecs.Size.small,
+        minSize = 16.dp,
         horizontalPadding = 4.dp,
         fontSizeSp = 10,
         fontWeight = FontWeight.Medium,
-        radius = BadgeSpecs.radiusSmall
+        radius = 2.dp,
     )
 
     val Large = BadgeTokens(
-        minSize = BadgeSpecs.Size.large,
+        minSize = 20.dp,
         horizontalPadding = 6.dp,
         fontSizeSp = 12,
         fontWeight = FontWeight.SemiBold,
-        radius = BadgeSpecs.radiusLarge
+        radius = 8.dp,
     )
 }

@@ -1775,22 +1775,6 @@ final class com.gearui.components.tree/TreeState { // com.gearui.components.tree
     final fun uncheckAll() // com.gearui.components.tree/TreeState.uncheckAll|uncheckAll(){}[0]
 }
 
-final class com.gearui.foundation.avatar/AvatarColors { // com.gearui.foundation.avatar/AvatarColors|null[0]
-    constructor <init>(com.tencent.kuikly.compose.ui.graphics/Color, com.tencent.kuikly.compose.ui.graphics/Color) // com.gearui.foundation.avatar/AvatarColors.<init>|<init>(com.tencent.kuikly.compose.ui.graphics.Color;com.tencent.kuikly.compose.ui.graphics.Color){}[0]
-
-    final val background // com.gearui.foundation.avatar/AvatarColors.background|{}background[0]
-        final fun <get-background>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.avatar/AvatarColors.background.<get-background>|<get-background>(){}[0]
-    final val content // com.gearui.foundation.avatar/AvatarColors.content|{}content[0]
-        final fun <get-content>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.avatar/AvatarColors.content.<get-content>|<get-content>(){}[0]
-
-    final fun component1(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.avatar/AvatarColors.component1|component1(){}[0]
-    final fun component2(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.avatar/AvatarColors.component2|component2(){}[0]
-    final fun copy(com.tencent.kuikly.compose.ui.graphics/Color = ..., com.tencent.kuikly.compose.ui.graphics/Color = ...): com.gearui.foundation.avatar/AvatarColors // com.gearui.foundation.avatar/AvatarColors.copy|copy(com.tencent.kuikly.compose.ui.graphics.Color;com.tencent.kuikly.compose.ui.graphics.Color){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.avatar/AvatarColors.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.gearui.foundation.avatar/AvatarColors.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.gearui.foundation.avatar/AvatarColors.toString|toString(){}[0]
-}
-
 final class com.gearui.foundation.avatar/AvatarTokens { // com.gearui.foundation.avatar/AvatarTokens|null[0]
     constructor <init>(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Int, com.tencent.kuikly.compose.ui.unit/Dp) // com.gearui.foundation.avatar/AvatarTokens.<init>|<init>(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Int;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
 
@@ -1811,22 +1795,6 @@ final class com.gearui.foundation.avatar/AvatarTokens { // com.gearui.foundation
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.avatar/AvatarTokens.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.foundation.avatar/AvatarTokens.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.foundation.avatar/AvatarTokens.toString|toString(){}[0]
-}
-
-final class com.gearui.foundation.badge/BadgeColors { // com.gearui.foundation.badge/BadgeColors|null[0]
-    constructor <init>(com.tencent.kuikly.compose.ui.graphics/Color, com.tencent.kuikly.compose.ui.graphics/Color) // com.gearui.foundation.badge/BadgeColors.<init>|<init>(com.tencent.kuikly.compose.ui.graphics.Color;com.tencent.kuikly.compose.ui.graphics.Color){}[0]
-
-    final val background // com.gearui.foundation.badge/BadgeColors.background|{}background[0]
-        final fun <get-background>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.badge/BadgeColors.background.<get-background>|<get-background>(){}[0]
-    final val content // com.gearui.foundation.badge/BadgeColors.content|{}content[0]
-        final fun <get-content>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.badge/BadgeColors.content.<get-content>|<get-content>(){}[0]
-
-    final fun component1(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.badge/BadgeColors.component1|component1(){}[0]
-    final fun component2(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.foundation.badge/BadgeColors.component2|component2(){}[0]
-    final fun copy(com.tencent.kuikly.compose.ui.graphics/Color = ..., com.tencent.kuikly.compose.ui.graphics/Color = ...): com.gearui.foundation.badge/BadgeColors // com.gearui.foundation.badge/BadgeColors.copy|copy(com.tencent.kuikly.compose.ui.graphics.Color;com.tencent.kuikly.compose.ui.graphics.Color){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.badge/BadgeColors.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.gearui.foundation.badge/BadgeColors.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.gearui.foundation.badge/BadgeColors.toString|toString(){}[0]
 }
 
 final class com.gearui.foundation.badge/BadgeTokens { // com.gearui.foundation.badge/BadgeTokens|null[0]
@@ -3447,13 +3415,6 @@ final object com.gearui.foundation.animation/AnimationDelay { // com.gearui.foun
     final fun calculateStaggerDelay(kotlin/Int, kotlin/Int = ...): kotlin/Int // com.gearui.foundation.animation/AnimationDelay.calculateStaggerDelay|calculateStaggerDelay(kotlin.Int;kotlin.Int){}[0]
 }
 
-final object com.gearui.foundation.avatar/AvatarColorTokens { // com.gearui.foundation.avatar/AvatarColorTokens|null[0]
-    final val Default // com.gearui.foundation.avatar/AvatarColorTokens.Default|{}Default[0]
-        final fun <get-Default>(): com.gearui.foundation.avatar/AvatarColors // com.gearui.foundation.avatar/AvatarColorTokens.Default.<get-Default>|<get-Default>(){}[0]
-    final val Primary // com.gearui.foundation.avatar/AvatarColorTokens.Primary|{}Primary[0]
-        final fun <get-Primary>(): com.gearui.foundation.avatar/AvatarColors // com.gearui.foundation.avatar/AvatarColorTokens.Primary.<get-Primary>|<get-Primary>(){}[0]
-}
-
 final object com.gearui.foundation.avatar/AvatarSizeTokens { // com.gearui.foundation.avatar/AvatarSizeTokens|null[0]
     final val Large // com.gearui.foundation.avatar/AvatarSizeTokens.Large|{}Large[0]
         final fun <get-Large>(): com.gearui.foundation.avatar/AvatarTokens // com.gearui.foundation.avatar/AvatarSizeTokens.Large.<get-Large>|<get-Large>(){}[0]
@@ -3465,17 +3426,6 @@ final object com.gearui.foundation.avatar/AvatarSizeTokens { // com.gearui.found
         final fun <get-XLarge>(): com.gearui.foundation.avatar/AvatarTokens // com.gearui.foundation.avatar/AvatarSizeTokens.XLarge.<get-XLarge>|<get-XLarge>(){}[0]
     final val XSmall // com.gearui.foundation.avatar/AvatarSizeTokens.XSmall|{}XSmall[0]
         final fun <get-XSmall>(): com.gearui.foundation.avatar/AvatarTokens // com.gearui.foundation.avatar/AvatarSizeTokens.XSmall.<get-XSmall>|<get-XSmall>(){}[0]
-}
-
-final object com.gearui.foundation.badge/BadgeColorTokens { // com.gearui.foundation.badge/BadgeColorTokens|null[0]
-    final val Error // com.gearui.foundation.badge/BadgeColorTokens.Error|{}Error[0]
-        final fun <get-Error>(): com.gearui.foundation.badge/BadgeColors // com.gearui.foundation.badge/BadgeColorTokens.Error.<get-Error>|<get-Error>(){}[0]
-    final val Neutral // com.gearui.foundation.badge/BadgeColorTokens.Neutral|{}Neutral[0]
-        final fun <get-Neutral>(): com.gearui.foundation.badge/BadgeColors // com.gearui.foundation.badge/BadgeColorTokens.Neutral.<get-Neutral>|<get-Neutral>(){}[0]
-    final val Primary // com.gearui.foundation.badge/BadgeColorTokens.Primary|{}Primary[0]
-        final fun <get-Primary>(): com.gearui.foundation.badge/BadgeColors // com.gearui.foundation.badge/BadgeColorTokens.Primary.<get-Primary>|<get-Primary>(){}[0]
-    final val Success // com.gearui.foundation.badge/BadgeColorTokens.Success|{}Success[0]
-        final fun <get-Success>(): com.gearui.foundation.badge/BadgeColors // com.gearui.foundation.badge/BadgeColorTokens.Success.<get-Success>|<get-Success>(){}[0]
 }
 
 final object com.gearui.foundation.badge/BadgeSizeTokens { // com.gearui.foundation.badge/BadgeSizeTokens|null[0]
@@ -4368,12 +4318,8 @@ final val com.gearui.foundation.animation/com_gearui_foundation_animation_Animat
 final val com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Rotate$stableprop // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Rotate$stableprop|#static{}com_gearui_foundation_animation_Animation_Rotate$stableprop[0]
 final val com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Scale$stableprop // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Scale$stableprop|#static{}com_gearui_foundation_animation_Animation_Scale$stableprop[0]
 final val com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Slide$stableprop // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Slide$stableprop|#static{}com_gearui_foundation_animation_Animation_Slide$stableprop[0]
-final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColorTokens$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColorTokens$stableprop|#static{}com_gearui_foundation_avatar_AvatarColorTokens$stableprop[0]
-final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColors$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColors$stableprop|#static{}com_gearui_foundation_avatar_AvatarColors$stableprop[0]
 final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTokens$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTokens$stableprop|#static{}com_gearui_foundation_avatar_AvatarSizeTokens$stableprop[0]
 final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop|#static{}com_gearui_foundation_avatar_AvatarTokens$stableprop[0]
-final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColorTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColorTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeColorTokens$stableprop[0]
-final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColors$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColors$stableprop|#static{}com_gearui_foundation_badge_BadgeColors$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeSizeTokens$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeTokens$stableprop[0]
 final val com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop|#static{}com_gearui_foundation_interaction_InteractionState$stableprop[0]
@@ -4780,12 +4726,8 @@ final fun com.gearui.foundation.animation/com_gearui_foundation_animation_Animat
 final fun com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Rotate$stableprop_getter(): kotlin/Int // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Rotate$stableprop_getter|com_gearui_foundation_animation_Animation_Rotate$stableprop_getter(){}[0]
 final fun com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Scale$stableprop_getter(): kotlin/Int // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Scale$stableprop_getter|com_gearui_foundation_animation_Animation_Scale$stableprop_getter(){}[0]
 final fun com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Slide$stableprop_getter(): kotlin/Int // com.gearui.foundation.animation/com_gearui_foundation_animation_Animation_Slide$stableprop_getter|com_gearui_foundation_animation_Animation_Slide$stableprop_getter(){}[0]
-final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColorTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColorTokens$stableprop_getter|com_gearui_foundation_avatar_AvatarColorTokens$stableprop_getter(){}[0]
-final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColors$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarColors$stableprop_getter|com_gearui_foundation_avatar_AvatarColors$stableprop_getter(){}[0]
 final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTokens$stableprop_getter|com_gearui_foundation_avatar_AvatarSizeTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter|com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(){}[0]
-final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColorTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColorTokens$stableprop_getter|com_gearui_foundation_badge_BadgeColorTokens$stableprop_getter(){}[0]
-final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColors$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeColors$stableprop_getter|com_gearui_foundation_badge_BadgeColors$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop_getter|com_gearui_foundation_interaction_InteractionState$stableprop_getter(){}[0]

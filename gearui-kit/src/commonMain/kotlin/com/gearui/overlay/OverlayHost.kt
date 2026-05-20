@@ -111,15 +111,23 @@ private fun OverlayItemLayout(
     ) {
         // ===== 背景触摸层（用于触摸外部关闭或阻断事件穿透）=====
         if (options.modal || options.maskColor != null) {
-            // 有遮罩的情况 - 拦截所有手势
+            // 有遮罩的情况 - 拦截所有手势，阻止穿透到背后的可滚动内容
             Box(
                 Modifier
                     .fillMaxSize()
                     .background(options.maskColor ?: Color.Black.copy(alpha = 0.32f))
-                    // 拦截拖动/滑动事件，阻止穿透
+                    // 抢先消费所有 pointer change，让背后的 LazyColumn 等
+                    // 可滚动组件拿不到事件。`detectDragGestures` 不够强，会
+                    // 让 down 事件先到底层，被 native scroll view 拦走。
                     .pointerInput(item.id) {
-                        detectDragGestures { _, _ ->
-                            // 消费拖动事件，不做任何处理
+                        awaitEachGesture {
+                            val down = awaitFirstDown(requireUnconsumed = false)
+                            down.consume()
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                event.changes.forEach { it.consume() }
+                                if (event.changes.all { !it.pressed }) break
+                            }
                         }
                     }
                     // 处理点击（根据 policy.outsideClick 决定是否关闭）

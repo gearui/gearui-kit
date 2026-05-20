@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // SPEC 4.6 Fullscreen Container Contract: root must be edge-to-edge
+        // so KuiklyUI's safeAreaInsets is the single source of top padding.
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         // 创建容器
         container = FrameLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(

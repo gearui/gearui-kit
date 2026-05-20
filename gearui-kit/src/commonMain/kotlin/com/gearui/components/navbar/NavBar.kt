@@ -49,6 +49,12 @@ fun NavBar(
     titleWidget: (@Composable () -> Unit)? = null,
     belowTitleWidget: (@Composable () -> Unit)? = null,
     rightWidget: (@Composable () -> Unit)? = null,
+    /**
+     * [rightWidget] 槽位宽度。默认 `null` 走 [actionSlotWidth]（=56dp，跟纯图标按钮一致）。
+     * 如果 rightWidget 里放的是"完成 / 创建(N)"等文字按钮，需要显式传一个更大的值
+     * （建议 80-120dp）；title 居中时的左右 padding 会跟随这个值，避免与标题重叠。
+     */
+    rightWidgetWidth: Dp? = null,
     showBottomDivider: Boolean = true
 ) {
     val colors = Theme.colors
@@ -87,7 +93,10 @@ fun NavBar(
                 val rightCount = rightItems.size
                 // 标题两侧留白：取左右操作区域中较大的宽度，确保标题居中不被遮挡
                 val leftSlotWidth = (leftCount * actionSlotWidth.value).dp
-                val rightSlotWidth = if (rightWidget != null) actionSlotWidth else (rightCount * actionSlotWidth.value).dp
+                val rightSlotWidth = when {
+                    rightWidget != null -> rightWidgetWidth ?: actionSlotWidth
+                    else -> (rightCount * actionSlotWidth.value).dp
+                }
                 val titlePadding = maxOf(leftSlotWidth, rightSlotWidth)
 
                 // 底层：标题区域（绝对居中，避开左右按钮）
@@ -141,7 +150,7 @@ fun NavBar(
                 if (rightWidget != null) {
                     Box(
                         modifier = Modifier
-                            .width(actionSlotWidth)
+                            .width(rightWidgetWidth ?: actionSlotWidth)
                             .fillMaxHeight()
                             .align(Alignment.CenterEnd),
                         contentAlignment = Alignment.CenterEnd
@@ -220,7 +229,7 @@ fun NavBar(
                 if (rightWidget != null) {
                     Box(
                         modifier = Modifier
-                            .width(actionSlotWidth)
+                            .width(rightWidgetWidth ?: actionSlotWidth)
                             .fillMaxHeight(),
                         contentAlignment = Alignment.CenterEnd
                     ) {

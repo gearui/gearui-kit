@@ -1,10 +1,34 @@
 package com.gearui
 
 /**
- * GearUI 间距系统
+ * Legacy spacing constants (Float-typed, `Spacing.spacer16.dp` call shape).
  *
- * 基于 8px 网格系统的标准间距规范
+ * Replaced by [com.gearui.foundation.layout.Spacing] (Dp-typed) as the
+ * single source of truth for GearUI spacing tokens
+ * (`docs/TOKEN_FREEZE_DECISIONS.md` Decision 3).
+ *
+ * Existing call sites compile unchanged. Will be removed before 1.0 RC.
+ *
+ * Migration map (legacy spacer* → `com.gearui.foundation.layout.Spacing`):
+ *
+ *   spacer4   → xs       (4.dp)
+ *   spacer8   → sm       (8.dp)
+ *   spacer12  → md       (12.dp)
+ *   spacer16  → lg       (16.dp)
+ *   spacer24  → xl       (24.dp)
+ *   spacer32  → xxl      (32.dp)
+ *   spacer40  → xxxl     (40.dp)
+ *   spacer48  → huge     (48.dp)
+ *   spacer64  → massive  (64.dp)
+ *
+ * Legacy values without a current canonical name (`spacer96`, `spacer160`)
+ * will not be promoted to canonical spacing tokens; if a component needs
+ * such a large value, declare it as a component token instead.
  */
+@Deprecated(
+    "Use com.gearui.foundation.layout.Spacing (Dp values). " +
+        "Will be removed before 1.0 RC."
+)
 object Spacing {
     /** 4dp - 最小间距 */
     const val spacer4 = 4f

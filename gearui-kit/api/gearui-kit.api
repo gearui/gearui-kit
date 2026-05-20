@@ -1107,7 +1107,7 @@ public final class com/gearui/components/navbar/NavBarItem {
 }
 
 public final class com/gearui/components/navbar/NavBarKt {
-	public static final fun NavBar-x8DEJoE (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZFLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun NavBar-LpaGMxo (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZFLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/unit/Dp;ZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/navigationmenu/NavigationMenuItem {

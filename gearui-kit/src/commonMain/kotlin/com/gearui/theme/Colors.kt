@@ -4,199 +4,228 @@ import androidx.compose.runtime.Immutable
 import com.tencent.kuikly.compose.ui.graphics.Color
 
 /**
- * GearUI Framework 语义颜色系统
+ * GearUI semantic color model (24 fields, business-neutral).
  *
- * 参考: 内部主题规范
+ * Roles are grouped into:
+ *  - Surfaces: background / surface / card / popover / muted (+ their foregrounds)
+ *  - Brand:    primary / secondary / accent (+ their foregrounds)
+ *  - Feedback: destructive (+ foreground) / success / warning / info
+ *  - Controls: border / input / ring
  *
- * ⚠️ 规则：
- * 组件层 ONLY 使用这些语义颜色
- * 禁止出现 Color(xxx) / 硬编码值
+ * Component state colors (hover / pressed / focused / disabled / invalid /
+ * selected / loading) live in component-specific `XxxTokens`, NOT in this
+ * core model. See `docs/TOKEN_FREEZE_DECISIONS.md` Decision 1.
+ *
+ * Legacy properties (`textPrimary`, `danger`, `surfaceVariant`, ...) keep
+ * compiling against the pre-1.0 35-field palette but emit deprecation
+ * warnings. They will be removed before 1.0 RC.
  */
 @Immutable
 data class Colors(
+    // ---- Surfaces ----
+    val background: Color,
+    val foreground: Color,
+    val surface: Color,
+    val surfaceForeground: Color,
+    val card: Color,
+    val cardForeground: Color,
+    val popover: Color,
+    val popoverForeground: Color,
+    val muted: Color,
+    val mutedForeground: Color,
 
-    /* ---------------- Surface 层级 ---------------- */
+    // ---- Brand ----
+    val primary: Color,
+    val primaryForeground: Color,
+    val secondary: Color,
+    val secondaryForeground: Color,
+    val accent: Color,
+    val accentForeground: Color,
 
-    val background: Color,           // 页面背景 (bgColorPage)
-    val surface: Color,              // 容器背景 (bgColorContainer)
-    val surfaceVariant: Color,       // 次级容器 (bgColorSecondaryContainer)
-    val surfaceComponent: Color,     // 组件背景 (bgColorComponent)
-    val overlay: Color,              // Dialog / Modal 背景
-    val mask: Color,                 // 遮罩层
+    // ---- Feedback ----
+    val destructive: Color,
+    val destructiveForeground: Color,
+    val success: Color,
+    val warning: Color,
+    val info: Color,
 
-    /* ---------------- Brand 品牌色 ---------------- */
+    // ---- Controls ----
+    val border: Color,
+    val input: Color,
+    val ring: Color,
+) {
+    // ------------------------------------------------------------------
+    // Legacy bridge properties (pre-1.0). Will be removed before 1.0 RC.
+    // ------------------------------------------------------------------
 
-    val primary: Color,              // 品牌主色 (brandNormalColor)
-    val primaryHover: Color,         // 悬停态 (brandHoverColor)
-    val primaryActive: Color,        // 点击态 (brandClickColor)
-    val primaryLight: Color,         // 浅色背景 (brandLightColor)
-    val primaryDisabled: Color,      // 禁用态 (brandDisabledColor)
-    val onPrimary: Color,            // 品牌色上的文字
+    // Surfaces
+    @Deprecated("Use muted", ReplaceWith("muted"))
+    val surfaceVariant: Color get() = muted
 
-    /* ---------------- Content 内容色 ---------------- */
+    @Deprecated("Use surface or card", ReplaceWith("surface"))
+    val surfaceComponent: Color get() = surface
 
-    val textPrimary: Color,          // 主要文本 (fontGyColor1 90%)
-    val textSecondary: Color,        // 次要文本 (fontGyColor2 60%)
-    val textPlaceholder: Color,      // 占位文本 (fontGyColor3 40%)
-    val textDisabled: Color,         // 禁用文本 (fontGyColor4 26%)
-    val textAnti: Color,             // 反色文本 (白色)
-    val textBrand: Color,            // 品牌文本 (链接色)
+    @Deprecated("Use popover", ReplaceWith("popover"))
+    val overlay: Color get() = popover
 
-    val iconPrimary: Color,          // 主要图标
-    val iconSecondary: Color,        // 次要图标
+    @Deprecated("Overlay scrim is a runtime token; not part of Colors.")
+    val mask: Color get() = Color(0x6609090B)
 
-    /* ---------------- Border / Divider 边框分割线 ---------------- */
+    // Content
+    @Deprecated("Use foreground", ReplaceWith("foreground"))
+    val textPrimary: Color get() = foreground
 
-    val border: Color,               // 边框色 (componentBorderColor)
-    val stroke: Color,               // 笔划色 (componentStrokeColor)
-    val divider: Color,              // 分割线
+    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
+    val textSecondary: Color get() = mutedForeground
 
-    /* ---------------- State 状态色 ---------------- */
+    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
+    val textPlaceholder: Color get() = mutedForeground
 
-    val disabled: Color,             // 禁用前景
-    val disabledContainer: Color,    // 禁用背景
+    @Deprecated("State color moved to ComponentTokens; reads mutedForeground.")
+    val textDisabled: Color get() = mutedForeground
 
-    /* ---------------- Feedback 反馈色 ---------------- */
+    @Deprecated("Use primaryForeground", ReplaceWith("primaryForeground"))
+    val textAnti: Color get() = primaryForeground
 
-    val success: Color,              // 成功色 (successNormalColor)
-    val successLight: Color,         // 成功浅色背景
-    val warning: Color,              // 警告色 (warningNormalColor)
-    val warningLight: Color,         // 警告浅色背景
-    val danger: Color,               // 错误色 (errorNormalColor)
-    val dangerLight: Color,          // 错误浅色背景
-    val info: Color,                 // 信息色 (= primary)
-    val infoLight: Color,            // 信息浅色背景
+    @Deprecated("Use primary directly for link/brand text", ReplaceWith("primary"))
+    val textBrand: Color get() = primary
 
-    /* ---------------- Inverse 反转色 (用于 Toast 等) ---------------- */
+    @Deprecated("Use foreground", ReplaceWith("foreground"))
+    val iconPrimary: Color get() = foreground
 
-    val inverseSurface: Color,       // 反转背景 (用于 Toast)
-    val inverseOnSurface: Color,     // 反转背景上的文字
-)
+    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
+    val iconSecondary: Color get() = mutedForeground
 
-/* --------------------------------------------------------- */
-/* Theme Spec = 一等公民 */
-/* --------------------------------------------------------- */
+    // Brand states
+    @Deprecated("Use primaryForeground", ReplaceWith("primaryForeground"))
+    val onPrimary: Color get() = primaryForeground
+
+    @Deprecated("State color moved to ComponentTokens (e.g. ButtonTokens.hoverBackground).")
+    val primaryHover: Color get() = primary
+
+    @Deprecated("State color moved to ComponentTokens (e.g. ButtonTokens.pressedBackground).")
+    val primaryActive: Color get() = primary
+
+    @Deprecated("State color moved to ComponentTokens; use muted as a fallback.")
+    val primaryLight: Color get() = muted
+
+    @Deprecated("State color moved to ComponentTokens; use mutedForeground as a fallback.")
+    val primaryDisabled: Color get() = mutedForeground
+
+    // Borders
+    @Deprecated("Use border or input (input is for editable control borders)", ReplaceWith("border"))
+    val stroke: Color get() = border
+
+    @Deprecated("Use border", ReplaceWith("border"))
+    val divider: Color get() = border
+
+    // Disabled state
+    @Deprecated("State color moved to ComponentTokens.<role>.disabledForeground")
+    val disabled: Color get() = mutedForeground
+
+    @Deprecated("State color moved to ComponentTokens.<role>.disabledBackground")
+    val disabledContainer: Color get() = muted
+
+    // Feedback aliases
+    @Deprecated("Use destructive", ReplaceWith("destructive"))
+    val danger: Color get() = destructive
+
+    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
+    val successLight: Color get() = success.copy(alpha = 0.12f)
+
+    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
+    val warningLight: Color get() = warning.copy(alpha = 0.12f)
+
+    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
+    val dangerLight: Color get() = destructive.copy(alpha = 0.12f)
+
+    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
+    val infoLight: Color get() = info.copy(alpha = 0.12f)
+
+    // Inverse (toast / snackbar)
+    @Deprecated("Inverse surfaces moved to component-specific tokens (e.g. ToastTokens.surface).")
+    val inverseSurface: Color get() = foreground
+
+    @Deprecated("Inverse surfaces moved to component-specific tokens (e.g. ToastTokens.surfaceForeground).")
+    val inverseOnSurface: Color get() = background
+}
+
+/* ---------------------------------------------------------------------- */
+/* Theme spec                                                              */
+/* ---------------------------------------------------------------------- */
 
 @Immutable
 data class ThemeSpec(
     val colors: Colors
 )
 
-/* --------------------------------------------------------- */
-/* 内置 Light / Dark 主题 */
-/* --------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+/* Built-in Light / Dark themes                                            */
+/* ---------------------------------------------------------------------- */
 
 object Themes {
 
-    /**
-     * Light Theme - 亮色主题
-     *
-     */
     val Light = ThemeSpec(
         colors = Colors(
-
             background = Color(0xFFFFFFFF),
+            foreground = Color(0xFF09090B),
             surface = Color(0xFFFFFFFF),
-            surfaceVariant = Color(0xFFF4F4F5),
-            surfaceComponent = Color(0xFFFAFAFA),
-            overlay = Color(0xFFFFFFFF),
-            mask = Color(0x6609090B),
+            surfaceForeground = Color(0xFF09090B),
+            card = Color(0xFFFFFFFF),
+            cardForeground = Color(0xFF09090B),
+            popover = Color(0xFFFFFFFF),
+            popoverForeground = Color(0xFF09090B),
+            muted = Color(0xFFF4F4F5),
+            mutedForeground = Color(0xFF52525B),
 
             primary = Color(0xFF18181B),
-            primaryHover = Color(0xFF27272A),
-            primaryActive = Color(0xFF09090B),
-            primaryLight = Color(0xFFF4F4F5),
-            primaryDisabled = Color(0xFFD4D4D8),
-            onPrimary = Color.White,
+            primaryForeground = Color(0xFFFFFFFF),
+            secondary = Color(0xFFF4F4F5),
+            secondaryForeground = Color(0xFF18181B),
+            accent = Color(0xFFF4F4F5),
+            accentForeground = Color(0xFF18181B),
 
-            textPrimary = Color(0xFF09090B),
-            textSecondary = Color(0xFF52525B),
-            textPlaceholder = Color(0xFFA1A1AA),
-            textDisabled = Color(0xFFB4B4BC),
-            textAnti = Color(0xFFFFFFFF),
-            textBrand = Color(0xFF18181B),
-
-            iconPrimary = Color(0xFF09090B),
-            iconSecondary = Color(0xFF52525B),
+            destructive = Color(0xFFDC2626),
+            destructiveForeground = Color(0xFFFFFFFF),
+            success = Color(0xFF16A34A),
+            warning = Color(0xFFF59E0B),
+            info = Color(0xFF2563EB),
 
             border = Color(0xFFE4E4E7),
-            stroke = Color(0xFFE4E4E7),
-            divider = Color(0xFFE4E4E7),
-
-            // State 状态色
-            disabled = Color(0xFFA1A1AA),
-            disabledContainer = Color(0xFFF4F4F5),
-
-            success = Color(0xFF16A34A),
-            successLight = Color(0xFFDCFCE7),
-            warning = Color(0xFFF59E0B),
-            warningLight = Color(0xFFFEF3C7),
-            danger = Color(0xFFDC2626),
-            dangerLight = Color(0xFFFEE2E2),
-            info = Color(0xFF2563EB),
-            infoLight = Color(0xFFDBEAFE),
-
-            // Inverse 反转色 - 用于 Toast 等浮层
-            inverseSurface = Color(0xFF18181B),
-            inverseOnSurface = Color(0xFFFAFAFA),
+            input = Color(0xFFE4E4E7),
+            ring = Color(0xFF18181B),
         )
     )
 
-    /**
-     * Dark Theme - 暗色主题
-     *
-     */
     val Dark = ThemeSpec(
         colors = Colors(
-
             background = Color(0xFF09090B),
-            // Dark mode needs visible surface elevation; do not collapse surface onto background.
+            foreground = Color(0xFFFAFAFA),
             surface = Color(0xFF111217),
-            surfaceVariant = Color(0xFF1A1C24),
-            surfaceComponent = Color(0xFF212533),
-            overlay = Color(0xFF1A1C24),
-            mask = Color(0x99000000),
+            surfaceForeground = Color(0xFFFAFAFA),
+            card = Color(0xFF111217),
+            cardForeground = Color(0xFFFAFAFA),
+            popover = Color(0xFF1A1C24),
+            popoverForeground = Color(0xFFFAFAFA),
+            muted = Color(0xFF1A1C24),
+            mutedForeground = Color(0xFFA1A1AA),
 
-            // Brand 品牌色 - 暗色调整
             primary = Color(0xFFFAFAFA),
-            primaryHover = Color(0xFFF4F4F5),
-            primaryActive = Color(0xFFE4E4E7),
-            primaryLight = Color(0xFF27272A),
-            primaryDisabled = Color(0xFF3F3F46),
-            onPrimary = Color(0xFF09090B),
+            primaryForeground = Color(0xFF09090B),
+            secondary = Color(0xFF27272A),
+            secondaryForeground = Color(0xFFFAFAFA),
+            accent = Color(0xFF27272A),
+            accentForeground = Color(0xFFFAFAFA),
 
-            textPrimary = Color(0xFFFAFAFA),
-            textSecondary = Color(0xFFA1A1AA),
-            textPlaceholder = Color(0xFF71717A),
-            textDisabled = Color(0xFF52525B),
-            textAnti = Color(0xFFFFFFFF),
-            textBrand = Color(0xFFFAFAFA),
-
-            iconPrimary = Color(0xFFFAFAFA),
-            iconSecondary = Color(0xFFA1A1AA),
-
-            // Border / Divider - 暗色 Gray 色阶
-            border = Color(0xFF2F3340),
-            stroke = Color(0xFF2F3340),
-            divider = Color(0xFF2F3340),
-
-            // State 状态色
-            disabled = Color(0xFF52525B),
-            disabledContainer = Color(0xFF1A1C24),
-
-            // Feedback 反馈色 - 暗色调整
+            destructive = Color(0xFFF87171),
+            destructiveForeground = Color(0xFFFFFFFF),
             success = Color(0xFF22C55E),
-            successLight = Color(0xFF14532D),
             warning = Color(0xFFF59E0B),
-            warningLight = Color(0xFF78350F),
-            danger = Color(0xFFF87171),
-            dangerLight = Color(0xFF7F1D1D),
             info = Color(0xFF60A5FA),
-            infoLight = Color(0xFF1E3A8A),
 
-            // Inverse 反转色 - 用于 Toast 等浮层 (暗色主题下用亮色)
-            inverseSurface = Color(0xFFF4F4F5),
-            inverseOnSurface = Color(0xFF09090B),
+            border = Color(0xFF2F3340),
+            input = Color(0xFF2F3340),
+            ring = Color(0xFFFAFAFA),
         )
     )
 }

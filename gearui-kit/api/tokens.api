@@ -4,41 +4,30 @@
 # DO NOT edit by hand.
 
 [fields] Colors
+  accent
+  accentForeground
   background
   border
-  danger
-  dangerLight
-  disabled
-  disabledContainer
-  divider
-  iconPrimary
-  iconSecondary
+  card
+  cardForeground
+  destructive
+  destructiveForeground
+  foreground
   info
-  infoLight
-  inverseOnSurface
-  inverseSurface
-  mask
-  onPrimary
-  overlay
+  input
+  muted
+  mutedForeground
+  popover
+  popoverForeground
   primary
-  primaryActive
-  primaryDisabled
-  primaryHover
-  primaryLight
-  stroke
+  primaryForeground
+  ring
+  secondary
+  secondaryForeground
   success
-  successLight
   surface
-  surfaceComponent
-  surfaceVariant
-  textAnti
-  textBrand
-  textDisabled
-  textPlaceholder
-  textPrimary
-  textSecondary
+  surfaceForeground
   warning
-  warningLight
 
 [fields] Typography
   bodyExtraLarge
@@ -74,75 +63,53 @@
   small
 
 [preset] Themes.Light.colors
+  accent = Color(0xFFF4F4F5)
+  accentForeground = Color(0xFF18181B)
   background = Color(0xFFFFFFFF)
   border = Color(0xFFE4E4E7)
-  danger = Color(0xFFDC2626)
-  dangerLight = Color(0xFFFEE2E2)
-  disabled = Color(0xFFA1A1AA)
-  disabledContainer = Color(0xFFF4F4F5)
-  divider = Color(0xFFE4E4E7)
-  iconPrimary = Color(0xFF09090B)
-  iconSecondary = Color(0xFF52525B)
+  card = Color(0xFFFFFFFF)
+  cardForeground = Color(0xFF09090B)
+  destructive = Color(0xFFDC2626)
+  destructiveForeground = Color(0xFFFFFFFF)
+  foreground = Color(0xFF09090B)
   info = Color(0xFF2563EB)
-  infoLight = Color(0xFFDBEAFE)
-  inverseOnSurface = Color(0xFFFAFAFA)
-  inverseSurface = Color(0xFF18181B)
-  mask = Color(0x6609090B)
-  onPrimary = Color.White
-  overlay = Color(0xFFFFFFFF)
+  input = Color(0xFFE4E4E7)
+  muted = Color(0xFFF4F4F5)
+  mutedForeground = Color(0xFF52525B)
+  popover = Color(0xFFFFFFFF)
+  popoverForeground = Color(0xFF09090B)
   primary = Color(0xFF18181B)
-  primaryActive = Color(0xFF09090B)
-  primaryDisabled = Color(0xFFD4D4D8)
-  primaryHover = Color(0xFF27272A)
-  primaryLight = Color(0xFFF4F4F5)
-  stroke = Color(0xFFE4E4E7)
+  primaryForeground = Color(0xFFFFFFFF)
+  ring = Color(0xFF18181B)
+  secondary = Color(0xFFF4F4F5)
+  secondaryForeground = Color(0xFF18181B)
   success = Color(0xFF16A34A)
-  successLight = Color(0xFFDCFCE7)
   surface = Color(0xFFFFFFFF)
-  surfaceComponent = Color(0xFFFAFAFA)
-  surfaceVariant = Color(0xFFF4F4F5)
-  textAnti = Color(0xFFFFFFFF)
-  textBrand = Color(0xFF18181B)
-  textDisabled = Color(0xFFB4B4BC)
-  textPlaceholder = Color(0xFFA1A1AA)
-  textPrimary = Color(0xFF09090B)
-  textSecondary = Color(0xFF52525B)
+  surfaceForeground = Color(0xFF09090B)
   warning = Color(0xFFF59E0B)
-  warningLight = Color(0xFFFEF3C7)
 
 [preset] Themes.Dark.colors
+  accent = Color(0xFF27272A)
+  accentForeground = Color(0xFFFAFAFA)
   background = Color(0xFF09090B)
   border = Color(0xFF2F3340)
-  danger = Color(0xFFF87171)
-  dangerLight = Color(0xFF7F1D1D)
-  disabled = Color(0xFF52525B)
-  disabledContainer = Color(0xFF1A1C24)
-  divider = Color(0xFF2F3340)
-  iconPrimary = Color(0xFFFAFAFA)
-  iconSecondary = Color(0xFFA1A1AA)
+  card = Color(0xFF111217)
+  cardForeground = Color(0xFFFAFAFA)
+  destructive = Color(0xFFF87171)
+  destructiveForeground = Color(0xFFFFFFFF)
+  foreground = Color(0xFFFAFAFA)
   info = Color(0xFF60A5FA)
-  infoLight = Color(0xFF1E3A8A)
-  inverseOnSurface = Color(0xFF09090B)
-  inverseSurface = Color(0xFFF4F4F5)
-  mask = Color(0x99000000)
-  onPrimary = Color(0xFF09090B)
-  overlay = Color(0xFF1A1C24)
+  input = Color(0xFF2F3340)
+  muted = Color(0xFF1A1C24)
+  mutedForeground = Color(0xFFA1A1AA)
+  popover = Color(0xFF1A1C24)
+  popoverForeground = Color(0xFFFAFAFA)
   primary = Color(0xFFFAFAFA)
-  primaryActive = Color(0xFFE4E4E7)
-  primaryDisabled = Color(0xFF3F3F46)
-  primaryHover = Color(0xFFF4F4F5)
-  primaryLight = Color(0xFF27272A)
-  stroke = Color(0xFF2F3340)
+  primaryForeground = Color(0xFF09090B)
+  ring = Color(0xFFFAFAFA)
+  secondary = Color(0xFF27272A)
+  secondaryForeground = Color(0xFFFAFAFA)
   success = Color(0xFF22C55E)
-  successLight = Color(0xFF14532D)
   surface = Color(0xFF111217)
-  surfaceComponent = Color(0xFF212533)
-  surfaceVariant = Color(0xFF1A1C24)
-  textAnti = Color(0xFFFFFFFF)
-  textBrand = Color(0xFFFAFAFA)
-  textDisabled = Color(0xFF52525B)
-  textPlaceholder = Color(0xFF71717A)
-  textPrimary = Color(0xFFFAFAFA)
-  textSecondary = Color(0xFFA1A1AA)
+  surfaceForeground = Color(0xFFFAFAFA)
   warning = Color(0xFFF59E0B)
-  warningLight = Color(0xFF78350F)

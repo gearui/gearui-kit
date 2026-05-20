@@ -7,56 +7,69 @@ import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * GearUI Framework 语义形状系统
+ * GearUI semantic shape scale (six steps).
  *
- * 参考: 内部圆角规范
+ * Scale (see `docs/TOKEN_FREEZE_DECISIONS.md` Decision 2):
  *
- * ⚠️ 规则：
- * 组件层 ONLY 使用这些语义形状
- * 禁止出现 RoundedCornerShape(xx.dp) / 硬编码值
+ *   none = 0       — square, no rounding (banner, sectioned full-bleed)
+ *   sm   = 4.dp    — tags, chips, dense controls
+ *   md   = 6.dp    — inputs, default surface rounding
+ *   lg   = 8.dp    — buttons, cards (GearUI mobile default)
+ *   xl   = 12.dp   — sheets, large cards, prominent surfaces
+ *   full = 9999.dp — capsule buttons, fully rounded segmented controls
  *
- * 使用方式：
- * val shapes = Theme.shapes
- * Modifier.clip(shapes.default)
+ * Use `CircleShape` directly (e.g. `Modifier.clip(CircleShape)`) for
+ * round avatars / badges — there is no dedicated `circle` token.
+ *
+ * Legacy properties (`small / default / large / extraLarge / round /
+ * circle`) keep compiling but emit deprecation warnings and will be
+ * removed before 1.0 RC. Note that legacy values were 3 / 9.dp; the new
+ * `sm` and `lg` are 4 / 8.dp respectively — visual difference is
+ * negligible on screen.
  */
 @Immutable
 data class Shapes(
+    val none: Shape,
+    val sm: Shape,
+    val md: Shape,
+    val lg: Shape,
+    val xl: Shape,
+    val full: Shape,
+) {
+    // ------------------------------------------------------------------
+    // Legacy bridge properties (pre-1.0). Will be removed before 1.0 RC.
+    // ------------------------------------------------------------------
 
-    /** 3dp - 小圆角 (按钮、小组件边角) */
-    val small: Shape,
+    @Deprecated("Use sm", ReplaceWith("sm"))
+    val small: Shape get() = sm
 
-    /** 6dp - 默认圆角 (输入框、卡片、默认组件) */
-    val default: Shape,
+    @Deprecated("Use md", ReplaceWith("md"))
+    val default: Shape get() = md
 
-    /** 9dp - 大圆角 (较大卡片、模态框) */
-    val large: Shape,
+    @Deprecated("Use lg", ReplaceWith("lg"))
+    val large: Shape get() = lg
 
-    /** 12dp - 特大圆角 (特殊强调组件) */
-    val extraLarge: Shape,
+    @Deprecated("Use xl", ReplaceWith("xl"))
+    val extraLarge: Shape get() = xl
 
-    /** 胶囊型 (胶囊按钮、完全圆角) */
-    val round: Shape,
+    @Deprecated("Use full", ReplaceWith("full"))
+    val round: Shape get() = full
 
-    /** 圆形 (圆形头像、徽章、单选框) */
-    val circle: Shape,
-)
+    @Deprecated("Use CircleShape directly: Modifier.clip(CircleShape)")
+    val circle: Shape get() = CircleShape
+}
 
-/* --------------------------------------------------------- */
-/* --------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+/* Default shape set                                                       */
+/* ---------------------------------------------------------------------- */
 
 object ShapesDefault {
-
-    /**
-     * Default Shapes - 默认形状系统
-     *
-     * 圆角值完全对齐
-     */
     val Default = Shapes(
-        small = RoundedCornerShape(3.dp),
-        default = RoundedCornerShape(6.dp),
-        large = RoundedCornerShape(9.dp),
-        extraLarge = RoundedCornerShape(12.dp),
-        round = RoundedCornerShape(9999.dp),
-        circle = CircleShape,
+        none = RoundedCornerShape(0.dp),
+        sm = RoundedCornerShape(4.dp),
+        md = RoundedCornerShape(6.dp),
+        lg = RoundedCornerShape(8.dp),
+        xl = RoundedCornerShape(12.dp),
+        full = RoundedCornerShape(9999.dp),
     )
 }

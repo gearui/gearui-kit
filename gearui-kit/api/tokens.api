@@ -55,12 +55,12 @@
   titleSmall
 
 [fields] Shapes
-  circle
-  default
-  extraLarge
-  large
-  round
-  small
+  full
+  lg
+  md
+  none
+  sm
+  xl
 
 [preset] Themes.Light.colors
   accent = Color(0xFFF4F4F5)

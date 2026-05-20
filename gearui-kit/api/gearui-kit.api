@@ -3837,9 +3837,15 @@ public final class com/gearui/theme/Shapes {
 	public final fun getCircle ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getDefault ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getExtraLarge ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getFull ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getLarge ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getLg ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getMd ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getNone ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getRound ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getSm ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getSmall ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getXl ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

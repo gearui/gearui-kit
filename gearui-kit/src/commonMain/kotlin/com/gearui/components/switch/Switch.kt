@@ -85,12 +85,12 @@ fun Switch(
 
     // 轨道颜色
     val activeTrackColor = trackOnColor ?: colors.primary
-    val inactiveTrackColor = trackOffColor ?: colors.textDisabled
+    val inactiveTrackColor = trackOffColor ?: colors.mutedForeground
 
     val trackColor = if (checked) activeTrackColor else inactiveTrackColor
 
     // 滑块内容颜色
-    val thumbContentColor = if (checked) colors.primary else colors.textDisabled
+    val thumbContentColor = if (checked) colors.primary else colors.mutedForeground
 
     // 滑块位置
     val thumbOffset = if (checked) {
@@ -194,7 +194,7 @@ fun SwitchWithLabel(
         Text(
             text = label,
             style = Typography.BodyLarge,
-            color = if (enabled) colors.textPrimary else colors.textDisabled
+            color = if (enabled) colors.foreground else colors.mutedForeground
         )
 
         Switch(

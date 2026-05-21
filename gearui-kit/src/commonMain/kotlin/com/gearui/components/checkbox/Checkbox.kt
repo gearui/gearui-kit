@@ -55,29 +55,29 @@ fun Checkbox(
 
     // ⭐ 颜色映射：Theme 语义 → Checkbox 视觉
     val backgroundColor = when {
-        !enabled && isActive -> colors.disabledContainer
+        !enabled && isActive -> colors.muted
         !enabled -> colors.surface
         isActive -> colors.primary
         else -> colors.surface
     }
 
     val borderColor = when {
-        !enabled -> colors.disabled
+        !enabled -> colors.mutedForeground
         isActive -> colors.primary
         else -> colors.border
     }
 
     val checkColor = when {
-        !enabled -> colors.disabled
-        else -> colors.onPrimary
+        !enabled -> colors.mutedForeground
+        else -> colors.primaryForeground
     }
 
     Box(
         modifier = modifier
             .size(boxSize)
-            .clip(shapes.small)
+            .clip(shapes.sm)
             .background(backgroundColor)
-            .border(1.5.dp, borderColor, shapes.small)
+            .border(1.5.dp, borderColor, shapes.sm)
             .then(
                 if (enabled) {
                     Modifier.clickable { onCheckedChange(!checked) }
@@ -148,7 +148,7 @@ fun CheckboxWithLabel(
 
         Text(
             text = label,
-            color = if (enabled) colors.textPrimary else colors.textDisabled,
+            color = if (enabled) colors.foreground else colors.mutedForeground,
             style = Typography.BodyLarge
         )
     }

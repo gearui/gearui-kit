@@ -212,26 +212,26 @@ private fun getButtonColors(
     when (theme) {
         ButtonTheme.PRIMARY -> {
             primaryColor = colors.primary
-            lightColor = colors.primaryLight
+            lightColor = colors.muted
         }
         ButtonTheme.DANGER -> {
-            primaryColor = colors.danger
-            lightColor = colors.dangerLight
+            primaryColor = colors.destructive
+            lightColor = colors.destructive.copy(alpha = 0.12f)
         }
         ButtonTheme.WARNING -> {
             primaryColor = colors.warning
-            lightColor = colors.warningLight
+            lightColor = colors.warning.copy(alpha = 0.12f)
         }
         ButtonTheme.SUCCESS -> {
             primaryColor = colors.success
-            lightColor = colors.successLight
+            lightColor = colors.success.copy(alpha = 0.12f)
         }
         ButtonTheme.DEFAULT -> {
-            primaryColor = colors.surfaceVariant
+            primaryColor = colors.muted
             lightColor = colors.surface
         }
         ButtonTheme.LIGHT -> {
-            primaryColor = colors.primaryLight
+            primaryColor = colors.muted
             lightColor = colors.surface
         }
     }
@@ -240,16 +240,16 @@ private fun getButtonColors(
         ButtonType.FILL -> {
             if (disabled) {
                 Triple(
-                    if (theme == ButtonTheme.DEFAULT) colors.disabledContainer else lightColor,
-                    colors.textDisabled,
+                    if (theme == ButtonTheme.DEFAULT) colors.muted else lightColor,
+                    colors.mutedForeground,
                     Color.Transparent
                 )
             } else {
                 Triple(
                     if (theme == ButtonTheme.LIGHT) lightColor else primaryColor,
-                    if (theme == ButtonTheme.DEFAULT) colors.textPrimary
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground
                     else if (theme == ButtonTheme.LIGHT) colors.primary
-                    else colors.onPrimary,
+                    else colors.primaryForeground,
                     Color.Transparent
                 )
             }
@@ -258,13 +258,13 @@ private fun getButtonColors(
             if (disabled) {
                 Triple(
                     colors.surface,
-                    colors.textDisabled,
-                    colors.disabled
+                    colors.mutedForeground,
+                    colors.mutedForeground
                 )
             } else {
                 Triple(
                     colors.surface,
-                    if (theme == ButtonTheme.DEFAULT) colors.textPrimary else primaryColor,
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
                     colors.border
                 )
             }
@@ -273,13 +273,13 @@ private fun getButtonColors(
             if (disabled) {
                 Triple(
                     Color.Transparent,
-                    colors.textDisabled,
+                    colors.mutedForeground,
                     Color.Transparent
                 )
             } else {
                 Triple(
                     Color.Transparent,
-                    if (theme == ButtonTheme.DEFAULT) colors.textPrimary else primaryColor,
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
                     Color.Transparent
                 )
             }
@@ -288,13 +288,13 @@ private fun getButtonColors(
             if (disabled) {
                 Triple(
                     Color.Transparent,
-                    colors.textDisabled,
+                    colors.mutedForeground,
                     Color.Transparent
                 )
             } else {
                 Triple(
                     Color.Transparent,
-                    if (theme == ButtonTheme.DEFAULT) colors.textPrimary else primaryColor,
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
                     Color.Transparent
                 )
             }

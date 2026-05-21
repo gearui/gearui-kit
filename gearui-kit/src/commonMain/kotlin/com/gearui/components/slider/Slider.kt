@@ -22,7 +22,7 @@ import com.tencent.kuikly.compose.ui.unit.IntSize
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -140,7 +140,7 @@ fun Slider(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 左侧标签
@@ -148,7 +148,7 @@ fun Slider(
                 Text(
                     text = leftLabel,
                     style = Typography.BodyMedium,
-                    color = if (enabled) colors.textPrimary else colors.textDisabled
+                    color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
 
@@ -209,7 +209,7 @@ fun Slider(
                         Text(
                             text = formatValue(displayValue),
                             style = Typography.BodySmall,
-                            color = if (enabled) colors.textPrimary else colors.textDisabled,
+                            color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
                                 .offset(y = (-24).dp)
@@ -225,10 +225,10 @@ fun Slider(
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.disabledContainer)
+                            .background(if (enabled) colors.surface else colors.muted)
                             .border(
                                 width = 1.dp,
-                                color = if (enabled) colors.border else colors.disabled,
+                                color = if (enabled) colors.border else colors.mutedForeground,
                                 shape = CircleShape
                             )
                             .then(
@@ -276,7 +276,7 @@ fun Slider(
                 Text(
                     text = rightLabel,
                     style = Typography.BodyMedium,
-                    color = if (enabled) colors.textPrimary else colors.textDisabled
+                    color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
         }
@@ -296,7 +296,7 @@ fun Slider(
                     Text(
                         text = formatValue(stepValue),
                         style = Typography.BodySmall,
-                        color = if (enabled) colors.textSecondary else colors.textDisabled
+                        color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )
                 }
             }
@@ -329,7 +329,7 @@ private fun NormalTrack(
                 .fillMaxWidth()
                 .height(trackHeight)
                 .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.surfaceVariant else colors.disabledContainer)
+                .background(if (enabled) colors.muted else colors.muted)
         )
 
         // 激活轨道
@@ -338,7 +338,7 @@ private fun NormalTrack(
                 .fillMaxWidth(normalizedValue.coerceAtLeast(0.001f))
                 .height(trackHeight)
                 .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.primary else colors.disabled)
+                .background(if (enabled) colors.primary else colors.mutedForeground)
         )
 
         // 刻度点
@@ -358,9 +358,9 @@ private fun NormalTrack(
                             .clip(CircleShape)
                             .background(
                                 if (enabled) {
-                                    if (isActive) colors.primary else colors.surfaceVariant
+                                    if (isActive) colors.primary else colors.muted
                                 } else {
-                                    colors.disabledContainer
+                                    colors.muted
                                 }
                             )
                     )
@@ -394,7 +394,7 @@ private fun CapsuleTrack(
                 .fillMaxWidth()
                 .height(trackHeight)
                 .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.surfaceVariant else colors.disabledContainer)
+                .background(if (enabled) colors.muted else colors.muted)
         )
 
         // 激活轨道 - 内缩一点以留出滑块空间
@@ -405,7 +405,7 @@ private fun CapsuleTrack(
                 .fillMaxWidth(normalizedValue.coerceAtLeast(0.001f))
                 .height(trackHeight - innerPadding * 2)
                 .clip(RoundedCornerShape((trackHeight - innerPadding * 2) / 2))
-                .background(if (enabled) colors.primary else colors.disabled)
+                .background(if (enabled) colors.primary else colors.mutedForeground)
         )
     }
 }
@@ -513,7 +513,7 @@ fun RangeSlider(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 左侧标签
@@ -521,7 +521,7 @@ fun RangeSlider(
                 Text(
                     text = leftLabel,
                     style = Typography.BodyMedium,
-                    color = if (enabled) colors.textPrimary else colors.textDisabled
+                    color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
 
@@ -566,7 +566,7 @@ fun RangeSlider(
                         .fillMaxWidth()
                         .height(trackHeight)
                         .clip(RoundedCornerShape(trackHeight / 2))
-                        .background(if (enabled) colors.surfaceVariant else colors.disabledContainer)
+                        .background(if (enabled) colors.muted else colors.muted)
                 )
 
                 // 激活轨道（中间部分）
@@ -589,7 +589,7 @@ fun RangeSlider(
                             .width(activeWidth)
                             .height(trackHeight)
                             .clip(RoundedCornerShape(trackHeight / 2))
-                            .background(if (enabled) colors.primary else colors.disabled)
+                            .background(if (enabled) colors.primary else colors.mutedForeground)
                     )
                 }
 
@@ -608,7 +608,7 @@ fun RangeSlider(
                         Text(
                             text = formatValue(displayStart),
                             style = Typography.BodySmall,
-                            color = if (enabled) colors.textPrimary else colors.textDisabled,
+                            color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
                                 .offset(y = (-24).dp)
@@ -620,8 +620,8 @@ fun RangeSlider(
                             .size(thumbSize)
                             .shadow(elevation = if (enabled) 4.dp else 0.dp, shape = CircleShape)
                             .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.disabledContainer)
-                            .border(1.dp, if (enabled) colors.border else colors.disabled, CircleShape)
+                            .background(if (enabled) colors.surface else colors.muted)
+                            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -679,7 +679,7 @@ fun RangeSlider(
                         Text(
                             text = formatValue(displayEnd),
                             style = Typography.BodySmall,
-                            color = if (enabled) colors.textPrimary else colors.textDisabled,
+                            color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
                                 .offset(y = (-24).dp)
@@ -691,8 +691,8 @@ fun RangeSlider(
                             .size(thumbSize)
                             .shadow(elevation = if (enabled) 4.dp else 0.dp, shape = CircleShape)
                             .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.disabledContainer)
-                            .border(1.dp, if (enabled) colors.border else colors.disabled, CircleShape)
+                            .background(if (enabled) colors.surface else colors.muted)
+                            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -741,7 +741,7 @@ fun RangeSlider(
                 Text(
                     text = rightLabel,
                     style = Typography.BodyMedium,
-                    color = if (enabled) colors.textPrimary else colors.textDisabled
+                    color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
         }
@@ -761,7 +761,7 @@ fun RangeSlider(
                     Text(
                         text = formatValue(stepValue),
                         style = Typography.BodySmall,
-                        color = if (enabled) colors.textSecondary else colors.textDisabled
+                        color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )
                 }
             }

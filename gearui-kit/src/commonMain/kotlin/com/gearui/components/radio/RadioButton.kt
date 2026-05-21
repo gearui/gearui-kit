@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
@@ -50,20 +51,20 @@ fun RadioButton(
 
     // ⭐ 颜色映射：Theme 语义 → Radio 视觉
     val borderColor = when {
-        !enabled -> colors.disabled
+        !enabled -> colors.mutedForeground
         selected -> colors.primary
-        else -> colors.stroke
+        else -> colors.border
     }
 
-    val innerColor = if (!enabled) colors.disabled else colors.primary
+    val innerColor = if (!enabled) colors.mutedForeground else colors.primary
 
     Box(
         modifier = modifier
             .size(outerSize)
-            .clip(shapes.circle)
+            .clip(CircleShape)
             // 未选中不做底色填充，避免深色主题出现“黑块”
             .background(Color.Transparent)
-            .border(1.5.dp, borderColor, shapes.circle)
+            .border(1.5.dp, borderColor, CircleShape)
             .then(
                 if (enabled) {
                     Modifier.clickable(onClick = onClick)
@@ -76,7 +77,7 @@ fun RadioButton(
             Box(
                 modifier = Modifier
                     .size(innerSize)
-                    .clip(shapes.circle)
+                    .clip(CircleShape)
                     .background(innerColor)
             )
         }
@@ -126,7 +127,7 @@ fun RadioButtonWithLabel(
 
         Text(
             text = label,
-            color = if (enabled) colors.textPrimary else colors.textDisabled,
+            color = if (enabled) colors.foreground else colors.mutedForeground,
             style = typography.bodyLarge
         )
     }
@@ -190,15 +191,15 @@ fun <T> RadioCardGroup(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .clip(shapes.default)
+                    .clip(shapes.md)
                     .background(
                         if (isSelected) colors.primary.copy(alpha = 0.1f)
-                        else colors.surfaceVariant
+                        else colors.muted
                     )
                     .border(
                         width = if (isSelected) 2.dp else 1.dp,
                         color = if (isSelected) colors.primary else colors.border,
-                        shape = shapes.default
+                        shape = shapes.md
                     )
                     .then(
                         if (enabled) {
@@ -216,7 +217,7 @@ fun <T> RadioCardGroup(
                     iconProvider?.let { provider ->
                         Text(
                             text = provider(option),
-                            color = if (isSelected) colors.primary else colors.textSecondary
+                            color = if (isSelected) colors.primary else colors.mutedForeground
                         )
                     }
 
@@ -224,8 +225,8 @@ fun <T> RadioCardGroup(
                     Text(
                         text = labelProvider(option),
                         color = if (isSelected) colors.primary
-                        else if (enabled) colors.textPrimary
-                        else colors.textDisabled
+                        else if (enabled) colors.foreground
+                        else colors.mutedForeground
                     )
 
                     // 选中指示器
@@ -233,7 +234,7 @@ fun <T> RadioCardGroup(
                         Box(
                             modifier = Modifier
                                 .size(6.dp)
-                                .clip(shapes.circle)
+                                .clip(CircleShape)
                                 .background(colors.primary)
                         )
                     }

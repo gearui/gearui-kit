@@ -122,7 +122,7 @@ fun <T> Select(
             Text(
                 text = label,
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.textPrimary else colors.textDisabled,
+                color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -141,14 +141,14 @@ fun <T> Select(
                 .border(
                     width = 1.dp,
                     color = when {
-                        error != null -> colors.danger
-                        !enabled -> colors.disabled
+                        error != null -> colors.destructive
+                        !enabled -> colors.mutedForeground
                         expanded -> colors.border
                         else -> colors.border
                     },
                     shape = triggerShape
                 )
-                .background(if (enabled) colors.surface else colors.disabledContainer)
+                .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) {
                     if (expanded) {
                         closeDropdown()
@@ -164,16 +164,16 @@ fun <T> Select(
                 text = selectedOption?.label ?: placeholder,
                 style = Typography.BodyMedium,
                 color = if (selectedOption != null) {
-                    if (enabled) colors.textPrimary else colors.textDisabled
+                    if (enabled) colors.foreground else colors.mutedForeground
                 } else {
-                    colors.textPlaceholder
+                    colors.mutedForeground
                 }
             )
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = if (enabled) colors.textSecondary else colors.textDisabled
+                tint = if (enabled) colors.mutedForeground else colors.mutedForeground
             )
         }
 
@@ -183,7 +183,7 @@ fun <T> Select(
             Text(
                 text = error,
                 style = Typography.BodySmall,
-                color = colors.danger
+                color = colors.destructive
             )
         }
     }
@@ -252,7 +252,7 @@ private fun <T> SelectOptionItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
-            .background(if (isSelected) colors.surfaceVariant else colors.surface)
+            .background(if (isSelected) colors.muted else colors.surface)
             .clickable(enabled = !option.disabled) { onClick() }
             .height(44.dp)
             .padding(horizontal = 12.dp),
@@ -263,8 +263,8 @@ private fun <T> SelectOptionItem(
             text = option.label,
             style = Typography.BodyMedium,
             color = when {
-                option.disabled -> colors.textDisabled
-                else -> colors.textPrimary
+                option.disabled -> colors.mutedForeground
+                else -> colors.foreground
             }
         )
     }
@@ -360,7 +360,7 @@ fun <T> MultiSelect(
             Text(
                 text = label,
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.textPrimary else colors.textDisabled,
+                color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -380,7 +380,7 @@ fun <T> MultiSelect(
                     if (expanded) colors.border else colors.border,
                     triggerShape
                 )
-                .background(if (enabled) colors.surface else colors.disabledContainer)
+                .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) {
                     if (expanded) closeDropdown() else openDropdown()
                 }
@@ -392,16 +392,16 @@ fun <T> MultiSelect(
                 text = if (values.isEmpty()) placeholder else "${values.size} 项已选",
                 style = Typography.BodyMedium,
                 color = if (values.isNotEmpty()) {
-                    if (enabled) colors.textPrimary else colors.textDisabled
+                    if (enabled) colors.foreground else colors.mutedForeground
                 } else {
-                    colors.textPlaceholder
+                    colors.mutedForeground
                 }
             )
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = if (enabled) colors.textSecondary else colors.textDisabled
+                tint = if (enabled) colors.mutedForeground else colors.mutedForeground
             )
         }
     }
@@ -464,7 +464,7 @@ private fun <T> MultiSelectDropdownContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(10.dp))
-                        .background(if (isSelected) colors.surfaceVariant else colors.surface)
+                        .background(if (isSelected) colors.muted else colors.surface)
                         .clickable(enabled = !option.disabled) {
                             val newValues = if (isSelected) {
                                 selectedValues - option.value
@@ -482,9 +482,9 @@ private fun <T> MultiSelectDropdownContent(
                         text = option.label,
                         style = Typography.BodyMedium,
                         color = when {
-                            option.disabled -> colors.textDisabled
+                            option.disabled -> colors.mutedForeground
                             isSelected -> colors.primary
-                            else -> colors.textPrimary
+                            else -> colors.foreground
                         }
                     )
 
@@ -504,7 +504,7 @@ private fun <T> MultiSelectDropdownContent(
                             Icon(
                                 name = Icons.check,
                                 size = 12.dp,
-                                tint = colors.textAnti
+                                tint = colors.primaryForeground
                             )
                         }
                     }

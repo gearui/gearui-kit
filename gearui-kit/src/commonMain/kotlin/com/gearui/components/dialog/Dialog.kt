@@ -13,8 +13,9 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
+import com.gearui.overlay.OverlayDefaults
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Dialog - 模态弹窗基类
@@ -53,7 +54,7 @@ object Dialog {
     ) {
         val colors = Theme.colors
         val controller = LocalOverlayController.current
-        val effectiveMaskColor = maskColor ?: colors.mask
+        val effectiveMaskColor = maskColor ?: OverlayDefaults.scrimColor
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
         LaunchedEffect(visible) {
@@ -100,9 +101,9 @@ internal fun DialogSurface(
     Box(
         modifier = modifier
             .widthIn(min = 280.dp, max = 360.dp)
-            .shadow(6.dp, shapes.large)
-            .background(colors.surface, shapes.large)
-            .border(1.dp, colors.border, shapes.large)
+            .shadow(6.dp, shapes.lg)
+            .background(colors.surface, shapes.lg)
+            .border(1.dp, colors.border, shapes.lg)
     ) {
         content()
     }
@@ -123,16 +124,16 @@ fun DialogContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Spacing.spacer24.dp)
+            .padding(Spacing.xl)
     ) {
         // 标题
         if (title != null) {
             com.gearui.foundation.primitives.Text(
                 text = title,
                 style = com.gearui.foundation.typography.Typography.TitleMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
-            Spacer(modifier = Modifier.height(Spacing.spacer8.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
         }
 
         // 消息
@@ -140,15 +141,15 @@ fun DialogContent(
             com.gearui.foundation.primitives.Text(
                 text = message,
                 style = com.gearui.foundation.typography.Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
         // 自定义内容
         if (content != null) {
             content()
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
         // 操作按钮

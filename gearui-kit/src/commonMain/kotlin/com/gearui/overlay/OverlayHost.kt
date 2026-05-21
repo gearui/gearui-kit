@@ -115,7 +115,7 @@ private fun OverlayItemLayout(
             Box(
                 Modifier
                     .fillMaxSize()
-                    .background(options.maskColor ?: Color.Black.copy(alpha = 0.32f))
+                    .background(options.maskColor ?: OverlayDefaults.scrimColor)
                     // 抢先消费所有 pointer change，让背后的 LazyColumn 等
                     // 可滚动组件拿不到事件。`detectDragGestures` 不够强，会
                     // 让 down 事件先到底层，被 native scroll view 拦走。

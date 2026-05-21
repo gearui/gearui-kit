@@ -6,10 +6,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.popover.PopoverPlacement
 import com.gearui.components.popover.PopoverTheme
 import com.gearui.components.popover.rememberPopoverState
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
@@ -24,11 +25,14 @@ import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.IntrinsicSize
 import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.Spacer
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.padding
+import com.tencent.kuikly.compose.foundation.layout.width
 import com.tencent.kuikly.compose.foundation.layout.widthIn
-import com.tencent.kuikly.compose.foundation.layout.wrapContentWidth
+import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
@@ -42,12 +46,14 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * Context menu action model.
  *
  * @param label action text
+ * @param icon optional leading icon (gearui [Icon] name, e.g. `Icons.groups`)
  * @param disabled whether action is disabled
  * @param danger whether action uses danger semantic color
  * @param onClick action callback
  */
 data class ContextMenuItem(
     val label: String,
+    val icon: String? = null,
     val disabled: Boolean = false,
     val danger: Boolean = false,
     val onClick: () -> Unit
@@ -84,7 +90,7 @@ fun ContextMenu(
                 anchorBounds = bounds,
                 options = OverlayOptions(
                     placement = placementToOverlay(placement),
-                    offsetY = Spacing.spacer4.dp,
+                    offsetY = Spacing.xs,
                     modal = false,
                     maskColor = null,
                     dismissPolicy = OverlayDismissPolicy.Dropdown.copy(
@@ -98,21 +104,28 @@ fun ContextMenu(
             ) {
                 Column(
                     modifier = Modifier
-                        .widthIn(min = 128.dp, max = 220.dp)
-                        .wrapContentWidth()
-                        .shadow(Spacing.spacer4.dp, shapes.default)
-                        .clip(shapes.default)
+                        // width(IntrinsicSize.Max): 列宽 = 最长 item 的固有宽度，
+                        // 配合 widthIn 防止极短/极长内容跑偏；这样不会出现"短文字撑满 max"的虚胖。
+                        .width(IntrinsicSize.Max)
+                        .widthIn(min = 140.dp, max = 260.dp)
+                        .shadow(Spacing.xs, shapes.md)
+                        .clip(shapes.md)
                         .background(colors.surface)
-                        .border(1.dp, colors.border, shapes.default)
-                        .padding(Spacing.spacer4.dp)
+                        .border(1.dp, colors.border, shapes.md)
+                        .padding(Spacing.xs)
                 ) {
                     items.forEachIndexed { index, item ->
+                        val itemColor = when {
+                            item.disabled -> colors.mutedForeground
+                            item.danger -> colors.destructive
+                            else -> colors.foreground
+                        }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(shapes.small)
+                                .clip(shapes.sm)
                                 .background(
-                                    if (pressedIndex == index) colors.surfaceVariant else colors.surface
+                                    if (pressedIndex == index) colors.muted else colors.surface
                                 )
                                 .pointerInput(index) {
                                     awaitEachGesture {
@@ -133,18 +146,23 @@ fun ContextMenu(
                                     state.hide()
                                 }
                                 .padding(
-                                    horizontal = Spacing.spacer8.dp,
-                                    vertical = 6.dp
-                                )
+                                    horizontal = Spacing.md,
+                                    vertical = 10.dp
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
+                            if (item.icon != null) {
+                                Icon(
+                                    name = item.icon,
+                                    size = 18.dp,
+                                    tint = itemColor,
+                                )
+                                Spacer(Modifier.width(10.dp))
+                            }
                             Text(
                                 text = item.label,
-                                style = Typography.BodySmall,
-                                color = when {
-                                    item.disabled -> colors.textDisabled
-                                    item.danger -> colors.danger
-                                    else -> colors.textPrimary
-                                }
+                                style = Typography.BodyMedium,
+                                color = itemColor,
                             )
                         }
                     }

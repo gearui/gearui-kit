@@ -23,7 +23,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
 
 /**
@@ -118,23 +118,23 @@ fun Popover(
     // 根据主题获取背景色和文字颜色
     val backgroundColor = remember(theme, colors) {
         when (theme) {
-            PopoverTheme.DARK -> colors.inverseSurface
+            PopoverTheme.DARK -> colors.foreground
             PopoverTheme.LIGHT -> colors.surface
             PopoverTheme.BRAND -> colors.primary
             PopoverTheme.SUCCESS -> colors.success
             PopoverTheme.WARNING -> colors.warning
-            PopoverTheme.ERROR -> colors.danger
+            PopoverTheme.ERROR -> colors.destructive
         }
     }
 
     val textColor = remember(theme, colors) {
         when (theme) {
-            PopoverTheme.DARK -> colors.textAnti
-            PopoverTheme.LIGHT -> colors.textPrimary
-            PopoverTheme.BRAND -> colors.textAnti
-            PopoverTheme.SUCCESS -> colors.textAnti
-            PopoverTheme.WARNING -> colors.textPrimary
-            PopoverTheme.ERROR -> colors.textAnti
+            PopoverTheme.DARK -> colors.primaryForeground
+            PopoverTheme.LIGHT -> colors.foreground
+            PopoverTheme.BRAND -> colors.primaryForeground
+            PopoverTheme.SUCCESS -> colors.primaryForeground
+            PopoverTheme.WARNING -> colors.foreground
+            PopoverTheme.ERROR -> colors.primaryForeground
         }
     }
 
@@ -332,11 +332,11 @@ private fun PopoverBody(
 
     Box(
         modifier = Modifier
-            .shadow(Spacing.spacer4.dp, shapes.default)
-            .clip(shapes.default)
+            .shadow(Spacing.xs, shapes.md)
+            .clip(shapes.md)
             .background(backgroundColor)
-            .border(1.dp, borderColor, shapes.default)
-            .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer12.dp)
+            .border(1.dp, borderColor, shapes.md)
+            .padding(horizontal = Spacing.lg, vertical = Spacing.md)
     ) {
         CompositionLocalProvider(
             LocalPopoverTextColor provides textColor
@@ -518,20 +518,20 @@ fun PopoverMenu(
                                 item.onClick()
                                 state.hide()
                             }
-                            .padding(vertical = Spacing.spacer12.dp, horizontal = Spacing.spacer12.dp),
+                            .padding(vertical = Spacing.md, horizontal = Spacing.md),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         if (item.icon != null) {
                             item.icon.invoke()
-                            Spacer(modifier = Modifier.width(Spacing.spacer8.dp))
+                            Spacer(modifier = Modifier.width(Spacing.sm))
                         }
 
                         Text(
                             text = item.label,
                             style = Typography.BodyMedium,
                             color = when {
-                                item.disabled -> colors.textDisabled
-                                item.danger -> colors.danger
+                                item.disabled -> colors.mutedForeground
+                                item.danger -> colors.destructive
                                 else -> LocalPopoverTextColor.current
                             }
                         )
@@ -542,7 +542,7 @@ fun PopoverMenu(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(colors.divider.copy(alpha = 0.3f))
+                                .background(colors.border.copy(alpha = 0.3f))
                         )
                     }
                 }

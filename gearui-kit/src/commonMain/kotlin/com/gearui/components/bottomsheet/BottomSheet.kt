@@ -22,7 +22,8 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.Spacing
+import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.layout.Spacing
 
 /**
  * BottomSheet - 基于 Overlay 系统的底部动作面板
@@ -73,7 +74,7 @@ fun BottomSheet(
                 options = OverlayOptions(
                     placement = OverlayPlacement.Fullscreen,
                     modal = true,
-                    maskColor = colors.mask,
+                    maskColor = OverlayDefaults.scrimColor,
                     dismissPolicy = OverlayDismissPolicy.Sheet.copy(
                         outsideClick = closeOnClickOutside
                     )
@@ -136,7 +137,7 @@ internal fun BottomSheetSurface(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = Spacing.spacer12.dp, topEnd = Spacing.spacer12.dp))
+                    .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
                     .background(colors.surface)
             ) {
                 // 标题区域
@@ -144,23 +145,23 @@ internal fun BottomSheetSurface(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(Spacing.spacer16.dp),
+                            .padding(Spacing.lg),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (title != null) {
                             Text(
                                 text = title,
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
 
                         if (description != null) {
-                            Spacer(modifier = Modifier.height(Spacing.spacer4.dp))
+                            Spacer(modifier = Modifier.height(Spacing.xs))
                             Text(
                                 text = description,
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -179,20 +180,20 @@ internal fun BottomSheetSurface(
 
             // 取消按钮
             if (showCancel) {
-                Spacer(modifier = Modifier.height(Spacing.spacer8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(colors.surface)
                         .clickable(onClick = onDismiss)
-                        .padding(vertical = Spacing.spacer16.dp),
+                        .padding(vertical = Spacing.lg),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = cancelText,
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -201,7 +202,7 @@ internal fun BottomSheetSurface(
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(Spacing.spacer16.dp)
+                    .height(Spacing.lg)
                     .background(colors.surface)
             )
         }
@@ -259,9 +260,9 @@ private fun BottomSheetItemRow(
     val colors = Theme.colors
 
     val textColor = when {
-        item.disabled -> colors.textDisabled
-        item.danger -> colors.danger
-        else -> colors.textPrimary
+        item.disabled -> colors.mutedForeground
+        item.danger -> colors.destructive
+        else -> colors.foreground
     }
 
     Column {
@@ -270,7 +271,7 @@ private fun BottomSheetItemRow(
                 .fillMaxWidth()
                 .height(56.dp)
                 .clickable(enabled = !item.disabled, onClick = onClick)
-                .padding(horizontal = Spacing.spacer16.dp),
+                .padding(horizontal = Spacing.lg),
             contentAlignment = Alignment.Center
         ) {
             Row(
@@ -279,7 +280,7 @@ private fun BottomSheetItemRow(
             ) {
                 if (item.icon != null) {
                     item.icon.invoke()
-                    Spacer(modifier = Modifier.width(Spacing.spacer8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                 }
 
                 Text(
@@ -295,7 +296,7 @@ private fun BottomSheetItemRow(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Spacing.spacer16.dp)
+                    .padding(horizontal = Spacing.lg)
                     .height(0.5.dp)
                     .background(colors.border)
             )
@@ -348,7 +349,7 @@ object BottomSheet {
                     options = OverlayOptions(
                         placement = OverlayPlacement.Fullscreen,
                         modal = true,
-                        maskColor = colors.mask,
+                        maskColor = OverlayDefaults.scrimColor,
                         dismissPolicy = OverlayDismissPolicy.Sheet.copy(
                             outsideClick = closeOnClickOutside
                         )
@@ -387,7 +388,7 @@ private fun BottomSheetHostSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = Spacing.spacer12.dp, topEnd = Spacing.spacer12.dp))
+                .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
                 .background(colors.surface)
                 .pointerInput(Unit) {
                     // 阻止事件穿透到背景

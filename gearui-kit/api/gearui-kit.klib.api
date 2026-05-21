@@ -3797,6 +3797,11 @@ final object com.gearui.i18n/StringPacks { // com.gearui.i18n/StringPacks|null[0
         final fun <get-builtIn>(): kotlin.collections/Map<kotlin/String, com.gearui.i18n/Strings> // com.gearui.i18n/StringPacks.builtIn.<get-builtIn>|<get-builtIn>(){}[0]
 }
 
+final object com.gearui.overlay/OverlayDefaults { // com.gearui.overlay/OverlayDefaults|null[0]
+    final val scrimColor // com.gearui.overlay/OverlayDefaults.scrimColor|{}scrimColor[0]
+        final fun <get-scrimColor>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.overlay/OverlayDefaults.scrimColor.<get-scrimColor>|<get-scrimColor>(){}[0]
+}
+
 final object com.gearui.overlay/OverlayManager { // com.gearui.overlay/OverlayManager|null[0]
     final fun hasOverlay(): kotlin/Boolean // com.gearui.overlay/OverlayManager.hasOverlay|hasOverlay(){}[0]
     final fun notifyBackPress() // com.gearui.overlay/OverlayManager.notifyBackPress|notifyBackPress(){}[0]
@@ -4416,6 +4421,7 @@ final val com.gearui.i18n/isEmpty // com.gearui.i18n/isEmpty|@com.gearui.i18n.St
 final val com.gearui.overlay/LocalOverlayController // com.gearui.overlay/LocalOverlayController|{}LocalOverlayController[0]
     final fun <get-LocalOverlayController>(): androidx.compose.runtime/ProvidableCompositionLocal<com.gearui.overlay/OverlayController> // com.gearui.overlay/LocalOverlayController.<get-LocalOverlayController>|<get-LocalOverlayController>(){}[0]
 final val com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop|#static{}com_gearui_overlay_OverlayController$stableprop[0]
+final val com.gearui.overlay/com_gearui_overlay_OverlayDefaults$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayDefaults$stableprop|#static{}com_gearui_overlay_OverlayDefaults$stableprop[0]
 final val com.gearui.overlay/com_gearui_overlay_OverlayDismissPolicy$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayDismissPolicy$stableprop|#static{}com_gearui_overlay_OverlayDismissPolicy$stableprop[0]
 final val com.gearui.overlay/com_gearui_overlay_OverlayItem$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayItem$stableprop|#static{}com_gearui_overlay_OverlayItem$stableprop[0]
 final val com.gearui.overlay/com_gearui_overlay_OverlayManager$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayManager$stableprop|#static{}com_gearui_overlay_OverlayManager$stableprop[0]
@@ -4819,6 +4825,7 @@ final fun com.gearui.i18n/normalizeLanguageTag(kotlin/String): kotlin/String // 
 final fun com.gearui.overlay/OverlayHost(com.gearui.overlay/OverlayController, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.overlay/OverlayHost|OverlayHost(com.gearui.overlay.OverlayController;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.overlay/OverlayRoot(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.overlay/OverlayRoot|OverlayRoot(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop_getter|com_gearui_overlay_OverlayController$stableprop_getter(){}[0]
+final fun com.gearui.overlay/com_gearui_overlay_OverlayDefaults$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayDefaults$stableprop_getter|com_gearui_overlay_OverlayDefaults$stableprop_getter(){}[0]
 final fun com.gearui.overlay/com_gearui_overlay_OverlayDismissPolicy$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayDismissPolicy$stableprop_getter|com_gearui_overlay_OverlayDismissPolicy$stableprop_getter(){}[0]
 final fun com.gearui.overlay/com_gearui_overlay_OverlayItem$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayItem$stableprop_getter|com_gearui_overlay_OverlayItem$stableprop_getter(){}[0]
 final fun com.gearui.overlay/com_gearui_overlay_OverlayManager$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayManager$stableprop_getter|com_gearui_overlay_OverlayManager$stableprop_getter(){}[0]

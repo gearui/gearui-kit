@@ -51,7 +51,7 @@ fun ConfirmDialog(
                     Text(
                         text = cancelText,
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))

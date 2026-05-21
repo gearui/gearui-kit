@@ -18,12 +18,13 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
+import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * ActionSheet - 动作面板组件
@@ -216,7 +217,7 @@ fun ActionSheetContent(
                 options = OverlayOptions(
                     placement = OverlayPlacement.Fullscreen,
                     modal = true,
-                    maskColor = colors.mask,
+                    maskColor = OverlayDefaults.scrimColor,
                     dismissPolicy = OverlayDismissPolicy.Sheet.copy(
                         outsideClick = true
                     )
@@ -277,7 +278,7 @@ private fun ActionSheetSurface(
     } else {
         configuration.safeAreaInsets.bottom.dp
     }
-    val bottomInset = if (safeAreaBottom > Spacing.spacer16.dp) safeAreaBottom else Spacing.spacer16.dp
+    val bottomInset = if (safeAreaBottom > Spacing.lg) safeAreaBottom else Spacing.lg
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -286,7 +287,7 @@ private fun ActionSheetSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = Spacing.spacer12.dp, topEnd = Spacing.spacer12.dp))
+                .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
                 .background(colors.surface)
                 .clickable { /* 阻止点击穿透 */ }
         ) {
@@ -296,7 +297,7 @@ private fun ActionSheetSurface(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(colors.surface)
-                        .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer12.dp),
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.md),
                     contentAlignment = when (align) {
                         ActionSheetAlign.CENTER -> Alignment.Center
                         ActionSheetAlign.LEFT -> Alignment.CenterStart
@@ -305,7 +306,7 @@ private fun ActionSheetSurface(
                     Text(
                         text = description,
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
                 // 分隔线
@@ -342,8 +343,8 @@ private fun ActionSheetSurface(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(Spacing.spacer8.dp)
-                        .background(colors.surfaceVariant)
+                        .height(Spacing.sm)
+                        .background(colors.muted)
                 )
 
                 // 取消按钮 - 带点击效果
@@ -353,7 +354,7 @@ private fun ActionSheetSurface(
                         .fillMaxWidth()
                         .height(56.dp)
                         .background(
-                            if (cancelPressed) colors.surfaceVariant else colors.surface
+                            if (cancelPressed) colors.muted else colors.surface
                         )
                         .clickable {
                             cancelPressed = true
@@ -365,7 +366,7 @@ private fun ActionSheetSurface(
                     Text(
                         text = cancelText,
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -433,9 +434,9 @@ private fun ActionSheetListItem(
     var isPressed by remember { mutableStateOf(false) }
 
     val textColor = when {
-        item.disabled -> colors.textDisabled
+        item.disabled -> colors.mutedForeground
         item.textColor != null -> item.textColor
-        else -> colors.textPrimary
+        else -> colors.foreground
     }
 
     val horizontalArrangement = when (align) {
@@ -451,13 +452,13 @@ private fun ActionSheetListItem(
                 .fillMaxWidth()
                 .height(itemHeight)
                 .background(
-                    if (isPressed && !item.disabled) colors.surfaceVariant else colors.surface
+                    if (isPressed && !item.disabled) colors.muted else colors.surface
                 )
                 .clickable(enabled = !item.disabled) {
                     isPressed = true
                     onClick()
                 }
-                .padding(horizontal = Spacing.spacer16.dp),
+                .padding(horizontal = Spacing.lg),
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -466,9 +467,9 @@ private fun ActionSheetListItem(
                 Text(
                     text = item.icon,
                     style = Typography.TitleMedium,
-                    color = if (item.disabled) colors.textDisabled else colors.textPrimary
+                    color = if (item.disabled) colors.mutedForeground else colors.foreground
                 )
-                Spacer(modifier = Modifier.width(Spacing.spacer8.dp))
+                Spacer(modifier = Modifier.width(Spacing.sm))
             }
 
             // 文本内容
@@ -487,40 +488,40 @@ private fun ActionSheetListItem(
 
                     // 徽标
                     if (item.badge != null) {
-                        Spacer(modifier = Modifier.width(Spacing.spacer8.dp))
+                        Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                                .background(colors.danger)
+                                .clip(RoundedCornerShape(Spacing.sm))
+                                .background(colors.destructive)
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
                             Text(
                                 text = item.badge,
                                 style = Typography.BodyExtraSmall,
-                                color = colors.onPrimary
+                                color = colors.primaryForeground
                             )
                         }
                     }
 
                     // 红点
                     if (item.showRedPoint && item.badge == null) {
-                        Spacer(modifier = Modifier.width(Spacing.spacer4.dp))
+                        Spacer(modifier = Modifier.width(Spacing.xs))
                         Box(
                             modifier = Modifier
-                                .size(Spacing.spacer8.dp)
-                                .clip(RoundedCornerShape(Spacing.spacer4.dp))
-                                .background(colors.danger)
+                                .size(Spacing.sm)
+                                .clip(RoundedCornerShape(Spacing.xs))
+                                .background(colors.destructive)
                         )
                     }
                 }
 
                 // 描述
                 if (item.description != null) {
-                    Spacer(modifier = Modifier.height(Spacing.spacer4.dp))
+                    Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = item.description,
                         style = Typography.BodyMedium,
-                        color = colors.textDisabled
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -531,7 +532,7 @@ private fun ActionSheetListItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Spacing.spacer16.dp)
+                    .padding(horizontal = Spacing.lg)
                     .height(0.5.dp)
                     .background(colors.border)
             )
@@ -562,7 +563,7 @@ private fun ActionSheetGrid(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(rowHeight * maxRows)
-                .padding(vertical = Spacing.spacer8.dp)
+                .padding(vertical = Spacing.sm)
         ) {
             items(rows) { rowIndex ->
                 ActionSheetGridRow(
@@ -577,7 +578,7 @@ private fun ActionSheetGrid(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = Spacing.spacer8.dp)
+                .padding(vertical = Spacing.sm)
         ) {
             for (rowIndex in 0 until rows) {
                 ActionSheetGridRow(
@@ -604,7 +605,7 @@ private fun ActionSheetGridRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.spacer8.dp),
+            .padding(horizontal = Spacing.sm),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         for (colIndex in 0 until columns) {
@@ -639,21 +640,21 @@ private fun ActionSheetGridItem(
 ) {
     val colors = Theme.colors
     var isPressed by remember { mutableStateOf(false) }
-    val textColor = if (item.disabled) colors.textDisabled else colors.textPrimary
+    val textColor = if (item.disabled) colors.mutedForeground else colors.foreground
 
     val shapes = Theme.shapes
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(Spacing.spacer8.dp))
+            .clip(RoundedCornerShape(Spacing.sm))
             .background(
-                if (isPressed && !item.disabled) colors.surfaceVariant else Color.Transparent
+                if (isPressed && !item.disabled) colors.muted else Color.Transparent
             )
             .clickable(enabled = !item.disabled) {
                 isPressed = true
                 onClick()
             }
-            .padding(Spacing.spacer8.dp),
+            .padding(Spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // 图标区域
@@ -661,15 +662,15 @@ private fun ActionSheetGridItem(
             if (item.icon != null) {
                 Box(
                     modifier = Modifier
-                        .size(Spacing.spacer48.dp)
-                        .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                        .background(colors.surfaceVariant),
+                        .size(Spacing.huge)
+                        .clip(RoundedCornerShape(Spacing.sm))
+                        .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = item.icon,
                         style = Typography.HeadlineSmall,
-                        color = if (item.disabled) colors.textDisabled else colors.textPrimary
+                        color = if (item.disabled) colors.mutedForeground else colors.foreground
                     )
                 }
             }
@@ -679,15 +680,15 @@ private fun ActionSheetGridItem(
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .offset(x = Spacing.spacer4.dp, y = (-Spacing.spacer4).dp)
-                        .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                        .background(colors.danger)
-                        .padding(horizontal = Spacing.spacer4.dp, vertical = 1.dp)
+                        .offset(x = Spacing.xs, y = -Spacing.xs)
+                        .clip(RoundedCornerShape(Spacing.sm))
+                        .background(colors.destructive)
+                        .padding(horizontal = Spacing.xs, vertical = 1.dp)
                 ) {
                     Text(
                         text = item.badge,
                         style = Typography.BodyExtraSmall,
-                        color = colors.onPrimary
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -698,14 +699,14 @@ private fun ActionSheetGridItem(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .offset(x = 2.dp, y = (-2).dp)
-                        .size(Spacing.spacer8.dp)
-                        .clip(RoundedCornerShape(Spacing.spacer4.dp))
-                        .background(colors.danger)
+                        .size(Spacing.sm)
+                        .clip(RoundedCornerShape(Spacing.xs))
+                        .background(colors.destructive)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(Spacing.spacer8.dp))
+        Spacer(modifier = Modifier.height(Spacing.sm))
 
         // 文本
         Text(

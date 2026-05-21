@@ -3393,6 +3393,12 @@ public final class com/gearui/overlay/OverlayControllerKt {
 	public static final fun getLocalOverlayController ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
+public final class com/gearui/overlay/OverlayDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/overlay/OverlayDefaults;
+	public final fun getScrimColor-cs37B9Y ()J
+}
+
 public final class com/gearui/overlay/OverlayDismissPolicy {
 	public static final field $stable I
 	public static final field Companion Lcom/gearui/overlay/OverlayDismissPolicy$Companion;

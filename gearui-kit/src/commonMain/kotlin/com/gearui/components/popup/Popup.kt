@@ -50,7 +50,7 @@ object Popup {
     fun Host(
         visible: Boolean,
         anchorBounds: Rect?,
-        placement: OverlayPlacement = OverlayPlacement.BottomStart,
+        placement: OverlayPlacement = OverlayPlacement.BottomLeft,
         offsetX: Dp = 0.dp,
         offsetY: Dp = 4.dp,
         dismissOnOutside: Boolean = true,
@@ -139,9 +139,9 @@ internal fun PopupSurface(
 
     Box(
         modifier = modifier
-            .clip(shapes.small)
+            .clip(shapes.sm)
             .background(colors.surface)
-            .border(1.dp, colors.border, shapes.small)
+            .border(1.dp, colors.border, shapes.sm)
     ) {
         content()
     }

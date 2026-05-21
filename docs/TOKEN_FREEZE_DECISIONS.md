@@ -211,6 +211,7 @@ Counts are `:gearui-kit:compileDebugKotlinAndroid --rerun-tasks 2>&1 | grep "is 
 | Batch 2 | Text / Icon / Badge / Avatar primitives | 788 | 771 | −17 |
 | Batch 3 | Button / Checkbox / Radio / Switch / Slider | 771 | 688 | −83 |
 | Batch 4 | Input / SearchBar / Textarea / Form | 688 | 633 | −55 |
+| Batch 5 | Overlay 族: Dialog / Popup / BottomSheet / ActionSheet / Select / Popover / ContextMenu | 633 | 483 | −150 |
 
 Notes:
 
@@ -218,3 +219,4 @@ Notes:
 - Batch 2 Δ comes from `BadgeTokens` / `AvatarTokens` dropping `BadgeSpecs` / `AvatarSpecs` references (11) plus deleting unused legacy `BadgeColors` / `AvatarColors` files (6). Text and Icon primitives were already clean.
 - Batch 3 maps the five form controls onto the new semantic color names (`textPrimary→foreground`, `danger→destructive`, `surfaceVariant→muted`, disabled/state colors → `mutedForeground`/`muted`), shape scale (`small→sm`, `default→md`, `circle→CircleShape`), and spacing source (root `Spacing.spacer8.dp` → `foundation.layout.Spacing.sm`). No public API change, so BCV baseline is unaffected.
 - Batch 4 maps the input family (Input/SearchBar/Textarea/Form) with the same color/shape rules (adds `surfaceComponent→surface`, `round→full`, `large→lg`). Pure token migration only — the deeper input-family state model and SearchBar local-focus rework (AUDIT P0-4 / P1-1) are intentionally NOT done here; `input` and `ring` semantic tokens stay reserved for that later polish. No public API change.
+- Batch 5 maps the overlay family (Dialog/Popup/BottomSheet/ActionSheet/Select/Popover/ContextMenu) with the same color/shape/spacing rules, plus three overlay-specific moves: (1) `colors.mask` (deprecated, "scrim is a runtime token") → new `OverlayDefaults.scrimColor` in the overlay layer, and `OverlayHost`'s scrim fallback now reads it too — this is Decision 1's runtime-owned scrim landing; (2) `OverlayPlacement.BottomStart` (deprecated) → `BottomLeft`; (3) `colors.inverseSurface` in Popover → `foreground` (behavior-preserving; the dark-tooltip → `PopoverTokens` rework per AUDIT P1-4 "Overlay Family 统一视觉契约" is intentionally deferred). ContextMenu's archived design changes (leading `icon`, `IntrinsicSize.Max` width, padding 8→12/6→10, `BodySmall→BodyMedium`) land in this batch alongside its token migration. One additive public API: `OverlayDefaults` (BCV baseline updated, no break).

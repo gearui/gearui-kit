@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
@@ -116,15 +117,15 @@ fun Input(
     }
 
     val shape = when (size) {
-        InputSize.LARGE -> shapes.default
-        InputSize.MEDIUM -> shapes.default
-        InputSize.SMALL -> shapes.small
+        InputSize.LARGE -> shapes.md
+        InputSize.MEDIUM -> shapes.md
+        InputSize.SMALL -> shapes.sm
     }
 
     // 不让 borderColor 依赖 isFocused：Kuikly 下 modifier 链在 focus 瞬间重建，
     // 会让底层 EditText 被重建，恰好发生在 tap 处理过程中就会表现为"偶发失焦"。
     val borderColor = when {
-        hasError -> colors.danger
+        hasError -> colors.destructive
         else -> colors.border
     }
 
@@ -132,8 +133,8 @@ fun Input(
     val borderWidth = 1f
 
     val backgroundColor = when {
-        disabled -> colors.disabledContainer
-        cardStyle -> colors.surfaceVariant
+        disabled -> colors.muted
+        cardStyle -> colors.muted
         else -> colors.surface
     }
 
@@ -215,13 +216,13 @@ fun Input(
                             Text(
                                 text = "*",
                                 style = Typography.BodyMedium,
-                                color = colors.danger
+                                color = colors.destructive
                             )
                         }
                         Text(
                             text = label,
                             style = Typography.BodyMedium,
-                            color = if (disabled) colors.textDisabled else colors.textPrimary
+                            color = if (disabled) colors.mutedForeground else colors.foreground
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
@@ -261,7 +262,7 @@ fun Input(
                         textStyle = TextStyle(
                             fontSize = Typography.BodyMedium.fontSize,
                             fontWeight = Typography.BodyMedium.fontWeight,
-                            color = if (disabled) colors.textDisabled else colors.textPrimary,
+                            color = if (disabled) colors.mutedForeground else colors.foreground,
                             textAlign = textAlign
                         ),
                         cursorBrush = SolidColor(colors.primary),
@@ -306,7 +307,7 @@ fun Input(
                                     Text(
                                         text = placeholder,
                                         style = Typography.BodyMedium,
-                                        color = colors.textPlaceholder
+                                        color = colors.mutedForeground
                                     )
                                 }
                                 innerTextField()
@@ -324,8 +325,8 @@ fun Input(
                     Box(
                         modifier = Modifier
                             .size(20.dp)
-                            .clip(shapes.circle)
-                            .background(colors.surfaceVariant)
+                            .clip(CircleShape)
+                            .background(colors.muted)
                             .pointerInput(Unit) {
                                 awaitEachGesture {
                                     val down = awaitFirstDown(
@@ -351,7 +352,7 @@ fun Input(
                         Icon(
                             name = Icons.close,
                             size = 12.dp,
-                            tint = colors.textSecondary
+                            tint = colors.mutedForeground
                         )
                     }
                 }
@@ -368,7 +369,7 @@ fun Input(
                     Text(
                         text = "${value.length}/$maxLength",
                         style = Typography.BodySmall,
-                        color = if (value.length >= maxLength) colors.danger else colors.textSecondary
+                        color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
                     )
                 }
             }
@@ -384,13 +385,13 @@ fun Input(
                     Text(
                         text = "*",
                         style = Typography.BodyMedium,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                 }
                 Text(
                     text = label,
                     style = Typography.BodyMedium,
-                    color = if (disabled) colors.textDisabled else colors.textPrimary
+                    color = if (disabled) colors.mutedForeground else colors.foreground
                 )
             }
         }
@@ -403,7 +404,7 @@ fun Input(
             Text(
                 text = bottomText,
                 style = Typography.BodySmall,
-                color = if (hasError) colors.danger else colors.textSecondary,
+                color = if (hasError) colors.destructive else colors.mutedForeground,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }

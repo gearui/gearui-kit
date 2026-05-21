@@ -70,8 +70,8 @@ fun Textarea(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shapes.large)
-                    .background(colors.surfaceVariant)
+                    .clip(shapes.lg)
+                    .background(colors.muted)
                     .padding(16.dp)
             ) {
                 TextareaContent(
@@ -230,7 +230,7 @@ private fun LabelRow(
         Text(
             text = label,
             style = Typography.BodyMedium,
-            color = if (enabled) colors.textPrimary else colors.textDisabled
+            color = if (enabled) colors.foreground else colors.mutedForeground
         )
 
         if (required) {
@@ -238,7 +238,7 @@ private fun LabelRow(
             Text(
                 text = "*",
                 style = Typography.BodyMedium,
-                color = colors.danger
+                color = colors.destructive
             )
         }
     }
@@ -308,12 +308,12 @@ private fun TextareaInputArea(
                         Modifier
                             .clip(RoundedCornerShape(12.dp))
                             .border(1.dp, colors.border, RoundedCornerShape(12.dp))
-                            .background(if (enabled && !readOnly) colors.surface else colors.disabledContainer)
+                            .background(if (enabled && !readOnly) colors.surface else colors.muted)
                             .padding(12.dp)
                     } else {
                         Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(colors.surfaceVariant)
+                            .background(colors.muted)
                             .padding(horizontal = 10.dp, vertical = 8.dp)
                     }
                 )
@@ -342,7 +342,7 @@ private fun TextareaInputArea(
                     textStyle = TextStyle(
                         fontSize = fontSize,
                         lineHeight = lineHeight,
-                        color = if (enabled) colors.textPrimary else colors.textDisabled
+                        color = if (enabled) colors.foreground else colors.mutedForeground
                     ),
                     cursorBrush = SolidColor(colors.primary),
                     singleLine = false,
@@ -354,7 +354,7 @@ private fun TextareaInputArea(
                                 Text(
                                     text = placeholder,
                                     style = Typography.BodyMedium,
-                                    color = if (readOnly) colors.textDisabled else colors.textPlaceholder
+                                    color = if (readOnly) colors.mutedForeground else colors.mutedForeground
                                 )
                             }
                             innerTextField()
@@ -374,7 +374,7 @@ private fun TextareaInputArea(
                             Text(
                                 text = additionInfo,
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
@@ -384,7 +384,7 @@ private fun TextareaInputArea(
                             Text(
                                 text = "${value.length}/$maxLength",
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }

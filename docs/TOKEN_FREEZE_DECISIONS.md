@@ -210,9 +210,11 @@ Counts are `:gearui-kit:compileDebugKotlinAndroid --rerun-tasks 2>&1 | grep "is 
 | Batch 1 (token-law) | Colors / Shapes / Spacing / Motion / ComponentSpecs deprecation | n/a | **788** (baseline) | — |
 | Batch 2 | Text / Icon / Badge / Avatar primitives | 788 | 771 | −17 |
 | Batch 3 | Button / Checkbox / Radio / Switch / Slider | 771 | 688 | −83 |
+| Batch 4 | Input / SearchBar / Textarea / Form | 688 | 633 | −55 |
 
 Notes:
 
 - Batch 1 introduces the deprecation surface; the 788 baseline reflects the layered bridges covering existing call sites.
 - Batch 2 Δ comes from `BadgeTokens` / `AvatarTokens` dropping `BadgeSpecs` / `AvatarSpecs` references (11) plus deleting unused legacy `BadgeColors` / `AvatarColors` files (6). Text and Icon primitives were already clean.
 - Batch 3 maps the five form controls onto the new semantic color names (`textPrimary→foreground`, `danger→destructive`, `surfaceVariant→muted`, disabled/state colors → `mutedForeground`/`muted`), shape scale (`small→sm`, `default→md`, `circle→CircleShape`), and spacing source (root `Spacing.spacer8.dp` → `foundation.layout.Spacing.sm`). No public API change, so BCV baseline is unaffected.
+- Batch 4 maps the input family (Input/SearchBar/Textarea/Form) with the same color/shape rules (adds `surfaceComponent→surface`, `round→full`, `large→lg`). Pure token migration only — the deeper input-family state model and SearchBar local-focus rework (AUDIT P0-4 / P1-1) are intentionally NOT done here; `input` and `ring` semantic tokens stay reserved for that later polish. No public API change.

@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
@@ -78,8 +79,8 @@ fun SearchBar(
     }
 
     val shapeModifier = when (shape) {
-        SearchBarShape.ROUNDED -> shapes.round
-        SearchBarShape.SQUARE -> shapes.small
+        SearchBarShape.ROUNDED -> shapes.full
+        SearchBarShape.SQUARE -> shapes.sm
     }
 
     val isCenter = alignment == SearchBarAlignment.CENTER
@@ -96,7 +97,7 @@ fun SearchBar(
                 .weight(1f)
                 .fillMaxHeight()
                 .clip(shapeModifier)
-                .background(if (enabled) colors.surfaceComponent else colors.disabledContainer)
+                .background(if (enabled) colors.surface else colors.muted)
                 .border(1.dp, colors.border, shapeModifier)
                 .pointerInput(enabled) {
                     if (enabled) {
@@ -149,7 +150,7 @@ fun SearchBar(
                     Icon(
                         name = Icons.search,
                         size = 16.dp,
-                        tint = colors.textSecondary
+                        tint = colors.mutedForeground
                     )
                 }
 
@@ -163,7 +164,7 @@ fun SearchBar(
                         Text(
                             text = placeholder,
                             style = Typography.BodyMedium,
-                            color = colors.textPlaceholder
+                            color = colors.mutedForeground
                         )
                     }
 
@@ -173,7 +174,7 @@ fun SearchBar(
                         textStyle = TextStyle(
                             fontSize = Typography.BodyMedium.fontSize,
                             fontWeight = Typography.BodyMedium.fontWeight,
-                            color = if (enabled) colors.textPrimary else colors.textDisabled
+                            color = if (enabled) colors.foreground else colors.mutedForeground
                         ),
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
@@ -204,15 +205,15 @@ fun SearchBar(
                     Box(
                         modifier = Modifier
                             .size(20.dp)
-                            .clip(shapes.circle)
-                            .background(colors.surfaceVariant)
+                            .clip(CircleShape)
+                            .background(colors.muted)
                             .clickable { onValueChange("") },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             name = Icons.close,
                             size = 12.dp,
-                            tint = colors.textSecondary
+                            tint = colors.mutedForeground
                         )
                     }
                 }
@@ -225,7 +226,7 @@ fun SearchBar(
             Text(
                 text = "取消",
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.primary else colors.textDisabled,
+                color = if (enabled) colors.primary else colors.mutedForeground,
                 modifier = Modifier.clickable(enabled = enabled) {
                     focusManager.clearFocus(force = true)
                     keyboardController?.hide()
@@ -291,15 +292,15 @@ fun SearchBarWithAction(
         Box(
             modifier = Modifier
                 .height(40.dp)
-                .clip(shapes.small)
-                .background(if (enabled) colors.primary else colors.disabledContainer)
+                .clip(shapes.sm)
+                .background(if (enabled) colors.primary else colors.muted)
                 .padding(horizontal = 16.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = actionText,
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.onPrimary else colors.textDisabled
+                color = if (enabled) colors.primaryForeground else colors.mutedForeground
             )
         }
     }

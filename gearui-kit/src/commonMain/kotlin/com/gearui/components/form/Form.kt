@@ -226,14 +226,14 @@ private class FormScopeImpl(
                         Text(
                             text = "*",
                             style = Typography.BodyMedium,
-                            color = colors.danger
+                            color = colors.destructive
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                     }
                     Text(
                         text = label,
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
 
@@ -251,7 +251,7 @@ private class FormScopeImpl(
                         Text(
                             text = it,
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -316,7 +316,7 @@ fun FormField(
             Text(
                 text = error,
                 style = Typography.BodySmall,
-                color = colors.danger
+                color = colors.destructive
             )
         }
     }

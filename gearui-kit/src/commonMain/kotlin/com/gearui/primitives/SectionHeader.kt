@@ -20,7 +20,7 @@ import com.gearui.theme.Theme
  *
  * 改造要点：
  * - 移除 SectionTokens 的颜色硬编码
- * - 直接使用 Theme.colors.textPrimary/textSecondary
+ * - 直接使用 Theme.colors.foreground/mutedForeground
  * - 背景使用 colors.background
  *
  * 使用场景：
@@ -71,7 +71,7 @@ fun SectionHeader(
                 Text(
                     text = title,
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 if (subtitle != null) {
@@ -79,7 +79,7 @@ fun SectionHeader(
                     Text(
                         text = subtitle,
                         style = Typography.Caption,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }

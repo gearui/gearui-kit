@@ -40,3 +40,18 @@
 | `colors.infoLight` | `colors.info.copy(alpha = 0.12f)` | 同上 |
 | `colors.inverseSurface` | `colors.foreground` | 反色面建议用组件 token（如 `ToastTokens.surface`） |
 | `colors.inverseOnSurface` | `colors.background` | 同上（如 `ToastTokens.surfaceForeground`） |
+
+## Batch 13B — `Shapes` 过时 bridge 字段移除
+
+`com.gearui.theme.Shapes` 的全部 `@Deprecated` getter 已删除。`Shapes` 现在只保留 6 档语义 scale：`none / sm / md / lg / xl / full`。
+
+> 说明：`ShapesDefault.Default` 的真实值未改动（none=0 / sm=4 / md=6 / lg=8 / xl=12 / full=9999dp）。注意旧 `small`/`large` 实际为 3 / 9dp，新 `sm`/`lg` 为 4 / 8dp，屏幕上视觉差异可忽略。
+
+| 旧字段（已删除） | 1.0 替换 | 备注 |
+|---|---|---|
+| `shapes.small` | `shapes.sm` | 旧 3dp → 新 4dp |
+| `shapes.default` | `shapes.md` | 6dp |
+| `shapes.large` | `shapes.lg` | 旧 9dp → 新 8dp |
+| `shapes.extraLarge` | `shapes.xl` | 12dp |
+| `shapes.round` | `shapes.full` | 9999dp |
+| `shapes.circle` | `CircleShape` | 直接用 `Modifier.clip(CircleShape)`，无专用 token |

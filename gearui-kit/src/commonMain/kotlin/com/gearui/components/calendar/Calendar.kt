@@ -122,7 +122,7 @@ fun Calendar(
             Text(
                 text = title,
                 style = Typography.TitleMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
         }
 
@@ -216,35 +216,35 @@ private fun CalendarHeader(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
-                .background(colors.surfaceVariant)
+                .background(colors.muted)
                 .clickable { onPreviousMonth() },
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 name = Icons.chevron_left,
                 size = 18.dp,
-                tint = colors.textPrimary
+                tint = colors.foreground
             )
         }
 
         Text(
             text = "${year}年${month}月",
             style = Typography.TitleMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
 
         Box(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
-                .background(colors.surfaceVariant)
+                .background(colors.muted)
                 .clickable { onNextMonth() },
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 name = Icons.chevron_right,
                 size = 18.dp,
-                tint = colors.textPrimary
+                tint = colors.foreground
             )
         }
     }
@@ -275,7 +275,7 @@ private fun CalendarWeekHeader(
                 Text(
                     text = day,
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -378,15 +378,15 @@ private fun CalendarCell(
     when (selectType) {
         DateSelectType.Selected -> {
             backgroundColor = colors.primary
-            textColor = colors.textAnti
+            textColor = colors.primaryForeground
         }
         DateSelectType.Start -> {
             backgroundColor = colors.primary
-            textColor = colors.textAnti
+            textColor = colors.primaryForeground
         }
         DateSelectType.End -> {
             backgroundColor = colors.primary
-            textColor = colors.textAnti
+            textColor = colors.primaryForeground
         }
         DateSelectType.Centre -> {
             backgroundColor = colors.primary.copy(alpha = 0.1f)
@@ -394,11 +394,11 @@ private fun CalendarCell(
         }
         DateSelectType.Disabled -> {
             backgroundColor = Color.Transparent
-            textColor = colors.textDisabled
+            textColor = colors.mutedForeground
         }
         DateSelectType.Empty -> {
             backgroundColor = Color.Transparent
-            textColor = if (isToday) colors.primary else colors.textPrimary
+            textColor = if (isToday) colors.primary else colors.foreground
         }
     }
 

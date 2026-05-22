@@ -50,7 +50,7 @@ fun DatePickerInput(
             Text(
                 text = label,
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.textPrimary else colors.textDisabled,
+                color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -60,9 +60,9 @@ fun DatePickerInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)
-                .clip(shapes.small)
-                .border(1.dp, if (enabled) colors.stroke else colors.disabled, shapes.small)
-                .background(if (enabled) colors.surface else colors.disabledContainer)
+                .clip(shapes.sm)
+                .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.sm)
+                .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) { showPicker = true }
                 .padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -72,9 +72,9 @@ fun DatePickerInput(
                 text = value.ifEmpty { placeholder },
                 style = Typography.BodyMedium,
                 color = if (value.isNotEmpty()) {
-                    if (enabled) colors.textPrimary else colors.textDisabled
+                    if (enabled) colors.foreground else colors.mutedForeground
                 } else {
-                    colors.textPlaceholder
+                    colors.mutedForeground
                 }
             )
 
@@ -134,7 +134,7 @@ private fun DatePickerDialogContent(
         Text(
             text = "选择日期",
             style = Typography.TitleMedium,
-            color = colors.textPrimary,
+            color = colors.foreground,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -189,15 +189,15 @@ private fun DatePickerDialogContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(40.dp)
-                    .clip(shapes.small)
-                    .border(1.dp, colors.stroke, shapes.small)
+                    .clip(shapes.sm)
+                    .border(1.dp, colors.border, shapes.sm)
                     .clickable { onCancel() },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "取消",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
@@ -205,7 +205,7 @@ private fun DatePickerDialogContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(40.dp)
-                    .clip(shapes.small)
+                    .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable { onConfirm() },
                 contentAlignment = Alignment.Center
@@ -213,7 +213,7 @@ private fun DatePickerDialogContent(
                 Text(
                     text = "确定",
                     style = Typography.BodyMedium,
-                    color = colors.onPrimary
+                    color = colors.primaryForeground
                 )
             }
         }
@@ -248,7 +248,7 @@ fun TimePickerInput(
             Text(
                 text = label,
                 style = Typography.BodyMedium,
-                color = if (enabled) colors.textPrimary else colors.textDisabled,
+                color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -257,9 +257,9 @@ fun TimePickerInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp)
-                .clip(shapes.small)
-                .border(1.dp, if (enabled) colors.stroke else colors.disabled, shapes.small)
-                .background(if (enabled) colors.surface else colors.disabledContainer)
+                .clip(shapes.sm)
+                .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.sm)
+                .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) { showPicker = true }
                 .padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -269,9 +269,9 @@ fun TimePickerInput(
                 text = value.ifEmpty { placeholder },
                 style = Typography.BodyMedium,
                 color = if (value.isNotEmpty()) {
-                    if (enabled) colors.textPrimary else colors.textDisabled
+                    if (enabled) colors.foreground else colors.mutedForeground
                 } else {
-                    colors.textPlaceholder
+                    colors.mutedForeground
                 }
             )
 
@@ -322,7 +322,7 @@ private fun TimePickerDialogContent(
         Text(
             text = "选择时间",
             style = Typography.TitleMedium,
-            color = colors.textPrimary,
+            color = colors.foreground,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -365,15 +365,15 @@ private fun TimePickerDialogContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(40.dp)
-                    .clip(shapes.small)
-                    .border(1.dp, colors.stroke, shapes.small)
+                    .clip(shapes.sm)
+                    .border(1.dp, colors.border, shapes.sm)
                     .clickable { onCancel() },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "取消",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
@@ -381,7 +381,7 @@ private fun TimePickerDialogContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(40.dp)
-                    .clip(shapes.small)
+                    .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable { onConfirm() },
                 contentAlignment = Alignment.Center
@@ -389,7 +389,7 @@ private fun TimePickerDialogContent(
                 Text(
                     text = "确定",
                     style = Typography.BodyMedium,
-                    color = colors.onPrimary
+                    color = colors.primaryForeground
                 )
             }
         }
@@ -442,8 +442,8 @@ private fun IntPickerColumn(
 
     Box(
         modifier = modifier
-            .clip(shapes.small)
-            .background(colors.surfaceVariant)
+            .clip(shapes.sm)
+            .background(colors.muted)
     ) {
         // 居中选中高亮层（统一视觉层次）
         Box(
@@ -452,9 +452,9 @@ private fun IntPickerColumn(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
                 .height(itemHeight)
-                .clip(shapes.default)
+                .clip(shapes.md)
                 .background(colors.surface)
-                .border(1.dp, colors.stroke, shapes.default)
+                .border(1.dp, colors.border, shapes.md)
         )
 
         LazyColumn(
@@ -470,7 +470,7 @@ private fun IntPickerColumn(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(itemHeight)
-                        .background(colors.surfaceVariant)
+                        .background(colors.muted)
                         .clickable {
                             scope.launch {
                                 // Tap first scrolls into selection window,
@@ -483,7 +483,7 @@ private fun IntPickerColumn(
                     Text(
                         text = displayText,
                         style = if (isSelected) Typography.TitleSmall else Typography.BodyMedium,
-                        color = if (isSelected) colors.textPrimary else colors.textSecondary
+                        color = if (isSelected) colors.foreground else colors.mutedForeground
                     )
                 }
             }
@@ -509,7 +509,7 @@ fun DateTimePickerInput(
             Text(
                 text = label,
                 style = Typography.BodyMedium,
-                color = if (enabled) Theme.colors.textPrimary else Theme.colors.textDisabled,
+                color = if (enabled) Theme.colors.foreground else Theme.colors.mutedForeground,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }

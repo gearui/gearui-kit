@@ -85,7 +85,7 @@ fun Rate(
                         Icon(
                             name = Icons.star_border,
                             size = size,
-                            tint = colors.textDisabled
+                            tint = colors.mutedForeground
                         )
                     }
                 }
@@ -169,7 +169,7 @@ fun Rate(
                         style = Typography.TitleLarge,
                         color = when {
                             fullActive || halfActive -> colors.warning
-                            else -> colors.textDisabled
+                            else -> colors.mutedForeground
                         }
                     )
                 }
@@ -187,7 +187,7 @@ fun Rate(
             Text(
                 text = displayText,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

@@ -141,11 +141,11 @@ fun Cascader(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(shapes.small)
+                .clip(shapes.sm)
                 .border(
                     width = 1.dp,
-                    color = if (expanded) colors.primary else colors.stroke,
-                    shape = shapes.small
+                    color = if (expanded) colors.primary else colors.border,
+                    shape = shapes.sm
                 )
                 .background(colors.surface)
                 .clickable {
@@ -158,13 +158,13 @@ fun Cascader(
             Text(
                 text = displayText,
                 style = Typography.BodyMedium,
-                color = if (selectedPath.isNotEmpty()) colors.textPrimary else colors.textPlaceholder
+                color = if (selectedPath.isNotEmpty()) colors.foreground else colors.mutedForeground
             )
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = colors.textSecondary
+                tint = colors.mutedForeground
             )
         }
     }
@@ -190,9 +190,9 @@ private fun CascaderDropdown(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(8.dp, shapes.small)
-            .background(colors.surface, shapes.small)
-            .border(1.dp, colors.stroke, shapes.small)
+            .shadow(8.dp, shapes.sm)
+            .background(colors.surface, shapes.sm)
+            .border(1.dp, colors.border, shapes.sm)
     ) {
         levels.forEachIndexed { levelIndex, levelOptions ->
             Column(
@@ -201,7 +201,7 @@ private fun CascaderDropdown(
                     .fillMaxHeight()
                     .then(
                         if (levelIndex > 0) {
-                            Modifier.border(width = 1.dp, color = colors.stroke)
+                            Modifier.border(width = 1.dp, color = colors.border)
                         } else {
                             Modifier
                         }
@@ -221,10 +221,10 @@ private fun CascaderDropdown(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(shapes.small)
+                                .clip(shapes.sm)
                                 .background(
                                     when {
-                                        isSelected -> colors.surfaceVariant
+                                        isSelected -> colors.muted
                                         else -> Color.Transparent
                                     }
                                 )
@@ -240,10 +240,10 @@ private fun CascaderDropdown(
                                 text = option.label,
                                 style = Typography.BodyMedium,
                                 color = when {
-                                    option.disabled -> colors.textDisabled
+                                    option.disabled -> colors.mutedForeground
                                     isLeafSelected -> colors.primary
-                                    isSelected -> colors.textPrimary
-                                    else -> colors.textPrimary
+                                    isSelected -> colors.foreground
+                                    else -> colors.foreground
                                 }
                             )
 
@@ -251,7 +251,7 @@ private fun CascaderDropdown(
                                 Icon(
                                     name = Icons.chevron_right,
                                     size = 16.dp,
-                                    tint = if (isSelected) colors.textPrimary else colors.textSecondary
+                                    tint = if (isSelected) colors.foreground else colors.mutedForeground
                                 )
                             } else if (isLeafSelected) {
                                 Icon(

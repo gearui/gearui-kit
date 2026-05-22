@@ -17,6 +17,7 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * CalendarPopup - 日历弹出层组件
@@ -84,7 +85,7 @@ fun CalendarPopup(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.mask)
+                .background(OverlayDefaults.scrimColor)
                 .clickable {
                     if (autoClose) onClose()
                 }
@@ -108,7 +109,7 @@ fun CalendarPopup(
                 Text(
                     text = title,
                     style = Typography.TitleMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 // 关闭按钮
@@ -122,7 +123,7 @@ fun CalendarPopup(
                     Icon(
                         name = Icons.close,
                         size = 16.dp,
-                        tint = colors.textSecondary
+                        tint = colors.mutedForeground
                     )
                 }
             }

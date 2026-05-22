@@ -113,8 +113,8 @@ object Picker {
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .height(40.dp)
-                            .clip(shapes.default)
-                            .background(colors.surfaceVariant)
+                            .clip(shapes.md)
+                            .background(colors.muted)
                     )
 
                     // 滚轮选择列
@@ -236,8 +236,8 @@ object Picker {
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .height(40.dp)
-                            .clip(shapes.default)
-                            .background(colors.surfaceVariant)
+                            .clip(shapes.md)
+                            .background(colors.muted)
                     )
 
                     // 联动滚轮列 - 使用 key 强制刷新
@@ -333,7 +333,7 @@ private fun PickerHeader(
         Text(
             text = "取消",
             style = Typography.BodyLarge,
-            color = colors.textSecondary,
+            color = colors.mutedForeground,
             modifier = Modifier.clickable { onCancel() }
         )
 
@@ -346,7 +346,7 @@ private fun PickerHeader(
                 Text(
                     text = title,
                     style = Typography.TitleMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -454,7 +454,7 @@ private fun WheelPickerColumn(
                     Text(
                         text = item,
                         style = if (distanceFromCenter == 0) Typography.TitleSmall else Typography.BodyMedium,
-                        color = colors.textPrimary.copy(alpha = alpha)
+                        color = colors.foreground.copy(alpha = alpha)
                     )
                 }
             }

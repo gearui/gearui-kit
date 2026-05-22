@@ -97,9 +97,9 @@ fun TreeSelect(
                 modifier = Modifier
                     .width(widthDp)
                     .height(dropdownHeight)
-                    .shadow(8.dp, shapes.small)
-                    .background(colors.surface, shapes.small)
-                    .border(1.dp, colors.stroke, shapes.small)
+                    .shadow(8.dp, shapes.sm)
+                    .background(colors.surface, shapes.sm)
+                    .border(1.dp, colors.border, shapes.sm)
                     .padding(8.dp)
             ) {
                 Tree(
@@ -131,11 +131,11 @@ fun TreeSelect(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(shapes.small)
+                .clip(shapes.sm)
                 .border(
                     width = 1.dp,
-                    color = if (expanded) colors.primary else colors.stroke,
-                    shape = shapes.small
+                    color = if (expanded) colors.primary else colors.border,
+                    shape = shapes.sm
                 )
                 .background(colors.surface)
                 .clickable {
@@ -148,13 +148,13 @@ fun TreeSelect(
             Text(
                 text = selectedNode?.title ?: placeholder,
                 style = Typography.BodyMedium,
-                color = if (selectedNode != null) colors.textPrimary else colors.textPlaceholder
+                color = if (selectedNode != null) colors.foreground else colors.mutedForeground
             )
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = colors.textSecondary
+                tint = colors.mutedForeground
             )
         }
     }
@@ -247,11 +247,11 @@ fun TreeSelectMultiple(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(shapes.small)
+                .clip(shapes.sm)
                 .border(
                     width = 1.dp,
-                    color = if (expanded) colors.primary else colors.stroke,
-                    shape = shapes.small
+                    color = if (expanded) colors.primary else colors.border,
+                    shape = shapes.sm
                 )
                 .background(colors.surface)
                 .clickable {
@@ -264,13 +264,13 @@ fun TreeSelectMultiple(
             Text(
                 text = if (selectedKeys.isEmpty()) placeholder else "已选择 ${selectedKeys.size} 项",
                 style = Typography.BodyMedium,
-                color = if (selectedKeys.isNotEmpty()) colors.textPrimary else colors.textPlaceholder
+                color = if (selectedKeys.isNotEmpty()) colors.foreground else colors.mutedForeground
             )
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = colors.textSecondary
+                tint = colors.mutedForeground
             )
         }
     }
@@ -294,9 +294,9 @@ private fun TreeSelectMultipleContent(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(8.dp, shapes.small)
-            .background(colors.surface, shapes.small)
-            .border(1.dp, colors.stroke, shapes.small)
+            .shadow(8.dp, shapes.sm)
+            .background(colors.surface, shapes.sm)
+            .border(1.dp, colors.border, shapes.sm)
             .padding(8.dp)
     ) {
         Tree(

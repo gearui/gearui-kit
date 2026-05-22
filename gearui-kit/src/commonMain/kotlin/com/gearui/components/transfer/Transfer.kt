@@ -174,7 +174,7 @@ private fun TransferList(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colors.surfaceVariant)
+                .background(colors.muted)
                 .padding(12.dp)
         ) {
             Row(
@@ -199,14 +199,14 @@ private fun TransferList(
                     Text(
                         text = title,
                         style = Typography.TitleSmall,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
 
                 Text(
                     text = "${checkedKeys.size}/${items.size}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
@@ -252,7 +252,7 @@ private fun TransferList(
                         Text(
                             text = if (searchValue.isNotEmpty()) "无搜索结果" else "暂无数据",
                             style = Typography.BodyMedium,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -292,7 +292,7 @@ private fun TransferListItem(
         Text(
             text = item.label,
             style = Typography.BodyMedium,
-            color = if (item.disabled) colors.textDisabled else colors.textPrimary,
+            color = if (item.disabled) colors.mutedForeground else colors.foreground,
             modifier = Modifier.weight(1f)
         )
     }

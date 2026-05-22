@@ -64,7 +64,7 @@ fun Cell(
             Text(
                 text = title,
                 style = Typography.BodyLarge,
-                color = if (enabled) colors.textPrimary else colors.textDisabled
+                color = if (enabled) colors.foreground else colors.mutedForeground
             )
 
             if (description != null) {
@@ -72,7 +72,7 @@ fun Cell(
                 Text(
                     text = description,
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -83,7 +83,7 @@ fun Cell(
             Text(
                 text = note,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
 
@@ -99,7 +99,7 @@ fun Cell(
             Icon(
                 name = Icons.chevron_right,
                 size = 16.dp,
-                tint = colors.textPlaceholder
+                tint = colors.mutedForeground
             )
         }
     }

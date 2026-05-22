@@ -14,7 +14,7 @@ import com.gearui.theme.Theme
  *
  * 改造要点：
  * - 移除 TextColors 依赖
- * - 直接使用 Theme.colors.textPrimary/textSecondary
+ * - 直接使用 Theme.colors.foreground/mutedForeground
  *
  * 👉 这是业务 90% 会使用的组件
  *
@@ -64,7 +64,7 @@ fun ListItem(
             Text(
                 text = title,
                 style = Typography.BodyMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
         },
         subtitle = subtitle?.let {
@@ -72,7 +72,7 @@ fun ListItem(
                 Text(
                     text = it,
                     style = Typography.Caption,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         },
@@ -81,7 +81,7 @@ fun ListItem(
                 Text(
                     text = it,
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

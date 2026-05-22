@@ -2,7 +2,6 @@ package com.gearui.foundation.list
 
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.CellSpecs
 
 /**
  * CellTokens - Cell 组件尺寸规范
@@ -27,7 +26,7 @@ object CellDefaults {
      */
     val Default = CellTokens(
         minHeight = 52.dp,
-        paddingHorizontal = CellSpecs.padding,
+        paddingHorizontal = 16.dp,
         paddingVertical = 12.dp,
         disabledAlpha = 0.5f,
         showDivider = true

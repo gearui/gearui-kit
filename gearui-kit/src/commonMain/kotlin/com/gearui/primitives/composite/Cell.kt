@@ -14,7 +14,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Surface
 import com.gearui.foundation.primitives.SurfaceColorTokens
 import com.gearui.foundation.primitives.SurfaceTokens
-import com.gearui.foundation.CellSpecs
+import com.gearui.foundation.list.CellDefaults
 import com.gearui.primitives.*
 import com.gearui.theme.Theme
 
@@ -37,7 +37,7 @@ import com.gearui.theme.Theme
 fun Cell(
     modifier: Modifier = Modifier,
     minHeight: Dp = 52.dp,
-    paddingHorizontal: Dp = CellSpecs.padding,
+    paddingHorizontal: Dp = CellDefaults.Default.paddingHorizontal,
     paddingVertical: Dp = 12.dp,
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
@@ -64,7 +64,7 @@ fun Cell(
     val surfaceColors = SurfaceColorTokens(
         background = colors.surface,
         disabledBackground = colors.surface,
-        pressedBackground = colors.surfaceVariant,
+        pressedBackground = colors.muted,
         border = colors.surface
     )
 

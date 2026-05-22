@@ -1,7 +1,7 @@
 package com.gearui.components.tabs
 
 import androidx.compose.runtime.Composable
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.GearLazyRow
 import com.gearui.foundation.primitives.Text
@@ -68,7 +68,7 @@ fun Tabs(
             isScrollable -> {
                 GearLazyRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md)
                 ) {
                     items.forEach { item ->
                         item {
@@ -89,7 +89,7 @@ fun Tabs(
             else -> {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     items.forEach { item ->
                         Box(modifier = Modifier.weight(1f)) {
@@ -140,12 +140,12 @@ private fun TabCell(
     val containerModifier = when (outlineType) {
         TabsOutlineType.UNDERLINE -> Modifier
         TabsOutlineType.CAPSULE -> Modifier
-            .clip(shapes.default)
-            .background(if (selected) colors.primary else colors.surfaceVariant)
+            .clip(shapes.md)
+            .background(if (selected) colors.primary else colors.muted)
         TabsOutlineType.CARD -> Modifier
-            .clip(shapes.default)
-            .background(if (selected) colors.surface else colors.surfaceVariant)
-            .border(1.dp, if (selected) colors.border else Color.Transparent, shapes.default)
+            .clip(shapes.md)
+            .background(if (selected) colors.surface else colors.muted)
+            .border(1.dp, if (selected) colors.border else Color.Transparent, shapes.md)
     }
 
     Column(
@@ -155,19 +155,19 @@ private fun TabCell(
             .clickable(enabled = !item.disabled) {
                 if (!selected) onSelect(item.id)
             }
-            .padding(horizontal = Spacing.spacer8.dp, vertical = Spacing.spacer8.dp),
+            .padding(horizontal = Spacing.sm, vertical = Spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         val contentColor = when {
-            item.disabled -> colors.textDisabled
-            outlineType == TabsOutlineType.CAPSULE && selected -> colors.onPrimary
-            selected -> colors.textPrimary
-            else -> colors.textSecondary
+            item.disabled -> colors.mutedForeground
+            outlineType == TabsOutlineType.CAPSULE && selected -> colors.primaryForeground
+            selected -> colors.foreground
+            else -> colors.mutedForeground
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (item.icon != null) {

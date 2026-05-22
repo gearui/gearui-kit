@@ -1,7 +1,6 @@
 package com.gearui.foundation.tab
 
 import com.tencent.kuikly.compose.ui.unit.*
-import com.gearui.foundation.TabSpecs
 
 /**
  * Tab 尺寸规范
@@ -24,15 +23,15 @@ object TabSizeTokens {
         height = 36.dp,
         horizontalPadding = 12.dp,
         iconTextSpacing = 4.dp,
-        indicatorHeight = TabSpecs.indicatorHeight,
+        indicatorHeight = 2.dp,
         textSizeSp = 12
     )
 
     val Medium = TabTokens(
-        height = TabSpecs.height,
+        height = 48.dp,
         horizontalPadding = 16.dp,
         iconTextSpacing = 6.dp,
-        indicatorHeight = TabSpecs.indicatorHeight,
+        indicatorHeight = 2.dp,
         textSizeSp = 14
     )
 
@@ -40,7 +39,7 @@ object TabSizeTokens {
         height = 52.dp,
         horizontalPadding = 20.dp,
         iconTextSpacing = 8.dp,
-        indicatorHeight = TabSpecs.indicatorHeight,
+        indicatorHeight = 2.dp,
         textSizeSp = 16
     )
 }

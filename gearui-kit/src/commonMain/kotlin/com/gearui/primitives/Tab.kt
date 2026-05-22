@@ -11,7 +11,7 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.TabSpecs
+import com.gearui.foundation.tab.TabSizeTokens
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 
@@ -23,7 +23,7 @@ import com.gearui.foundation.typography.Typography
  *
  * 改造要点：
  * - selected: colors.primary
- * - unselected: colors.textSecondary
+ * - unselected: colors.mutedForeground
  * - indicator: colors.primary
  */
 @Composable
@@ -37,9 +37,9 @@ fun Tab(
     badgeCount: Int? = null,
     badgeDot: Boolean = false,
 
-    height: Dp = TabSpecs.height,
+    height: Dp = TabSizeTokens.Medium.height,
     horizontalPadding: Dp = 16.dp,
-    indicatorHeight: Dp = TabSpecs.indicatorHeight
+    indicatorHeight: Dp = TabSizeTokens.Medium.indicatorHeight
 ) {
     // ⭐ Framework Rule #1: 第一行永远是这个
     val colors = Theme.colors
@@ -72,7 +72,7 @@ fun Tab(
                 Text(
                     text = text,
                     style = Typography.BodyMedium,
-                    color = if (selected) colors.textPrimary else colors.textSecondary
+                    color = if (selected) colors.foreground else colors.mutedForeground
                 )
             }
 
@@ -84,7 +84,7 @@ fun Tab(
                     Modifier
                         .height(indicatorHeight)
                         .fillMaxWidth()
-                        .background(colors.textPrimary)
+                        .background(colors.foreground)
                 )
             } else {
                 Spacer(Modifier.height(indicatorHeight))

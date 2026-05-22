@@ -58,7 +58,7 @@ fun <T> SegmentedControl(
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(6.dp))
                     .background(
-                        if (isSelected) colors.surfaceVariant else colors.surface
+                        if (isSelected) colors.muted else colors.surface
                     )
                     .clickable(enabled = enabled) {
                         onOptionSelected(option)
@@ -69,9 +69,9 @@ fun <T> SegmentedControl(
                     text = labelProvider(option),
                     style = Typography.BodyMedium,
                     color = when {
-                        !enabled -> colors.textDisabled
-                        isSelected -> colors.textPrimary
-                        else -> colors.textSecondary
+                        !enabled -> colors.mutedForeground
+                        isSelected -> colors.foreground
+                        else -> colors.mutedForeground
                     }
                 )
             }
@@ -112,7 +112,7 @@ fun <T> IconSegmentedControl(
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(6.dp))
                     .background(
-                        if (isSelected) colors.surfaceVariant else colors.surface
+                        if (isSelected) colors.muted else colors.surface
                     )
                     .clickable(enabled = enabled) {
                         onOptionSelected(option.value)
@@ -132,9 +132,9 @@ fun <T> IconSegmentedControl(
                         text = option.label,
                         style = Typography.BodySmall,
                         color = when {
-                            !enabled -> colors.textDisabled
-                            isSelected -> colors.textPrimary
-                            else -> colors.textSecondary
+                            !enabled -> colors.mutedForeground
+                            isSelected -> colors.foreground
+                            else -> colors.mutedForeground
                         }
                     )
                 }

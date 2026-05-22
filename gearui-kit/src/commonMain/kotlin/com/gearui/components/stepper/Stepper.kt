@@ -62,8 +62,8 @@ fun Stepper(
     Row(
         modifier = modifier
             .height(height)
-            .clip(shapes.default)
-            .border(1.dp, if (enabled) colors.border else colors.disabled, shapes.default),
+            .clip(shapes.md)
+            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 减少按钮
@@ -71,7 +71,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(height)
-                .background(if (canDecrease) colors.surface else colors.disabledContainer)
+                .background(if (canDecrease) colors.surface else colors.muted)
                 .clickable(enabled = canDecrease) {
                     onValueChange((value - step).coerceAtLeast(min))
                 },
@@ -80,7 +80,7 @@ fun Stepper(
             Text(
                 text = "−",
                 style = textStyle,
-                color = if (canDecrease) colors.textPrimary else colors.textDisabled
+                color = if (canDecrease) colors.foreground else colors.mutedForeground
             )
         }
 
@@ -89,7 +89,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(1.dp)
-                .background(if (enabled) colors.border else colors.disabled)
+                .background(if (enabled) colors.border else colors.mutedForeground)
         )
 
         // 数值显示
@@ -97,13 +97,13 @@ fun Stepper(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .background(if (enabled && !disableInput) colors.surface else colors.surfaceVariant),
+                .background(if (enabled && !disableInput) colors.surface else colors.muted),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = value.toString(),
                 style = textStyle,
-                color = if (enabled) colors.textPrimary else colors.textDisabled
+                color = if (enabled) colors.foreground else colors.mutedForeground
             )
         }
 
@@ -112,7 +112,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(1.dp)
-                .background(if (enabled) colors.border else colors.disabled)
+                .background(if (enabled) colors.border else colors.mutedForeground)
         )
 
         // 增加按钮
@@ -120,7 +120,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(height)
-                .background(if (canIncrease) colors.surface else colors.disabledContainer)
+                .background(if (canIncrease) colors.surface else colors.muted)
                 .clickable(enabled = canIncrease) {
                     onValueChange((value + step).coerceAtMost(max))
                 },
@@ -129,7 +129,7 @@ fun Stepper(
             Text(
                 text = "+",
                 style = textStyle,
-                color = if (canIncrease) colors.textPrimary else colors.textDisabled
+                color = if (canIncrease) colors.foreground else colors.mutedForeground
             )
         }
     }
@@ -175,7 +175,7 @@ fun StepperWithLabel(
         Text(
             text = label,
             style = Typography.BodyMedium,
-            color = if (enabled) colors.textPrimary else colors.textDisabled,
+            color = if (enabled) colors.foreground else colors.mutedForeground,
             modifier = Modifier.weight(1f)
         )
 

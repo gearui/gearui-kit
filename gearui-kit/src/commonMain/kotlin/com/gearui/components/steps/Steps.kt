@@ -158,8 +158,8 @@ private fun HorizontalSteps(
                         color = when (stepStatus) {
                             StepStatus.FINISH -> colors.success
                             StepStatus.PROCESS -> colors.primary
-                            StepStatus.ERROR -> colors.danger
-                            StepStatus.WAITING -> colors.textSecondary
+                            StepStatus.ERROR -> colors.destructive
+                            StepStatus.WAITING -> colors.mutedForeground
                         }
                     )
 
@@ -169,7 +169,7 @@ private fun HorizontalSteps(
                         Text(
                             text = desc,
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -250,8 +250,8 @@ private fun VerticalSteps(
                         color = when (stepStatus) {
                             StepStatus.FINISH -> colors.success
                             StepStatus.PROCESS -> colors.primary
-                            StepStatus.ERROR -> colors.danger
-                            StepStatus.WAITING -> colors.textSecondary
+                            StepStatus.ERROR -> colors.destructive
+                            StepStatus.WAITING -> colors.mutedForeground
                         }
                     )
 
@@ -260,7 +260,7 @@ private fun VerticalSteps(
                         Text(
                             text = desc,
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -282,13 +282,13 @@ private fun StepIcon(
     val backgroundColor = when (status) {
         StepStatus.FINISH -> colors.success
         StepStatus.PROCESS -> colors.primary
-        StepStatus.ERROR -> colors.danger
-        StepStatus.WAITING -> colors.surfaceVariant
+        StepStatus.ERROR -> colors.destructive
+        StepStatus.WAITING -> colors.muted
     }
 
     val contentColor = when (status) {
-        StepStatus.WAITING -> colors.textSecondary
-        else -> colors.textAnti
+        StepStatus.WAITING -> colors.mutedForeground
+        else -> colors.primaryForeground
     }
 
     Box(

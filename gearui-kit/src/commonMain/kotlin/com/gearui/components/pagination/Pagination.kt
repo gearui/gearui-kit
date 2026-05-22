@@ -1,7 +1,7 @@
 package com.gearui.components.pagination
 
 import androidx.compose.runtime.Composable
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
@@ -48,7 +48,7 @@ fun Pagination(
 
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
         PaginationButton(
@@ -67,21 +67,21 @@ fun Pagination(
                         modifier = Modifier
                             .background(
                                 if (selected) colors.primary else colors.surface,
-                                shapes.default
+                                shapes.md
                             )
                             .border(
                                 width = 1.dp,
                                 color = if (selected) colors.primary else colors.border,
-                                shape = shapes.default
+                                shape = shapes.md
                             )
                             .clickable { onPageChange(item.value) }
-                            .padding(horizontal = Spacing.spacer12.dp, vertical = Spacing.spacer8.dp),
+                            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = item.value.toString(),
                             style = Typography.BodySmall,
-                            color = if (selected) colors.onPrimary else colors.textPrimary
+                            color = if (selected) colors.primaryForeground else colors.foreground
                         )
                     }
                 }
@@ -90,7 +90,7 @@ fun Pagination(
                     Text(
                         text = "...",
                         style = Typography.BodySmall,
-                        color = Theme.colors.textSecondary
+                        color = Theme.colors.mutedForeground
                     )
                 }
             }
@@ -115,18 +115,18 @@ private fun PaginationButton(
     Box(
         modifier = Modifier
             .background(
-                if (enabled) colors.surface else colors.disabledContainer,
-                shapes.default
+                if (enabled) colors.surface else colors.muted,
+                shapes.md
             )
-            .border(1.dp, colors.border, shapes.default)
+            .border(1.dp, colors.border, shapes.md)
             .clickable(enabled = enabled) { onClick() }
-            .padding(horizontal = Spacing.spacer12.dp, vertical = Spacing.spacer8.dp),
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = label,
             style = Typography.BodySmall,
-            color = if (enabled) colors.textPrimary else colors.textDisabled,
+            color = if (enabled) colors.foreground else colors.mutedForeground,
             maxLines = 1,
             softWrap = false
         )

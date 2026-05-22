@@ -101,7 +101,7 @@ private fun AnchorLink(
         Text(
             text = item.title,
             style = Typography.BodyMedium,
-            color = if (isActive) colors.primary else colors.textSecondary
+            color = if (isActive) colors.primary else colors.mutedForeground
         )
     }
 }

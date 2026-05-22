@@ -59,7 +59,7 @@ fun NavBar(
 ) {
     val colors = Theme.colors
     val bgColor = backgroundColor ?: colors.surface
-    val textColor = titleColor ?: colors.textPrimary
+    val textColor = titleColor ?: colors.foreground
 
     // 获取安全区域
     val runtimeFlags = LocalRuntimeFlags.current
@@ -260,7 +260,7 @@ fun NavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(colors.divider)
+                    .background(colors.border)
             )
         }
     }

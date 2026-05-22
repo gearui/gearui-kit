@@ -138,13 +138,13 @@ fun GearImage(
     } else {
         // Placeholder
         Box(
-            modifier = imageModifier.background(colors.surfaceVariant),
+            modifier = imageModifier.background(colors.muted),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = placeholderText,
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }
@@ -172,13 +172,13 @@ fun ImageWithState(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "加载中...",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -187,7 +187,7 @@ fun ImageWithState(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -196,13 +196,13 @@ fun ImageWithState(
                         Icon(
                             name = Icons.close,
                             size = 20.dp,
-                            tint = colors.danger
+                            tint = colors.destructive
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = loadState.message,
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -224,7 +224,7 @@ fun ImageWithState(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(colors.surfaceVariant)
+                        .background(colors.muted)
                 )
             }
         }
@@ -269,7 +269,7 @@ fun Avatar(
             Text(
                 text = fallbackText.take(2).uppercase(),
                 style = Typography.BodyMedium,
-                color = colors.textAnti
+                color = colors.primaryForeground
             )
         }
     }
@@ -333,7 +333,7 @@ fun ImagePlaceholder(
 
     Box(
         modifier = modifier
-            .background(colors.surfaceVariant)
+            .background(colors.muted)
             .border(1.dp, colors.border),
         contentAlignment = Alignment.Center
     ) {
@@ -343,13 +343,13 @@ fun ImagePlaceholder(
             Text(
                 text = icon,
                 style = Typography.HeadlineLarge,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = text,
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

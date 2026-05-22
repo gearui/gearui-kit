@@ -15,7 +15,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.foundation.AvatarSpecs
+import com.gearui.foundation.avatar.AvatarSizeTokens
 import com.gearui.theme.Theme
 
 /**
@@ -25,8 +25,8 @@ import com.gearui.theme.Theme
  * ❌ 禁止：硬编码颜色
  *
  * 改造要点：
- * - 使用 Theme.colors.surfaceVariant 作为背景
- * - 使用 Theme.colors.textSecondary 作为内容颜色
+ * - 使用 Theme.colors.muted 作为背景
+ * - 使用 Theme.colors.mutedForeground 作为内容颜色
  */
 @Composable
 fun Avatar(
@@ -36,8 +36,8 @@ fun Avatar(
     text: String? = null,
     icon: Painter? = null,
 
-    size: Dp = AvatarSpecs.Size.medium,
-    radius: Dp = AvatarSpecs.defaultRadius,  // 圆形
+    size: Dp = AvatarSizeTokens.Medium.size,
+    radius: Dp = AvatarSizeTokens.Medium.radius,  // 圆形
 
     badgeCount: Int? = null,
     badgeDot: Boolean = false,
@@ -53,7 +53,7 @@ fun Avatar(
             modifier = modifier
                 .size(size)
                 .clip(RoundedCornerShape(radius))
-                .background(colors.surfaceVariant)
+                .background(colors.muted)
                 .then(
                     if (onClick != null) {
                         Modifier.clickable(onClick = onClick)
@@ -73,7 +73,7 @@ fun Avatar(
                     Text(
                         text = text.take(2).uppercase(),
                         style = Typography.BodyMedium.copy(fontSize = (size.value * 0.4).sp),
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 

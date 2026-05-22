@@ -357,7 +357,7 @@ fun ImageViewerTrigger(
                         modifier = Modifier
                             .size(thumbnailSize.dp)
                             .clip(RoundedCornerShape(4.dp))
-                            .background(colors.surfaceVariant)
+                            .background(colors.muted)
                             .clickable { state.show(index) },
                         contentAlignment = Alignment.Center
                     ) {
@@ -373,7 +373,7 @@ fun ImageViewerTrigger(
                             Text(
                                 text = "${index + 1}",
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
 

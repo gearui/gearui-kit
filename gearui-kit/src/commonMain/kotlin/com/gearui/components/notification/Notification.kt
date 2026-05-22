@@ -13,7 +13,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -103,7 +103,7 @@ fun Notification(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = topOffset.dp)
-            .padding(horizontal = Spacing.spacer16.dp),
+            .padding(horizontal = Spacing.lg),
         contentAlignment = Alignment.TopCenter
     ) {
         NotificationContent(
@@ -140,17 +140,17 @@ internal fun NotificationContent(
         NotificationType.INFO -> Icons.info to colors.primary
         NotificationType.SUCCESS -> Icons.check to colors.success
         NotificationType.WARNING -> Icons.warning to colors.warning
-        NotificationType.ERROR -> Icons.close to colors.danger
+        NotificationType.ERROR -> Icons.close to colors.destructive
     }
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Spacing.spacer8.dp, shapes.default)
-            .clip(shapes.default)
+            .shadow(Spacing.sm, shapes.md)
+            .clip(shapes.md)
             .background(colors.surface)
-            .padding(Spacing.spacer16.dp),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp),
+            .padding(Spacing.lg),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.Top
     ) {
         // 左侧图标
@@ -165,20 +165,20 @@ internal fun NotificationContent(
             Text(
                 text = title,
                 style = Typography.TitleMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
 
             if (message != null) {
-                Spacer(modifier = Modifier.height(Spacing.spacer4.dp))
+                Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = message,
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
             if (action != null && onAction != null) {
-                Spacer(modifier = Modifier.height(Spacing.spacer8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
                     text = action,
                     style = Typography.BodyMedium,
@@ -196,7 +196,7 @@ internal fun NotificationContent(
             Icon(
                 name = Icons.close,
                 size = 18.dp,
-                tint = colors.textPlaceholder,
+                tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)
             )
         }
@@ -369,7 +369,7 @@ private fun NotificationOverlayContent(
         Box(
             modifier = Modifier
                 .padding(top = topOffset.dp)
-                .padding(horizontal = Spacing.spacer16.dp)
+                .padding(horizontal = Spacing.lg)
         ) {
             NotificationContent(
                 title = title,

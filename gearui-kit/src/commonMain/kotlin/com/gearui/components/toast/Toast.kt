@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
-import com.gearui.Spacing as GearSpacing
 import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -183,15 +182,15 @@ private fun ToastSurface(toast: ToastData) {
 
     // 颜色映射：类型 → 视觉
     val (backgroundColor, textColor) = when (toast.type) {
-        ToastType.INFO -> colors.inverseSurface to colors.inverseOnSurface
-        ToastType.SUCCESS -> colors.success to colors.onPrimary
-        ToastType.WARNING -> colors.warning to colors.onPrimary
-        ToastType.ERROR -> colors.danger to colors.onPrimary
+        ToastType.INFO -> colors.foreground to colors.background
+        ToastType.SUCCESS -> colors.success to colors.primaryForeground
+        ToastType.WARNING -> colors.warning to colors.primaryForeground
+        ToastType.ERROR -> colors.destructive to colors.primaryForeground
     }
 
     Box(
         modifier = Modifier
-            .clip(shapes.small)
+            .clip(shapes.sm)
             .background(backgroundColor)
             .padding(horizontal = 24.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
@@ -299,10 +298,10 @@ fun LocalToast(
 
     // 颜色映射
     val (backgroundColor, textColor) = when (type) {
-        ToastType.INFO -> colors.inverseSurface to colors.inverseOnSurface
-        ToastType.SUCCESS -> colors.success to colors.onPrimary
-        ToastType.WARNING -> colors.warning to colors.onPrimary
-        ToastType.ERROR -> colors.danger to colors.onPrimary
+        ToastType.INFO -> colors.foreground to colors.background
+        ToastType.SUCCESS -> colors.success to colors.primaryForeground
+        ToastType.WARNING -> colors.warning to colors.primaryForeground
+        ToastType.ERROR -> colors.destructive to colors.primaryForeground
     }
 
     // 位置对齐
@@ -313,9 +312,9 @@ fun LocalToast(
     }
 
     val verticalPadding = when (position) {
-        ToastPosition.TOP -> PaddingValues(top = GearSpacing.spacer64.dp)
+        ToastPosition.TOP -> PaddingValues(top = Spacing.massive)
         ToastPosition.CENTER -> PaddingValues(0.dp)
-        ToastPosition.BOTTOM -> PaddingValues(bottom = GearSpacing.spacer64.dp)
+        ToastPosition.BOTTOM -> PaddingValues(bottom = Spacing.massive)
     }
 
     Box(
@@ -327,7 +326,7 @@ fun LocalToast(
         Box(
             modifier = Modifier
                 .widthIn(min = 120.dp, max = 280.dp)
-                .clip(shapes.default)
+                .clip(shapes.md)
                 .background(backgroundColor)
                 .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             contentAlignment = Alignment.Center

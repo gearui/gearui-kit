@@ -56,7 +56,7 @@ fun EmptyState(
             Icon(
                 name = Icons.image,
                 size = 28.dp,
-                tint = colors.textPlaceholder
+                tint = colors.mutedForeground
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -65,7 +65,7 @@ fun EmptyState(
         Text(
             text = message,
             style = Typography.TitleMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
 
         // 描述文字
@@ -74,7 +74,7 @@ fun EmptyState(
             Text(
                 text = description,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
 
@@ -86,7 +86,7 @@ fun EmptyState(
             Spacer(modifier = Modifier.height(24.dp))
             Box(
                 modifier = Modifier
-                    .clip(shapes.small)
+                    .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable(onClick = onAction)
                     .padding(horizontal = 24.dp, vertical = 10.dp)
@@ -94,7 +94,7 @@ fun EmptyState(
                 Text(
                     text = actionText,
                     style = Typography.BodyMedium,
-                    color = colors.onPrimary
+                    color = colors.primaryForeground
                 )
             }
         }
@@ -130,7 +130,7 @@ fun EmptyStatePreset(
             Icon(
                 name = iconName,
                 size = 28.dp,
-                tint = colors.textPlaceholder
+                tint = colors.mutedForeground
             )
         },
         actionText = actionText,

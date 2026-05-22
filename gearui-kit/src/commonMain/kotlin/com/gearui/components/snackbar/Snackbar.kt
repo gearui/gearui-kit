@@ -16,7 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -163,7 +163,7 @@ fun Snackbar(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = topOffset.dp)
-            .padding(horizontal = Spacing.spacer16.dp),
+            .padding(horizontal = Spacing.lg),
         contentAlignment = Alignment.TopCenter
     ) {
         SnackbarContent(
@@ -198,9 +198,9 @@ internal fun SnackbarContent(
     // 根据类型获取背景色
     val backgroundColor = when (type) {
         SnackbarType.INFO -> colors.surface
-        SnackbarType.SUCCESS -> colors.successLight
-        SnackbarType.WARNING -> colors.warningLight
-        SnackbarType.ERROR -> colors.dangerLight
+        SnackbarType.SUCCESS -> colors.success.copy(alpha = 0.12f)
+        SnackbarType.WARNING -> colors.warning.copy(alpha = 0.12f)
+        SnackbarType.ERROR -> colors.destructive.copy(alpha = 0.12f)
     }
 
     // 根据类型获取图标颜色
@@ -208,20 +208,20 @@ internal fun SnackbarContent(
         SnackbarType.INFO -> colors.primary
         SnackbarType.SUCCESS -> colors.success
         SnackbarType.WARNING -> colors.warning
-        SnackbarType.ERROR -> colors.danger
+        SnackbarType.ERROR -> colors.destructive
     }
 
     // 文字颜色
-    val textColor = colors.textPrimary
+    val textColor = colors.foreground
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Spacing.spacer4.dp, shapes.small)
-            .clip(shapes.small)
+            .shadow(Spacing.xs, shapes.sm)
+            .clip(shapes.sm)
             .background(backgroundColor)
-            .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer12.dp),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp),
+            .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 图标
@@ -265,7 +265,7 @@ internal fun SnackbarContent(
             Icon(
                 name = Icons.close,
                 size = 16.dp,
-                tint = colors.textPlaceholder,
+                tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)
             )
         }
@@ -399,7 +399,7 @@ private fun SnackbarOverlayContent(
         Box(
             modifier = Modifier
                 .padding(top = topOffset.dp)
-                .padding(horizontal = Spacing.spacer16.dp)
+                .padding(horizontal = Spacing.lg)
         ) {
             SnackbarContent(
                 message = message,

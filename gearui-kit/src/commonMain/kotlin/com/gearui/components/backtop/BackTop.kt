@@ -85,17 +85,17 @@ fun BackTop(
     // 根据主题确定颜色
     val backgroundColor = when (theme) {
         BackTopTheme.LIGHT -> colors.surface
-        BackTopTheme.DARK -> colors.inverseSurface
+        BackTopTheme.DARK -> colors.foreground
     }
 
     val contentColor = when (theme) {
-        BackTopTheme.LIGHT -> colors.textPrimary
-        BackTopTheme.DARK -> colors.inverseOnSurface
+        BackTopTheme.LIGHT -> colors.foreground
+        BackTopTheme.DARK -> colors.background
     }
 
     val borderColor = when (theme) {
         BackTopTheme.LIGHT -> colors.border
-        BackTopTheme.DARK -> colors.stroke
+        BackTopTheme.DARK -> colors.border
     }
 
     // 根据样式确定尺寸和形状
@@ -218,12 +218,12 @@ fun BackTopCustom(
     // 根据主题确定颜色
     val backgroundColor = when (theme) {
         BackTopTheme.LIGHT -> colors.surface
-        BackTopTheme.DARK -> colors.inverseSurface
+        BackTopTheme.DARK -> colors.foreground
     }
 
     val borderColor = when (theme) {
         BackTopTheme.LIGHT -> colors.border
-        BackTopTheme.DARK -> colors.stroke
+        BackTopTheme.DARK -> colors.border
     }
 
     AnimatedVisibility(

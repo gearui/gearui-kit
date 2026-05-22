@@ -99,7 +99,7 @@ fun Result(
         Text(
             text = title,
             style = Typography.HeadlineMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
 
         // Description
@@ -108,7 +108,7 @@ fun Result(
             Text(
                 text = desc,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
 
@@ -134,12 +134,12 @@ fun Result(
 private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<String?, Color> {
     return when (status) {
         ResultStatus.SUCCESS -> Icons.check to colors.success
-        ResultStatus.ERROR -> Icons.close to colors.danger
+        ResultStatus.ERROR -> Icons.close to colors.destructive
         ResultStatus.WARNING -> Icons.warning to colors.warning
         ResultStatus.INFO -> Icons.info to colors.primary
         ResultStatus.QUESTION -> Icons.info to colors.primary
-        ResultStatus.FORBIDDEN -> Icons.no_photography to colors.danger
-        ResultStatus.NOT_FOUND -> null to colors.textSecondary
+        ResultStatus.FORBIDDEN -> Icons.no_photography to colors.destructive
+        ResultStatus.NOT_FOUND -> null to colors.mutedForeground
     }
 }
 

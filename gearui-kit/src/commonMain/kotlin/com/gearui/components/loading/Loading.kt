@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.geometry.Offset
 import com.tencent.kuikly.compose.ui.geometry.Size
 import com.gearui.theme.Theme
+import com.gearui.overlay.OverlayDefaults
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -111,7 +112,7 @@ fun Loading(
                     LoadingSize.MEDIUM -> Typography.BodyMedium
                     LoadingSize.LARGE -> Typography.BodyLarge
                 },
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }
@@ -374,7 +375,7 @@ fun FullScreenLoading(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.mask),
+            .background(OverlayDefaults.scrimColor),
         contentAlignment = Alignment.Center
     ) {
         Loading(

@@ -18,7 +18,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.primitives.Text
 
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Skeleton animation type
@@ -63,11 +63,11 @@ fun Skeleton(
     modifier: Modifier = Modifier,
     variant: SkeletonVariant = SkeletonVariant.RECTANGULAR,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE,
-    cornerRadius: Dp = Spacing.spacer4.dp
+    cornerRadius: Dp = Spacing.xs
 ) {
     val colors = Theme.colors
 
-    val baseColor = colors.surfaceVariant
+    val baseColor = colors.muted
     val highlightColor = colors.surface
 
     val infiniteTransition = rememberInfiniteTransition()
@@ -130,8 +130,8 @@ fun Skeleton(
 fun SkeletonText(
     modifier: Modifier = Modifier,
     lines: Int = 1,
-    lineHeight: Dp = Spacing.spacer16.dp,
-    lineSpacing: Dp = Spacing.spacer8.dp,
+    lineHeight: Dp = Spacing.lg,
+    lineSpacing: Dp = Spacing.sm,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE,
     lastLineWidth: Float = 0.6f
 ) {
@@ -157,7 +157,7 @@ fun SkeletonText(
 @Composable
 fun SkeletonAvatar(
     modifier: Modifier = Modifier,
-    size: Dp = Spacing.spacer40.dp,
+    size: Dp = Spacing.xxxl,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {
     Skeleton(
@@ -175,7 +175,7 @@ fun SkeletonImage(
     modifier: Modifier = Modifier,
     width: Dp = 100.dp,
     height: Dp = 100.dp,
-    cornerRadius: Dp = Spacing.spacer8.dp,
+    cornerRadius: Dp = Spacing.sm,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {
     Skeleton(
@@ -197,12 +197,12 @@ fun SkeletonArticle(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         // Title
         SkeletonText(
             lines = 1,
-            lineHeight = Spacing.spacer24.dp,
+            lineHeight = Spacing.xl,
             animation = animation,
             modifier = Modifier.fillMaxWidth(0.7f)
         )
@@ -220,7 +220,7 @@ fun SkeletonArticle(
         // Content
         SkeletonText(
             lines = 4,
-            lineHeight = Spacing.spacer16.dp,
+            lineHeight = Spacing.lg,
             animation = animation
         )
     }
@@ -238,13 +238,13 @@ fun SkeletonListItem(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Avatar
         if (showAvatar) {
             SkeletonAvatar(
-                size = Spacing.spacer48.dp,
+                size = Spacing.huge,
                 animation = animation
             )
         }
@@ -252,11 +252,11 @@ fun SkeletonListItem(
         // Content
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             SkeletonText(
                 lines = 1,
-                lineHeight = Spacing.spacer16.dp,
+                lineHeight = Spacing.lg,
                 animation = animation,
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
@@ -290,7 +290,7 @@ fun SkeletonCard(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         // Image
         SkeletonImage(
@@ -302,8 +302,8 @@ fun SkeletonCard(
 
         // Content
         Column(
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp),
-            modifier = Modifier.padding(horizontal = Spacing.spacer12.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+            modifier = Modifier.padding(horizontal = Spacing.md)
         ) {
             SkeletonText(
                 lines = 1,
@@ -317,18 +317,18 @@ fun SkeletonCard(
                 animation = animation
             )
 
-            Spacer(modifier = Modifier.height(Spacing.spacer4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Skeleton(
                     animation = animation,
-                    modifier = Modifier.size(80.dp, Spacing.spacer32.dp)
+                    modifier = Modifier.size(80.dp, Spacing.xxl)
                 )
                 Skeleton(
                     animation = animation,
-                    modifier = Modifier.size(80.dp, Spacing.spacer32.dp)
+                    modifier = Modifier.size(80.dp, Spacing.xxl)
                 )
             }
         }
@@ -344,7 +344,7 @@ fun SkeletonGrid(
     columns: Int = 2,
     rows: Int = 2,
     itemHeight: Dp = 120.dp,
-    spacing: Dp = Spacing.spacer12.dp,
+    spacing: Dp = Spacing.md,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {
     Column(

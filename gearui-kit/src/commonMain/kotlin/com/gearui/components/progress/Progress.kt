@@ -57,7 +57,7 @@ fun LinearProgress(
         ProgressStatus.PRIMARY -> colors.primary
         ProgressStatus.SUCCESS -> colors.success
         ProgressStatus.WARNING -> colors.warning
-        ProgressStatus.DANGER -> colors.danger
+        ProgressStatus.DANGER -> colors.destructive
     }
 
     when (labelPosition) {
@@ -71,8 +71,8 @@ fun LinearProgress(
                     modifier = Modifier
                         .weight(1f)
                         .height(height)
-                        .clip(shapes.small)
-                        .background(colors.surfaceVariant)
+                        .clip(shapes.sm)
+                        .background(colors.muted)
                 ) {
                     Box(
                         modifier = Modifier
@@ -88,7 +88,7 @@ fun LinearProgress(
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
                         style = typography.bodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -98,8 +98,8 @@ fun LinearProgress(
             Box(
                 modifier = modifier
                     .height(height.coerceAtLeast(24.dp))
-                    .clip(shapes.small)
-                    .background(colors.surfaceVariant),
+                    .clip(shapes.sm)
+                    .background(colors.muted),
                 contentAlignment = Alignment.Center
             ) {
                 // 进度条
@@ -116,7 +116,7 @@ fun LinearProgress(
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
                         style = typography.bodySmall,
-                        color = if (animatedProgress > 0.5f) colors.onPrimary else colors.textPrimary
+                        color = if (animatedProgress > 0.5f) colors.primaryForeground else colors.foreground
                     )
                 }
             }
@@ -151,7 +151,7 @@ fun CircularProgress(
         ProgressStatus.PRIMARY -> colors.primary
         ProgressStatus.SUCCESS -> colors.success
         ProgressStatus.WARNING -> colors.warning
-        ProgressStatus.DANGER -> colors.danger
+        ProgressStatus.DANGER -> colors.destructive
     }
 
     Box(
@@ -163,7 +163,7 @@ fun CircularProgress(
 
             // 背景圆环
             drawCircle(
-                color = colors.surfaceVariant,
+                color = colors.muted,
                 style = Stroke(width = strokeWidth.toPx())
             )
 
@@ -185,7 +185,7 @@ fun CircularProgress(
             Text(
                 text = "${(normalizedProgress * 100).roundToInt()}%",
                 style = typography.bodySmall,
-                color = colors.textPrimary
+                color = colors.foreground
             )
         }
     }

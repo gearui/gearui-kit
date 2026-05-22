@@ -15,7 +15,7 @@ import com.gearui.foundation.interaction.createMutableInteractionSource
 import com.gearui.foundation.primitives.Surface
 import com.gearui.foundation.primitives.SurfaceColorTokens
 import com.gearui.foundation.primitives.SurfaceTokens
-import com.gearui.foundation.CardSpecs
+import com.gearui.foundation.list.CardDefaults
 import com.gearui.theme.Theme
 
 /**
@@ -52,8 +52,8 @@ fun Card(
     modifier: Modifier = Modifier,
     containerColor: Color? = null,
     borderColor: Color? = null,
-    cornerRadius: Float = CardSpecs.radius.value,
-    padding: PaddingValues = PaddingValues(CardSpecs.padding),
+    cornerRadius: Float = CardDefaults.Default.cornerRadius.value,
+    padding: PaddingValues = PaddingValues(CardDefaults.Default.padding),
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { createMutableInteractionSource() },
@@ -69,7 +69,7 @@ fun Card(
     val surfaceTokens = SurfaceTokens(
         height = 0.dp,  // Card 高度由内容决定
         radius = cornerRadius.dp,
-        borderWidth = CardSpecs.borderWidth,
+        borderWidth = CardDefaults.Default.borderWidth,
         padding = PaddingValues(0.dp)  // Card 自己控制 padding
     )
 

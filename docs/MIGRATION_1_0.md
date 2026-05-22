@@ -74,3 +74,19 @@
 | `Spacing.spacer48.dp` | `Spacing.huge` (48dp) |
 | `Spacing.spacer64.dp` | `Spacing.massive` (64dp) |
 | `Spacing.spacer96` / `Spacing.spacer160` | 无 canonical token；如需该尺寸，请在组件 token 内自行声明 |
+
+## Batch 13D — `ComponentSpecs` 移除
+
+`com.gearui.foundation.ComponentSpecs.kt`（早期尺寸常量池）整个文件已删除，含其中全部 9 个 `*Specs` object。组件级尺寸已在 Batch 2–11 全部迁移到对应的 `XxxTokens` / `XxxDefaults`。
+
+| 旧 object（已删除） | 1.0 替换 |
+|---|---|
+| `ButtonSpecs` | `ButtonTokens`（`foundation.tokens`） |
+| `CellSpecs` | `CellTokens` / `CellDefaults`（`foundation.list`） |
+| `AvatarSpecs` | `AvatarTokens` / `AvatarSizeTokens`（`foundation.avatar`） |
+| `BadgeSpecs` | `BadgeTokens` / `BadgeSizeTokens`（`foundation.badge`） |
+| `DividerSpecs` | `DividerTokens` / `Dividers`（`foundation.layout`） |
+| `TabSpecs` | `TabTokens` / `TabSizeTokens`（`foundation.tab`） |
+| `CardSpecs` | `CardTokens` / `CardDefaults`（`foundation.list`） |
+| `InputSpecs` | `InputTokens`（`foundation.tokens`） |
+| `SectionHeaderSpecs` | `SectionTokens`（`foundation.layout`）/ 组件内默认值 |

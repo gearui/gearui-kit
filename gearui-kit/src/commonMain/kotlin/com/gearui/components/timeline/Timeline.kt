@@ -119,11 +119,11 @@ private fun TimelineItemView(
     val colors = Theme.colors
 
     val dotColor = when (item.color) {
-        TimelineColor.DEFAULT -> colors.textSecondary
+        TimelineColor.DEFAULT -> colors.mutedForeground
         TimelineColor.PRIMARY -> colors.primary
         TimelineColor.SUCCESS -> colors.success
         TimelineColor.WARNING -> colors.warning
-        TimelineColor.ERROR -> colors.danger
+        TimelineColor.ERROR -> colors.destructive
     }
 
     Row(
@@ -157,7 +157,7 @@ private fun TimelineItemView(
                     Text(
                         text = icon,
                         style = Typography.BodySmall,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -185,7 +185,7 @@ private fun TimelineItemView(
                 Text(
                     text = item.content,
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 item.timestamp?.let { timestamp ->
@@ -193,7 +193,7 @@ private fun TimelineItemView(
                     Text(
                         text = timestamp,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -210,7 +210,7 @@ private fun TimelineItemView(
                 Text(
                     text = item.content,
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 item.timestamp?.let { timestamp ->
@@ -218,7 +218,7 @@ private fun TimelineItemView(
                     Text(
                         text = timestamp,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }

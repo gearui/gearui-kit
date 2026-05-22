@@ -395,7 +395,7 @@ private fun SwipeCellActionButton(
     // 从 Theme.colors 获取语义颜色
     val backgroundColor = when (action.theme) {
         SwipeCellActionTheme.PRIMARY -> colors.primary
-        SwipeCellActionTheme.DANGER -> colors.danger
+        SwipeCellActionTheme.DANGER -> colors.destructive
         SwipeCellActionTheme.WARNING -> colors.warning
         SwipeCellActionTheme.SUCCESS -> colors.success
     }
@@ -420,7 +420,7 @@ private fun SwipeCellActionButton(
                 Text(
                     text = action.icon,
                     style = Typography.TitleMedium,
-                    color = colors.textAnti,
+                    color = colors.primaryForeground,
                     maxLines = 1
                 )
                 if (action.label.isNotEmpty()) {
@@ -428,7 +428,7 @@ private fun SwipeCellActionButton(
                     Text(
                         text = action.label,
                         style = Typography.BodySmall,
-                        color = colors.textAnti,
+                        color = colors.primaryForeground,
                         maxLines = 1
                     )
                 }
@@ -443,14 +443,14 @@ private fun SwipeCellActionButton(
                 Text(
                     text = action.icon,
                     style = Typography.BodyMedium,
-                    color = colors.textAnti,
+                    color = colors.primaryForeground,
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.width(tokens.iconSpacing))
                 Text(
                     text = action.label,
                     style = Typography.BodySmall,
-                    color = colors.textAnti,
+                    color = colors.primaryForeground,
                     maxLines = 1
                 )
             }
@@ -459,7 +459,7 @@ private fun SwipeCellActionButton(
             Text(
                 text = action.icon,
                 style = Typography.TitleMedium,
-                color = colors.textAnti,
+                color = colors.primaryForeground,
                 maxLines = 1
             )
         } else {
@@ -467,7 +467,7 @@ private fun SwipeCellActionButton(
             Text(
                 text = action.label,
                 style = Typography.BodyMedium,
-                color = colors.textAnti,
+                color = colors.primaryForeground,
                 maxLines = 1,
                 modifier = Modifier.padding(horizontal = tokens.actionPaddingHorizontal)
             )

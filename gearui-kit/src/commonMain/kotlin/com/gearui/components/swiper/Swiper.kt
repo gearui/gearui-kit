@@ -209,7 +209,7 @@ fun Swiper(
                             Icon(
                                 name = Icons.chevron_left,
                                 size = 18.dp,
-                                tint = colors.textPrimary
+                                tint = colors.foreground
                             )
                         }
                     } else {
@@ -234,7 +234,7 @@ fun Swiper(
                             Icon(
                                 name = Icons.chevron_right,
                                 size = 18.dp,
-                                tint = colors.textPrimary
+                                tint = colors.foreground
                             )
                         }
                     } else {
@@ -286,8 +286,8 @@ private fun SwiperIndicator(
     val colors = Theme.colors
 
     // 颜色配置：外部用品牌色，内部用白色
-    val activeColor = if (isOuter) colors.primary else colors.textAnti
-    val inactiveColor = if (isOuter) colors.border else colors.textAnti.copy(alpha = 0.4f)
+    val activeColor = if (isOuter) colors.primary else colors.primaryForeground
+    val inactiveColor = if (isOuter) colors.border else colors.primaryForeground.copy(alpha = 0.4f)
 
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -359,7 +359,7 @@ private fun SwiperIndicator(
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
                         .background(
-                            if (isOuter) colors.textPlaceholder
+                            if (isOuter) colors.mutedForeground
                             else colors.surface.copy(alpha = 0.5f)
                         )
                         .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -367,7 +367,7 @@ private fun SwiperIndicator(
                     Text(
                         text = "${currentIndex + 1}/$itemCount",
                         style = Typography.BodySmall,
-                        color = if (isOuter) colors.textAnti else colors.textAnti
+                        color = if (isOuter) colors.primaryForeground else colors.primaryForeground
                     )
                 }
             }

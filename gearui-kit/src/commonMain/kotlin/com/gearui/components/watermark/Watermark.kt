@@ -51,7 +51,7 @@ fun Watermark(
                                 Text(
                                     text = line,
                                     style = textStyle,
-                                    color = colors.textPlaceholder.copy(alpha = normalizedAlpha)
+                                    color = colors.mutedForeground.copy(alpha = normalizedAlpha)
                                 )
                             }
                         }

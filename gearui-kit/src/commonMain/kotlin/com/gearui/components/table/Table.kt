@@ -180,7 +180,7 @@ private fun <T> NormalTable(
         modifier = Modifier
             .fillMaxWidth()
             .height(rowHeight)
-            .background(colors.surfaceVariant),
+            .background(colors.muted),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (selectable) {
@@ -211,7 +211,7 @@ private fun <T> NormalTable(
                 Text(
                     text = column.title,
                     style = Typography.TitleSmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -237,7 +237,7 @@ private fun <T> NormalTable(
             Text(
                 text = emptyText,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     } else {
@@ -246,7 +246,7 @@ private fun <T> NormalTable(
                 val isSelected = selectionState.isSelected(item)
                 val backgroundColor = when {
                     isSelected -> colors.primary.copy(alpha = 0.1f)
-                    striped && index % 2 == 1 -> colors.surfaceVariant
+                    striped && index % 2 == 1 -> colors.muted
                     else -> colors.surface
                 }
 
@@ -440,14 +440,14 @@ private fun <T> ColumnContent(
             modifier = Modifier
                 .width(colWidth)
                 .height(rowHeight)
-                .background(colors.surfaceVariant)
+                .background(colors.muted)
                 .padding(horizontal = 16.dp),
             contentAlignment = getAlignment(column.align)
         ) {
             Text(
                 text = column.title,
                 style = Typography.TitleSmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
         // 表头下分割线
@@ -470,7 +470,7 @@ private fun <T> ColumnContent(
                     Text(
                         text = emptyText,
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -479,7 +479,7 @@ private fun <T> ColumnContent(
                 val isSelected = selectionState.isSelected(item)
                 val backgroundColor = when {
                     isSelected -> colors.primary.copy(alpha = 0.1f)
-                    striped && index % 2 == 1 -> colors.surfaceVariant
+                    striped && index % 2 == 1 -> colors.muted
                     else -> colors.surface
                 }
                 Box(
@@ -542,7 +542,7 @@ fun SimpleTable(
                 Text(
                     text = row.getOrNull(index) ?: "",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         )

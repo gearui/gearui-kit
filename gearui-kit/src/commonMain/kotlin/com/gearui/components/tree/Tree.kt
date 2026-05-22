@@ -293,7 +293,7 @@ private fun TreeNodeView(
                 Icon(
                     name = if (isExpanded) Icons.keyboard_arrow_down else Icons.chevron_right,
                     size = 16.dp,
-                    tint = if (node.disabled) colors.textDisabled else colors.textSecondary,
+                    tint = if (node.disabled) colors.mutedForeground else colors.mutedForeground,
                     modifier = Modifier.width(16.dp)
                 )
             } else {
@@ -318,7 +318,7 @@ private fun TreeNodeView(
                 Text(
                     text = icon,
                     style = Typography.BodyMedium,
-                    color = if (node.disabled) colors.textDisabled else colors.textSecondary
+                    color = if (node.disabled) colors.mutedForeground else colors.mutedForeground
                 )
             }
 
@@ -326,7 +326,7 @@ private fun TreeNodeView(
             Text(
                 text = node.title,
                 style = Typography.BodyMedium,
-                color = if (node.disabled) colors.textDisabled else colors.textPrimary
+                color = if (node.disabled) colors.mutedForeground else colors.foreground
             )
         }
 

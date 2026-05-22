@@ -301,16 +301,16 @@ private fun computeOffset(
 
     // 判断是否需要翻转（基于弹出方向）
     val isVerticalPlacement = options.placement in listOf(
-        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight, OverlayPlacement.TopStart,
-        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight, OverlayPlacement.BottomStart
+        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight,
+        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight
     )
 
     val isTopPlacement = options.placement in listOf(
-        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight, OverlayPlacement.TopStart
+        OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight
     )
 
     val isBottomPlacement = options.placement in listOf(
-        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight, OverlayPlacement.BottomStart
+        OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight
     )
 
     val isLeftPlacement = options.placement in listOf(
@@ -353,9 +353,7 @@ private fun computeOffset(
     val x = when (options.placement) {
         // 上方/下方 - 左对齐
         OverlayPlacement.TopLeft,
-        OverlayPlacement.BottomLeft,
-        OverlayPlacement.TopStart,
-        OverlayPlacement.BottomStart ->
+        OverlayPlacement.BottomLeft ->
             (anchor.left + offsetX).toInt()
 
         // 上方/下方 - 居中
@@ -404,8 +402,7 @@ private fun computeOffset(
         // 上方 - popup 在 anchor 上面
         OverlayPlacement.TopLeft,
         OverlayPlacement.TopCenter,
-        OverlayPlacement.TopRight,
-        OverlayPlacement.TopStart -> {
+        OverlayPlacement.TopRight -> {
             if (actuallyAbove) {
                 (anchor.top - popupSize.height + offsetY).toInt()
             } else {
@@ -417,8 +414,7 @@ private fun computeOffset(
         // 下方 - popup 在 anchor 下面
         OverlayPlacement.BottomLeft,
         OverlayPlacement.BottomCenter,
-        OverlayPlacement.BottomRight,
-        OverlayPlacement.BottomStart -> {
+        OverlayPlacement.BottomRight -> {
             if (!actuallyAbove) {
                 (anchor.bottom + offsetY).toInt()
             } else {

@@ -32,12 +32,6 @@ enum class OverlayPlacement {
     // 特殊
     Center,         // 屏幕居中（无 anchor）
     Fullscreen,     // 全屏
-
-    // 向后兼容别名
-    @Deprecated("Use TopLeft", ReplaceWith("TopLeft"))
-    TopStart,
-    @Deprecated("Use BottomLeft", ReplaceWith("BottomLeft"))
-    BottomStart
 }
 
 /**

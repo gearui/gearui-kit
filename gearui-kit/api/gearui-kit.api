@@ -2758,30 +2758,6 @@ public final class com/gearui/foundation/swipecell/SwipeCellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/gearui/foundation/tab/TabColorTokens {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/tab/TabColorTokens;
-	public final fun getDefault ()Lcom/gearui/foundation/tab/TabColors;
-}
-
-public final class com/gearui/foundation/tab/TabColors {
-	public static final field $stable I
-	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-cs37B9Y ()J
-	public final fun component2-cs37B9Y ()J
-	public final fun component3-cs37B9Y ()J
-	public final fun component4-cs37B9Y ()J
-	public final fun copy-qXgTcaw (JJJJ)Lcom/gearui/foundation/tab/TabColors;
-	public static synthetic fun copy-qXgTcaw$default (Lcom/gearui/foundation/tab/TabColors;JJJJILjava/lang/Object;)Lcom/gearui/foundation/tab/TabColors;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBackground-cs37B9Y ()J
-	public final fun getIndicator-cs37B9Y ()J
-	public final fun getSelectedText-cs37B9Y ()J
-	public final fun getUnselectedText-cs37B9Y ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/gearui/foundation/tab/TabSizeTokens {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/tab/TabSizeTokens;
@@ -2962,46 +2938,6 @@ public final class com/gearui/foundation/tokens/InputTokens$Companion {
 	public final fun getLarge ()Lcom/gearui/foundation/tokens/InputTokens;
 	public final fun getMedium ()Lcom/gearui/foundation/tokens/InputTokens;
 	public final fun getSmall ()Lcom/gearui/foundation/tokens/InputTokens;
-}
-
-public final class com/gearui/foundation/tokens/TagColorTokens {
-	public static final field $stable I
-	public static final field Companion Lcom/gearui/foundation/tokens/TagColorTokens$Companion;
-	public fun <init> (JJJJJ)V
-	public synthetic fun <init> (JJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()J
-	public final fun component2 ()J
-	public final fun component3 ()J
-	public final fun component4 ()J
-	public final fun component5 ()J
-	public final fun copy (JJJJJ)Lcom/gearui/foundation/tokens/TagColorTokens;
-	public static synthetic fun copy$default (Lcom/gearui/foundation/tokens/TagColorTokens;JJJJJILjava/lang/Object;)Lcom/gearui/foundation/tokens/TagColorTokens;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getActiveBackgroundColor ()J
-	public final fun getBackgroundColor ()J
-	public final fun getDisabledBackgroundColor ()J
-	public final fun getDisabledTextColor ()J
-	public final fun getTextColor ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/gearui/foundation/tokens/TagColorTokens$Companion {
-	public final fun getDangerDark ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getDangerLight ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getDangerOutline ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getDefaultDark ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getDefaultLight ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getDefaultOutline ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getPrimaryDark ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getPrimaryLight ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getPrimaryOutline ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getSuccessDark ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getSuccessLight ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getSuccessOutline ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getWarningDark ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getWarningLight ()Lcom/gearui/foundation/tokens/TagColorTokens;
-	public final fun getWarningOutline ()Lcom/gearui/foundation/tokens/TagColorTokens;
 }
 
 public final class com/gearui/foundation/tokens/TagTokens {
@@ -3351,7 +3287,6 @@ public final class com/gearui/overlay/OverlayPlacement : java/lang/Enum {
 	public static final field BottomCenter Lcom/gearui/overlay/OverlayPlacement;
 	public static final field BottomLeft Lcom/gearui/overlay/OverlayPlacement;
 	public static final field BottomRight Lcom/gearui/overlay/OverlayPlacement;
-	public static final field BottomStart Lcom/gearui/overlay/OverlayPlacement;
 	public static final field Center Lcom/gearui/overlay/OverlayPlacement;
 	public static final field Fullscreen Lcom/gearui/overlay/OverlayPlacement;
 	public static final field LeftBottom Lcom/gearui/overlay/OverlayPlacement;
@@ -3363,7 +3298,6 @@ public final class com/gearui/overlay/OverlayPlacement : java/lang/Enum {
 	public static final field TopCenter Lcom/gearui/overlay/OverlayPlacement;
 	public static final field TopLeft Lcom/gearui/overlay/OverlayPlacement;
 	public static final field TopRight Lcom/gearui/overlay/OverlayPlacement;
-	public static final field TopStart Lcom/gearui/overlay/OverlayPlacement;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/overlay/OverlayPlacement;
 	public static fun values ()[Lcom/gearui/overlay/OverlayPlacement;

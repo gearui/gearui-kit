@@ -338,47 +338,6 @@ data class TagTokens(
     }
 }
 
-/**
- * @deprecated 使用 Theme.colors 替代
- *
- * Tag 颜色应通过 Theme.colors 获取：
- * - PRIMARY: colors.primary / colors.primaryLight
- * - SUCCESS: colors.success / colors.successLight
- * - WARNING: colors.warning / colors.warningLight
- * - DANGER: colors.danger / colors.dangerLight
- */
-@Deprecated("Use Theme.colors instead - Tag component now uses semantic colors directly")
-data class TagColorTokens(
-    val backgroundColor: Long,
-    val textColor: Long,
-    val disabledBackgroundColor: Long,
-    val disabledTextColor: Long,
-    val activeBackgroundColor: Long = backgroundColor
-) {
-    companion object {
-        // Dark variant
-        val PrimaryDark = TagColorTokens(0xFF0052D9, 0xFFFFFFFF, 0xFFE0EDFF, 0xFFB5DAFF)
-        val SuccessDark = TagColorTokens(0xFF00A870, 0xFFFFFFFF, 0xFFE3F9E9, 0xFFC6F3D7)
-        val WarningDark = TagColorTokens(0xFFED7B2F, 0xFFFFFFFF, 0xFFFFF1E9, 0xFFFFDDB8)
-        val DangerDark = TagColorTokens(0xFFE34D59, 0xFFFFFFFF, 0xFFFFECEE, 0xFFFFB9BE)
-        val DefaultDark = TagColorTokens(0xFF000000, 0xFFFFFFFF, 0xFFF3F3F3, 0xFFE7E7E7)
-
-        // Light variant
-        val PrimaryLight = TagColorTokens(0xFFE0EDFF, 0xFF0052D9, 0xFFD6E4FF, 0xFFB5DAFF)
-        val SuccessLight = TagColorTokens(0xFFE3F9E9, 0xFF00A870, 0xFFD1F5E0, 0xFFC6F3D7)
-        val WarningLight = TagColorTokens(0xFFFFF1E9, 0xFFED7B2F, 0xFFFFE7D9, 0xFFFFDDB8)
-        val DangerLight = TagColorTokens(0xFFFFECEE, 0xFFE34D59, 0xFFFFDBDD, 0xFFFFB9BE)
-        val DefaultLight = TagColorTokens(0xFFF3F3F3, 0xFF000000, 0xFFE7E7E7, 0xFFDCDCDC)
-
-        // Outline variant
-        val PrimaryOutline = TagColorTokens(0x000052D9, 0xFF0052D9, 0xFFE0EDFF, 0xFFB5DAFF)
-        val SuccessOutline = TagColorTokens(0x0000A870, 0xFF00A870, 0xFFE3F9E9, 0xFFC6F3D7)
-        val WarningOutline = TagColorTokens(0x00ED7B2F, 0xFFED7B2F, 0xFFFFF1E9, 0xFFFFDDB8)
-        val DangerOutline = TagColorTokens(0x00E34D59, 0xFFE34D59, 0xFFFFECEE, 0xFFFFB9BE)
-        val DefaultOutline = TagColorTokens(0x00000000, 0xFF000000, 0xFFF3F3F3, 0xFFE7E7E7)
-    }
-}
-
 // ============ Badge Token ============
 
 /**

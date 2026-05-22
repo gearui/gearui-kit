@@ -90,3 +90,28 @@
 | `CardSpecs` | `CardTokens` / `CardDefaults`（`foundation.list`） |
 | `InputSpecs` | `InputTokens`（`foundation.tokens`） |
 | `SectionHeaderSpecs` | `SectionTokens`（`foundation.layout`）/ 组件内默认值 |
+
+## Batch 13E — 其余 deprecated API 移除
+
+清理最后一批与四个 bridge 无关的 deprecated API。
+
+### 死代码移除（无替代，本就无人使用）
+
+| 已删除 | 说明 |
+|---|---|
+| `TagColorTokens`（`foundation.tokens`） | 早期 Tag 颜色常量池（硬编码 ARGB），Tag 组件已直接用 `Theme.colors` 语义色 |
+| `TabColors`（`foundation.tab`） | 早期 Tab 颜色数据类，Tab 已直接用 `Theme.colors` |
+| `TabColorTokens`（`foundation.tab`） | 同上，预设池 |
+
+### OverlayPlacement 过时枚举项移除
+
+| 旧枚举项（已删除） | 1.0 替换 |
+|---|---|
+| `OverlayPlacement.TopStart` | `OverlayPlacement.TopLeft` |
+| `OverlayPlacement.BottomStart` | `OverlayPlacement.BottomLeft` |
+
+> `OverlayHost` 内部对这两个别名的穷举分支已删除（它们原与 `TopLeft`/`BottomLeft` 同组左对齐），实际 placement 布局行为不变。
+
+---
+
+至此 GearUI Kit 已无任何 `@Deprecated` API，pre-1.0 token 迁移收口完成。

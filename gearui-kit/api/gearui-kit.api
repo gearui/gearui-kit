@@ -116,22 +116,6 @@ public final class com/gearui/Radius {
 	public static final field Small F
 }
 
-public final class com/gearui/Spacing {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/Spacing;
-	public static final field spacer12 F
-	public static final field spacer16 F
-	public static final field spacer160 F
-	public static final field spacer24 F
-	public static final field spacer32 F
-	public static final field spacer4 F
-	public static final field spacer40 F
-	public static final field spacer48 F
-	public static final field spacer64 F
-	public static final field spacer8 F
-	public static final field spacer96 F
-}
-
 public final class com/gearui/Typography {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/Typography;

@@ -55,3 +55,22 @@
 | `shapes.extraLarge` | `shapes.xl` | 12dp |
 | `shapes.round` | `shapes.full` | 9999dp |
 | `shapes.circle` | `CircleShape` | 直接用 `Modifier.clip(CircleShape)`，无专用 token |
+
+## Batch 13C — root-package `Spacing` 移除
+
+`com.gearui.Spacing`（root 包，Float 类型，`Spacing.spacer16.dp` 调用形态）整个 object 已删除。唯一公开间距来源是 `com.gearui.foundation.layout.Spacing`（Dp 类型）。
+
+下游请将 `import com.gearui.Spacing` 改为 `import com.gearui.foundation.layout.Spacing`，并按下表替换（注意旧用法带 `.dp` 后缀，新 token 本身已是 `Dp`，无需再 `.dp`）。
+
+| 旧（root，Float） | 1.0 替换（foundation.layout，Dp） |
+|---|---|
+| `Spacing.spacer4.dp` | `Spacing.xs` (4dp) |
+| `Spacing.spacer8.dp` | `Spacing.sm` (8dp) |
+| `Spacing.spacer12.dp` | `Spacing.md` (12dp) |
+| `Spacing.spacer16.dp` | `Spacing.lg` (16dp) |
+| `Spacing.spacer24.dp` | `Spacing.xl` (24dp) |
+| `Spacing.spacer32.dp` | `Spacing.xxl` (32dp) |
+| `Spacing.spacer40.dp` | `Spacing.xxxl` (40dp) |
+| `Spacing.spacer48.dp` | `Spacing.huge` (48dp) |
+| `Spacing.spacer64.dp` | `Spacing.massive` (64dp) |
+| `Spacing.spacer96` / `Spacing.spacer160` | 无 canonical token；如需该尺寸，请在组件 token 内自行声明 |

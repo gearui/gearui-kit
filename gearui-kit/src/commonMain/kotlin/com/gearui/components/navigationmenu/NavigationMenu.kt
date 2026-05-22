@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -73,7 +73,7 @@ fun NavigationMenu(
                 anchorBounds = anchorBounds,
                 options = OverlayOptions(
                     placement = OverlayPlacement.BottomLeft,
-                    offsetY = Spacing.spacer8.dp,
+                    offsetY = Spacing.sm,
                     modal = false,
                     maskColor = null,
                     dismissPolicy = OverlayDismissPolicy.Dropdown.copy(
@@ -88,38 +88,38 @@ fun NavigationMenu(
                 Column(
                     modifier = Modifier
                         .widthIn(min = 280.dp, max = 380.dp)
-                        .clip(shapes.large)
-                        .shadow(Spacing.spacer4.dp, shapes.large)
+                        .clip(shapes.lg)
+                        .shadow(Spacing.xs, shapes.lg)
                         .background(colors.surface)
-                        .border(1.dp, colors.border, shapes.large)
-                        .padding(Spacing.spacer8.dp),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                        .border(1.dp, colors.border, shapes.lg)
+                        .padding(Spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     expandedSection.items.forEach { item ->
                         val selected = item.id == selectedItemId
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(shapes.default)
-                                .background(if (selected) colors.surfaceVariant else colors.surface)
+                                .clip(shapes.md)
+                                .background(if (selected) colors.muted else colors.surface)
                                 .clickable(enabled = !item.disabled) {
                                     onSectionSelect(expandedSection.id)
                                     onItemSelect(item.id)
                                     expandedSectionId = null
                                 }
-                                .padding(horizontal = Spacing.spacer12.dp, vertical = Spacing.spacer8.dp),
-                            verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                                .padding(horizontal = Spacing.md, vertical = Spacing.sm),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                         ) {
                             Text(
                                 text = item.title,
                                 style = Typography.TitleSmall,
-                                color = if (item.disabled) colors.textDisabled else colors.textPrimary
+                                color = if (item.disabled) colors.mutedForeground else colors.foreground
                             )
                             if (item.description.isNotEmpty()) {
                                 Text(
                                     text = item.description,
                                     style = Typography.BodyMedium,
-                                    color = colors.textSecondary
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
@@ -135,7 +135,7 @@ fun NavigationMenu(
 
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         sections.forEach { section ->
             val selected = section.id == selectedSectionId
@@ -147,10 +147,10 @@ fun NavigationMenu(
                     .onGloballyPositioned { coordinates ->
                         triggerBounds[section.id] = coordinates.boundsInRoot()
                     }
-                    .clip(shapes.default)
+                    .clip(shapes.md)
                     .background(
-                        if (expanded) colors.surfaceVariant
-                        else if (selected) colors.surfaceVariant
+                        if (expanded) colors.muted
+                        else if (selected) colors.muted
                         else colors.surface
                     )
                     .clickable(enabled = !section.disabled) {
@@ -161,11 +161,11 @@ fun NavigationMenu(
                             else -> section.id
                         }
                     }
-                    .padding(horizontal = Spacing.spacer12.dp, vertical = Spacing.spacer8.dp)
+                    .padding(horizontal = Spacing.md, vertical = Spacing.sm)
             ) {
-                val textColor = if (section.disabled) colors.textDisabled else colors.textPrimary
+                val textColor = if (section.disabled) colors.mutedForeground else colors.foreground
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Text(
                         text = section.label,

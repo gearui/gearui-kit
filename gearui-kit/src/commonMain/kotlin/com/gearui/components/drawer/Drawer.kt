@@ -23,6 +23,7 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
+import com.gearui.overlay.OverlayDefaults
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
@@ -203,7 +204,7 @@ private fun DrawerOverlayContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .alpha(maskAlpha)
-                    .background(colors.mask)
+                    .background(OverlayDefaults.scrimColor)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -326,7 +327,7 @@ private fun DrawerContent(
                 Text(
                     text = title,
                     style = Typography.TitleLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
             if (bordered) {
@@ -425,7 +426,7 @@ private fun DrawerListItem(
                 Text(
                     text = item.title,
                     style = Typography.BodyLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -480,7 +481,7 @@ fun DrawerWithHeader(
                     Text(
                         text = title,
                         style = Typography.TitleLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }

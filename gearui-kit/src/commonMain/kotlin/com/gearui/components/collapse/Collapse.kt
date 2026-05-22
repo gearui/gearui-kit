@@ -52,7 +52,7 @@ fun Collapse(
     val containerModifier = if (style == CollapseStyle.Card) {
         modifier
             .padding(horizontal = 16.dp)
-            .clip(shapes.large)
+            .clip(shapes.lg)
     } else {
         modifier
     }
@@ -99,7 +99,7 @@ object Collapse {
         val containerModifier = if (style == CollapseStyle.Card) {
             modifier
                 .padding(horizontal = 16.dp)
-                .clip(shapes.large)
+                .clip(shapes.lg)
         } else {
             modifier
         }
@@ -170,14 +170,14 @@ private fun CollapsePanelItem(
                     Text(
                         text = builder(panel.isExpanded),
                         style = Typography.BodySmall,
-                        color = colors.textPlaceholder
+                        color = colors.mutedForeground
                     )
                 }
 
                 Icon(
                     name = Icons.keyboard_arrow_down,
                     size = 16.dp,
-                    tint = colors.textPlaceholder,
+                    tint = colors.mutedForeground,
                     modifier = Modifier.rotate(rotation)
                 )
             }
@@ -219,7 +219,7 @@ fun CollapseItem(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(shapes.small)
+            .clip(shapes.sm)
             .background(colors.surface)
     ) {
         Row(
@@ -236,13 +236,13 @@ fun CollapseItem(
             Text(
                 text = title,
                 style = Typography.TitleMedium,
-                color = if (enabled) colors.textPrimary else colors.textDisabled
+                color = if (enabled) colors.foreground else colors.mutedForeground
             )
 
             Icon(
                 name = Icons.keyboard_arrow_down,
                 size = 16.dp,
-                tint = if (enabled) colors.textSecondary else colors.textDisabled,
+                tint = if (enabled) colors.mutedForeground else colors.mutedForeground,
                 modifier = Modifier.rotate(rotation)
             )
         }

@@ -156,13 +156,13 @@ private fun TourContent(
                 Text(
                     text = step.title,
                     style = Typography.TitleLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 Text(
                     text = "${currentIndex + 1} / $totalSteps",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
@@ -170,7 +170,7 @@ private fun TourContent(
             Text(
                 text = step.description,
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             // Progress indicator
@@ -185,7 +185,7 @@ private fun TourContent(
                             .clip(RoundedCornerShape(4.dp))
                             .background(
                                 if (index <= currentIndex) colors.primary
-                                else colors.surfaceVariant
+                                else colors.muted
                             )
                     )
                 }

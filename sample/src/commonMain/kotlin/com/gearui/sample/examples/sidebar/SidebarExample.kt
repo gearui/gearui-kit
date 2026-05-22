@@ -11,7 +11,7 @@ import com.gearui.components.button.ButtonType
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Sidebar 侧边栏组件示例 - 主入口页面
@@ -50,7 +50,7 @@ fun SidebarExample(
             title = "组件类型",
             description = "侧边导航用法"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Button(
                     text = "锚点用法",
                     onClick = { currentSubPage = SidebarSubPage.ANCHOR },
@@ -90,7 +90,7 @@ fun SidebarExample(
             title = "组件样式",
             description = "侧边导航样式"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Button(
                     text = "非通栏选项样式",
                     onClick = { currentSubPage = SidebarSubPage.OUTLINE },
@@ -116,7 +116,7 @@ fun SidebarExample(
             title = "高级用法",
             description = "延迟加载与自定义颜色"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Button(
                     text = "延迟加载",
                     onClick = { currentSubPage = SidebarSubPage.LOADING },

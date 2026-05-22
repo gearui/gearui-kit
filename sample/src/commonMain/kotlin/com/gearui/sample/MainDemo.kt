@@ -88,7 +88,7 @@ fun MainDemoContent() {
 @Composable
 private fun StatusBarEffect(themeStyle: ThemeStyle) {
     val colors = Theme.colors
-    val statusBarColor = if (themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
+    val statusBarColor = if (themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
     // 使用 surface 颜色作为状态栏背景
     // 深色主题用浅色图标，浅色主题用深色图标

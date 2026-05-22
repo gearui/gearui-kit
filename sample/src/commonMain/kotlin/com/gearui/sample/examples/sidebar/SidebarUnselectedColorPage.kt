@@ -11,7 +11,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.launch
 
 /**
@@ -92,7 +92,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(colors.surface)
-                    .padding(Spacing.spacer16.dp)
+                    .padding(Spacing.lg)
             ) {
                 Button(
                     text = "更新 children",

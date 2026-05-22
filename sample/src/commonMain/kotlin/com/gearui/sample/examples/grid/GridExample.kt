@@ -48,13 +48,13 @@ fun GridExample(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
-                                .background(colors.surfaceVariant),
+                                .background(colors.muted),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = "项目 ${index + 1}",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     }
@@ -110,7 +110,7 @@ fun GridExample(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(colors.surfaceVariant)
+                                .background(colors.muted)
                                 .padding(8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -123,14 +123,14 @@ fun GridExample(
                                 Text(
                                     text = name.first().toString(),
                                     style = Typography.BodySmall,
-                                    color = colors.textAnti
+                                    color = colors.primaryForeground
                                 )
                             }
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = name,
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -209,22 +209,22 @@ fun GridExample(
                 Text(
                     text = "1. columns: 设置固定列数",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. horizontalSpacing/verticalSpacing: 自定义间距",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. ResponsiveGrid: 根据宽度自动调整列数",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. item { } 方法添加子项，自动排列",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

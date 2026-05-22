@@ -275,12 +275,12 @@ fun StepsExample(
                                 Text(
                                     text = "第一步：基本信息",
                                     style = Typography.TitleMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                                 Text(
                                     text = "请输入您的姓名和手机号码",
                                     style = Typography.BodyMedium,
-                                    color = colors.textSecondary
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
@@ -289,12 +289,12 @@ fun StepsExample(
                                 Text(
                                     text = "第二步：详细信息",
                                     style = Typography.TitleMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                                 Text(
                                     text = "请输入您的地址和邮箱",
                                     style = Typography.BodyMedium,
-                                    color = colors.textSecondary
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
@@ -303,12 +303,12 @@ fun StepsExample(
                                 Text(
                                     text = "第三步：确认信息",
                                     style = Typography.TitleMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                                 Text(
                                     text = "请核对您填写的所有信息",
                                     style = Typography.BodyMedium,
-                                    color = colors.textSecondary
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
@@ -354,22 +354,22 @@ fun StepsExample(
                 Text(
                     text = "1. 支持水平/垂直两种布局",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持默认/点状两种主题",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持四种状态: WAITING, PROCESS, FINISH, ERROR",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持自定义图标和描述",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

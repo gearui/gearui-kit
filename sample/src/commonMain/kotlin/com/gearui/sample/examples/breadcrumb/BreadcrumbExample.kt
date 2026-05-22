@@ -56,7 +56,7 @@ fun BreadcrumbExample(
                     Text(
                         text = "点击了: $clickedItem",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -178,27 +178,27 @@ fun BreadcrumbExample(
                 Text(
                     text = "1. 显示当前页面在系统层级结构中的位置",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持自定义分隔符",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持图标和文字组合",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 最后一项表示当前页面，不可点击",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持折叠模式处理长路径",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -252,8 +252,8 @@ private fun Breadcrumb(
                         text = item.icon,
                         style = Typography.BodySmall,
                         color = when {
-                            item.disabled -> colors.textDisabled
-                            isLast -> colors.textPrimary
+                            item.disabled -> colors.mutedForeground
+                            isLast -> colors.foreground
                             else -> colors.primary
                         }
                     )
@@ -265,8 +265,8 @@ private fun Breadcrumb(
                     text = item.label,
                     style = Typography.BodyMedium,
                     color = when {
-                        item.disabled -> colors.textDisabled
-                        isLast -> colors.textPrimary
+                        item.disabled -> colors.mutedForeground
+                        isLast -> colors.foreground
                         else -> colors.primary
                     }
                 )
@@ -277,7 +277,7 @@ private fun Breadcrumb(
                 Text(
                     text = " $separator ",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -321,7 +321,7 @@ private fun BreadcrumbCollapsed(
             Text(
                 text = " / ",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             // 折叠的省略号
@@ -338,7 +338,7 @@ private fun BreadcrumbCollapsed(
             Text(
                 text = " / ",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             // 最后一项
@@ -346,7 +346,7 @@ private fun BreadcrumbCollapsed(
             Text(
                 text = lastItem.label,
                 style = Typography.BodyMedium,
-                color = colors.textPrimary,
+                color = colors.foreground,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
             )
         }

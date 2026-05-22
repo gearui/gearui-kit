@@ -13,7 +13,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import kotlin.math.roundToInt
 
 /**
@@ -85,7 +85,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -94,17 +94,17 @@ fun SliderExample(
                     Text(
                         text = "0",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Text(
                         text = "40 - 60",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Text(
                         text = "100",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
                 RangeSlider(
@@ -124,7 +124,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Slider(
                     value = scaleValue,
@@ -141,7 +141,7 @@ fun SliderExample(
                         Text(
                             text = tick.toString(),
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -155,7 +155,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 RangeSlider(
                     values = 40f..70f,
@@ -172,7 +172,7 @@ fun SliderExample(
                         Text(
                             text = tick.toString(),
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -204,7 +204,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -213,17 +213,17 @@ fun SliderExample(
                     Text(
                         text = "0",
                         style = Typography.BodyMedium,
-                        color = colors.textDisabled
+                        color = colors.mutedForeground
                     )
                     Text(
                         text = "20 - 60",
                         style = Typography.BodySmall,
-                        color = colors.textDisabled
+                        color = colors.mutedForeground
                     )
                     Text(
                         text = "100",
                         style = Typography.BodyMedium,
-                        color = colors.textDisabled
+                        color = colors.mutedForeground
                     )
                 }
                 RangeSlider(
@@ -243,7 +243,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 RangeSlider(
                     values = 20f..60f,
@@ -261,7 +261,7 @@ fun SliderExample(
                         Text(
                             text = tick.toString(),
                             style = Typography.BodySmall,
-                            color = colors.textDisabled
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -278,7 +278,7 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 // 带数值
                 Slider(
@@ -310,12 +310,12 @@ fun SliderExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 // 音量控制
                 var volumeValue by remember { mutableStateOf(70f) }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -324,12 +324,12 @@ fun SliderExample(
                         Text(
                             text = "音量",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "${volumeValue.roundToInt()}%",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                     Slider(
@@ -345,7 +345,7 @@ fun SliderExample(
                 // 亮度控制
                 var brightnessValue by remember { mutableStateOf(80f) }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -354,12 +354,12 @@ fun SliderExample(
                         Text(
                             text = "亮度",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "${brightnessValue.roundToInt()}%",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                     Slider(
@@ -375,7 +375,7 @@ fun SliderExample(
                 // 价格筛选
                 var priceValue by remember { mutableStateOf(500f) }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -384,12 +384,12 @@ fun SliderExample(
                         Text(
                             text = "价格筛选",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "¥${priceValue.roundToInt()}",
                             style = Typography.BodySmall,
-                            color = colors.danger
+                            color = colors.destructive
                         )
                     }
                     Slider(
@@ -405,7 +405,7 @@ fun SliderExample(
                 // 温度调节
                 var temperatureValue by remember { mutableStateOf(24f) }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -414,7 +414,7 @@ fun SliderExample(
                         Text(
                             text = "空调温度",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "${temperatureValue.roundToInt()}°C",

@@ -29,7 +29,7 @@ fun ComingSoonExample(
             Text(
                 text = "当前状态：可展示入口，后续完善交互与视觉细节。",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

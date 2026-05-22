@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.CardSpecs
+import com.gearui.foundation.list.CardDefaults
 import com.gearui.primitives.composite.Card
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -41,8 +41,8 @@ fun CardExample(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(text = "卡片标题", style = Typography.TitleMedium, color = colors.textPrimary)
-                    Text(text = "这是卡片的内容区域，可以放置任意内容", style = Typography.BodyMedium, color = colors.textSecondary)
+                    Text(text = "卡片标题", style = Typography.TitleMedium, color = colors.foreground)
+                    Text(text = "这是卡片的内容区域，可以放置任意内容", style = Typography.BodyMedium, color = colors.mutedForeground)
                 }
             }
         }
@@ -59,14 +59,14 @@ fun CardExample(
             ) {
                 Column(modifier = Modifier.fillMaxWidth().background(colors.surface)) {
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(120.dp).background(colors.surfaceVariant)
+                        modifier = Modifier.fillMaxWidth().height(120.dp).background(colors.muted)
                     )
                     Column(
-                        modifier = Modifier.padding(CardSpecs.padding),
+                        modifier = Modifier.padding(CardDefaults.Default.padding),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "图文卡片", style = Typography.TitleMedium, color = colors.textPrimary)
-                        Text(text = "带有封面图的卡片样式", style = Typography.BodyMedium, color = colors.textSecondary)
+                        Text(text = "图文卡片", style = Typography.TitleMedium, color = colors.foreground)
+                        Text(text = "带有封面图的卡片样式", style = Typography.BodyMedium, color = colors.mutedForeground)
                     }
                 }
             }
@@ -84,17 +84,17 @@ fun CardExample(
             ) {
                 Column(modifier = Modifier.fillMaxWidth().background(colors.surface)) {
                     Column(
-                        modifier = Modifier.padding(CardSpecs.padding),
+                        modifier = Modifier.padding(CardDefaults.Default.padding),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "操作卡片", style = Typography.TitleMedium, color = colors.textPrimary)
-                        Text(text = "卡片内容描述", style = Typography.BodyMedium, color = colors.textSecondary)
+                        Text(text = "操作卡片", style = Typography.TitleMedium, color = colors.foreground)
+                        Text(text = "卡片内容描述", style = Typography.BodyMedium, color = colors.mutedForeground)
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = CardSpecs.padding, vertical = 12.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = CardDefaults.Default.padding, vertical = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End)
                     ) {
-                        Text(text = "[取消]", style = Typography.BodyMedium, color = colors.textSecondary)
+                        Text(text = "[取消]", style = Typography.BodyMedium, color = colors.mutedForeground)
                         Text(text = "[确定]", style = Typography.BodyMedium, color = colors.primary)
                     }
                 }

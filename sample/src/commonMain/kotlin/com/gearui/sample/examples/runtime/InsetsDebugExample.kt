@@ -30,55 +30,55 @@ fun InsetsDebugExample(
             Text(
                 text = "Kuikly safeAreaInsets",
                 style = Typography.TitleSmall,
-                color = colors.textPrimary
+                color = colors.foreground
             )
             Text(
                 text = "top=${rawInsets.top}, bottom=${rawInsets.bottom}, left=${rawInsets.left}, right=${rawInsets.right}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             Text(
                 text = "Gear Runtime safeArea",
                 style = Typography.TitleSmall,
-                color = colors.textPrimary
+                color = colors.foreground
             )
             Text(
                 text = "top=${runtimeEnvironment.safeArea.top}, bottom=${runtimeEnvironment.safeArea.bottom}, " +
                     "left=${runtimeEnvironment.safeArea.left}, right=${runtimeEnvironment.safeArea.right}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             Text(
                 text = "Runtime flags",
                 style = Typography.TitleSmall,
-                color = colors.textPrimary
+                color = colors.foreground
             )
             Text(
                 text = "unifiedSafeAreaPipeline=${runtimeFlags.unifiedSafeAreaPipeline}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Text(
                 text = "navBarConsumesTopSafeArea=${runtimeFlags.navBarConsumesTopSafeArea}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Text(
                 text = "bottomNavBarConsumesBottomSafeArea=${runtimeFlags.bottomNavBarConsumesBottomSafeArea}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Text(
                 text = "drawerConsumesVerticalSafeArea=${runtimeFlags.drawerConsumesVerticalSafeArea}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Text(
                 text = "actionSheetConsumesBottomSafeArea=${runtimeFlags.actionSheetConsumesBottomSafeArea}",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

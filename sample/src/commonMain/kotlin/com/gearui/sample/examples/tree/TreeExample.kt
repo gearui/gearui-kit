@@ -151,7 +151,7 @@ fun TreeExample(
                 Text(
                     text = clickedNode,
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -292,32 +292,32 @@ fun TreeExample(
                 Text(
                     text = "1. 支持多级嵌套节点",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持节点展开/收起",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持复选框选择模式",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持自定义节点图标",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持禁用指定节点",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "6. 提供 TreeState 便捷管理状态",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

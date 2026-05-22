@@ -41,7 +41,7 @@ fun ContextMenuExample(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.surfaceVariant, shapes.large)
+                    .background(colors.muted, shapes.lg)
                     .padding(vertical = 20.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -57,7 +57,7 @@ fun ContextMenuExample(
             Text(
                 text = "Actions: Copy / Share / Delete",
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

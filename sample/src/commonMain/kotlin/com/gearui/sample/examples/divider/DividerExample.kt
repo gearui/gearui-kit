@@ -42,13 +42,13 @@ fun DividerExample(
                 Text(
                     text = "上方内容",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 DividerFull()
                 Text(
                     text = "下方内容",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -65,19 +65,19 @@ fun DividerExample(
                 Text(
                     text = "列表项 1",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 DividerInset()
                 Text(
                     text = "列表项 2",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 DividerInset()
                 Text(
                     text = "列表项 3",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -99,7 +99,7 @@ fun DividerExample(
                     Text(
                         text = "章节 1 内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
                 DividerSection()
@@ -112,7 +112,7 @@ fun DividerExample(
                     Text(
                         text = "章节 2 内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }

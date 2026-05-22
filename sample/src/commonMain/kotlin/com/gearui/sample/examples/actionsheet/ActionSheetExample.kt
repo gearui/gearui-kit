@@ -392,7 +392,7 @@ fun ActionSheetExample(
                     ActionSheetItem(label = "默认选项"),
                     ActionSheetItem(label = "自定义选项", textColor = colors.primary),
                     ActionSheetItem(label = "失效选项", disabled = true),
-                    ActionSheetItem(label = "警告选项", textColor = colors.danger)
+                    ActionSheetItem(label = "警告选项", textColor = colors.destructive)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -411,7 +411,7 @@ fun ActionSheetExample(
                     ActionSheetItem(label = "默认选项", icon = "📱"),
                     ActionSheetItem(label = "自定义选项", icon = "📱", textColor = colors.primary),
                     ActionSheetItem(label = "失效选项", icon = "📱", disabled = true),
-                    ActionSheetItem(label = "警告选项", icon = "📱", textColor = colors.danger)
+                    ActionSheetItem(label = "警告选项", icon = "📱", textColor = colors.destructive)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")

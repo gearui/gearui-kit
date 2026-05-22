@@ -48,7 +48,7 @@ fun DatePickerExample(
                 Text(
                     text = "已选择: ${dateValue.ifEmpty { "未选择" }}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -86,7 +86,7 @@ fun DatePickerExample(
                 Text(
                     text = "已选择: ${timeValue.ifEmpty { "未选择" }}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -126,7 +126,7 @@ fun DatePickerExample(
                 Text(
                     text = "已选择: ${if (dateValue.isNotEmpty() || timeValue.isNotEmpty()) "$dateValue $timeValue" else "未选择"}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -192,27 +192,27 @@ fun DatePickerExample(
                 Text(
                     text = "1. DatePickerInput: 日期选择器",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. TimePickerInput: 时间选择器",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. DateTimePickerInput: 日期时间组合选择器",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. label: 可选的标签文字",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. enabled: 控制是否可交互",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

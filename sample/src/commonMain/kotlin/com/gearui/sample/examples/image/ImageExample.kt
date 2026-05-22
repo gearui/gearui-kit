@@ -58,7 +58,7 @@ fun ImageExample(
                     Text(
                         text = "裁剪",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     GearImage(
@@ -78,14 +78,14 @@ fun ImageExample(
                     Text(
                         text = "拉伸",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(width = 121.dp, height = 72.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         GearImage(
@@ -115,14 +115,14 @@ fun ImageExample(
                     Text(
                         text = "适应高",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(width = 89.dp, height = 72.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         GearImage(
@@ -141,14 +141,14 @@ fun ImageExample(
                     Text(
                         text = "适应宽",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(width = 72.dp, height = 89.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         GearImage(
@@ -178,7 +178,7 @@ fun ImageExample(
                     Text(
                         text = "方形",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     GearImage(
@@ -196,7 +196,7 @@ fun ImageExample(
                     Text(
                         text = "圆角方形",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     GearImage(
@@ -215,7 +215,7 @@ fun ImageExample(
                     Text(
                         text = "圆形",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     GearImage(
@@ -246,20 +246,20 @@ fun ImageExample(
                     Text(
                         text = "加载默认提示",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(72.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "...",
                             style = Typography.TitleLarge,
-                            color = colors.textPlaceholder
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -271,14 +271,14 @@ fun ImageExample(
                     Text(
                         text = "加载自定义提示",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(72.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         // 自定义加载指示器（使用圆圈模拟）
@@ -309,7 +309,7 @@ fun ImageExample(
                     Text(
                         text = "失败默认提示",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     ImageWithState(
@@ -328,20 +328,20 @@ fun ImageExample(
                     Text(
                         text = "失败自定义提示",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(
                         modifier = Modifier
                             .size(72.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surfaceComponent),
+                            .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "加载失败",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -371,7 +371,7 @@ fun ImageExample(
                     Text(
                         text = "32dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -387,7 +387,7 @@ fun ImageExample(
                     Text(
                         text = "48dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -403,7 +403,7 @@ fun ImageExample(
                     Text(
                         text = "64dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -419,7 +419,7 @@ fun ImageExample(
                     Text(
                         text = "80dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -450,7 +450,7 @@ fun ImageExample(
                     Text(
                         text = "方形",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -470,7 +470,7 @@ fun ImageExample(
                     Text(
                         text = "圆角",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -489,7 +489,7 @@ fun ImageExample(
                     Text(
                         text = "圆形",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }

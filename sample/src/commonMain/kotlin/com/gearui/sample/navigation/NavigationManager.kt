@@ -217,13 +217,13 @@ private fun PlaceholderExample(
         Text(
             text = "该组件示例页面即将推出",
             style = Typography.BodyLarge,
-            color = colors.textSecondary
+            color = colors.mutedForeground
         )
 
         Text(
             text = "组件 ID: ${component.id}",
             style = Typography.BodySmall,
-            color = colors.textPlaceholder
+            color = colors.mutedForeground
         )
     }
 }

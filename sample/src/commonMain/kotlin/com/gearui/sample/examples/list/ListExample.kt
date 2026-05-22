@@ -37,8 +37,8 @@ fun ListExample(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "列表项 ${index + 1}", style = Typography.BodyMedium, color = colors.textPrimary)
-                        Text(text = "›", style = Typography.BodyLarge, color = colors.textPlaceholder)
+                        Text(text = "列表项 ${index + 1}", style = Typography.BodyMedium, color = colors.foreground)
+                        Text(text = "›", style = Typography.BodyLarge, color = colors.mutedForeground)
                     }
                     if (index < 2) DividerFull()
                 }
@@ -55,7 +55,7 @@ fun ListExample(
                     Text(
                         text = item,
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary,
+                        color = colors.foreground,
                         modifier = Modifier.padding(vertical = 12.dp)
                     )
                     DividerFull()
@@ -70,8 +70,8 @@ fun ListExample(
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(text = "标题文本", style = Typography.BodyLarge, color = colors.textPrimary)
-                    Text(text = "这是描述信息，可以显示更多详细内容", style = Typography.BodySmall, color = colors.textSecondary)
+                    Text(text = "标题文本", style = Typography.BodyLarge, color = colors.foreground)
+                    Text(text = "这是描述信息，可以显示更多详细内容", style = Typography.BodySmall, color = colors.mutedForeground)
                 }
             }
         }

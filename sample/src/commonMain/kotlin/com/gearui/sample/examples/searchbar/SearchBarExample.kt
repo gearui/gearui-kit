@@ -56,7 +56,7 @@ fun SearchBarExample(
                     Text(
                         text = "输入内容: $basicSearchValue",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -109,7 +109,7 @@ fun SearchBarExample(
                     Text(
                         text = searchResult,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -163,27 +163,27 @@ fun SearchBarExample(
                 Text(
                     text = "1. 支持圆角和直角两种形状",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 输入内容时显示清除按钮",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 可选显示取消按钮",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. SearchBarWithAction 提供搜索按钮",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持禁用状态",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

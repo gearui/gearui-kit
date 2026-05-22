@@ -50,7 +50,7 @@ fun HomePage(
     val strings = SampleI18n.strings
     val focusManager = LocalFocusManager.current
     var searchQuery by remember { mutableStateOf("") }
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
+    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
     // 获取安全区域
     val safeAreaBottom = LocalRuntimeEnvironment.current.safeArea.bottom
@@ -115,7 +115,7 @@ fun HomePage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(colors.divider)
+                    .background(colors.border)
             )
         }
 
@@ -140,7 +140,7 @@ fun HomePage(
                             Text(
                                 text = strings.noResults,
                                 style = Typography.BodyMedium,
-                                color = colors.textPlaceholder
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -241,13 +241,13 @@ private fun CategoryHeader(
             Text(
                 text = getCategoryDisplayName(category, strings),
                 style = Typography.BodyMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
 
             Text(
                 text = "$count${strings.componentCountSuffix}",
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }
@@ -262,9 +262,9 @@ private fun ListCard(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(shapes.large)
+            .clip(shapes.lg)
             .background(colors.surface)
-            .border(1.dp, colors.border, shapes.large)
+            .border(1.dp, colors.border, shapes.lg)
     ) {
         content()
     }
@@ -305,7 +305,7 @@ private fun ComponentListItem(
                 Text(
                     text = name,
                     style = Typography.BodyLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 // 组件描述
@@ -314,7 +314,7 @@ private fun ComponentListItem(
                     Text(
                         text = description,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -324,7 +324,7 @@ private fun ComponentListItem(
                     Text(
                         text = "ID: ${component.id}",
                         style = Typography.BodySmall,
-                        color = colors.textPlaceholder
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -333,7 +333,7 @@ private fun ComponentListItem(
             Text(
                 text = "›",
                 style = Typography.TitleLarge,
-                color = colors.textPlaceholder
+                color = colors.mutedForeground
             )
         }
 
@@ -342,7 +342,7 @@ private fun ComponentListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(colors.divider)
+                    .background(colors.border)
             )
         }
     }

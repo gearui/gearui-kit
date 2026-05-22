@@ -24,7 +24,7 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Badge 徽标组件示例
@@ -64,7 +64,7 @@ fun BadgeExample(
                     Text(
                         text = "消息",
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
 
@@ -108,7 +108,7 @@ fun BadgeExample(
                     Text(
                         text = "消息",
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
 
@@ -160,7 +160,7 @@ fun BadgeExample(
                     Text(
                         text = "数字$messageCount",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -180,7 +180,7 @@ fun BadgeExample(
                     Text(
                         text = "显示0",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -200,7 +200,7 @@ fun BadgeExample(
                     Text(
                         text = "隐藏0",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -267,7 +267,7 @@ fun BadgeExample(
                     Text(
                         text = "大圆角",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -287,7 +287,7 @@ fun BadgeExample(
                     Text(
                         text = "小圆角",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -365,9 +365,9 @@ fun BadgeExample(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = Spacing.spacer16.dp)
+                        .padding(horizontal = Spacing.lg)
                         .height(1.dp)
-                        .background(colors.divider)
+                        .background(colors.border)
                 )
 
                 Box {
@@ -421,7 +421,7 @@ fun BadgeExample(
                     Text(
                         text = "Large",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -441,7 +441,7 @@ fun BadgeExample(
                     Text(
                         text = "Small",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -459,7 +459,7 @@ fun BadgeExample(
                     Text(
                         text = "RedPoint",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -491,7 +491,7 @@ fun BadgeExample(
                     Text(
                         text = "Error",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -510,7 +510,7 @@ fun BadgeExample(
                     Text(
                         text = "Primary",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -529,7 +529,7 @@ fun BadgeExample(
                     Text(
                         text = "Success",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -548,7 +548,7 @@ fun BadgeExample(
                     Text(
                         text = "Warning",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -567,7 +567,7 @@ fun BadgeExample(
                     Text(
                         text = "Neutral",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -600,7 +600,7 @@ fun BadgeExample(
                     Text(
                         text = "50",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -620,7 +620,7 @@ fun BadgeExample(
                     Text(
                         text = "99",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -640,7 +640,7 @@ fun BadgeExample(
                     Text(
                         text = "99+",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -662,7 +662,7 @@ fun BadgeExample(
                     Text(
                         text = "8888",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -725,7 +725,7 @@ fun BadgeExample(
                     Text(
                         text = "$messageCount",
                         style = Typography.TitleMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Button(
                         text = "+",
@@ -751,7 +751,7 @@ private fun IconBox() {
         modifier = Modifier
             .size(24.dp)
             .clip(RoundedCornerShape(4.dp))
-            .background(colors.surfaceVariant),
+            .background(colors.muted),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -771,7 +771,7 @@ private fun LargeIconBox(showShopIcon: Boolean = false) {
         modifier = Modifier
             .size(48.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(colors.surfaceVariant),
+            .background(colors.muted),
         contentAlignment = Alignment.Center
     ) {
         Text(

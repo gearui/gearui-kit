@@ -121,10 +121,10 @@ private fun NoticeBarItem(
 ) {
     val colors = Theme.colors
     val (toneBackground, toneForeground) = when (tone) {
-        NoticeTone.INFO -> colors.primaryLight to colors.primary
-        NoticeTone.SUCCESS -> colors.successLight to colors.success
-        NoticeTone.WARNING -> colors.warningLight to colors.warning
-        NoticeTone.ERROR -> colors.dangerLight to colors.danger
+        NoticeTone.INFO -> colors.muted to colors.primary
+        NoticeTone.SUCCESS -> colors.success.copy(alpha = 0.12f) to colors.success
+        NoticeTone.WARNING -> colors.warning.copy(alpha = 0.12f) to colors.warning
+        NoticeTone.ERROR -> colors.destructive.copy(alpha = 0.12f) to colors.destructive
     }
 
     Row(
@@ -145,14 +145,14 @@ private fun NoticeBarItem(
         Text(
             text = content,
             style = Typography.BodySmall,
-            color = colors.textPrimary,
+            color = colors.foreground,
             modifier = Modifier.weight(1f)
         )
         if (suffixIcon != null) {
             Icon(
                 name = suffixIcon,
                 size = 16.dp,
-                tint = colors.textSecondary,
+                tint = colors.mutedForeground,
                 modifier = Modifier.clickable(enabled = onSuffixClick != null) {
                     onSuffixClick?.invoke()
                 }

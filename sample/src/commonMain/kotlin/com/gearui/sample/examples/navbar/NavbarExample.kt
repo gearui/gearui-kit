@@ -161,7 +161,7 @@ fun NavbarExample(
                                 .fillMaxWidth()
                                 .height(32.dp)
                                 .background(
-                                    colors.surfaceVariant,
+                                    colors.muted,
                                     RoundedCornerShape(16.dp)
                                 )
                                 .padding(horizontal = 12.dp),
@@ -170,7 +170,7 @@ fun NavbarExample(
                             Text(
                                 text = "🔍 搜索",
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -205,7 +205,7 @@ fun NavbarExample(
                             Text(
                                 text = "LOGO",
                                 style = Typography.Label,
-                                color = colors.onPrimary
+                                color = colors.primaryForeground
                             )
                         }
                     }
@@ -301,7 +301,7 @@ fun NavbarExample(
                             Text(
                                 text = "大标题文字",
                                 style = Typography.HeadlineSmall,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     }
@@ -327,13 +327,13 @@ fun NavbarExample(
                     NavBar(
                         title = "深色背景",
                         backgroundColor = colors.primary,
-                        titleColor = colors.onPrimary,
+                        titleColor = colors.primaryForeground,
                         useDefaultBack = true,
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(
                             NavBarItem(
                                 icon = "⋯",
-                                iconColor = colors.onPrimary,
+                                iconColor = colors.primaryForeground,
                                 onClick = { Toast.show("更多") }
                             )
                         )
@@ -348,14 +348,14 @@ fun NavbarExample(
                 ) {
                     NavBar(
                         title = "红色背景",
-                        backgroundColor = colors.danger,
-                        titleColor = colors.onPrimary,
+                        backgroundColor = colors.destructive,
+                        titleColor = colors.primaryForeground,
                         useDefaultBack = true,
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(
                             NavBarItem(
                                 icon = "⋯",
-                                iconColor = colors.onPrimary,
+                                iconColor = colors.primaryForeground,
                                 onClick = { Toast.show("更多") }
                             )
                         )
@@ -371,7 +371,7 @@ fun NavbarExample(
                 ) {
                     NavBar(
                         title = "淡色背景",
-                        backgroundColor = colors.surfaceVariant,
+                        backgroundColor = colors.muted,
                         useDefaultBack = true,
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(

@@ -74,7 +74,7 @@ fun CollapseExample(
                             Text(
                                 text = "标题 $index",
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         },
                         isExpanded = expanded,
@@ -82,7 +82,7 @@ fun CollapseExample(
                             Text(
                                 text = SAMPLE_CONTENT,
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     )
@@ -108,7 +108,7 @@ fun CollapseExample(
                             Text(
                                 text = "标题 $index",
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         },
                         expandIconTextBuilder = { isExpanded ->
@@ -119,7 +119,7 @@ fun CollapseExample(
                             Text(
                                 text = SAMPLE_CONTENT,
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     )
@@ -141,14 +141,14 @@ fun CollapseExample(
                             Text(
                                 text = "标题 $index",
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         },
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     )
@@ -176,7 +176,7 @@ fun CollapseExample(
                             Text(
                                 text = "标题 $index",
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         },
                         isExpanded = expanded,
@@ -184,7 +184,7 @@ fun CollapseExample(
                             Text(
                                 text = SAMPLE_CONTENT,
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     )
@@ -210,7 +210,7 @@ fun CollapseExample(
                             Text(
                                 text = "标题 $index",
                                 style = Typography.TitleMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         },
                         isExpanded = expanded,
@@ -218,7 +218,7 @@ fun CollapseExample(
                             Text(
                                 text = SAMPLE_CONTENT,
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     )

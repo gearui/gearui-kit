@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.icon.Icons
 import com.gearui.components.tabs.Tabs
 import com.gearui.components.tabs.Tab
@@ -83,7 +83,7 @@ fun TabsExample(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .background(colors.surfaceVariant),
+                    .background(colors.muted),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -93,7 +93,7 @@ fun TabsExample(
                         else -> "内容区 3"
                     },
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -158,7 +158,7 @@ private fun TabsDemoRow(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Tabs(
             items = items,
@@ -186,7 +186,7 @@ private fun TabsDemoItemsRow(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Tabs(
             items = items,

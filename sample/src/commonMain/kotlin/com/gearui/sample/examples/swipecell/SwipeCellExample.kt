@@ -51,7 +51,7 @@ fun SwipeCellExample(
             SwipeCellGroup(state = groupState) { group ->
                 Column(
                     verticalArrangement = Arrangement.spacedBy(1.dp),
-                    modifier = Modifier.background(colors.divider)
+                    modifier = Modifier.background(colors.border)
                 ) {
                     SwipeCell(
                         groupState = group,
@@ -301,7 +301,7 @@ fun SwipeCellExample(
             SwipeCellGroup(state = deleteGroupState) { group ->
                 Column(
                     verticalArrangement = Arrangement.spacedBy(1.dp),
-                    modifier = Modifier.background(colors.divider)
+                    modifier = Modifier.background(colors.border)
                 ) {
                     deleteList.forEachIndexed { index, item ->
                         key(item) {
@@ -336,7 +336,7 @@ fun SwipeCellExample(
                             Text(
                                 text = "列表已清空",
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -367,12 +367,12 @@ fun SwipeCellExample(
                 Text(
                     text = "手感优化:",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "• 弹性动画 (Spring Animation)\n• 阻尼感滑动\n• 快速滑动判断\n• 组内互斥关闭",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -380,12 +380,12 @@ fun SwipeCellExample(
                 Text(
                     text = "滑动方向:",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "左滑 (rightActions) / 右滑 (leftActions)",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -393,12 +393,12 @@ fun SwipeCellExample(
                 Text(
                     text = "操作按钮主题:",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "PRIMARY / DANGER / WARNING / SUCCESS",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

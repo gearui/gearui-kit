@@ -34,11 +34,11 @@ fun TagExample(
             description = "不同主题的标签样式"
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                SimpleTag(text = "默认", colors.surfaceVariant, colors.textPrimary)
-                SimpleTag(text = "主要", colors.primary, colors.onPrimary)
-                SimpleTag(text = "成功", colors.success, colors.onPrimary)
-                SimpleTag(text = "警告", colors.warning, colors.onPrimary)
-                SimpleTag(text = "危险", colors.danger, colors.onPrimary)
+                SimpleTag(text = "默认", colors.muted, colors.foreground)
+                SimpleTag(text = "主要", colors.primary, colors.primaryForeground)
+                SimpleTag(text = "成功", colors.success, colors.primaryForeground)
+                SimpleTag(text = "警告", colors.warning, colors.primaryForeground)
+                SimpleTag(text = "危险", colors.destructive, colors.primaryForeground)
             }
         }
 
@@ -51,7 +51,7 @@ fun TagExample(
                 Text(
                     text = "浅色标签",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

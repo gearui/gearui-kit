@@ -214,7 +214,7 @@ fun TimelineExample(
                             Text(
                                 text = "所有测试用例通过",
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -228,7 +228,7 @@ fun TimelineExample(
                             Text(
                                 text = "等待团队成员审核",
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -242,7 +242,7 @@ fun TimelineExample(
                             Text(
                                 text = "需要进一步优化",
                                 style = Typography.BodySmall,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                         }
                     }
@@ -296,22 +296,22 @@ fun TimelineExample(
                 Text(
                     text = "1. 支持三种模式: LEFT, RIGHT, ALTERNATE",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持五种颜色: DEFAULT, PRIMARY, SUCCESS, WARNING, ERROR",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持倒序显示 (reverse)",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. TimelineCustom 支持完全自定义内容",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

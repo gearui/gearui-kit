@@ -127,7 +127,7 @@ fun RadioExample(
                     Text(
                         text = "大尺寸",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     RadioButton(
                         selected = sizeSelected == "large",
@@ -143,7 +143,7 @@ fun RadioExample(
                     Text(
                         text = "中尺寸",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     RadioButton(
                         selected = sizeSelected == "medium",
@@ -159,7 +159,7 @@ fun RadioExample(
                     Text(
                         text = "小尺寸",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     RadioButton(
                         selected = sizeSelected == "small",
@@ -196,7 +196,7 @@ fun RadioExample(
                     Text(
                         text = "单选框在左侧",
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     RadioButton(
                         selected = positionSelected2,
@@ -314,12 +314,12 @@ private fun RadioCardItem(
             Text(
                 text = title,
                 style = Typography.BodyLarge,
-                color = colors.textPrimary
+                color = colors.foreground
             )
             Text(
                 text = description,
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
         RadioButton(
@@ -358,7 +358,7 @@ private fun RadioCardItemCompact(
         Text(
             text = title,
             style = Typography.BodyMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
         RadioButton(
             selected = selected,

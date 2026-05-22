@@ -5,7 +5,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.Avatar
-import com.gearui.foundation.AvatarSpecs
+import com.gearui.foundation.avatar.AvatarSizeTokens
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -30,15 +30,15 @@ fun AvatarExample(
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Avatar(
                     text = "A",
-                    size = AvatarSpecs.Size.medium
+                    size = AvatarSizeTokens.Medium.size
                 )
                 Avatar(
                     text = "用",
-                    size = AvatarSpecs.Size.medium
+                    size = AvatarSizeTokens.Medium.size
                 )
                 Avatar(
                     text = "AB",
-                    size = AvatarSpecs.Size.medium
+                    size = AvatarSizeTokens.Medium.size
                 )
             }
         }
@@ -54,15 +54,15 @@ fun AvatarExample(
             ) {
                 Avatar(
                     text = "L",
-                    size = AvatarSpecs.Size.large
+                    size = AvatarSizeTokens.Large.size
                 )
                 Avatar(
                     text = "M",
-                    size = AvatarSpecs.Size.medium
+                    size = AvatarSizeTokens.Medium.size
                 )
                 Avatar(
                     text = "S",
-                    size = AvatarSpecs.Size.small
+                    size = AvatarSizeTokens.Small.size
                 )
                 Avatar(
                     text = "XS",
@@ -79,12 +79,12 @@ fun AvatarExample(
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Avatar(
                     text = "圆",
-                    size = AvatarSpecs.Size.medium,
-                    radius = AvatarSpecs.defaultRadius  // 圆形
+                    size = AvatarSizeTokens.Medium.size,
+                    radius = AvatarSizeTokens.Medium.radius  // 圆形
                 )
                 Avatar(
                     text = "方",
-                    size = AvatarSpecs.Size.medium,
+                    size = AvatarSizeTokens.Medium.size,
                     radius = 8.dp  // 圆角矩形
                 )
             }
@@ -98,17 +98,17 @@ fun AvatarExample(
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Avatar(
                     text = "U",
-                    size = AvatarSpecs.Size.medium,
+                    size = AvatarSizeTokens.Medium.size,
                     badgeDot = true
                 )
                 Avatar(
                     text = "U",
-                    size = AvatarSpecs.Size.medium,
+                    size = AvatarSizeTokens.Medium.size,
                     badgeCount = 5
                 )
                 Avatar(
                     text = "U",
-                    size = AvatarSpecs.Size.medium,
+                    size = AvatarSizeTokens.Medium.size,
                     badgeCount = 99
                 )
             }

@@ -46,7 +46,7 @@ fun SkeletonExample(
                 Text(
                     text = "矩形骨架",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Skeleton(
                     variant = SkeletonVariant.RECTANGULAR,
@@ -59,7 +59,7 @@ fun SkeletonExample(
                 Text(
                     text = "圆形骨架",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     Skeleton(
@@ -80,7 +80,7 @@ fun SkeletonExample(
                 Text(
                     text = "文本骨架",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Skeleton(
                     variant = SkeletonVariant.TEXT,
@@ -102,7 +102,7 @@ fun SkeletonExample(
                     Text(
                         text = "脉冲动画 (PULSE)",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Skeleton(
                         animation = SkeletonAnimation.PULSE,
@@ -117,7 +117,7 @@ fun SkeletonExample(
                     Text(
                         text = "波浪动画 (WAVE)",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Skeleton(
                         animation = SkeletonAnimation.WAVE,
@@ -132,7 +132,7 @@ fun SkeletonExample(
                     Text(
                         text = "无动画 (NONE)",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Skeleton(
                         animation = SkeletonAnimation.NONE,
@@ -190,7 +190,7 @@ fun SkeletonExample(
                     Text(
                         text = "小",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
                 Column(
@@ -201,7 +201,7 @@ fun SkeletonExample(
                     Text(
                         text = "中",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
                 Column(
@@ -212,7 +212,7 @@ fun SkeletonExample(
                     Text(
                         text = "大",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
                 Column(
@@ -228,7 +228,7 @@ fun SkeletonExample(
                     Text(
                         text = "图片",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -300,22 +300,22 @@ fun SkeletonExample(
                 Text(
                     text = "1. 支持三种形状: 矩形、圆形、文本",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持三种动画: 脉冲、波浪、无动画",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 提供预设模板: 列表项、卡片、文章、网格",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 可自定义尺寸和圆角",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

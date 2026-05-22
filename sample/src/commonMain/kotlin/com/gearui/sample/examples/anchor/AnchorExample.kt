@@ -53,7 +53,7 @@ fun AnchorExample(
                 Text(
                     text = "当前选中: ${anchorState.activeKey ?: "无"}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Anchor(
@@ -117,24 +117,24 @@ fun AnchorExample(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(colors.surfaceVariant)
+                        .background(colors.muted)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.TitleMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Text(
                         text = "当前显示: ${items.find { it.key == activeKey }?.title ?: ""}",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Text(
                         text = "点击左侧锚点可以切换内容",
                         style = Typography.BodySmall,
-                        color = colors.textPlaceholder
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -223,7 +223,7 @@ fun AnchorExample(
                 Text(
                     text = "当前选中: ${anchorState.activeKey ?: "无"}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Anchor(
@@ -243,27 +243,27 @@ fun AnchorExample(
                 Text(
                     text = "1. Anchor: 基础锚点导航组件",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. AnchorAffix: 固定定位的锚点导航",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. rememberAnchorState: 管理选中状态",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持动态添加和移除锚点项",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持顶部偏移量设置",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

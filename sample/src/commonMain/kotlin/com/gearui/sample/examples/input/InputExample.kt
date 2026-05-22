@@ -258,8 +258,8 @@ fun InputExample(
                                 modifier = Modifier
                                     .width(72.dp)
                                     .height(36.dp)
-                                    .clip(Theme.shapes.small)
-                                    .background(colors.surfaceVariant)
+                                    .clip(Theme.shapes.sm)
+                                    .background(colors.muted)
                                     .clickable { Toast.show("点击更换验证码") },
                                 contentAlignment = Alignment.Center
                             ) {
@@ -295,7 +295,7 @@ fun InputExample(
                             Text(
                                 text = if (countdown > 0) "重发(${countdown}秒)" else "发送验证码",
                                 style = Typography.BodyMedium,
-                                color = if (countdown > 0) colors.textDisabled else colors.primary,
+                                color = if (countdown > 0) colors.mutedForeground else colors.primary,
                                 modifier = Modifier.clickable(enabled = countdown == 0) {
                                     Toast.show("发送验证码")
                                 }
@@ -316,7 +316,7 @@ fun InputExample(
                         Text(
                             text = "元",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                     }
                 )
@@ -333,7 +333,7 @@ fun InputExample(
                         Text(
                             text = "个",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                     }
                 )
@@ -482,7 +482,7 @@ fun InputExample(
                 Text(
                     text = "标签文字",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 var value by remember { mutableStateOf("") }
                 Input(

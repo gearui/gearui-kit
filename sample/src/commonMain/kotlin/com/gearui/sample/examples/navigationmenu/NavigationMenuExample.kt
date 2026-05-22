@@ -1,7 +1,7 @@
 package com.gearui.sample.examples.navigationmenu
 
 import androidx.compose.runtime.*
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.navigationmenu.NavigationMenu
 import com.gearui.components.navigationmenu.NavigationMenuSection
 import com.gearui.components.navigationmenu.NavigationMenuItem
@@ -67,11 +67,11 @@ fun NavigationMenuExample(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shapes.large)
+                    .clip(shapes.lg)
                     .background(colors.surface)
-                    .border(1.dp, colors.border, shapes.large)
-                    .padding(Spacing.spacer16.dp),
-                verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                    .border(1.dp, colors.border, shapes.lg)
+                    .padding(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 NavigationMenu(
                     sections = sections,
@@ -85,20 +85,20 @@ fun NavigationMenuExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                        .clip(shapes.default)
+                        .clip(shapes.md)
                         .background(colors.background)
-                        .padding(Spacing.spacer12.dp),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                        .padding(Spacing.md),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Text(
                         text = "Selected Section: $selectedSection",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     Text(
                         text = "Selected Item: $selectedItem",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }

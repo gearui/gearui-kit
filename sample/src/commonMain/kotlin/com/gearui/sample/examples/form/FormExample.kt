@@ -28,8 +28,10 @@ import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
+import com.gearui.overlay.OverlayDefaults
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
 
 /**
  * Form 组件示例
@@ -190,22 +192,22 @@ fun FormExample(
             // 布局切换按钮
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 // 水平排布按钮
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(40.dp)
-                        .clip(shapes.circle)
-                        .background(if (isHorizontal) colors.primaryLight else colors.surfaceVariant)
+                        .clip(CircleShape)
+                        .background(if (isHorizontal) colors.muted else colors.muted)
                         .clickable(enabled = !formDisabled) { isHorizontal = true },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "水平排布",
                         style = Typography.BodyMedium,
-                        color = if (isHorizontal) colors.primary else colors.textPrimary
+                        color = if (isHorizontal) colors.primary else colors.foreground
                     )
                 }
 
@@ -214,20 +216,20 @@ fun FormExample(
                     modifier = Modifier
                         .weight(1f)
                         .height(40.dp)
-                        .clip(shapes.circle)
-                        .background(if (!isHorizontal) colors.primaryLight else colors.surfaceVariant)
+                        .clip(CircleShape)
+                        .background(if (!isHorizontal) colors.muted else colors.muted)
                         .clickable(enabled = !formDisabled) { isHorizontal = false },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "竖直排布",
                         style = Typography.BodyMedium,
-                        color = if (!isHorizontal) colors.primary else colors.textPrimary
+                        color = if (!isHorizontal) colors.primary else colors.foreground
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             // 禁用态开关
             Cell(
@@ -240,13 +242,13 @@ fun FormExample(
                 }
             )
 
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             // 表单内容
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shapes.default)
+                    .clip(shapes.md)
                     .background(colors.surface)
             ) {
                 // 用户名
@@ -294,7 +296,7 @@ fun FormExample(
                     error = genderError
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         genderOptions.forEach { (label, value) ->
@@ -313,7 +315,7 @@ fun FormExample(
                                 Text(
                                     text = label,
                                     style = Typography.BodyMedium,
-                                    color = if (!formDisabled) colors.textPrimary else colors.textDisabled
+                                    color = if (!formDisabled) colors.foreground else colors.mutedForeground
                                 )
                             }
                         }
@@ -350,9 +352,9 @@ fun FormExample(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)
-                            .clip(shapes.small)
-                            .border(1.dp, if (!formDisabled) colors.border else colors.disabled, shapes.small)
-                            .background(if (!formDisabled) colors.surface else colors.disabledContainer)
+                            .clip(shapes.sm)
+                            .border(1.dp, if (!formDisabled) colors.border else colors.mutedForeground, shapes.sm)
+                            .background(if (!formDisabled) colors.surface else colors.muted)
                             .clickable(enabled = !formDisabled) { showPlacePicker = true }
                             .padding(horizontal = 12.dp),
                         contentAlignment = Alignment.CenterStart
@@ -361,9 +363,9 @@ fun FormExample(
                             text = place.ifEmpty { "请选择籍贯" },
                             style = Typography.BodyMedium,
                             color = if (place.isNotEmpty()) {
-                                if (!formDisabled) colors.textPrimary else colors.textDisabled
+                                if (!formDisabled) colors.foreground else colors.mutedForeground
                             } else {
-                                colors.textPlaceholder
+                                colors.mutedForeground
                             }
                         )
                     }
@@ -429,12 +431,12 @@ fun FormExample(
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             // 提交/重置按钮
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Button(
                     text = "重置",
@@ -490,7 +492,7 @@ private fun FormItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer12.dp),
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             verticalAlignment = Alignment.Top
         ) {
             // 标签
@@ -501,19 +503,19 @@ private fun FormItem(
                 Text(
                     text = label,
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 if (required) {
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
                         text = "*",
                         style = Typography.BodyMedium,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.width(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.width(Spacing.lg))
 
             // 内容
             Column(modifier = Modifier.weight(1f)) {
@@ -525,7 +527,7 @@ private fun FormItem(
                     Text(
                         text = help,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -535,7 +537,7 @@ private fun FormItem(
                     Text(
                         text = error,
                         style = Typography.BodySmall,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                 }
             }
@@ -545,26 +547,26 @@ private fun FormItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer12.dp)
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md)
         ) {
             // 标签
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = label,
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 if (required) {
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
                         text = "*",
                         style = Typography.BodyMedium,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.spacer8.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
 
             // 内容
             content()
@@ -575,7 +577,7 @@ private fun FormItem(
                 Text(
                     text = help,
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
 
@@ -585,7 +587,7 @@ private fun FormItem(
                 Text(
                     text = error,
                     style = Typography.BodySmall,
-                    color = colors.danger
+                    color = colors.destructive
                 )
             }
         }
@@ -601,9 +603,9 @@ private fun FormDivider() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = Spacing.spacer16.dp)
+            .padding(start = Spacing.lg)
             .height(1.dp)
-            .background(colors.divider)
+            .background(colors.border)
     )
 }
 
@@ -624,45 +626,45 @@ private fun PlacePickerDialog(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.mask)
+            .background(OverlayDefaults.scrimColor)
             .clickable { onDismiss() },
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(0.8f)
-                .clip(shapes.large)
+                .clip(shapes.lg)
                 .background(colors.surface)
                 .clickable { /* 阻止点击穿透 */ }
-                .padding(Spacing.spacer16.dp)
+                .padding(Spacing.lg)
         ) {
             Text(
                 text = "选择籍贯",
                 style = Typography.TitleMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
 
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             options.forEach { option ->
                 val isSelected = option == selectedPlace
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(shapes.small)
-                        .background(if (isSelected) colors.primaryLight else colors.surface)
+                        .clip(shapes.sm)
+                        .background(if (isSelected) colors.muted else colors.surface)
                         .clickable { onSelect(option) }
-                        .padding(Spacing.spacer12.dp)
+                        .padding(Spacing.md)
                 ) {
                     Text(
                         text = option,
                         style = Typography.BodyMedium,
-                        color = if (isSelected) colors.primary else colors.textPrimary
+                        color = if (isSelected) colors.primary else colors.foreground
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.spacer16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             Button(
                 text = "取消",

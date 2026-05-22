@@ -19,7 +19,7 @@ import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 侧边栏样式
@@ -104,7 +104,7 @@ fun Sidebar(
         modifier = modifier
             .width(110.dp)
             .fillMaxHeight()
-            .background(unSelectedBgColor ?: colors.surfaceVariant)
+            .background(unSelectedBgColor ?: colors.muted)
     ) {
         itemsIndexed(items) { index, item ->
             if (showIcon && item.icon != null) {
@@ -151,13 +151,13 @@ private fun SidebarItem(
 
     val backgroundColor = when {
         selected -> selectedBgColor ?: colors.surface
-        else -> unSelectedBgColor ?: colors.surfaceVariant
+        else -> unSelectedBgColor ?: colors.muted
     }
 
     val textColor = when {
         selected -> selectedTextColor ?: colors.primary
         item.textColor != null -> item.textColor
-        else -> unSelectedTextColor ?: colors.textPrimary
+        else -> unSelectedTextColor ?: colors.foreground
     }
 
     val itemModifier = when (style) {
@@ -166,15 +166,15 @@ private fun SidebarItem(
             .background(backgroundColor)
         SidebarStyle.OUTLINE -> Modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.spacer8.dp, vertical = Spacing.spacer4.dp)
-            .clip(RoundedCornerShape(Spacing.spacer8.dp))
+            .padding(horizontal = Spacing.sm, vertical = Spacing.xs)
+            .clip(RoundedCornerShape(Spacing.sm))
             .background(backgroundColor)
     }
 
     Box(
         modifier = itemModifier
             .clickable(onClick = onClick)
-            .padding(vertical = Spacing.spacer16.dp, horizontal = Spacing.spacer12.dp)
+            .padding(vertical = Spacing.lg, horizontal = Spacing.md)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -189,10 +189,10 @@ private fun SidebarItem(
 
             // 徽标
             if (item.showDot) {
-                Spacer(modifier = Modifier.width(Spacing.spacer4.dp))
+                Spacer(modifier = Modifier.width(Spacing.xs))
                 Badge(type = BadgeType.RedPoint)
             } else if (item.badgeCount != null) {
-                Spacer(modifier = Modifier.width(Spacing.spacer4.dp))
+                Spacer(modifier = Modifier.width(Spacing.xs))
                 Badge(type = BadgeType.Message, count = item.badgeCount.toIntOrNull() ?: 0)
             }
         }
@@ -227,13 +227,13 @@ private fun SidebarItemWithIcon(
 
     val backgroundColor = when {
         selected -> selectedBgColor ?: colors.surface
-        else -> unSelectedBgColor ?: colors.surfaceVariant
+        else -> unSelectedBgColor ?: colors.muted
     }
 
     val textColor = when {
         selected -> selectedTextColor ?: colors.primary
         item.textColor != null -> item.textColor
-        else -> unSelectedTextColor ?: colors.textPrimary
+        else -> unSelectedTextColor ?: colors.foreground
     }
 
     Box(
@@ -241,12 +241,12 @@ private fun SidebarItemWithIcon(
             .fillMaxWidth()
             .background(backgroundColor)
             .clickable(onClick = onClick)
-            .padding(vertical = Spacing.spacer12.dp, horizontal = Spacing.spacer8.dp)
+            .padding(vertical = Spacing.md, horizontal = Spacing.sm)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             // 图标行（带徽标）
             Box {
@@ -301,11 +301,11 @@ fun ContentSection(index: Int) {
         Text(
             text = "标题$index",
             style = Typography.TitleSmall,
-            color = colors.textPrimary,
+            color = colors.foreground,
             modifier = Modifier.padding(
-                start = Spacing.spacer16.dp,
-                top = Spacing.spacer16.dp,
-                bottom = Spacing.spacer8.dp
+                start = Spacing.lg,
+                top = Spacing.lg,
+                bottom = Spacing.sm
             )
         )
 
@@ -327,16 +327,16 @@ fun ContentListItem() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer16.dp),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp),
+            .padding(horizontal = Spacing.lg, vertical = Spacing.lg),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 图片占位
         Box(
             modifier = Modifier
                 .size(48.dp)
-                .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                .background(colors.surfaceVariant),
+                .clip(RoundedCornerShape(Spacing.sm))
+                .background(colors.muted),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -349,7 +349,7 @@ fun ContentListItem() {
         Text(
             text = "标题",
             style = Typography.BodyLarge,
-            color = colors.textPrimary
+            color = colors.foreground
         )
     }
 }
@@ -365,23 +365,23 @@ fun PageGridContent(index: Int) {
         modifier = Modifier
             .fillMaxSize()
             .background(colors.surface)
-            .padding(Spacing.spacer16.dp)
+            .padding(Spacing.lg)
     ) {
         Text(
             text = "标题 $index",
             style = Typography.TitleSmall,
-            color = colors.textPrimary,
-            modifier = Modifier.padding(bottom = Spacing.spacer16.dp)
+            color = colors.foreground,
+            modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
         // 网格内容 - 3列4行
         Column(
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             repeat(4) { row ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     repeat(3) { col ->
                         val itemIndex = row * 3 + col
@@ -409,13 +409,13 @@ private fun GridItem(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Box(
             modifier = Modifier
                 .size(48.dp)
-                .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                .background(colors.surfaceVariant),
+                .clip(RoundedCornerShape(Spacing.sm))
+                .background(colors.muted),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -427,7 +427,7 @@ private fun GridItem(
         Text(
             text = title,
             style = Typography.BodySmall,
-            color = colors.textPrimary,
+            color = colors.foreground,
             maxLines = 1
         )
     }

@@ -33,9 +33,9 @@ fun SwiperExample(
         colors.primary,
         colors.success,
         colors.warning,
-        colors.danger,
+        colors.destructive,
         colors.info,
-        colors.primaryActive
+        colors.primary
     )
 
     ExamplePage(
@@ -66,7 +66,7 @@ fun SwiperExample(
                     Text(
                         text = "Slide ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -93,7 +93,7 @@ fun SwiperExample(
                     Text(
                         text = "Slide ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -120,7 +120,7 @@ fun SwiperExample(
                     Text(
                         text = "Slide ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -148,7 +148,7 @@ fun SwiperExample(
                     Text(
                         text = "Slide ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -175,7 +175,7 @@ fun SwiperExample(
                     Text(
                         text = "Slide ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -204,7 +204,7 @@ fun SwiperExample(
                     Text(
                         text = "内部 ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -231,7 +231,7 @@ fun SwiperExample(
                     Text(
                         text = "外部 ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -258,7 +258,7 @@ fun SwiperExample(
                     Text(
                         text = "顶部 ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -287,7 +287,7 @@ fun SwiperExample(
                     Text(
                         text = "第 ${index + 1} 页",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -317,7 +317,7 @@ fun SwiperExample(
                         Text(
                             text = "Index ${index + 1}",
                             style = Typography.HeadlineMedium,
-                            color = colors.textAnti
+                            color = colors.primaryForeground
                         )
                     }
                 }
@@ -351,7 +351,7 @@ fun SwiperExample(
                     Text(
                         text = "Fast ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -378,7 +378,7 @@ fun SwiperExample(
                     Text(
                         text = "Page ${index + 1}",
                         style = Typography.HeadlineMedium,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }

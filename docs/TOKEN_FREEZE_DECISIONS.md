@@ -218,8 +218,11 @@ Counts are `:gearui-kit:compileDebugKotlinAndroid --rerun-tasks 2>&1 | grep "is 
 | Batch 9 | Navigation/Disclosure + Tab 族: Tabs/Tab/TabTokens(9A) · Steps/Stepper/Pagination/Anchor/Segmented(9B) · NavigationMenu/Collapse/Tour/Drawer(9C) | 357 | 238 | −119 |
 | Batch 10 | 复杂数据展示+显示 primitives+foundation 池: Divider/Badge/Text/BasicTextField(10A) · Avatar/Image/ImageViewer(10B) · Table/Tree/Timeline/Watermark/Swiper/SwipeCell(10C) · ComponentTokens/Tag(10D) | 238 | 137 | −101 |
 | Batch 11 | 复杂输入/选择器族: DatePicker / Picker / Calendar / CalendarPopup / TreeSelect / Cascader / Transfer / Rate | 137 | 24 | −113 |
+| Batch 12 | Sample 迁移: 71 个 example/page 文件（sample 模块） | sample 742 | sample 0 | −742 |
 
-> **里程碑（Batch 11 后）**：库内已完全脱离四个目标 bridge（Colors / Shapes / root Spacing / ComponentSpecs）。剩余 **24** 条全部是「其他 deprecated API」自警告，全部留待 Batch 13E：`TagColorTokens` 构造器 15、`TabColors` 构造器 1、`OverlayPlacement.TopStart/BottomStart` 各 4（OverlayHost 内部回溯兼容）。下一步 Batch 12 迁移 sample（1197）；待 lib + sample 双归零后方可进 Batch 13 删除 bridge。
+> **里程碑（Batch 11 后）**：库内已完全脱离四个目标 bridge（Colors / Shapes / root Spacing / ComponentSpecs）。剩余 **24** 条全部是「其他 deprecated API」自警告，全部留待 Batch 13E：`TagColorTokens` 构造器 15、`TabColors` 构造器 1、`OverlayPlacement.TopStart/BottomStart` 各 4（OverlayHost 内部回溯兼容）。
+>
+> **里程碑（Batch 12 后）**：sample 源码也已完全脱离四个目标 bridge（71 文件，sample-source deprecation 0）。**lib + sample 双双归零**——四个 bridge 的解锁条件全部满足，可以进入 Batch 13 删除 bridge。编译 :sample 时仍会连带显示库内那 24 条自警告，它们在 Batch 13E 随 declaration 删除一并消失。
 
 Notes:
 

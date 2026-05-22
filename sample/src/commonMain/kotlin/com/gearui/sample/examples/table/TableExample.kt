@@ -98,7 +98,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary,
+                                color = colors.foreground,
                                 maxLines = 1
                             )
                         }
@@ -110,7 +110,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -121,7 +121,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -132,7 +132,7 @@ fun TableExample(
                             Text(
                                 text = item["title4"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -157,7 +157,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary,
+                                color = colors.foreground,
                                 maxLines = 1
                             )
                         }
@@ -170,7 +170,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -182,7 +182,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -233,7 +233,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary,
+                                color = colors.foreground,
                                 maxLines = 1
                             )
                         }
@@ -245,7 +245,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -256,7 +256,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -313,7 +313,7 @@ fun TableExample(
                                 Text(
                                     text = item["title1"] ?: "",
                                     style = Typography.BodyMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                             }
                         ),
@@ -324,7 +324,7 @@ fun TableExample(
                                 Text(
                                     text = item["title2"] ?: "",
                                     style = Typography.BodyMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                             }
                         ),
@@ -335,7 +335,7 @@ fun TableExample(
                                 Text(
                                     text = item["title3"] ?: "",
                                     style = Typography.BodyMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                             }
                         ),
@@ -346,7 +346,7 @@ fun TableExample(
                                 Text(
                                     text = item["title4"] ?: "",
                                     style = Typography.BodyMedium,
-                                    color = colors.textPrimary
+                                    color = colors.foreground
                                 )
                             }
                         )
@@ -395,7 +395,7 @@ fun TableExample(
                             Text(
                                 text = item.id,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -407,7 +407,7 @@ fun TableExample(
                             Text(
                                 text = item.name,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -419,7 +419,7 @@ fun TableExample(
                             Text(
                                 text = item.category,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -432,7 +432,7 @@ fun TableExample(
                             Text(
                                 text = item.price,
                                 style = Typography.BodyMedium,
-                                color = colors.danger
+                                color = colors.destructive
                             )
                         }
                     ),
@@ -445,7 +445,7 @@ fun TableExample(
                             Text(
                                 text = item.stock,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -458,7 +458,7 @@ fun TableExample(
                             Text(
                                 text = item.sales,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -482,7 +482,7 @@ fun TableExample(
                                 Text(
                                     text = "删除",
                                     style = Typography.BodyMedium,
-                                    color = colors.danger,
+                                    color = colors.destructive,
                                     modifier = Modifier.clickable {
                                         Toast.show("删除 ${item.name}")
                                     }
@@ -511,7 +511,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -523,7 +523,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -535,7 +535,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -561,7 +561,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary,
+                                color = colors.foreground,
                                 maxLines = 1
                             )
                         }
@@ -573,7 +573,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -584,7 +584,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -595,7 +595,7 @@ fun TableExample(
                             Text(
                                 text = item["title4"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -620,7 +620,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary,
+                                color = colors.foreground,
                                 maxLines = 1
                             )
                         }
@@ -632,7 +632,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -643,7 +643,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -654,7 +654,7 @@ fun TableExample(
                             Text(
                                 text = item["title4"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -680,7 +680,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -692,7 +692,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -704,7 +704,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -716,7 +716,7 @@ fun TableExample(
                             Text(
                                 text = item["title4"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -740,7 +740,7 @@ fun TableExample(
                             Text(
                                 text = item["title1"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -751,7 +751,7 @@ fun TableExample(
                             Text(
                                 text = item["title2"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -762,7 +762,7 @@ fun TableExample(
                             Text(
                                 text = item["title3"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -773,7 +773,7 @@ fun TableExample(
                             Text(
                                 text = item["title4"] ?: "",
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     )
@@ -832,7 +832,7 @@ fun TableExample(
                             Text(
                                 text = item.id,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -843,7 +843,7 @@ fun TableExample(
                             Text(
                                 text = item.product,
                                 style = Typography.BodyMedium,
-                                color = colors.textPrimary
+                                color = colors.foreground
                             )
                         }
                     ),
@@ -855,7 +855,7 @@ fun TableExample(
                             Text(
                                 text = item.amount,
                                 style = Typography.BodyMedium,
-                                color = colors.danger
+                                color = colors.destructive
                             )
                         }
                     ),

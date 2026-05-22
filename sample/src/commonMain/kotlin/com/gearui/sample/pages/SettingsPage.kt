@@ -18,7 +18,7 @@ import com.gearui.i18n.I18n
 import com.gearui.sample.i18n.DefaultSampleLanguageOptions
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 主题风格选项
@@ -58,7 +58,7 @@ fun SettingsPage(
     val colors = Theme.colors
     val coreStrings = I18n.strings
     val sampleStrings = SampleI18n.strings
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
+    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
     val languageOptions = DefaultSampleLanguageOptions
 
     // 根据当前语言获取主题风格显示名称
@@ -88,12 +88,12 @@ fun SettingsPage(
             modifier = Modifier
                 .fillMaxSize()
                 .background(colors.background)
-                .padding(Spacing.spacer16.dp),
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer24.dp)
+                .padding(Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xl)
         ) {
             // 语言设置
             SettingsCardSection(title = coreStrings.language) {
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                     languageOptions.forEach { language ->
                         RadioCardItem(
                             selected = settingsState.languageTag == language.tag,
@@ -107,9 +107,9 @@ fun SettingsPage(
 
             // 主题风格设置 - 横向卡片单选框
             SettingsCardSection(title = coreStrings.theme) {
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                     // 第一行：浅色 + 深色
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                         RadioCardItemCompact(
                             selected = settingsState.themeStyle == ThemeStyle.LIGHT,
                             onClick = { settingsState.themeStyle = ThemeStyle.LIGHT },
@@ -124,7 +124,7 @@ fun SettingsPage(
                         )
                     }
                     // 第二行：暗紫 + 跟随系统
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                         RadioCardItemCompact(
                             selected = settingsState.themeStyle == ThemeStyle.DARK_PURPLE,
                             onClick = { settingsState.themeStyle = ThemeStyle.DARK_PURPLE },
@@ -148,15 +148,15 @@ fun SettingsPage(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(Spacing.spacer8.dp))
-                        .background(colors.surfaceComponent)
+                        .clip(RoundedCornerShape(Spacing.sm))
+                        .background(colors.surface)
                         .border(
                             width = 1.dp,
                             color = colors.border,
-                            shape = RoundedCornerShape(Spacing.spacer8.dp)
+                            shape = RoundedCornerShape(Spacing.sm)
                         )
-                        .padding(Spacing.spacer16.dp),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)
+                        .padding(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.md)
                 ) {
                     SettingsInfoRow(
                         title = sampleStrings.versionLabel,
@@ -184,13 +184,13 @@ private fun SettingsCardSection(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.spacer12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         // 分组标题
         Text(
             text = title,
             style = Typography.TitleMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
 
         // 分组内容
@@ -210,37 +210,37 @@ private fun RadioCardItem(
     modifier: Modifier = Modifier
 ) {
     val colors = Theme.colors
-    val cardBackground = if (selected) colors.surfaceVariant else colors.surfaceComponent
-    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.stroke
+    val cardBackground = if (selected) colors.muted else colors.surface
+    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(Spacing.spacer8.dp))
+            .clip(RoundedCornerShape(Spacing.sm))
             .background(cardBackground)
             .border(
                 width = 1.dp,
                 color = cardBorderColor,
-                shape = RoundedCornerShape(Spacing.spacer8.dp)
+                shape = RoundedCornerShape(Spacing.sm)
             )
             .clickable(onClick = onClick)
-            .padding(Spacing.spacer16.dp),
+            .padding(Spacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.spacer4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             Text(
                 text = title,
                 style = Typography.BodyLarge,
-                color = colors.textPrimary
+                color = colors.foreground
             )
             Text(
                 text = description,
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
         RadioButton(
@@ -262,27 +262,27 @@ private fun RadioCardItemCompact(
     modifier: Modifier = Modifier
 ) {
     val colors = Theme.colors
-    val cardBackground = if (selected) colors.surfaceVariant else colors.surfaceComponent
-    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.stroke
+    val cardBackground = if (selected) colors.muted else colors.surface
+    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
 
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(Spacing.spacer8.dp))
+            .clip(RoundedCornerShape(Spacing.sm))
             .background(cardBackground)
             .border(
                 width = 1.dp,
                 color = cardBorderColor,
-                shape = RoundedCornerShape(Spacing.spacer8.dp)
+                shape = RoundedCornerShape(Spacing.sm)
             )
             .clickable(onClick = onClick)
-            .padding(horizontal = Spacing.spacer16.dp, vertical = Spacing.spacer16.dp),
+            .padding(horizontal = Spacing.lg, vertical = Spacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = title,
             style = Typography.BodyMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
         RadioButton(
             selected = selected,
@@ -309,12 +309,12 @@ private fun SettingsInfoRow(
         Text(
             text = title,
             style = Typography.BodyMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
         Text(
             text = value,
             style = Typography.BodySmall,
-            color = colors.textSecondary
+            color = colors.mutedForeground
         )
     }
 }

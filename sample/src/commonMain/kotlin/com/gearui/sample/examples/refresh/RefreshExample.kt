@@ -35,7 +35,7 @@ fun RefreshExample(
             Text(
                 text = "预期行为：下拉触发刷新、展示刷新中状态、完成后回弹并更新列表数据。",
                 style = Typography.BodyMedium,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
             Button(
                 text = "模拟刷新完成",

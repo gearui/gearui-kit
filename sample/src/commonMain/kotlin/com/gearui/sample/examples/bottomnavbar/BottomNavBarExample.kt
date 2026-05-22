@@ -68,7 +68,7 @@ fun BottomNavBarExample(
                 Text(
                     text = "Selected tab: $selectedId",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

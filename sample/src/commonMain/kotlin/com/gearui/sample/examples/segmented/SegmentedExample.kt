@@ -58,7 +58,7 @@ fun SegmentedExample(
                 Text(
                     text = "当前选择: $selectedOption",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -82,7 +82,7 @@ fun SegmentedExample(
                 Text(
                     text = "显示模式: ${if (selectedOption == "list") "列表视图" else "网格视图"}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -117,7 +117,7 @@ fun SegmentedExample(
                 Text(
                     text = "当前筛选: $selectedTab",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -148,7 +148,7 @@ fun SegmentedExample(
                 Text(
                     text = "排序方式: $sortOrder",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -206,7 +206,7 @@ fun SegmentedExample(
                 Text(
                     text = "视图模式: $selectedView",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -239,17 +239,17 @@ fun SegmentedExample(
                     "intro" -> Text(
                         text = "GearUI 是一个现代化的 Compose 组件库，提供丰富的 UI 组件。",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     "features" -> Text(
                         text = "支持主题定制、响应式布局、完整的组件体系、优秀的开发体验。",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     "pricing" -> Text(
                         text = "完全开源免费，欢迎社区贡献。",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -264,27 +264,27 @@ fun SegmentedExample(
                 Text(
                     text = "1. options: 选项列表，支持任意类型",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. selectedOption: 当前选中的选项",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. labelProvider: 将选项值转换为显示文本",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. enabled: 控制整体是否可交互",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. IconSegmentedControl: 支持带图标的选项",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

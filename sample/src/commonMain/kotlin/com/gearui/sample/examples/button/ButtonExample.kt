@@ -127,7 +127,7 @@ fun ButtonExample(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.textPrimary)
+                    .background(colors.foreground)
                     .padding(16.dp)
             ) {
                 Row(

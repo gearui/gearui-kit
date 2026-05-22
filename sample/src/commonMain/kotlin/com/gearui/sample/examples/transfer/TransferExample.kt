@@ -58,7 +58,7 @@ fun TransferExample(
                 Text(
                     text = "已选择: ${selectedKeys.joinToString(", ").ifEmpty { "无" }}",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -155,27 +155,27 @@ fun TransferExample(
                 Text(
                     text = "1. items: 所有可选项列表",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. selectedKeys: 已选中项的 key 集合",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. titles: 左右列表的标题",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. searchable: 是否显示搜索框",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. disabled: 禁用某些选项",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

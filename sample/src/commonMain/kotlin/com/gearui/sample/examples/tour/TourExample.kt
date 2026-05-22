@@ -243,7 +243,7 @@ fun TourExample(
                         .fillMaxWidth()
                         .height(180.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(colors.surfaceVariant)
+                        .background(colors.muted)
                         .padding(16.dp)
                 ) {
                     Column(
@@ -269,7 +269,7 @@ fun TourExample(
                                 Text(
                                     text = "🔍 搜索...",
                                     style = Typography.BodyMedium,
-                                    color = colors.textPlaceholder
+                                    color = colors.mutedForeground
                                 )
                             }
 
@@ -286,7 +286,7 @@ fun TourExample(
                                 Text(
                                     text = "⚙",
                                     style = Typography.BodyMedium,
-                                    color = colors.textSecondary
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
@@ -303,7 +303,7 @@ fun TourExample(
                             Text(
                                 text = "内容区域",
                                 style = Typography.BodyMedium,
-                                color = colors.textPlaceholder
+                                color = colors.mutedForeground
                             )
                         }
 
@@ -322,7 +322,7 @@ fun TourExample(
                                 Text(
                                     text = "+",
                                     style = Typography.TitleLarge,
-                                    color = colors.onPrimary
+                                    color = colors.primaryForeground
                                 )
                             }
                         }

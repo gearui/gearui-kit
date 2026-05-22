@@ -31,7 +31,7 @@ fun PaginationExample(
             Text(
                 text = "Current page: $pageA",
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
 
@@ -48,7 +48,7 @@ fun PaginationExample(
             Text(
                 text = "Current page: $pageB",
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
         }
     }

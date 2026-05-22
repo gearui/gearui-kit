@@ -33,7 +33,7 @@ fun ExamplePage(
     val shapes = Theme.shapes
     val settingsState = LocalSettingsState.current
     val listState = rememberLazyListState()
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primaryActive else colors.surface
+    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
     Column(
         modifier = Modifier
@@ -94,14 +94,14 @@ fun ExampleSection(
                 Text(
                     text = title,
                     style = Typography.TitleMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 if (description.isNotEmpty()) {
                     Text(
                         text = description,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -112,9 +112,9 @@ fun ExampleSection(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shapes.large)
+                    .clip(shapes.lg)
                     .background(colors.surface)
-                    .border(1.dp, colors.border, shapes.large)
+                    .border(1.dp, colors.border, shapes.lg)
                     .padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {

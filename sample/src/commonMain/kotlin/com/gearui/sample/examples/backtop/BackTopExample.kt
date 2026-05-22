@@ -65,13 +65,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -108,13 +108,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -151,13 +151,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -195,13 +195,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -238,13 +238,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -281,13 +281,13 @@ fun BackTopExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = "内容区域",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
 
@@ -324,17 +324,17 @@ fun BackTopExample(
                 Text(
                     text = "style: 样式类型",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "  - CIRCLE: 圆形 (48dp)",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "  - HALF_CIRCLE: 半圆形 (贴边)",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -342,17 +342,17 @@ fun BackTopExample(
                 Text(
                     text = "theme: 主题颜色",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "  - LIGHT: 亮色 (白底黑字)",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "  - DARK: 暗色 (黑底白字)",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -360,7 +360,7 @@ fun BackTopExample(
                 Text(
                     text = "showText: 是否显示文字 (默认 false)",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -368,7 +368,7 @@ fun BackTopExample(
                 Text(
                     text = "offset: 位置偏移 (right, bottom)",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }

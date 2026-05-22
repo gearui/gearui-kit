@@ -376,12 +376,12 @@ fun PopoverExample(
                         Text(
                             text = "自定义气泡内容",
                             style = Typography.TitleSmall,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "这里可以放置任意自定义内容，包括图片、按钮、列表等各种组件。",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -455,7 +455,7 @@ fun PopoverExample(
                     Text(
                         text = "操作结果: $menuResult",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -470,12 +470,12 @@ fun PopoverExample(
                 Text(
                     text = "主题支持:",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "DARK / LIGHT / BRAND / SUCCESS / WARNING / ERROR",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -483,12 +483,12 @@ fun PopoverExample(
                 Text(
                     text = "位置支持 (12种):",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "TOP_LEFT / TOP / TOP_RIGHT\nRIGHT_TOP / RIGHT / RIGHT_BOTTOM\nBOTTOM_RIGHT / BOTTOM / BOTTOM_LEFT\nLEFT_BOTTOM / LEFT / LEFT_TOP",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -496,12 +496,12 @@ fun PopoverExample(
                 Text(
                     text = "组件类型:",
                     style = Typography.Label,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Popover - 基础气泡\nTooltip - 文本提示\nPopoverMenu - 菜单气泡",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

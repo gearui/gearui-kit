@@ -58,7 +58,7 @@ fun RateExample(
                 Text(
                     text = "当前评分: ${rating1.toInt()} 星",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -78,7 +78,7 @@ fun RateExample(
                 Text(
                     text = "当前评分: $rating2 星",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }
@@ -116,7 +116,7 @@ fun RateExample(
                 Text(
                     text = "3 颗星",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Rate(
                     value = 2f,
@@ -128,7 +128,7 @@ fun RateExample(
                 Text(
                     text = "10 颗星",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Rate(
                     value = rating4,
@@ -153,7 +153,7 @@ fun RateExample(
                     Text(
                         text = "小号",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     Rate(
@@ -171,7 +171,7 @@ fun RateExample(
                     Text(
                         text = "中号",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     Rate(
@@ -189,7 +189,7 @@ fun RateExample(
                     Text(
                         text = "大号",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     Rate(
@@ -215,7 +215,7 @@ fun RateExample(
                     Text(
                         text = "商品评分:",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     RateDisplay(
                         value = 4.5f,
@@ -230,7 +230,7 @@ fun RateExample(
                     Text(
                         text = "服务评分:",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     RateDisplay(
                         value = 5f,
@@ -245,7 +245,7 @@ fun RateExample(
                     Text(
                         text = "物流评分:",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                     RateDisplay(
                         value = 3f,
@@ -264,27 +264,27 @@ fun RateExample(
                 Text(
                     text = "1. 支持整星和半星评分",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 可自定义星星数量",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持显示描述文字",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持只读展示模式",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 可配置星星大小和间距",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

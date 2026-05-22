@@ -46,7 +46,7 @@ fun EmptyExample(
                     Icon(
                         name = Icons.hourglass_empty,
                         size = 36.dp,
-                        tint = colors.textPlaceholder
+                        tint = colors.mutedForeground
                     )
                 }
             )
@@ -59,14 +59,14 @@ fun EmptyExample(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(colors.surfaceVariant)
+                            .background(colors.muted)
                             .padding(horizontal = 24.dp, vertical = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             name = Icons.image,
                             size = 48.dp,
-                            tint = colors.textPlaceholder
+                            tint = colors.mutedForeground
                         )
                     }
                 }

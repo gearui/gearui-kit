@@ -41,7 +41,7 @@ fun TextExample(
             Text(
                 text = exampleText,
                 style = Typography.BodyMedium,
-                color = colors.textPrimary
+                color = colors.foreground
             )
         }
 
@@ -52,7 +52,7 @@ fun TextExample(
         ) {
             Box(
                 modifier = Modifier
-                    .background(colors.primaryLight)
+                    .background(colors.muted)
                     .padding(8.dp)
             ) {
                 Text(
@@ -72,42 +72,42 @@ fun TextExample(
                 Text(
                     text = "Headline Large 大标题",
                     style = Typography.HeadlineLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Headline Medium 中标题",
                     style = Typography.HeadlineMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Title Large 大标题",
                     style = Typography.TitleLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Title Medium 中等标题",
                     style = Typography.TitleMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Title Small 小标题",
                     style = Typography.TitleSmall,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Body Large 大正文",
                     style = Typography.BodyLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Body Medium 中正文",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "Body Small 小正文",
                     style = Typography.BodySmall,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
             }
         }
@@ -121,33 +121,33 @@ fun TextExample(
                 Text(
                     text = "主要文字 textPrimary",
                     style = Typography.BodyLarge,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
                 Text(
                     text = "次要文字 textSecondary",
                     style = Typography.BodyLarge,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "占位文字 textPlaceholder",
                     style = Typography.BodyLarge,
-                    color = colors.textPlaceholder
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "禁用文字 textDisabled",
                     style = Typography.BodyLarge,
-                    color = colors.textDisabled
+                    color = colors.mutedForeground
                 )
                 // 反色文字
                 Box(
                     modifier = Modifier
-                        .background(colors.textPrimary)
+                        .background(colors.foreground)
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = "反色文字 textAnti",
                         style = Typography.BodyLarge,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
             }
@@ -177,7 +177,7 @@ fun TextExample(
                 Text(
                     text = "危险文字 Danger/Error",
                     style = Typography.BodyLarge,
-                    color = colors.danger
+                    color = colors.destructive
                 )
             }
         }
@@ -190,7 +190,7 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
                     modifier = Modifier
-                        .background(colors.primaryLight)
+                        .background(colors.muted)
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
                     Text(
@@ -201,7 +201,7 @@ fun TextExample(
                 }
                 Box(
                     modifier = Modifier
-                        .background(colors.successLight)
+                        .background(colors.success.copy(alpha = 0.12f))
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
                     Text(
@@ -212,7 +212,7 @@ fun TextExample(
                 }
                 Box(
                     modifier = Modifier
-                        .background(colors.warningLight)
+                        .background(colors.warning.copy(alpha = 0.12f))
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
                     Text(
@@ -223,13 +223,13 @@ fun TextExample(
                 }
                 Box(
                     modifier = Modifier
-                        .background(colors.dangerLight)
+                        .background(colors.destructive.copy(alpha = 0.12f))
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
                     Text(
                         text = "危险背景",
                         style = Typography.BodyMedium,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                 }
             }
@@ -244,14 +244,14 @@ fun TextExample(
                 Text(
                     text = "这是一段很长的文字，用于测试文字截断效果，当文字超出容器宽度时会显示省略号",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary,
+                    color = colors.foreground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = "这是一段很长的文字，用于测试文字截断效果，当文字超出容器宽度时会显示省略号。这里设置最多显示两行。",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary,
+                    color = colors.foreground,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -266,24 +266,24 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
                     modifier = Modifier
-                        .background(colors.primaryLight)
+                        .background(colors.muted)
                         .padding(4.dp)
                 ) {
                     Text(
                         text = "中华人民共和国 China",
                         style = Typography.BodyLarge,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
                 Box(
                     modifier = Modifier
-                        .background(colors.primaryLight)
+                        .background(colors.muted)
                         .padding(4.dp)
                 ) {
                     Text(
                         text = "腾讯科技 Tencent fgjpqy",
                         style = Typography.TitleMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }

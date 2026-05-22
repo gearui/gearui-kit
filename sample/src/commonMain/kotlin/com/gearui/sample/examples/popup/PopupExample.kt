@@ -94,7 +94,7 @@ fun PopupExample(
                     Text(
                         text = "顶部弹出内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -131,7 +131,7 @@ fun PopupExample(
                     Text(
                         text = "左侧弹出内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -167,7 +167,7 @@ fun PopupExample(
                     Text(
                         text = "居中弹出内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -204,7 +204,7 @@ fun PopupExample(
                     Text(
                         text = "底部弹出内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -241,7 +241,7 @@ fun PopupExample(
                     Text(
                         text = "右侧弹出内容",
                         style = Typography.BodyMedium,
-                        color = colors.textPrimary
+                        color = colors.foreground
                     )
                 }
             }
@@ -284,13 +284,13 @@ fun PopupExample(
                         Text(
                             text = "取消",
                             style = Typography.BodyMedium,
-                            color = colors.textSecondary,
+                            color = colors.mutedForeground,
                             modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
                         )
                         Text(
                             text = "标题文字",
                             style = Typography.TitleMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "确定",
@@ -345,7 +345,7 @@ fun PopupExample(
                         Text(
                             text = "取消",
                             style = Typography.BodyMedium,
-                            color = colors.textSecondary,
+                            color = colors.mutedForeground,
                             modifier = Modifier.clickable { showBottomWithOp = false }
                         )
                         Text(
@@ -399,13 +399,13 @@ fun PopupExample(
                         Text(
                             text = "标题文字",
                             style = Typography.TitleMedium,
-                            color = colors.textPrimary,
+                            color = colors.foreground,
                             modifier = Modifier.align(Alignment.Center)
                         )
                         Text(
                             text = "✕",
                             style = Typography.TitleMedium,
-                            color = colors.textSecondary,
+                            color = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .clickable { showBottomWithTitleAndClose = false }
@@ -455,7 +455,7 @@ fun PopupExample(
                         Text(
                             text = "✕",
                             style = Typography.TitleMedium,
-                            color = colors.textSecondary,
+                            color = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .clickable { showBottomWithClose = false }
@@ -506,7 +506,7 @@ fun PopupExample(
                         Text(
                             text = "标题文字",
                             style = Typography.TitleMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                     }
                     // 内容区
@@ -550,7 +550,7 @@ fun PopupExample(
                     Text(
                         text = "✕",
                         style = Typography.TitleMedium,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(12.dp)
@@ -595,7 +595,7 @@ fun PopupExample(
                     Text(
                         text = "✕",
                         style = Typography.TitleLarge,
-                        color = colors.textAnti,
+                        color = colors.primaryForeground,
                         modifier = Modifier.clickable { showCenterWithUnderClose = false }
                     )
                 }

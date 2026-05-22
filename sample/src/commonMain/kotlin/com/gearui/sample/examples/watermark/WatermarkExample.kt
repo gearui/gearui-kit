@@ -130,13 +130,13 @@ private fun CenterText(text: String) {
         Text(
             text = text,
             style = Typography.TitleMedium,
-            color = colors.textPrimary
+            color = colors.foreground
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Watermark 覆盖在内容层上方",
             style = Typography.BodySmall,
-            color = colors.textSecondary
+            color = colors.mutedForeground
         )
     }
 }

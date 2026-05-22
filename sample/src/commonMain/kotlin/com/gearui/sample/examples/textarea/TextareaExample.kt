@@ -71,7 +71,7 @@ fun TextareaExample(
                     modifier = Modifier.fillMaxWidth(),
                     textStyle = TextStyle(
                         fontSize = 16.sp,
-                        color = Theme.colors.textPrimary
+                        color = Theme.colors.foreground
                     ),
                     cursorBrush = SolidColor(Theme.colors.primary),
                     singleLine = false,
@@ -281,7 +281,7 @@ private fun SectionTitle(title: String) {
     com.gearui.foundation.primitives.Text(
         text = title,
         style = com.gearui.foundation.typography.Typography.BodySmall,
-        color = colors.textSecondary,
+        color = colors.mutedForeground,
         modifier = Modifier.padding(bottom = 8.dp)
     )
 }

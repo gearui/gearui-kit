@@ -59,7 +59,7 @@ fun DialogExample(
                     Text(
                         text = resultText,
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -173,7 +173,7 @@ fun DialogExample(
                             Text(
                                 text = "这里可以放置任意自定义内容",
                                 style = Typography.BodyMedium,
-                                color = colors.textSecondary
+                                color = colors.mutedForeground
                             )
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -187,7 +187,7 @@ fun DialogExample(
                                         Text(
                                             text = "项目${index + 1}",
                                             style = Typography.BodySmall,
-                                            color = colors.textPrimary
+                                            color = colors.foreground
                                         )
                                     }
                                 }
@@ -214,22 +214,22 @@ fun DialogExample(
                 Text(
                     text = "1. ConfirmDialog: 带确认/取消的对话框",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. AlertDialog: 单按钮警告对话框",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. Dialog.Host: 自定义内容对话框",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 模态遮罩，点击外部可关闭",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

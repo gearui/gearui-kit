@@ -63,7 +63,7 @@ fun BottomSheetExample(
                     Text(
                         text = "选择了: $selectedAction",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -152,7 +152,7 @@ fun BottomSheetExample(
                             Text(
                                 text = "B",
                                 style = Typography.BodyMedium,
-                                color = colors.danger
+                                color = colors.destructive
                             )
                         }
                     ),
@@ -323,42 +323,42 @@ fun BottomSheetExample(
                 Text(
                     text = "1. 基于 Overlay 系统，全局弹出",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. BottomSheetState: 管理显示/隐藏状态",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. BottomSheetItem: 定义选项数据",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持标题和描述",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持图标",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "6. 支持危险操作高亮",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "7. 支持禁用状态",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "8. 点击遮罩层关闭",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

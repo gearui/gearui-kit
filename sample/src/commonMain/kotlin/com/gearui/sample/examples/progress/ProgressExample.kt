@@ -93,7 +93,7 @@ fun ProgressExample(
                     Text(
                         text = "主色",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -110,7 +110,7 @@ fun ProgressExample(
                     Text(
                         text = "成功",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -127,7 +127,7 @@ fun ProgressExample(
                     Text(
                         text = "警告",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -144,7 +144,7 @@ fun ProgressExample(
                     Text(
                         text = "危险",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -168,7 +168,7 @@ fun ProgressExample(
                 Text(
                     text = "右侧显示百分比",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 LinearProgress(
                     progress = 0.65f,
@@ -182,7 +182,7 @@ fun ProgressExample(
                 Text(
                     text = "内部显示百分比",
                     style = Typography.BodySmall,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 LinearProgress(
                     progress = 0.75f,
@@ -210,7 +210,7 @@ fun ProgressExample(
                     Text(
                         text = "4dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -228,7 +228,7 @@ fun ProgressExample(
                     Text(
                         text = "8dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -246,7 +246,7 @@ fun ProgressExample(
                     Text(
                         text = "16dp",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary,
+                        color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
                     LinearProgress(
@@ -318,7 +318,7 @@ fun ProgressExample(
                     Text(
                         text = "小",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -334,7 +334,7 @@ fun ProgressExample(
                     Text(
                         text = "中",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -350,7 +350,7 @@ fun ProgressExample(
                     Text(
                         text = "大",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -431,12 +431,12 @@ fun ProgressExample(
                         Text(
                             text = "文件上传中...",
                             style = Typography.BodySmall,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "2.5MB / 5MB",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
@@ -456,7 +456,7 @@ fun ProgressExample(
                         Text(
                             text = "存储空间",
                             style = Typography.BodySmall,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "85GB / 100GB",
@@ -488,12 +488,12 @@ fun ProgressExample(
                         Text(
                             text = "今日任务",
                             style = Typography.BodyMedium,
-                            color = colors.textPrimary
+                            color = colors.foreground
                         )
                         Text(
                             text = "已完成 8/10 项任务",
                             style = Typography.BodySmall,
-                            color = colors.textSecondary
+                            color = colors.mutedForeground
                         )
                     }
                 }
@@ -509,27 +509,27 @@ fun ProgressExample(
                 Text(
                     text = "1. LinearProgress: 线性进度条",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. CircularProgress: 环形进度条",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. ProgressStatus: PRIMARY/SUCCESS/WARNING/DANGER",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. showLabel: 显示百分比标签",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. animated: 开启动画过渡效果",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

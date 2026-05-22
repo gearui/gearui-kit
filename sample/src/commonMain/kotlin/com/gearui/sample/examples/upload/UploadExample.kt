@@ -135,7 +135,7 @@ private fun UploadList(files: List<UploadFileDemo>) {
                 UploadState.NORMAL -> colors.success
                 UploadState.LOADING -> colors.warning
                 UploadState.RETRY -> colors.primary
-                UploadState.ERROR -> colors.danger
+                UploadState.ERROR -> colors.destructive
             }
 
             Row(
@@ -147,8 +147,8 @@ private fun UploadList(files: List<UploadFileDemo>) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Icon(name = Icons.image, size = 16.dp, tint = colors.textSecondary)
-                Text(text = file.name, style = Typography.BodySmall, color = colors.textPrimary, modifier = Modifier.weight(1f))
+                Icon(name = Icons.image, size = 16.dp, tint = colors.mutedForeground)
+                Text(text = file.name, style = Typography.BodySmall, color = colors.foreground, modifier = Modifier.weight(1f))
                 Text(text = statusText, style = Typography.BodySmall, color = statusColor)
             }
         }

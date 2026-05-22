@@ -61,7 +61,7 @@ fun LoadingExample(
                     Text(
                         text = "圆形",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -74,7 +74,7 @@ fun LoadingExample(
                     Text(
                         text = "菊花状",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -88,7 +88,7 @@ fun LoadingExample(
                     Text(
                         text = "点状",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -159,20 +159,20 @@ fun LoadingExample(
                 Text(
                     text = "加载中…",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
 
                 Text(
                     text = "加载失败",
                     style = Typography.BodyMedium,
-                    color = colors.textPlaceholder
+                    color = colors.mutedForeground
                 )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "加载失败",
                         style = Typography.BodyMedium,
-                        color = colors.textPlaceholder
+                        color = colors.mutedForeground
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
@@ -260,7 +260,7 @@ fun LoadingExample(
                     Text(
                         text = "主色",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -274,7 +274,7 @@ fun LoadingExample(
                     Text(
                         text = "成功",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -288,7 +288,7 @@ fun LoadingExample(
                     Text(
                         text = "警告",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
 
@@ -296,13 +296,13 @@ fun LoadingExample(
                     Loading(
                         size = LoadingSize.MEDIUM,
                         icon = LoadingIcon.CIRCLE,
-                        color = colors.danger
+                        color = colors.destructive
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "危险",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }
@@ -359,7 +359,7 @@ fun LoadingExample(
                         icon = LoadingIcon.CIRCLE,
                         text = "提交中...",
                         layout = LoadingLayout.HORIZONTAL,
-                        color = colors.textAnti
+                        color = colors.primaryForeground
                     )
                 }
 
@@ -368,7 +368,7 @@ fun LoadingExample(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp)
-                        .background(colors.surfaceVariant),
+                        .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
                     Loading(
@@ -410,37 +410,37 @@ fun LoadingExample(
                 Text(
                     text = "1. LoadingSize: SMALL/MEDIUM/LARGE 三种尺寸",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "2. LoadingIcon: CIRCLE/ACTIVITY/POINT 三种图标",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "3. LoadingLayout: VERTICAL/HORIZONTAL 布局方向",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "4. text: 可选的文字说明",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "5. color: 自定义加载指示器颜色",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "6. duration: 动画周期（毫秒）",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
                 Text(
                     text = "7. FullScreenLoading: 全屏遮罩加载",
                     style = Typography.BodyMedium,
-                    color = colors.textSecondary
+                    color = colors.mutedForeground
                 )
             }
         }

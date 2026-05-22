@@ -51,13 +51,13 @@ fun LinkExample(
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 LinkItem("Primary", color = colors.primary) { Toast.show("Primary") }
-                LinkItem("Default", color = colors.textPrimary) { Toast.show("Default") }
-                LinkItem("Danger", color = colors.danger) { Toast.show("Danger") }
+                LinkItem("Default", color = colors.foreground) { Toast.show("Default") }
+                LinkItem("Danger", color = colors.destructive) { Toast.show("Danger") }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 LinkItem("Warning", color = colors.warning) { Toast.show("Warning") }
                 LinkItem("Success", color = colors.success) { Toast.show("Success") }
-                LinkItem("禁用态", color = colors.textPlaceholder, enabled = false) {}
+                LinkItem("禁用态", color = colors.mutedForeground, enabled = false) {}
             }
         }
     }

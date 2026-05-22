@@ -61,7 +61,7 @@ fun IconExample(
             Text(
                 text = "筛选 Icon 可参考：https://fonts.google.com/icons",
                 style = Typography.BodySmall,
-                color = colors.textSecondary
+                color = colors.mutedForeground
             )
 
             SearchBar(
@@ -78,7 +78,7 @@ fun IconExample(
                 Text(
                     text = "icon数量: ${filteredIcons.size}",
                     style = Typography.BodyMedium,
-                    color = colors.textPrimary
+                    color = colors.foreground
                 )
 
                 Row(
@@ -88,7 +88,7 @@ fun IconExample(
                     Text(
                         text = "显示边框",
                         style = Typography.BodySmall,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                     Switch(
                         checked = showBorder,
@@ -107,7 +107,7 @@ fun IconExample(
                     Text(
                         text = "暂无匹配图标",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             } else {
@@ -160,8 +160,8 @@ private fun IconCell(
     val colors = Theme.colors
     val cellShape = RoundedCornerShape(6.dp)
     val cellBorderWidth = if (showBorder) 1.dp else 0.dp
-    val cellBorderColor = if (showBorder) colors.stroke else Color.Transparent
-    val cellBackground = if (showBorder) colors.surfaceComponent else Color.Transparent
+    val cellBorderColor = if (showBorder) colors.border else Color.Transparent
+    val cellBackground = if (showBorder) colors.surface else Color.Transparent
 
     Column(
         modifier = modifier,
@@ -178,14 +178,14 @@ private fun IconCell(
             Icon(
                 name = iconName,
                 size = 24.dp,
-                tint = colors.textPrimary
+                tint = colors.foreground
             )
         }
 
         Text(
             text = iconName,
             style = Typography.BodySmall,
-            color = colors.textSecondary
+            color = colors.mutedForeground
         )
     }
 }

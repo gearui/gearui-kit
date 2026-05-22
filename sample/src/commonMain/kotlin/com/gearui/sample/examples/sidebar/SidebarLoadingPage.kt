@@ -12,7 +12,7 @@ import com.gearui.components.loading.Loading
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -95,13 +95,13 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     Loading()
                     Text(
                         text = "加载中...",
                         style = Typography.BodyMedium,
-                        color = colors.textSecondary
+                        color = colors.mutedForeground
                     )
                 }
             }

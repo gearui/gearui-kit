@@ -22,7 +22,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
-import com.gearui.Spacing
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Calendar 日历组件示例
@@ -89,9 +89,9 @@ fun CalendarExample(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = Spacing.spacer16.dp)
+                            .padding(horizontal = Spacing.lg)
                             .height(1.dp)
-                            .background(colors.divider)
+                            .background(colors.border)
                     )
 
                     // 多个选择日历
@@ -108,9 +108,9 @@ fun CalendarExample(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = Spacing.spacer16.dp)
+                            .padding(horizontal = Spacing.lg)
                             .height(1.dp)
-                            .background(colors.divider)
+                            .background(colors.border)
                     )
 
                     // 区间选择日历
@@ -132,12 +132,12 @@ fun CalendarExample(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     // 月份切换按钮
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp, Alignment.CenterHorizontally)
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg, Alignment.CenterHorizontally)
                     ) {
                         Button(
                             text = "上个月",
@@ -196,7 +196,7 @@ fun CalendarExample(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.spacer16.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
                     // 预约日期选择
                     Column(

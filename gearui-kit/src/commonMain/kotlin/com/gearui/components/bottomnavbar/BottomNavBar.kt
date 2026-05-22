@@ -66,7 +66,7 @@ fun BottomNavBar(
     val selected = selectedId ?: items.firstOrNull()?.id.orEmpty()
     val barBackground = backgroundColor ?: colors.surface
     val selectedColor = activeColor ?: colors.primary
-    val unselectedColor = inactiveColor ?: colors.textSecondary
+    val unselectedColor = inactiveColor ?: colors.mutedForeground
 
     Column(
         modifier = modifier
@@ -78,7 +78,7 @@ fun BottomNavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(colors.divider)
+                    .background(colors.border)
             )
         }
 
@@ -90,7 +90,7 @@ fun BottomNavBar(
             items.forEach { item ->
                 val isSelected = selected == item.id
                 val contentColor = when {
-                    item.disabled -> colors.textDisabled
+                    item.disabled -> colors.mutedForeground
                     isSelected -> selectedColor
                     else -> unselectedColor
                 }

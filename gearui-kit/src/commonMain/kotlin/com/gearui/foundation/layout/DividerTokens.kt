@@ -2,14 +2,13 @@ package com.gearui.foundation.layout
 
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.DividerSpecs
 
 /**
  * DividerTokens - 分割线尺寸 Token
  *
  * 参考: 内部组件规范divider/td_divider.dart
  *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors.divider
+ * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors.border
  */
 data class DividerTokens(
     val thickness: Dp,
@@ -22,14 +21,14 @@ data class DividerTokens(
  */
 object Dividers {
     val Full = DividerTokens(
-        thickness = DividerSpecs.height,
+        thickness = 0.5.dp,
         insetStart = 0.dp,
         insetEnd = 0.dp
     )
 
     /** 缩进分割线 (列表项) */
     val Inset = DividerTokens(
-        thickness = DividerSpecs.height,
+        thickness = 0.5.dp,
         insetStart = 16.dp,
         insetEnd = 0.dp
     )

@@ -9,7 +9,6 @@ import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.DividerSpecs
 import com.gearui.theme.Theme
 
 /**
@@ -20,7 +19,7 @@ import com.gearui.theme.Theme
  *
  * 改造要点：
  * - 移除 DividerTokens 的颜色硬编码
- * - 直接使用 Theme.colors.divider
+ * - 直接使用 Theme.colors.border
  */
 
 /**
@@ -32,7 +31,7 @@ import com.gearui.theme.Theme
  */
 @Composable
 fun Divider(
-    thickness: Dp = DividerSpecs.height,
+    thickness: Dp = 0.5.dp,
     insetStart: Dp = 0.dp,
     insetEnd: Dp = 0.dp
 ) {
@@ -44,7 +43,7 @@ fun Divider(
             .fillMaxWidth()
             .padding(start = insetStart, end = insetEnd)
             .height(thickness)
-            .background(colors.divider)
+            .background(colors.border)
     )
 }
 
@@ -57,7 +56,7 @@ fun Divider(
  */
 @Composable
 fun DividerFull() = Divider(
-    thickness = DividerSpecs.height,
+    thickness = 0.5.dp,
     insetStart = 0.dp,
     insetEnd = 0.dp
 )
@@ -67,7 +66,7 @@ fun DividerFull() = Divider(
  */
 @Composable
 fun DividerInset() = Divider(
-    thickness = DividerSpecs.height,
+    thickness = 0.5.dp,
     insetStart = 16.dp,
     insetEnd = 0.dp
 )
@@ -83,6 +82,6 @@ fun DividerSection() {
         modifier = Modifier
             .fillMaxWidth()
             .height(8.dp)
-            .background(colors.surfaceVariant)
+            .background(colors.muted)
     )
 }

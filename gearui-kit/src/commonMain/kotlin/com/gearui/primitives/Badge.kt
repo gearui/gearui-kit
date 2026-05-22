@@ -138,15 +138,15 @@ fun Badge(
 
     // 根据主题获取背景色
     val backgroundColor = color ?: when (theme) {
-        BadgeTheme.Error -> colors.danger
+        BadgeTheme.Error -> colors.destructive
         BadgeTheme.Primary -> colors.primary
         BadgeTheme.Success -> colors.success
         BadgeTheme.Warning -> colors.warning
-        BadgeTheme.Neutral -> colors.disabled
+        BadgeTheme.Neutral -> colors.mutedForeground
     }
 
     // 文字颜色
-    val contentColor = textColor ?: colors.textAnti
+    val contentColor = textColor ?: colors.primaryForeground
 
     // 计算显示的文本
     val displayText = remember(count, maxCount, message) {

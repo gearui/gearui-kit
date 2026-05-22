@@ -60,9 +60,9 @@ fun BasicTextField(
     }
     val effectiveTextStyle = textStyle.copy(
         color = when {
-            !enabled -> colors.textDisabled
+            !enabled -> colors.mutedForeground
             textStyle.color != Color.Unspecified -> textStyle.color
-            else -> colors.textPrimary
+            else -> colors.foreground
         }
     )
 
@@ -94,7 +94,7 @@ fun BasicTextField(
                     Text(
                         text = placeholder,
                         style = Typography.BodyMedium,
-                        color = colors.textPlaceholder
+                        color = colors.mutedForeground
                     )
                 }
                 innerTextField()

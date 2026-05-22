@@ -61,9 +61,9 @@ fun Text(
 
     // 颜色优先级：color > tertiary > secondary > primary
     val finalColor = color ?: when {
-        tertiary -> themeColors.textPlaceholder
-        secondary -> themeColors.textSecondary
-        else -> themeColors.textPrimary
+        tertiary -> themeColors.mutedForeground
+        secondary -> themeColors.mutedForeground
+        else -> themeColors.foreground
     }
 
     // 字号和字重支持覆盖

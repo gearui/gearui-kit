@@ -3744,52 +3744,24 @@ public final class com/gearui/theme/Colors {
 	public final fun getBorder-cs37B9Y ()J
 	public final fun getCard-cs37B9Y ()J
 	public final fun getCardForeground-cs37B9Y ()J
-	public final fun getDanger-cs37B9Y ()J
-	public final fun getDangerLight-cs37B9Y ()J
 	public final fun getDestructive-cs37B9Y ()J
 	public final fun getDestructiveForeground-cs37B9Y ()J
-	public final fun getDisabled-cs37B9Y ()J
-	public final fun getDisabledContainer-cs37B9Y ()J
-	public final fun getDivider-cs37B9Y ()J
 	public final fun getForeground-cs37B9Y ()J
-	public final fun getIconPrimary-cs37B9Y ()J
-	public final fun getIconSecondary-cs37B9Y ()J
 	public final fun getInfo-cs37B9Y ()J
-	public final fun getInfoLight-cs37B9Y ()J
 	public final fun getInput-cs37B9Y ()J
-	public final fun getInverseOnSurface-cs37B9Y ()J
-	public final fun getInverseSurface-cs37B9Y ()J
-	public final fun getMask-cs37B9Y ()J
 	public final fun getMuted-cs37B9Y ()J
 	public final fun getMutedForeground-cs37B9Y ()J
-	public final fun getOnPrimary-cs37B9Y ()J
-	public final fun getOverlay-cs37B9Y ()J
 	public final fun getPopover-cs37B9Y ()J
 	public final fun getPopoverForeground-cs37B9Y ()J
 	public final fun getPrimary-cs37B9Y ()J
-	public final fun getPrimaryActive-cs37B9Y ()J
-	public final fun getPrimaryDisabled-cs37B9Y ()J
 	public final fun getPrimaryForeground-cs37B9Y ()J
-	public final fun getPrimaryHover-cs37B9Y ()J
-	public final fun getPrimaryLight-cs37B9Y ()J
 	public final fun getRing-cs37B9Y ()J
 	public final fun getSecondary-cs37B9Y ()J
 	public final fun getSecondaryForeground-cs37B9Y ()J
-	public final fun getStroke-cs37B9Y ()J
 	public final fun getSuccess-cs37B9Y ()J
-	public final fun getSuccessLight-cs37B9Y ()J
 	public final fun getSurface-cs37B9Y ()J
-	public final fun getSurfaceComponent-cs37B9Y ()J
 	public final fun getSurfaceForeground-cs37B9Y ()J
-	public final fun getSurfaceVariant-cs37B9Y ()J
-	public final fun getTextAnti-cs37B9Y ()J
-	public final fun getTextBrand-cs37B9Y ()J
-	public final fun getTextDisabled-cs37B9Y ()J
-	public final fun getTextPlaceholder-cs37B9Y ()J
-	public final fun getTextPrimary-cs37B9Y ()J
-	public final fun getTextSecondary-cs37B9Y ()J
 	public final fun getWarning-cs37B9Y ()J
-	public final fun getWarningLight-cs37B9Y ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

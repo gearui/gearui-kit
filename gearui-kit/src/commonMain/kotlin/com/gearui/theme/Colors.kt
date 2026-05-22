@@ -16,9 +16,8 @@ import com.tencent.kuikly.compose.ui.graphics.Color
  * selected / loading) live in component-specific `XxxTokens`, NOT in this
  * core model. See `docs/TOKEN_FREEZE_DECISIONS.md` Decision 1.
  *
- * Legacy properties (`textPrimary`, `danger`, `surfaceVariant`, ...) keep
- * compiling against the pre-1.0 35-field palette but emit deprecation
- * warnings. They will be removed before 1.0 RC.
+ * Pre-1.0 legacy bridge properties were removed in Batch 13A; see
+ * `docs/MIGRATION_1_0.md` for the old → new field mapping.
  */
 @Immutable
 data class Colors(
@@ -53,102 +52,7 @@ data class Colors(
     val border: Color,
     val input: Color,
     val ring: Color,
-) {
-    // ------------------------------------------------------------------
-    // Legacy bridge properties (pre-1.0). Will be removed before 1.0 RC.
-    // ------------------------------------------------------------------
-
-    // Surfaces
-    @Deprecated("Use muted", ReplaceWith("muted"))
-    val surfaceVariant: Color get() = muted
-
-    @Deprecated("Use surface or card", ReplaceWith("surface"))
-    val surfaceComponent: Color get() = surface
-
-    @Deprecated("Use popover", ReplaceWith("popover"))
-    val overlay: Color get() = popover
-
-    @Deprecated("Overlay scrim is a runtime token; not part of Colors.")
-    val mask: Color get() = Color(0x6609090B)
-
-    // Content
-    @Deprecated("Use foreground", ReplaceWith("foreground"))
-    val textPrimary: Color get() = foreground
-
-    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
-    val textSecondary: Color get() = mutedForeground
-
-    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
-    val textPlaceholder: Color get() = mutedForeground
-
-    @Deprecated("State color moved to ComponentTokens; reads mutedForeground.")
-    val textDisabled: Color get() = mutedForeground
-
-    @Deprecated("Use primaryForeground", ReplaceWith("primaryForeground"))
-    val textAnti: Color get() = primaryForeground
-
-    @Deprecated("Use primary directly for link/brand text", ReplaceWith("primary"))
-    val textBrand: Color get() = primary
-
-    @Deprecated("Use foreground", ReplaceWith("foreground"))
-    val iconPrimary: Color get() = foreground
-
-    @Deprecated("Use mutedForeground", ReplaceWith("mutedForeground"))
-    val iconSecondary: Color get() = mutedForeground
-
-    // Brand states
-    @Deprecated("Use primaryForeground", ReplaceWith("primaryForeground"))
-    val onPrimary: Color get() = primaryForeground
-
-    @Deprecated("State color moved to ComponentTokens (e.g. ButtonTokens.hoverBackground).")
-    val primaryHover: Color get() = primary
-
-    @Deprecated("State color moved to ComponentTokens (e.g. ButtonTokens.pressedBackground).")
-    val primaryActive: Color get() = primary
-
-    @Deprecated("State color moved to ComponentTokens; use muted as a fallback.")
-    val primaryLight: Color get() = muted
-
-    @Deprecated("State color moved to ComponentTokens; use mutedForeground as a fallback.")
-    val primaryDisabled: Color get() = mutedForeground
-
-    // Borders
-    @Deprecated("Use border or input (input is for editable control borders)", ReplaceWith("border"))
-    val stroke: Color get() = border
-
-    @Deprecated("Use border", ReplaceWith("border"))
-    val divider: Color get() = border
-
-    // Disabled state
-    @Deprecated("State color moved to ComponentTokens.<role>.disabledForeground")
-    val disabled: Color get() = mutedForeground
-
-    @Deprecated("State color moved to ComponentTokens.<role>.disabledBackground")
-    val disabledContainer: Color get() = muted
-
-    // Feedback aliases
-    @Deprecated("Use destructive", ReplaceWith("destructive"))
-    val danger: Color get() = destructive
-
-    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
-    val successLight: Color get() = success.copy(alpha = 0.12f)
-
-    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
-    val warningLight: Color get() = warning.copy(alpha = 0.12f)
-
-    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
-    val dangerLight: Color get() = destructive.copy(alpha = 0.12f)
-
-    @Deprecated("Subtle feedback backgrounds moved to ComponentTokens.<feedback>.subtleBackground.")
-    val infoLight: Color get() = info.copy(alpha = 0.12f)
-
-    // Inverse (toast / snackbar)
-    @Deprecated("Inverse surfaces moved to component-specific tokens (e.g. ToastTokens.surface).")
-    val inverseSurface: Color get() = foreground
-
-    @Deprecated("Inverse surfaces moved to component-specific tokens (e.g. ToastTokens.surfaceForeground).")
-    val inverseOnSurface: Color get() = background
-}
+)
 
 /* ---------------------------------------------------------------------- */
 /* Theme spec                                                              */

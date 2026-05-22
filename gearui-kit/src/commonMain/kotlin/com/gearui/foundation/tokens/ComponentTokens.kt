@@ -2,7 +2,6 @@ package com.gearui.foundation.tokens
 
 import com.gearui.ColorTokens
 import com.gearui.Radius
-import com.gearui.Spacing
 import com.gearui.Typography
 
 /**
@@ -51,7 +50,7 @@ data class ButtonTokens(
     val iconSize: Float,
 
     /** 图标与文本间距 */
-    val iconSpacing: Float = Spacing.spacer8,
+    val iconSpacing: Float = 8f,
 
     /** 加载指示器大小 */
     val loadingSize: Float,
@@ -65,7 +64,7 @@ data class ButtonTokens(
          */
         val Large = ButtonTokens(
             height = 48f,
-            paddingHorizontal = Spacing.spacer24,
+            paddingHorizontal = 24f,
             fontSize = Typography.BodyLarge.fontSize,
             lineHeight = Typography.BodyLarge.lineHeight,
             borderRadius = Radius.Default,
@@ -79,7 +78,7 @@ data class ButtonTokens(
          */
         val Medium = ButtonTokens(
             height = 40f,
-            paddingHorizontal = Spacing.spacer16,
+            paddingHorizontal = 16f,
             fontSize = Typography.BodyMedium.fontSize,
             lineHeight = Typography.BodyMedium.lineHeight,
             borderRadius = Radius.Default,
@@ -93,7 +92,7 @@ data class ButtonTokens(
          */
         val Small = ButtonTokens(
             height = 32f,
-            paddingHorizontal = Spacing.spacer12,
+            paddingHorizontal = 12f,
             fontSize = Typography.BodySmall.fontSize,
             lineHeight = Typography.BodySmall.lineHeight,
             borderRadius = Radius.Small,
@@ -107,7 +106,7 @@ data class ButtonTokens(
          */
         val ExtraSmall = ButtonTokens(
             height = 28f,
-            paddingHorizontal = Spacing.spacer8,
+            paddingHorizontal = 8f,
             fontSize = Typography.BodySmall.fontSize,
             lineHeight = Typography.BodySmall.lineHeight,
             borderRadius = Radius.Small,
@@ -239,7 +238,7 @@ data class InputTokens(
     companion object {
         val Large = InputTokens(
             height = 48f,
-            paddingHorizontal = Spacing.spacer16,
+            paddingHorizontal = 16f,
             fontSize = Typography.BodyLarge.fontSize,
             lineHeight = Typography.BodyLarge.lineHeight,
             borderRadius = Radius.Default
@@ -247,7 +246,7 @@ data class InputTokens(
 
         val Medium = InputTokens(
             height = 40f,
-            paddingHorizontal = Spacing.spacer12,
+            paddingHorizontal = 12f,
             fontSize = Typography.BodyMedium.fontSize,
             lineHeight = Typography.BodyMedium.lineHeight,
             borderRadius = Radius.Default
@@ -255,7 +254,7 @@ data class InputTokens(
 
         val Small = InputTokens(
             height = 32f,
-            paddingHorizontal = Spacing.spacer8,
+            paddingHorizontal = 8f,
             fontSize = Typography.BodySmall.fontSize,
             lineHeight = Typography.BodySmall.lineHeight,
             borderRadius = Radius.Small
@@ -283,13 +282,13 @@ data class CardTokens(
 ) {
     companion object {
         val Default = CardTokens(
-            padding = Spacing.spacer12,
+            padding = 12f,
             borderRadius = Radius.Large,
             shadowLevel = 1
         )
 
         val Compact = CardTokens(
-            padding = Spacing.spacer12,
+            padding = 12f,
             borderRadius = Radius.Default,
             shadowLevel = 0,
             borderWidth = 1f
@@ -318,21 +317,21 @@ data class TagTokens(
     companion object {
         val Large = TagTokens(
             height = 32f,
-            paddingHorizontal = Spacing.spacer12,
+            paddingHorizontal = 12f,
             fontSize = Typography.BodyMedium.fontSize,
             borderRadius = Radius.Default
         )
 
         val Medium = TagTokens(
             height = 24f,
-            paddingHorizontal = Spacing.spacer8,
+            paddingHorizontal = 8f,
             fontSize = Typography.BodySmall.fontSize,
             borderRadius = Radius.Small
         )
 
         val Small = TagTokens(
             height = 20f,
-            paddingHorizontal = Spacing.spacer8,
+            paddingHorizontal = 8f,
             fontSize = Typography.MarkSmall.fontSize,
             borderRadius = Radius.Small
         )

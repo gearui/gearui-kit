@@ -60,26 +60,26 @@ fun Tag(
 
     // Map token borderRadius to Theme.shapes
     val shape = when (size) {
-        TagSize.LARGE -> shapes.default   // Radius.Default = 6dp
-        TagSize.MEDIUM -> shapes.small    // Radius.Small = 3dp
-        TagSize.SMALL -> shapes.small     // Radius.Small = 3dp
+        TagSize.LARGE -> shapes.md   // Radius.Default = 6dp
+        TagSize.MEDIUM -> shapes.sm    // Radius.Small = 3dp
+        TagSize.SMALL -> shapes.sm     // Radius.Small = 3dp
     }
 
     // ⭐ 颜色映射：Theme 语义 → Tag 视觉
     // 根据 theme 获取语义颜色
     val (themeColor, themeLightColor) = when (theme) {
-        TagTheme.PRIMARY -> colors.primary to colors.primaryLight
-        TagTheme.SUCCESS -> colors.success to colors.successLight
-        TagTheme.WARNING -> colors.warning to colors.warningLight
-        TagTheme.DANGER -> colors.danger to colors.dangerLight
-        TagTheme.DEFAULT -> colors.textSecondary to colors.surfaceVariant
+        TagTheme.PRIMARY -> colors.primary to colors.muted
+        TagTheme.SUCCESS -> colors.success to colors.success.copy(alpha = 0.12f)
+        TagTheme.WARNING -> colors.warning to colors.warning.copy(alpha = 0.12f)
+        TagTheme.DANGER -> colors.destructive to colors.destructive.copy(alpha = 0.12f)
+        TagTheme.DEFAULT -> colors.mutedForeground to colors.muted
     }
 
     // 根据 variant 决定背景色和文字色
     val (backgroundColor, textColor, borderColor) = when (variant) {
         TagVariant.DARK -> Triple(
             themeColor,           // 深色背景
-            colors.onPrimary,     // 白色文字
+            colors.primaryForeground,     // 白色文字
             Color.Transparent
         )
 
@@ -98,12 +98,12 @@ fun Tag(
 
     // 禁用态颜色
     val finalBackgroundColor = if (!interactionSource.currentState.isInteractive) {
-        colors.disabledContainer
+        colors.muted
     } else {
         backgroundColor
     }
     val finalTextColor = if (!interactionSource.currentState.isInteractive) {
-        colors.disabled
+        colors.mutedForeground
     } else {
         textColor
     }

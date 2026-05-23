@@ -39,20 +39,34 @@ Date: 2026-05-23
 - 追加：`successForeground/warningForeground/infoForeground`（additive）
 - 追加：`Radius` scale 对齐 Shapes（small 3→sm 4 / large 9→lg 8）
 
-## 4. Open Items（不阻断 RC，排入 1.0.x / 1.1，除非 smoke 发现真实阻断）
+## 4. RC blocker vs Known debt
 
-| 项 | 说明 | 来源 |
+判定原则：**RC blocker = 不修不能发**；**Known debt = 已登记，可进 1.0.x / 1.1**。
+
+### 4.1 RC blocker（必须在 1.0 RC / GA 前做）
+
+| 项 | 性质 | 状态 |
 |---|---|---|
-| Elevation token | 占位 e0/e1/e2/floating，需设计师定阴影值 | TOKEN_FREEZE Open Items |
-| Density 模式 | comfortable/default/compact，需先用 Cell/Card 验证 | 同上 |
-| Brand pack 机制 | SPEC §7.1，独立决策 | 同上 |
-| Overlay Family 视觉契约（#4） | Popover dark-tooltip 下沉 PopoverTokens；暗色弹层 elevated surface 方案 | DESIGN_AUDIT P1-4 |
-| Input 族状态模型 + SearchBar 本地 focus（#5） | `input`/`ring` 语义 token 尚未真正用起来 | DESIGN_AUDIT P0-4/P1-1 |
-| 两套 Cell / 两套 CardTokens / ComponentTokens legacy pool（#6/#7） | 组件合并 + Float 老池子 Dp 化，结构债 | 本轮迁移延后项 |
-| 暗色 destructive 实底白字偏弱 | 暗色 destructive=F87171（浅红）+白字对比 ~2.3，属暗色 palette 取色，非内容 token 问题 | DARK_MODE_CONTRAST_AUDIT |
-| Web / 鸿蒙 | KuiklyUI Compose Web 上游不完整（core-ksp 无 JsTargetEntryBuilder），1.0 暂不可行 | 上游阻塞 |
-| Upload 组件 | gearui-kit 未实现（tdesign-flutter 有参考实现），属新增 | 能力缺口 |
-| CHANGELOG / release notes | 1.0.0 release 时补 | 发布流程 |
+| RC-1 视觉 smoke（Android + iOS，明暗 + DarkPurple） | 验证，非重构 | 待做 |
+| CHANGELOG / release notes | 发布物料 | 待做 |
+| 发布 dry-run（Sonatype Central，首发走 beta） | 发布流程 | 待做 |
+| README / RC note 诚实标注 Web/鸿蒙暂不支持 | 文档 | 待做 |
+
+> 当前**代码层无 RC blocker**：deprecation=0、token 冻结、编译全绿、下游已适配。剩余 blocker 都是验证 / 文档 / 发布动作，不是代码重构。
+
+### 4.2 Known debt（不阻断 RC，除非 RC-1 smoke 发现真实问题）
+
+| # | 项 | 性质 | 目标里程碑 | 来源 |
+|---|---|---|---|---|
+| 1 | Overlay Family 视觉契约：Popover/Tooltip 暗色下沉 PopoverTokens；Dialog/Popup/Sheet/ActionSheet 的 elevated surface/border/shadow/radius/motion 统一成一套 contract | 视觉 polish | **1.0.x** | DESIGN_AUDIT P1-4 |
+| 2 | 暗色 destructive 实底白字偏弱（F87171 浅红 + 白字 ~2.3）；属暗色 palette 取色，非内容 token | 暗色 polish | **1.0.x** | DARK_MODE_CONTRAST_AUDIT |
+| 3 | 两套 Cell（composite/Cell、components/cell/Cell）/ 两套 CardTokens / ComponentTokens legacy pool（Float 老池子）合并 | 结构债 | **1.0.x** | 本轮迁移延后项 |
+| 4 | Input 族状态模型：input/ring + focused/invalid/disabled/readonly + keyboard dismiss / local focus；体量中、易引入交互回归 | 交互模型 | **1.1**（除非 RC-1 发现输入框明显问题） | DESIGN_AUDIT P0-4/P1-1 |
+| 5 | Density 模式（comfortable/default/compact），需先在 Card/Cell/List 验证 | 新能力 | **1.1** | TOKEN_FREEZE Open Items |
+| 6 | Elevation token（e0/e1/e2/floating），需设计输入；当前 Card 走 border-first | 新能力 | **1.1**（待设计） | TOKEN_FREEZE Open Items |
+| 7 | Brand pack 机制（SPEC §7.1），独立决策 | 新能力 | **1.1** | TOKEN_FREEZE Open Items |
+| 8 | Upload 组件（gearui-kit 未实现，tdesign-flutter 有参考） | 新增功能 | **1.1** | 能力缺口 |
+| 9 | Web / 鸿蒙：Web 被 KuiklyUI Compose Web entry 阻塞（core-ksp 无 JsTargetEntryBuilder），鸿蒙放后面 | 平台支持 | **1.1 spike**（README 须诚实标注） | 上游阻塞 |
 
 ## 5. 后续 RC 流程（建议顺序）
 
@@ -61,4 +75,10 @@ Date: 2026-05-23
 - **RC-2 Package publish dry-run**：vanniktech + Sonatype Central Portal 验证（首次外部发布走 beta）
 - **RC-3 CHANGELOG / release notes**
 
-> 结论：主线已接近 RC 前状态，质量闸门全绿。停止继续顺手重构（#4/#5/#6/#7 放 1.0.x/1.1），先走 RC-1 视觉 smoke 再决定是否有真实阻断。
+## 6. Post-1.0 Roadmap（优先级汇总）
+
+- **RC 前必须**：RC-1 visual smoke · CHANGELOG/release notes · 发布 dry-run · README 标注 Web/鸿蒙状态
+- **1.0.x**：Overlay visual contract · 暗色 polish（destructive 浅红等）· Cell/Card/ComponentTokens 结构收敛
+- **1.1**：Input state model · Density · Elevation · Brand Pack · Upload · Web/Harmony spike
+
+> 结论：仍有不规范，但**当前都是 Known debt，不是 RC blocker**。停止继续顺手重构，先走 RC-1 视觉 smoke——只有 smoke 发现真实阻断才回头修，否则按上方 roadmap 排期。

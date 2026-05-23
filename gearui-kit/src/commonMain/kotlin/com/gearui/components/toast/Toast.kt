@@ -183,9 +183,9 @@ private fun ToastSurface(toast: ToastData) {
     // 颜色映射：类型 → 视觉
     val (backgroundColor, textColor) = when (toast.type) {
         ToastType.INFO -> colors.foreground to colors.background
-        ToastType.SUCCESS -> colors.success to colors.primaryForeground
-        ToastType.WARNING -> colors.warning to colors.primaryForeground
-        ToastType.ERROR -> colors.destructive to colors.primaryForeground
+        ToastType.SUCCESS -> colors.success to colors.successForeground
+        ToastType.WARNING -> colors.warning to colors.warningForeground
+        ToastType.ERROR -> colors.destructive to colors.destructiveForeground
     }
 
     Box(
@@ -299,9 +299,9 @@ fun LocalToast(
     // 颜色映射
     val (backgroundColor, textColor) = when (type) {
         ToastType.INFO -> colors.foreground to colors.background
-        ToastType.SUCCESS -> colors.success to colors.primaryForeground
-        ToastType.WARNING -> colors.warning to colors.primaryForeground
-        ToastType.ERROR -> colors.destructive to colors.primaryForeground
+        ToastType.SUCCESS -> colors.success to colors.successForeground
+        ToastType.WARNING -> colors.warning to colors.warningForeground
+        ToastType.ERROR -> colors.destructive to colors.destructiveForeground
     }
 
     // 位置对齐

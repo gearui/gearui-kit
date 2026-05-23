@@ -45,8 +45,11 @@ data class Colors(
     val destructive: Color,
     val destructiveForeground: Color,
     val success: Color,
+    val successForeground: Color,
     val warning: Color,
+    val warningForeground: Color,
     val info: Color,
+    val infoForeground: Color,
 
     // ---- Controls ----
     val border: Color,
@@ -92,8 +95,11 @@ object Themes {
             destructive = Color(0xFFDC2626),
             destructiveForeground = Color(0xFFFFFFFF),
             success = Color(0xFF16A34A),
+            successForeground = Color(0xFFFFFFFF),
             warning = Color(0xFFF59E0B),
+            warningForeground = Color(0xFF09090B),
             info = Color(0xFF2563EB),
+            infoForeground = Color(0xFFFFFFFF),
 
             border = Color(0xFFE4E4E7),
             input = Color(0xFFE4E4E7),
@@ -124,8 +130,11 @@ object Themes {
             destructive = Color(0xFFF87171),
             destructiveForeground = Color(0xFFFFFFFF),
             success = Color(0xFF22C55E),
+            successForeground = Color(0xFF09090B),
             warning = Color(0xFFF59E0B),
+            warningForeground = Color(0xFF09090B),
             info = Color(0xFF60A5FA),
+            infoForeground = Color(0xFF09090B),
 
             border = Color(0xFF2F3340),
             input = Color(0xFF2F3340),

@@ -60,6 +60,14 @@ fun LinearProgress(
         ProgressStatus.DANGER -> colors.destructive
     }
 
+    // 进度条内文字（>50% 时压在 progressColor 实底上）的文字色，按 status 取对应 foreground
+    val progressForeground = when (status) {
+        ProgressStatus.PRIMARY -> colors.primaryForeground
+        ProgressStatus.SUCCESS -> colors.successForeground
+        ProgressStatus.WARNING -> colors.warningForeground
+        ProgressStatus.DANGER -> colors.destructiveForeground
+    }
+
     when (labelPosition) {
         ProgressLabelPosition.RIGHT -> {
             Row(
@@ -116,7 +124,7 @@ fun LinearProgress(
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
                         style = typography.bodySmall,
-                        color = if (animatedProgress > 0.5f) colors.primaryForeground else colors.foreground
+                        color = if (animatedProgress > 0.5f) progressForeground else colors.foreground
                     )
                 }
             }

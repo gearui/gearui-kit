@@ -115,3 +115,10 @@
 ---
 
 至此 GearUI Kit 已无任何 `@Deprecated` API，pre-1.0 token 迁移收口完成。
+
+## 追加：feedback 前景 token（additive）
+
+`Colors` 新增 3 个语义字段：`successForeground / warningForeground / infoForeground`（配合既有 `destructiveForeground`），用于彩色实底上的内容色，明暗主题各自取达标对比度的值。
+
+- 通过 `Themes.X.colors.copy(...)` 自定义主题的下游：无需改动（copy 继承新默认值）。
+- **直接 `Colors(...)` 构造**自定义主题的下游：必须补这 3 个参数（否则编译报 "No value passed"）。浅色 feedback 配近黑前景、深色 feedback 配白前景，按对比度取值。

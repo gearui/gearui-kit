@@ -61,7 +61,9 @@ Scope: 内容色（文字/图标）与其所在背景 token 的配对，在 Ligh
 - **P2（层次偏弱，不影响可读）**：#12 disabled/muted。
 - **已修（本会话）**：Badge(#8 黑→白)、scrim(#11)。
 
-## 4. 建议的根治方案（需 token 变更，单独决策，不在本审计执行）
+> **已实施（fix(theme): add feedback foreground tokens）**：采纳 §4 根治方案，新增 `successForeground / warningForeground / infoForeground` 主题感知 token（按 WCAG 对比度取值），并把 Button(FILL) / Toast / Tag(DARK) / Progress(条内) / Badge / ActionSheet 危险 badge 的填充态文字从误用的 `primaryForeground` 改为对应 `xxxForeground`（destructive 用既有 `destructiveForeground`）。P0（warning 填充白字不可读）已消除；P1（暗色实底黑字违反惯例）一并解决。下游主题（sample DarkPurple、lms 模板）已补值。
+
+## 4. 建议的根治方案（已实施）
 
 新增主题感知的 on-feedback 前景 token（**additive，非 rename**）：
 ```

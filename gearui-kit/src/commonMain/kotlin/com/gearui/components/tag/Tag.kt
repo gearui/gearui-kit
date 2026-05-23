@@ -75,11 +75,20 @@ fun Tag(
         TagTheme.DEFAULT -> colors.mutedForeground to colors.muted
     }
 
+    // DARK 变体（彩色实底）上的文字色：按主题取对应 foreground（明暗自适应）
+    val themeForeground = when (theme) {
+        TagTheme.PRIMARY -> colors.primaryForeground
+        TagTheme.SUCCESS -> colors.successForeground
+        TagTheme.WARNING -> colors.warningForeground
+        TagTheme.DANGER -> colors.destructiveForeground
+        TagTheme.DEFAULT -> colors.primaryForeground
+    }
+
     // 根据 variant 决定背景色和文字色
     val (backgroundColor, textColor, borderColor) = when (variant) {
         TagVariant.DARK -> Triple(
             themeColor,           // 深色背景
-            colors.primaryForeground,     // 白色文字
+            themeForeground,      // 实底上的文字（明暗自适应）
             Color.Transparent
         )
 

@@ -236,6 +236,14 @@ private fun getButtonColors(
         }
     }
 
+    // 彩色实底上的文字色：按主题取对应 foreground（明暗自适应），不再统一用 primaryForeground
+    val onFillColor = when (theme) {
+        ButtonTheme.DANGER -> colors.destructiveForeground
+        ButtonTheme.WARNING -> colors.warningForeground
+        ButtonTheme.SUCCESS -> colors.successForeground
+        else -> colors.primaryForeground
+    }
+
     return when (type) {
         ButtonType.FILL -> {
             if (disabled) {
@@ -249,7 +257,7 @@ private fun getButtonColors(
                     if (theme == ButtonTheme.LIGHT) lightColor else primaryColor,
                     if (theme == ButtonTheme.DEFAULT) colors.foreground
                     else if (theme == ButtonTheme.LIGHT) colors.primary
-                    else colors.primaryForeground,
+                    else onFillColor,
                     Color.Transparent
                 )
             }

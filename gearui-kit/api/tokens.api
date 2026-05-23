@@ -14,6 +14,7 @@
   destructiveForeground
   foreground
   info
+  infoForeground
   input
   muted
   mutedForeground
@@ -25,9 +26,11 @@
   secondary
   secondaryForeground
   success
+  successForeground
   surface
   surfaceForeground
   warning
+  warningForeground
 
 [fields] Typography
   bodyExtraLarge
@@ -73,6 +76,7 @@
   destructiveForeground = Color(0xFFFFFFFF)
   foreground = Color(0xFF09090B)
   info = Color(0xFF2563EB)
+  infoForeground = Color(0xFFFFFFFF)
   input = Color(0xFFE4E4E7)
   muted = Color(0xFFF4F4F5)
   mutedForeground = Color(0xFF52525B)
@@ -84,9 +88,11 @@
   secondary = Color(0xFFF4F4F5)
   secondaryForeground = Color(0xFF18181B)
   success = Color(0xFF16A34A)
+  successForeground = Color(0xFFFFFFFF)
   surface = Color(0xFFFFFFFF)
   surfaceForeground = Color(0xFF09090B)
   warning = Color(0xFFF59E0B)
+  warningForeground = Color(0xFF09090B)
 
 [preset] Themes.Dark.colors
   accent = Color(0xFF27272A)
@@ -99,6 +105,7 @@
   destructiveForeground = Color(0xFFFFFFFF)
   foreground = Color(0xFFFAFAFA)
   info = Color(0xFF60A5FA)
+  infoForeground = Color(0xFF09090B)
   input = Color(0xFF2F3340)
   muted = Color(0xFF1A1C24)
   mutedForeground = Color(0xFFA1A1AA)
@@ -110,6 +117,8 @@
   secondary = Color(0xFF27272A)
   secondaryForeground = Color(0xFFFAFAFA)
   success = Color(0xFF22C55E)
+  successForeground = Color(0xFF09090B)
   surface = Color(0xFF111217)
   surfaceForeground = Color(0xFFFAFAFA)
   warning = Color(0xFFF59E0B)
+  warningForeground = Color(0xFF09090B)

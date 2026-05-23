@@ -498,7 +498,7 @@ private fun ActionSheetListItem(
                             Text(
                                 text = item.badge,
                                 style = Typography.BodyExtraSmall,
-                                color = colors.primaryForeground
+                                color = colors.destructiveForeground
                             )
                         }
                     }

@@ -145,11 +145,13 @@ fun Badge(
         BadgeTheme.Neutral -> colors.mutedForeground
     }
 
-    // 文字颜色：彩色填充上的数字恒为白色（红/绿/橙底在明暗两种主题下都用白字）；
-    // 唯独 Primary 主题暗色下背景是浅色，需用 primaryForeground 才能保证对比度。
+    // 文字颜色：彩色填充上的内容色按主题取对应 foreground（明暗自适应）
     val contentColor = textColor ?: when (theme) {
+        BadgeTheme.Error -> colors.destructiveForeground
         BadgeTheme.Primary -> colors.primaryForeground
-        else -> Color.White
+        BadgeTheme.Success -> colors.successForeground
+        BadgeTheme.Warning -> colors.warningForeground
+        BadgeTheme.Neutral -> colors.primaryForeground
     }
 
     // 计算显示的文本

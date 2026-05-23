@@ -39,8 +39,11 @@ object CustomThemes {
             destructive = Color(0xFFFF2DA8),
             destructiveForeground = Color(0xFFFFFFFF),
             success = Color(0xFF5FE0B8),
+            successForeground = Color(0xFF09090B),
             warning = Color(0xFFF3C17A),
+            warningForeground = Color(0xFF09090B),
             info = Color(0xFFB89CFF),
+            infoForeground = Color(0xFF09090B),
 
             border = Color(0xFF4C406F),
             input = Color(0xFF3D325A),

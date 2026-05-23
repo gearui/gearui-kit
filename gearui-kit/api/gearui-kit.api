@@ -2416,11 +2416,12 @@ public final class com/gearui/foundation/layout/Radius {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/layout/Radius;
 	public final fun getCircle-UdJoRJA ()F
-	public final fun getDefault-UdJoRJA ()F
-	public final fun getExtraLarge-UdJoRJA ()F
-	public final fun getLarge-UdJoRJA ()F
-	public final fun getRound-UdJoRJA ()F
-	public final fun getSmall-UdJoRJA ()F
+	public final fun getFull-UdJoRJA ()F
+	public final fun getLg-UdJoRJA ()F
+	public final fun getMd-UdJoRJA ()F
+	public final fun getNone-UdJoRJA ()F
+	public final fun getSm-UdJoRJA ()F
+	public final fun getXl-UdJoRJA ()F
 }
 
 public final class com/gearui/foundation/layout/SectionTokens {

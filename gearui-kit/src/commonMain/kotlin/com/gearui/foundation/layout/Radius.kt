@@ -4,37 +4,39 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * Radius - 全局圆角规范
+ * Radius - 全局圆角规范（Dp 值）
  *
- * 参考: 内部圆角规范
+ * 与冻结后的 `theme.Shapes` scale 完全一致（同名同值），消除双标准：
  *
- * 圆角层级:
- * - radiusSmall:       3dp  (小圆角，细节元素)
- * - radiusDefault:     6dp  (默认圆角，常用)
- * - radiusLarge:       9dp  (大圆角)
- * - radiusExtraLarge:  12dp (特大圆角)
- * - radiusRound:       9999dp (胶囊型/完全圆角)
+ *   none = 0
+ *   sm   = 4dp
+ *   md   = 6dp
+ *   lg   = 8dp
+ *   xl   = 12dp
+ *   full = 9999dp（胶囊/完全圆角）
  *
- * 使用原则:
- * - ✅ 强制使用 Radius.default / Radius.small
- * - ❌ 禁止 RoundedCornerShape(8.dp)
+ * `Shapes` 提供 `Shape` 实例（用于 `Modifier.clip`），`Radius` 提供对应 `Dp`
+ * 值（用于需要 Dp 的场景，如组件 token）。两者数值保持同步。
  */
 object Radius {
-    /** 3dp - 小圆角 (按钮、小组件边角) */
-    val small: Dp = 3.dp
+    /** 0dp - 直角 */
+    val none: Dp = 0.dp
 
-    /** 6dp - 默认圆角 (输入框、卡片、默认组件) */
-    val default: Dp = 6.dp
+    /** 4dp - 小圆角（tag、chip、密集控件） */
+    val sm: Dp = 4.dp
 
-    /** 9dp - 大圆角 (较大卡片、模态框) */
-    val large: Dp = 9.dp
+    /** 6dp - 默认圆角（输入框、默认表面） */
+    val md: Dp = 6.dp
 
-    /** 12dp - 特大圆角 (特殊强调组件) */
-    val extraLarge: Dp = 12.dp
+    /** 8dp - 大圆角（按钮、卡片，GearUI 移动端默认） */
+    val lg: Dp = 8.dp
 
-    /** 9999dp - 胶囊型 (胶囊按钮、完全圆角) */
-    val round: Dp = 9999.dp
+    /** 12dp - 特大圆角（sheet、大卡片、强调表面） */
+    val xl: Dp = 12.dp
 
-    /** 9999dp - 圆形 (圆形头像、徽章) */
+    /** 9999dp - 胶囊/完全圆角 */
+    val full: Dp = 9999.dp
+
+    /** 9999dp - 圆形（圆形头像/徽章），等同 [full] */
     val circle: Dp = 9999.dp
 }

@@ -122,3 +122,19 @@
 
 - 通过 `Themes.X.colors.copy(...)` 自定义主题的下游：无需改动（copy 继承新默认值）。
 - **直接 `Colors(...)` 构造**自定义主题的下游：必须补这 3 个参数（否则编译报 "No value passed"）。浅色 feedback 配近黑前景、深色 feedback 配白前景，按对比度取值。
+
+## 追加：`foundation.layout.Radius` scale 对齐 `Shapes`
+
+`Radius`（Dp 值）此前是旧 3/6/9/12 scale，与冻结后的 `theme.Shapes`（0/4/6/8/12）不一致，属内部双标准。现已对齐为同名同值：
+
+| 旧字段（已删除） | 1.0 替换 | 值变化 |
+|---|---|---|
+| `Radius.small` | `Radius.sm` | 3dp → **4dp** |
+| `Radius.default` | `Radius.md` | 6dp（不变） |
+| `Radius.large` | `Radius.lg` | 9dp → **8dp** |
+| `Radius.extraLarge` | `Radius.xl` | 12dp（不变） |
+| `Radius.round` | `Radius.full` | 9999dp（不变） |
+| （新增）| `Radius.none` | 0dp |
+| `Radius.circle` | `Radius.circle` | 9999dp（保留，= full，用于圆形头像/徽章） |
+
+库内仅 `AvatarTokens` 用到 `Radius.circle`（保留，无改动）；四个下游仓库均未使用 `Radius`。

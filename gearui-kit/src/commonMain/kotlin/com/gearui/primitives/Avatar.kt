@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -39,6 +40,11 @@ fun Avatar(
     size: Dp = AvatarSizeTokens.Medium.size,
     radius: Dp = AvatarSizeTokens.Medium.radius,  // 圆形
 
+    // 上层（PrivChatAvatar 等）可强制固定 fallback 配色，避免 light/dark theme
+    // 与 bitmap（如 QR 中心头像）渲染产物视觉不一致。null 时退回 Theme.colors。
+    backgroundColor: Color? = null,
+    contentColor: Color? = null,
+
     badgeCount: Int? = null,
     badgeDot: Boolean = false,
     badgeVisible: Boolean = true,
@@ -47,13 +53,15 @@ fun Avatar(
 ) {
     // ⭐ Framework Rule #1: 第一行永远是这个
     val colors = Theme.colors
+    val resolvedBackground = backgroundColor ?: colors.muted
+    val resolvedContent = contentColor ?: colors.mutedForeground
 
     val contentComposable: @Composable () -> Unit = {
         Box(
             modifier = modifier
                 .size(size)
                 .clip(RoundedCornerShape(radius))
-                .background(colors.muted)
+                .background(resolvedBackground)
                 .then(
                     if (onClick != null) {
                         Modifier.clickable(onClick = onClick)
@@ -73,7 +81,7 @@ fun Avatar(
                     Text(
                         text = text.take(2).uppercase(),
                         style = Typography.BodyMedium.copy(fontSize = (size.value * 0.4).sp),
-                        color = colors.mutedForeground
+                        color = resolvedContent
                     )
                 }
 

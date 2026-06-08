@@ -81,6 +81,12 @@
 @interface KuiklyRenderViewController()<KuiklyRenderViewControllerBaseDelegatorDelegate>
 
 @property (nonatomic, strong) KuiklyRenderViewControllerBaseDelegator *delegator;
+// Phase 0 spike：iOS 没有自动 BACK 桥，浮一个按钮主动触发
+// [delegator onBackPressedWithCompletion:]，回填 consumed 真值到 label。
+// 仅用于 sample 验证 Kuikly BackHandler 链路，不是 GearUI runtime API。
+@property (nonatomic, strong) UIButton *kuiklyBackProbeButton;
+@property (nonatomic, strong) UILabel *kuiklyBackProbeLabel;
+@property (nonatomic, assign) NSInteger kuiklyBackProbeCounter;
 
 @end
 
@@ -103,6 +109,66 @@
 
     // delegator 会自动创建和管理 render view
     [_delegator viewDidLoadWithView:self.view];
+
+    [self installKuiklyBackProbeOverlay];
+}
+
+#pragma mark - Phase 0 BACK probe
+
+- (void)installKuiklyBackProbeOverlay {
+    if (self.kuiklyBackProbeButton != nil) {
+        return;
+    }
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [button setTitle:@"Simulate iOS BACK" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor colorWithRed:0.07 green:0.41 blue:0.86 alpha:0.92];
+    button.layer.cornerRadius = 20;
+    button.contentEdgeInsets = UIEdgeInsetsMake(8, 16, 8, 16);
+    [button addTarget:self action:@selector(handleKuiklyBackProbeTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    self.kuiklyBackProbeButton = button;
+
+    UILabel *label = [[UILabel alloc] init];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    label.font = [UIFont systemFontOfSize:12];
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.65];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.numberOfLines = 2;
+    label.layer.cornerRadius = 8;
+    label.clipsToBounds = YES;
+    label.text = @"BACK probe ready\nlast result: -";
+    [self.view addSubview:label];
+    self.kuiklyBackProbeLabel = label;
+
+    UILayoutGuide *safe = self.view.safeAreaLayoutGuide;
+    [NSLayoutConstraint activateConstraints:@[
+        [button.trailingAnchor constraintEqualToAnchor:safe.trailingAnchor constant:-16],
+        [button.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor constant:-16],
+
+        [label.leadingAnchor constraintEqualToAnchor:safe.leadingAnchor constant:16],
+        [label.trailingAnchor constraintEqualToAnchor:button.leadingAnchor constant:-12],
+        [label.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
+        [label.heightAnchor constraintGreaterThanOrEqualToConstant:36],
+    ]];
+}
+
+- (void)handleKuiklyBackProbeTap:(UIButton *)sender {
+    self.kuiklyBackProbeCounter += 1;
+    NSInteger callId = self.kuiklyBackProbeCounter;
+    __weak typeof(self) weakSelf = self;
+    [_delegator onBackPressedWithCompletion:^(BOOL consumed) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf == nil) return;
+        NSString *result = consumed ? @"consumed=YES" : @"consumed=NO";
+        NSLog(@"[BackProbe #%ld] %@", (long)callId, result);
+        strongSelf.kuiklyBackProbeLabel.text =
+            [NSString stringWithFormat:@"BACK #%ld\n%@", (long)callId, result];
+    }];
 }
 
 - (void)viewDidLayoutSubviews {

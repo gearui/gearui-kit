@@ -343,19 +343,54 @@ Navigator 不是孤立的 Compose 组件——它跑在 KuiklyUI Compose 之上�
 - `ComposeContainer` 通过 `LocalOnBackPressedDispatcherOwner provides this` 向 Compose 树提供 dispatcher
 - `com.tencent.kuikly.compose.BackHandler` 使用 `DisposableEffect` 向 dispatcher 注册/注销 callback
 - dispatcher 最终继承 `com.tencent.kuikly.core.base.BackPressHandler`
-- `BackPressHandler.dispatchOnBackEvent()` 使用 `backPressCallbackList.last()`，天然是 LIFO
 - Android `KuiklyRenderViewBaseDelegator.onBackPressed()` 会发送 `onBackPressed` 到 Kotlin 侧，并通过 `KRBackPressModule.isBackConsumed` 返回是否被消费
 - iOS `KuiklyRenderViewControllerBaseDelegator.onBackPressedWithCompletion` 也发送同名 `onBackPressed` 事件，并通过 completion 返回消费结果
 
-因此 v1 不需要从零自建一套 native bridge；`BackPressRouter` 应该是 gearui-kit 对 Kuikly back 链路的薄封装 / façade，底层优先复用 `com.tencent.kuikly.compose.BackHandler` 或 `LocalOnBackPressedDispatcherOwner.current.onBackPressedDispatcher`。
+#### 重要：consumed 语义是 topmost-only，不是 LIFO 链式 fallback
 
-约束：
+本轮 KuiklyUI 源码深读后修正——上一版关于「LIFO 分层 fallback」的描述是**错的**。真实模型：
+
+`Pager.onReceivePagerEvent` 收到 `PAGER_EVENT_ON_BACK_PRESSED` 时：
+
+```kotlin
+val hasCallbacks = getBackPressHandler().backPressCallbackList.isNotEmpty()
+acquireModule<BackPressModule>(BackPressModule.MODULE_NAME).backHandle(isConsumed = hasCallbacks)
+this@Pager.setTimeout {
+    getBackPressHandler().dispatchOnBackEvent()
+}
+```
+
+`BackPressHandler.dispatchOnBackEvent`：
+
+```kotlin
+fun dispatchOnBackEvent() {
+    if (backPressCallbackList.isNotEmpty()) {
+        val callback = backPressCallbackList.last()   // 只调最后一个
+        callback.handleOnBackPressed()
+    }
+}
+```
+
+由此推出两条关键事实：
+
+1. **`consumed = list.isNotEmpty()` 同步回 native**：先于 callback 真正执行返回 native。callback 内部「再做条件判断决定不吃」对 consumed **无效**——consumed 早就回去了。
+2. **`dispatchOnBackEvent` 只调 `last()` 一个 callback**：后注册者**独占** back 事件，**下层 callback 完全拿不到事件**。「LIFO 链式询问、不吃就冒泡」这个心智模型在 Kuikly 上不成立。
+
+#### 对 Navigator 的硬约束
+
+- Navigator 不能一直注册 BackHandler 然后在 callback 里 `if (!canPop) return`。callback 还没跑 consumed 已经回 true 了，native 永远拿不到 BACK。
+- **`canPop = true` 时注册 BackHandler；`canPop = false` 时 dispose**。BackHandler 的**存在性本身**就是 consumed 语义。
+- Navigator 内部只能挂**一个**总 BackHandler 代表「Navigator 想吃 back」，多 entry 不要每个挂一个。
+- Dialog / Sheet / ActionSheet 在 Navigator 之上时，它们注册的 BackHandler 自动是 `list.last()` → 先吃 → Navigator 这个总 BackHandler 看不到 → 正确。**优先级靠 Composition 注册顺序，不靠显式 priority，也不靠 dispatcher 询问链**。
+- `onPopRequest` 返回 `Pending` 时本次 BACK 已经 consumed=true，业务弹确认框，Navigator **不挂 continuation**，业务确认后显式 `forcePop()`。
+- `BackPressRouter` 是**Kuikly BackHandler 的薄 façade**，不是逐层询问的传统 dispatcher。
+
+#### 集成约束
 
 - **不要**依赖 `androidx.activity.compose.BackHandler` / AndroidX `LocalOnBackPressedDispatcherOwner`
-- `BackPressRouter` 仍然必须保持 LIFO：后注册者优先吃返回。推荐层级为 **Dialog / Sheet / ActionSheet > Navigator top entry > Kuikly delegator**
 - Composable consumer 必须用 `DisposableEffect` 注册/注销，确保页面卸载、Dialog 关闭、Navigator unmount 后不会残留 back consumer
-- 当 `onPopRequest` 返回 `Pending` 时，Navigator 本次返回事件视为已消费；业务确认后调用 `forcePop()` 继续
 - `MainActivity.dispatchKeyEvent` 继续调用 `kuiklyDelegator.onBackPressed()` 并尊重其 Boolean 返回值；Navigator 不应绕开 Kuikly delegator 直接接管 Android key event
+- iOS 没有自动 BACK 桥（没有等价 `dispatchKeyEvent`）——必须由业务宿主主动调 `[delegator onBackPressedWithCompletion:]`（NavigationController pop / 自定义 navbar back / edge swipe gesture / 其他业务触发器）
 
 ### 5.4 手势事件分发（复用已验证的能力）
 
@@ -410,6 +445,47 @@ Navigator 不是孤立的 Compose 组件——它跑在 KuiklyUI Compose 之上�
 
 任何一条不过 → 立即上报，**不**进 Phase 1。这些是 §5.5 表格里 ⚠ 的对应实测。
 
+#### Phase 0 sample spike status（2026-06-08）
+
+- 已在 `gearui-kit/sample` 改造现有 example 详情页：每个 example 详情统一包一层 sample-only swipe container，不新增 `Navigator.kt` public API。
+- Android 真机 Xiaomi 2201122G / Android 16 已验证：进入 `Button` example 详情后，从左侧 `x=240` 右划可回到 examples 列表，前台仍保持 `com.gearui.kit.sample`。
+- Android `KEYCODE_BACK` 已验证：sample `MainActivity.dispatchKeyEvent` 转发到 `kuiklyDelegator.onBackPressed()` 后，Kuikly `BackHandler` 能消费详情页返回并回到 examples 列表。
+- `graphicsLayer.translationX` + Kuikly `Animatable` 已在真实详情页 swipe commit/cancel 容器里跑通 Android 编译和真机基础路径。
+- Android `SaveableStateHolder + removeState` 已验证：`entry-A` increment 后切到 `entry-B` 再切回 `entry-A` 保留 `rememberSaveable count=1`；在 `entry-B` 调 `removeState(entry-A)` 后再切回 `entry-A`，count 重置为 `0`。
+- Android previous mount timing A/B 已验证：
+  - Mode A：`edge-down: previous mounted before recognition -> recognized: previous already mounted -> commit`
+  - Mode B：`edge-down: previous not mounted yet -> recognized: previous mounted after touch slop -> commit`
+  - Android 当前倾向 Mode A 作为 v1 默认策略，因为 previous 在识别前已存在，首帧风险更低；Mode B 可作为低内存 fallback。
+- Android BackHandler LIFO 已验证：`innerEnabled=true` 时按 Android BACK 后仍停留在 `Navigator Spike`，`innerCount=1, outerCount=0`，说明后注册的 inner consumer 优先消费。
+- iOS simulator `iPhone 16 / iOS 18.2` 已完成 build + launch：sample iOS Podfile 升级到 `OpenKuiklyIOSRender 2.21.0`，`xcodebuild -workspace GearUISample.xcworkspace -scheme iosApp -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=18.2,name=iPhone 16' build` 成功，App 启动后渲染 `GearUI Kit 演示` 首页和 `Navigator Spike` 页。
+- iOS simulator `SaveableStateHolder + removeState` 已验证：`entry-A` increment 后切到 `entry-B` 再切回 `entry-A` 保留 `rememberSaveable count=1`；`removeState(entry-A)` 后再切回 `entry-A`，count 重置为 `0`。
+- iOS simulator mount timing 已部分验证：Mode A 可触发 `edge-down: previous mounted before recognition`，cancel 路径触发 spring restore。Mode B 因 Simulator UI 自动化难以稳定把 probe 的 current layer 完整露出并拖动，尚未完成自动确认。
+- 发现项：Android 系统手势会抢占非常靠边的 `x=20` / `x=100` 起滑；sample spike 暂用 `SwipeBackConfig(edgeWidthDp = 96f)` 并从更靠内的左侧区域验证。v1 需要把 native 系统手势热区冲突作为 Android 参数调优项。
+- 发现项：iOS sample 搜索框可显示输入文本，但输入 `Navigator` 后列表仍显示“未找到匹配的组件”，疑似 iOS SearchBar 输入状态同步问题；本轮绕过搜索，滚动列表并通过 accessibility 激活 `Navigator Spike`。
+- 未完成：iOS Mode B mount timing、iOS interactive commit path、iOS BackHandler/native back 语义、完整 fallback matrix 结论。因此 Phase 0 当前状态仍是 **in progress / not passed**。
+
+##### iOS BackHandler probe（接入阶段已完成，真值表待手动验证）
+
+- KuiklyUI 源码已通读：`BackHandler.kt` / `BackPressHandler.kt` / `Pager.kt:251` / `BackPressModule.kt` / `KRBackPressModule.{kt,m}` / `KuiklyRenderViewControllerBaseDelegator.m` —— iOS 链路跟 Android 完全同构，但 iOS 没有自动 native 桥，宿主必须主动调 `[delegator onBackPressedWithCompletion:]`
+- sample Kotlin probe 扩展：`BackHandlerLifoSpikeSection` 加 `outerEnabled` toggle；新增 `OneShotBackHandlerSection` 覆盖 Scenario D（callback 内 dispose 自己）
+- sample iOS native probe：`KuiklyRenderViewController.m` 加浮动 `Simulate iOS BACK` 按钮 + consumed label，点击调 `[_delegator onBackPressedWithCompletion:^(BOOL consumed) { ... }]`，label 显示 `consumed=YES/NO`，NSLog 落 `[BackProbe #N]`
+- 接入验证：`./gradlew :sample:linkPodDebugFrameworkIosSimulatorArm64` + `xcodebuild ... -destination 'platform=iOS Simulator,OS=18.2,name=iPhone 16' build` PASS；`xcrun simctl install/launch` PASS；首屏截图可见 overlay 浮在 Kuikly render view 之上
+
+待手动验证真值表（Simulator UI 自动化用例需要 `idb` 才能 tap，本轮先准备 probe，留给真机 / 手动操作收尾）：
+
+| innerEnabled | outerEnabled | 期望 consumed | 期望 callback fire | 验证点 |
+|---|---|---|---|---|
+| true | true | true | inner | topmost-only：inner 独占 |
+| false | true | true | outer | inner dispose 后 outer 升顶 |
+| false | false | **false** | 无 | list-empty release：让出 native |
+
+Scenario D（one-shot）：
+
+| 触发顺序 | armed 状态 | 期望 consumed | 验证点 |
+|---|---|---|---|
+| 第 1 次 BACK | true → false | true | callback fire，state setter 推进 recomposition |
+| 第 2 次 BACK | false | **false** | DisposableEffect dispose 完成，list 清空，native 让出 |
+
 Phase 0 report 必须包含 failure fallback decision matrix。失败时先不实现 fallback，但必须判断下一步走哪条替代路线：
 
 | 失败项 | fallback 方向 | 判定输出 |
@@ -419,6 +495,17 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 | `SaveableStateHolder` 状态保留 / 清理不稳 | entry 常驻 top2 或业务手动保存关键状态 | 记录丢失的状态类型、是否必须由业务层保存 |
 | Kuikly `BackHandler` / LIFO 优先级不稳 | 退回 runtime `BackPressRouter` 自管 callback 链 | 记录冲突组件、注册顺序、是否需要完全绕开 Kuikly dispatcher |
 | previous mount timing 两种策略都不稳 | 放弃 interactive previous layer，降级为非跟手 slide/fade | 记录是否仍保留 edge gesture，只在 commit 后执行动画 |
+
+当前阶段性 fallback 判断（2026-06-08）：
+
+| 项 | 当前判断 |
+|---|---|
+| `graphicsLayer.translationX` | Android 真机通过，iOS simulator build/launch 通过但 interactive commit 未完整测完；暂不启用 fallback |
+| Kuikly `Animatable` | Android commit/cancel 通过，iOS Mode A cancel path 通过；暂不启用 manual tween fallback |
+| `SaveableStateHolder + removeState` | Android 真机和 iOS simulator 均通过；暂不需要 top2 常驻或业务手动保存作为默认方案 |
+| Kuikly `BackHandler` / LIFO | Android 真机通过；iOS 没有等价硬件 BACK，仍需确认 iOS delegator back API 与业务返回入口如何接入 |
+| previous mount timing | Android A/B 均通过，iOS Mode A 部分通过；v1 默认倾向 Mode A，Mode B 保留为低内存 fallback |
+| native system gesture conflict | Android 极左边缘会被系统返回抢占；v1 必须暴露 `SwipeBackConfig`，Android 默认 edge width 需要可调，iOS 可使用更窄热区 |
 
 ### Phase 1：Navigator 落地 + 1 个 spike 页面
 
@@ -487,7 +574,9 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 | SaveableStateHolder | **Navigator 内部实现** | 不放进 `NavEntry`，避免业务误持有；按 `entry.key` 自管 `SaveableStateProvider`，entry 最终移除后删除对应 state |
 | swipe back 实现 | 复用 `Modifier.swipeBack`，加 transition 容器 | 手势识别已经成熟，只缺渲染层 |
 | swipe 范围 | 只左边缘 24dp | 避开 Kuikly 全屏手势冲突历史坑 |
-| 系统返回接管 | `handleBack: Boolean` + gearui-kit/runtime `BackPressRouter` façade | **不**走 `androidx.activity.compose.BackHandler`；底层复用 Kuikly `BackHandler` / `BackPressHandler`，按 LIFO 注册，Dialog/Sheet/ActionSheet > Navigator top entry > Kuikly delegator |
+| 系统返回接管 | `handleBack: Boolean` + gearui-kit/runtime `BackPressRouter` façade | **不**走 `androidx.activity.compose.BackHandler`；底层复用 Kuikly `BackHandler` / `BackPressHandler`。**Kuikly 模型是 topmost-only**（`dispatchOnBackEvent` 只调 `list.last()`，consumed=`list.isNotEmpty()` 先于 callback 同步回 native），不是 LIFO 链式 fallback。façade 只是注册/注销的薄包装，**不**做逐层询问 |
+| Navigator 栈底语义 | `canPop=false` 必须 dispose 那一个 Navigator 内部 BackHandler | 因为 consumed 同步看 list 是否为空。Navigator 不能挂着 BackHandler 然后在 callback 里「return without action」——那时 consumed 已经回 true，native 永远拿不到 BACK |
+| Dialog / Sheet / Navigator 优先级 | 靠 Composition 注册顺序（topmost-only） | 进入 Composition 晚 → 进入 `backPressCallbackList` 晚 → 自动成为 `list.last()` 独占 back；不需要显式 priority，也不要假设「不吃会冒泡」 |
 | pop 拦截 | `onPopRequest(PopRequest): PopDecision` + `forcePop()` | 支持同步放行/拒绝，也支持 dirty 弹窗这类 Pending 后确认继续 |
 | Navigator vs Kuikly `@Page` | Navigator 是 Compose 树内部栈，不替代 `@Page` | 维持单 Kuikly Page 模型；Navigator entry 切换不触发 Kuikly native render reattach |
 | Presentation | `Push` / `Overlay` / `Modal` | 普通页面、沉浸式预览、全屏模态分别表达；Overlay/Modal 不参与 edge swipe |

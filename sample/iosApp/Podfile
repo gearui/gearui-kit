@@ -7,7 +7,7 @@ target 'iosApp' do
   pod 'gearui_sample', :path => '../'
 
   # KuiklyUI iOS 渲染引擎
-  pod 'OpenKuiklyIOSRender', '~> 2.16.0'
+  pod 'OpenKuiklyIOSRender', '2.21.0'
 
   # 图片加载（可选）
   pod 'SDWebImage', '~> 5.20.1'

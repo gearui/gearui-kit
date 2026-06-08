@@ -1,6 +1,7 @@
 package com.gearui.sample
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -67,5 +68,14 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
         super.onDestroy()
         kuiklyDelegator.onDetach()
         StatusBarControllerImpl.unregister()
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+            if (kuiklyDelegator.onBackPressed()) {
+                return true
+            }
+        }
+        return super.dispatchKeyEvent(event)
     }
 }

@@ -536,6 +536,18 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 
 不阻塞 Phase 2 启动条件：上面 7 条任一失败 → 停在 Phase 1，把现象写回本文档并决定走 fallback matrix 哪一行。
 
+#### Phase 1 self-audit（实现完成后回看 5 点）
+
+| # | 审查点 | 当前实现 | 结论 |
+|---|---|---|---|
+| 1 | `onEntryRemoved` exactly-once | 所有移除路径（`pop` / `forcePop` / `popTo` / `replace` / `resetTo` / `commitSwipe`）都收敛到 `notifyRemoved(entry)`，内部用 `removedKeys.add(entry.key)` set-based 幂等 guard | ✅ PASS |
+| 2 | `removeState` 动画结束后 | `notifyRemoved` 同时调 `removeSaveableState`；`startCommitPopAnim` / `commitSwipe` 把 `notifyRemoved` 放在 `animScope.launch { animateTo(...); notifyRemoved(...) }` 尾部，确保动画结束才 remove；`replace` / `resetTo` 不走动画立即 remove，那时也没 transition 期间的视觉副作用 | ✅ PASS |
+| 3 | transition 期间 stack mutation | 初版 `push` / `requestPop` 已 guard `_exiting` / `pendingEntry`，但 `replace` / `popTo` / `resetTo` 漏掉。修复方式：抽 `isMidFlight = _exiting != null \|\| pendingEntry != null`，所有 mutating API 入口统一 guard；`forcePop` 单独放行 `pendingEntry != null`（它就是 Pending 的唯一出路） | ✅ FIXED |
+| 4 | swipe begin 时机 | v1 hardcode **Mode B (recognized mount)**：`Modifier.swipeBack` 的 `onStart` 即「过 touch slop + 方向判定后」才 mount previous 层；`onProgress` 才接 fraction。Mode A (edge-down pre-mount) 暂不实现——是否切换由 Phase 2 真机 FPS 数据决定，**不**暴露给业务 | 📌 v1 写死 Mode B |
+| 5 | Phase 2 scope | privchat-app 改造**只挑一条最简链**：Settings (`MAIN` 的「我」tab `currentIndex=2`) → `APPEARANCE`。无参数、无聊天/消息流、无文件、无图片预览。这两个 route 全走 Navigator，外层 `currentPage` 不再持有 `APPEARANCE` | 📌 锁定 |
+
+`isMidFlight` 修复落地见 commit `01084a0 feat(navigation): guard stack mutations mid-flight`（紧随本文档变更）。
+
 ### Phase 2：批量迁 push pages
 
 - 把剩下 21 个 push page 全部从 `when (currentPage)` 抽出来挂到 Navigator

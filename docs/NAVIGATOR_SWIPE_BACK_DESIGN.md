@@ -509,10 +509,32 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 
 ### Phase 1：Navigator 落地 + 1 个 spike 页面
 
-- gearui-kit 实现 `Navigator` + `NavigatorController` + `EntryScope` + `NavTransition.SlidePush` + `BackPressRouter` 接入
-- 复用现有 `Modifier.swipeBack`，加 `onProgress` 接到 transition 容器
-- privchat-app 选 `main -> appearance` 做 spike：这两个 route **全部走 Navigator**，不做“旧 currentPage 管 main + Navigator 管子页面”的半套混合路由
-- 验收：main push appearance，边缘滑能看到 main，能 cancel 回弹，能 commit pop，系统 BACK 能 pop appearance，栈底让出给 Kuikly delegator
+实现要点：
+- gearui-kit 落地 `Navigator` + `NavigatorController` + `EntryScope` + `NavTransition.SlidePush` + `NavPresentation` + `PopRequest` / `PopReason` / `PopDecision` + `onEntryRemoved`
+- 复用现有 `Modifier.swipeBack`，`onProgress` 接到 Navigator transition 容器（pop 动画与 swipe 共用同一个 `Animatable<Float>`）
+- BackHandler 严格按 §5.3 模型：**仅在 `canPop = true` 时挂**；transition 进行中 `canPop = false`；栈底立即 dispose 让出 native
+- **不**迁 privchat-app；端到端验证全部走 `gearui-kit/sample` 的 `navigator-v1-demo`
+
+实施进度（2026-06-08）：
+
+| Commit | 内容 | 状态 |
+|---|---|---|
+| `bedef9d feat(navigation): add Navigator core stack API` | NavApi + NavigatorState 真栈 + BackHandler 接入 + SaveableStateHolder + onEntryRemoved exactly-once；不含 transition | ✅ 编译通过 |
+| `0bebd21 feat(navigation): add slide transition and edge swipe pop` | BoxWithConstraints + 出场 snapshot + Animatable fraction 驱动 translationX + parallax + scrim；swipe begin/progress/cancel/commit 完整 | ✅ 编译通过 |
+| `8250b9b feat(sample): add Navigator v1 demo` | sample 注册 `navigator-v1-demo`；main → detail × N + dirty_editor (`PopDecision.Pending` → `forcePop`) + popTo + replace + resetTo + onEntryRemoved 日志 | ✅ 编译通过 |
+| `(this commit) docs(navigation): mark Phase 1 sample validation status` | 文档同步实施进度 + Phase 1 done 验收清单标位 | ✅ |
+
+仍需在 Android 真机 + iOS Simulator 上跑 demo 完成的实测项（覆盖 §9 Phase 1 done 全部 7 条）：
+
+1. 栈底（`route = "main"`）按系统 BACK 不被 Navigator 吃掉，让出给 sample 外层退到首页
+2. 非栈底（detail 内）按系统 BACK 走 pop 出场动画
+3. 边缘右滑：拖到阈值前松手 → 回弹 cancel；拖过阈值或 fling → commit pop
+4. push detail → detail（同 route 多次）→ 每次 `onEntryRemoved` 只 fire 一次
+5. dirty_editor 触发 `PopDecision.Pending` 后按 BACK / 边缘滑都被 Navigator 吃掉但**不** pop；`forcePop` 才真返回
+6. swipe / pop 动画进行中 previous 层可见且 `rememberSaveable` 状态不串
+7. Android Xiaomi 真机 + iOS iPhone 16 / iOS 18.2 Simulator 60fps（无明显掉帧）
+
+不阻塞 Phase 2 启动条件：上面 7 条任一失败 → 停在 Phase 1，把现象写回本文档并决定走 fallback matrix 哪一行。
 
 ### Phase 2：批量迁 push pages
 

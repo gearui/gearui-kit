@@ -235,9 +235,16 @@ internal class NavigatorState(
         viewportWidth = width
     }
 
+    /**
+     * v1 硬不变式：transition / pending 期间**所有** stack-mutating API 一律拒绝。
+     * 否则 swipe 中途 replace/resetTo/popTo 会让出场 snapshot 指向已被移除的栈顶，
+     * 或者 pending 状态下业务行为不确定。需要切栈的业务先 [forcePop] / 等动画完成。
+     */
+    private val isMidFlight: Boolean
+        get() = _exiting != null || pendingEntry != null
+
     override fun push(route: String, key: String?, options: NavOptions) {
-        if (pendingEntry != null) return
-        if (_exiting != null) return
+        if (isMidFlight) return
         val newKey = key ?: generateKey(route, keyCounter++)
         _entries.add(NavEntry(route = route, key = newKey, options = options))
     }
@@ -245,6 +252,8 @@ internal class NavigatorState(
     override fun pop(): Boolean = requestPop(PopReason.Programmatic)
 
     override fun forcePop(): Boolean {
+        // 显式跳过 onPopRequest——是 Pending 的「业务确认后继续返回」唯一出路；
+        // 因此 pendingEntry != null 是 forcePop 的**预期**场景，单独放行。
         if (_entries.size <= 1) return false
         if (_exiting != null) return false
         pendingEntry = null
@@ -254,6 +263,7 @@ internal class NavigatorState(
     }
 
     override fun popTo(route: String): Boolean {
+        if (isMidFlight) return false
         val idx = _entries.indexOfLast { it.route == route }
         if (idx < 0 || idx == _entries.size - 1) return false
         // 中间层 entry 立刻清掉（不动画），只有最顶层走 pop 动画
@@ -262,26 +272,25 @@ internal class NavigatorState(
             notifyRemoved(removed)
         }
         val top = _entries.removeAt(_entries.size - 1)
-        pendingEntry = null
         startCommitPopAnim(top)
         return true
     }
 
     override fun replace(route: String, key: String?, options: NavOptions) {
+        if (isMidFlight) return
         if (_entries.isEmpty()) return
         val old = _entries.removeAt(_entries.size - 1)
         notifyRemoved(old)
         val newKey = key ?: generateKey(route, keyCounter++)
         _entries.add(NavEntry(route = route, key = newKey, options = options))
-        pendingEntry = null
     }
 
     override fun resetTo(route: String) {
+        if (isMidFlight) return
         val snapshot = _entries.toList()
         _entries.clear()
         snapshot.forEach { notifyRemoved(it) }
         _entries.add(NavEntry(route = route, key = generateKey(route, keyCounter++)))
-        pendingEntry = null
     }
 
     /**

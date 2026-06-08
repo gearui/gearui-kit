@@ -71,6 +71,8 @@ import com.gearui.sample.examples.common.ComingSoonExample
 import com.gearui.sample.examples.dropdownmenu.DropdownMenuExample
 import com.gearui.sample.examples.fab.FabExample
 import com.gearui.sample.examples.runtime.InsetsDebugExample
+import com.gearui.sample.examples.navigator.NavigatorKuiklySpikeExample
+import com.gearui.sample.examples.navigator.NavigatorV1DemoExample
 import com.gearui.sample.examples.link.LinkExample
 import com.gearui.sample.examples.message.MessageExample
 import com.gearui.sample.examples.noticebar.NoticeBarExample
@@ -147,6 +149,8 @@ object NavigationManager {
             "segmented" -> SegmentedExample(component, onBack)
             "fab" -> FabExample(component, onBack)
             "runtime-insets" -> InsetsDebugExample(component, onBack)
+            "navigator-kuikly-spike" -> NavigatorKuiklySpikeExample(component, onBack)
+            "navigator-v1-demo" -> NavigatorV1DemoExample(component, onBack)
 
             // 数据展示组件 (15个)
             "list" -> ListExample(component, onBack)

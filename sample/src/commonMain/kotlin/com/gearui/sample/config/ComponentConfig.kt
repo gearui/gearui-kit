@@ -73,6 +73,8 @@ object ComponentConfig {
         ComponentInfo("segmented", "分段控制", "Segmented", ComponentCategory.NAVIGATION, "/components/segmented", "分段选择", "Segmented control"),
         ComponentInfo("fab", "悬浮按钮", "FAB", ComponentCategory.NAVIGATION, "/components/fab", "浮动操作按钮", "Floating action button"),
         ComponentInfo("runtime-insets", "运行时安全区调试", "Runtime Insets", ComponentCategory.NAVIGATION, "/components/runtime-insets", "运行时安全区数据快照", "Runtime safe-area snapshot"),
+        ComponentInfo("navigator-kuikly-spike", "Navigator Kuikly 验证", "Navigator Spike", ComponentCategory.NAVIGATION, "/components/navigator-kuikly-spike", "Navigator Phase 0 运行时能力验证", "Navigator Phase 0 runtime spike"),
+        ComponentInfo("navigator-v1-demo", "Navigator v1 演示", "Navigator v1 Demo", ComponentCategory.NAVIGATION, "/components/navigator-v1-demo", "Navigator v1 栈式跳转 + 边缘滑动返回", "Navigator v1 stack + edge swipe pop"),
 
         // 数据展示
         ComponentInfo("list", "列表", "List", ComponentCategory.DATA_DISPLAY, "/components/list", "列表展示", "List display"),

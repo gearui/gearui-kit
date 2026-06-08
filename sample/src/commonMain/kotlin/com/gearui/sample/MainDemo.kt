@@ -1,10 +1,23 @@
 package com.gearui.sample
 
 import androidx.compose.runtime.*
+import com.tencent.kuikly.compose.BackHandler
+import com.tencent.kuikly.compose.animation.core.Animatable
+import com.tencent.kuikly.compose.animation.core.spring
+import com.tencent.kuikly.compose.animation.core.tween
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
+import com.tencent.kuikly.compose.foundation.lazy.LazyListState
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.core.annotations.Page
 import com.gearui.View
 import com.gearui.App
+import com.gearui.gestures.SwipeBackConfig
+import com.gearui.gestures.swipeBack
 import com.gearui.sample.i18n.SampleI18nProvider
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.HomePage
@@ -17,6 +30,7 @@ import com.gearui.sample.theme.CustomThemes
 import com.gearui.theme.Theme
 import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
+import kotlinx.coroutines.launch
 
 /**
  * 导航页面枚举
@@ -123,6 +137,11 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
     // 首页列表滚动状态
     val homeListState = rememberLazyListState()
 
+    fun returnToHome() {
+        currentPage = AppPage.HOME
+        currentComponent = null
+    }
+
     when (currentPage) {
         AppPage.HOME -> {
             HomePage(
@@ -139,12 +158,32 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
 
         AppPage.COMPONENT_DETAIL -> {
             currentComponent?.let { component ->
-                NavigationManager.getExamplePage(
-                    component = component,
-                    onBack = { currentPage = AppPage.HOME }
-                )
+                if (component.id == "navigator-kuikly-spike" || component.id == "navigator-v1-demo") {
+                    // 这两个详情页内部自带 swipeBack/Navigator，绕过外层 SwipeBackHost 避免手势冲突
+                    NavigationManager.getExamplePage(
+                        component = component,
+                        onBack = { returnToHome() }
+                    )
+                } else {
+                    ExampleDetailSwipeBackHost(
+                        homeListState = homeListState,
+                        onHomeComponentClick = { nextComponent ->
+                            currentComponent = nextComponent
+                            currentPage = AppPage.COMPONENT_DETAIL
+                        },
+                        onSettingsClick = {
+                            currentPage = AppPage.SETTINGS
+                        },
+                        onBack = { returnToHome() }
+                    ) {
+                        NavigationManager.getExamplePage(
+                            component = component,
+                            onBack = { returnToHome() }
+                        )
+                    }
+                }
             } ?: run {
-                currentPage = AppPage.HOME
+                returnToHome()
             }
         }
 
@@ -153,6 +192,99 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
                 settingsState = settingsState,
                 onBack = { currentPage = AppPage.HOME }
             )
+        }
+    }
+}
+
+@Composable
+private fun ExampleDetailSwipeBackHost(
+    homeListState: LazyListState,
+    onHomeComponentClick: (ComponentInfo) -> Unit,
+    onSettingsClick: () -> Unit,
+    onBack: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val colors = Theme.colors
+    val scope = rememberCoroutineScope()
+    val offsetX = remember { Animatable(0f) }
+    var previousLayerMounted by remember { mutableStateOf(false) }
+    var isCompletingPop by remember { mutableStateOf(false) }
+    var containerWidthPx by remember { mutableStateOf(0) }
+
+    fun finishPop(animated: Boolean) {
+        if (isCompletingPop) return
+        isCompletingPop = true
+        previousLayerMounted = true
+        scope.launch {
+            if (animated) {
+                val targetX = if (containerWidthPx > 0) containerWidthPx.toFloat() else 480f
+                offsetX.animateTo(
+                    targetValue = targetX,
+                    animationSpec = tween(durationMillis = 180)
+                )
+            }
+            onBack()
+            offsetX.snapTo(0f)
+            previousLayerMounted = false
+            isCompletingPop = false
+        }
+    }
+
+    BackHandler {
+        finishPop(animated = false)
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .onSizeChanged { size ->
+                containerWidthPx = size.width
+            }
+    ) {
+        if (previousLayerMounted) {
+            HomePage(
+                listState = homeListState,
+                onComponentClick = onHomeComponentClick,
+                onSettingsClick = onSettingsClick
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    translationX = offsetX.value
+                }
+                .swipeBack(
+                    enabled = !isCompletingPop,
+                    config = SwipeBackConfig(edgeWidthDp = 96f),
+                    onStart = {
+                        previousLayerMounted = true
+                        scope.launch {
+                            offsetX.snapTo(0f)
+                        }
+                    },
+                    onProgress = { _, dragX ->
+                        scope.launch {
+                            offsetX.snapTo(dragX)
+                        }
+                    },
+                    onCancel = {
+                        scope.launch {
+                            offsetX.animateTo(
+                                targetValue = 0f,
+                                animationSpec = spring()
+                            )
+                            previousLayerMounted = false
+                        }
+                    },
+                    onCommit = {
+                        finishPop(animated = true)
+                    }
+                )
+        ) {
+            content()
         }
     }
 }

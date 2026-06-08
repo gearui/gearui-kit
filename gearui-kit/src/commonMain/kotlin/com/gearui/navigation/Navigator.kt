@@ -44,18 +44,19 @@ import kotlinx.coroutines.launch
  *
  * @param initialRoute 栈底 route 字符串
  * @param swipeBackEnabled 全局开关；个别 entry 可在 [NavOptions.swipeBackEnabled] 再禁用
- * @param swipeBackConfig 手势热区/阈值；平台默认值差异化（Android 偏宽以避开系统手势抢占）
  * @param handleBack 是否接管系统返回；内部通过 Kuikly `BackHandler` 注册，**仅当 [NavigatorController.canPop] 为 true 时挂**
  * @param onEntryRemoved entry **最终**从栈中移除时回调（commit pop 动画结束 / replace / popTo / resetTo）。
  *                      exactly-once：同一个 entry 不会被重复触发
  * @param content 根据当前渲染的 entry 渲染对应页面；transition 期间会被栈顶和 previous 两层各调一次
+ *
+ * 注：edge 热区**不**暴露给业务（review 4）。Navigator 内部固定用 96dp，避开 Android 系统返回
+ * 手势在最左 ~24dp 的抢占（Phase 0 spike finding）。iOS 上 96dp 也工作良好。
  */
 @Composable
 fun Navigator(
     initialRoute: String,
     modifier: Modifier = Modifier,
     swipeBackEnabled: Boolean = true,
-    swipeBackConfig: SwipeBackConfig = SwipeBackConfig(),
     handleBack: Boolean = true,
     onEntryRemoved: ((NavEntry) -> Unit)? = null,
     content: @Composable EntryScope.(NavEntry) -> Unit,
@@ -83,6 +84,10 @@ fun Navigator(
         }
     }
 
+    // Edge 热区 hardcode 96dp，避开 Android 系统返回手势在 ~24dp 的抢占（Phase 0 spike finding）；
+    // remember 一次，整个 Navigator 生命周期复用，不要每帧重建避免 swipeBack pointerInput key 变化
+    val swipeConfig = remember { SwipeBackConfig(edgeWidthDp = 96f) }
+
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val widthPx = constraints.maxWidth.toFloat()
         state.bindViewportWidth(widthPx)
@@ -90,8 +95,10 @@ fun Navigator(
         // belowEntry = transition 期间渲染在底层的 entry：
         // - swipe 进行中 → entries[size-2]（真 previous，栈未动）
         // - commit 动画 / programmatic pop → entries.last()（栈已 pop，old previous 升顶）
+        // 渲染顺序（Box children 后画的在上）：below → scrim → top
         val belowEntry = state.belowEntry
         if (belowEntry != null) {
+            // 1. below 层（previous 页）
             saveableHolder.SaveableStateProvider(belowEntry.key) {
                 Box(
                     modifier = Modifier
@@ -110,9 +117,20 @@ fun Navigator(
                     scope.content(belowEntry)
                 }
             }
+
+            // 2. Scrim：盖在 below 之上、top 之下；fraction 0→1 时 alpha 0.15→0
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer {
+                        translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
+                        alpha = SCRIM_MAX_ALPHA * (1f - state.exitingFraction)
+                    }
+                    .background(Color.Black),
+            )
         }
 
-        // 上层 = 出场 snapshot（pop 动画 / swipe 期间）或当前栈顶（平时 / push 动画）
+        // 3. 上层 = 出场 snapshot（pop 动画 / swipe 期间）或当前栈顶（平时 / push 动画）
         val topEntry = state.topEntry
         saveableHolder.SaveableStateProvider(topEntry.key) {
             val isExitingLayer = state.exiting != null
@@ -133,7 +151,7 @@ fun Navigator(
                         if (enable) {
                             base.swipeBack(
                                 enabled = true,
-                                config = swipeBackConfig,
+                                config = swipeConfig,
                                 onStart = { state.beginSwipe() },
                                 onProgress = { progress, _ -> state.updateSwipe(progress) },
                                 onCancel = { state.cancelSwipe() },
@@ -152,19 +170,6 @@ fun Navigator(
                 )
                 scope.content(topEntry)
             }
-        }
-
-        // Scrim：贴在 below 层之上、出场层之下；fraction 0→1 时 alpha 0.15→0
-        if (belowEntry != null) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
-                        alpha = SCRIM_MAX_ALPHA * (1f - state.exitingFraction)
-                    }
-                    .background(Color.Black),
-            )
         }
     }
 }

@@ -255,31 +255,80 @@ Navigator 内部按 `entry.key` 维护一个 `SaveableStateHolder`，每个 entr
 
 ---
 
-## 5. Kuikly 手势风险
+## 5. Kuikly 集成边界
 
-Kuikly Compose 在 native 侧有自己的事件分发，已知坑：
+Navigator 不是孤立的 Compose 组件——它跑在 KuiklyUI Compose 之上，跟 native render / native event / Kuikly Page 模型都有耦合。**这一层接错了，未来 Kuikly 升版就会爆**。这一节列清现状 + 边界 + 必须做的 spike。
 
-- 横向手势容易和 LazyColumn 横滑、ScrollView、SwipeCell（消息行的左滑「置顶/静音」）、Slider、地图、WebView 冲突
-- 当前 `Modifier.swipeBack` 用 `awaitHorizontalTouchSlopOrCancellation` + edge hot zone（24dp）规避，已经过子组件手势审计
+### 5.1 当前集成形态（事实陈述）
 
-**v1 保守策略**：
+- 整个 PrivChat 是**单 Kuikly Page**：`@Page("PrivChatApp") class PrivChatAppPage : View() extends com.gearui.View extends com.tencent.kuikly.compose.ComposeContainer`
+- 28 个业务页面**全部活在同一个 Compose 树**里，靠 `when (currentPage)` 切换
+- Android 侧 `MainActivity` 通过 `KuiklyRenderViewBaseDelegator` 起 Kuikly native render；`onResume`/`onPause`/`onDetach`/`onBackPressed` 全转发给 delegator
+- `MainActivity.dispatchKeyEvent` 拦 `KEYCODE_BACK` → `kuiklyDelegator.onBackPressed()` → **不进 Compose 层**
 
-1. **只做左边缘 edge swipe**，热区维持 24dp，**不做全屏 swipe**
-2. 默认 Android / iOS 都启用；个别页面（横向 Pager / WebView / 摄像头预览 / 全屏图片缩放）允许通过 `NavOptions(swipeBackEnabled = false)` 关闭
-3. Recognized 之后才 consume 事件；之前不抢
-4. 一个手势识别期内**只挂一层** previous，不做更深栈预渲染
-5. transition 进行中 `isTransitioning = true`，业务可借此 disable 输入
+### 5.2 Navigator 与 Kuikly Page 的关系（不变式）
+
+- **Navigator 不替代 `@Page`**。@Page 是「一个 Kuikly native render surface」，Navigator 是「一个 Compose 树内部的栈」。Navigator 永远是 `PrivChatAppPage.Content()` 里的一个普通 Composable，**绝不**对应「多 Kuikly Page 用 native 栈切换」
+- 单 Page 模型不变 → Kuikly Page lifecycle (`onResume` / `onPause` / `onDetach`) 跟 Navigator 内部的 entry 不同层，互不感知
+- 后果：Navigator entry 切换**不会**触发 Kuikly native render reattach；动画/手势/render 完全在 Compose 层完成
+
+### 5.3 系统 BACK 桥接（**不用** `androidx.activity.compose.BackHandler`）
+
+- Compose Multiplatform 标准 `BackHandler` 依赖 `LocalOnBackPressedDispatcherOwner`，Kuikly Compose 是否提供这个 owner **未确认**，不能赌
+- v1 改走 Kuikly 已有桥：在 `gearui-kit/runtime` 层加一个轻量 back router（`BackPressRouter`），`Navigator` 启动时把自己注册进去；`MainActivity.dispatchKeyEvent` 先问 router「有 entry 要 pop 吗？」，否则才落到 `kuiklyDelegator.onBackPressed()`
+- iOS / 桌面 / 鸿蒙的 BACK 等价事件由各自 runtime 适配层注入同一个 router
+- 这样 `Navigator(handleBack = true)` API 表面**完全平台无关**，业务调用方零感知
+
+### 5.4 手势事件分发（复用已验证的能力）
+
+- `Modifier.swipeBack` 用 `pointerInput` + `awaitEachGesture` + `awaitHorizontalTouchSlopOrCancellation`——这三个在 Kuikly Compose 上**已经跑通**（gearui-kit/SwipeBack.kt 现实使用中）
+- consume 时机：Recognized 之后才 `change.consume()`，避免抢子组件手势——这是当前已 audit 的策略，Navigator transition 容器**只**叠在 SwipeBack 之上，不重新设计 consume 模型
+- Kuikly native 横向手势冲突历史坑：LazyColumn 横滑、ScrollView、SwipeCell（消息行的左滑「置顶/静音」）、Slider、地图、WebView
+- 规避：**只做左边缘 24dp edge swipe，不做全屏 swipe**；个别页面允许通过 `NavOptions(swipeBackEnabled = false)` 关闭
 
 需要禁用 swipe 的清单（初步）：
 
 - `main`（栈底，没有可返回页）
-- `login_*` / auth-gate 系列
-- `video_preview` / `image_preview`（用 ModalSheet/Fade，自带 onClose 关闭）
-- 未来的横向 Pager / WebView 类页面
+- `video_preview` / `image_preview`（沉浸式，走 ModalSheet/Fade）
+- 未来的横向 Pager / WebView / 摄像头预览 / 全屏图片缩放
+
+### 5.5 Compose Multiplatform 标准 API 的 Kuikly 可用性（必须 spike）
+
+| 标准 Compose API | Navigator 用法 | Kuikly 实现度 | 必做 spike |
+|---|---|---|---|
+| `Modifier.pointerInput` / `awaitEachGesture` | 已用 (SwipeBack) | ✅ 现实跑通 | — |
+| `Modifier.graphicsLayer { translationX = ... }` | transition 跟手 | ⚠ 未验证 60fps native | ✅ Phase 0 |
+| `androidx.compose.animation.core.Animatable<Float>` + `spring/tween` | cancel 回弹 / commit 完成动画 | ⚠ 未验证 | ✅ Phase 0 |
+| `androidx.compose.runtime.saveable.SaveableStateHolder` | entry 状态保留 | ⚠ 未验证 | ✅ Phase 0 |
+| `androidx.activity.compose.BackHandler` | — | ❌ **不依赖** | — |
+| `LocalDensity` / `LocalLayoutDirection` | transition 偏移换算 | ✅ 用过 | — |
+
+> **Phase 0 必须先把上面 ⚠ 三条在 Kuikly 真机上跑过 demo**，再开 Phase 1 Navigator 实现——否则会出现「Compose 代码看着对，Kuikly 渲染抖 / 状态不保留 / cancel 不回弹」这类 native 层 bug。
+
+### 5.6 render 性能边界
+
+- transition 期间 Composition 树挂着 2 个 entry（current + previous），翻倍 Kuikly virtual DOM diff
+- 当前 ChatList / MessagePage 已经是几百到上千节点，transition 那一帧的 diff 成本是已知关注点
+- v1 缓解策略：
+  - previous 层**仅在 Recognized 那一刻挂入**，cancel 后立即卸掉
+  - previous 层禁用一切非视觉相关的 LaunchedEffect（用 freeze flag 在业务侧表达，或者 Navigator 自动 `CompositionLocalProvider(LocalIsForeground provides false)`）
+
+这一条 Phase 0 spike 一起验证：模拟「会话列表 push 聊天页」的最坏情况，看 transition 60fps 是否能保持。
 
 ---
 
 ## 6. 迁移计划（privchat-app）
+
+### Phase 0：Kuikly compatibility spike（**必须**先于 Phase 1）
+
+在 gearui-kit/sample 里写一个最小 demo，**不实现 Navigator**，只把以下 4 件事在 Kuikly Compose 真机（Android + iOS）跑通：
+
+1. `Modifier.graphicsLayer { translationX = dragX.value }` 跟随 SwipeBack 的 `onProgress` 平滑动起来，60fps
+2. `Animatable<Float>` + `animateTo(0f, spring())` 在 cancel 时把 translationX 回弹到 0，无掉帧
+3. `SaveableStateHolder.SaveableStateProvider(key)` 包住一个 `rememberSaveable { mutableStateOf(...) }` 的 demo，挂入→卸出→重挂能保留值
+4. 自建 `BackPressRouter`：MainActivity dispatchKeyEvent → router → 一个注册了「back consumer」的 Composable 能正确吃掉 BACK 一次、再次按 BACK 时让出给 `kuiklyDelegator.onBackPressed()`
+
+任何一条不过 → 立即上报，**不**进 Phase 1。这些是 §5.5 表格里 ⚠ 的对应实测。
 
 ### Phase 1：Navigator 落地 + 1 个 spike 页面
 
@@ -319,6 +368,8 @@ Kuikly Compose 在 native 侧有自己的事件分发，已知坑：
 
 明确收口，避免 scope creep：
 
+- ❌ **替代 Kuikly `@Page`**（Navigator 永远跑在单个 ComposeContainer 里，不引入多 Page 切换模型）
+- ❌ **依赖 `androidx.activity.compose.BackHandler`** / `LocalOnBackPressedDispatcherOwner`（Kuikly Compose 未确认提供，改用 gearui-kit/runtime 的 BackPressRouter 桥）
 - ❌ deep link / App Link 路由
 - ❌ nested navigator（tab 内 push）
 - ❌ tab navigator（MAIN 内的 currentIndex 维持手写）
@@ -345,18 +396,29 @@ Kuikly Compose 在 native 侧有自己的事件分发，已知坑：
 | SaveableStateHolder | **Navigator 内部实现** | 不放进 `NavEntry`，避免业务误持有；按 `entry.key` 自管 `SaveableStateProvider` |
 | swipe back 实现 | 复用 `Modifier.swipeBack`，加 transition 容器 | 手势识别已经成熟，只缺渲染层 |
 | swipe 范围 | 只左边缘 24dp | 避开 Kuikly 全屏手势冲突历史坑 |
-| 系统返回接管 | `handleBack: Boolean` | 平台无关命名；内部 Android `BackHandler` / Kuikly native back / iOS edge 都由 runtime 适配层兜，不暴露给业务 |
+| 系统返回接管 | `handleBack: Boolean` + gearui-kit/runtime `BackPressRouter` | **不**走 `androidx.activity.compose.BackHandler`，Kuikly Compose 未确认提供 OnBackPressedDispatcherOwner；改在 runtime 层桥接 native back → router → 注册的 Composable consumer |
+| Navigator vs Kuikly `@Page` | Navigator 是 Compose 树内部栈，不替代 `@Page` | 维持单 Kuikly Page 模型；Navigator entry 切换不触发 Kuikly native render reattach |
+| Kuikly 兼容验证 | **Phase 0 必跑** | `graphicsLayer.translationX` / `Animatable` / `SaveableStateHolder` / 自建 `BackPressRouter` 四件套必须先在 sample 真机验过，再开 Phase 1 |
 | auth gate | 不进 Navigator | 维持现状，gate 是栈外概念 |
 
 ---
 
-## 9. 验收标准（Phase 1 done 条件）
+## 9. 验收标准
+
+### Phase 0 done
+
+- gearui-kit/sample 跑通 §6 Phase 0 列的 4 件套（translationX / Animatable / SaveableStateHolder / BackPressRouter）
+- Android + iOS 真机各跑一遍，无掉帧、无状态丢失、BACK 正确二段让出
+- 若任一不过：**停在 Phase 0**，把不通过的现象 + 日志补回本文档，再决定是绕路还是等 Kuikly 升级
+
+### Phase 1 done
 
 - gearui-kit 增加 `Navigator.kt` + 相关 API，编译通过
 - 选定 spike 页面（如 APPEARANCE）：边缘右滑能看到 MAIN 露出来；中途松手回弹；过阈值 / 速度 commit 弹出
-- 没有出现 BackHandler 跟 Kuikly native back 冲突
+- 系统 BACK 走 `BackPressRouter` 正确触发 pop；栈底时让出给 `kuiklyDelegator.onBackPressed()`
 - 没有出现 swipe 跟 ChatList 左滑/SwipeCell 手势冲突
 - `Navigator` API 表上方法在 spike 页面全部实测过：push / pop / canPop / resetTo
+- Android + iOS 60fps，无明显掉帧
 - 文档 docs/NAVIGATOR_SWIPE_BACK_DESIGN.md 标 Phase 1 完成
 
 ---

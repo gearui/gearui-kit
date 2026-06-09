@@ -845,6 +845,10 @@ Navigator 不变式
 - forced_logout / unexpected_logout SDK 事件触发的 resetToShell
 - iOS Simulator interactive preview（待跑）
 
+#### Sample Navigator v1 demo regression（同日同设备）
+
+`gearui-kit/sample` 的 `navigator-v1-demo` 在 stable-slot fix 后跑 push detail × 3 + BACK × 3 → demo 内 `removedLog` 显示 `removed detail#3 / detail#2 / detail#1` 三条全唯一，无 crash。证明 stable-slot 重构既修了 PrivChat 闪烁，又没破 framework 自带的 demo 路径。
+
 ---
 
 ## 10. 参考

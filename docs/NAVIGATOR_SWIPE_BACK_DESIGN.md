@@ -849,6 +849,22 @@ Navigator 不变式
 
 `gearui-kit/sample` 的 `navigator-v1-demo` 在 stable-slot fix 后跑 push detail × 3 + BACK × 3 → demo 内 `removedLog` 显示 `removed detail#3 / detail#2 / detail#1` 三条全唯一，无 crash。证明 stable-slot 重构既修了 PrivChat 闪烁，又没破 framework 自带的 demo 路径。
 
+#### iOS Simulator framework smoke（同日，iPhone 16 / iOS 26.2）
+
+`gearui-kit/sample` iOS app 在 iPhone 16 simulator（iOS 26.2，UDID `A42885CA-...`）：
+
+- `xcodebuild` build 成功；Cocoapods + KMP common 代码（含 Phase 4e 的 11 个 commit：rememberNavigatorController / PrivChatRouteHost 在 sample 不用，但 `Navigator` / `NavOptions` / `NavTransition` / `NavPresentation` 全在共用 commonMain；6632d63 Overlay/FadeIn 实现 + 60265cb stable-slot fix 全部进 iOS klib）
+- `xcrun simctl launch` 成功；sample 主屏渲染正常（Theme / 12 个组件 list / Phase 1 task #20 加的「Simulate iOS BACK」floating button 全部可见）
+- 运行期 `xcrun simctl spawn ... log show` 无 error / crash
+
+PrivChat iOS app 当前 **无法**在 iOS Simulator 启动 —— `QrPngRenderer.ios.kt` 用了 `NSString.sizeWithAttributes` / `useContents { width }` API 在当前 Kotlin/Native 版本上 unresolved。这是 b9cc7c4 commit "single render pipeline for screen + save" 引入的 iOS-specific 编译错误，**跟 Phase 4e Navigator 无关**。该错误属于 iOS QR renderer 维护范畴，留到后续单独修。
+
+iOS-侧 Phase 4e 验收结论：
+
+- ✅ Framework 编译 + 运行 + Theme/Button 渲染（通过 sample 间接验）
+- ⏸ Navigator interactive swipe-back（沙箱 Accessibility API 受限，无法用 cliclick / AppleScript 自动 tap；需用户手指在 sim 内拖动）
+- ⏸ PrivChat business routes end-to-end on iOS（受 QR renderer 编译错误阻塞，跟 Navigator 不相关）
+
 ---
 
 ## 10. 参考

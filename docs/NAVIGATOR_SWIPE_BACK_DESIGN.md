@@ -815,6 +815,36 @@ Navigator 不变式
 
 26 / 30 项即可标 Phase 4e 收尾（其中 23-25 验 Overlay/FadeIn 框架实现是否真实落地；26-27 重复 Phase 2 / batch 1 已 PASS；28 自动；29-30 已经 Phase 2 PASS）。建议优先跑 2 / 8 / 10 / 12 / 19 / 21 / 22 / 23 / 24 这几条 —— 它们各自代表 typed payload / resetToShell / replaceRoute / Overlay 不同的关键路径。
 
+#### Phase 4e Android 自动化 acceptance 结果（2026-06-10 Xiaomi 2201122G / Android 16）
+
+通过 `adb input tap` + `adb logcat --pid` 在真机自动跑了核心 push/pop 链路，logcat 抓 `[Navigator] removed <key>` 验证 exactly-once：
+
+| 验收项 | 结果 | logcat 证据 |
+|---|---|---|
+| 1 cold start → Shell | ✅ PASS | 启动后 ConversationPage 三 tab 正常 |
+| 2 List → Chat → BACK ×5 loop | ✅ PASS | `removed chat#1 … chat#5` 全唯一 |
+| 13 Contact → 好友申请 → BACK | ✅ PASS | `removed friend_request#2` |
+| 14 Contact → 添加好友(SearchUser) → BACK | ✅ PASS（push 进入 SearchUser 页确认） |
+| 17 Me → 个人资料 → 昵称 → BACK BACK | ✅ PASS | `removed profile_nickname#4` + `profile_edit#3` |
+| 18 Me → 外观 → 主题详情 → BACK BACK | ✅ PASS | `removed theme_detail#6` + `appearance#5` |
+| 28 exactly-once across 11 push/pop | ✅ PASS | 11 个 key 全唯一 |
+| 30 60fps | ✅ 视觉无掉帧 |
+
+#### Phase 4e Android 真机回报修复（2026-06-10）
+
+| 现象 | 根因 | commit |
+|---|---|---|
+| 退出登录后 LoginPage 显示「账号体系未就绪」| logout 触发 SDK shutdown 但没有 reinit；`LoginPagePlatform.awaitPlatformAccountLogin()` 8s 超时 | 6a58a05 fix(login): reinitialize SDK after logout |
+| 会话页右滑返回会话列表，列表闪烁 | Navigator 渲染层 `SaveableStateProvider` 在 transition 结束时切换 call-site，Compose dispose+remount 整个 ConversationPage | 60265cb fix(navigation): stable-slot render |
+
+未自动覆盖项（需用户手动测）：
+
+- 边缘 swipe-back 系列（adb 不能模拟 pointerInput；Android predictive back 本来就抢了边缘手势，详 §5.4.1）
+- Chat 内点头像/转发/媒体预览（需要真实有好友/消息的链）
+- ImagePreview / VideoPreview Overlay + FadeIn 视觉效果
+- forced_logout / unexpected_logout SDK 事件触发的 resetToShell
+- iOS Simulator interactive preview（待跑）
+
 ---
 
 ## 10. 参考

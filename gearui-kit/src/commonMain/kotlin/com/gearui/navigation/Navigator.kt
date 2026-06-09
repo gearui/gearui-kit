@@ -1,6 +1,7 @@
 package com.gearui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -59,19 +60,29 @@ fun Navigator(
     swipeBackEnabled: Boolean = true,
     handleBack: Boolean = true,
     onEntryRemoved: ((NavEntry) -> Unit)? = null,
+    controller: NavigatorController? = null,
     content: @Composable EntryScope.(NavEntry) -> Unit,
 ) {
     val saveableHolder = rememberSaveableStateHolder()
     val removedRef = rememberUpdatedState(onEntryRemoved)
     val animScope = rememberCoroutineScope()
 
-    val state: NavigatorState = remember(initialRoute) {
-        NavigatorState(
-            initial = NavEntry(route = initialRoute, key = generateKey(initialRoute, 0)),
-            removeSaveableState = { key -> saveableHolder.removeState(key) },
+    // controller 由外部传入（如 [rememberNavigatorController] 的产物）时直接使用；
+    // 否则内部 remember 一份兼容旧 caller（sample / Phase 2 已有调用方）。
+    val state: NavigatorState = remember(controller, initialRoute) {
+        (controller as? NavigatorState)
+            ?: NavigatorState(initialRoute = initialRoute)
+    }
+
+    // attach：每帧 SideEffect 模式 — 把 Composable 范围的 saveable/anim/onEntryRemoved
+    // 注入 state；离开 Composition 时 detach，避免 logout reset 后回调跑到旧 holder。
+    DisposableEffect(state, saveableHolder, animScope) {
+        state.attach(
+            saveable = { key -> saveableHolder.removeState(key) },
             onEntryRemovedRef = { entry -> removedRef.value?.invoke(entry) },
             animScope = animScope,
         )
+        onDispose { state.detach() }
     }
 
     // 关键：BackHandler **仅在 canPop=true 时挂**。
@@ -184,15 +195,59 @@ private const val SCRIM_MAX_ALPHA = 0.15f
 // internal impl
 // ─────────────────────────────────────────────────────────────────────────────
 
-@Stable
-internal class NavigatorState(
-    initial: NavEntry,
-    private val removeSaveableState: (String) -> Unit,
-    private val onEntryRemovedRef: (NavEntry) -> Unit,
-    private val animScope: CoroutineScope,
-) : NavigatorController {
+/**
+ * 业务侧预先创建 Navigator 控制器。在外部事件（forced logout / kick out / token expired）
+ * 触发 [NavigatorController.resetTo] 等操作时使用。Composable 业务侧不直接拿到 [NavigatorState]
+ * 内部状态——只通过 [NavigatorController] interface 操作栈。
+ *
+ * 用法：
+ * ```kotlin
+ * val nav = rememberNavigatorController("shell")
+ *
+ * LaunchedEffect(Unit) {
+ *     forcedLogoutEvents.collect {
+ *         nav.resetTo("shell")
+ *         legacyPageStack.clear()
+ *     }
+ * }
+ *
+ * Navigator(controller = nav, initialRoute = "shell") { entry -> ... }
+ * ```
+ *
+ * @param initialRoute 栈底 route；同一次 Composition 内传给 [Navigator] 的 `initialRoute` 应一致
+ */
+@Composable
+fun rememberNavigatorController(initialRoute: String): NavigatorController =
+    remember(initialRoute) { NavigatorState(initialRoute = initialRoute) }
 
-    private val _entries = mutableStateListOf(initial)
+@Stable
+internal class NavigatorState(initialRoute: String) : NavigatorController {
+
+    private val _entries = mutableStateListOf(
+        NavEntry(route = initialRoute, key = generateKey(initialRoute, 0)),
+    )
+
+    // attach/detach：外部预先创建 controller 时这三个回调在 Composable scope 内才有；
+    // 未 attach 时调用 push/pop 会照常工作但 saveable / onEntryRemoved 不会触发。
+    private var removeSaveableState: ((String) -> Unit)? = null
+    private var onEntryRemovedRef: ((NavEntry) -> Unit)? = null
+    private var animScope: CoroutineScope? = null
+
+    internal fun attach(
+        saveable: (String) -> Unit,
+        onEntryRemovedRef: (NavEntry) -> Unit,
+        animScope: CoroutineScope,
+    ) {
+        this.removeSaveableState = saveable
+        this.onEntryRemovedRef = onEntryRemovedRef
+        this.animScope = animScope
+    }
+
+    internal fun detach() {
+        removeSaveableState = null
+        onEntryRemovedRef = null
+        animScope = null
+    }
 
     /** exactly-once guard：每个 key 只通知一次 onEntryRemoved + removeState。 */
     private val removedKeys = mutableSetOf<String>()
@@ -329,7 +384,14 @@ internal class NavigatorState(
     private fun startCommitPopAnim(outgoing: NavEntry) {
         _swipeMode = false
         _exiting = outgoing
-        animScope.launch {
+        val scope = animScope
+        if (scope == null) {
+            // detached：没有动画 scope，直接同步完成（业务在 Composition 外触发 logout 时走这）
+            notifyRemoved(outgoing)
+            _exiting = null
+            return
+        }
+        scope.launch {
             _exitingFractionAnim.snapTo(0f)
             _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_POP_MS))
             notifyRemoved(outgoing)
@@ -351,7 +413,7 @@ internal class NavigatorState(
 
     internal fun updateSwipe(progress: Float) {
         if (!_swipeMode) return
-        animScope.launch {
+        animScope?.launch {
             _exitingFractionAnim.snapTo(progress.coerceIn(0f, 1f))
         }
     }
@@ -363,7 +425,13 @@ internal class NavigatorState(
         _swipeMode = false
         // 此时 entries 仍含 outgoing 在栈顶；先 remove 再跑剩余动画 + notify
         _entries.removeAt(_entries.size - 1)
-        animScope.launch {
+        val scope = animScope
+        if (scope == null) {
+            notifyRemoved(outgoing)
+            _exiting = null
+            return
+        }
+        scope.launch {
             _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_SWIPE_COMMIT_MS))
             notifyRemoved(outgoing)
             _exiting = null
@@ -374,7 +442,12 @@ internal class NavigatorState(
     internal fun cancelSwipe() {
         if (!_swipeMode) return
         _swipeMode = false
-        animScope.launch {
+        val scope = animScope
+        if (scope == null) {
+            _exiting = null
+            return
+        }
+        scope.launch {
             _exitingFractionAnim.animateTo(0f, spring())
             _exiting = null
         }
@@ -382,8 +455,8 @@ internal class NavigatorState(
 
     private fun notifyRemoved(entry: NavEntry) {
         if (removedKeys.add(entry.key)) {
-            onEntryRemovedRef(entry)
-            removeSaveableState(entry.key)
+            onEntryRemovedRef?.invoke(entry)
+            removeSaveableState?.invoke(entry.key)
         }
     }
 }

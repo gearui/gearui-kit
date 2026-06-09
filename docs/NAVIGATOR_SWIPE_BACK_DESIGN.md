@@ -652,30 +652,44 @@ Phase 2.5 **closed**。
 - predictive back + Navigator transition 衔接无冲突 ✅
 - 60fps performance budget 在简单页面下成立 ✅
 
-### Phase 3（远期，本轮不做）：批量迁其它 push pages
+### Phase 4e：全路由替换工程（**已完成 2026-06-10**）
 
-- 剩下 21 个 push page 从 `when (currentPage)` 抽出来挂到 Navigator
-- `selectedX` 系列继续保留作为外层 state holder（typed params 是 v2 才做的事）
-- `resetToMain` → `nav.resetTo("shell")`
-- 真正大考验是 CHAT → PROFILE → IMAGE_PREVIEW 这种带来源页依赖 + 复杂 selectedX 状态的链
+跳过当时设想的「按 push page 渐进迁移」的 Phase 3。改成一刀切的**路由体系替换**：把 PrivChat 业务路由完全从 `MobilePage enum + pageStack + selectedX` 切到 `PrivChatRoute sealed model + PrivChatRouteHost + gearui-kit Navigator`。Spec 见 §3.3 + §6 Phase 4e。
 
-### Phase 3：Overlay / Modal 页面
+**框架层（gearui-kit）**：
 
-- VIDEO_PREVIEW / IMAGE_PREVIEW 用 `NavPresentation.Overlay` 或 `NavPresentation.Modal`，配 `FadeIn` / `ModalSheet`，关闭 swipeBack
-- ScanQrCode / 后续相机页面如有手势冲突也禁用 swipe
+- `rememberNavigatorController(initialRoute)` 暴露给业务作 outer-scope 持有，供 forced_logout / kick_out / token_expired 等不在 Navigator content lambda 内的事件调度（commit 494e507）
+- `Navigator(controller = …)` 可选 controller 参数；NavigatorState 改 attach/detach 模式
+- Phase 4e-5：Navigator 渲染按 `NavOptions.transition` 分支（SlidePush ⇒ translationX，FadeIn/ModalSheet ⇒ alpha），按 `NavOptions.presentation` 决定 below 层是否参与视差 + scrim（Overlay/Modal 静止）。VideoPreview / ImagePreview 等沉浸式预览的「上层渐出、下层不动」效果至此 end-to-end 生效（commit 6632d63）
 
-### Phase 4：清理
+**业务层（privchat-app）**：
 
-- 删 `PrivChatApp.kt` 里的 `MobilePage` enum / pageStack / pushPage/popPage/replacePage/resetToMain
-- 删 `WithSwipeBack` thin wrapper
-- 删 `tryAcquireNavLock`（Navigator 内部接管）
-- Android BACK 走 Navigator 的 `BackPressRouter` 而非直接落到 `kuiklyDelegator.onBackPressed()`——这一步需要跟 SDK/Kuikly 那边对齐
+- 4e-1：`PrivChatRoute` sealed model（29 routes，含 typed payload + per-route `NavOptions`）+ `PrivChatRouteHost`（pushRoute / popRoute / forcePopRoute / popTo / replaceRoute / resetToShell + entry.key ↔ typed payload store + exactly-once 清理）
+- 4e-2：PrivChatApp 顶层 `rememberPrivChatRouteHost()` 取代 navController；Navigator content lambda 改用 sealed when on `host.payloadFor(entry)` dispatch；shell/appearance/theme_detail 走 typed dispatch
+- 4e-3.1：Navigator dispatch 所需依赖（friends / groups / networkStatusBar / onRouteError / selectedGroupMembers）hoist 到 PrivChatApp 顶层
+- 4e-3.2：剩余 27 个 push pages 全部加 dispatch arms + Main tab 入口切走 routeHost
+- 4e-3.3：**净删 -993 行**。`PrivChatApp.kt` 3088 → 2095 行。删除：
+  - `MobilePage` enum（28 个值）
+  - `pageStack` / `currentPage` / `navLockUntilMs` state
+  - `pushPage` / `popPage` / `replacePage` / `resetToMain` / `tryAcquireNavLock` / `openDirectChat` helper functions
+  - 9 个 `selectedX` outer state holder（selectedChannel/User/FriendRequest/profileFriendSource/Friend/GroupMembers/ForwardMessage/VideoMessage/ImageMessage）—— typed payload 完全取代
+  - 27 个 `when (currentPage) -> { ... }` legacy when arms
+  - `WithSwipeBack` thin wrapper（Navigator 自带边缘 swipe）
+  - `onAppearanceRoute` prop（已由 routeHost 统一）
+
+**架构不变式**：
+
+- `gearui-kit` 仍只用 String route + entry.key dispatch；不暴露 typed params
+- `privchat-app` 持有 typed payload，业务侧调度只通过 `routeHost.pushRoute(PrivChatRoute.X(...))`
+- 所有 outer-scope 事件（forced_logout / kick_out / token_expired / switch_account / preflight 失败 / auto-login auth fail / setCurrentUid 失败）统一通过 `LaunchedEffect(isLoggedIn) { if (!isLoggedIn) routeHost.resetToShell() }` 触发 → 自动覆盖所有 7 处 `isLoggedIn = false` 写入点
 
 ### Phase 5（远期 v2）
 
-- 引入 typed params 模型：`NavRoute<T>` / `NavArgs` / type-safe route builder
-- 9 个 `selected*` state 收进 typed args
-- 编辑页加 `onPopRequest(PopRequest): PopDecision` 实现 dirty check；用户确认后调用 `forcePop()`
+- `onPopRequest(PopRequest): PopDecision` 真实业务挂载（dirty check）；用户确认后调用 `forcePop()`
+- iOS 真机/Simulator interactive preview 验收（Phase 1 起一直 pending；不阻塞 Phase 4e）
+- ModalSheet 真正的 translateY 动画（4e-5 暂用 FadeIn 替代）
+- 多套 transition 曲线 / route 级 transition override
+- result passing / push 后回传值
 
 ---
 
@@ -746,6 +760,60 @@ Phase 2.5 **closed**。
 - `Navigator` API 表上方法在 spike 页面全部实测过：push / pop / forcePop / canPop / resetTo / onEntryRemoved
 - Android + iOS 60fps，无明显掉帧
 - 文档 docs/NAVIGATOR_SWIPE_BACK_DESIGN.md 标 Phase 1 完成
+
+### Phase 4e done（**待真机手动跑全 path 验收**）
+
+代码侧已完成 11 个 commit（gearui-kit 3 + privchat-app 8）。剩**真机走全链路**确认无遗漏，验收清单：
+
+```
+登录 + 基础
+  1. cold start → Shell（消息 / 联系人 / 我）3 tab 正常
+
+聊天链
+  2. 点会话 → Chat（typed dispatch + markChannelRead 同步触发 + BACK pop 回 Shell）
+  3. Chat → NavBar 头像 → ChatSettings → BACK 回 Chat
+  4. ChatSettings → 群成员 → BACK 回 ChatSettings
+  5. ChatSettings → 邀请成员 → 选中 → 邀请 → 回 ChatSettings
+  6. ChatSettings → 群名称编辑 → 保存 → 回 ChatSettings
+  7. ChatSettings → 群二维码 → BACK 回 ChatSettings
+  8. ChatSettings → 退出群聊 → resetToShell（栈清空回 Shell）
+
+好友 / 用户
+  9. Contact tab → 好友 → FriendProfile → BACK
+ 10. FriendProfile → 发消息 → replaceRoute(Chat)（栈不留 FriendProfile，BACK 一次回 Shell）
+ 11. FriendProfile → 好友设置 → 编辑备注 → 保存 → 回 FriendSettings
+ 12. FriendSettings → 删除好友 → resetToShell
+ 13. Contact tab → 好友申请 → 点击 → UserProfile（带 friendRequest）→ 同意 / 拒绝
+ 14. Contact tab → 添加好友（SearchUser）→ 搜出用户 → UserProfile → 加好友 → 回 SearchUser
+ 15. Chat 头像点击 → 已是好友 → FriendProfile；不是好友 → UserProfile
+ 16. 群成员页 → 点成员 → UserProfile（source = group:groupId）→ 加好友 → source 携带正确
+
+个人资料
+ 17. Me tab → 个人资料 → 6 个子页（昵称 / 用户名 / 签名 / 性别 / 生日 / 手机）push / saved 回退
+ 18. Me tab → 外观 → 主题详情（depth=2）→ BACK BACK
+
+账号
+ 19. Me tab → 切换账号 → 选另一账号 → resetToShell + auto-login + Shell（新账号）
+ 20. Me tab → 切换账号 → 添加账号 → 退出 Shell 进登录态
+ 21. Me tab → 退出登录 → 登录页 + Navigator 栈清空（重新登录后无残留）
+ 22. forced_logout / unexpected_logout SDK 事件触发 → resetToShell 自动 fire
+
+媒体 / 转发
+ 23. Chat 长按图片消息 → 转发 → ForwardPicker 选目标 → 转发成功 Toast + 回 Chat
+ 24. Chat 点击图片消息 → ImagePreview（Overlay + FadeIn；下层 Chat 不动）→ 关闭 → 回 Chat
+ 25. Chat 点击视频消息 → VideoPreview（Overlay + FadeIn）→ 关闭
+
+二维码
+ 26. Me tab → 我的二维码 → BACK
+ 27. Conversation tab → 扫一扫 → BACK
+
+Navigator 不变式
+ 28. 任何 push/pop 一次 → logcat `[Navigator] removed <key>` exactly-once
+ 29. predictive back 单 swipe → 无双动画 / 闪烁
+ 30. 60fps（所有过场动画肉眼丝滑）
+```
+
+26 / 30 项即可标 Phase 4e 收尾（其中 23-25 验 Overlay/FadeIn 框架实现是否真实落地；26-27 重复 Phase 2 / batch 1 已 PASS；28 自动；29-30 已经 Phase 2 PASS）。建议优先跑 2 / 8 / 10 / 12 / 19 / 21 / 22 / 23 / 24 这几条 —— 它们各自代表 typed payload / resetToShell / replaceRoute / Overlay 不同的关键路径。
 
 ---
 

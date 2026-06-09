@@ -397,13 +397,35 @@ fun dispatchOnBackEvent() {
 - `Modifier.swipeBack` 用 `pointerInput` + `awaitEachGesture` + `awaitHorizontalTouchSlopOrCancellation`——这三个在 Kuikly Compose 上**已经跑通**（gearui-kit/SwipeBack.kt 现实使用中）
 - consume 时机：Recognized 之后才 `change.consume()`，避免抢子组件手势——这是当前已 audit 的策略，Navigator transition 容器**只**叠在 SwipeBack 之上，不重新设计 consume 模型
 - Kuikly native 横向手势冲突历史坑：LazyColumn 横滑、ScrollView、SwipeCell（消息行的左滑「置顶/静音」）、Slider、地图、WebView
-- 规避：**只做左边缘 24dp edge swipe，不做全屏 swipe**；个别页面允许通过 `NavOptions(swipeBackEnabled = false)` 关闭
+- 规避：**Navigator 内部 hardcode 96dp edge**（参数不暴露给业务）；个别页面允许通过 `NavOptions(swipeBackEnabled = false)` 关闭
 
 需要禁用 swipe 的清单（初步）：
 
 - `main`（栈底，没有可返回页）
 - `video_preview` / `image_preview`（沉浸式，`Overlay` / `Modal`，走 ModalSheet/Fade）
 - 未来的横向 Pager / WebView / 摄像头预览 / 全屏图片缩放
+
+#### 5.4.1 Android predictive back gesture：让出，不抢
+
+Phase 1 真机验证（Xiaomi 2201122G / Android 16，2026-06-09）发现：
+
+- Android 13+ 的 predictive back gesture 在 OS 层吃掉左边缘 swipe 的整个事件链
+- 表现：用户拖动时屏幕中出现「圆圈 + ›」系统视觉提示；`Modifier.swipeBack` 的 `pointerInput` **完全收不到** `down`/`move`；Navigator 的 `onStart` / `onProgress` 也不会触发（用 `[NavigatorSwipe]` 标签的诊断日志 0 行）
+- 即便 Navigator 把 edgeWidthDp 撑到 96dp 也没用——OS gesture detector 在更外层
+
+**架构决策：让出，不抢**
+
+- Navigator **不**调 `Window.setSystemGestureExclusionRects`
+- Android 上的 interactive preview 由系统 predictive back 提供（已经够「微信式」）
+- App BACK 链路（`MainActivity.dispatchKeyEvent` → `kuiklyDelegator.onBackPressed()` → Kuikly dispatcher → Navigator 的 `BackHandler` 这一个 consumer）保留：predictive back 提交时会发 BACK key，Navigator 接到后跑**出场动画**完成 pop，跟系统 preview 视觉衔接
+
+**理由**：
+
+1. Android 用户预期就是 OS predictive back；强行抢手势是体验倒退
+2. 抢 `systemGestureExclusionRects` 会让屏幕左边大部分区域**屏蔽**系统返回 = 抢用户惯用的退出途径 = 上线后投诉
+3. 主战场是 iOS（没有 predictive back 干扰）；Android 维持「系统手势 preview + Navigator 出场动画」组合就够
+
+**结论**：「Navigator interactive preview while dragging」是**iOS-only** 验收项，不在 Android 上强求。Android 验收口径调整为「BACK 触发 pop 出场动画 + 栈底让出 native」。
 
 ### 5.5 Compose Multiplatform 标准 API 的 Kuikly 可用性（必须 spike）
 
@@ -524,17 +546,28 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 | `8250b9b feat(sample): add Navigator v1 demo` | sample 注册 `navigator-v1-demo`；main → detail × N + dirty_editor (`PopDecision.Pending` → `forcePop`) + popTo + replace + resetTo + onEntryRemoved 日志 | ✅ 编译通过 |
 | `(this commit) docs(navigation): mark Phase 1 sample validation status` | 文档同步实施进度 + Phase 1 done 验收清单标位 | ✅ |
 
-仍需在 Android 真机 + iOS Simulator 上跑 demo 完成的实测项（覆盖 §9 Phase 1 done 全部 7 条）：
+实测项按平台分叉（见 §5.4.1 架构决策）：
 
-1. 栈底（`route = "main"`）按系统 BACK 不被 Navigator 吃掉，让出给 sample 外层退到首页
-2. 非栈底（detail 内）按系统 BACK 走 pop 出场动画
-3. 边缘右滑：拖到阈值前松手 → 回弹 cancel；拖过阈值或 fling → commit pop
-4. push detail → detail（同 route 多次）→ 每次 `onEntryRemoved` 只 fire 一次
-5. dirty_editor 触发 `PopDecision.Pending` 后按 BACK / 边缘滑都被 Navigator 吃掉但**不** pop；`forcePop` 才真返回
-6. swipe / pop 动画进行中 previous 层可见且 `rememberSaveable` 状态不串
-7. Android Xiaomi 真机 + iOS iPhone 16 / iOS 18.2 Simulator 60fps（无明显掉帧）
+**Android 真机（Xiaomi 2201122G / Android 16）**——OS 接管 interactive preview，Navigator 只验「BACK 链路 + 动画 + exactly-once」：
 
-不阻塞 Phase 2 启动条件：上面 7 条任一失败 → 停在 Phase 1，把现象写回本文档并决定走 fallback matrix 哪一行。
+1. 非栈底按系统 BACK / predictive back commit → Navigator 跑 pop 出场动画，回到上一页
+2. 栈底按系统 BACK → 不被 Navigator 吃掉，让出给 sample 外层（让 `kuiklyDelegator.onBackPressed()` 走默认分支）
+3. push detail → detail 多次 → 每次 `onEntryRemoved` 只 fire 一次（看 demo onEntryRemoved 日志）
+4. dirty_editor 触发 `PopDecision.Pending` 后按 BACK 被 Navigator 吃掉但**不** pop；`forcePop` 才真返回
+5. pop 出场动画过程中 previous 层可见且不串状态；60fps
+
+**iOS Simulator / 真机（iPhone 16 / iOS 18.2）**——没有 predictive back 干扰，跑完整 interactive preview：
+
+1. interactive preview while dragging：拖动 20% 不松手时 previous 页**可见且带视差**（不是黑屏 / 不是等松手才出现 / 上面有半透明 scrim）
+2. swipe cancel：拖不过阈值松手 → 弹回原位，previous 层卸载
+3. swipe commit：拖过阈值 / fling → 跑完剩余动画 + 真 pop + `onEntryRemoved` fire
+4. 系统返回入口（NavBar back button / 业务调 `[delegator onBackPressedWithCompletion:]` 之类）走 Navigator BackHandler → pop 出场动画
+5. 60fps
+
+不阻塞 Phase 2 启动条件：
+
+- Android 验收（5 条）任一失败 → 停在 Phase 1
+- iOS interactive preview（5 条第 1 条）失败 → 停在 Phase 1，查 transition layer（previous mount / zIndex / scrim / translation）；这是 §5.4.1 决策之外的 Transition Bug
 
 #### Phase 1 self-audit（实现完成后回看 5 点）
 

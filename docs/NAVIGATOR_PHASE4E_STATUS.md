@@ -1,6 +1,23 @@
 # Navigator Phase 4e — Status & Closing Report
 
-**Status**: Code side **DONE**; release-candidate stabilization stage. Architecture frozen — P2 backlog deferred until manual acceptance is in.
+## Final declaration (2026-06-10)
+
+```
+GearUI Navigator v1
+  Status:                 RELEASE CANDIDATE
+  Implementation:         COMPLETE
+  Architecture:           FROZEN
+  Automated Validation:   PASS
+  Manual Validation:      PENDING
+  Known Blockers:         0
+  Known Unrelated Issues: 1  (IOS-QR-RENDERER-FIX — see §5)
+
+Phase 4e
+  Code Side:              DONE
+  Validation Side:        partial → waiting on manual pass
+```
+
+**No further development on Navigator / RouteHost / Transition / BackHandler / Overlay is planned before RC.** The next round is QA, not engineering. P2 backlog moves to v1.1 / v2.0 — see §6.
 
 **Spec**: see [NAVIGATOR_SWIPE_BACK_DESIGN.md](NAVIGATOR_SWIPE_BACK_DESIGN.md) for the design and §9 for the 30-item acceptance checklist this report cross-references.
 
@@ -119,7 +136,7 @@ What this does **not** prove: the iOS interactive swipe-back visual (cancel/comm
 
 ## 5. Known blockers / out-of-scope items
 
-### PrivChat iOS end-to-end — BLOCKED (unrelated)
+### IOS-QR-RENDERER-FIX — BLOCKED (independent ticket)
 
 `privchat/src/iosMain/kotlin/com/netonstream/privchat/app/qr/QrPngRenderer.ios.kt` fails to compile on the current Kotlin/Native toolchain:
 
@@ -130,7 +147,7 @@ e: ... QrPngRenderer.ios.kt:122  Unresolved reference 'height'
 e: ... QrPngRenderer.ios.kt:123  Unresolved reference 'div' for operator '/'
 ```
 
-Introduced in `b9cc7c4 refactor(qr): single render pipeline for screen + save` — predates Phase 4e Navigator work. Belongs in an iOS QR renderer ticket; **do not** bundle it with this Phase 4e closeout.
+Introduced in `b9cc7c4 refactor(qr): single render pipeline for screen + save` — predates Phase 4e Navigator work. **Tracked as its own ticket `IOS-QR-RENDERER-FIX`; not part of this closeout.** PrivChat iOS end-to-end runs depend on this ticket clearing, but the Navigator architecture itself does not.
 
 ### Items that landed in code but lacked finger / data verification
 
@@ -139,19 +156,19 @@ Introduced in `b9cc7c4 refactor(qr): single render pipeline for screen + save` �
 - `routeHost.resetToShell()` from `forced_logout` / `unexpected_logout` SDK events (needs server push or constructed SDK state)
 - Chat's onAvatarClick → FriendProfile / UserProfile chain (needs real friend / non-friend data)
 
-## 6. Explicit P2 deferrals
+## 6. Explicit deferrals — moved to v1.1 / v2.0
 
-The Phase 4e closeout intentionally does **not** open these items:
+The Phase 4e closeout intentionally does **not** open these items. **All routed to v1.1 or v2.0; will not be touched between now and RC sign-off.**
 
-| Item | Reason |
-|---|---|
-| Dirty check `onPopRequest = Pending` real business wiring (e.g. ProfileNickname unsaved edit) | Needs `routeHost.pushRoute(...)` to accept a `NavOptions` override → public-API change to `PrivChatRouteHost` |
-| `NavTransition.ModalSheet` real translateY animation | Currently degrades to FadeIn; no business consumer yet |
-| Route-level transition curve / duration override | Framework API extension; no business pressure |
-| Result passing (push → caller receives a value on pop) | Touches `NavEntry` / `NavigatorController` contract |
-| PrivChat iOS QR renderer fix | Unrelated; separate ticket |
+| Item | Target | Reason |
+|---|---|---|
+| Dirty check `onPopRequest = Pending` real business wiring (e.g. ProfileNickname unsaved edit) | v1.1 | Needs `routeHost.pushRoute(...)` to accept a `NavOptions` override → public-API change to `PrivChatRouteHost` |
+| `NavTransition.ModalSheet` real translateY animation | v1.1 | Currently degrades to FadeIn; no business consumer yet |
+| Route-level transition curve / duration override | v1.1 | Framework API extension; no business pressure |
+| Result passing (push → caller receives a value on pop) | v2.0 | Touches `NavEntry` / `NavigatorController` contract |
+| PrivChat iOS QR renderer fix (IOS-QR-RENDERER-FIX) | own ticket | Unrelated to Navigator |
 
-The architecture is frozen pending the manual acceptance result. If a finger-found bug needs an API change, decide at that point — not preemptively.
+Architecture is frozen. If a finger-found bug needs an API change, the decision happens then — not preemptively.
 
 ## 7. How to verify on your own
 
@@ -181,4 +198,11 @@ Move to RC / release when:
 - §4 iOS items 1–6 all hand-verified PASS
 - No new P0 surfaces
 
-If P0 finger-found bugs do not appear, no further architectural change is planned for the Navigator before RC.
+If P0 finger-found bugs do not appear, **Phase 4e is formally CLOSED** and Navigator v1 ships as the released version. P0 finger-found bugs (if any) get one targeted fix commit each — no architectural touch.
+
+## 9. Owner protocol from here
+
+- **No code change to Navigator / RouteHost / Transition / BackHandler / Overlay** until either RC sign-off lands or a P0 finger-found bug requires it.
+- All v1.1 / v2.0 backlog items in §6 stay closed. Reopen needs an explicit version-bump decision, not a commit.
+- IOS-QR-RENDERER-FIX is owned by a separate ticket; Navigator team is not on point for it.
+- Manual acceptance owner runs §4 Android and §4 iOS checklists, files only the FAIL items, and stops there.

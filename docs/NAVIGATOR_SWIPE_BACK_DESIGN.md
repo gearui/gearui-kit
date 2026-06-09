@@ -427,6 +427,32 @@ Phase 1 真机验证（Xiaomi 2201122G / Android 16，2026-06-09）发现：
 
 **结论**：「Navigator interactive preview while dragging」是**iOS-only** 验收项，不在 Android 上强求。Android 验收口径调整为「BACK 触发 pop 出场动画 + 栈底让出 native」。
 
+#### 5.4.2 Navigator interactive swipe-back —— Platform Support Matrix
+
+这是**设计决策，不是缺陷**。FAQ 入口：
+
+| Platform | Interactive preview while dragging | 路径 | Reason |
+|---|---|---|---|
+| **Android** | ❌ Not supported | Predictive Back → BACK event → Navigator BackHandler → pop exit animation | Android Predictive Back（API 33+ 系统层）独占左边缘手势链路，pointerInput 拿不到 down |
+| **iOS** | ✅ Supported | Edge swipe → Navigator interactive transition → pop animation | iOS 没有系统级 predictive back gesture；Navigator 独享 interactive transition |
+
+未来再出现「为什么 Android 不能像微信一样拖着看上一页？」直接指这张表。
+
+#### 5.4.3 Android predictive back + Navigator transition 的衔接风险
+
+predictive back 自带一段系统动画（用户拖时屏幕里的圆圈/缩略图反馈）。当用户 commit 后 OS 发 BACK key → Navigator 又跑一遍 pop 出场动画。**两段动画串起来可能视觉打架**：
+
+- 双动画：预览反馈刚结束、出场动画又跑一遍 → 看着「pop 了两次」
+- 闪烁：predictive back preview 直接砸 BACK key 前 OS 抢先把当前 view snapshot 平移，跟 Compose 的 graphicsLayer 偏移叠加 → 闪一下
+- 时序：BACK 到达 Compose 时 OS 动画可能还没结束 → Animatable 接到一个被预览态污染的起点
+
+Phase 2 实测必查项（写进 §9 Android 验收第 6 条）：
+- predictive back commit 触发 Navigator pop 时，**是否双动画**
+- 如果有，方案：
+  - Navigator 检测 `PopReason.BackButton` 且来源是 predictive back，**跳过** transition（直接快闪），让 OS 系统动画独占
+  - 或者用更短的 transition 时长（如 100ms 而不是 220ms）
+- 现在**不**提前优化，等真机看到现象再决定
+
 ### 5.5 Compose Multiplatform 标准 API 的 Kuikly 可用性（必须 spike）
 
 | 标准 Compose API | Navigator 用法 | Kuikly 实现度 | 必做 spike |
@@ -555,6 +581,7 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 3. push detail → detail 多次 → 每次 `onEntryRemoved` 只 fire 一次（看 demo onEntryRemoved 日志）
 4. dirty_editor 触发 `PopDecision.Pending` 后按 BACK 被 Navigator 吃掉但**不** pop；`forcePop` 才真返回
 5. pop 出场动画过程中 previous 层可见且不串状态；60fps
+6. **predictive back 衔接** (§5.4.3)：用户拖动看到 OS 圆圈预览 → 抬手 commit → Navigator 触发 pop。观察：**是否出现双动画 / 闪烁 / 页面跳两次**。如果有，按 §5.4.3 fallback（跳过 transition 或缩短时长）
 
 **iOS Simulator / 真机（iPhone 16 / iOS 18.2）**——没有 predictive back 干扰，跑完整 interactive preview：
 

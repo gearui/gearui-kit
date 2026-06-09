@@ -165,6 +165,7 @@ The Phase 4e closeout intentionally does **not** open these items. **All routed 
 | Dirty check `onPopRequest = Pending` real business wiring (e.g. ProfileNickname unsaved edit) | v1.1 | Needs `routeHost.pushRoute(...)` to accept a `NavOptions` override → public-API change to `PrivChatRouteHost` |
 | `NavTransition.ModalSheet` real translateY animation | v1.1 | Currently degrades to FadeIn; no business consumer yet |
 | Route-level transition curve / duration override | v1.1 | Framework API extension; no business pressure |
+| **Android Predictive Back progress bridge** (Android interactive preview while dragging) | v1.1 / v2.0 | v1 yields the edge gesture to OS predictive back per §5.4.1; "drag halfway and see the previous page" on Android is **not** achievable through `pointerInput` — it requires bridging `OnBackInvokedDispatcher` progress (Android 14+) through Kuikly into `Navigator`'s `exitingFraction`. Not in v1 scope. |
 | Result passing (push → caller receives a value on pop) | v2.0 | Touches `NavEntry` / `NavigatorController` contract |
 | PrivChat iOS QR renderer fix (IOS-QR-RENDERER-FIX) | own ticket | Unrelated to Navigator |
 

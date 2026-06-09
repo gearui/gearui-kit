@@ -108,6 +108,10 @@ fun Navigator(
         // - commit 动画 / programmatic pop → entries.last()（栈已 pop，old previous 升顶）
         // 渲染顺序（Box children 后画的在上）：below → scrim → top
         val belowEntry = state.belowEntry
+        // Overlay / Modal presentation 下 below 层静止（无视差、无 scrim 透明变化），
+        // 模仿 iOS / 微信图片预览的「上层覆盖」语义。
+        val topPresentation = state.topEntry.options.presentation
+        val isOverlayTop = topPresentation == NavPresentation.Overlay || topPresentation == NavPresentation.Modal
         if (belowEntry != null) {
             // 1. below 层（previous 页）
             saveableHolder.SaveableStateProvider(belowEntry.key) {
@@ -115,8 +119,9 @@ fun Navigator(
                     modifier = Modifier
                         .fillMaxSize()
                         .graphicsLayer {
-                            // 视差：出场进度 0→1 期间 previous 从 -W*0.25 滑到 0
-                            translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
+                            // Push: 视差 -W*0.25 → 0；Overlay/Modal: 静止
+                            translationX = if (isOverlayTop) 0f
+                                else -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
                         },
                 ) {
                     val scope = EntryScopeImpl(
@@ -129,13 +134,19 @@ fun Navigator(
                 }
             }
 
-            // 2. Scrim：盖在 below 之上、top 之下；fraction 0→1 时 alpha 0.15→0
+            // 2. Scrim：Push 时跟随视差 + alpha 渐变；Overlay/Modal 时静止 + alpha 不参与
+            //    （NavTransition.FadeIn 上层自己 alpha 渐入，scrim 保持稳定背景）
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer {
-                        translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
-                        alpha = SCRIM_MAX_ALPHA * (1f - state.exitingFraction)
+                        if (isOverlayTop) {
+                            translationX = 0f
+                            alpha = SCRIM_MAX_ALPHA
+                        } else {
+                            translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
+                            alpha = SCRIM_MAX_ALPHA * (1f - state.exitingFraction)
+                        }
                     }
                     .background(Color.Black),
             )
@@ -145,15 +156,25 @@ fun Navigator(
         val topEntry = state.topEntry
         saveableHolder.SaveableStateProvider(topEntry.key) {
             val isExitingLayer = state.exiting != null
+            val transition = topEntry.options.transition
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer {
-                        // 出场层：fraction 0→1 → translationX 0→W；其它层不偏移
-                        translationX = if (isExitingLayer) widthPx * state.exitingFraction else 0f
+                        when (transition) {
+                            NavTransition.SlidePush -> {
+                                translationX = if (isExitingLayer) widthPx * state.exitingFraction else 0f
+                            }
+                            NavTransition.FadeIn, NavTransition.ModalSheet -> {
+                                // FadeIn: pop 时 alpha 1→0；push 时业务无入场动画也接受瞬切（更稳）
+                                translationX = 0f
+                                alpha = if (isExitingLayer) 1f - state.exitingFraction else 1f
+                            }
+                        }
                     }
                     .let { base ->
-                        // 仅当 canPop 且全局/本 entry 都允许 swipeBack 时给当前栈顶接手势
+                        // 仅当 canPop 且全局/本 entry 都允许 swipeBack 时给当前栈顶接手势；
+                        // Overlay/Modal 默认禁 swipeBack（业务可用 close 按钮 / BACK 关闭）
                         val enable = swipeBackEnabled &&
                             topEntry.options.swipeBackEnabled &&
                             topEntry.options.presentation == NavPresentation.Push &&

@@ -608,12 +608,39 @@ Phase 0 report 必须包含 failure fallback decision matrix。失败时先不�
 
 `isMidFlight` 修复落地见 commit `01084a0 feat(navigation): guard stack mutations mid-flight`（紧随本文档变更）。
 
-### Phase 2：批量迁 push pages
+### Phase 2：privchat-app Settings → Appearance 单条链路迁移
 
-- 把剩下 21 个 push page 全部从 `when (currentPage)` 抽出来挂到 Navigator
-- `selectedX` 系列**继续保留**作为外层 state holder——typed params 是 v2 才做的事
-- `resetToMain` → `nav.resetTo("main")`
-- `MainPage` 内部的 bottom tab `currentIndex` 不动（不进 Navigator）
+**范围严格锁定**为 Me tab Settings → 外观 一条最短链；其它 27 个 push pages（CHAT / GROUP_* / FRIEND_* / PROFILE_* / QR / PREVIEW…）**全部不动**，继续走旧 `pageStack` 机制。
+
+实施要点（按 review 修正版）：
+
+- `PrivChatAppMobileLayout` 加 prop `onAppearanceRoute: (() -> Unit)? = null`；prop 为 null 时 fallback 到 `pushPage(MobilePage.APPEARANCE)`（**保留 legacy 一行回滚能力**）
+- `MobilePage.APPEARANCE` enum 值与 when 分支**保留**不删（review 1：spike 迁移不做清理）
+- `PrivChatApp.kt` MOBILE 调用处外套 `Navigator(initialRoute = "shell", handleBack = true)`；shell route 渲染 `PrivChatAppMobileLayout(onAppearanceRoute = { controller.push("appearance") })`；appearance route 渲染 `PrivChatAppearancePage(onBack = { controller.pop() })`
+- **不**引入 `pendingAppearancePush` outer state（review 2：controller 直接在 Navigator scope 内传到 prop，不需要桥）
+- 不动 `selectedX` 系列、`WithSwipeBack`、`tryAcquireNavLock`、Android 系统手势 exclusion
+
+Phase 2 验收结果（2026-06-10 Xiaomi 2201122G / Android 16）：
+
+| # | 验收项 | 状态 |
+|---|---|---|
+| 1 | Settings 点「外观」→ Navigator push appearance，外观页显示 | ✅ PASS |
+| 2 | appearance 系统 BACK → Navigator pop 回 shell（「我」tab） | ✅ PASS |
+| 3 | shell 栈底系统 BACK → 让出 native（退回 launcher） | ✅ PASS（mCurrentFocus = `com.ism.app.android`） |
+| 4 | predictive back commit 时是否双动画/闪烁/跳两次 | ⏸ 视觉验收待跑 |
+| 5 | `onEntryRemoved` 对 appearance entry 只 fire 一次 | ⏸ 待加日志确认 |
+| 6 | pop 出场动画 60fps 无掉帧 | ⏸ 视觉验收待跑 |
+
+第 1-3 项已确认架构正确；第 4-6 项是手指视觉/计数观察类，可在 Phase 3 启动前补一次实测。
+
+Phase 3 启动条件：第 4-6 项至少跑过一遍（即使 4 出现双动画，按 §5.4.3 fallback 修复，不阻塞 Phase 3 规划）。
+
+### Phase 3（远期，本轮不做）：批量迁其它 push pages
+
+- 剩下 21 个 push page 从 `when (currentPage)` 抽出来挂到 Navigator
+- `selectedX` 系列继续保留作为外层 state holder（typed params 是 v2 才做的事）
+- `resetToMain` → `nav.resetTo("shell")`
+- 真正大考验是 CHAT → PROFILE → IMAGE_PREVIEW 这种带来源页依赖 + 复杂 selectedX 状态的链
 
 ### Phase 3：Overlay / Modal 页面
 

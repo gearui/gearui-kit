@@ -1,12 +1,12 @@
 # Navigator Phase 4e — Status & Closing Report
 
-## Final declaration (2026-06-10)
+## Final declaration (2026-06-10, revised)
 
 ```
 GearUI Navigator v1
   Status:                 RELEASE CANDIDATE
   Implementation:         COMPLETE
-  Architecture:           FROZEN
+  Architecture:           FROZEN (with one explicit override — see below)
   Automated Validation:   PASS
   Manual Validation:      PENDING
   Known Blockers:         0
@@ -16,6 +16,10 @@ Phase 4e
   Code Side:              DONE
   Validation Side:        partial → waiting on manual pass
 ```
+
+### Architecture override (2026-06-10)
+
+§5.4.1 of NAVIGATOR_SWIPE_BACK_DESIGN.md originally yielded the Android left-edge gesture to OS predictive back, making interactive preview "iOS-only by design". Owner overrode that decision in the same window the RC freeze went up: every Navigator route now gets interactive swipe-back on every platform, automatically. Android landed via `SystemGestureExclusion.setLeftEdgeExclusion` + `View.setSystemGestureExclusionRects` (gearui-kit `c0d9efa`), business hookup in PrivChat `MainActivity` is a single register line (`5d38ceb`). Verified on Xiaomi 2201122G / Android 16: swipe from left edge through the chat now triggers `commitSwipe` and produces `[Navigator] removed chat#N` exactly-once.
 
 **No further development on Navigator / RouteHost / Transition / BackHandler / Overlay is planned before RC.** The next round is QA, not engineering. P2 backlog moves to v1.1 / v2.0 — see §6.
 
@@ -165,7 +169,7 @@ The Phase 4e closeout intentionally does **not** open these items. **All routed 
 | Dirty check `onPopRequest = Pending` real business wiring (e.g. ProfileNickname unsaved edit) | v1.1 | Needs `routeHost.pushRoute(...)` to accept a `NavOptions` override → public-API change to `PrivChatRouteHost` |
 | `NavTransition.ModalSheet` real translateY animation | v1.1 | Currently degrades to FadeIn; no business consumer yet |
 | Route-level transition curve / duration override | v1.1 | Framework API extension; no business pressure |
-| **Android Predictive Back progress bridge** (Android interactive preview while dragging) | v1.1 / v2.0 | v1 yields the edge gesture to OS predictive back per §5.4.1; "drag halfway and see the previous page" on Android is **not** achievable through `pointerInput` — it requires bridging `OnBackInvokedDispatcher` progress (Android 14+) through Kuikly into `Navigator`'s `exitingFraction`. Not in v1 scope. |
+| ~~Android Predictive Back progress bridge~~ | **Closed — landed via setSystemGestureExclusionRects** | Owner override of §5.4.1 (2026-06-10): rather than bridging OnBackInvokedDispatcher progress, Android claims the left 96 dp via `View.setSystemGestureExclusionRects` and lets the existing `Modifier.swipeBack` pointer chain do the work. `SystemGestureExclusion` expect/actual + Navigator's `DisposableEffect` keep the strip claimed only while a route is poppable. Verified on Xiaomi 2201122G / Android 16. |
 | **Root-stack exit-confirmation helper** (`ExitConfirmation` Composable that intercepts the root-stack BACK once, shows a confirm dialog, then yields native on confirm) | v1.1 | v1 deliberately leaves `canPop=false` BACK to yield directly to native — Kuikly BACK is topmost-only, so any BackHandler on the root would block native exit forever. The fix is **not** "let Navigator hold BACK"; it is a new framework helper that registers a BackHandler only between first-tap and dialog-confirm, then unregisters and re-fires BACK. Business code lands one line in the Shell. New public API → freeze rule applies. |
 | Result passing (push → caller receives a value on pop) | v2.0 | Touches `NavEntry` / `NavigatorController` contract |
 | PrivChat iOS QR renderer fix (IOS-QR-RENDERER-FIX) | own ticket | Unrelated to Navigator |

@@ -405,7 +405,14 @@ fun dispatchOnBackEvent() {
 - `video_preview` / `image_preview`（沉浸式，`Overlay` / `Modal`，走 ModalSheet/Fade）
 - 未来的横向 Pager / WebView / 摄像头预览 / 全屏图片缩放
 
-#### 5.4.1 Android predictive back gesture：让出，不抢
+#### 5.4.1 Android predictive back gesture：~~让出，不抢~~ → **抢边缘 96dp（owner override 2026-06-10）**
+
+**v1 / Phase 4e 早期决策**（保留作为历史背景）：让出系统手势，Android 不做 interactive preview。
+
+**Owner override 2026-06-10**：每条 Navigator route 必须自动得到 interactive swipe-back，跨平台一致。Android 的实现路径不是 `OnBackInvokedDispatcher` progress bridge，而是 `View.setSystemGestureExclusionRects` 把左边缘 96dp 从系统 predictive back 排除，让 `Modifier.swipeBack` 的 `pointerInput` 接到 down/move/up。当 `canPop=false` 时清掉排除，栈底用户仍可用系统手势退出 app。落地在 `gearui-kit/src/{common,android,ios}Main/.../navigation/SystemGestureExclusion*.kt` + `Navigator.kt` 的 `DisposableEffect`。
+
+以下原文保留，**已失效**，作为 spike finding 的历史记录。
+
 
 Phase 1 真机验证（Xiaomi 2201122G / Android 16，2026-06-09）发现：
 
@@ -427,16 +434,18 @@ Phase 1 真机验证（Xiaomi 2201122G / Android 16，2026-06-09）发现：
 
 **结论**：「Navigator interactive preview while dragging」是**iOS-only** 验收项，不在 Android 上强求。Android 验收口径调整为「BACK 触发 pop 出场动画 + 栈底让出 native」。
 
-#### 5.4.2 Navigator interactive swipe-back —— Platform Support Matrix
+#### 5.4.2 Navigator interactive swipe-back —— Platform Support Matrix （v1.1 修订）
 
-这是**设计决策，不是缺陷**。FAQ 入口：
+Owner override 2026-06-10：跨平台一致，全部 ✅。
 
-| Platform | Interactive preview while dragging | 路径 | Reason |
-|---|---|---|---|
-| **Android** | ❌ Not supported | Predictive Back → BACK event → Navigator BackHandler → pop exit animation | Android Predictive Back（API 33+ 系统层）独占左边缘手势链路，pointerInput 拿不到 down |
-| **iOS** | ✅ Supported | Edge swipe → Navigator interactive transition → pop animation | iOS 没有系统级 predictive back gesture；Navigator 独享 interactive transition |
+| Platform | Interactive preview while dragging | 实现路径 |
+|---|---|---|
+| **Android** | ✅ Supported (since c0d9efa) | `Navigator.DisposableEffect` 调 `SystemGestureExclusion.setLeftEdgeExclusion(96f)` → Android `View.setSystemGestureExclusionRects` 把左边缘从系统 predictive back 排除 → `Modifier.swipeBack.pointerInput` 接到 down/move/up → 整套 stable-slot 渲染（current + scrim + exiting）跟手 |
+| **iOS** | ✅ Supported | 没有 predictive back 干扰，`Modifier.swipeBack` 直接工作 |
 
-未来再出现「为什么 Android 不能像微信一样拖着看上一页？」直接指这张表。
+栈底（`canPop=false`）时 Android 端 `clearLeftEdgeExclusion()` 把 96dp 还给系统手势，用户从左边缘滑仍能正常退出 app。
+
+历史决策（已失效）：原表把 Android 标 ❌ Not supported，原因是 Phase 0 spike 时认为只有 `OnBackInvokedDispatcher` progress bridge 才能解。后来发现 `systemGestureExclusionRects` 是更直接的解。
 
 #### 5.4.3 Android predictive back + Navigator transition 的衔接风险
 

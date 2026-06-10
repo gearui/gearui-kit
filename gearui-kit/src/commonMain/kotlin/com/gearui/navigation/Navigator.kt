@@ -99,6 +99,26 @@ fun Navigator(
     // remember 一次，整个 Navigator 生命周期复用，不要每帧重建避免 swipeBack pointerInput key 变化
     val swipeConfig = remember { SwipeBackConfig(edgeWidthDp = 96f) }
 
+    // v1.1 决策推翻 §5.4.1：Android 端也要全自动 interactive preview。
+    // canPop=true 且本 entry 允许 swipe 时把左边缘 96dp 从系统 predictive back 排除，
+    // Modifier.swipeBack 才能接到 pointerInput；不需要时清掉，让系统手势全幅可用（栈底
+    // 用户仍可正常退出 app）。iOS 端 SystemGestureExclusion 是 no-op。
+    val gestureCanCapture = swipeBackEnabled &&
+        state.canPop &&
+        state.exiting == null &&
+        state.stableTopEntry.options.swipeBackEnabled &&
+        state.stableTopEntry.options.presentation == NavPresentation.Push
+    DisposableEffect(gestureCanCapture) {
+        if (gestureCanCapture) {
+            SystemGestureExclusion.setLeftEdgeExclusion(swipeConfig.edgeWidthDp)
+        } else {
+            SystemGestureExclusion.clearLeftEdgeExclusion()
+        }
+        onDispose {
+            SystemGestureExclusion.clearLeftEdgeExclusion()
+        }
+    }
+
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val widthPx = constraints.maxWidth.toFloat()
         state.bindViewportWidth(widthPx)

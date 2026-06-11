@@ -95,29 +95,18 @@ fun Navigator(
         }
     }
 
-    // Edge 热区 hardcode 96dp，避开 Android 系统返回手势在 ~24dp 的抢占（Phase 0 spike finding）；
-    // remember 一次，整个 Navigator 生命周期复用，不要每帧重建避免 swipeBack pointerInput key 变化
-    val swipeConfig = remember { SwipeBackConfig(edgeWidthDp = 96f) }
-
-    // v1.1 决策推翻 §5.4.1：Android 端也要全自动 interactive preview。
-    // canPop=true 且本 entry 允许 swipe 时把左边缘 96dp 从系统 predictive back 排除，
-    // Modifier.swipeBack 才能接到 pointerInput；不需要时清掉，让系统手势全幅可用（栈底
-    // 用户仍可正常退出 app）。iOS 端 SystemGestureExclusion 是 no-op。
-    val gestureCanCapture = swipeBackEnabled &&
-        state.canPop &&
-        state.exiting == null &&
-        state.stableTopEntry.options.swipeBackEnabled &&
-        state.stableTopEntry.options.presentation == NavPresentation.Push
-    DisposableEffect(gestureCanCapture) {
-        if (gestureCanCapture) {
-            SystemGestureExclusion.setLeftEdgeExclusion(swipeConfig.edgeWidthDp)
-        } else {
-            SystemGestureExclusion.clearLeftEdgeExclusion()
-        }
-        onDispose {
-            SystemGestureExclusion.clearLeftEdgeExclusion()
-        }
-    }
+    // 全屏手势（微信 Android 同款）：起始点不限于左边缘，屏幕任意位置右滑即可返回。
+    //
+    // 为什么不再用边缘热区 + setSystemGestureExclusionRects：
+    // - Android 对 back-gesture 区域的 exclusion 有 200dp 高度硬限制（系统只取 rect 底部
+    //   200dp），全高豁免不可能 —— 用户在屏幕中部从最左边缘起手永远会被系统 predictive
+    //   back 抢走。
+    // - 微信 Android 的真实行为就是「全屏右滑返回」：从屏幕中间右滑返回上一页；从最左
+    //   边缘起手则交给系统手势（predictive back commit → BACK → Navigator pop 动画兜底）。
+    //
+    // 误触安全性由 SwipeBack.kt 状态机保证：directionRatio 要求横向位移显著大于纵向才
+    // Recognized；Recognized 之前不 consume 任何事件，垂直滚动列表不受影响。
+    val swipeConfig = remember { SwipeBackConfig(edgeWidthDp = Float.MAX_VALUE) }
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val widthPx = constraints.maxWidth.toFloat()
@@ -166,7 +155,10 @@ fun Navigator(
                                 enabled = true,
                                 config = swipeConfig,
                                 onStart = { state.beginSwipe() },
-                                onProgress = { progress, _ -> state.updateSwipe(progress) },
+                                // 1:1 像素跟手：页面位移 = 手指位移（微信式）。
+                                // SwipeBack 的 progress 参数按 commitDistance(96dp) 归一化，
+                                // 只用于 commit 判定；渲染 fraction 必须按视口宽换算。
+                                onProgress = { _, dragX -> state.updateSwipe(dragX / widthPx) },
                                 onCancel = { state.cancelSwipe() },
                                 onCommit = { state.commitSwipe() },
                             )
@@ -452,10 +444,16 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
             return
         }
         scope.launch {
-            _exitingFractionAnim.snapTo(0f)
-            _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_POP_MS))
-            notifyRemoved(outgoing)
-            _exiting = null
+            // finally 保证：即使 animateTo 被并发 Animatable 操作取消（CancellationException），
+            // 移除语义也必须完成 —— 否则 _exiting 残留会让 canPop 永远 false、后续 push 全被
+            // isMidFlight 拒绝、BACK 直接让出 native 误退 app（P0，真机踩过）。
+            try {
+                _exitingFractionAnim.snapTo(0f)
+                _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_POP_MS))
+            } finally {
+                notifyRemoved(outgoing)
+                _exiting = null
+            }
         }
     }
 
@@ -479,6 +477,10 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
     internal fun updateSwipe(progress: Float) {
         if (!_swipeMode) return
         animScope?.launch {
+            // double-check：launch 排队期间手势可能已经 commit/cancel（_swipeMode 翻 false）。
+            // 不加这层，迟到的 snapTo 会通过 Animatable 互斥取消掉 commitSwipe 正在跑的
+            // animateTo（CancellationException），打断移除流程。
+            if (!_swipeMode) return@launch
             _exitingFractionAnim.snapTo(progress.coerceIn(0f, 1f))
         }
     }
@@ -495,9 +497,12 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
             return
         }
         scope.launch {
-            _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_SWIPE_COMMIT_MS))
-            notifyRemoved(outgoing)
-            _exiting = null
+            try {
+                _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_SWIPE_COMMIT_MS))
+            } finally {
+                notifyRemoved(outgoing)
+                _exiting = null
+            }
         }
     }
 
@@ -515,8 +520,11 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
             return
         }
         scope.launch {
-            _exitingFractionAnim.animateTo(0f, spring())
-            _exiting = null
+            try {
+                _exitingFractionAnim.animateTo(0f, spring())
+            } finally {
+                _exiting = null
+            }
         }
     }
 

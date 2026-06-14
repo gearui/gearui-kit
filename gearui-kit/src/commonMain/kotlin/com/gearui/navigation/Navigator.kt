@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.tencent.kuikly.compose.ui.zIndex
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -112,128 +114,130 @@ fun Navigator(
         val widthPx = constraints.maxWidth.toFloat()
         state.bindViewportWidth(widthPx)
 
-        // Phase 4e flicker fix: **stable-slot 渲染模型**。
+        // ───────────────────────── 渲染模型：单 keyed-loop（最终版） ─────────────────────────
         //
-        // 旧模型在 transition 结束时把 shell 从 "below if 块" 切到 "top 主块" 不同 Compose tree
-        // 位置 —— 同 key 但不同 SaveableStateProvider call-site = Compose 视为新 Composition =
-        // ConversationPage 整层 dispose+remount，视觉上闪烁。
+        // 演进史（每一版都在真机踩过坑）：
+        // - v1 stable-slot「eager-remove」：beginSwipe 立刻把 outgoing 从 entries 拆出 →
+        //   commit 不闪，但 **cancel 会把 outgoing 重新 add 回 entries**，此刻
+        //   `entries.last() == _exiting`（同一个 key）→ slot1 SaveableStateProvider(key) 与
+        //   slot3 SaveableStateProvider(key) 同 key 双注册 → Compose `Key X was used multiple
+        //   times` FATAL → app crash（cancel 一拖回就崩，再点会话进不去）。
         //
-        // 新模型：beginSwipe / pop 立刻把 outgoing 从 _entries 拆下进 _exiting；从那一帧起
-        // [stableTopEntry] 永远是 `entries.last()` (= previous / shell)。该层渲染在 stable
-        // slot 1，跨整个 transition 不切换 call-site。`_exiting` (chat snapshot) 渲染在 stable
-        // slot 3 (exit overlay)；动画结束清 `_exiting` 时只是 slot 3 整段 dispose，slot 1 不动。
-        val stableTop = state.stableTopEntry
-        val exiting = state.exiting
-        val isOverlayExit = exiting != null && (exiting.options.presentation == NavPresentation.Overlay ||
-            exiting.options.presentation == NavPresentation.Modal)
-
-        // ── Slot 1：current top（stable, 永不切位置） ─────────────────────────────
-        saveableHolder.SaveableStateProvider(stableTop.key) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        // transition 期间作为 below 渲染：Push 视差；Overlay/Modal 静止
-                        translationX = when {
-                            exiting == null -> 0f
-                            isOverlayExit -> 0f
-                            else -> -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
-                        }
+        // 最终版：**栈在整个 transition 期间不变**（beginSwipe / pop 都不动 entries，只在动画
+        // 完成时才 remove）。可见层用唯一一个 `forEach + key(entry.key)` 循环渲染——每个 entry
+        // 永远只有一个稳定 call-site（按 key 追踪 identity），role/transform 随状态变。这样：
+        // - commit 完成：survivor(shell) 从 BELOW→FRONT 是同一 loop call-site → 不 remount →
+        //   不闪烁（v1 stable-slot 当初要解的就是这个）。
+        // - cancel 完成：survivor(chat) 从 MOVING→FRONT 同 call-site → 不 remount；
+        //   below(shell) 退出 loop → dispose。**任一帧每个 key 只出现一次** → 永不双注册。
+        //
+        // 手势宿主：BoxWithConstraints **内部**一个无 key、跨生命周期稳定的全屏 wrapper Box。
+        // 两条真机教训：① 不能挂 slot 内（key 变 → 协程被 dispose）；② 不能挂
+        // BoxWithConstraints 自身（Kuikly SubcomposeLayout 上 pointerInput 收不到事件）。
+        // enabled 恒为常量；动态 guard 全部由 [NavigatorState.beginSwipe] 在 onStart 判定。
+        val layers = state.visibleLayers()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .let { base ->
+                    if (swipeBackEnabled) {
+                        base.swipeBack(
+                            enabled = true,
+                            config = swipeConfig,
+                            onStart = { state.beginSwipe() },
+                            // 1:1 像素跟手：页面位移 = 手指位移（微信式）。
+                            onProgress = { _, dragX -> state.updateSwipeByPixels(dragX) },
+                            onCancel = { state.cancelSwipe() },
+                            onCommit = { state.commitSwipe() },
+                        )
+                    } else {
+                        base
                     }
-                    .let { base ->
-                        // 接 swipeBack 手势：normal state 且栈深 ≥ 2 时挂在这一层。
-                        // 用户从这一层开始 swipe → beginSwipe → outgoing 从 entries 拆下进
-                        // _exiting；同一帧 slot 3 (exit overlay) 开始渲染 _exiting；手势继续
-                        // 接收 progress 直到 cancel / commit。
-                        val enable = swipeBackEnabled &&
-                            exiting == null &&
-                            state.canPop &&
-                            stableTop.options.swipeBackEnabled &&
-                            stableTop.options.presentation == NavPresentation.Push
-                        if (enable) {
-                            base.swipeBack(
-                                enabled = true,
-                                config = swipeConfig,
-                                onStart = { state.beginSwipe() },
-                                // 1:1 像素跟手：页面位移 = 手指位移（微信式）。
-                                // SwipeBack 的 progress 参数按 commitDistance(96dp) 归一化，
-                                // 只用于 commit 判定；渲染 fraction 必须按视口宽换算。
-                                onProgress = { _, dragX -> state.updateSwipe(dragX / widthPx) },
-                                onCancel = { state.cancelSwipe() },
-                                onCommit = { state.commitSwipe() },
+                },
+        ) {
+            layers.forEach { layer ->
+                key(layer.entry.key) {
+                    saveableHolder.SaveableStateProvider(layer.entry.key) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .zIndex(layer.zIndex)
+                                .graphicsLayer {
+                                    when (layer.role) {
+                                        NavLayerRole.Front -> {
+                                            translationX = 0f
+                                        }
+                                        NavLayerRole.Below -> {
+                                            // Push: 视差 -W*0.25→0；Overlay/Modal: 静止
+                                            translationX = if (layer.movingIsOverlay) 0f
+                                                else -widthPx * PARALLAX_RATIO * (1f - state.transitionFraction)
+                                        }
+                                        NavLayerRole.Moving -> when (layer.entry.options.transition) {
+                                            NavTransition.SlidePush ->
+                                                translationX = widthPx * state.transitionFraction
+                                            NavTransition.FadeIn, NavTransition.ModalSheet -> {
+                                                translationX = 0f
+                                                alpha = 1f - state.transitionFraction
+                                            }
+                                        }
+                                    }
+                                },
+                        ) {
+                            val scope = EntryScopeImpl(
+                                entry = layer.entry,
+                                controller = state,
+                                isTop = layer.role != NavLayerRole.Below,
+                                isForeground = layer.role == NavLayerRole.Front,
                             )
-                        } else {
-                            base
+                            scope.content(layer.entry)
                         }
-                    },
-            ) {
-                val scope = EntryScopeImpl(
-                    entry = stableTop,
-                    controller = state,
-                    isTop = exiting == null,
-                    isForeground = exiting == null,
-                )
-                scope.content(stableTop)
+                    }
+                }
             }
-        }
 
-        // ── Slot 2：scrim（只在 transition 期间） ─────────────────────────────────
-        if (exiting != null && !isOverlayExit) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        translationX = -widthPx * PARALLAX_RATIO * (1f - state.exitingFraction)
-                        alpha = SCRIM_MAX_ALPHA * (1f - state.exitingFraction)
-                    }
-                    .background(Color.Black),
-            )
-        } else if (exiting != null && isOverlayExit) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        translationX = 0f
-                        alpha = SCRIM_MAX_ALPHA
-                    }
-                    .background(Color.Black),
-            )
-        }
-
-        // ── Slot 3：exit overlay（只在 transition 期间） ──────────────────────────
-        if (exiting != null) {
-            val exitTransition = exiting.options.transition
-            saveableHolder.SaveableStateProvider(exiting.key) {
+            // Scrim：z 夹在 below(0) 与 moving(2) 之间。只在 Push transition 期间渐变；
+            // Overlay/Modal 期间保持稳定暗罩。
+            val moving = state.movingEntry
+            if (moving != null) {
+                val overlayMoving = moving.options.presentation == NavPresentation.Overlay ||
+                    moving.options.presentation == NavPresentation.Modal
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .zIndex(SCRIM_Z)
                         .graphicsLayer {
-                            when (exitTransition) {
-                                NavTransition.SlidePush -> {
-                                    translationX = widthPx * state.exitingFraction
-                                }
-                                NavTransition.FadeIn, NavTransition.ModalSheet -> {
-                                    translationX = 0f
-                                    alpha = 1f - state.exitingFraction
-                                }
+                            if (overlayMoving) {
+                                translationX = 0f
+                                alpha = SCRIM_MAX_ALPHA
+                            } else {
+                                translationX = -widthPx * PARALLAX_RATIO * (1f - state.transitionFraction)
+                                alpha = SCRIM_MAX_ALPHA * (1f - state.transitionFraction)
                             }
-                        },
-                ) {
-                    val scope = EntryScopeImpl(
-                        entry = exiting,
-                        controller = state,
-                        isTop = true,
-                        isForeground = false,
-                    )
-                    scope.content(exiting)
-                }
+                        }
+                        .background(Color.Black),
+                )
             }
         }
     }
 }
 
+/** 可见层在渲染循环里的角色。 */
+internal enum class NavLayerRole { Front, Below, Moving }
+
+/** 一个待渲染的可见层。 */
+internal data class NavLayer(
+    val entry: NavEntry,
+    val role: NavLayerRole,
+    val zIndex: Float,
+    /** moving entry 是否 Overlay/Modal（决定 below 是否静止）。 */
+    val movingIsOverlay: Boolean,
+)
+
 /** Previous 层视差比例：出场进度 0 时 -W*0.25，1 时 0。设计参考 iOS / 微信。 */
 private const val PARALLAX_RATIO = 0.25f
+
+/** Scrim 的 zIndex，夹在 below(0f) 与 moving(2f) 之间。 */
+private const val SCRIM_Z = 1f
 
 /** 出场期间贴在 previous 层上的最大暗罩透明度。 */
 private const val SCRIM_MAX_ALPHA = 0.15f
@@ -305,31 +309,47 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
     /** PopDecision.Pending 状态：栈顶被业务确认前不允许 push/pop。 */
     private var pendingEntry: NavEntry? by mutableStateOf(null)
 
-    /** transition 出场层 snapshot：null = 平时；非 null = pop animation 或 swipe in progress。 */
-    private var _exiting: NavEntry? by mutableStateOf(null)
+    /**
+     * 正在 transition 出场的 entry。**关键不变式：transition 期间它仍留在 [_entries] 里**
+     * （== `entries.last()`）。栈只在动画完成时才 remove（commit/pop）或保持不变（cancel）。
+     * null = 平时；非 null = pop animation 或 swipe in progress。
+     */
+    private var _moving: NavEntry? by mutableStateOf(null)
 
-    /** Swipe 模式开关：true 期间 fraction 由 [updateSwipe] 手动 snap；false 期间由 animation 驱动。 */
+    /** Swipe 模式开关：true 期间 fraction 由 [updateSwipeByPixels] 手动 snap；false 期间由 animation 驱动。 */
     private var _swipeMode: Boolean by mutableStateOf(false)
 
-    /** 出场层占屏宽比例 0..1：0=完全可见，1=完全在右屏外。 */
-    private val _exitingFractionAnim = Animatable(0f)
+    /** 出场层占屏宽比例 0..1：0=完全可见(moving 覆盖)，1=完全在右屏外(below 完全露出)。 */
+    private val _fractionAnim = Animatable(0f)
 
     /** Viewport 宽（像素）。由 [Navigator] BoxWithConstraints 注入。 */
     private var viewportWidth: Float = 0f
 
-    val exiting: NavEntry? get() = _exiting
-    val exitingFraction: Float get() = _exitingFractionAnim.value
+    val movingEntry: NavEntry? get() = _moving
+    val transitionFraction: Float get() = _fractionAnim.value
 
     /**
-     * Stable-slot 渲染模型（Phase 4e flicker fix）：
-     *
-     * - [stableTopEntry] 永远等于 `entries.last()`，渲染在 stable Compose 树位置 1。
-     *   transition 期间它也是 current top（因为 [beginSwipe] / [pop] 都在 *enter* transition
-     *   时立刻 mutate entries）—— 跨 transition 不切换 SaveableStateProvider call-site，
-     *   所以 Shell 的 ConversationPage 等不会 dispose+remount，避免会话列表闪烁。
-     * - [exiting] 不为 null 时表示出场快照，渲染在 stable Compose 树位置 3。
+     * 当前可见层（bottom→top）。渲染循环按 `key(entry.key)` 追踪 identity：
+     * - 无 transition：只有栈顶一层 [NavLayerRole.Front]。
+     * - transition 中：below([NavLayerRole.Below], z=0) + moving([NavLayerRole.Moving], z=2)。
+     *   moving == `entries.last()`（栈未动），below == `entries[size-2]` —— **两者 key 必然不同**，
+     *   所以同一帧不会出现重复 key（v1 stable-slot 的 crash 根因被消除）。
      */
-    val stableTopEntry: NavEntry get() = _entries.last()
+    fun visibleLayers(): List<NavLayer> {
+        val moving = _moving
+        if (moving == null) {
+            return listOf(NavLayer(_entries.last(), NavLayerRole.Front, zIndex = 0f, movingIsOverlay = false))
+        }
+        val overlayMoving = moving.options.presentation == NavPresentation.Overlay ||
+            moving.options.presentation == NavPresentation.Modal
+        val below = _entries.getOrNull(_entries.size - 2)
+        return buildList {
+            if (below != null) {
+                add(NavLayer(below, NavLayerRole.Below, zIndex = 0f, movingIsOverlay = overlayMoving))
+            }
+            add(NavLayer(moving, NavLayerRole.Moving, zIndex = 2f, movingIsOverlay = overlayMoving))
+        }
+    }
 
     override val current: NavEntry
         get() = _entries.last()
@@ -338,10 +358,10 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
         get() = _entries.getOrNull(_entries.size - 2)
 
     override val canPop: Boolean
-        get() = _entries.size > 1 && pendingEntry == null && _exiting == null
+        get() = _entries.size > 1 && pendingEntry == null && _moving == null
 
     override val isTransitioning: Boolean
-        get() = _exiting != null
+        get() = _moving != null
 
     fun bindViewportWidth(width: Float) {
         viewportWidth = width
@@ -353,7 +373,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
      * 或者 pending 状态下业务行为不确定。需要切栈的业务先 [forcePop] / 等动画完成。
      */
     private val isMidFlight: Boolean
-        get() = _exiting != null || pendingEntry != null
+        get() = _moving != null || pendingEntry != null
 
     override fun push(route: String, key: String?, options: NavOptions) {
         if (isMidFlight) return
@@ -367,10 +387,9 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
         // 显式跳过 onPopRequest——是 Pending 的「业务确认后继续返回」唯一出路；
         // 因此 pendingEntry != null 是 forcePop 的**预期**场景，单独放行。
         if (_entries.size <= 1) return false
-        if (_exiting != null) return false
+        if (_moving != null) return false
         pendingEntry = null
-        val top = _entries.removeAt(_entries.size - 1)
-        startCommitPopAnim(top)
+        startCommitPopAnim(_entries.last())
         return true
     }
 
@@ -378,13 +397,13 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
         if (isMidFlight) return false
         val idx = _entries.indexOfLast { it.route == route }
         if (idx < 0 || idx == _entries.size - 1) return false
-        // 中间层 entry 立刻清掉（不动画），只有最顶层走 pop 动画
+        // 中间层 entry 立刻清掉（不动画），只有最顶层走 pop 动画。
+        // 栈顶不 remove（留给动画完成时），所以保留到 idx+2。
         while (_entries.size > idx + 2) {
             val removed = _entries.removeAt(_entries.size - 2)
             notifyRemoved(removed)
         }
-        val top = _entries.removeAt(_entries.size - 1)
-        startCommitPopAnim(top)
+        startCommitPopAnim(_entries.last())
         return true
     }
 
@@ -414,12 +433,11 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
     internal fun requestPop(reason: PopReason): Boolean {
         if (_entries.size <= 1) return false
         if (pendingEntry != null) return false
-        if (_exiting != null) return false
+        if (_moving != null) return false
         val top = _entries.last()
         val decision = top.options.onPopRequest?.invoke(PopRequest(top, reason)) ?: PopDecision.Allow
         return when (decision) {
             PopDecision.Allow -> {
-                _entries.removeAt(_entries.size - 1)
                 startCommitPopAnim(top)
                 true
             }
@@ -433,97 +451,125 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
         }
     }
 
+    /**
+     * 程序化 pop 出场动画。**outgoing 留在 _entries 不动**（== entries.last()），
+     * 渲染 loop 把它当 Moving 层、below = entries[size-2]，fraction 0→1 滑出。
+     * 动画完成才 remove + notify —— survivor(below) 从 Below→Front 同一 loop call-site
+     * 不 remount（无闪烁）。
+     */
     private fun startCommitPopAnim(outgoing: NavEntry) {
         _swipeMode = false
-        _exiting = outgoing
+        _moving = outgoing
         val scope = animScope
         if (scope == null) {
             // detached：没有动画 scope，直接同步完成（业务在 Composition 外触发 logout 时走这）
-            notifyRemoved(outgoing)
-            _exiting = null
+            removeMoving(outgoing)
             return
         }
         scope.launch {
-            // finally 保证：即使 animateTo 被并发 Animatable 操作取消（CancellationException），
-            // 移除语义也必须完成 —— 否则 _exiting 残留会让 canPop 永远 false、后续 push 全被
-            // isMidFlight 拒绝、BACK 直接让出 native 误退 app（P0，真机踩过）。
+            // finally 保证：即使 animateTo 被并发取消（CancellationException），移除语义也必须
+            // 完成 —— 否则 _moving 残留会让 canPop 永远 false、后续 push 全被 isMidFlight 拒绝、
+            // BACK 直接让出 native 误退 app（P0，真机踩过）。
             try {
-                _exitingFractionAnim.snapTo(0f)
-                _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_POP_MS))
+                _fractionAnim.snapTo(0f)
+                _fractionAnim.animateTo(1f, tween(durationMillis = ANIM_POP_MS))
             } finally {
-                notifyRemoved(outgoing)
-                _exiting = null
+                removeMoving(outgoing)
             }
         }
+    }
+
+    /** 动画完成：把 outgoing 从栈顶移除 + notify + 清 _moving。三步原子（同一帧 recompose）。 */
+    private fun removeMoving(outgoing: NavEntry) {
+        if (_entries.lastOrNull()?.key == outgoing.key) {
+            _entries.removeAt(_entries.size - 1)
+        }
+        notifyRemoved(outgoing)
+        _moving = null
     }
 
     // ───── swipe API（由 Modifier.swipeBack onStart/onProgress/onCancel/onCommit 触发） ─────
 
     /**
-     * 边缘手势识别成功：**立刻**把 outgoing 从 entries 移除，[stableTopEntry] 直接切回
-     * previous（i.e. shell）。这样从用户开始拖动那一帧起，Compose stable slot 渲染的就是
-     * shell，跨整个 swipe + commit/cancel 周期 SaveableStateProvider 永远稳定在
-     * `_entries.last().key`。cancel 时把 outgoing 重新 add 回 entries 复原。
+     * 手势识别成功（onStart）：**所有动态 guard 在这里判定**——手势 modifier 挂在
+     * Navigator 根节点且 enabled 恒定（否则 beginSwipe 改栈会重启 pointerInput 杀手势），
+     * 所以「能不能 swipe」只能在手势开始时刻检查：
+     * - 栈深 ≥ 2（canPop 语义）
+     * - 没有进行中的 transition / pending
+     * - 栈顶 entry 允许 swipe 且是 Push presentation
+     *
+     * 通过后**立刻**把 outgoing 从 entries 移除（stable-slot：slot 1 切回 previous，
+     * slot 3 渲染 outgoing snapshot）。同时把 fraction 同步复位 0 —— 上一轮 commit
+     * 留下的 1f 残值会让 snapshot 直接渲染在屏幕外（「闪回」观感）。
+     * 拒绝时本轮手势 no-op（updateSwipe/commitSwipe/cancelSwipe 自检直接 return）。
      */
     internal fun beginSwipe() {
         if (_entries.size <= 1) return
-        if (_exiting != null) return
+        if (_moving != null) return
         if (pendingEntry != null) return
-        val outgoing = _entries.removeAt(_entries.size - 1)
-        _exiting = outgoing
+        val top = _entries.last()
+        if (!top.options.swipeBackEnabled) return
+        if (top.options.presentation != NavPresentation.Push) return
+        // **不 remove**：top 留在 entries 当 Moving 层，below = entries[size-2]，两者 key 不同。
+        _moving = top
         _swipeMode = true
+        // 上一轮动画可能停在 1f；复位到 0 再开始跟手。snapTo 是 suspend，借 animScope。
+        animScope?.launch {
+            if (_swipeMode) _fractionAnim.snapTo(0f)
+        }
     }
 
-    internal fun updateSwipe(progress: Float) {
+    /** 1:1 跟手：dragX（px）按视口宽归一化进 fraction。 */
+    internal fun updateSwipeByPixels(dragX: Float) {
         if (!_swipeMode) return
+        val width = viewportWidth.takeIf { it > 0f } ?: return
         animScope?.launch {
             // double-check：launch 排队期间手势可能已经 commit/cancel（_swipeMode 翻 false）。
             // 不加这层，迟到的 snapTo 会通过 Animatable 互斥取消掉 commitSwipe 正在跑的
             // animateTo（CancellationException），打断移除流程。
             if (!_swipeMode) return@launch
-            _exitingFractionAnim.snapTo(progress.coerceIn(0f, 1f))
+            _fractionAnim.snapTo((dragX / width).coerceIn(0f, 1f))
         }
     }
 
-    /** 用户松手且过阈值：跑完剩余动画后 notify（entries 已在 beginSwipe 时 pop）。 */
+    /** 用户松手且过阈值：跑完剩余动画 → 真 remove + notify。 */
     internal fun commitSwipe() {
-        val outgoing = _exiting ?: return
+        val outgoing = _moving ?: return
         if (!_swipeMode) return
         _swipeMode = false
         val scope = animScope
         if (scope == null) {
-            notifyRemoved(outgoing)
-            _exiting = null
+            removeMoving(outgoing)
             return
         }
         scope.launch {
             try {
-                _exitingFractionAnim.animateTo(1f, tween(durationMillis = ANIM_SWIPE_COMMIT_MS))
+                _fractionAnim.animateTo(1f, tween(durationMillis = ANIM_SWIPE_COMMIT_MS))
             } finally {
-                notifyRemoved(outgoing)
-                _exiting = null
+                // 即使动画被取消也必须完成移除语义，否则 _moving 残留 = Navigator 卡死。
+                removeMoving(outgoing)
             }
         }
     }
 
-    /** 用户松手未过阈值：把 outgoing 重新 push 回 entries，回弹 fraction。 */
+    /**
+     * 用户松手未过阈值：回弹。**栈一直没动**（outgoing 仍是 entries.last()），所以这里只需
+     * 把 fraction 弹回 0、清 _moving —— outgoing 从 Moving→Front 是同一 loop call-site，
+     * 不 remount、不重复 key（v1 cancel-crash 根因被消除）。
+     */
     internal fun cancelSwipe() {
         if (!_swipeMode) return
         _swipeMode = false
-        val outgoing = _exiting
-        if (outgoing != null) {
-            _entries.add(outgoing)
-        }
         val scope = animScope
         if (scope == null) {
-            _exiting = null
+            _moving = null
             return
         }
         scope.launch {
             try {
-                _exitingFractionAnim.animateTo(0f, spring())
+                _fractionAnim.animateTo(0f, spring())
             } finally {
-                _exiting = null
+                _moving = null
             }
         }
     }

@@ -26,6 +26,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.zIndex
+import com.gearui.theme.Theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -136,6 +137,9 @@ fun Navigator(
         // BoxWithConstraints 自身（Kuikly SubcomposeLayout 上 pointerInput 收不到事件）。
         // enabled 恒为常量；动态 guard 全部由 [NavigatorState.beginSwipe] 在 onStart 判定。
         val layers = state.visibleLayers()
+        // 页面层兜底背景：每个导航「屏幕」必须不透明，否则业务页面背景透明时上层会透叠下层
+        // （真机：聊天页右滑能看到会话列表透出来）。在 composable scope 读一次主题色。
+        val screenBackground = Theme.colors.background
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -158,6 +162,11 @@ fun Navigator(
             layers.forEach { layer ->
                 key(layer.entry.key) {
                     saveableHolder.SaveableStateProvider(layer.entry.key) {
+                        // 兜底不透明背景：仅 Overlay/Modal 的淡入(alpha) Moving 层跳过——它故意
+                        // 与下层 + scrim 合成（图片/视频预览）。其余所有层（含 Push 的 Moving）
+                        // 都铺不透明底，杜绝层间透叠。
+                        val opaque = !(layer.role == NavLayerRole.Moving &&
+                            layer.entry.options.transition != NavTransition.SlidePush)
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -181,7 +190,8 @@ fun Navigator(
                                             }
                                         }
                                     }
-                                },
+                                }
+                                .let { m -> if (opaque) m.background(screenBackground) else m },
                         ) {
                             val scope = EntryScopeImpl(
                                 entry = layer.entry,

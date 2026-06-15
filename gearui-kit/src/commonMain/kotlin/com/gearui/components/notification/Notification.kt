@@ -85,7 +85,9 @@ fun Notification(
     onAction: (() -> Unit)? = null,
     duration: Long = 4000L,
     closable: Boolean = true,
-    topOffset: Float = 48f
+    topOffset: Float = 48f,
+    leading: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -113,7 +115,9 @@ fun Notification(
             action = action,
             onAction = onAction,
             closable = closable,
-            onDismiss = onDismiss
+            onDismiss = onDismiss,
+            leading = leading,
+            onClick = onClick,
         )
     }
 }
@@ -130,7 +134,11 @@ internal fun NotificationContent(
     onAction: (() -> Unit)?,
     closable: Boolean,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    /** 左侧自定义内容（头像 / app 图标 / 文件图标…）。null 时回退到 type 图标。 */
+    leading: (@Composable () -> Unit)? = null,
+    /** 整条点击回调。null 时整条不可点（保持现有行为）。 */
+    onClick: (() -> Unit)? = null,
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -149,16 +157,25 @@ internal fun NotificationContent(
             .shadow(Spacing.sm, shapes.md)
             .clip(shapes.md)
             .background(colors.surface)
+            // 整条点击：onClick != null 时挂在卡片上。action / close 各自的 clickable 会
+            // 消费自己的点击事件（Compose pointerInput 不向上冒泡），不会误触整条 onClick。
+            .let { base ->
+                if (onClick != null) base.clickable { onClick(); onDismiss() } else base
+            }
             .padding(Spacing.lg),
         horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.Top
     ) {
-        // 左侧图标
-        Icon(
-            name = iconName,
-            size = 20.dp,
-            tint = iconColor
-        )
+        // 左侧：自定义 leading slot 优先，否则 type 图标
+        if (leading != null) {
+            leading()
+        } else {
+            Icon(
+                name = iconName,
+                size = 20.dp,
+                tint = iconColor
+            )
+        }
 
         // 内容区
         Column(modifier = Modifier.weight(1f)) {
@@ -302,7 +319,9 @@ class NotificationController internal constructor(
         onAction: (() -> Unit)? = null,
         duration: Long = 4000L,
         closable: Boolean = true,
-        topOffset: Float = 48f
+        topOffset: Float = 48f,
+        leading: (@Composable () -> Unit)? = null,
+        onClick: (() -> Unit)? = null,
     ) {
         // 先关闭之前的
         dismiss()
@@ -323,7 +342,9 @@ class NotificationController internal constructor(
                 duration = duration,
                 closable = closable,
                 topOffset = topOffset,
-                onDismiss = { dismiss() }
+                onDismiss = { dismiss() },
+                leading = leading,
+                onClick = onClick,
             )
         }
     }
@@ -352,7 +373,9 @@ private fun NotificationOverlayContent(
     duration: Long,
     closable: Boolean,
     topOffset: Float,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    leading: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
 ) {
     // 自动关闭定时器
     LaunchedEffect(Unit) {
@@ -378,7 +401,9 @@ private fun NotificationOverlayContent(
                 action = action,
                 onAction = onAction,
                 closable = closable,
-                onDismiss = onDismiss
+                onDismiss = onDismiss,
+                leading = leading,
+                onClick = onClick,
             )
         }
     }

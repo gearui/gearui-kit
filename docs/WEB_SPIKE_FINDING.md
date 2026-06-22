@@ -1,8 +1,23 @@
 # Web Spike 0 — Finding
 
-Goal（GPT 压缩版）：能不能把一个 `Text("Hello GearUI")` 的 compose 内容在浏览器里渲染出第一帧。
-Timebox：半天。Mode：探索，不承诺成功。
-**结论：FAIL — 上游缺口。GearUI 这边就绪，KuiklyUI 的 compose-web host 缺失。**
+> **⚠️ 修订（2026-05）：本文档早先版本写「上游缺失 / compose-web host BLOCKED」是错误的、下早了结论。**
+> 实测 + 官方文档复核后纠正如下。错误根源：(1) 只读了 core-ksp `getEntryBuilder()` 一段就外推；
+> (2) 实测时跑的是 `:demo`（巨型 monolithic 模块），不是官方 H5 的 `:shared` + `:h5App` 路径。
+
+Goal（GPT 压缩版）：能不能把一个 compose `Text("Hello")` 在浏览器渲染出第一帧。
+
+## 准确结论（修订后）
+
+1. **gearui-kit → JS 编译：PASS**（实测，见下）。
+2. **官方 KuiklyUI H5 工具链真实存在且成熟**（自渲染路径）。官方 quickstart（https://kuikly.tds.qq.com/QuickStart/h5.html）：
+   - 模块结构：`:shared`（页面）+ `:h5App`（host）
+   - 任务：`:shared:packLocalJsBundleDebug` / `:h5App:jsBrowserRun -t` / `copyAssetsToWebpackDevServer`
+   - 依赖：`core-render-web:base` + `core-render-web:h5`
+   - 入口：host `delegator.init()` 按 URL `?page_name=` 加载页面
+3. **Compose DSL 页面能否在 H5 渲染 = 官方文档未明确说明 = gearui-kit 的关键未知**（gearui-kit 全是 compose）。
+4. **我跑 `:demo:packLocalJSBundleDebug -PpageName=X` 失败**（self-render `HelloWorldPage` 与 compose `NavigationBarDemo` 都一样炸）——但这是**用错了模块**：`:demo` 的 KSP 生成 `KuiklyCoreEntry.kt`（`package com.tencent.kuikly.core.android`，Android 入口）进 JS 源集 → 引用 android-only `IKuiklyCoreEntry`/`callKotlinMethod` → JS 编译失败。**正式 2.21.0 release 与 dev HEAD 表现一致**，所以这是 `:demo` 模块的 monolithic-entry 路径问题，**不是 H5 整体不可用**。官方 H5 走 `:shared`+`:h5App`，不是 `:demo` 这个任务。
+
+**未结论项**：用官方 `:shared`+`:h5App` 模板放一个 compose `@Page` 跑出第一帧——尚未验证（这才是真正要做的 Web Spike）。
 
 ## 已确认（证据）
 
@@ -11,68 +26,37 @@ Timebox：半天。Mode：探索，不承诺成功。
 - 加 `js(IR){browser()}` + `org.jetbrains.compose.experimental.jscanvas.enabled=true` → `compileKotlinJs` **BUILD SUCCESSFUL**（零代码改动；探针已还原）
 - `com.tencent.kuikly-open:compose` 有已发布的 `compose-js` 变体
 
-### 2. KuiklyUI 的 web 宿主只服务「自渲染」路径
-- `h5App-js`（JS webpack 宿主 + `core-render-web`）按 `pageName` 加载**自渲染页面 bundle**（`com.tencent.kuikly.core` DSL，如 `HelloWorldPage`）
-- 之前的 `sample/jsApp` 是 h5App 的完整拷贝（`KuiklyRenderView`/`pageName`）——这是自渲染宿主，与 compose 组件不兼容，运行时报 `callKotlinMethod is not a function` / `KuiklyCore-core not found`
+### 2. 实测了什么（哪些是 valid 证据，哪些是「用错模块」）
+- gearui-kit `compileKotlinJs` PASS（valid）
+- `:demo:packLocalJSBundleDebug -PpageName=HelloWorldPage`（自渲染）与 `-PpageName=NavigationBarDemo`（compose）**都失败**，错误相同：KSP 生成的 `demo/build/generated/ksp/js/jsMain/.../KuiklyCoreEntry.kt` 头部是 `package com.tencent.kuikly.core.android` + `import com.tencent.kuikly.core.IKuiklyCoreEntry`（Android 入口生成器产物）→ android-only 类型在 JS 不存在 → 编译失败。
+- 在干净的 **2.21.0 正式 release** 上重测 HelloWorldPage：**同样失败**。
+- **但这是用错了模块**：`:demo` 是含全部页面的巨型 demo，其 KSP entry 走 `else→AndroidTargetEntryBuilder`。**官方 H5 不用 `:demo`，用 `:shared`（页面）+ `:h5App`（host）+ `core-render-web:base/h5`**（见官方 quickstart）。`:shared`+`:h5App` 模板的 KSP/插件配置与 `:demo` 不同，我**尚未**用官方路径测过。
 
-### 3. compose 页面入口机制 = `@Page` + `ComposeContainer` + `setContent`，由 core-ksp 注册
-- demo 的 compose 页面：`@Page("X") class X : ComposeContainer() { override fun willInit() { setContent { ... } } }`
-- demo build 给 js 也配了 `add("kspJs", this)`
+### 3. `else→AndroidTargetEntryBuilder` 这条 fallback 确实存在（但不等于「H5 不可用」）
+`core-ksp` `KuiklyCoreProcessorProvider.getEntryBuilder()` 只有 android/ios/ohos 三个 builder，js 落 `else`→Android。**这解释了 `:demo` 路径为何炸**。但官方 H5 自渲染是成熟的，说明官方 `:shared`+`:h5App` 流程要么用不同的 entry 机制（core-render-web 运行时按 `page_name` 注册），要么有我没复现的配置。**不能从 `:demo` 的失败推出「H5 整体不可用」——这是我之前的错误。**
 
-### 4. 根因：core-ksp 没有 JS EntryBuilder（compose @Page 在 js 上 fallback 到 Android）
-`KuiklyCoreProcessorProvider.getEntryBuilder()` 按 source set 分发：
-```kotlin
-return when {
-    outputSourceSet.androidJVMFamily() -> AndroidTargetEntryBuilder(...)
-    outputSourceSet.iosFamily()        -> IOSTargetEntryBuilder(...)
-    outputSourceSet.ohosFamily()       -> OhOsTargetEntryBuilder(...)
-    else -> AndroidTargetEntryBuilder(caughtException)   // ← JS 落这里
-}
-```
-- 实现只有 Android / iOS / OhOs，**没有 `JsTargetEntryBuilder`**
-- `kspJs` 的 source set 不属于 android/ios/ohos family → 命中 `else` → 用 **AndroidTargetEntryBuilder**
-- Android 入口生成器产出引用 androidMain-only 类型（`IKuiklyCoreEntry` 等）的代码 → 在 web bundle 里这些类型不存在 → 运行时 `callKotlinMethod`/`KuiklyCore-core not found`
-
-### 5. compose jsMain 没有独立 canvas/window 宿主
-- `compose/src/jsMain` 只有零碎平台桩（key codes、scheduler、GlobalSnapshotManager、WeakReference）
-- 没有 `CanvasBasedWindow` / canvas 绑定 / scene→屏幕 wiring
-- 整个 KuiklyUI repo 没有任何 compose-on-web 的可运行示例，git log 无相关提交
-- 所以也无法绕过 @Page 直接把 ComposeScene 挂到浏览器 canvas
-
-## 判定
+## 判定（修订）
 
 | 层 | 状态 |
 |---|---|
-| GearUI 组件库 → JS 编译 | ✅ 就绪 |
+| GearUI 组件库 → JS 编译 | ✅ VERIFIED |
 | Kuikly compose 运行时 → JS klib | ✅ 已发布 |
-| **Kuikly compose-web 渲染宿主（@Page js 入口 / ComposeContainer→canvas）** | ❌ **上游缺失** |
+| KuiklyUI 官方 H5（自渲染，`:shared`+`:h5App`） | ✅ 成熟（官方文档 + 用户确认） |
+| **Compose DSL 页面经官方 H5 路径渲染** | ⏳ **未验证**（官方文档未明确；这是真正要做的 spike） |
 
-**第一帧画不出来不是 GearUI 的问题，是 KuiklyUI 的 compose-web runtime 尚未完成（core-ksp 缺 JsTargetEntryBuilder + compose 缺 js canvas host）。**
+## 真正的下一步（GPT 路线，已校准为官方路径）
 
-## 路线归档
+按官方 quickstart 搭最小验证，**不用 `:demo`**：
+1. 建 `sample` 的 `:shared`（或复用 sample）放一个最小 `@Page` + `ComposeContainer { setContent { Text("Hello GearUI") } }`
+2. 建/修 `:h5App`（host）按官方 `core-render-web:base/h5` + `KuiklyWebRenderViewDelegator` 接入，`?page_name=` 加载
+3. `./gradlew :shared:packLocalJsBundleDebug` + `:h5App:jsBrowserRun -t`
+4. 浏览器确认第一帧
+5. 成功 → 接 Button/Card/Input/Navigator；失败 → 拿到官方路径下的真实错误，再判断是否 compose-on-H5 缺口、给 KuiklyUI 提精确 issue
 
 ```
 Web:
-  compile target:        feasible / VERIFIED
-  browser runtime host:  BLOCKED upstream (KuiklyUI core-ksp JsTargetEntryBuilder 缺失)
-  roadmap:               等上游能力（或我们投入给 KuiklyUI 贡献 JsEntryBuilder）
-                         不在 v1.0，spike 已给出明确 blocker
+  compile target:        VERIFIED
+  官方 H5（自渲染）:      成熟
+  compose-on-H5:         未验证 → 待按 :shared+:h5App 官方模板做 spike
+  roadmap:               v1.1 spike（不在 v1.0 RC）
 ```
-
-按 spike 协议：**停在这里**，不再往 broken 路径堆代码。下一步是给 KuiklyUI 提 issue（草稿见下），而不是继续。
-
----
-
-## KuiklyUI Issue 草稿
-
-> **Title**: Compose on Web (JS): core-ksp has no JsTargetEntryBuilder; `@Page` registration falls back to AndroidTargetEntryBuilder
->
-> **Environment**: `com.tencent.kuikly-open:compose:2.21.0-2.1.21`, Kotlin/JS (IR), `js(IR){browser()}`, `kspJs`
->
-> **What works**: A pure-Compose component library (`androidx.compose.runtime` + `com.tencent.kuikly.compose.foundation/ui`, no `@Page`) compiles cleanly to JS via the published `compose-js` artifact (with `org.jetbrains.compose.experimental.jscanvas.enabled=true`).
->
-> **What's broken**: Hosting a `@Page` + `ComposeContainer { setContent { Text("Hello") } }` on web. In `core-ksp` `KuiklyCoreProcessorProvider.getEntryBuilder()`, the platform dispatch is `androidJVMFamily → Android`, `iosFamily → iOS`, `ohosFamily → OhOs`, and **`else → AndroidTargetEntryBuilder`**. A `kspJs` source set hits the `else` branch and uses the **Android** entry builder, which generates code referencing androidMain-only types (`IKuiklyCoreEntry`, etc.). At runtime in the browser this fails with `callKotlinMethod is not a function` / `KuiklyCore-core not found`.
->
-> **Also missing**: `compose/src/jsMain` has no canvas/window host (no `CanvasBasedWindow`, no scene→canvas binding), so there's no way to mount a `ComposeScene` to a browser surface bypassing `@Page` either.
->
-> **Ask**: Is Compose-on-Web a supported/planned target? If yes, (1) a `JsTargetEntryBuilder` in core-ksp, and (2) a documented compose-web host entry (page-by-name via `core-render-web`, or a canvas host) would unblock it. Is there a reference compose-web demo we can follow?

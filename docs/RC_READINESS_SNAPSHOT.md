@@ -66,7 +66,7 @@ Date: 2026-05-23
 | 6 | Elevation token（e0/e1/e2/floating），需设计输入；当前 Card 走 border-first | 新能力 | **1.1**（待设计） | TOKEN_FREEZE Open Items |
 | 7 | Brand pack 机制（SPEC §7.1），独立决策 | 新能力 | **1.1** | TOKEN_FREEZE Open Items |
 | 8 | Upload 组件（gearui-kit 未实现，tdesign-flutter 有参考） | 新增功能 | **1.1** | 能力缺口 |
-| 9 | Web / 鸿蒙：**Web Spike 0 已做（见 `WEB_SPIKE_FINDING.md`）**——gearui-kit→JS 编译 VERIFIED，但 KuiklyUI compose-web 渲染宿主缺失（core-ksp `getEntryBuilder()` 的 js 走 `else→AndroidTargetEntryBuilder`，运行时炸；compose jsMain 无 canvas host）。结论：**等上游能力 / 给 KuiklyUI 贡献 JsEntryBuilder**，不在 v1.0。鸿蒙放后面 | 平台支持（上游阻塞，已定位 + issue 草稿） | **等上游**（README 须诚实标注） | 上游阻塞 |
+| 9 | Web / 鸿蒙（见 `WEB_SPIKE_FINDING.md`，结论已修订）：gearui-kit→JS 编译 **VERIFIED**；官方 KuiklyUI H5（自渲染 `:shared`+`:h5App`）**成熟**；**compose-on-H5 经官方路径渲染 = 未验证**（早先「上游缺失」是错误结论，因为测错了 `:demo` 模块）。真正 spike = 按官方 `:shared`+`:h5App` 模板放 compose `@Page` 跑第一帧。鸿蒙放后面 | 平台支持（compose-on-H5 待官方路径验证） | **1.1 spike**（README 须诚实标注 Web 未 GA） | 待验证 |
 
 ## 5. 后续 RC 流程（建议顺序）
 

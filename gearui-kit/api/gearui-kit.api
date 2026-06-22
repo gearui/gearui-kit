@@ -399,7 +399,7 @@ public final class com/gearui/components/backtop/BackTopTheme : java/lang/Enum {
 }
 
 public final class com/gearui/components/bottomnavbar/BottomNavBarKt {
-	public static final fun BottomNavBar-btwbLyc (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Landroidx/compose/runtime/Composer;II)V
+	public static final fun BottomNavBar-alI_tMM (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/bottomnavbar/BottomNavItem {
@@ -1141,8 +1141,8 @@ public final class com/gearui/components/navigationmenu/NavigationMenuSection {
 public final class com/gearui/components/notification/NotificationController {
 	public static final field $stable I
 	public final fun dismiss ()V
-	public final fun show (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZF)V
-	public static synthetic fun show$default (Lcom/gearui/components/notification/NotificationController;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZFILjava/lang/Object;)V
+	public final fun show (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZFLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun show$default (Lcom/gearui/components/notification/NotificationController;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZFLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 }
 
 public final class com/gearui/components/notification/NotificationData {
@@ -1182,7 +1182,7 @@ public final class com/gearui/components/notification/NotificationHostState {
 }
 
 public final class com/gearui/components/notification/NotificationKt {
-	public static final fun Notification (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZFLandroidx/compose/runtime/Composer;III)V
+	public static final fun Notification (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/notification/NotificationType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;JZFLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 	public static final fun NotificationHost (Lcom/gearui/components/notification/NotificationHostState;Lcom/tencent/kuikly/compose/ui/Modifier;FLandroidx/compose/runtime/Composer;II)V
 	public static final fun rememberNotificationController (Landroidx/compose/runtime/Composer;I)Lcom/gearui/components/notification/NotificationController;
 	public static final fun rememberNotificationHostState (Landroidx/compose/runtime/Composer;I)Lcom/gearui/components/notification/NotificationHostState;
@@ -3162,6 +3162,125 @@ public final class com/gearui/i18n/Strings_zh_HantKt {
 	public static final fun getStringsZhHant ()Lcom/gearui/i18n/Strings;
 }
 
+public abstract interface class com/gearui/navigation/EntryScope {
+	public abstract fun getController ()Lcom/gearui/navigation/NavigatorController;
+	public abstract fun getEntry ()Lcom/gearui/navigation/NavEntry;
+	public abstract fun isForeground ()Z
+	public abstract fun isTop ()Z
+}
+
+public final class com/gearui/navigation/NavEntry {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/gearui/navigation/NavOptions;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;)Lcom/gearui/navigation/NavEntry;
+	public static synthetic fun copy$default (Lcom/gearui/navigation/NavEntry;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;ILjava/lang/Object;)Lcom/gearui/navigation/NavEntry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getOptions ()Lcom/gearui/navigation/NavOptions;
+	public final fun getRoute ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/navigation/NavOptions {
+	public static final field $stable I
+	public static final field Companion Lcom/gearui/navigation/NavOptions$Companion;
+	public fun <init> ()V
+	public fun <init> (ZLcom/gearui/navigation/NavTransition;Lcom/gearui/navigation/NavPresentation;Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (ZLcom/gearui/navigation/NavTransition;Lcom/gearui/navigation/NavPresentation;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Lcom/gearui/navigation/NavTransition;
+	public final fun component3 ()Lcom/gearui/navigation/NavPresentation;
+	public final fun component4 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (ZLcom/gearui/navigation/NavTransition;Lcom/gearui/navigation/NavPresentation;Lkotlin/jvm/functions/Function1;)Lcom/gearui/navigation/NavOptions;
+	public static synthetic fun copy$default (Lcom/gearui/navigation/NavOptions;ZLcom/gearui/navigation/NavTransition;Lcom/gearui/navigation/NavPresentation;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/gearui/navigation/NavOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOnPopRequest ()Lkotlin/jvm/functions/Function1;
+	public final fun getPresentation ()Lcom/gearui/navigation/NavPresentation;
+	public final fun getSwipeBackEnabled ()Z
+	public final fun getTransition ()Lcom/gearui/navigation/NavTransition;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/navigation/NavOptions$Companion {
+	public final fun getDefault ()Lcom/gearui/navigation/NavOptions;
+}
+
+public final class com/gearui/navigation/NavPresentation : java/lang/Enum {
+	public static final field Modal Lcom/gearui/navigation/NavPresentation;
+	public static final field Overlay Lcom/gearui/navigation/NavPresentation;
+	public static final field Push Lcom/gearui/navigation/NavPresentation;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/navigation/NavPresentation;
+	public static fun values ()[Lcom/gearui/navigation/NavPresentation;
+}
+
+public final class com/gearui/navigation/NavTransition : java/lang/Enum {
+	public static final field FadeIn Lcom/gearui/navigation/NavTransition;
+	public static final field ModalSheet Lcom/gearui/navigation/NavTransition;
+	public static final field SlidePush Lcom/gearui/navigation/NavTransition;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/navigation/NavTransition;
+	public static fun values ()[Lcom/gearui/navigation/NavTransition;
+}
+
+public abstract interface class com/gearui/navigation/NavigatorController {
+	public abstract fun forcePop ()Z
+	public abstract fun getCanPop ()Z
+	public abstract fun getCurrent ()Lcom/gearui/navigation/NavEntry;
+	public abstract fun getPrevious ()Lcom/gearui/navigation/NavEntry;
+	public abstract fun isTransitioning ()Z
+	public abstract fun pop ()Z
+	public abstract fun popTo (Ljava/lang/String;)Z
+	public abstract fun push (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;)V
+	public static synthetic fun push$default (Lcom/gearui/navigation/NavigatorController;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;ILjava/lang/Object;)V
+	public abstract fun replace (Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;)V
+	public static synthetic fun replace$default (Lcom/gearui/navigation/NavigatorController;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/navigation/NavOptions;ILjava/lang/Object;)V
+	public abstract fun resetTo (Ljava/lang/String;)V
+}
+
+public final class com/gearui/navigation/NavigatorKt {
+	public static final fun Navigator (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLkotlin/jvm/functions/Function1;Lcom/gearui/navigation/NavigatorController;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
+	public static final fun rememberNavigatorController (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)Lcom/gearui/navigation/NavigatorController;
+}
+
+public final class com/gearui/navigation/PopDecision : java/lang/Enum {
+	public static final field Allow Lcom/gearui/navigation/PopDecision;
+	public static final field Deny Lcom/gearui/navigation/PopDecision;
+	public static final field Pending Lcom/gearui/navigation/PopDecision;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/navigation/PopDecision;
+	public static fun values ()[Lcom/gearui/navigation/PopDecision;
+}
+
+public final class com/gearui/navigation/PopReason : java/lang/Enum {
+	public static final field BackButton Lcom/gearui/navigation/PopReason;
+	public static final field EdgeSwipe Lcom/gearui/navigation/PopReason;
+	public static final field Programmatic Lcom/gearui/navigation/PopReason;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/navigation/PopReason;
+	public static fun values ()[Lcom/gearui/navigation/PopReason;
+}
+
+public final class com/gearui/navigation/PopRequest {
+	public static final field $stable I
+	public fun <init> (Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;)V
+	public final fun component1 ()Lcom/gearui/navigation/NavEntry;
+	public final fun component2 ()Lcom/gearui/navigation/PopReason;
+	public final fun copy (Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;)Lcom/gearui/navigation/PopRequest;
+	public static synthetic fun copy$default (Lcom/gearui/navigation/PopRequest;Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;ILjava/lang/Object;)Lcom/gearui/navigation/PopRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntry ()Lcom/gearui/navigation/NavEntry;
+	public final fun getReason ()Lcom/gearui/navigation/PopReason;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/overlay/OverlayController {
 	public static final field $stable I
 	public fun <init> ()V
@@ -3305,7 +3424,7 @@ public final class com/gearui/overlay/OverlayPlacement : java/lang/Enum {
 }
 
 public final class com/gearui/primitives/AvatarKt {
-	public static final fun Avatar-abPzxxY (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;FFLjava/lang/Integer;ZZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Avatar-33gABag (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;FFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Ljava/lang/Integer;ZZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/primitives/BadgeBorder : java/lang/Enum {

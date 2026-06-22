@@ -753,6 +753,54 @@ final enum class com.gearui.foundation.keyboard/KeyboardDismissMode : kotlin/Enu
     final fun values(): kotlin/Array<com.gearui.foundation.keyboard/KeyboardDismissMode> // com.gearui.foundation.keyboard/KeyboardDismissMode.values|values#static(){}[0]
 }
 
+final enum class com.gearui.navigation/NavPresentation : kotlin/Enum<com.gearui.navigation/NavPresentation> { // com.gearui.navigation/NavPresentation|null[0]
+    enum entry Modal // com.gearui.navigation/NavPresentation.Modal|null[0]
+    enum entry Overlay // com.gearui.navigation/NavPresentation.Overlay|null[0]
+    enum entry Push // com.gearui.navigation/NavPresentation.Push|null[0]
+
+    final val entries // com.gearui.navigation/NavPresentation.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.navigation/NavPresentation> // com.gearui.navigation/NavPresentation.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.navigation/NavPresentation // com.gearui.navigation/NavPresentation.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.navigation/NavPresentation> // com.gearui.navigation/NavPresentation.values|values#static(){}[0]
+}
+
+final enum class com.gearui.navigation/NavTransition : kotlin/Enum<com.gearui.navigation/NavTransition> { // com.gearui.navigation/NavTransition|null[0]
+    enum entry FadeIn // com.gearui.navigation/NavTransition.FadeIn|null[0]
+    enum entry ModalSheet // com.gearui.navigation/NavTransition.ModalSheet|null[0]
+    enum entry SlidePush // com.gearui.navigation/NavTransition.SlidePush|null[0]
+
+    final val entries // com.gearui.navigation/NavTransition.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.navigation/NavTransition> // com.gearui.navigation/NavTransition.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.navigation/NavTransition // com.gearui.navigation/NavTransition.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.navigation/NavTransition> // com.gearui.navigation/NavTransition.values|values#static(){}[0]
+}
+
+final enum class com.gearui.navigation/PopDecision : kotlin/Enum<com.gearui.navigation/PopDecision> { // com.gearui.navigation/PopDecision|null[0]
+    enum entry Allow // com.gearui.navigation/PopDecision.Allow|null[0]
+    enum entry Deny // com.gearui.navigation/PopDecision.Deny|null[0]
+    enum entry Pending // com.gearui.navigation/PopDecision.Pending|null[0]
+
+    final val entries // com.gearui.navigation/PopDecision.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.navigation/PopDecision> // com.gearui.navigation/PopDecision.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.navigation/PopDecision // com.gearui.navigation/PopDecision.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.navigation/PopDecision> // com.gearui.navigation/PopDecision.values|values#static(){}[0]
+}
+
+final enum class com.gearui.navigation/PopReason : kotlin/Enum<com.gearui.navigation/PopReason> { // com.gearui.navigation/PopReason|null[0]
+    enum entry BackButton // com.gearui.navigation/PopReason.BackButton|null[0]
+    enum entry EdgeSwipe // com.gearui.navigation/PopReason.EdgeSwipe|null[0]
+    enum entry Programmatic // com.gearui.navigation/PopReason.Programmatic|null[0]
+
+    final val entries // com.gearui.navigation/PopReason.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.navigation/PopReason> // com.gearui.navigation/PopReason.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.navigation/PopReason // com.gearui.navigation/PopReason.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.navigation/PopReason> // com.gearui.navigation/PopReason.values|values#static(){}[0]
+}
+
 final enum class com.gearui.overlay/OverlayEvent : kotlin/Enum<com.gearui.overlay/OverlayEvent> { // com.gearui.overlay/OverlayEvent|null[0]
     enum entry AnchorDetached // com.gearui.overlay/OverlayEvent.AnchorDetached|null[0]
     enum entry BackPress // com.gearui.overlay/OverlayEvent.BackPress|null[0]
@@ -886,6 +934,35 @@ abstract interface com.gearui.foundation.primitives/ListScope { // com.gearui.fo
     abstract fun item(kotlin/Any? = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // com.gearui.foundation.primitives/ListScope.item|item(kotlin.Any?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
     abstract fun items(kotlin/Int, kotlin/Function1<kotlin/Int, kotlin/Any>? = ..., kotlin/Function3<kotlin/Int, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // com.gearui.foundation.primitives/ListScope.items|items(kotlin.Int;kotlin.Function1<kotlin.Int,kotlin.Any>?;kotlin.Function3<kotlin.Int,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
     abstract fun section(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, kotlin/Function1<com.gearui.foundation.primitives/ListScope, kotlin/Unit>) // com.gearui.foundation.primitives/ListScope.section|section(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;kotlin.Function1<com.gearui.foundation.primitives.ListScope,kotlin.Unit>){}[0]
+}
+
+abstract interface com.gearui.navigation/EntryScope { // com.gearui.navigation/EntryScope|null[0]
+    abstract val controller // com.gearui.navigation/EntryScope.controller|{}controller[0]
+        abstract fun <get-controller>(): com.gearui.navigation/NavigatorController // com.gearui.navigation/EntryScope.controller.<get-controller>|<get-controller>(){}[0]
+    abstract val entry // com.gearui.navigation/EntryScope.entry|{}entry[0]
+        abstract fun <get-entry>(): com.gearui.navigation/NavEntry // com.gearui.navigation/EntryScope.entry.<get-entry>|<get-entry>(){}[0]
+    abstract val isForeground // com.gearui.navigation/EntryScope.isForeground|{}isForeground[0]
+        abstract fun <get-isForeground>(): kotlin/Boolean // com.gearui.navigation/EntryScope.isForeground.<get-isForeground>|<get-isForeground>(){}[0]
+    abstract val isTop // com.gearui.navigation/EntryScope.isTop|{}isTop[0]
+        abstract fun <get-isTop>(): kotlin/Boolean // com.gearui.navigation/EntryScope.isTop.<get-isTop>|<get-isTop>(){}[0]
+}
+
+abstract interface com.gearui.navigation/NavigatorController { // com.gearui.navigation/NavigatorController|null[0]
+    abstract val canPop // com.gearui.navigation/NavigatorController.canPop|{}canPop[0]
+        abstract fun <get-canPop>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.canPop.<get-canPop>|<get-canPop>(){}[0]
+    abstract val current // com.gearui.navigation/NavigatorController.current|{}current[0]
+        abstract fun <get-current>(): com.gearui.navigation/NavEntry // com.gearui.navigation/NavigatorController.current.<get-current>|<get-current>(){}[0]
+    abstract val isTransitioning // com.gearui.navigation/NavigatorController.isTransitioning|{}isTransitioning[0]
+        abstract fun <get-isTransitioning>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.isTransitioning.<get-isTransitioning>|<get-isTransitioning>(){}[0]
+    abstract val previous // com.gearui.navigation/NavigatorController.previous|{}previous[0]
+        abstract fun <get-previous>(): com.gearui.navigation/NavEntry? // com.gearui.navigation/NavigatorController.previous.<get-previous>|<get-previous>(){}[0]
+
+    abstract fun forcePop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.forcePop|forcePop(){}[0]
+    abstract fun pop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.pop|pop(){}[0]
+    abstract fun popTo(kotlin/String): kotlin/Boolean // com.gearui.navigation/NavigatorController.popTo|popTo(kotlin.String){}[0]
+    abstract fun push(kotlin/String, kotlin/String? = ..., com.gearui.navigation/NavOptions = ...) // com.gearui.navigation/NavigatorController.push|push(kotlin.String;kotlin.String?;com.gearui.navigation.NavOptions){}[0]
+    abstract fun replace(kotlin/String, kotlin/String? = ..., com.gearui.navigation/NavOptions = ...) // com.gearui.navigation/NavigatorController.replace|replace(kotlin.String;kotlin.String?;com.gearui.navigation.NavOptions){}[0]
+    abstract fun resetTo(kotlin/String) // com.gearui.navigation/NavigatorController.resetTo|resetTo(kotlin.String){}[0]
 }
 
 abstract interface com.gearui.system/StatusBarController { // com.gearui.system/StatusBarController|null[0]
@@ -1395,7 +1472,7 @@ final class com.gearui.components.navigationmenu/NavigationMenuSection { // com.
 
 final class com.gearui.components.notification/NotificationController { // com.gearui.components.notification/NotificationController|null[0]
     final fun dismiss() // com.gearui.components.notification/NotificationController.dismiss|dismiss(){}[0]
-    final fun show(kotlin/String, kotlin/String? = ..., com.gearui.components.notification/NotificationType = ..., kotlin/String? = ..., kotlin/Function0<kotlin/Unit>? = ..., kotlin/Long = ..., kotlin/Boolean = ..., kotlin/Float = ...) // com.gearui.components.notification/NotificationController.show|show(kotlin.String;kotlin.String?;com.gearui.components.notification.NotificationType;kotlin.String?;kotlin.Function0<kotlin.Unit>?;kotlin.Long;kotlin.Boolean;kotlin.Float){}[0]
+    final fun show(kotlin/String, kotlin/String? = ..., com.gearui.components.notification/NotificationType = ..., kotlin/String? = ..., kotlin/Function0<kotlin/Unit>? = ..., kotlin/Long = ..., kotlin/Boolean = ..., kotlin/Float = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>? = ..., kotlin/Function0<kotlin/Unit>? = ...) // com.gearui.components.notification/NotificationController.show|show(kotlin.String;kotlin.String?;com.gearui.components.notification.NotificationType;kotlin.String?;kotlin.Function0<kotlin.Unit>?;kotlin.Long;kotlin.Boolean;kotlin.Float;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function0<kotlin.Unit>?){}[0]
 }
 
 final class com.gearui.components.notification/NotificationData { // com.gearui.components.notification/NotificationData|null[0]
@@ -2466,6 +2543,68 @@ final class com.gearui.i18n/StringsPatch { // com.gearui.i18n/StringsPatch|null[
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.i18n/StringsPatch.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.i18n/StringsPatch.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.i18n/StringsPatch.toString|toString(){}[0]
+}
+
+final class com.gearui.navigation/NavEntry { // com.gearui.navigation/NavEntry|null[0]
+    constructor <init>(kotlin/String, kotlin/String, com.gearui.navigation/NavOptions = ...) // com.gearui.navigation/NavEntry.<init>|<init>(kotlin.String;kotlin.String;com.gearui.navigation.NavOptions){}[0]
+
+    final val key // com.gearui.navigation/NavEntry.key|{}key[0]
+        final fun <get-key>(): kotlin/String // com.gearui.navigation/NavEntry.key.<get-key>|<get-key>(){}[0]
+    final val options // com.gearui.navigation/NavEntry.options|{}options[0]
+        final fun <get-options>(): com.gearui.navigation/NavOptions // com.gearui.navigation/NavEntry.options.<get-options>|<get-options>(){}[0]
+    final val route // com.gearui.navigation/NavEntry.route|{}route[0]
+        final fun <get-route>(): kotlin/String // com.gearui.navigation/NavEntry.route.<get-route>|<get-route>(){}[0]
+
+    final fun component1(): kotlin/String // com.gearui.navigation/NavEntry.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.gearui.navigation/NavEntry.component2|component2(){}[0]
+    final fun component3(): com.gearui.navigation/NavOptions // com.gearui.navigation/NavEntry.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., com.gearui.navigation/NavOptions = ...): com.gearui.navigation/NavEntry // com.gearui.navigation/NavEntry.copy|copy(kotlin.String;kotlin.String;com.gearui.navigation.NavOptions){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/NavEntry.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.navigation/NavEntry.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.navigation/NavEntry.toString|toString(){}[0]
+}
+
+final class com.gearui.navigation/NavOptions { // com.gearui.navigation/NavOptions|null[0]
+    constructor <init>(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopRequest, com.gearui.navigation/PopDecision>? = ...) // com.gearui.navigation/NavOptions.<init>|<init>(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopRequest,com.gearui.navigation.PopDecision>?){}[0]
+
+    final val onPopRequest // com.gearui.navigation/NavOptions.onPopRequest|{}onPopRequest[0]
+        final fun <get-onPopRequest>(): kotlin/Function1<com.gearui.navigation/PopRequest, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.onPopRequest.<get-onPopRequest>|<get-onPopRequest>(){}[0]
+    final val presentation // com.gearui.navigation/NavOptions.presentation|{}presentation[0]
+        final fun <get-presentation>(): com.gearui.navigation/NavPresentation // com.gearui.navigation/NavOptions.presentation.<get-presentation>|<get-presentation>(){}[0]
+    final val swipeBackEnabled // com.gearui.navigation/NavOptions.swipeBackEnabled|{}swipeBackEnabled[0]
+        final fun <get-swipeBackEnabled>(): kotlin/Boolean // com.gearui.navigation/NavOptions.swipeBackEnabled.<get-swipeBackEnabled>|<get-swipeBackEnabled>(){}[0]
+    final val transition // com.gearui.navigation/NavOptions.transition|{}transition[0]
+        final fun <get-transition>(): com.gearui.navigation/NavTransition // com.gearui.navigation/NavOptions.transition.<get-transition>|<get-transition>(){}[0]
+
+    final fun component1(): kotlin/Boolean // com.gearui.navigation/NavOptions.component1|component1(){}[0]
+    final fun component2(): com.gearui.navigation/NavTransition // com.gearui.navigation/NavOptions.component2|component2(){}[0]
+    final fun component3(): com.gearui.navigation/NavPresentation // com.gearui.navigation/NavOptions.component3|component3(){}[0]
+    final fun component4(): kotlin/Function1<com.gearui.navigation/PopRequest, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.component4|component4(){}[0]
+    final fun copy(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopRequest, com.gearui.navigation/PopDecision>? = ...): com.gearui.navigation/NavOptions // com.gearui.navigation/NavOptions.copy|copy(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopRequest,com.gearui.navigation.PopDecision>?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/NavOptions.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.navigation/NavOptions.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.navigation/NavOptions.toString|toString(){}[0]
+
+    final object Companion { // com.gearui.navigation/NavOptions.Companion|null[0]
+        final val Default // com.gearui.navigation/NavOptions.Companion.Default|{}Default[0]
+            final fun <get-Default>(): com.gearui.navigation/NavOptions // com.gearui.navigation/NavOptions.Companion.Default.<get-Default>|<get-Default>(){}[0]
+    }
+}
+
+final class com.gearui.navigation/PopRequest { // com.gearui.navigation/PopRequest|null[0]
+    constructor <init>(com.gearui.navigation/NavEntry, com.gearui.navigation/PopReason) // com.gearui.navigation/PopRequest.<init>|<init>(com.gearui.navigation.NavEntry;com.gearui.navigation.PopReason){}[0]
+
+    final val entry // com.gearui.navigation/PopRequest.entry|{}entry[0]
+        final fun <get-entry>(): com.gearui.navigation/NavEntry // com.gearui.navigation/PopRequest.entry.<get-entry>|<get-entry>(){}[0]
+    final val reason // com.gearui.navigation/PopRequest.reason|{}reason[0]
+        final fun <get-reason>(): com.gearui.navigation/PopReason // com.gearui.navigation/PopRequest.reason.<get-reason>|<get-reason>(){}[0]
+
+    final fun component1(): com.gearui.navigation/NavEntry // com.gearui.navigation/PopRequest.component1|component1(){}[0]
+    final fun component2(): com.gearui.navigation/PopReason // com.gearui.navigation/PopRequest.component2|component2(){}[0]
+    final fun copy(com.gearui.navigation/NavEntry = ..., com.gearui.navigation/PopReason = ...): com.gearui.navigation/PopRequest // com.gearui.navigation/PopRequest.copy|copy(com.gearui.navigation.NavEntry;com.gearui.navigation.PopReason){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/PopRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.navigation/PopRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.navigation/PopRequest.toString|toString(){}[0]
 }
 
 final class com.gearui.overlay/OverlayController { // com.gearui.overlay/OverlayController|null[0]
@@ -4070,6 +4209,11 @@ final val com.gearui.i18n/com_gearui_i18n_Strings$stableprop // com.gearui.i18n/
 final val com.gearui.i18n/com_gearui_i18n_StringsPatch$stableprop // com.gearui.i18n/com_gearui_i18n_StringsPatch$stableprop|#static{}com_gearui_i18n_StringsPatch$stableprop[0]
 final val com.gearui.i18n/isEmpty // com.gearui.i18n/isEmpty|@com.gearui.i18n.StringsPatch{}isEmpty[0]
     final fun (com.gearui.i18n/StringsPatch).<get-isEmpty>(): kotlin/Boolean // com.gearui.i18n/isEmpty.<get-isEmpty>|<get-isEmpty>@com.gearui.i18n.StringsPatch(){}[0]
+final val com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop // com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop|#static{}com_gearui_navigation_NavEntry$stableprop[0]
+final val com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop // com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop|#static{}com_gearui_navigation_NavLayer$stableprop[0]
+final val com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop // com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop|#static{}com_gearui_navigation_NavOptions$stableprop[0]
+final val com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop // com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop|#static{}com_gearui_navigation_NavigatorState$stableprop[0]
+final val com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop // com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop|#static{}com_gearui_navigation_PopRequest$stableprop[0]
 final val com.gearui.overlay/LocalOverlayController // com.gearui.overlay/LocalOverlayController|{}LocalOverlayController[0]
     final fun <get-LocalOverlayController>(): androidx.compose.runtime/ProvidableCompositionLocal<com.gearui.overlay/OverlayController> // com.gearui.overlay/LocalOverlayController.<get-LocalOverlayController>|<get-LocalOverlayController>(){}[0]
 final val com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop // com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop|#static{}com_gearui_overlay_OverlayController$stableprop[0]
@@ -4182,7 +4326,7 @@ final fun com.gearui.components.anchor/com_gearui_components_anchor_AnchorState$
 final fun com.gearui.components.anchor/rememberAnchorState(kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.gearui.components.anchor/AnchorState // com.gearui.components.anchor/rememberAnchorState|rememberAnchorState(kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.backtop/BackTop(kotlin/Boolean, kotlin/Function0<kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, com.gearui.components.backtop/BackTopStyle?, com.gearui.components.backtop/BackTopTheme?, kotlin/Boolean, kotlin/String?, kotlin/String?, kotlin/Pair<com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.backtop/BackTop|BackTop(kotlin.Boolean;kotlin.Function0<kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;com.gearui.components.backtop.BackTopStyle?;com.gearui.components.backtop.BackTopTheme?;kotlin.Boolean;kotlin.String?;kotlin.String?;kotlin.Pair<com.tencent.kuikly.compose.ui.unit.Dp,com.tencent.kuikly.compose.ui.unit.Dp>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.backtop/BackTopCustom(kotlin/Boolean, kotlin/Function0<kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, com.gearui.components.backtop/BackTopTheme?, kotlin/Pair<com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp>?, kotlin/Function3<com.tencent.kuikly.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.backtop/BackTopCustom|BackTopCustom(kotlin.Boolean;kotlin.Function0<kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;com.gearui.components.backtop.BackTopTheme?;kotlin.Pair<com.tencent.kuikly.compose.ui.unit.Dp,com.tencent.kuikly.compose.ui.unit.Dp>?;kotlin.Function3<com.tencent.kuikly.compose.foundation.layout.BoxScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-final fun com.gearui.components.bottomnavbar/BottomNavBar(kotlin.collections/List<com.gearui.components.bottomnavbar/BottomNavItem>, kotlin/String?, kotlin/Function1<kotlin/String, kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Boolean, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.bottomnavbar/BottomNavBar|BottomNavBar(kotlin.collections.List<com.gearui.components.bottomnavbar.BottomNavItem>;kotlin.String?;kotlin.Function1<kotlin.String,kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Boolean;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.components.bottomnavbar/BottomNavBar(kotlin.collections/List<com.gearui.components.bottomnavbar/BottomNavItem>, kotlin/String?, kotlin/Function1<kotlin/String, kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Boolean, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.components.bottomnavbar/BottomNavBar|BottomNavBar(kotlin.collections.List<com.gearui.components.bottomnavbar.BottomNavItem>;kotlin.String?;kotlin.Function1<kotlin.String,kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Boolean;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.bottomnavbar/com_gearui_components_bottomnavbar_BottomNavItem$stableprop_getter(): kotlin/Int // com.gearui.components.bottomnavbar/com_gearui_components_bottomnavbar_BottomNavItem$stableprop_getter|com_gearui_components_bottomnavbar_BottomNavItem$stableprop_getter(){}[0]
 final fun com.gearui.components.bottomsheet/BottomSheet(kotlin/Boolean, kotlin/Function0<kotlin/Unit>, kotlin/String?, kotlin/String?, kotlin.collections/List<com.gearui.components.bottomsheet/BottomSheetItem>, kotlin/Boolean, kotlin/String?, kotlin/Boolean, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Function2<com.gearui.components.bottomsheet/BottomSheetItem, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.bottomsheet/BottomSheet|BottomSheet(kotlin.Boolean;kotlin.Function0<kotlin.Unit>;kotlin.String?;kotlin.String?;kotlin.collections.List<com.gearui.components.bottomsheet.BottomSheetItem>;kotlin.Boolean;kotlin.String?;kotlin.Boolean;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Function2<com.gearui.components.bottomsheet.BottomSheetItem,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.bottomsheet/com_gearui_components_bottomsheet_BottomSheet$stableprop_getter(): kotlin/Int // com.gearui.components.bottomsheet/com_gearui_components_bottomsheet_BottomSheet$stableprop_getter|com_gearui_components_bottomsheet_BottomSheet$stableprop_getter(){}[0]
@@ -4250,7 +4394,7 @@ final fun com.gearui.components.navbar/com_gearui_components_navbar_NavBarItem$s
 final fun com.gearui.components.navigationmenu/NavigationMenu(kotlin.collections/List<com.gearui.components.navigationmenu/NavigationMenuSection>, kotlin/String?, kotlin/String?, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Function1<kotlin/String, kotlin/Unit>, kotlin/Function1<kotlin/String, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.navigationmenu/NavigationMenu|NavigationMenu(kotlin.collections.List<com.gearui.components.navigationmenu.NavigationMenuSection>;kotlin.String?;kotlin.String?;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Function1<kotlin.String,kotlin.Unit>;kotlin.Function1<kotlin.String,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.navigationmenu/com_gearui_components_navigationmenu_NavigationMenuItem$stableprop_getter(): kotlin/Int // com.gearui.components.navigationmenu/com_gearui_components_navigationmenu_NavigationMenuItem$stableprop_getter|com_gearui_components_navigationmenu_NavigationMenuItem$stableprop_getter(){}[0]
 final fun com.gearui.components.navigationmenu/com_gearui_components_navigationmenu_NavigationMenuSection$stableprop_getter(): kotlin/Int // com.gearui.components.navigationmenu/com_gearui_components_navigationmenu_NavigationMenuSection$stableprop_getter|com_gearui_components_navigationmenu_NavigationMenuSection$stableprop_getter(){}[0]
-final fun com.gearui.components.notification/Notification(kotlin/String, kotlin/Boolean, kotlin/Function0<kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, kotlin/String?, com.gearui.components.notification/NotificationType?, kotlin/String?, kotlin/Function0<kotlin/Unit>?, kotlin/Long, kotlin/Boolean, kotlin/Float, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.components.notification/Notification|Notification(kotlin.String;kotlin.Boolean;kotlin.Function0<kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;kotlin.String?;com.gearui.components.notification.NotificationType?;kotlin.String?;kotlin.Function0<kotlin.Unit>?;kotlin.Long;kotlin.Boolean;kotlin.Float;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.components.notification/Notification(kotlin/String, kotlin/Boolean, kotlin/Function0<kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, kotlin/String?, com.gearui.components.notification/NotificationType?, kotlin/String?, kotlin/Function0<kotlin/Unit>?, kotlin/Long, kotlin/Boolean, kotlin/Float, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Function0<kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.components.notification/Notification|Notification(kotlin.String;kotlin.Boolean;kotlin.Function0<kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;kotlin.String?;com.gearui.components.notification.NotificationType?;kotlin.String?;kotlin.Function0<kotlin.Unit>?;kotlin.Long;kotlin.Boolean;kotlin.Float;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function0<kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.notification/NotificationHost(com.gearui.components.notification/NotificationHostState, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Float, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.notification/NotificationHost|NotificationHost(com.gearui.components.notification.NotificationHostState;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Float;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.components.notification/com_gearui_components_notification_NotificationController$stableprop_getter(): kotlin/Int // com.gearui.components.notification/com_gearui_components_notification_NotificationController$stableprop_getter|com_gearui_components_notification_NotificationController$stableprop_getter(){}[0]
 final fun com.gearui.components.notification/com_gearui_components_notification_NotificationData$stableprop_getter(): kotlin/Int // com.gearui.components.notification/com_gearui_components_notification_NotificationData$stableprop_getter|com_gearui_components_notification_NotificationData$stableprop_getter(){}[0]
@@ -4454,6 +4598,13 @@ final fun com.gearui.i18n/com_gearui_i18n_StringPacks$stableprop_getter(): kotli
 final fun com.gearui.i18n/com_gearui_i18n_Strings$stableprop_getter(): kotlin/Int // com.gearui.i18n/com_gearui_i18n_Strings$stableprop_getter|com_gearui_i18n_Strings$stableprop_getter(){}[0]
 final fun com.gearui.i18n/com_gearui_i18n_StringsPatch$stableprop_getter(): kotlin/Int // com.gearui.i18n/com_gearui_i18n_StringsPatch$stableprop_getter|com_gearui_i18n_StringsPatch$stableprop_getter(){}[0]
 final fun com.gearui.i18n/normalizeLanguageTag(kotlin/String): kotlin/String // com.gearui.i18n/normalizeLanguageTag|normalizeLanguageTag(kotlin.String){}[0]
+final fun com.gearui.navigation/Navigator(kotlin/String, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Boolean, kotlin/Function1<com.gearui.navigation/NavEntry, kotlin/Unit>?, com.gearui.navigation/NavigatorController?, kotlin/Function4<com.gearui.navigation/EntryScope, com.gearui.navigation/NavEntry, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.navigation/Navigator|Navigator(kotlin.String;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Boolean;kotlin.Function1<com.gearui.navigation.NavEntry,kotlin.Unit>?;com.gearui.navigation.NavigatorController?;kotlin.Function4<com.gearui.navigation.EntryScope,com.gearui.navigation.NavEntry,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop_getter|com_gearui_navigation_NavEntry$stableprop_getter(){}[0]
+final fun com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop_getter|com_gearui_navigation_NavLayer$stableprop_getter(){}[0]
+final fun com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop_getter|com_gearui_navigation_NavOptions$stableprop_getter(){}[0]
+final fun com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop_getter|com_gearui_navigation_NavigatorState$stableprop_getter(){}[0]
+final fun com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop_getter|com_gearui_navigation_PopRequest$stableprop_getter(){}[0]
+final fun com.gearui.navigation/rememberNavigatorController(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int): com.gearui.navigation/NavigatorController // com.gearui.navigation/rememberNavigatorController|rememberNavigatorController(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.overlay/OverlayHost(com.gearui.overlay/OverlayController, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.overlay/OverlayHost|OverlayHost(com.gearui.overlay.OverlayController;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.overlay/OverlayRoot(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.overlay/OverlayRoot|OverlayRoot(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop_getter(): kotlin/Int // com.gearui.overlay/com_gearui_overlay_OverlayController$stableprop_getter|com_gearui_overlay_OverlayController$stableprop_getter(){}[0]
@@ -4466,7 +4617,7 @@ final fun com.gearui.overlay/rememberOverlay(androidx.compose.runtime/Composer?,
 final fun com.gearui.primitives.composite/Card(com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, kotlin/Float, com.tencent.kuikly.compose.foundation.layout/PaddingValues?, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, com.gearui.foundation.interaction/MutableInteractionSource?, kotlin/Function3<com.tencent.kuikly.compose.foundation.layout/ColumnScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.primitives.composite/Card|Card(com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;kotlin.Float;com.tencent.kuikly.compose.foundation.layout.PaddingValues?;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;com.gearui.foundation.interaction.MutableInteractionSource?;kotlin.Function3<com.tencent.kuikly.compose.foundation.layout.ColumnScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.primitives.composite/Cell(com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, com.gearui.foundation.interaction/MutableInteractionSource?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Boolean, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.primitives.composite/Cell|Cell(com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;com.gearui.foundation.interaction.MutableInteractionSource?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Boolean;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.primitives.composite/ListItem(kotlin/String, com.tencent.kuikly.compose.ui/Modifier?, kotlin/String?, kotlin/String?, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.primitives.composite/ListItem|ListItem(kotlin.String;com.tencent.kuikly.compose.ui.Modifier?;kotlin.String?;kotlin.String?;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-final fun com.gearui.primitives/Avatar(com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.graphics.painter/Painter?, kotlin/String?, com.tencent.kuikly.compose.ui.graphics.painter/Painter?, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Int?, kotlin/Boolean, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.primitives/Avatar|Avatar(com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.graphics.painter.Painter?;kotlin.String?;com.tencent.kuikly.compose.ui.graphics.painter.Painter?;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Int?;kotlin.Boolean;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.primitives/Avatar(com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.graphics.painter/Painter?, kotlin/String?, com.tencent.kuikly.compose.ui.graphics.painter/Painter?, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, kotlin/Int?, kotlin/Boolean, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.primitives/Avatar|Avatar(com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.graphics.painter.Painter?;kotlin.String?;com.tencent.kuikly.compose.ui.graphics.painter.Painter?;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;kotlin.Int?;kotlin.Boolean;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.primitives/Badge(com.tencent.kuikly.compose.ui/Modifier?, com.gearui.primitives/BadgeType?, kotlin/Int?, kotlin/Int, kotlin/String?, com.gearui.primitives/BadgeSize?, com.gearui.primitives/BadgeBorder?, com.gearui.primitives/BadgeTheme?, com.tencent.kuikly.compose.ui.graphics/Color?, com.tencent.kuikly.compose.ui.graphics/Color?, kotlin/Boolean, kotlin/Pair<com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp>?, com.tencent.kuikly.compose.ui/Alignment?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int, kotlin/Int) // com.gearui.primitives/Badge|Badge(com.tencent.kuikly.compose.ui.Modifier?;com.gearui.primitives.BadgeType?;kotlin.Int?;kotlin.Int;kotlin.String?;com.gearui.primitives.BadgeSize?;com.gearui.primitives.BadgeBorder?;com.gearui.primitives.BadgeTheme?;com.tencent.kuikly.compose.ui.graphics.Color?;com.tencent.kuikly.compose.ui.graphics.Color?;kotlin.Boolean;kotlin.Pair<com.tencent.kuikly.compose.ui.unit.Dp,com.tencent.kuikly.compose.ui.unit.Dp>?;com.tencent.kuikly.compose.ui.Alignment?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.primitives/Divider(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.primitives/Divider|Divider(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.primitives/DividerFull(androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.primitives/DividerFull|DividerFull(androidx.compose.runtime.Composer?;kotlin.Int){}[0]

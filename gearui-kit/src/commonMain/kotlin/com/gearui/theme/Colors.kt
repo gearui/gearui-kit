@@ -109,35 +109,36 @@ object Themes {
 
     val Dark = ThemeSpec(
         colors = Colors(
-            background = Color(0xFF09090B),
+            // 中性灰阶梯：纯中性（R=G=B），对标 iOS，去除旧 zinc 蓝味
+            background = Color(0xFF0A0A0A),
             foreground = Color(0xFFFAFAFA),
-            surface = Color(0xFF111217),
+            surface = Color(0xFF121212),
             surfaceForeground = Color(0xFFFAFAFA),
-            card = Color(0xFF111217),
+            card = Color(0xFF121212),
             cardForeground = Color(0xFFFAFAFA),
-            popover = Color(0xFF1A1C24),
+            popover = Color(0xFF1C1C1C),
             popoverForeground = Color(0xFFFAFAFA),
-            muted = Color(0xFF1A1C24),
-            mutedForeground = Color(0xFFA1A1AA),
+            muted = Color(0xFF1C1C1C),
+            mutedForeground = Color(0xFFA1A1A1),
 
             primary = Color(0xFFFAFAFA),
-            primaryForeground = Color(0xFF09090B),
-            secondary = Color(0xFF27272A),
+            primaryForeground = Color(0xFF0A0A0A),
+            secondary = Color(0xFF272727),
             secondaryForeground = Color(0xFFFAFAFA),
-            accent = Color(0xFF27272A),
+            accent = Color(0xFF272727),
             accentForeground = Color(0xFFFAFAFA),
 
             destructive = Color(0xFFF87171),
             destructiveForeground = Color(0xFFFFFFFF),
             success = Color(0xFF22C55E),
-            successForeground = Color(0xFF09090B),
+            successForeground = Color(0xFF0A0A0A),
             warning = Color(0xFFF59E0B),
-            warningForeground = Color(0xFF09090B),
+            warningForeground = Color(0xFF0A0A0A),
             info = Color(0xFF60A5FA),
-            infoForeground = Color(0xFF09090B),
+            infoForeground = Color(0xFF0A0A0A),
 
-            border = Color(0xFF2F3340),
-            input = Color(0xFF2F3340),
+            border = Color(0xFF333333),
+            input = Color(0xFF333333),
             ring = Color(0xFFFAFAFA),
         )
     )

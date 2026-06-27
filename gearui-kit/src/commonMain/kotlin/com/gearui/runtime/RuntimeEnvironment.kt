@@ -3,8 +3,13 @@ package com.gearui.runtime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.withFrameNanos
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -42,6 +47,12 @@ data class RuntimeFlags(
 
 val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }
 val LocalRuntimeFlags = staticCompositionLocalOf { RuntimeFlags() }
+
+/**
+ * 冷启动安全区 ticker 的逐帧轮询上限（~2s @60fps）。
+ * 防止在真正 0 顶部 inset 的设备（如无刘海旧机的某些形态）上无限逐帧空转。
+ */
+private const val MAX_INSET_SETTLE_FRAMES = 120
 
 /**
  * 顶部安全区稳定器（粘滞最大值兜底）。
@@ -87,6 +98,40 @@ fun ProvideRuntimeEnvironment(
     content: @Composable () -> Unit
 ) {
     val configuration = LocalConfiguration.current
+
+    // ── 冷启动安全区竞态修复 ──────────────────────────────────────────────
+    // Kuikly Compose 层的 `configuration.safeAreaInsets` 是裸 getter
+    // （compose/.../platform/LocalConfiguration.kt：`get() = pageData.safeAreaInsets`），
+    // **不是 Compose snapshot state**。同一个 Configuration 里 width/height/fontScale 都用
+    // mutableStateOf 包了反应式，唯独 safeAreaInsets 漏了：native 在首帧之后才把真实 inset
+    // 投递进 pageData（Pager.handlePagerViewSizeDidChanged），这一步**不会触发 Compose 重组**。
+    //
+    // 后果：冷启动若 Compose 首帧组合早于 inset 到达，顶部安全区读到 0 后就**卡住不恢复**
+    // （NavBar 被状态栏/刘海盖住、内容顶到状态栏下），只有等后续某次尺寸变化顺带触发重组才
+    // 自愈——纯竖屏冷启动没有这种事件，于是表现为「偶尔启动顶部塌掉」。
+    // （Android 侧靠 host 主动 push RuntimeInsetsBridge 兜底，iOS 没有，故 iOS 高发。）
+    //
+    // 修法：用一个逐帧 ticker 在冷启动期间强制重组，使下方 fresh 读取能追平真实 inset；
+    // 一旦观测到非 0 顶部 inset 即收敛停止。之后 orientation/键盘等仍由 fresh 读取 + 各自
+    // 反应式路径覆盖，本 ticker 不再参与。设帧数上限避免在真正 0 顶 inset 的设备上空转。
+    var insetSettleTick by remember { mutableStateOf(0) }
+    LaunchedEffect(configuration) {
+        var frames = 0
+        var lastTop = configuration.safeAreaInsets.top
+        while (lastTop <= 0f && frames < MAX_INSET_SETTLE_FRAMES) {
+            withFrameNanos { }
+            frames++
+            val now = configuration.safeAreaInsets.top
+            if (now != lastTop) {
+                lastTop = now
+                insetSettleTick++ // 仅在真正变化时强制一次重组
+            }
+        }
+    }
+    // 读 tick 建立重组依赖（值本身不使用）；冷启动期间它被 bump 后会让下面重新 fresh 读取。
+    @Suppress("UNUSED_EXPRESSION")
+    insetSettleTick
+
     val safeInsets = configuration.safeAreaInsets
     val baseSafeArea = SafeArea(
         top = safeInsets.top.dp,

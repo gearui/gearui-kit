@@ -1,29 +1,36 @@
 PODS:
   - gearui_sample (1.0)
-  - OpenKuiklyIOSRender (2.21.0)
+  - OpenKuiklyIOSRender (2.22.0)
   - SDWebImage (5.20.1):
     - SDWebImage/Core (= 5.20.1)
   - SDWebImage/Core (5.20.1)
 
 DEPENDENCIES:
   - gearui_sample (from `../`)
-  - OpenKuiklyIOSRender (= 2.21.0)
+  - OpenKuiklyIOSRender (from `https://github.com/Tencent-TDS/KuiklyUI.git`, tag `2.22.0`)
   - SDWebImage (~> 5.20.1)
 
 SPEC REPOS:
   trunk:
-    - OpenKuiklyIOSRender
     - SDWebImage
 
 EXTERNAL SOURCES:
   gearui_sample:
     :path: "../"
+  OpenKuiklyIOSRender:
+    :git: https://github.com/Tencent-TDS/KuiklyUI.git
+    :tag: 2.22.0
+
+CHECKOUT OPTIONS:
+  OpenKuiklyIOSRender:
+    :git: https://github.com/Tencent-TDS/KuiklyUI.git
+    :tag: 2.22.0
 
 SPEC CHECKSUMS:
   gearui_sample: c66dea8c6e09d758a50125fa8dad83271ed23e40
-  OpenKuiklyIOSRender: 3a1d74e85639e26e82e575134dc5bdf5dd43095b
+  OpenKuiklyIOSRender: fdc05767dbec7fb2ba4f468d44a3a7ab8a35b6b0
   SDWebImage: 33d0f23bddeb5d209ae959153883247be6703713
 
-PODFILE CHECKSUM: 2c51d9e14bbb661d08c87dbae720bfbed3d069a0
+PODFILE CHECKSUM: 8c3c5b2555c5fd3b369f2ee9a839712c7066c824
 
 COCOAPODS: 1.16.2

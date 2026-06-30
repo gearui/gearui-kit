@@ -38,7 +38,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // GearUI-KuiklyUI depends ONLY on KuiklyUI Runtime
-            api("com.tencent.kuikly-open:compose:2.21.0-2.1.21")
+            api("com.tencent.kuikly-open:compose:2.22.0-2.1.21")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)

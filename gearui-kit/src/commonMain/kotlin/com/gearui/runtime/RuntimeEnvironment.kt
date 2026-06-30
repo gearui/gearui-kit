@@ -3,13 +3,8 @@ package com.gearui.runtime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.runtime.withFrameNanos
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -49,18 +44,11 @@ val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }
 val LocalRuntimeFlags = staticCompositionLocalOf { RuntimeFlags() }
 
 /**
- * 冷启动安全区 ticker 的逐帧轮询上限（~2s @60fps）。
- * 防止在真正 0 顶部 inset 的设备（如无刘海旧机的某些形态）上无限逐帧空转。
- */
-private const val MAX_INSET_SETTLE_FRAMES = 120
-
-/**
- * 顶部安全区稳定器（粘滞最大值兜底）。
+ * 顶部安全区稳定器。
  *
- * Kuikly runtime 的 `safeAreaInsets.top` 在某些 host / 某些导航时机会偶发回 0，导致顶部
- * 留白塌掉、内容压到状态栏。竖屏 status bar 高度不会变小，所以一旦观测到非 0 顶部 inset，
- * 就把它粘滞住，后续偶发的 0 帧用粘滞值兜底。orientation（横竖屏）切换时重置粘滞，避免把
- * 上一方向的过大顶值带到新方向。
+ * Kuikly iOS 2.21.0 及以后在 Scene 尚未 active 时可能先上报 0；同一方向内只过滤这种瞬时 0，
+ * 非零变化必须立即接受（通话状态栏、分屏和窗口变化都可能合法改变 top）。方向改变时清空
+ * 缓存，避免把竖屏值带入横屏。
  *
  * 注意：bottom 不做粘滞——home indicator / 键盘会真实变化，简单取最大值会把输入框搞乱
  * （留给 Phase 2 的 keyboard/home-indicator 分离处理）。
@@ -70,19 +58,21 @@ private const val MAX_INSET_SETTLE_FRAMES = 120
  */
 internal class SafeAreaStabilizer {
     private var lastNonZeroTop: Dp = 0.dp
-    private var orientationKey: Boolean? = null
+    private var portrait: Boolean? = null
 
-    fun stabilize(raw: SafeArea): SafeArea {
-        // 用 left/right 是否有 inset 粗略判定横屏；翻转即重置顶部粘滞。
-        val landscapeish = raw.left.value > 0f || raw.right.value > 0f
-        if (orientationKey != landscapeish) {
-            orientationKey = landscapeish
+    fun stabilize(raw: SafeArea, isPortrait: Boolean, fallbackTop: Dp): SafeArea {
+        if (portrait != isPortrait) {
+            portrait = isPortrait
             lastNonZeroTop = 0.dp
         }
-        if (raw.top.value > lastNonZeroTop.value) {
+        if (raw.top > 0.dp) {
             lastNonZeroTop = raw.top
         }
-        val stableTop = if (raw.top.value >= lastNonZeroTop.value) raw.top else lastNonZeroTop
+        val stableTop = when {
+            raw.top > 0.dp -> raw.top
+            lastNonZeroTop > 0.dp -> lastNonZeroTop
+            else -> fallbackTop
+        }
         return SafeArea(
             top = stableTop,
             bottom = raw.bottom,
@@ -99,39 +89,6 @@ fun ProvideRuntimeEnvironment(
 ) {
     val configuration = LocalConfiguration.current
 
-    // ── 冷启动安全区竞态修复 ──────────────────────────────────────────────
-    // Kuikly Compose 层的 `configuration.safeAreaInsets` 是裸 getter
-    // （compose/.../platform/LocalConfiguration.kt：`get() = pageData.safeAreaInsets`），
-    // **不是 Compose snapshot state**。同一个 Configuration 里 width/height/fontScale 都用
-    // mutableStateOf 包了反应式，唯独 safeAreaInsets 漏了：native 在首帧之后才把真实 inset
-    // 投递进 pageData（Pager.handlePagerViewSizeDidChanged），这一步**不会触发 Compose 重组**。
-    //
-    // 后果：冷启动若 Compose 首帧组合早于 inset 到达，顶部安全区读到 0 后就**卡住不恢复**
-    // （NavBar 被状态栏/刘海盖住、内容顶到状态栏下），只有等后续某次尺寸变化顺带触发重组才
-    // 自愈——纯竖屏冷启动没有这种事件，于是表现为「偶尔启动顶部塌掉」。
-    // （Android 侧靠 host 主动 push RuntimeInsetsBridge 兜底，iOS 没有，故 iOS 高发。）
-    //
-    // 修法：用一个逐帧 ticker 在冷启动期间强制重组，使下方 fresh 读取能追平真实 inset；
-    // 一旦观测到非 0 顶部 inset 即收敛停止。之后 orientation/键盘等仍由 fresh 读取 + 各自
-    // 反应式路径覆盖，本 ticker 不再参与。设帧数上限避免在真正 0 顶 inset 的设备上空转。
-    var insetSettleTick by remember { mutableStateOf(0) }
-    LaunchedEffect(configuration) {
-        var frames = 0
-        var lastTop = configuration.safeAreaInsets.top
-        while (lastTop <= 0f && frames < MAX_INSET_SETTLE_FRAMES) {
-            withFrameNanos { }
-            frames++
-            val now = configuration.safeAreaInsets.top
-            if (now != lastTop) {
-                lastTop = now
-                insetSettleTick++ // 仅在真正变化时强制一次重组
-            }
-        }
-    }
-    // 读 tick 建立重组依赖（值本身不使用）；冷启动期间它被 bump 后会让下面重新 fresh 读取。
-    @Suppress("UNUSED_EXPRESSION")
-    insetSettleTick
-
     val safeInsets = configuration.safeAreaInsets
     val baseSafeArea = SafeArea(
         top = safeInsets.top.dp,
@@ -141,9 +98,20 @@ fun ProvideRuntimeEnvironment(
     )
     // host override（如 Android 某些机型补测的 inset）先并入 raw。
     val rawSafeArea = RuntimeInsetsBridge.mergeWith(baseSafeArea)
-    // 再过稳定器：顶部粘滞兜底，消除偶发 0。
+    // iOS 的 statusBarHeight 在 keyWindow 暂不可用时仍有设备级 fallback，可确保首帧至少不
+    // 与状态栏重叠；宿主随后上报真实 safeAreaInsets 后会替换它。
+    val isPortrait = configuration.pageViewHeight >= configuration.pageViewWidth
+    val fallbackTop = if (configuration.isIOS && isPortrait && configuration.statusBarHeight > 0f) {
+        configuration.statusBarHeight.dp
+    } else {
+        0.dp
+    }
     val stabilizer = remember { SafeAreaStabilizer() }
-    val stableSafeArea = stabilizer.stabilize(rawSafeArea)
+    val stableSafeArea = stabilizer.stabilize(
+        raw = rawSafeArea,
+        isPortrait = isPortrait,
+        fallbackTop = fallbackTop
+    )
 
     val environment = RuntimeEnvironment(
         safeArea = stableSafeArea,

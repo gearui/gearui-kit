@@ -135,6 +135,8 @@ Host -> Runtime 动态桥接约束（Android/iOS）：
 - Host 必须提供“首帧注入 + 动态更新”双路径：
 1. initial bootstrap：首帧前注入初始 safeArea，避免首帧抖动。
 2. dynamic update：系统栏/手势栏/方向变化时持续调用 Runtime 更新接口。
+- iOS Kuikly host 必须实现 `viewControllerHostWindow` 并返回当前页面的 `self.view.window`，禁止依赖全局 `keyWindow` 猜测 Scene。
+- iOS host 必须在 `viewSafeAreaInsetsDidChange` 后发送包含 `width`、`height`、`safeAreaInsets` 的 `rootViewSizeDidChanged`；仅调用 `viewDidLayoutSubviews` 不足以覆盖“尺寸未变但 safe-area 改变”的场景。
 - bottom safeArea 计算不得只依赖单一来源（如 `navigationBars`）；应采用多来源 max 合并（system bars / gestures / tappable / stable insets 等平台等价字段）。
 
 强约束：

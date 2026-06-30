@@ -87,6 +87,8 @@
 @property (nonatomic, strong) UIButton *kuiklyBackProbeButton;
 @property (nonatomic, strong) UILabel *kuiklyBackProbeLabel;
 @property (nonatomic, assign) NSInteger kuiklyBackProbeCounter;
+@property (nonatomic, assign) UIEdgeInsets lastSentSafeAreaInsets;
+@property (nonatomic, assign) BOOL hasSentSafeAreaInsets;
 
 @end
 
@@ -182,6 +184,30 @@
     // 关键：在布局完成后通知 delegator，此时 safeAreaInsets 已经正确设置
     // 这样 KuiklyUI Runtime 就能获取到正确的可用渲染区域（已排除状态栏/刘海）
     [_delegator viewDidLayoutSubviews];
+    [self sendSafeAreaInsetsIfNeeded];
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    [self sendSafeAreaInsetsIfNeeded];
+}
+
+- (void)sendSafeAreaInsetsIfNeeded {
+    if (_delegator.renderView == nil) return;
+
+    UIEdgeInsets insets = self.view.safeAreaInsets;
+    if (self.hasSentSafeAreaInsets && UIEdgeInsetsEqualToEdgeInsets(insets, self.lastSentSafeAreaInsets)) return;
+
+    self.hasSentSafeAreaInsets = YES;
+    self.lastSentSafeAreaInsets = insets;
+    NSString *encodedInsets = [NSString stringWithFormat:@"%.2f %.2f %.2f %.2f",
+                               insets.top, insets.left, insets.bottom, insets.right];
+    [_delegator sendWithEvent:@"rootViewSizeDidChanged"
+                         data:@{
+                             @"width": @(CGRectGetWidth(self.view.bounds)),
+                             @"height": @(CGRectGetHeight(self.view.bounds)),
+                             @"safeAreaInsets": encodedInsets,
+                         }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -217,6 +243,10 @@
 
 - (UIViewController *)delegatorViewController {
     return self;
+}
+
+- (UIWindow *)viewControllerHostWindow {
+    return self.view.window;
 }
 
 - (void)fetchContextCodeWithPageName:(NSString *)pageName resultCallback:(void (^)(NSString * _Nullable, NSError * _Nullable))callback {

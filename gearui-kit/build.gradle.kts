@@ -45,6 +45,10 @@ kotlin {
             implementation(compose.ui)
         }
 
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+
         androidMain.dependencies {
             implementation("androidx.annotation:annotation:1.9.1")
         }
@@ -112,4 +116,3 @@ mavenPublishing {
         signAllPublications()
     }
 }
-

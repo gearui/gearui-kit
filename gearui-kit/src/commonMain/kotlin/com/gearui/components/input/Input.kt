@@ -267,7 +267,10 @@ fun Input(
                         ),
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = keyboardType,
+                            // isPassword 必须走 KeyboardType.Password:Kuikly iOS 的掩码
+                            // 通道是原生 secureTextEntry(由 keyboardType=password 触发),
+                            // visualTransformation 在 Kuikly 桥接下不生效。
+                            keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
                             imeAction = when {
                                 onSend != null -> ImeAction.Send
                                 maxLines == 1 -> ImeAction.Done

@@ -46,4 +46,47 @@ class SafeAreaStabilizerTest {
 
         assertEquals(0.dp, landscape.top)
     }
+
+    @Test
+    fun keyboardInsetNeverPollutesSystemBottomSafeArea() {
+        val stabilizer = SafeAreaStabilizer()
+
+        stabilizer.stabilize(
+            SafeArea(bottom = 34.dp),
+            isPortrait = true,
+            fallbackTop = 44.dp,
+        )
+        val keyboardOpen = stabilizer.stabilize(
+            SafeArea(bottom = 336.dp),
+            isPortrait = true,
+            fallbackTop = 44.dp,
+            keyboardHeight = 336.dp,
+        )
+        val keyboardClosed = stabilizer.stabilize(
+            SafeArea(bottom = 34.dp),
+            isPortrait = true,
+            fallbackTop = 44.dp,
+        )
+
+        assertEquals(34.dp, keyboardOpen.bottom)
+        assertEquals(34.dp, keyboardClosed.bottom)
+    }
+
+    @Test
+    fun keyboardHideNotificationCannotExposeStaleImeBottom() {
+        val stabilizer = SafeAreaStabilizer()
+
+        stabilizer.stabilize(SafeArea(bottom = 34.dp), true, 44.dp)
+        stabilizer.stabilize(SafeArea(bottom = 336.dp), true, 44.dp, keyboardHeight = 336.dp)
+        val hideBeforeRawInsetsReset = stabilizer.stabilize(
+            SafeArea(bottom = 336.dp),
+            isPortrait = true,
+            fallbackTop = 44.dp,
+            keyboardHeight = 0.dp,
+        )
+        val settled = stabilizer.stabilize(SafeArea(bottom = 34.dp), true, 44.dp)
+
+        assertEquals(34.dp, hideBeforeRawInsetsReset.bottom)
+        assertEquals(34.dp, settled.bottom)
+    }
 }

@@ -116,6 +116,19 @@ GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分
 3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
 4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
 
+Insets 语义（强制）：
+- `RuntimeEnvironment.safeArea` 只表示系统状态栏、导航栏、手势区和异形屏安全区。
+- `RuntimeEnvironment.keyboard` 单独表示 IME 高度与可见状态；IME 不得并入
+  `safeArea.bottom`，页面 chrome、BottomNavBar、ActionSheet 不得随键盘高度漂移。
+- 普通页面由 `PageScaffold` 消费 top/bottom safe area；启用该路径时 NavBar 不得再次
+  消费 top safe area。聊天输入栏等需要跟随键盘的区域显式读取 `keyboard.height`。
+- Keyboard geometry 必须由宿主上报：Android 使用 `WindowInsets.Type.ime()`，iOS 使用
+  `UIKeyboardWillChangeFrame/WillHide`。GearUI 的 Input/Textarea 和业务页面不得通过
+  组件级 `Modifier.keyboardHeightChange` 建立全局键盘状态；该回调依赖输入组件挂载状态，
+  无法作为页面级 IME geometry 的唯一事实源。Kuikly 原生输入 overlay 在部分截图工具中
+  可能无法与 render surface 正确合成，必须用连续录屏或真机视觉确认，不能把截图黑屏
+  直接判定为页面渲染失败。
+
 App 入口约束（强制）：
 - 每个页面树只允许一个 `App` 根入口作为 Runtime 生效点（single runtime root）。
 - 禁止同一页面树出现双层 `App` 嵌套，避免 `runtimeFlags` 与 `RuntimeEnvironment` 被内层默认值覆盖。
@@ -142,6 +155,7 @@ Host -> Runtime 动态桥接约束（Android/iOS）：
 强约束：
 - 安全区主来源必须是 Runtime；初始化传入仅可作为 override/fallback。
 - 业务页面禁止手写系统安全区补丁（如 `padding(top = safeArea.top)` 作为常态方案）。
+- 业务页面禁止通过 `safeArea.bottom` 的数值差或阈值推断键盘是否可见。
 - 横屏与异形屏必须支持 `left/right` 安全区，不得只实现 `top/bottom`。
 - 安全区只作用于“内容布局层”，不得作为根容器尺寸裁剪策略。
 - 根容器与 Overlay 宿主必须保持 `fillMaxSize`，禁止因安全区导致画布缩小。

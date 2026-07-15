@@ -3530,16 +3530,32 @@ public final class com/gearui/primitives/composite/ListItemKt {
 	public static final fun ListItem (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class com/gearui/runtime/KeyboardInset {
+	public static final field $stable I
+	public synthetic fun <init> (FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-UdJoRJA ()F
+	public final fun copy-fIIWN6E (F)Lcom/gearui/runtime/KeyboardInset;
+	public static synthetic fun copy-fIIWN6E$default (Lcom/gearui/runtime/KeyboardInset;FILjava/lang/Object;)Lcom/gearui/runtime/KeyboardInset;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHeight-UdJoRJA ()F
+	public final fun getVisible ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/runtime/RuntimeEnvironment {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;)V
-	public synthetic fun <init> (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/KeyboardInset;)V
+	public synthetic fun <init> (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/KeyboardInset;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/gearui/runtime/SafeArea;
 	public final fun component2 ()Lcom/gearui/runtime/SafeArea;
-	public final fun copy (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;)Lcom/gearui/runtime/RuntimeEnvironment;
-	public static synthetic fun copy$default (Lcom/gearui/runtime/RuntimeEnvironment;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;ILjava/lang/Object;)Lcom/gearui/runtime/RuntimeEnvironment;
+	public final fun component3 ()Lcom/gearui/runtime/KeyboardInset;
+	public final fun copy (Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/KeyboardInset;)Lcom/gearui/runtime/RuntimeEnvironment;
+	public static synthetic fun copy$default (Lcom/gearui/runtime/RuntimeEnvironment;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/SafeArea;Lcom/gearui/runtime/KeyboardInset;ILjava/lang/Object;)Lcom/gearui/runtime/RuntimeEnvironment;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKeyboard ()Lcom/gearui/runtime/KeyboardInset;
 	public final fun getRawSafeArea ()Lcom/gearui/runtime/SafeArea;
 	public final fun getSafeArea ()Lcom/gearui/runtime/SafeArea;
 	public fun hashCode ()I
@@ -3578,8 +3594,10 @@ public final class com/gearui/runtime/RuntimeInsetsBridge {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/runtime/RuntimeInsetsBridge;
 	public final fun clear ()V
+	public final fun getKeyboardHeightOverride-UdJoRJA ()F
 	public final fun getSafeAreaOverride ()Lcom/gearui/runtime/SafeArea;
 	public final fun mergeWith (Lcom/gearui/runtime/SafeArea;)Lcom/gearui/runtime/SafeArea;
+	public final fun updateKeyboardHeight-fIIWN6E (F)V
 	public final fun updateSafeArea-KlVn7e8 (FFFF)V
 }
 

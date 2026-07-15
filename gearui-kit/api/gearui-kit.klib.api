@@ -2714,9 +2714,26 @@ final class com.gearui.primitives/TabState { // com.gearui.primitives/TabState|n
     final fun select(kotlin/Int) // com.gearui.primitives/TabState.select|select(kotlin.Int){}[0]
 }
 
-final class com.gearui.runtime/RuntimeEnvironment { // com.gearui.runtime/RuntimeEnvironment|null[0]
-    constructor <init>(com.gearui.runtime/SafeArea = ..., com.gearui.runtime/SafeArea = ...) // com.gearui.runtime/RuntimeEnvironment.<init>|<init>(com.gearui.runtime.SafeArea;com.gearui.runtime.SafeArea){}[0]
+final class com.gearui.runtime/KeyboardInset { // com.gearui.runtime/KeyboardInset|null[0]
+    constructor <init>(com.tencent.kuikly.compose.ui.unit/Dp = ...) // com.gearui.runtime/KeyboardInset.<init>|<init>(com.tencent.kuikly.compose.ui.unit.Dp){}[0]
 
+    final val height // com.gearui.runtime/KeyboardInset.height|{}height[0]
+        final fun <get-height>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.runtime/KeyboardInset.height.<get-height>|<get-height>(){}[0]
+    final val visible // com.gearui.runtime/KeyboardInset.visible|{}visible[0]
+        final fun <get-visible>(): kotlin/Boolean // com.gearui.runtime/KeyboardInset.visible.<get-visible>|<get-visible>(){}[0]
+
+    final fun component1(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.runtime/KeyboardInset.component1|component1(){}[0]
+    final fun copy(com.tencent.kuikly.compose.ui.unit/Dp = ...): com.gearui.runtime/KeyboardInset // com.gearui.runtime/KeyboardInset.copy|copy(com.tencent.kuikly.compose.ui.unit.Dp){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.runtime/KeyboardInset.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.runtime/KeyboardInset.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.runtime/KeyboardInset.toString|toString(){}[0]
+}
+
+final class com.gearui.runtime/RuntimeEnvironment { // com.gearui.runtime/RuntimeEnvironment|null[0]
+    constructor <init>(com.gearui.runtime/SafeArea = ..., com.gearui.runtime/SafeArea = ..., com.gearui.runtime/KeyboardInset = ...) // com.gearui.runtime/RuntimeEnvironment.<init>|<init>(com.gearui.runtime.SafeArea;com.gearui.runtime.SafeArea;com.gearui.runtime.KeyboardInset){}[0]
+
+    final val keyboard // com.gearui.runtime/RuntimeEnvironment.keyboard|{}keyboard[0]
+        final fun <get-keyboard>(): com.gearui.runtime/KeyboardInset // com.gearui.runtime/RuntimeEnvironment.keyboard.<get-keyboard>|<get-keyboard>(){}[0]
     final val rawSafeArea // com.gearui.runtime/RuntimeEnvironment.rawSafeArea|{}rawSafeArea[0]
         final fun <get-rawSafeArea>(): com.gearui.runtime/SafeArea // com.gearui.runtime/RuntimeEnvironment.rawSafeArea.<get-rawSafeArea>|<get-rawSafeArea>(){}[0]
     final val safeArea // com.gearui.runtime/RuntimeEnvironment.safeArea|{}safeArea[0]
@@ -2724,7 +2741,8 @@ final class com.gearui.runtime/RuntimeEnvironment { // com.gearui.runtime/Runtim
 
     final fun component1(): com.gearui.runtime/SafeArea // com.gearui.runtime/RuntimeEnvironment.component1|component1(){}[0]
     final fun component2(): com.gearui.runtime/SafeArea // com.gearui.runtime/RuntimeEnvironment.component2|component2(){}[0]
-    final fun copy(com.gearui.runtime/SafeArea = ..., com.gearui.runtime/SafeArea = ...): com.gearui.runtime/RuntimeEnvironment // com.gearui.runtime/RuntimeEnvironment.copy|copy(com.gearui.runtime.SafeArea;com.gearui.runtime.SafeArea){}[0]
+    final fun component3(): com.gearui.runtime/KeyboardInset // com.gearui.runtime/RuntimeEnvironment.component3|component3(){}[0]
+    final fun copy(com.gearui.runtime/SafeArea = ..., com.gearui.runtime/SafeArea = ..., com.gearui.runtime/KeyboardInset = ...): com.gearui.runtime/RuntimeEnvironment // com.gearui.runtime/RuntimeEnvironment.copy|copy(com.gearui.runtime.SafeArea;com.gearui.runtime.SafeArea;com.gearui.runtime.KeyboardInset){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.runtime/RuntimeEnvironment.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.runtime/RuntimeEnvironment.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.runtime/RuntimeEnvironment.toString|toString(){}[0]
@@ -3649,11 +3667,14 @@ final object com.gearui.overlay/OverlayManager { // com.gearui.overlay/OverlayMa
 }
 
 final object com.gearui.runtime/RuntimeInsetsBridge { // com.gearui.runtime/RuntimeInsetsBridge|null[0]
+    final var keyboardHeightOverride // com.gearui.runtime/RuntimeInsetsBridge.keyboardHeightOverride|{}keyboardHeightOverride[0]
+        final fun <get-keyboardHeightOverride>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.runtime/RuntimeInsetsBridge.keyboardHeightOverride.<get-keyboardHeightOverride>|<get-keyboardHeightOverride>(){}[0]
     final var safeAreaOverride // com.gearui.runtime/RuntimeInsetsBridge.safeAreaOverride|{}safeAreaOverride[0]
         final fun <get-safeAreaOverride>(): com.gearui.runtime/SafeArea // com.gearui.runtime/RuntimeInsetsBridge.safeAreaOverride.<get-safeAreaOverride>|<get-safeAreaOverride>(){}[0]
 
     final fun clear() // com.gearui.runtime/RuntimeInsetsBridge.clear|clear(){}[0]
     final fun mergeWith(com.gearui.runtime/SafeArea): com.gearui.runtime/SafeArea // com.gearui.runtime/RuntimeInsetsBridge.mergeWith|mergeWith(com.gearui.runtime.SafeArea){}[0]
+    final fun updateKeyboardHeight(com.tencent.kuikly.compose.ui.unit/Dp) // com.gearui.runtime/RuntimeInsetsBridge.updateKeyboardHeight|updateKeyboardHeight(com.tencent.kuikly.compose.ui.unit.Dp){}[0]
     final fun updateSafeArea(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp) // com.gearui.runtime/RuntimeInsetsBridge.updateSafeArea|updateSafeArea(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
 }
 
@@ -4230,6 +4251,7 @@ final val com.gearui.runtime/LocalRuntimeEnvironment // com.gearui.runtime/Local
     final fun <get-LocalRuntimeEnvironment>(): androidx.compose.runtime/ProvidableCompositionLocal<com.gearui.runtime/RuntimeEnvironment> // com.gearui.runtime/LocalRuntimeEnvironment.<get-LocalRuntimeEnvironment>|<get-LocalRuntimeEnvironment>(){}[0]
 final val com.gearui.runtime/LocalRuntimeFlags // com.gearui.runtime/LocalRuntimeFlags|{}LocalRuntimeFlags[0]
     final fun <get-LocalRuntimeFlags>(): androidx.compose.runtime/ProvidableCompositionLocal<com.gearui.runtime/RuntimeFlags> // com.gearui.runtime/LocalRuntimeFlags.<get-LocalRuntimeFlags>|<get-LocalRuntimeFlags>(){}[0]
+final val com.gearui.runtime/com_gearui_runtime_KeyboardInset$stableprop // com.gearui.runtime/com_gearui_runtime_KeyboardInset$stableprop|#static{}com_gearui_runtime_KeyboardInset$stableprop[0]
 final val com.gearui.runtime/com_gearui_runtime_RuntimeEnvironment$stableprop // com.gearui.runtime/com_gearui_runtime_RuntimeEnvironment$stableprop|#static{}com_gearui_runtime_RuntimeEnvironment$stableprop[0]
 final val com.gearui.runtime/com_gearui_runtime_RuntimeFlags$stableprop // com.gearui.runtime/com_gearui_runtime_RuntimeFlags$stableprop|#static{}com_gearui_runtime_RuntimeFlags$stableprop[0]
 final val com.gearui.runtime/com_gearui_runtime_RuntimeInsetsBridge$stableprop // com.gearui.runtime/com_gearui_runtime_RuntimeInsetsBridge$stableprop|#static{}com_gearui_runtime_RuntimeInsetsBridge$stableprop[0]
@@ -4641,6 +4663,7 @@ final fun com.gearui.primitives/VerticalSpacer(com.tencent.kuikly.compose.ui.uni
 final fun com.gearui.primitives/com_gearui_primitives_TabState$stableprop_getter(): kotlin/Int // com.gearui.primitives/com_gearui_primitives_TabState$stableprop_getter|com_gearui_primitives_TabState$stableprop_getter(){}[0]
 final fun com.gearui.primitives/rememberTabState(kotlin/Int, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): com.gearui.primitives/TabState // com.gearui.primitives/rememberTabState|rememberTabState(kotlin.Int;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun com.gearui.runtime/ProvideRuntimeEnvironment(com.gearui.runtime/RuntimeFlags?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.runtime/ProvideRuntimeEnvironment|ProvideRuntimeEnvironment(com.gearui.runtime.RuntimeFlags?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.runtime/com_gearui_runtime_KeyboardInset$stableprop_getter(): kotlin/Int // com.gearui.runtime/com_gearui_runtime_KeyboardInset$stableprop_getter|com_gearui_runtime_KeyboardInset$stableprop_getter(){}[0]
 final fun com.gearui.runtime/com_gearui_runtime_RuntimeEnvironment$stableprop_getter(): kotlin/Int // com.gearui.runtime/com_gearui_runtime_RuntimeEnvironment$stableprop_getter|com_gearui_runtime_RuntimeEnvironment$stableprop_getter(){}[0]
 final fun com.gearui.runtime/com_gearui_runtime_RuntimeFlags$stableprop_getter(): kotlin/Int // com.gearui.runtime/com_gearui_runtime_RuntimeFlags$stableprop_getter|com_gearui_runtime_RuntimeFlags$stableprop_getter(){}[0]
 final fun com.gearui.runtime/com_gearui_runtime_RuntimeInsetsBridge$stableprop_getter(): kotlin/Int // com.gearui.runtime/com_gearui_runtime_RuntimeInsetsBridge$stableprop_getter|com_gearui_runtime_RuntimeInsetsBridge$stableprop_getter(){}[0]

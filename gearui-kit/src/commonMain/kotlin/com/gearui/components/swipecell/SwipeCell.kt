@@ -392,12 +392,20 @@ private fun SwipeCellActionButton(
 ) {
     val colors = Theme.colors
 
-    // 从 Theme.colors 获取语义颜色
+    // 从 Theme.colors 获取语义颜色。前景色必须与背景**同主题配对**：
+    // 之前统一用 primaryForeground，暗色主题下它是深色（primary 为浅色），
+    // 落在 destructive 红色背景上文字几乎不可见。
     val backgroundColor = when (action.theme) {
         SwipeCellActionTheme.PRIMARY -> colors.primary
         SwipeCellActionTheme.DANGER -> colors.destructive
         SwipeCellActionTheme.WARNING -> colors.warning
         SwipeCellActionTheme.SUCCESS -> colors.success
+    }
+    val foregroundColor = when (action.theme) {
+        SwipeCellActionTheme.PRIMARY -> colors.primaryForeground
+        SwipeCellActionTheme.DANGER -> colors.destructiveForeground
+        SwipeCellActionTheme.WARNING -> colors.warningForeground
+        SwipeCellActionTheme.SUCCESS -> colors.successForeground
     }
 
     var isPressed by remember { mutableStateOf(false) }
@@ -420,7 +428,7 @@ private fun SwipeCellActionButton(
                 Text(
                     text = action.icon,
                     style = Typography.TitleMedium,
-                    color = colors.primaryForeground,
+                    color = foregroundColor,
                     maxLines = 1
                 )
                 if (action.label.isNotEmpty()) {
@@ -428,7 +436,7 @@ private fun SwipeCellActionButton(
                     Text(
                         text = action.label,
                         style = Typography.BodySmall,
-                        color = colors.primaryForeground,
+                        color = foregroundColor,
                         maxLines = 1
                     )
                 }
@@ -443,14 +451,14 @@ private fun SwipeCellActionButton(
                 Text(
                     text = action.icon,
                     style = Typography.BodyMedium,
-                    color = colors.primaryForeground,
+                    color = foregroundColor,
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.width(tokens.iconSpacing))
                 Text(
                     text = action.label,
                     style = Typography.BodySmall,
-                    color = colors.primaryForeground,
+                    color = foregroundColor,
                     maxLines = 1
                 )
             }
@@ -459,7 +467,7 @@ private fun SwipeCellActionButton(
             Text(
                 text = action.icon,
                 style = Typography.TitleMedium,
-                color = colors.primaryForeground,
+                color = foregroundColor,
                 maxLines = 1
             )
         } else {
@@ -467,7 +475,7 @@ private fun SwipeCellActionButton(
             Text(
                 text = action.label,
                 style = Typography.BodyMedium,
-                color = colors.primaryForeground,
+                color = foregroundColor,
                 maxLines = 1,
                 modifier = Modifier.padding(horizontal = tokens.actionPaddingHorizontal)
             )

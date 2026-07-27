@@ -129,11 +129,10 @@ fun BottomNavBar(
                             .fillMaxHeight()
                             .then(
                                 if (!item.disabled) {
-                                    Modifier.clickable {
-                                        if (!isSelected) {
-                                            onSelect(item.id)
-                                        }
-                                    }
+                                    // 选中项也要回调：再次点击当前 tab 是一个有意义的交互
+                                    // （回到列表顶部 / 跳下一条未读，微信、Telegram 都这么做）。
+                                    // 控件不替业务吞事件，是否忽略重复选中由调用方决定。
+                                    Modifier.clickable { onSelect(item.id) }
                                 } else {
                                     Modifier
                                 }

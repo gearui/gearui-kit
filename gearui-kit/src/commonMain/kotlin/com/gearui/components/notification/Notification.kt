@@ -330,6 +330,8 @@ class NotificationController internal constructor(
             options = OverlayOptions(
                 placement = OverlayPlacement.Fullscreen,
                 modal = false,
+                // 通知是非阻断提示：横幅之外的区域照常可点/可滚，不冻结整屏交互。
+                passThroughOutside = true,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )
         ) {

@@ -159,5 +159,14 @@ data class OverlayOptions(
     val safeAreaLeft: Boolean = false,
 
     /** Fullscreen 模式下是否应用右侧安全区 */
-    val safeAreaRight: Boolean = false
+    val safeAreaRight: Boolean = false,
+
+    /**
+     * 内容之外的区域是否放行手势（仅 Fullscreen、非 modal 生效）。
+     *
+     * Fullscreen 默认铺一层全屏点击拦截层，非模态的通知横幅用它就会在整个展示期间
+     * 冻结全屏交互 —— 用户点不动列表、按不了返回。置 true 时不铺该层，横幅本身仍可点，
+     * 其余区域的滚动/点击照常落到下面的页面（微信式 in-app 横幅语义）。
+     */
+    val passThroughOutside: Boolean = false
 )

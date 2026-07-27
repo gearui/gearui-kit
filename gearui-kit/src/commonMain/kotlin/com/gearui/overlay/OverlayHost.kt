@@ -221,14 +221,19 @@ private fun OverlayItemLayout(
             } else {
                 0.dp
             }
-            Box(
+            // passThroughOutside：非模态横幅（如 in-app 消息通知）不该冻结整屏交互，
+            // 内容之外的手势要落到下面的页面上；默认仍是拦截层（模态/对话框语义不变）。
+            val fullscreenModifier = if (options.passThroughOutside) {
+                Modifier.fillMaxSize()
+            } else {
                 Modifier
                     .fillMaxSize()
                     // 拦截点击事件，不让它传递到背景层
                     .clickable(onClick = {
                         // 空操作，只是拦截事件
                     })
-            ) {
+            }
+            Box(fullscreenModifier) {
                 Box(
                     Modifier
                         .fillMaxSize()

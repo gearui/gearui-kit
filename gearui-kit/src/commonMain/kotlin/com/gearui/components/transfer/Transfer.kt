@@ -169,7 +169,7 @@ private fun TransferList(
 
     Column(
         modifier = modifier
-            .border(1.dp, colors.border, RoundedCornerShape(8.dp))
+            .border(1.dp, colors.border, Theme.shapes.lg)
             .background(colors.surface)
     ) {
         // Header

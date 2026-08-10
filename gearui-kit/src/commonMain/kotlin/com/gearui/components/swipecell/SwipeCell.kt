@@ -223,7 +223,7 @@ fun SwipeCell(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(0.dp))
+            .clip(Theme.shapes.none)
     ) {
         // 左侧操作区域（右滑显示）- 固定在左边
         if (leftActions.isNotEmpty() && state.offsetX.value > 0) {

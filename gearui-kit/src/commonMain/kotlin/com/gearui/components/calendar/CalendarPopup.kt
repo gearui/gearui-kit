@@ -117,7 +117,7 @@ fun CalendarPopup(
                 Box(
                     modifier = Modifier
                         .size(24.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(Theme.shapes.xl)
                         .clickable { onClose() },
                     contentAlignment = Alignment.Center
                 ) {

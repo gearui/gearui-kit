@@ -299,7 +299,7 @@ private fun SwiperIndicator(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .clip(RoundedCornerShape(100.dp))
+                        .clip(Theme.shapes.full)
                         .background(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
@@ -328,7 +328,7 @@ private fun SwiperIndicator(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     modifier = Modifier
-                        .clip(RoundedCornerShape(100.dp))
+                        .clip(Theme.shapes.full)
                         .background(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
@@ -346,7 +346,7 @@ private fun SwiperIndicator(
                             modifier = Modifier
                                 .width(width)
                                 .height(6.dp)
-                                .clip(RoundedCornerShape(3.dp))
+                                .clip(Theme.shapes.sm)
                                 .background(if (isActive) activeColor else inactiveColor)
                         )
                     }
@@ -357,7 +357,7 @@ private fun SwiperIndicator(
                 // 分数指示器
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(Theme.shapes.xl)
                         .background(
                             if (isOuter) colors.mutedForeground
                             else colors.surface.copy(alpha = 0.5f)

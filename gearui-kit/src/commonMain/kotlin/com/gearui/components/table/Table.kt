@@ -126,7 +126,7 @@ fun <T> Table(
         modifier = modifier
             .fillMaxWidth()
             .then(
-                if (bordered) Modifier.border(1.dp, colors.border, RoundedCornerShape(8.dp))
+                if (bordered) Modifier.border(1.dp, colors.border, Theme.shapes.lg)
                 else Modifier
             )
     ) {

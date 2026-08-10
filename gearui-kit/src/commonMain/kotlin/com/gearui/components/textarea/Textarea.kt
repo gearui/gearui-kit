@@ -306,13 +306,13 @@ private fun TextareaInputArea(
                 .then(
                     if (bordered) {
                         Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                            .clip(Theme.shapes.xl)
+                            .border(1.dp, colors.border, Theme.shapes.xl)
                             .background(if (enabled && !readOnly) colors.surface else colors.muted)
                             .padding(12.dp)
                     } else {
                         Modifier
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(Theme.shapes.lg)
                             .background(colors.muted)
                             .padding(horizontal = 10.dp, vertical = 8.dp)
                     }

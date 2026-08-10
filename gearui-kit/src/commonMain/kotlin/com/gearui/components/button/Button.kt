@@ -82,9 +82,9 @@ fun Button(
 
     // 形状配置
     val buttonShape: Shape = when (shape) {
-        ButtonShape.RECTANGLE -> RoundedCornerShape(8.dp)
+        ButtonShape.RECTANGLE -> Theme.shapes.lg
         ButtonShape.ROUND -> RoundedCornerShape(height / 2)
-        ButtonShape.SQUARE -> RoundedCornerShape(8.dp)
+        ButtonShape.SQUARE -> Theme.shapes.lg
         ButtonShape.CIRCLE -> CircleShape
         ButtonShape.FILLED -> RoundedCornerShape(height / 2)
     }

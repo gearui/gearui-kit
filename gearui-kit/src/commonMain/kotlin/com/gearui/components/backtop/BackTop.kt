@@ -236,10 +236,10 @@ fun BackTopCustom(
         Box(
             modifier = Modifier
                 .offset(x = -offset.first, y = -offset.second)
-                .shadow(4.dp, RoundedCornerShape(8.dp))
-                .clip(RoundedCornerShape(8.dp))
+                .shadow(4.dp, Theme.shapes.lg)
+                .clip(Theme.shapes.lg)
                 .background(backgroundColor)
-                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
+                .border(1.dp, borderColor, Theme.shapes.lg)
                 .clickable(onClick = onClick)
                 .padding(12.dp)
         ) {

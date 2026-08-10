@@ -358,7 +358,7 @@ fun ImageViewerTrigger(
                     Box(
                         modifier = Modifier
                             .size(thumbnailSize.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(Theme.shapes.sm)
                             .background(colors.muted)
                             .clickable { state.show(index) },
                         contentAlignment = Alignment.Center

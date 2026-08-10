@@ -43,9 +43,9 @@ fun <T> SegmentedControl(
     Row(
         modifier = modifier
             .height(36.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(Theme.shapes.lg)
             .background(colors.surface)
-            .border(1.dp, colors.border, RoundedCornerShape(8.dp))
+            .border(1.dp, colors.border, Theme.shapes.lg)
             .padding(2.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
@@ -56,7 +56,7 @@ fun <T> SegmentedControl(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clip(RoundedCornerShape(6.dp))
+                    .clip(Theme.shapes.md)
                     .background(
                         if (isSelected) colors.muted else colors.surface
                     )
@@ -97,9 +97,9 @@ fun <T> IconSegmentedControl(
     Row(
         modifier = modifier
             .height(40.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(Theme.shapes.lg)
             .background(colors.surface)
-            .border(1.dp, colors.border, RoundedCornerShape(8.dp))
+            .border(1.dp, colors.border, Theme.shapes.lg)
             .padding(2.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
@@ -110,7 +110,7 @@ fun <T> IconSegmentedControl(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clip(RoundedCornerShape(6.dp))
+                    .clip(Theme.shapes.md)
                     .background(
                         if (isSelected) colors.muted else colors.surface
                     )

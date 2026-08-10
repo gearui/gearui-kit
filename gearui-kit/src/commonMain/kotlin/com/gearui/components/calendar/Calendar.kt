@@ -114,8 +114,8 @@ fun Calendar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, colors.border, RoundedCornerShape(8.dp))
+            .clip(Theme.shapes.lg)
+            .border(1.dp, colors.border, Theme.shapes.lg)
             .background(colors.surface)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -410,7 +410,7 @@ private fun CalendarCell(
         DateSelectType.Selected -> CircleShape
         DateSelectType.Start -> RoundedCornerShape(topStart = cellHeight / 2, bottomStart = cellHeight / 2)
         DateSelectType.End -> RoundedCornerShape(topEnd = cellHeight / 2, bottomEnd = cellHeight / 2)
-        else -> RoundedCornerShape(0.dp)
+        else -> Theme.shapes.none
     }
 
     // 是否需要背景

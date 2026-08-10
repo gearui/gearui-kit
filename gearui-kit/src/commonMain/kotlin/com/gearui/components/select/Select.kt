@@ -58,7 +58,7 @@ fun <T> Select(
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
     val selectedOption = options.find { it.value == value }
-    val triggerShape = RoundedCornerShape(12.dp)
+    val triggerShape = Theme.shapes.xl
 
     // 用 State 包装，让 lambda 内部能访问最新值
     val valueState = rememberUpdatedState(value)
@@ -206,7 +206,7 @@ private fun <T> SelectDropdownContent(
     val density = LocalDensity.current
 
     val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = RoundedCornerShape(12.dp)
+    val panelShape = Theme.shapes.xl
     val panelShadow = if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) 4.dp else 6.dp
     val itemHeight = 44.dp
     val verticalPadding = 8.dp
@@ -253,7 +253,7 @@ private fun <T> SelectOptionItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
+            .clip(Theme.shapes.lg)
             .background(if (isSelected) colors.muted else colors.surface)
             .clickable(enabled = !option.disabled) { onClick() }
             .height(44.dp)
@@ -302,7 +302,7 @@ fun <T> MultiSelect(
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
-    val triggerShape = RoundedCornerShape(12.dp)
+    val triggerShape = Theme.shapes.xl
 
     // 用 State 包装，让 lambda 内部能访问最新值
     val valuesState = rememberUpdatedState(values)
@@ -438,7 +438,7 @@ private fun <T> MultiSelectDropdownContent(
     val density = LocalDensity.current
 
     val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = RoundedCornerShape(12.dp)
+    val panelShape = Theme.shapes.xl
     val panelShadow = if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) 4.dp else 6.dp
     val itemHeight = 44.dp
     val verticalPadding = 8.dp
@@ -466,7 +466,7 @@ private fun <T> MultiSelectDropdownContent(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(10.dp))
+                        .clip(Theme.shapes.lg)
                         .background(if (isSelected) colors.muted else colors.surface)
                         .clickable(enabled = !option.disabled) {
                             val newValues = if (isSelected) {
@@ -494,11 +494,11 @@ private fun <T> MultiSelectDropdownContent(
                     Box(
                         modifier = Modifier
                             .size(18.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(Theme.shapes.sm)
                             .border(
                                 1.dp,
                                 if (isSelected) colors.primary else colors.border,
-                                RoundedCornerShape(4.dp)
+                                Theme.shapes.sm
                             )
                             .background(if (isSelected) colors.primary else colors.surface),
                         contentAlignment = Alignment.Center

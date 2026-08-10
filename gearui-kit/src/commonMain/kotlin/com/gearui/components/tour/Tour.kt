@@ -140,8 +140,8 @@ private fun TourContent(
     Box(
         modifier = Modifier
             .width(400.dp)
-            .shadow(8.dp, RoundedCornerShape(12.dp))
-            .clip(RoundedCornerShape(12.dp))
+            .shadow(8.dp, Theme.shapes.xl)
+            .clip(Theme.shapes.xl)
             .background(colors.surface)
             .padding(24.dp)
     ) {
@@ -183,7 +183,7 @@ private fun TourContent(
                         modifier = Modifier
                             .weight(1f)
                             .height(4.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(Theme.shapes.sm)
                             .background(
                                 if (index <= currentIndex) colors.primary
                                 else colors.muted

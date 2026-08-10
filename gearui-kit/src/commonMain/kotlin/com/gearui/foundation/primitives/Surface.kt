@@ -142,23 +142,3 @@ data class SurfaceColorTokens(
     val pressedBackground: Color = background
 )
 
-/**
- * 扩展: 从组件自有 tokens 转换为 SurfaceTokens
- */
-fun com.gearui.foundation.tokens.ButtonTokens.toSurfaceTokens(): SurfaceTokens {
-    return SurfaceTokens(
-        height = this.height.dp,
-        radius = this.borderRadius.dp,
-        borderWidth = this.borderWidth.dp,
-        padding = PaddingValues(horizontal = this.paddingHorizontal.dp)
-    )
-}
-
-fun com.gearui.foundation.tokens.TagTokens.toSurfaceTokens(): SurfaceTokens {
-    return SurfaceTokens(
-        height = this.height.dp,
-        radius = this.borderRadius.dp,
-        borderWidth = 0.dp,
-        padding = PaddingValues(horizontal = this.paddingHorizontal.dp)
-    )
-}

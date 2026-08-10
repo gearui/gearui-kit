@@ -1,39 +1,48 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Rule: the pre-1.0 Float token pool (`com.gearui.Radius`, `com.gearui.Typography`
-# and the `foundation/tokens/ComponentTokens.kt` data classes built on them) is
-# frozen. It is still load-bearing for Input/Tag/Surface, so it cannot simply be
-# deleted — but nothing new may reference it.
+# Rule: the pre-1.0 Float token pool stays gone.
+#
+# It was three files — root Radius.kt, root Typography.kt, and
+# foundation/tokens/ComponentTokens.kt — carrying dimensions as raw Float on a
+# radius scale (3/6/9/12) that disagreed with theme/Shapes (0/4/6/8/12). While
+# it existed, this guard froze it to its last consumer. Input and Tag have
+# since moved to Dp tokens under foundation/input and foundation/tag, so the
+# pool is deleted and this guard flips to preventing its return.
 #
 # Canonical replacements:
-#   com.gearui.Radius            -> com.gearui.theme.Shapes (Shape)
-#                                   com.gearui.foundation.layout.Radius (Dp)
-#   com.gearui.Typography        -> com.gearui.foundation.typography.Typography
-#   ComponentTokens data classes -> per-component token objects under foundation/
-#
-# Untangling the pool is tracked as the Input/Field token batch; until then this
-# guard stops the debt from spreading.
+#   com.gearui.Radius     -> com.gearui.theme.Shapes (Shape)
+#                            com.gearui.foundation.layout.Radius (Dp)
+#   com.gearui.Typography -> com.gearui.foundation.typography.Typography
+#   ComponentTokens.*     -> per-component tokens under foundation/<component>/
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SRC_DIR="$ROOT_DIR/gearui-kit/src/commonMain/kotlin/com/gearui"
-ALLOWED="$SRC_DIR/foundation/tokens/ComponentTokens.kt"
 
-tmp_hits="$(mktemp)"
-trap 'rm -f "$tmp_hits"' EXIT
+status=0
 
-grep -rEn '^import com\.gearui\.(Radius|Typography)$' "$SRC_DIR" --include='*.kt' \
-  | grep -v "^$ALLOWED:" \
-  | sed "s|$ROOT_DIR/||" \
-  | sort -u > "$tmp_hits" || true
+for f in "Radius.kt" "Typography.kt" "foundation/tokens/ComponentTokens.kt"; do
+  if [[ -e "$SRC_DIR/$f" ]]; then
+    echo "Legacy Float token pool reintroduced: com/gearui/$f"
+    status=1
+  fi
+done
 
-if [[ -s "$tmp_hits" ]]; then
-  echo "New reference to the frozen legacy Float token pool:"
-  cat "$tmp_hits"
+refs="$(grep -rEn '^import com\.gearui\.(Radius|Typography)$|com\.gearui\.foundation\.tokens\.' \
+          "$SRC_DIR" --include='*.kt' | sed "s|$ROOT_DIR/||" || true)"
+
+if [[ -n "$refs" ]]; then
+  echo "Reference to the removed Float token pool:"
+  echo "$refs"
+  status=1
+fi
+
+if [[ $status -ne 0 ]]; then
   echo
-  echo "Rule: use Theme.shapes / foundation.layout.Radius for radius, and"
-  echo "      foundation.typography.Typography for text styles."
+  echo "Rule: use Theme.shapes / foundation.layout.Radius for radius,"
+  echo "      foundation.typography.Typography for text styles, and"
+  echo "      per-component Dp tokens under foundation/<component>/."
   exit 1
 fi
 
-echo "Legacy token pool guard passed. new_references=0"
+echo "Legacy token pool guard passed. pool_absent=yes references=0"

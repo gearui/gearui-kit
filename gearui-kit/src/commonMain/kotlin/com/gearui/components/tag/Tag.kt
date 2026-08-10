@@ -16,8 +16,8 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.interaction.*
-import com.gearui.foundation.tokens.TagTokens
 import com.gearui.theme.Theme
+import com.gearui.foundation.tag.TagSizeTokens
 
 /**
  * Tag - 100% Theme 驱动的标签组件
@@ -53,9 +53,9 @@ fun Tag(
 
     // 尺寸 Tokens
     val tokens = when (size) {
-        TagSize.LARGE -> TagTokens.Large
-        TagSize.MEDIUM -> TagTokens.Medium
-        TagSize.SMALL -> TagTokens.Small
+        TagSize.LARGE -> TagSizeTokens.Large
+        TagSize.MEDIUM -> TagSizeTokens.Medium
+        TagSize.SMALL -> TagSizeTokens.Small
     }
 
     // Map token borderRadius to Theme.shapes
@@ -119,7 +119,7 @@ fun Tag(
 
     Box(
         modifier = modifier
-            .height(tokens.height.dp)
+            .height(tokens.height)
             .clip(shape)
             .background(finalBackgroundColor)
             .then(
@@ -134,7 +134,7 @@ fun Tag(
                     )
                 } else Modifier
             )
-            .padding(horizontal = tokens.paddingHorizontal.dp),
+            .padding(horizontal = tokens.paddingHorizontal),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -143,7 +143,7 @@ fun Tag(
         ) {
             // 图标
             if (icon != null) {
-                Box(modifier = Modifier.size((tokens.fontSize + 2).dp)) { icon() }
+                Box(modifier = Modifier.size(tokens.iconBoxSize)) { icon() }
                 Spacer(modifier = Modifier.width(4.dp))
             }
 
@@ -158,14 +158,14 @@ fun Tag(
                 Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier
-                        .size((tokens.fontSize + 2).dp)
+                        .size(tokens.iconBoxSize)
                         .clickable(
                             onClick = onClose
                         )
                 ) {
                     Icon(
                         name = Icons.close,
-                        size = (tokens.fontSize).dp,
+                        size = tokens.iconSize,
                         tint = finalTextColor
                     )
                 }

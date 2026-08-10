@@ -33,9 +33,9 @@ import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
-import com.gearui.foundation.tokens.*
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.input.InputSizeTokens
 
 /**
  * GearUI Input - 100% Theme 驱动
@@ -111,9 +111,9 @@ fun Input(
     }
 
     val tokens = when (size) {
-        InputSize.LARGE -> InputTokens.Large
-        InputSize.MEDIUM -> InputTokens.Medium
-        InputSize.SMALL -> InputTokens.Small
+        InputSize.LARGE -> InputSizeTokens.Large
+        InputSize.MEDIUM -> InputSizeTokens.Medium
+        InputSize.SMALL -> InputSizeTokens.Small
     }
 
     val shape = when (size) {
@@ -165,14 +165,14 @@ fun Input(
         val containerModifier = if (cardStyle) {
             Modifier
                 .fillMaxWidth()
-                .heightIn(min = tokens.height.dp)
+                .heightIn(min = tokens.height)
                 .clip(shape)
                 .background(backgroundColor)
                 .then(borderModifier)
         } else {
             Modifier
                 .fillMaxWidth()
-                .height(tokens.height.dp)
+                .height(tokens.height)
                 .clip(shape)
                 .background(backgroundColor)
                 .then(borderModifier)
@@ -204,7 +204,7 @@ fun Input(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = tokens.paddingHorizontal.dp,
+                        horizontal = tokens.paddingHorizontal,
                         vertical = if (cardStyle) 12.dp else 0.dp
                     ),
                 verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically

@@ -144,10 +144,10 @@ SPEC 映射：
 - CI：`.github/workflows/guardrails.yml`
 
 策略：
-- 冻结 `com.gearui.Radius` / `com.gearui.Typography`：除 `foundation/tokens/ComponentTokens.kt`
-  外禁止 import。
-- 这套 Float 池仍被 Input/Tag/Surface 依赖，删不掉；解开它属于 Input/Field token 批次。
-- 在那之前，护栏只保证债务不扩散。
+- **池子已删除**（root `Radius.kt` / root `Typography.kt` / `foundation/tokens/ComponentTokens.kt`），
+  护栏语义从「冻结扩散」翻转为「防止复活」：三个文件存在即 fail，任何 import 即 fail。
+- Input / Tag 已迁到 `foundation/input` / `foundation/tag` 的 Dp token。
+- 曾经的风险点：那套 Float 池的圆角标度是 3/6/9/12，与 `theme/Shapes` 的 0/4/6/8/12 不一致。
 
 11. 阴影标度护栏（P0，硬门禁）
 SPEC 映射：

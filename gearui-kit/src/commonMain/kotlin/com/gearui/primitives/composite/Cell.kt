@@ -34,7 +34,7 @@ import com.gearui.theme.Theme
  * - 统一最小高度
  */
 @Composable
-fun Cell(
+internal fun Cell(
     modifier: Modifier = Modifier,
     minHeight: Dp = 52.dp,
     paddingHorizontal: Dp = CellDefaults.Default.paddingHorizontal,

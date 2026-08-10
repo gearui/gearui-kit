@@ -143,7 +143,7 @@ data class SurfaceColorTokens(
 )
 
 /**
- * 扩展: 从 ComponentTokens 转换为 SurfaceTokens
+ * 扩展: 从组件自有 tokens 转换为 SurfaceTokens
  */
 fun com.gearui.foundation.tokens.ButtonTokens.toSurfaceTokens(): SurfaceTokens {
     return SurfaceTokens(

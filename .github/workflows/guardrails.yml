@@ -36,3 +36,15 @@ jobs:
 
       - name: Token schema compatibility (SPEC 4.1)
         run: ./scripts/ci/check_token_compat.sh
+
+      - name: i18n default-text guard
+        run: ./scripts/ci/check_i18n_default_text.sh
+
+      - name: Hardcoded radius guard (shape scale)
+        run: ./scripts/ci/check_component_hardcoded_radius.sh
+
+      - name: Hardcoded spacing guard (components)
+        run: ./scripts/ci/check_component_hardcoded_spacing.sh
+
+      - name: Legacy Float token pool guard
+        run: ./scripts/ci/check_legacy_token_pool.sh

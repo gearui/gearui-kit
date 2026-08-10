@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# rg is required: without it these scans silently return nothing (false green)
+# or blow up mid-pipeline (false red). Fail loudly instead.
+command -v rg >/dev/null 2>&1 || { echo "ripgrep (rg) is required by $0"; exit 1; }
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SAMPLE_DIR="$ROOT_DIR/sample/src/commonMain/kotlin/com/gearui/sample"
 MAIN_DEMO="$SAMPLE_DIR/MainDemo.kt"

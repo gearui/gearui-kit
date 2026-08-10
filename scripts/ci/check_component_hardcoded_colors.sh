@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# rg is required: without it these scans silently return nothing (false green)
+# or blow up mid-pipeline (false red). Fail loudly instead.
+command -v rg >/dev/null 2>&1 || { echo "ripgrep (rg) is required by $0"; exit 1; }
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 TARGET_DIR="$ROOT_DIR/gearui-kit/src/commonMain/kotlin/com/gearui/components"
 BASELINE_FILE="$ROOT_DIR/scripts/ci/hardcoded_color_baseline.txt"

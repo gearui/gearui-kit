@@ -94,6 +94,61 @@ SPEC 映射：
 - KLib dump 含 iOS 全部 target，必须在 macOS 上执行；CI 与本地刷新基线时同样要求 macOS。
 - `sample` 模块在 `apiValidation.ignoredProjects` 中排除。
 
+7. i18n 默认文案护栏（P0，硬门禁）
+SPEC 映射：
+- 12 I18n 分层架构
+- 11.1 REJECT / 组件不得内嵌本地化文案
+
+实现：
+- 脚本：`scripts/ci/check_i18n_default_text.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0，不是债务冻结：库源码（`com/gearui/i18n/` 以外）出现任何中文字面量即 fail。
+- 注释不计入；用 `perl -CSD` 解码，`$.` 每文件重置以保证行号可点击。
+
+8. 圆角标度护栏（P0，硬门禁）
+SPEC 映射：
+- 4.1 Token 治理（Shapes 六档标度）
+- 11.1 REJECT / 2. Token 与样式
+
+实现：
+- 脚本：`scripts/ci/check_component_hardcoded_radius.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0。除 `theme/Shapes.kt`（标度定义本身）外禁止 `RoundedCornerShape(<n>.dp)`。
+- 组件读 `Theme.shapes.*`；需要 Dp 的 token 层读 `foundation.layout.Radius.*`。
+- 离档值必须吸附到最近档位，不得新增档位。
+
+9. 组件层间距护栏（P1，债务冻结）
+SPEC 映射：
+- 4.1 Token 治理（Spacing）
+
+实现：
+- 脚本：`scripts/ci/check_component_hardcoded_spacing.sh`
+- 基线：`scripts/ci/hardcoded_spacing_baseline.txt`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- 与颜色护栏同构：冻结现存 `<n>.dp`，只阻断新增。
+- 仅覆盖 `components/`；`foundation/primitives` 的几何值按设计归其所有。
+- 基线只允许缩小。
+
+10. 遗留 Float token 池护栏（P1，扩散阻断）
+SPEC 映射：
+- 4.1 Token 治理（单一来源）
+
+实现：
+- 脚本：`scripts/ci/check_legacy_token_pool.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- 冻结 `com.gearui.Radius` / `com.gearui.Typography`：除 `foundation/tokens/ComponentTokens.kt`
+  外禁止 import。
+- 这套 Float 池仍被 Input/Tag/Surface 依赖，删不掉；解开它属于 Input/Field token 批次。
+- 在那之前，护栏只保证债务不扩散。
+
 ---
 
 ## 下一批（建议 4 周内完成）

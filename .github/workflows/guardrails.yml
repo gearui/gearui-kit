@@ -54,3 +54,6 @@ jobs:
 
       - name: Legacy Float token pool guard
         run: ./scripts/ci/check_legacy_token_pool.sh
+
+      - name: iOS pod resources guard
+        run: ./scripts/ci/check_ios_pod_resources.sh

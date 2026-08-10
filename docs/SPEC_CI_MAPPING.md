@@ -189,6 +189,22 @@ SPEC 映射：
   猜错的两种代价（误报布局代码 / 放过真描边）都不可接受，交给评审。
 - 禁止新增焦点态档位（会导致内容盒尺寸变化 → 布局跳动）。
 
+13. iOS pod 资源打包护栏（P0，硬门禁）
+SPEC 映射：
+- 6.4 Sample 即架构验证
+
+实现：
+- 脚本：`scripts/ci/check_ios_pod_resources.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- 断言 `project.pbxproj` 保留 `[CP] Copy Pods Resources` build phase。
+- 成因：`syncSharedAssetsToPodResources` 只是 `:sample:syncFramework` 的 finalizer，
+  在真正构建之前跑 `pod install`，资源目录是空的 → CocoaPods 判定「无资源」并静默删掉拷贝阶段。
+- 失败形态极具迷惑性：**构建成功、应用能跑、只是 101 个图标全部变空白**。
+  图标经 coil3 从 `assets://icons/<name>.png` 加载，缺资源时渲染成尺寸正确的空盒而不是报错。
+- 正确顺序：先跑一次触发 `syncFramework` 的构建，再 `pod install`。
+
 ---
 
 ## 下一批（建议 4 周内完成）

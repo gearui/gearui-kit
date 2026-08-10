@@ -67,6 +67,18 @@ object FieldSizeTokens {
 }
 
 object FieldDefaults {
+    /**
+     * Size of the trailing affordance on a field trigger — the chevron on
+     * Select/Cascader/TreeSelect, the calendar and clock on the pickers.
+     *
+     * 16dp is what the family already converged on, but it is not a step in
+     * [com.gearui.foundation.typography.IconSizes] (14/18/24), so it lived as
+     * a literal in seven places. Naming it here keeps the family in agreement
+     * without inventing a new step in the icon scale; reconciling IconSizes
+     * with real usage is a separate question.
+     */
+    val trailingIconSize: Dp = 16.dp
+
     /** Default trigger shape for input-like controls (`Shapes.md`, 6dp). */
     val shape: Shape
         @Composable get() = Theme.shapes.md

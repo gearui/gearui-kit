@@ -49,8 +49,10 @@ fun Rate(
     count: Int = 5,
     allowHalf: Boolean = false,
     readonly: Boolean = false,
-    icon: String = "★",
-    emptyIcon: String = "☆",
+    /** 自定义实心字形；留空则使用内置星形图标。与 [emptyIcon] 必须成对提供。 */
+    icon: String? = null,
+    /** 自定义空心字形；留空则使用内置星形图标。 */
+    emptyIcon: String? = null,
     size: Dp = 24.dp,
     gap: Dp = 4.dp,
     showText: Boolean = false,
@@ -58,7 +60,10 @@ fun Rate(
 ) {
     val colors = Theme.colors
     val displayValue = value
-    val useDefaultStarIcons = icon == "★" && emptyIcon == "☆"
+    // 之前用 "★"/"☆" 两个字面量当哨兵：默认值时其实画的是 Icons.star_*，
+    // 字符串本身从不渲染。null 把"用内置图标"这件事说清楚，也让
+    // check_emoji_as_icon 不必为一个从不上屏的字形误报。
+    val useDefaultStarIcons = icon == null && emptyIcon == null
     val clampedValue = displayValue.coerceIn(0f, count.toFloat())
     val totalWidth = (size.value * count + gap.value * (count - 1).coerceAtLeast(0)).dp
     val fullStars = clampedValue.toInt()
@@ -165,8 +170,8 @@ fun Rate(
                 ) {
                     Text(
                         text = when {
-                            fullActive || halfActive -> icon
-                            else -> emptyIcon
+                            fullActive || halfActive -> icon.orEmpty()
+                            else -> emptyIcon.orEmpty()
                         },
                         style = Typography.TitleLarge,
                         color = when {

@@ -26,6 +26,7 @@ import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Image fit mode
@@ -330,7 +331,8 @@ fun ImageGallery(
 fun ImagePlaceholder(
     modifier: Modifier = Modifier,
     text: String = I18n.strings.media.imageEmpty,
-    icon: String = "📷"
+    /** 自定义字形；留空则使用内置图标。 */
+    icon: String? = null
 ) {
     val colors = Theme.colors
 
@@ -343,11 +345,19 @@ fun ImagePlaceholder(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = icon,
-                style = Typography.HeadlineLarge,
-                color = colors.mutedForeground
-            )
+            if (icon == null) {
+                Icon(
+                    name = Icons.image,
+                    size = IconSizes.Default.large,
+                    tint = colors.mutedForeground
+                )
+            } else {
+                Text(
+                    text = icon,
+                    style = Typography.HeadlineLarge,
+                    color = colors.mutedForeground
+                )
+            }
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = text,

@@ -205,6 +205,24 @@ SPEC 映射：
   图标经 coil3 从 `assets://icons/<name>.png` 加载，缺资源时渲染成尺寸正确的空盒而不是报错。
 - 正确顺序：先跑一次触发 `syncFramework` 的构建，再 `pod install`。
 
+14. Emoji 当图标护栏（P0，硬门禁）
+SPEC 映射：
+- 4.1 Token 治理（Icon 系统单一入口）
+- 11.1 REJECT / 组件不得绕过 Icon primitive
+
+实现：
+- 脚本：`scripts/ci/check_emoji_as_icon.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0。拦字符串字面量里的 emoji / dingbat / 符号箭头。
+- emoji 是文本字形：**不吃 `tint`**（无法跟随主题色）、由平台字体绘制（iOS/Android/Web 三样）、
+  绕过 Icon primitive 因而对图标工具链与 allowlist 不可见。
+- 它还会掩盖故障：iOS 资源拷贝阶段丢失、所有真图标渲染成空白时，
+  DatePicker 的 emoji 仍在，整族看起来"半正常"而不是明显坏掉。
+- 顺带清掉两处字符串哨兵（Rate 的 `"★"/"☆"`、Image 的 `"📷"`）：它们从不上屏，
+  只是"用内置图标"的暗号，改成 `null` 后语义自明。
+
 ---
 
 ## 下一批（建议 4 周内完成）

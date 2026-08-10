@@ -3828,6 +3828,8 @@ final object com.gearui.foundation.field/FieldDefaults { // com.gearui.foundatio
         final fun <get-compactShape>(androidx.compose.runtime/Composer?, kotlin/Int): com.tencent.kuikly.compose.ui.graphics/Shape // com.gearui.foundation.field/FieldDefaults.compactShape.<get-compactShape>|<get-compactShape>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val shape // com.gearui.foundation.field/FieldDefaults.shape|{}shape[0]
         final fun <get-shape>(androidx.compose.runtime/Composer?, kotlin/Int): com.tencent.kuikly.compose.ui.graphics/Shape // com.gearui.foundation.field/FieldDefaults.shape.<get-shape>|<get-shape>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val trailingIconSize // com.gearui.foundation.field/FieldDefaults.trailingIconSize|{}trailingIconSize[0]
+        final fun <get-trailingIconSize>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.field/FieldDefaults.trailingIconSize.<get-trailingIconSize>|<get-trailingIconSize>(){}[0]
 }
 
 final object com.gearui.foundation.field/FieldSizeTokens { // com.gearui.foundation.field/FieldSizeTokens|null[0]

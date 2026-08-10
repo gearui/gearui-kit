@@ -24,6 +24,8 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.primitives.Icon
+import com.gearui.components.icon.Icons
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -87,9 +89,10 @@ fun DatePickerInput(
                 }
             )
 
-            Text(
-                text = "📅",
-                style = Typography.BodyMedium
+            Icon(
+                name = Icons.event,
+                size = FieldDefaults.trailingIconSize,
+                tint = colors.mutedForeground
             )
         }
     }
@@ -288,9 +291,10 @@ fun TimePickerInput(
                 }
             )
 
-            Text(
-                text = "🕐",
-                style = Typography.BodyMedium
+            Icon(
+                name = Icons.schedule,
+                size = FieldDefaults.trailingIconSize,
+                tint = colors.mutedForeground
             )
         }
     }

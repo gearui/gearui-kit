@@ -57,3 +57,6 @@ jobs:
 
       - name: iOS pod resources guard
         run: ./scripts/ci/check_ios_pod_resources.sh
+
+      - name: Emoji-as-icon guard
+        run: ./scripts/ci/check_emoji_as_icon.sh

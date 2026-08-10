@@ -154,7 +154,7 @@ fun SearchBar(
                 ) {
                     Icon(
                         name = Icons.search,
-                        size = 16.dp,
+                        size = FieldDefaults.trailingIconSize,
                         tint = colors.mutedForeground
                     )
                 }

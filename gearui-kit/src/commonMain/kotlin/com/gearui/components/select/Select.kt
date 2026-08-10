@@ -180,7 +180,7 @@ fun <T> Select(
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
-                size = 16.dp,
+                size = FieldDefaults.trailingIconSize,
                 tint = if (enabled) colors.mutedForeground else colors.mutedForeground
             )
         }
@@ -410,7 +410,7 @@ fun <T> MultiSelect(
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
-                size = 16.dp,
+                size = FieldDefaults.trailingIconSize,
                 tint = if (enabled) colors.mutedForeground else colors.mutedForeground
             )
         }

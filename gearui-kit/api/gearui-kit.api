@@ -2175,6 +2175,7 @@ public final class com/gearui/foundation/field/FieldDefaults {
 	public static final field INSTANCE Lcom/gearui/foundation/field/FieldDefaults;
 	public final fun getCompactShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getTrailingIconSize-UdJoRJA ()F
 }
 
 public final class com/gearui/foundation/field/FieldSizeTokens {

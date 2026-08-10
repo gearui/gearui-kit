@@ -161,7 +161,7 @@ fun TreeSelect(
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
-                size = 16.dp,
+                size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )
         }
@@ -278,7 +278,7 @@ fun TreeSelectMultiple(
 
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
-                size = 16.dp,
+                size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )
         }

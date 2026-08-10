@@ -23,6 +23,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ripgrep is not preinstalled on the GitHub-hosted Ubuntu images (checked
+      # against the 22.04 and 24.04 manifests). Four guards require it and fail
+      # loudly when it is missing rather than scanning nothing, so install it
+      # before they run. Conditional, so a future image that ships rg costs
+      # nothing here.
+      - name: Ensure ripgrep
+        run: |
+          if ! command -v rg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ripgrep
+          fi
+          rg --version
+
       - name: Hardcoded color guard (components)
         run: ./scripts/ci/check_component_hardcoded_colors.sh
 

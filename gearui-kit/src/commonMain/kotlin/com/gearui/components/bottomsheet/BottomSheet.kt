@@ -138,7 +138,7 @@ internal fun BottomSheetSurface(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
+                    .clip(OverlayDefaults.sheetShape)
                     .background(colors.surface)
             ) {
                 // 标题区域
@@ -389,7 +389,7 @@ private fun BottomSheetHostSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
+                .clip(OverlayDefaults.sheetShape)
                 .background(colors.surface)
                 .pointerInput(Unit) {
                     // 阻止事件穿透到背景

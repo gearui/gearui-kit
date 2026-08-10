@@ -97,7 +97,7 @@ fun CalendarPopup(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                .clip(OverlayDefaults.sheetShape)
                 .background(colors.surface)
                 .padding(16.dp)
         ) {

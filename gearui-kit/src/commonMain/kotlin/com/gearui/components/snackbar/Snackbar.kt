@@ -23,6 +23,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Snackbar - 顶部消息提示条
@@ -218,8 +219,8 @@ internal fun SnackbarContent(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Elevation.raised, shapes.sm)
-            .clip(shapes.sm)
+            .shadow(Elevation.raised, OverlayDefaults.panelShape)
+            .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
             .padding(horizontal = Spacing.lg, vertical = Spacing.md),
         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),

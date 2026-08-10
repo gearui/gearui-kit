@@ -18,6 +18,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Toast 类型
@@ -190,7 +191,7 @@ private fun ToastSurface(toast: ToastData) {
 
     Box(
         modifier = Modifier
-            .clip(shapes.sm)
+            .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
             .padding(horizontal = 24.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
@@ -326,7 +327,7 @@ fun LocalToast(
         Box(
             modifier = Modifier
                 .widthIn(min = 120.dp, max = 280.dp)
-                .clip(shapes.md)
+                .clip(OverlayDefaults.panelShape)
                 .background(backgroundColor)
                 .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             contentAlignment = Alignment.Center

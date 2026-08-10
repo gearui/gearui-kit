@@ -14,6 +14,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Popup - 锚点浮层基类
@@ -139,9 +140,9 @@ internal fun PopupSurface(
 
     Box(
         modifier = modifier
-            .clip(shapes.sm)
+            .clip(OverlayDefaults.panelShape)
             .background(colors.surface)
-            .border(1.dp, colors.border, shapes.sm)
+            .border(1.dp, colors.border, OverlayDefaults.panelShape)
     ) {
         content()
     }

@@ -117,9 +117,15 @@ SPEC 映射：
 - CI：`.github/workflows/guardrails.yml`
 
 策略：
-- baseline = 0。除 `theme/Shapes.kt`（标度定义本身）外禁止 `RoundedCornerShape(<n>.dp)`。
-- 组件读 `Theme.shapes.*`；需要 Dp 的 token 层读 `foundation.layout.Radius.*`。
+- baseline = 0。除 `theme/Shapes.kt`（标度定义）与 `overlay/OverlayDefaults.kt`（sheet 形状派生）
+  外，禁止 `RoundedCornerShape(...)` 里出现字面量 dp 或 `Spacing.*`。
+- 组件读 `Theme.shapes.*`；浮层读 `OverlayDefaults.{panelShape,modalShape,sheetShape}`；
+  需要 Dp 的 token 层读 `foundation.layout.Radius.*`。
 - 离档值必须吸附到最近档位，不得新增档位。
+- **拦 `Spacing.*` 当圆角**：两条轴都是 Dp 且数值撞车（`Spacing.md` 与 `Radius.xl` 同为 12dp），
+  写成 `RoundedCornerShape(Spacing.md)` 今天渲染正确，但把圆角绑死在间距标度上。
+- 匹配覆盖具名参数形式（`RoundedCornerShape(topStart = 12.dp, ...)`）——早期只匹配紧跟
+  左括号的数字，漏掉了 CalendarPopup 的贴边 sheet。
 
 9. 组件层间距护栏（P1，债务冻结）
 SPEC 映射：

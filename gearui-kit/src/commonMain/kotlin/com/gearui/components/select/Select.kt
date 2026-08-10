@@ -31,6 +31,7 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -209,7 +210,7 @@ private fun <T> SelectDropdownContent(
     val density = LocalDensity.current
 
     val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = Theme.shapes.xl
+    val panelShape = OverlayDefaults.panelShape
     val panelShadow =
         if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
     val itemHeight = 44.dp
@@ -442,7 +443,7 @@ private fun <T> MultiSelectDropdownContent(
     val density = LocalDensity.current
 
     val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = Theme.shapes.xl
+    val panelShape = OverlayDefaults.panelShape
     val panelShadow =
         if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
     val itemHeight = 44.dp

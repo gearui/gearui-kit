@@ -3447,7 +3447,11 @@ public final class com/gearui/overlay/OverlayControllerKt {
 public final class com/gearui/overlay/OverlayDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/overlay/OverlayDefaults;
+	public final fun getModalShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getPanelShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getScrimColor-cs37B9Y ()J
+	public final fun getSheetCornerRadius-UdJoRJA ()F
+	public final fun getSheetShape ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 }
 
 public final class com/gearui/overlay/OverlayDismissPolicy {

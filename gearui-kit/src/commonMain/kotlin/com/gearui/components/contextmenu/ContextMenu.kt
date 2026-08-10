@@ -42,6 +42,7 @@ import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Context menu action model.
@@ -109,10 +110,10 @@ fun ContextMenu(
                         // 配合 widthIn 防止极短/极长内容跑偏；这样不会出现"短文字撑满 max"的虚胖。
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
-                        .shadow(Elevation.raised, shapes.md)
-                        .clip(shapes.md)
+                        .shadow(Elevation.raised, OverlayDefaults.panelShape)
+                        .clip(OverlayDefaults.panelShape)
                         .background(colors.surface)
-                        .border(1.dp, colors.border, shapes.md)
+                        .border(1.dp, colors.border, OverlayDefaults.panelShape)
                         .padding(Spacing.xs)
                 ) {
                     items.forEachIndexed { index, item ->

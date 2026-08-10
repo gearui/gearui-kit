@@ -102,9 +102,9 @@ internal fun DialogSurface(
     Box(
         modifier = modifier
             .widthIn(min = 280.dp, max = 360.dp)
-            .shadow(Elevation.modal, shapes.lg)
-            .background(colors.surface, shapes.lg)
-            .border(1.dp, colors.border, shapes.lg)
+            .shadow(Elevation.modal, OverlayDefaults.modalShape)
+            .background(colors.surface, OverlayDefaults.modalShape)
+            .border(1.dp, colors.border, OverlayDefaults.modalShape)
     ) {
         content()
     }

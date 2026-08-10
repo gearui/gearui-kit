@@ -4035,8 +4035,16 @@ final object com.gearui.i18n/StringPacks { // com.gearui.i18n/StringPacks|null[0
 }
 
 final object com.gearui.overlay/OverlayDefaults { // com.gearui.overlay/OverlayDefaults|null[0]
+    final val modalShape // com.gearui.overlay/OverlayDefaults.modalShape|{}modalShape[0]
+        final fun <get-modalShape>(androidx.compose.runtime/Composer?, kotlin/Int): com.tencent.kuikly.compose.ui.graphics/Shape // com.gearui.overlay/OverlayDefaults.modalShape.<get-modalShape>|<get-modalShape>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final val panelShape // com.gearui.overlay/OverlayDefaults.panelShape|{}panelShape[0]
+        final fun <get-panelShape>(androidx.compose.runtime/Composer?, kotlin/Int): com.tencent.kuikly.compose.ui.graphics/Shape // com.gearui.overlay/OverlayDefaults.panelShape.<get-panelShape>|<get-panelShape>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final val scrimColor // com.gearui.overlay/OverlayDefaults.scrimColor|{}scrimColor[0]
         final fun <get-scrimColor>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.overlay/OverlayDefaults.scrimColor.<get-scrimColor>|<get-scrimColor>(){}[0]
+    final val sheetCornerRadius // com.gearui.overlay/OverlayDefaults.sheetCornerRadius|{}sheetCornerRadius[0]
+        final fun <get-sheetCornerRadius>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.overlay/OverlayDefaults.sheetCornerRadius.<get-sheetCornerRadius>|<get-sheetCornerRadius>(){}[0]
+    final val sheetShape // com.gearui.overlay/OverlayDefaults.sheetShape|{}sheetShape[0]
+        final fun <get-sheetShape>(): com.tencent.kuikly.compose.ui.graphics/Shape // com.gearui.overlay/OverlayDefaults.sheetShape.<get-sheetShape>|<get-sheetShape>(){}[0]
 }
 
 final object com.gearui.overlay/OverlayManager { // com.gearui.overlay/OverlayManager|null[0]

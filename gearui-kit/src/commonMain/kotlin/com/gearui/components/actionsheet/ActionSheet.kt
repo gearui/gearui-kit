@@ -6,6 +6,7 @@ import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.itemsIndexed
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -289,7 +290,7 @@ private fun ActionSheetSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = Spacing.md, topEnd = Spacing.md))
+                .clip(OverlayDefaults.sheetShape)
                 .background(colors.surface)
                 .clickable { /* 阻止点击穿透 */ }
         ) {
@@ -433,6 +434,7 @@ private fun ActionSheetListItem(
     onClick: () -> Unit
 ) {
     val colors = Theme.colors
+    val shapes = Theme.shapes
     var isPressed by remember { mutableStateOf(false) }
 
     val textColor = when {
@@ -493,7 +495,7 @@ private fun ActionSheetListItem(
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(Spacing.sm))
+                                .clip(shapes.lg)
                                 .background(colors.destructive)
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
@@ -511,7 +513,7 @@ private fun ActionSheetListItem(
                         Box(
                             modifier = Modifier
                                 .size(Spacing.sm)
-                                .clip(RoundedCornerShape(Spacing.xs))
+                                .clip(CircleShape)
                                 .background(colors.destructive)
                         )
                     }
@@ -648,7 +650,7 @@ private fun ActionSheetGridItem(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(Spacing.sm))
+            .clip(shapes.lg)
             .background(
                 if (isPressed && !item.disabled) colors.muted else Color.Transparent
             )
@@ -665,7 +667,7 @@ private fun ActionSheetGridItem(
                 Box(
                     modifier = Modifier
                         .size(Spacing.huge)
-                        .clip(RoundedCornerShape(Spacing.sm))
+                        .clip(shapes.lg)
                         .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
@@ -683,7 +685,7 @@ private fun ActionSheetGridItem(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .offset(x = Spacing.xs, y = -Spacing.xs)
-                        .clip(RoundedCornerShape(Spacing.sm))
+                        .clip(shapes.lg)
                         .background(colors.destructive)
                         .padding(horizontal = Spacing.xs, vertical = 1.dp)
                 ) {
@@ -702,7 +704,7 @@ private fun ActionSheetGridItem(
                         .align(Alignment.TopEnd)
                         .offset(x = 2.dp, y = (-2).dp)
                         .size(Spacing.sm)
-                        .clip(RoundedCornerShape(Spacing.xs))
+                        .clip(CircleShape)
                         .background(colors.destructive)
                 )
             }

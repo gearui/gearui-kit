@@ -31,6 +31,7 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Cascader option data
@@ -194,9 +195,9 @@ private fun CascaderDropdown(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(Elevation.floating, shapes.sm)
-            .background(colors.surface, shapes.sm)
-            .border(1.dp, colors.border, shapes.sm)
+            .shadow(Elevation.floating, OverlayDefaults.panelShape)
+            .background(colors.surface, OverlayDefaults.panelShape)
+            .border(1.dp, colors.border, OverlayDefaults.panelShape)
     ) {
         levels.forEachIndexed { levelIndex, levelOptions ->
             Column(

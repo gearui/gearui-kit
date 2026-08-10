@@ -20,6 +20,7 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.overlay.OverlayDefaults
 
 /**
  * Tour step data
@@ -141,8 +142,8 @@ private fun TourContent(
     Box(
         modifier = Modifier
             .width(400.dp)
-            .shadow(Elevation.modal, Theme.shapes.xl)
-            .clip(Theme.shapes.xl)
+            .shadow(Elevation.modal, OverlayDefaults.modalShape)
+            .clip(OverlayDefaults.modalShape)
             .background(colors.surface)
             .padding(24.dp)
     ) {

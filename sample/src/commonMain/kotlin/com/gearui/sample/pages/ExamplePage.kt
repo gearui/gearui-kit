@@ -9,6 +9,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
+import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
@@ -35,7 +36,11 @@ fun ExamplePage(
     val listState = rememberLazyListState()
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
-    Column(
+    PageScaffold(
+        backgroundColor = colors.background,
+        consumeBottomSafeArea = true
+    ) {
+        Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.background)
@@ -65,6 +70,7 @@ fun ExamplePage(
                     content()
                 }
             }
+        }
         }
     }
 }

@@ -40,8 +40,10 @@ data class RuntimeEnvironment(
 
 @Immutable
 data class RuntimeFlags(
-    // Spec phase-1: feature-flag gated rollout.
-    val unifiedSafeAreaPipeline: Boolean = false,
+    // 1.0 default: page chrome consumes stabilized safe-area through PageScaffold/runtime helpers.
+    // Keep the flag as a rollback switch while host integrations settle, but the legacy path is not
+    // the standard validation model anymore.
+    val unifiedSafeAreaPipeline: Boolean = true,
     // Component safe-area consumption policy (runtime-owned, app-wide).
     val navBarConsumesTopSafeArea: Boolean = false,
     val bottomNavBarConsumesBottomSafeArea: Boolean = true,
@@ -203,10 +205,9 @@ internal fun rememberSafeAreaInset(
         SafeAreaEdge.Right -> configuration.safeAreaInsets.right.dp
     }
 
-    // 注意：legacy 分支刻意不看 [consume]，这是迁移前的既有行为——
-    // `unifiedSafeAreaPipeline` 默认关闭时，组件级 flag 实际不生效
-    // （例如 navBarConsumesTopSafeArea 默认 false，NavBar 今天仍在消费顶部 inset）。
-    // 这里保持原样，不借重构顺手改变行为。
+    // 注意：legacy 分支刻意不看 [consume]，这是迁移前的既有行为。
+    // 仅作为宿主集成回滚开关保留；标准路径由 unifiedSafeAreaPipeline=true 驱动，
+    // 组件级消费策略才会真正生效。
     val resolved = if (flags.unifiedSafeAreaPipeline) {
         if (consume) stable else 0.dp
     } else {

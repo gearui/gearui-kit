@@ -12,6 +12,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
 import com.gearui.components.radio.RadioButton
+import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
@@ -69,7 +70,11 @@ fun SettingsPage(
         ThemeStyle.SYSTEM to coreStrings.system
     )
 
-    Column(
+    PageScaffold(
+        backgroundColor = colors.background,
+        consumeBottomSafeArea = true
+    ) {
+        Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.background)
@@ -168,6 +173,7 @@ fun SettingsPage(
                     )
                 }
             }
+        }
         }
     }
 }

@@ -120,6 +120,8 @@ Insets 语义（强制）：
 - `RuntimeEnvironment.safeArea` 只表示系统状态栏、导航栏、手势区和异形屏安全区。
 - `RuntimeEnvironment.keyboard` 单独表示 IME 高度与可见状态；IME 不得并入
   `safeArea.bottom`，页面 chrome、BottomNavBar、ActionSheet 不得随键盘高度漂移。
+- `RuntimeFlags.unifiedSafeAreaPipeline` 默认为开启；关闭仅作为宿主集成回滚路径，不是
+  sample 或业务页面的标准验证模型。
 - 普通页面由 `PageScaffold` 消费 top/bottom safe area；启用该路径时 NavBar 不得再次
   消费 top safe area。聊天输入栏等需要跟随键盘的区域显式读取 `keyboard.height`。
 - Keyboard geometry 必须由宿主上报：Android 使用 `WindowInsets.Type.ime()`，iOS 使用

@@ -18,9 +18,9 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.navbar.NavBarItem
 import com.gearui.components.icon.Icons
 import com.gearui.components.searchbar.SearchBar
+import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.sample.i18n.SampleStrings
 import com.gearui.sample.config.ComponentCategory
@@ -52,9 +52,6 @@ fun HomePage(
     var searchQuery by remember { mutableStateOf("") }
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
-    // 获取安全区域
-    val safeAreaBottom = LocalRuntimeEnvironment.current.safeArea.bottom
-
     val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
 
     // 根据搜索关键词过滤组件（搜索同时匹配中英文）
@@ -72,113 +69,86 @@ fun HomePage(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(colors.background)) {
-        // 复合顶部区域：NavBar + SearchBar 一体化
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(navBarColor)
-        ) {
-            NavBar(
-                title = strings.homeTitle,
-                centerTitle = true,
-                backgroundColor = navBarColor,
-                showBottomDivider = false,
-                rightItems = listOf(
-                    NavBarItem(
-                        icon = Icons.settings,
-                        onClick = onSettingsClick
-                    )
-                )
-            )
-
-            // 搜索栏
+    PageScaffold(
+        backgroundColor = colors.background,
+        consumeBottomSafeArea = true
+    ) {
+        Column(modifier = Modifier.fillMaxSize().background(colors.background)) {
+            // 复合顶部区域：NavBar + SearchBar 一体化
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(navBarColor)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                SearchBar(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = strings.searchPlaceholder,
-                    showCancel = searchQuery.isNotEmpty(),
-                    onCancel = {
-                        searchQuery = ""
-                    }
+                NavBar(
+                    title = strings.homeTitle,
+                    centerTitle = true,
+                    backgroundColor = navBarColor,
+                    showBottomDivider = false,
+                    rightItems = listOf(
+                        NavBarItem(
+                            icon = Icons.settings,
+                            onClick = onSettingsClick
+                        )
+                    )
+                )
+
+                // 搜索栏
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(navBarColor)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    SearchBar(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = strings.searchPlaceholder,
+                        showCancel = searchQuery.isNotEmpty(),
+                        onCancel = {
+                            searchQuery = ""
+                        }
+                    )
+                }
+
+                // 分割线应在搜索栏下方
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(colors.border)
                 )
             }
 
-            // 分割线应在搜索栏下方
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(colors.border)
-            )
-        }
+            // 组件列表
+            LazyColumn(
+                state = listState,
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+            ) {
 
-        // 组件列表
-        LazyColumn(
-            state = listState,
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-
-            // 显示搜索结果或分类列表
-            if (searchQuery.isNotEmpty()) {
-                // 搜索模式：显示过滤后的结果
-                if (filteredComponents.isEmpty()) {
-                    item(key = "no_results") {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(32.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = strings.noResults,
-                                style = Typography.BodyMedium,
-                                color = colors.mutedForeground
-                            )
-                        }
-                    }
-                } else {
-                    item(key = "search_result_card") {
-                        ListCard {
-                            filteredComponents.forEachIndexed { index, component ->
-                                ComponentListItem(
-                                    component = component,
-                                    isEnglish = isEnglish,
-                                    onClick = {
-                                        focusManager.clearFocus()
-                                        onComponentClick(component)
-                                    },
-                                    searchQuery = searchQuery,
-                                    showDivider = index < filteredComponents.lastIndex
+                // 显示搜索结果或分类列表
+                if (searchQuery.isNotEmpty()) {
+                    // 搜索模式：显示过滤后的结果
+                    if (filteredComponents.isEmpty()) {
+                        item(key = "no_results") {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(32.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = strings.noResults,
+                                    style = Typography.BodyMedium,
+                                    color = colors.mutedForeground
                                 )
                             }
                         }
-                    }
-                }
-            } else {
-                // 正常模式：按分类展示
-                ComponentCategory.entries.forEach { category ->
-                    val components = ComponentConfig.getByCategory(category)
-
-                    if (components.isNotEmpty()) {
-                        item(key = "category_${category.name}") {
-                            CategoryHeader(
-                                category = category,
-                                count = components.size,
-                                strings = strings
-                            )
-                        }
-
-                        item(key = "category_card_${category.name}") {
+                    } else {
+                        item(key = "search_result_card") {
                             ListCard {
-                                components.forEachIndexed { index, component ->
+                                filteredComponents.forEachIndexed { index, component ->
                                     ComponentListItem(
                                         component = component,
                                         isEnglish = isEnglish,
@@ -186,147 +156,179 @@ fun HomePage(
                                             focusManager.clearFocus()
                                             onComponentClick(component)
                                         },
-                                        showDivider = index < components.lastIndex
+                                        searchQuery = searchQuery,
+                                        showDivider = index < filteredComponents.lastIndex
                                     )
                                 }
                             }
                         }
                     }
+                } else {
+                    // 正常模式：按分类展示
+                    ComponentCategory.entries.forEach { category ->
+                        val components = ComponentConfig.getByCategory(category)
+
+                        if (components.isNotEmpty()) {
+                            item(key = "category_${category.name}") {
+                                CategoryHeader(
+                                    category = category,
+                                    count = components.size,
+                                    strings = strings
+                                )
+                            }
+
+                            item(key = "category_card_${category.name}") {
+                                ListCard {
+                                    components.forEachIndexed { index, component ->
+                                        ComponentListItem(
+                                            component = component,
+                                            isEnglish = isEnglish,
+                                            onClick = {
+                                                focusManager.clearFocus()
+                                                onComponentClick(component)
+                                            },
+                                            showDivider = index < components.lastIndex
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 底部空白（包含安全区域）
+                item {
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
-
-            // 底部空白（包含安全区域）
-            item {
-                Spacer(modifier = Modifier.height(32.dp + safeAreaBottom))
             }
         }
     }
-}
 
-/**
- * 获取分类的本地化名称
- */
-private fun getCategoryDisplayName(category: ComponentCategory, strings: SampleStrings): String {
-    return when (category) {
-        ComponentCategory.BASIC -> strings.categoryBasic
-        ComponentCategory.FORM -> strings.categoryForm
-        ComponentCategory.NAVIGATION -> strings.categoryNavigation
-        ComponentCategory.DATA_DISPLAY -> strings.categoryDataDisplay
-        ComponentCategory.FEEDBACK -> strings.categoryFeedback
-        ComponentCategory.LAYOUT -> strings.categoryLayout
-    }
-}
-
-/**
- * 分类标题
- */
-@Composable
-private fun CategoryHeader(
-    category: ComponentCategory,
-    count: Int,
-    strings: SampleStrings
-) {
-    val colors = Theme.colors
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 12.dp, bottom = 8.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = getCategoryDisplayName(category, strings),
-                style = Typography.BodyMedium,
-                color = colors.foreground
-            )
-
-            Text(
-                text = "$count${strings.componentCountSuffix}",
-                style = Typography.BodySmall,
-                color = colors.mutedForeground
-            )
+    /**
+     * 获取分类的本地化名称
+     */
+    private fun getCategoryDisplayName(category: ComponentCategory, strings: SampleStrings): String {
+        return when (category) {
+            ComponentCategory.BASIC -> strings.categoryBasic
+            ComponentCategory.FORM -> strings.categoryForm
+            ComponentCategory.NAVIGATION -> strings.categoryNavigation
+            ComponentCategory.DATA_DISPLAY -> strings.categoryDataDisplay
+            ComponentCategory.FEEDBACK -> strings.categoryFeedback
+            ComponentCategory.LAYOUT -> strings.categoryLayout
         }
     }
-}
 
-@Composable
-private fun ListCard(
-    content: @Composable ColumnScope.() -> Unit
-) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shapes.lg)
-            .background(colors.surface)
-            .border(1.dp, colors.border, shapes.lg)
+    /**
+     * 分类标题
+     */
+    @Composable
+    private fun CategoryHeader(
+        category: ComponentCategory,
+        count: Int,
+        strings: SampleStrings
     ) {
-        content()
-    }
-}
+        val colors = Theme.colors
 
-/**
- * 组件列表项
- */
-@Composable
-private fun ComponentListItem(
-    component: ComponentInfo,
-    isEnglish: Boolean = false,
-    onClick: () -> Unit,
-    searchQuery: String = "",
-    showDivider: Boolean = false
-) {
-    val colors = Theme.colors
-    val name = component.nameEn
-    val description = component.localizedDescription(isEnglish)
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .background(colors.surface)
-    ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(top = 12.dp, bottom = 8.dp)
         ) {
-            Column(
-                modifier = Modifier.weight(1f)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                // 组件名称
                 Text(
-                    text = name,
-                    style = Typography.BodyLarge,
+                    text = getCategoryDisplayName(category, strings),
+                    style = Typography.BodyMedium,
                     color = colors.foreground
                 )
 
-                // 组件描述
-                if (description.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = description,
-                        style = Typography.BodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+                Text(
+                    text = "$count${strings.componentCountSuffix}",
+                    style = Typography.BodySmall,
+                    color = colors.mutedForeground
+                )
+            }
+        }
+    }
 
-                // 如果在搜索模式，显示组件ID
-                if (searchQuery.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(4.dp))
+    @Composable
+    private fun ListCard(
+        content: @Composable ColumnScope.() -> Unit
+    ) {
+        val colors = Theme.colors
+        val shapes = Theme.shapes
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shapes.lg)
+                .background(colors.surface)
+                .border(1.dp, colors.border, shapes.lg)
+        ) {
+            content()
+        }
+    }
+
+    /**
+     * 组件列表项
+     */
+    @Composable
+    private fun ComponentListItem(
+        component: ComponentInfo,
+        isEnglish: Boolean = false,
+        onClick: () -> Unit,
+        searchQuery: String = "",
+        showDivider: Boolean = false
+    ) {
+        val colors = Theme.colors
+        val name = component.nameEn
+        val description = component.localizedDescription(isEnglish)
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .background(colors.surface)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    // 组件名称
                     Text(
-                        text = "ID: ${component.id}",
-                        style = Typography.BodySmall,
-                        color = colors.mutedForeground
+                        text = name,
+                        style = Typography.BodyLarge,
+                        color = colors.foreground
                     )
-                }
+
+                    // 组件描述
+                    if (description.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = description,
+                            style = Typography.BodySmall,
+                            color = colors.mutedForeground
+                        )
+                    }
+
+                    // 如果在搜索模式，显示组件ID
+                    if (searchQuery.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "ID: ${component.id}",
+                            style = Typography.BodySmall,
+                            color = colors.mutedForeground
+                        )
+                    }
             }
 
             // 右箭头

@@ -1,0 +1,28 @@
+# Exceptions for check_sample_index.py. Format: <kind> <id> <reason>
+# Blank lines and #-comments ignored. Every entry needs a reason.
+#
+#   uncovered  <component-dir>  an SDK component with no demo route
+#   comingsoon <route-id>       an indexed route still pointing at ComingSoonExample
+#
+# Both lists are ratchets: they may shrink, never grow. Anything not listed
+# here must be genuinely covered.
+
+# --- uncovered ---
+# PageScaffold is page infrastructure rather than a component someone picks off
+# a gallery: it is the root container that consumes safe area. Its coverage is
+# that HomePage, ExamplePage and SettingsPage are all built on it — a dedicated
+# demo would show an empty box.
+uncovered scaffold page infrastructure, exercised by every sample page
+
+# --- comingsoon ---
+# These seven are advertised in the official index but open a placeholder. They
+# are design-system topics rather than components, which is why they were
+# stubbed. Each must end up either implemented or removed from the index; this
+# list exists so the debt is counted rather than invisible.
+comingsoon font design-system topic, not yet written
+comingsoon radius design-system topic, superseded by the frozen shape scale
+comingsoon shadows design-system topic, superseded by the Elevation scale
+comingsoon theme design-system topic, not yet written
+comingsoon indexes navigation aid, not yet written
+comingsoon timecounter component not implemented in the SDK
+comingsoon footer component not implemented in the SDK

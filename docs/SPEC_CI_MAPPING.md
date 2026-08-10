@@ -272,6 +272,30 @@ SPEC 映射：
   都不是字段校验，靠参数名无法区分。首跑全误报的护栏会教人忽略红灯，代价大于它能拦下的漂移。
   Field 族命名交给 SPEC 6.1 + 编译器 + apiCheck 把关。
 
+17. Sample 索引完整性（P0）
+SPEC 映射：
+- 6.4 Sample 即架构验证
+
+实现：
+- 脚本：`scripts/ci/check_sample_index.sh` → `check_sample_index.py`
+- 豁免清单：`scripts/ci/sample_index_exceptions.txt`
+- CI：`.github/workflows/ci.yml` job `sdk-guard`
+
+策略（四项）：
+1. **路由完整性**：`ComponentConfig` ID ≡ `NavigationManager` 分支 ID（**支持连字符**）。
+2. **示例实现**：每个路由指向的 composable 必须在 sample 源码里真实存在。
+3. **SDK 覆盖**：组件目录必须能被某条路由触达（目录名 == 路由 ID 去掉连字符）。
+   该规则覆盖 57 个组件中的 56 个，因此豁免表只有 1 条而不是一张会腐烂的映射表。
+4. **发布完整性**：正式索引不得指向 `ComingSoonExample`；现有 7 条按豁免登记，**只可减不可增**。
+
+取代的旧内联检查错在哪：
+- 它把**路由 ID** 和**示例目录名**当成同一命名空间比较，而两者本就不对应
+  （`tabs`→`examples/tab`、`icon-render`→`examples/icon`、`runtime-insets`→`examples/runtime`）。
+- ID 正则是 `[a-z0-9]+`，**静默丢掉 7 个连字符 ID**；因为两侧同样瞎，路由那半边是「碰巧过的」。
+- 于是它报出的 4 个「未覆盖组件」全部不成立（bottomnavbar/contextmenu/navigationmenu 的示例本来就有）。
+- 只用 git 追踪的目录判断：本地遗留的空目录（accordion/appbar/tabbar）**不是组件**，不该被算进来。
+- 逻辑从 ci.yml 内联挪成脚本——内联版只能靠 push 触发，而 Actions 从未运行，等于从未被执行过。
+
 ---
 
 ## 下一批（建议 4 周内完成）

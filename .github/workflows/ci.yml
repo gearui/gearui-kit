@@ -102,7 +102,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build iOS simulator targets
-        run: ./gradlew --no-daemon :gearui-kit:linkDebugFrameworkIosSimulatorArm64 :sample:linkDebugFrameworkIosSimulatorArm64
+        # gearui-kit declares no iOS framework binary (it ships as a klib), so
+        # linkDebugFrameworkIosSimulatorArm64 never existed on it and this step
+        # could not resolve. Link its main binaries instead; the framework task
+        # is only valid on :sample.
+        run: ./gradlew --no-daemon :gearui-kit:iosSimulatorArm64MainBinaries :sample:linkDebugFrameworkIosSimulatorArm64
 
   api-compat-check:
     name: Public API Compatibility (SPEC 4.2)

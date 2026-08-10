@@ -27,6 +27,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Cascader option data
@@ -54,7 +55,7 @@ fun Cascader(
     selectedPath: List<String>,
     onSelect: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "请选择",
+    placeholder: String = I18n.strings.field.selectPlaceholder,
     separator: String = " / ",
     dropdownHeight: Dp = 300.dp
 ) {

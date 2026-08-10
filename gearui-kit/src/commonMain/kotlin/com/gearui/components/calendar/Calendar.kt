@@ -18,6 +18,8 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
+import com.gearui.i18n.formatArgs
 
 /**
  * 日期数据类
@@ -228,7 +230,8 @@ private fun CalendarHeader(
         }
 
         Text(
-            text = "${year}年${month}月",
+            text = I18n.strings.dateTime.calendarYearMonthFormat
+                .formatArgs("year" to year, "month" to month),
             style = Typography.TitleMedium,
             color = colors.foreground
         )
@@ -255,7 +258,7 @@ private fun CalendarWeekHeader(
     firstDayOfWeek: Int = 0
 ) {
     val colors = Theme.colors
-    val weekdays = listOf("日", "一", "二", "三", "四", "五", "六")
+    val weekdays = I18n.strings.dateTime.weekdaysShort
 
     val orderedWeekdays = if (firstDayOfWeek == 0) {
         weekdays

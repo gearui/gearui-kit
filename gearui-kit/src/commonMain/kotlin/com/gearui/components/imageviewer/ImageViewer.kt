@@ -28,6 +28,8 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
+import com.gearui.i18n.I18n
+import com.gearui.i18n.formatArgs
 
 /**
  * ImageViewerState - 图片预览器状态
@@ -181,7 +183,7 @@ fun ImageViewer(
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
-                                text = "图片 ${page + 1}",
+                                text = I18n.strings.media.imageIndexFormat.formatArgs("index" to (page + 1)),
                                 style = Typography.TitleMedium,
                                 color = Color.White.copy(alpha = 0.7f)
                             )

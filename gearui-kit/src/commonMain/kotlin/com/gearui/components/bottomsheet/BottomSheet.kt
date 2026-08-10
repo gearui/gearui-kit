@@ -24,6 +24,7 @@ import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
+import com.gearui.i18n.I18n
 
 /**
  * BottomSheet - 基于 Overlay 系统的底部动作面板
@@ -58,7 +59,7 @@ fun BottomSheet(
     description: String? = null,
     items: List<BottomSheetItem>,
     showCancel: Boolean = true,
-    cancelText: String = "取消",
+    cancelText: String = I18n.strings.common.cancel,
     closeOnClickOutside: Boolean = true,
     maxListHeight: Dp = 400.dp,
     onItemClick: (BottomSheetItem, Int) -> Unit
@@ -114,7 +115,7 @@ internal fun BottomSheetSurface(
     description: String? = null,
     items: List<BottomSheetItem>,
     showCancel: Boolean = true,
-    cancelText: String = "取消",
+    cancelText: String = I18n.strings.common.cancel,
     maxListHeight: Dp = 400.dp,
     onDismiss: () -> Unit,
     onItemClick: (BottomSheetItem, Int) -> Unit

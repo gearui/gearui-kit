@@ -18,6 +18,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.i18n.I18n
 
 /**
  * CalendarPopup - 日历弹出层组件
@@ -48,7 +49,7 @@ fun CalendarPopup(
     visible: Boolean,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    title: String = "请选择日期",
+    title: String = I18n.strings.dateTime.selectDateTitle,
     type: CalendarType = CalendarType.Single,
     // 单选
     initialDate: CalendarDate? = null,
@@ -64,7 +65,7 @@ fun CalendarPopup(
     minDate: CalendarDate? = null,
     maxDate: CalendarDate? = null,
     autoClose: Boolean = true,
-    confirmText: String = "确认",
+    confirmText: String = I18n.strings.common.confirm,
     showConfirmButton: Boolean = true
 ) {
     if (!visible) return

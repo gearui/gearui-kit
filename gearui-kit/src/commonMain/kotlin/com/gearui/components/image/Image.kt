@@ -23,6 +23,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Image fit mode
@@ -87,8 +88,8 @@ fun GearImage(
     cornerRadius: Dp = 8.dp,
     showBorder: Boolean = false,
     borderWidth: Dp = 1.dp,
-    placeholderText: String = "加载中...",
-    errorText: String = "加载失败",
+    placeholderText: String = I18n.strings.common.loading,
+    errorText: String = I18n.strings.common.loadFailed,
     onClick: (() -> Unit)? = null
 ) {
     val colors = Theme.colors
@@ -176,7 +177,7 @@ fun ImageWithState(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "加载中...",
+                        text = I18n.strings.common.loading,
                         style = Typography.BodySmall,
                         color = colors.mutedForeground
                     )
@@ -326,7 +327,7 @@ fun ImageGallery(
 @Composable
 fun ImagePlaceholder(
     modifier: Modifier = Modifier,
-    text: String = "暂无图片",
+    text: String = I18n.strings.media.imageEmpty,
     icon: String = "📷"
 ) {
     val colors = Theme.colors

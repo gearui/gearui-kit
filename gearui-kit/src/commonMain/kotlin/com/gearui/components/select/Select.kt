@@ -26,6 +26,8 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.i18n.formatArgs
+import com.gearui.i18n.I18n
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -45,7 +47,7 @@ fun <T> Select(
     onValueChange: (T) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    placeholder: String = "请选择",
+    placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
     error: String? = null,
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
@@ -290,7 +292,7 @@ fun <T> MultiSelect(
     onValuesChange: (Set<T>) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    placeholder: String = "请选择",
+    placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
     maxSelection: Int? = null,
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
@@ -389,7 +391,8 @@ fun <T> MultiSelect(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = if (values.isEmpty()) placeholder else "${values.size} 项已选",
+                text = if (values.isEmpty()) placeholder
+                    else I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size),
                 style = Typography.BodyMedium,
                 color = if (values.isNotEmpty()) {
                     if (enabled) colors.foreground else colors.mutedForeground

@@ -19,6 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.components.dialog.Dialog
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import com.gearui.i18n.I18n
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -29,7 +30,7 @@ fun DatePickerInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    placeholder: String = "选择日期",
+    placeholder: String = I18n.strings.dateTime.datePlaceholder,
     label: String? = null,
     format: String = "YYYY-MM-DD"
 ) {
@@ -132,7 +133,7 @@ private fun DatePickerDialogContent(
             .padding(16.dp)
     ) {
         Text(
-            text = "选择日期",
+            text = I18n.strings.dateTime.selectDateTitle,
             style = Typography.TitleMedium,
             color = colors.foreground,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -151,7 +152,7 @@ private fun DatePickerDialogContent(
                 selectedItem = selectedYear,
                 onItemSelected = onYearChange,
                 modifier = Modifier.weight(1f),
-                suffix = "年"
+                suffix = I18n.strings.dateTime.yearSuffix
             )
 
             // 月份选择
@@ -160,7 +161,7 @@ private fun DatePickerDialogContent(
                 selectedItem = selectedMonth,
                 onItemSelected = onMonthChange,
                 modifier = Modifier.weight(1f),
-                suffix = "月"
+                suffix = I18n.strings.dateTime.monthSuffix
             )
 
             // 日期选择
@@ -174,7 +175,7 @@ private fun DatePickerDialogContent(
                 selectedItem = selectedDay.coerceAtMost(daysInMonth),
                 onItemSelected = onDayChange,
                 modifier = Modifier.weight(1f),
-                suffix = "日"
+                suffix = I18n.strings.dateTime.daySuffix
             )
         }
 
@@ -195,7 +196,7 @@ private fun DatePickerDialogContent(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "取消",
+                    text = I18n.strings.common.cancel,
                     style = Typography.BodyMedium,
                     color = colors.mutedForeground
                 )
@@ -211,7 +212,7 @@ private fun DatePickerDialogContent(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "确定",
+                    text = I18n.strings.common.ok,
                     style = Typography.BodyMedium,
                     color = colors.primaryForeground
                 )
@@ -229,7 +230,7 @@ fun TimePickerInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    placeholder: String = "选择时间",
+    placeholder: String = I18n.strings.dateTime.timePlaceholder,
     label: String? = null,
     format: String = "HH:mm"
 ) {
@@ -320,7 +321,7 @@ private fun TimePickerDialogContent(
             .padding(16.dp)
     ) {
         Text(
-            text = "选择时间",
+            text = I18n.strings.dateTime.selectTimeTitle,
             style = Typography.TitleMedium,
             color = colors.foreground,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -339,7 +340,7 @@ private fun TimePickerDialogContent(
                 selectedItem = selectedHour,
                 onItemSelected = onHourChange,
                 modifier = Modifier.weight(1f),
-                suffix = "时",
+                suffix = I18n.strings.dateTime.hourSuffix,
                 padZero = true
             )
 
@@ -349,7 +350,7 @@ private fun TimePickerDialogContent(
                 selectedItem = selectedMinute,
                 onItemSelected = onMinuteChange,
                 modifier = Modifier.weight(1f),
-                suffix = "分",
+                suffix = I18n.strings.dateTime.minuteSuffix,
                 padZero = true
             )
         }
@@ -371,7 +372,7 @@ private fun TimePickerDialogContent(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "取消",
+                    text = I18n.strings.common.cancel,
                     style = Typography.BodyMedium,
                     color = colors.mutedForeground
                 )
@@ -387,7 +388,7 @@ private fun TimePickerDialogContent(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "确定",
+                    text = I18n.strings.common.ok,
                     style = Typography.BodyMedium,
                     color = colors.primaryForeground
                 )

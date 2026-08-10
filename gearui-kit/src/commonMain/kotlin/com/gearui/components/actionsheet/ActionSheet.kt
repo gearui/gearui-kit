@@ -25,6 +25,7 @@ import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.i18n.I18n
 
 /**
  * ActionSheet - 动作面板组件
@@ -89,7 +90,7 @@ object ActionSheet {
     private var currentAlign = mutableStateOf(ActionSheetAlign.CENTER)
     private var currentDescription = mutableStateOf<String?>(null)
     private var currentShowCancel = mutableStateOf(true)
-    private var currentCancelText = mutableStateOf("取消")
+    private var currentCancelText = mutableStateOf<String?>(null)
     private var currentOnSelected = mutableStateOf<((ActionSheetItem, Int) -> Unit)?>(null)
     private var currentOnCancel = mutableStateOf<(() -> Unit)?>(null)
     private var currentGridColumns = mutableStateOf(4)
@@ -102,7 +103,7 @@ object ActionSheet {
         description: String? = null,
         align: ActionSheetAlign = ActionSheetAlign.CENTER,
         showCancel: Boolean = true,
-        cancelText: String = "取消",
+        cancelText: String? = null,
         onSelected: ((ActionSheetItem, Int) -> Unit)? = null,
         onCancel: (() -> Unit)? = null
     ) {
@@ -125,7 +126,7 @@ object ActionSheet {
         description: String? = null,
         columns: Int = 4,
         showCancel: Boolean = true,
-        cancelText: String = "取消",
+        cancelText: String? = null,
         onSelected: ((ActionSheetItem, Int) -> Unit)? = null,
         onCancel: (() -> Unit)? = null
     ) {
@@ -159,7 +160,8 @@ object ActionSheet {
         val align by currentAlign
         val description by currentDescription
         val showCancel by currentShowCancel
-        val cancelText by currentCancelText
+        val cancelTextOverride by currentCancelText
+        val cancelText = cancelTextOverride ?: I18n.strings.common.cancel
         val onSelected by currentOnSelected
         val onCancel by currentOnCancel
         val gridColumns by currentGridColumns
@@ -199,7 +201,7 @@ fun ActionSheetContent(
     align: ActionSheetAlign = ActionSheetAlign.CENTER,
     description: String? = null,
     showCancel: Boolean = true,
-    cancelText: String = "取消",
+    cancelText: String = I18n.strings.common.cancel,
     gridColumns: Int = 4,
     maxListHeight: Dp = 400.dp,
     onSelected: ((ActionSheetItem, Int) -> Unit)? = null,

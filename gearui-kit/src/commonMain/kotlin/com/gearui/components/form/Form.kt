@@ -12,6 +12,8 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.i18n.StringPacks
+import com.gearui.i18n.I18n
 
 /**
  * Form validation rule
@@ -19,15 +21,55 @@ import com.gearui.theme.Theme
 data class FormRule(
     val required: Boolean = false,
     val validator: ((String) -> Boolean)? = null,
-    val message: String = "验证失败"
+    /** 留空时回落到 [FormMessages]，由 [rememberFormFieldState] 按当前语言注入。 */
+    val message: String = ""
 )
+
+/**
+ * 校验发生在 [FormFieldState.validate] 里，那是普通类而不是 composable，读不到
+ * [com.gearui.i18n.LocalStrings]。所以文案在构造期注入；直接 new [FormFieldState]
+ * 时回落到英文包（库的 fallback 语言），而不是硬编码字面量。
+ */
+data class FormMessages(
+    val validationFailed: String,
+    val fieldRequired: String,
+) {
+    companion object {
+        val Fallback: FormMessages = StringPacks.English.feedback.let {
+            FormMessages(
+                validationFailed = it.validationFailed,
+                fieldRequired = it.fieldRequired,
+            )
+        }
+    }
+}
+
+/** 按当前语言环境创建字段状态；优先用这个而不是直接构造 [FormFieldState]。 */
+@Composable
+fun rememberFormFieldState(
+    initialValue: String = "",
+    rules: List<FormRule> = emptyList(),
+): FormFieldState {
+    val feedback = I18n.strings.feedback
+    return remember(initialValue, rules, feedback) {
+        FormFieldState(
+            initialValue = initialValue,
+            rules = rules,
+            messages = FormMessages(
+                validationFailed = feedback.validationFailed,
+                fieldRequired = feedback.fieldRequired,
+            ),
+        )
+    }
+}
 
 /**
  * Form field state
  */
 class FormFieldState(
     initialValue: String = "",
-    val rules: List<FormRule> = emptyList()
+    val rules: List<FormRule> = emptyList(),
+    val messages: FormMessages = FormMessages.Fallback,
 ) {
     var value by mutableStateOf(initialValue)
     var error by mutableStateOf<String?>(null)
@@ -39,14 +81,14 @@ class FormFieldState(
         for (rule in rules) {
             // Required check
             if (rule.required && value.isBlank()) {
-                error = rule.message.ifBlank { "此字段为必填项" }
+                error = rule.message.ifBlank { messages.fieldRequired }
                 return false
             }
 
             // Custom validator
             rule.validator?.let { validator ->
                 if (!validator(value)) {
-                    error = rule.message
+                    error = rule.message.ifBlank { messages.validationFailed }
                     return false
                 }
             }

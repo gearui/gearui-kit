@@ -17,6 +17,7 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Switch 尺寸枚举
@@ -69,8 +70,8 @@ fun Switch(
     size: SwitchSize = SwitchSize.MEDIUM,
     trackOnColor: Color? = null,
     trackOffColor: Color? = null,
-    openText: String = "开",
-    closeText: String = "关"
+    openText: String = I18n.strings.field.switchOn,
+    closeText: String = I18n.strings.field.switchOff
 ) {
     val colors = Theme.colors
 

@@ -54,7 +54,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     themeMode = ThemeMode.System,
  *     isSystemDark = StatusBarControllerImpl.isSystemDarkMode(),
  *     stringsOverrides = mapOf(
- *         "zh-Hans" to StringsPatch(buttonConfirm = "确定一下"),
+ *         "zh-Hans" to StringsPatch(common = CommonStringsPatch(confirm = "确定一下")),
  *     ),
  * ) {
  *     MainPage()

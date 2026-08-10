@@ -19,6 +19,7 @@ import com.gearui.components.bottomsheet.BottomSheet
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import com.gearui.i18n.I18n
 
 /**
  * Picker - 通用选择器
@@ -331,7 +332,7 @@ private fun PickerHeader(
     ) {
         // 取消按钮
         Text(
-            text = "取消",
+            text = I18n.strings.common.cancel,
             style = Typography.BodyLarge,
             color = colors.mutedForeground,
             modifier = Modifier.clickable { onCancel() }
@@ -353,7 +354,7 @@ private fun PickerHeader(
 
         // 确定按钮
         Text(
-            text = "确定",
+            text = I18n.strings.common.ok,
             style = Typography.BodyLarge,
             color = colors.primary,
             modifier = Modifier.clickable { onConfirm() }

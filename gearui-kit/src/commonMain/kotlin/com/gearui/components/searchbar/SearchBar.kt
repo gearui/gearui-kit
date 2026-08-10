@@ -30,6 +30,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlin.math.abs
+import com.gearui.i18n.I18n
 
 /**
  * SearchBar - 100% Theme 驱动的搜索栏
@@ -49,7 +50,7 @@ fun SearchBar(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "搜索",
+    placeholder: String = I18n.strings.field.searchPlaceholder,
     enabled: Boolean = true,
     showCancel: Boolean = false,
     onCancel: (() -> Unit)? = null,
@@ -224,7 +225,7 @@ fun SearchBar(
         if (showCancel) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "取消",
+                text = I18n.strings.common.cancel,
                 style = Typography.BodyMedium,
                 color = if (enabled) colors.primary else colors.mutedForeground,
                 modifier = Modifier.clickable(enabled = enabled) {
@@ -266,10 +267,10 @@ enum class SearchBarAlignment {
 fun SearchBarWithAction(
     value: String,
     onValueChange: (String) -> Unit,
-    actionText: String = "搜索",
+    actionText: String = I18n.strings.common.search,
     onAction: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "搜索",
+    placeholder: String = I18n.strings.field.searchPlaceholder,
     enabled: Boolean = true
 ) {
     val colors = Theme.colors

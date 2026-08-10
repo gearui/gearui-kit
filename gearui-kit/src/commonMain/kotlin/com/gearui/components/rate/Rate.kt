@@ -15,6 +15,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Rate - Rating component
@@ -203,7 +204,7 @@ fun RateWithDescription(
     modifier: Modifier = Modifier,
     count: Int = 5,
     allowHalf: Boolean = false,
-    descriptions: List<String> = listOf("很差", "较差", "一般", "满意", "很满意")
+    descriptions: List<String> = I18n.strings.guide.rateDescriptions
 ) {
     val colors = Theme.colors
 

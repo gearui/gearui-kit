@@ -777,9 +777,10 @@ public final class com/gearui/components/empty/EmptyStateType : java/lang/Enum {
 public final class com/gearui/components/form/FormFieldState {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Lcom/gearui/components/form/FormMessages;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Lcom/gearui/components/form/FormMessages;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getError ()Ljava/lang/String;
+	public final fun getMessages ()Lcom/gearui/components/form/FormMessages;
 	public final fun getRules ()Ljava/util/List;
 	public final fun getTouched ()Z
 	public final fun getValue ()Ljava/lang/String;
@@ -794,8 +795,28 @@ public final class com/gearui/components/form/FormFieldState {
 public final class com/gearui/components/form/FormKt {
 	public static final fun Form-aDbNxCU (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/form/FormState;FZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun FormField (Lcom/gearui/components/form/FormFieldState;Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
+	public static final fun rememberFormFieldState (Ljava/lang/String;Ljava/util/List;Landroidx/compose/runtime/Composer;II)Lcom/gearui/components/form/FormFieldState;
 	public static final fun rememberFormFieldState (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lcom/gearui/components/form/FormState;Landroidx/compose/runtime/Composer;II)Lcom/gearui/components/form/FormFieldState;
 	public static final fun rememberFormState (Landroidx/compose/runtime/Composer;I)Lcom/gearui/components/form/FormState;
+}
+
+public final class com/gearui/components/form/FormMessages {
+	public static final field $stable I
+	public static final field Companion Lcom/gearui/components/form/FormMessages$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/components/form/FormMessages;
+	public static synthetic fun copy$default (Lcom/gearui/components/form/FormMessages;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/components/form/FormMessages;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFieldRequired ()Ljava/lang/String;
+	public final fun getValidationFailed ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/form/FormMessages$Companion {
+	public final fun getFallback ()Lcom/gearui/components/form/FormMessages;
 }
 
 public final class com/gearui/components/form/FormRule {
@@ -3063,6 +3084,338 @@ public final class com/gearui/gestures/SwipeBackKt {
 	public static synthetic fun swipeBack$default (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
+public final class com/gearui/i18n/CommonStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackToTop ()Ljava/lang/String;
+	public final fun getCancel ()Ljava/lang/String;
+	public final fun getConfirm ()Ljava/lang/String;
+	public final fun getLoadFailed ()Ljava/lang/String;
+	public final fun getLoading ()Ljava/lang/String;
+	public final fun getNetworkError ()Ljava/lang/String;
+	public final fun getNoData ()Ljava/lang/String;
+	public final fun getNoSearchResult ()Ljava/lang/String;
+	public final fun getOk ()Ljava/lang/String;
+	public final fun getRetry ()Ljava/lang/String;
+	public final fun getSearch ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/CommonStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackToTop ()Ljava/lang/String;
+	public final fun getCancel ()Ljava/lang/String;
+	public final fun getConfirm ()Ljava/lang/String;
+	public final fun getLoadFailed ()Ljava/lang/String;
+	public final fun getLoading ()Ljava/lang/String;
+	public final fun getNetworkError ()Ljava/lang/String;
+	public final fun getNoData ()Ljava/lang/String;
+	public final fun getNoSearchResult ()Ljava/lang/String;
+	public final fun getOk ()Ljava/lang/String;
+	public final fun getRetry ()Ljava/lang/String;
+	public final fun getSearch ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/DateTimeStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/gearui/i18n/DateTimeStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/DateTimeStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/gearui/i18n/DateTimeStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCalendarYearMonthFormat ()Ljava/lang/String;
+	public final fun getDatePlaceholder ()Ljava/lang/String;
+	public final fun getDaySuffix ()Ljava/lang/String;
+	public final fun getHourSuffix ()Ljava/lang/String;
+	public final fun getMinuteSuffix ()Ljava/lang/String;
+	public final fun getMonthSuffix ()Ljava/lang/String;
+	public final fun getSelectDateTitle ()Ljava/lang/String;
+	public final fun getSelectTimeTitle ()Ljava/lang/String;
+	public final fun getTimePlaceholder ()Ljava/lang/String;
+	public final fun getWeekdaysShort ()Ljava/util/List;
+	public final fun getYearSuffix ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/DateTimeStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/gearui/i18n/DateTimeStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/DateTimeStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/gearui/i18n/DateTimeStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCalendarYearMonthFormat ()Ljava/lang/String;
+	public final fun getDatePlaceholder ()Ljava/lang/String;
+	public final fun getDaySuffix ()Ljava/lang/String;
+	public final fun getHourSuffix ()Ljava/lang/String;
+	public final fun getMinuteSuffix ()Ljava/lang/String;
+	public final fun getMonthSuffix ()Ljava/lang/String;
+	public final fun getSelectDateTitle ()Ljava/lang/String;
+	public final fun getSelectTimeTitle ()Ljava/lang/String;
+	public final fun getTimePlaceholder ()Ljava/lang/String;
+	public final fun getWeekdaysShort ()Ljava/util/List;
+	public final fun getYearSuffix ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/DomainStringsKt {
+	public static final fun formatArgs (Ljava/lang/String;[Lkotlin/Pair;)Ljava/lang/String;
+	public static final fun isEmpty (Lcom/gearui/i18n/CommonStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/DateTimeStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/FeedbackStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/FieldStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/GuideStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/MediaStringsPatch;)Z
+	public static final fun isEmpty (Lcom/gearui/i18n/ThemeStringsPatch;)Z
+	public static final fun merge (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/CommonStringsPatch;)Lcom/gearui/i18n/CommonStrings;
+	public static final fun merge (Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/DateTimeStringsPatch;)Lcom/gearui/i18n/DateTimeStrings;
+	public static final fun merge (Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/FeedbackStringsPatch;)Lcom/gearui/i18n/FeedbackStrings;
+	public static final fun merge (Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/FieldStringsPatch;)Lcom/gearui/i18n/FieldStrings;
+	public static final fun merge (Lcom/gearui/i18n/GuideStrings;Lcom/gearui/i18n/GuideStringsPatch;)Lcom/gearui/i18n/GuideStrings;
+	public static final fun merge (Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/MediaStringsPatch;)Lcom/gearui/i18n/MediaStrings;
+	public static final fun merge (Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/ThemeStringsPatch;)Lcom/gearui/i18n/ThemeStrings;
+}
+
+public final class com/gearui/i18n/FeedbackStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/lang/String;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Ljava/lang/String;
+	public final fun component15 ()Ljava/lang/String;
+	public final fun component16 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FeedbackStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FeedbackStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FeedbackStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmptyErrorDescription ()Ljava/lang/String;
+	public final fun getEmptyNoDataDescription ()Ljava/lang/String;
+	public final fun getEmptyNoNetworkDescription ()Ljava/lang/String;
+	public final fun getEmptyNoNetworkTitle ()Ljava/lang/String;
+	public final fun getEmptyNoPermissionDescription ()Ljava/lang/String;
+	public final fun getEmptyNoPermissionTitle ()Ljava/lang/String;
+	public final fun getEmptyNoSearchResultDescription ()Ljava/lang/String;
+	public final fun getFieldRequired ()Ljava/lang/String;
+	public final fun getForbiddenDescription ()Ljava/lang/String;
+	public final fun getForbiddenTitle ()Ljava/lang/String;
+	public final fun getNetworkErrorDescription ()Ljava/lang/String;
+	public final fun getNotFoundDescription ()Ljava/lang/String;
+	public final fun getNotFoundTitle ()Ljava/lang/String;
+	public final fun getProcessingDescription ()Ljava/lang/String;
+	public final fun getProcessingTitle ()Ljava/lang/String;
+	public final fun getValidationFailed ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/FeedbackStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/lang/String;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Ljava/lang/String;
+	public final fun component15 ()Ljava/lang/String;
+	public final fun component16 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FeedbackStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FeedbackStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FeedbackStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmptyErrorDescription ()Ljava/lang/String;
+	public final fun getEmptyNoDataDescription ()Ljava/lang/String;
+	public final fun getEmptyNoNetworkDescription ()Ljava/lang/String;
+	public final fun getEmptyNoNetworkTitle ()Ljava/lang/String;
+	public final fun getEmptyNoPermissionDescription ()Ljava/lang/String;
+	public final fun getEmptyNoPermissionTitle ()Ljava/lang/String;
+	public final fun getEmptyNoSearchResultDescription ()Ljava/lang/String;
+	public final fun getFieldRequired ()Ljava/lang/String;
+	public final fun getForbiddenDescription ()Ljava/lang/String;
+	public final fun getForbiddenTitle ()Ljava/lang/String;
+	public final fun getNetworkErrorDescription ()Ljava/lang/String;
+	public final fun getNotFoundDescription ()Ljava/lang/String;
+	public final fun getNotFoundTitle ()Ljava/lang/String;
+	public final fun getProcessingDescription ()Ljava/lang/String;
+	public final fun getProcessingTitle ()Ljava/lang/String;
+	public final fun getValidationFailed ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/FieldStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FieldStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FieldStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FieldStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSearchPlaceholder ()Ljava/lang/String;
+	public final fun getSelectPlaceholder ()Ljava/lang/String;
+	public final fun getSelectedCountFormat ()Ljava/lang/String;
+	public final fun getSwitchOff ()Ljava/lang/String;
+	public final fun getSwitchOn ()Ljava/lang/String;
+	public final fun getTableEmpty ()Ljava/lang/String;
+	public final fun getTransferSourceTitle ()Ljava/lang/String;
+	public final fun getTransferTargetTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/FieldStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FieldStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FieldStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FieldStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSearchPlaceholder ()Ljava/lang/String;
+	public final fun getSelectPlaceholder ()Ljava/lang/String;
+	public final fun getSelectedCountFormat ()Ljava/lang/String;
+	public final fun getSwitchOff ()Ljava/lang/String;
+	public final fun getSwitchOn ()Ljava/lang/String;
+	public final fun getTableEmpty ()Ljava/lang/String;
+	public final fun getTransferSourceTitle ()Ljava/lang/String;
+	public final fun getTransferTargetTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/GuideStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/gearui/i18n/GuideStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/GuideStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/gearui/i18n/GuideStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRateDescriptions ()Ljava/util/List;
+	public final fun getTourFinish ()Ljava/lang/String;
+	public final fun getTourNext ()Ljava/lang/String;
+	public final fun getTourPrevious ()Ljava/lang/String;
+	public final fun getTourSkip ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/GuideStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/gearui/i18n/GuideStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/GuideStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/gearui/i18n/GuideStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRateDescriptions ()Ljava/util/List;
+	public final fun getTourFinish ()Ljava/lang/String;
+	public final fun getTourNext ()Ljava/lang/String;
+	public final fun getTourPrevious ()Ljava/lang/String;
+	public final fun getTourSkip ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/i18n/I18n {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/i18n/I18n;
@@ -3086,6 +3439,36 @@ public final class com/gearui/i18n/LanguageTagKt {
 	public static final fun resolveLanguagePack (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Ljava/lang/Object;
 }
 
+public final class com/gearui/i18n/MediaStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/MediaStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/MediaStrings;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/MediaStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getImageEmpty ()Ljava/lang/String;
+	public final fun getImageIndexFormat ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/MediaStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/MediaStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/MediaStringsPatch;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/MediaStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getImageEmpty ()Ljava/lang/String;
+	public final fun getImageIndexFormat ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/i18n/StringPacks {
 	public static final field $stable I
 	public static final field CHINESE_SIMPLIFIED_TAG Ljava/lang/String;
@@ -3101,24 +3484,31 @@ public final class com/gearui/i18n/StringPacks {
 
 public final class com/gearui/i18n/Strings {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/Strings;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/Strings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/Strings;
+	public fun <init> (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;)V
+	public final fun component1 ()Lcom/gearui/i18n/CommonStrings;
+	public final fun component2 ()Lcom/gearui/i18n/ThemeStrings;
+	public final fun component3 ()Lcom/gearui/i18n/FieldStrings;
+	public final fun component4 ()Lcom/gearui/i18n/DateTimeStrings;
+	public final fun component5 ()Lcom/gearui/i18n/FeedbackStrings;
+	public final fun component6 ()Lcom/gearui/i18n/MediaStrings;
+	public final fun component7 ()Lcom/gearui/i18n/GuideStrings;
+	public final fun copy (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;)Lcom/gearui/i18n/Strings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/Strings;Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;ILjava/lang/Object;)Lcom/gearui/i18n/Strings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getButtonCancel ()Ljava/lang/String;
 	public final fun getButtonConfirm ()Ljava/lang/String;
+	public final fun getCommon ()Lcom/gearui/i18n/CommonStrings;
 	public final fun getDark ()Ljava/lang/String;
+	public final fun getDateTime ()Lcom/gearui/i18n/DateTimeStrings;
+	public final fun getFeedback ()Lcom/gearui/i18n/FeedbackStrings;
+	public final fun getField ()Lcom/gearui/i18n/FieldStrings;
+	public final fun getGuide ()Lcom/gearui/i18n/GuideStrings;
 	public final fun getLanguage ()Ljava/lang/String;
 	public final fun getLight ()Ljava/lang/String;
+	public final fun getMedia ()Lcom/gearui/i18n/MediaStrings;
 	public final fun getSystem ()Ljava/lang/String;
 	public final fun getTheme ()Ljava/lang/String;
+	public final fun getTheming ()Lcom/gearui/i18n/ThemeStrings;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -3126,25 +3516,25 @@ public final class com/gearui/i18n/Strings {
 public final class com/gearui/i18n/StringsPatch {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/StringsPatch;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/StringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/StringsPatch;
+	public fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;)V
+	public synthetic fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/gearui/i18n/CommonStringsPatch;
+	public final fun component2 ()Lcom/gearui/i18n/ThemeStringsPatch;
+	public final fun component3 ()Lcom/gearui/i18n/FieldStringsPatch;
+	public final fun component4 ()Lcom/gearui/i18n/DateTimeStringsPatch;
+	public final fun component5 ()Lcom/gearui/i18n/FeedbackStringsPatch;
+	public final fun component6 ()Lcom/gearui/i18n/MediaStringsPatch;
+	public final fun component7 ()Lcom/gearui/i18n/GuideStringsPatch;
+	public final fun copy (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;)Lcom/gearui/i18n/StringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/StringsPatch;Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;ILjava/lang/Object;)Lcom/gearui/i18n/StringsPatch;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getButtonCancel ()Ljava/lang/String;
-	public final fun getButtonConfirm ()Ljava/lang/String;
-	public final fun getDark ()Ljava/lang/String;
-	public final fun getLanguage ()Ljava/lang/String;
-	public final fun getLight ()Ljava/lang/String;
-	public final fun getSystem ()Ljava/lang/String;
-	public final fun getTheme ()Ljava/lang/String;
+	public final fun getCommon ()Lcom/gearui/i18n/CommonStringsPatch;
+	public final fun getDateTime ()Lcom/gearui/i18n/DateTimeStringsPatch;
+	public final fun getFeedback ()Lcom/gearui/i18n/FeedbackStringsPatch;
+	public final fun getField ()Lcom/gearui/i18n/FieldStringsPatch;
+	public final fun getGuide ()Lcom/gearui/i18n/GuideStringsPatch;
+	public final fun getMedia ()Lcom/gearui/i18n/MediaStringsPatch;
+	public final fun getTheming ()Lcom/gearui/i18n/ThemeStringsPatch;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -3164,6 +3554,48 @@ public final class com/gearui/i18n/Strings_zh_HansKt {
 
 public final class com/gearui/i18n/Strings_zh_HantKt {
 	public static final fun getStringsZhHant ()Lcom/gearui/i18n/Strings;
+}
+
+public final class com/gearui/i18n/ThemeStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/ThemeStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/ThemeStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/ThemeStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDark ()Ljava/lang/String;
+	public final fun getLanguage ()Ljava/lang/String;
+	public final fun getLight ()Ljava/lang/String;
+	public final fun getSystem ()Ljava/lang/String;
+	public final fun getTheme ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/ThemeStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/ThemeStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/ThemeStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/ThemeStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDark ()Ljava/lang/String;
+	public final fun getLanguage ()Ljava/lang/String;
+	public final fun getLight ()Ljava/lang/String;
+	public final fun getSystem ()Ljava/lang/String;
+	public final fun getTheme ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class com/gearui/navigation/EntryScope {
@@ -3374,12 +3806,13 @@ public final class com/gearui/overlay/OverlayManager {
 
 public final class com/gearui/overlay/OverlayOptions {
 	public static final field $stable I
-	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/gearui/overlay/OverlayPlacement;
 	public final fun component10 ()Z
 	public final fun component11 ()Z
 	public final fun component12 ()Z
+	public final fun component13 ()Z
 	public final fun component2-UdJoRJA ()F
 	public final fun component3-UdJoRJA ()F
 	public final fun component4 ()Z
@@ -3388,8 +3821,8 @@ public final class com/gearui/overlay/OverlayOptions {
 	public final fun component7 ()Z
 	public final fun component8 ()Lcom/gearui/overlay/OverlayDismissPolicy;
 	public final fun component9 ()Z
-	public final fun copy-nP4HkzQ (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZ)Lcom/gearui/overlay/OverlayOptions;
-	public static synthetic fun copy-nP4HkzQ$default (Lcom/gearui/overlay/OverlayOptions;Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZILjava/lang/Object;)Lcom/gearui/overlay/OverlayOptions;
+	public final fun copy-VihmGF0 (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZ)Lcom/gearui/overlay/OverlayOptions;
+	public static synthetic fun copy-VihmGF0$default (Lcom/gearui/overlay/OverlayOptions;Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZILjava/lang/Object;)Lcom/gearui/overlay/OverlayOptions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAutoFlip ()Z
 	public final fun getDismissPolicy ()Lcom/gearui/overlay/OverlayDismissPolicy;
@@ -3397,6 +3830,7 @@ public final class com/gearui/overlay/OverlayOptions {
 	public final fun getModal ()Z
 	public final fun getOffsetX-UdJoRJA ()F
 	public final fun getOffsetY-UdJoRJA ()F
+	public final fun getPassThroughOutside ()Z
 	public final fun getPlacement ()Lcom/gearui/overlay/OverlayPlacement;
 	public final fun getSafeAreaBottom ()Z
 	public final fun getSafeAreaLeft ()Z

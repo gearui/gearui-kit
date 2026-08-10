@@ -18,6 +18,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Tour step data
@@ -199,7 +200,7 @@ private fun TourContent(
                 // Skip button
                 if (onSkip != null) {
                     Button(
-                        text = "跳过",
+                        text = I18n.strings.guide.tourSkip,
                         onClick = onSkip
                     )
                 } else {
@@ -212,19 +213,19 @@ private fun TourContent(
                 ) {
                     if (onPrevious != null) {
                         Button(
-                            text = "上一步",
+                            text = I18n.strings.guide.tourPrevious,
                             onClick = onPrevious
                         )
                     }
 
                     if (onNext != null) {
                         Button(
-                            text = "下一步",
+                            text = I18n.strings.guide.tourNext,
                             onClick = onNext
                         )
                     } else {
                         Button(
-                            text = "完成",
+                            text = I18n.strings.guide.tourFinish,
                             onClick = onFinish
                         )
                     }

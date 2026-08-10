@@ -18,6 +18,7 @@ import com.gearui.components.checkbox.Checkbox
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * 列固定位置
@@ -107,7 +108,7 @@ fun <T> Table(
     bordered: Boolean = false,
     hoverable: Boolean = true,
     rowHeight: Dp = 48.dp,
-    emptyText: String = "暂无数据",
+    emptyText: String = I18n.strings.field.tableEmpty,
     onRowClick: ((T, Int) -> Unit)? = null
 ) {
     val colors = Theme.colors

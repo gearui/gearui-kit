@@ -12,6 +12,7 @@ import com.gearui.components.button.ButtonSize
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * ConfirmDialog - 确认对话框
@@ -23,8 +24,8 @@ fun ConfirmDialog(
     visible: Boolean,
     title: String,
     message: String,
-    confirmText: String = "确认",
-    cancelText: String = "取消",
+    confirmText: String = I18n.strings.common.confirm,
+    cancelText: String = I18n.strings.common.cancel,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
     onDismiss: () -> Unit = onCancel,
@@ -77,7 +78,7 @@ fun AlertDialog(
     visible: Boolean,
     title: String,
     message: String,
-    buttonText: String = "确定",
+    buttonText: String = I18n.strings.common.ok,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit = onConfirm,
     dismissOnOutside: Boolean = false

@@ -179,7 +179,7 @@ fun App() {
         languageTag = lang,
         // 可选：覆盖 GearUI 内置文案
         stringsOverrides = mapOf(
-            "zh-Hans" to StringsPatch(buttonConfirm = "确定一下"),
+            "zh-Hans" to StringsPatch(common = CommonStringsPatch(confirm = "确定一下")),
         ),
     ) {
         // 可选：覆盖 privchat-ui 内置文案
@@ -195,6 +195,62 @@ fun App() {
 ```
 
 应用层只在**一处**声明 `languageTag`；切换时 GearUI Kit、privchat-ui、业务自身 strings 全部自动重组。
+
+## 语义域拆分（强制）
+
+单个 `Strings` data class 一旦膨胀到几十个字段，Kotlin 生成的
+`copy` / `equals` / `hashCode` / `componentN` 会把类字节码推向 DEX 方法上限与
+255 参数上限——在 Android 上表现为**加一个 key 就运行期 `VerifyError`**，且
+只在 Android 端复现。所以文案按语义域拆成小 data class：
+
+```kotlin
+// gearui-kit 的域：common / theming / field / dateTime / feedback / media / guide
+@Immutable
+data class Strings(
+    val common: CommonStrings,
+    val theming: ThemeStrings,
+    // ...
+)
+
+// Patch 逐域镜像，域本身也可为 null
+data class StringsPatch(
+    val common: CommonStringsPatch? = null,
+    val theming: ThemeStringsPatch? = null,
+    // ...
+)
+```
+
+规则：
+
+- 每个域保持在**十几个字段以内**；超了就再拆一个域，不要往现有域堆。
+- 每个域自带 `XxxStringsPatch` / `isEmpty` / `merge`，顶层 `merge` 只做域转发。
+- 新增文案 = 加到对应域 + **三份语言包全部补齐**（en-US / zh-Hans / zh-Hant）。
+- 门面可以用委托 getter 保留扁平调用点（如 `strings.theme` → `theming.theme`），
+  让既有调用方不受拆域影响。
+
+### 带参数的文案
+
+不要在组件里拼字符串。模板串放进 pack，占位符用 `{name}`，读取时展开：
+
+```kotlin
+// pack 里：  selectedCountFormat = "已选择 {count} 项"
+Text(I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size))
+```
+
+### 读不到 CompositionLocal 的地方
+
+默认参数写在 `@Composable` 函数签名上是可以读 `I18n.strings` 的——默认值表达式
+在 composition 作用域求值。真正读不到的是两类：
+
+1. **命令式控制器**（如 `ActionSheet.showList(...)`）——参数设计成
+   `String? = null`，在 `@Composable` 的 Host 里再 `?: I18n.strings.common.cancel`
+   兜底，这样仍然是按当前语言解析的。
+2. **普通类里的逻辑**（如表单校验 `FormFieldState.validate()`）——文案在构造期
+   注入；直接构造时回落到 `StringPacks.English`（库的 fallback 语言），
+   **不要写字面量**。配套提供 `rememberXxx` 工厂按当前语言注入。
+
+CI 守卫 `scripts/ci/check_i18n_default_text.sh` 会拦下库源码里任何中文字面量
+（i18n 包除外），baseline 为 0。
 
 ## 命名约定（强制）
 

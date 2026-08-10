@@ -20,6 +20,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Transfer item data
@@ -62,7 +63,8 @@ fun Transfer(
     selectedKeys: Set<String>,
     onSelectedKeysChange: (Set<String>) -> Unit,
     modifier: Modifier = Modifier,
-    titles: Pair<String, String> = "源列表" to "目标列表",
+    titles: Pair<String, String> =
+        I18n.strings.field.transferSourceTitle to I18n.strings.field.transferTargetTitle,
     searchable: Boolean = true,
     height: Dp = 400.dp,
     itemHeight: Dp = 40.dp
@@ -250,7 +252,8 @@ private fun TransferList(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = if (searchValue.isNotEmpty()) "无搜索结果" else "暂无数据",
+                            text = if (searchValue.isNotEmpty()) I18n.strings.common.noSearchResult
+                            else I18n.strings.common.noData,
                             style = Typography.BodyMedium,
                             color = colors.mutedForeground
                         )
@@ -307,7 +310,8 @@ fun TransferWithGroups(
     selectedKeys: Set<String>,
     onSelectedKeysChange: (Set<String>) -> Unit,
     modifier: Modifier = Modifier,
-    titles: Pair<String, String> = "源列表" to "目标列表",
+    titles: Pair<String, String> =
+        I18n.strings.field.transferSourceTitle to I18n.strings.field.transferTargetTitle,
     height: Dp = 400.dp
 ) {
     val allItems = groups.flatMap { it.second }

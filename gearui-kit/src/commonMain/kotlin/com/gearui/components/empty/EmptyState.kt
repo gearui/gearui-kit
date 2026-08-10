@@ -13,6 +13,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.i18n.I18n
 
 /**
  * EmptyState - 100% Theme 驱动的空状态组件
@@ -112,12 +113,13 @@ fun EmptyStatePreset(
     onAction: (() -> Unit)? = null,
     customAction: (@Composable () -> Unit)? = null
 ) {
+    val s = I18n.strings
     val (message, description, iconName) = when (type) {
-        EmptyStateType.NO_DATA -> Triple("暂无数据", "当前没有可显示的内容", Icons.image)
-        EmptyStateType.NO_SEARCH_RESULT -> Triple("无搜索结果", "换个关键词试试吧", Icons.search)
-        EmptyStateType.NO_NETWORK -> Triple("网络连接失败", "请检查网络设置后重试", Icons.warning)
-        EmptyStateType.ERROR -> Triple("加载失败", "出现了一些问题", Icons.error)
-        EmptyStateType.NO_PERMISSION -> Triple("无权限访问", "您暂无查看此内容的权限", Icons.no_photography)
+        EmptyStateType.NO_DATA -> Triple(s.common.noData, s.feedback.emptyNoDataDescription, Icons.image)
+        EmptyStateType.NO_SEARCH_RESULT -> Triple(s.common.noSearchResult, s.feedback.emptyNoSearchResultDescription, Icons.search)
+        EmptyStateType.NO_NETWORK -> Triple(s.feedback.emptyNoNetworkTitle, s.feedback.emptyNoNetworkDescription, Icons.warning)
+        EmptyStateType.ERROR -> Triple(s.common.loadFailed, s.feedback.emptyErrorDescription, Icons.error)
+        EmptyStateType.NO_PERMISSION -> Triple(s.feedback.emptyNoPermissionTitle, s.feedback.emptyNoPermissionDescription, Icons.no_photography)
     }
 
     val colors = Theme.colors

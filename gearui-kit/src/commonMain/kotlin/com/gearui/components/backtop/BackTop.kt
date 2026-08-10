@@ -21,6 +21,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * BackTop 样式
@@ -77,7 +78,7 @@ fun BackTop(
     theme: BackTopTheme = BackTopTheme.LIGHT,
     showText: Boolean = false,
     icon: String = "↑",
-    text: String = "顶部",
+    text: String = I18n.strings.common.backToTop,
     offset: Pair<Dp, Dp> = 16.dp to 16.dp // (right, bottom)
 ) {
     val colors = Theme.colors

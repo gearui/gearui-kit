@@ -15,6 +15,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.i18n.I18n
 
 /**
  * Result status type
@@ -191,8 +192,8 @@ fun ErrorResult(
 @Composable
 fun NotFoundResult(
     modifier: Modifier = Modifier,
-    title: String = "页面不存在",
-    description: String? = "抱歉，您访问的页面不存在",
+    title: String = I18n.strings.feedback.notFoundTitle,
+    description: String? = I18n.strings.feedback.notFoundDescription,
     primaryAction: (@Composable () -> Unit)? = null
 ) {
     Result(
@@ -210,8 +211,8 @@ fun NotFoundResult(
 @Composable
 fun ForbiddenResult(
     modifier: Modifier = Modifier,
-    title: String = "无权访问",
-    description: String? = "抱歉，您没有权限访问此页面",
+    title: String = I18n.strings.feedback.forbiddenTitle,
+    description: String? = I18n.strings.feedback.forbiddenDescription,
     primaryAction: (@Composable () -> Unit)? = null
 ) {
     Result(
@@ -229,7 +230,7 @@ fun ForbiddenResult(
 @Composable
 fun EmptyResult(
     modifier: Modifier = Modifier,
-    title: String = "暂无数据",
+    title: String = I18n.strings.common.noData,
     description: String? = null,
     icon: String = Icons.image,
     primaryAction: (@Composable () -> Unit)? = null
@@ -250,8 +251,8 @@ fun EmptyResult(
 @Composable
 fun LoadingResult(
     modifier: Modifier = Modifier,
-    title: String = "正在处理",
-    description: String? = "请稍候...",
+    title: String = I18n.strings.feedback.processingTitle,
+    description: String? = I18n.strings.feedback.processingDescription,
     icon: String = Icons.hourglass_empty
 ) {
     Result(
@@ -269,8 +270,8 @@ fun LoadingResult(
 @Composable
 fun NetworkErrorResult(
     modifier: Modifier = Modifier,
-    title: String = "网络错误",
-    description: String? = "网络连接失败，请检查网络设置",
+    title: String = I18n.strings.common.networkError,
+    description: String? = I18n.strings.feedback.networkErrorDescription,
     onRetry: (() -> Unit)? = null
 ) {
     Result(
@@ -281,7 +282,7 @@ fun NetworkErrorResult(
         primaryAction = onRetry?.let {
             {
                 Button(
-                    text = "重试",
+                    text = I18n.strings.common.retry,
                     onClick = it
                 )
             }

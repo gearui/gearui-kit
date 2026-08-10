@@ -26,6 +26,8 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.i18n.formatArgs
+import com.gearui.i18n.I18n
 
 /**
  * TreeSelect - 树形选择器
@@ -44,7 +46,7 @@ fun TreeSelect(
     selectedKey: String?,
     onSelect: (String?) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "请选择",
+    placeholder: String = I18n.strings.field.selectPlaceholder,
     dropdownHeight: Dp = 300.dp
 ) {
     val colors = Theme.colors
@@ -169,7 +171,7 @@ fun TreeSelectMultiple(
     selectedKeys: Set<String>,
     onSelectedChange: (Set<String>) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "请选择",
+    placeholder: String = I18n.strings.field.selectPlaceholder,
     dropdownHeight: Dp = 300.dp
 ) {
     val colors = Theme.colors
@@ -262,7 +264,8 @@ fun TreeSelectMultiple(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = if (selectedKeys.isEmpty()) placeholder else "已选择 ${selectedKeys.size} 项",
+                text = if (selectedKeys.isEmpty()) placeholder
+                else I18n.strings.field.selectedCountFormat.formatArgs("count" to selectedKeys.size),
                 style = Typography.BodyMedium,
                 color = if (selectedKeys.isNotEmpty()) colors.foreground else colors.mutedForeground
             )

@@ -29,6 +29,8 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 
 /**
  * Cascader option data
@@ -139,21 +141,21 @@ fun Cascader(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
+                .height(FieldSizeTokens.Medium.height)
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(shapes.sm)
+                .clip(FieldDefaults.shape)
                 .border(
-                    width = 1.dp,
+                    width = FieldSizeTokens.Medium.borderWidth,
                     color = if (expanded) colors.primary else colors.border,
-                    shape = shapes.sm
+                    shape = FieldDefaults.shape
                 )
                 .background(colors.surface)
                 .clickable {
                     if (expanded) closeDropdown() else openDropdown()
                 }
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

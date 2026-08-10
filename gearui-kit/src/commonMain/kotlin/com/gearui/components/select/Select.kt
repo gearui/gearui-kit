@@ -29,6 +29,8 @@ import com.gearui.theme.Theme
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -59,7 +61,7 @@ fun <T> Select(
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
     val selectedOption = options.find { it.value == value }
-    val triggerShape = Theme.shapes.xl
+    val triggerShape = FieldDefaults.shape
 
     // 用 State 包装，让 lambda 内部能访问最新值
     val valueState = rememberUpdatedState(value)
@@ -134,7 +136,7 @@ fun <T> Select(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(44.dp)
+                .height(FieldSizeTokens.Medium.height)
                 .onGloballyPositioned { coordinates ->
                     if (!expanded) {
                         anchorBounds = coordinates.boundsInRoot()
@@ -142,7 +144,7 @@ fun <T> Select(
                 }
                 .clip(triggerShape)
                 .border(
-                    width = 1.dp,
+                    width = FieldSizeTokens.Medium.borderWidth,
                     color = when {
                         error != null -> colors.destructive
                         !enabled -> colors.mutedForeground
@@ -159,7 +161,7 @@ fun <T> Select(
                         openDropdown()
                     }
                 }
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -304,7 +306,7 @@ fun <T> MultiSelect(
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
-    val triggerShape = Theme.shapes.xl
+    val triggerShape = FieldDefaults.shape
 
     // 用 State 包装，让 lambda 内部能访问最新值
     val valuesState = rememberUpdatedState(values)
@@ -372,7 +374,7 @@ fun <T> MultiSelect(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(44.dp)
+                .height(FieldSizeTokens.Medium.height)
                 .onGloballyPositioned { coordinates ->
                     if (!expanded) {
                         anchorBounds = coordinates.boundsInRoot()
@@ -380,7 +382,7 @@ fun <T> MultiSelect(
                 }
                 .clip(triggerShape)
                 .border(
-                    1.dp,
+                    FieldSizeTokens.Medium.borderWidth,
                     if (expanded) colors.border else colors.border,
                     triggerShape
                 )
@@ -388,7 +390,7 @@ fun <T> MultiSelect(
                 .clickable(enabled = enabled) {
                     if (expanded) closeDropdown() else openDropdown()
                 }
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

@@ -31,6 +31,8 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlin.math.abs
 import com.gearui.i18n.I18n
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 
 /**
  * SearchBar - 100% Theme 驱动的搜索栏
@@ -81,7 +83,7 @@ fun SearchBar(
 
     val shapeModifier = when (shape) {
         SearchBarShape.ROUNDED -> shapes.full
-        SearchBarShape.SQUARE -> shapes.sm
+        SearchBarShape.SQUARE -> FieldDefaults.shape
     }
 
     val isCenter = alignment == SearchBarAlignment.CENTER
@@ -89,7 +91,7 @@ fun SearchBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(40.dp),
+            .height(FieldSizeTokens.Medium.height),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 搜索框主体

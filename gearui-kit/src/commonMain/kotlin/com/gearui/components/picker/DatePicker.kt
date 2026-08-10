@@ -20,6 +20,8 @@ import com.gearui.components.dialog.Dialog
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import com.gearui.i18n.I18n
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -60,12 +62,16 @@ fun DatePickerInput(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .clip(shapes.sm)
-                .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.sm)
+                .height(FieldSizeTokens.Medium.height)
+                .clip(FieldDefaults.shape)
+                .border(
+                    FieldSizeTokens.Medium.borderWidth,
+                    if (enabled) colors.border else colors.mutedForeground,
+                    FieldDefaults.shape,
+                )
                 .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) { showPicker = true }
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -257,12 +263,16 @@ fun TimePickerInput(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .clip(shapes.sm)
-                .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.sm)
+                .height(FieldSizeTokens.Medium.height)
+                .clip(FieldDefaults.shape)
+                .border(
+                    FieldSizeTokens.Medium.borderWidth,
+                    if (enabled) colors.border else colors.mutedForeground,
+                    FieldDefaults.shape,
+                )
                 .background(if (enabled) colors.surface else colors.muted)
                 .clickable(enabled = enabled) { showPicker = true }
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

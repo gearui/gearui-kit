@@ -35,7 +35,8 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
-import com.gearui.foundation.input.InputSizeTokens
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 
 /**
  * GearUI Input - 100% Theme 驱动
@@ -111,15 +112,15 @@ fun Input(
     }
 
     val tokens = when (size) {
-        InputSize.LARGE -> InputSizeTokens.Large
-        InputSize.MEDIUM -> InputSizeTokens.Medium
-        InputSize.SMALL -> InputSizeTokens.Small
+        InputSize.LARGE -> FieldSizeTokens.Large
+        InputSize.MEDIUM -> FieldSizeTokens.Medium
+        InputSize.SMALL -> FieldSizeTokens.Small
     }
 
     val shape = when (size) {
-        InputSize.LARGE -> shapes.md
-        InputSize.MEDIUM -> shapes.md
-        InputSize.SMALL -> shapes.sm
+        InputSize.LARGE -> FieldDefaults.shape
+        InputSize.MEDIUM -> FieldDefaults.shape
+        InputSize.SMALL -> FieldDefaults.compactShape
     }
 
     // 不让 borderColor 依赖 isFocused：Kuikly 下 modifier 链在 focus 瞬间重建，
@@ -130,7 +131,7 @@ fun Input(
     }
 
     // Keep border width stable to avoid layout jump when focus/error changes.
-    val borderWidth = 1f
+    val borderWidth = tokens.borderWidth
 
     val backgroundColor = when {
         disabled -> colors.muted
@@ -156,11 +157,9 @@ fun Input(
             }
         }
 
-        val borderModifier = if (borderWidth > 0f) {
-            Modifier.border(borderWidth.dp, borderColor, shape)
-        } else {
-            Modifier
-        }
+        // Width comes from the field tokens and is never zero, so this is not
+        // conditional. It was already constant-true before (borderWidth = 1f).
+        val borderModifier = Modifier.border(borderWidth, borderColor, shape)
 
         val containerModifier = if (cardStyle) {
             Modifier

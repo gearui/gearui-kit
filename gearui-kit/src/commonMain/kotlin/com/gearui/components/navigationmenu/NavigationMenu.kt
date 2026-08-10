@@ -34,6 +34,7 @@ import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.elevation.Elevation
 
 data class NavigationMenuItem(
     val id: String,
@@ -89,7 +90,7 @@ fun NavigationMenu(
                     modifier = Modifier
                         .widthIn(min = 280.dp, max = 380.dp)
                         .clip(shapes.lg)
-                        .shadow(Spacing.xs, shapes.lg)
+                        .shadow(Elevation.raised, shapes.lg)
                         .background(colors.surface)
                         .border(1.dp, colors.border, shapes.lg)
                         .padding(Spacing.sm),

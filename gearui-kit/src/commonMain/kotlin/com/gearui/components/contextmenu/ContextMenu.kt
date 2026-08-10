@@ -41,6 +41,7 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * Context menu action model.
@@ -108,7 +109,7 @@ fun ContextMenu(
                         // 配合 widthIn 防止极短/极长内容跑偏；这样不会出现"短文字撑满 max"的虚胖。
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
-                        .shadow(Spacing.xs, shapes.md)
+                        .shadow(Elevation.raised, shapes.md)
                         .clip(shapes.md)
                         .background(colors.surface)
                         .border(1.dp, colors.border, shapes.md)

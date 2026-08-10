@@ -25,6 +25,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * Slider 样式类型
@@ -221,7 +222,7 @@ fun Slider(
                         modifier = Modifier
                             .size(thumbSize)
                             .shadow(
-                                elevation = if (enabled) 4.dp else 0.dp,
+                                elevation = if (enabled) Elevation.raised else Elevation.none,
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
@@ -618,7 +619,7 @@ fun RangeSlider(
                     Box(
                         modifier = Modifier
                             .size(thumbSize)
-                            .shadow(elevation = if (enabled) 4.dp else 0.dp, shape = CircleShape)
+                            .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
                             .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)
@@ -689,7 +690,7 @@ fun RangeSlider(
                     Box(
                         modifier = Modifier
                             .size(thumbSize)
-                            .shadow(elevation = if (enabled) 4.dp else 0.dp, shape = CircleShape)
+                            .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
                             .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)

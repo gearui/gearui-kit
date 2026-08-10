@@ -43,6 +43,9 @@ jobs:
       - name: Hardcoded radius guard (shape scale)
         run: ./scripts/ci/check_component_hardcoded_radius.sh
 
+      - name: Hardcoded elevation guard (elevation scale)
+        run: ./scripts/ci/check_component_hardcoded_elevation.sh
+
       - name: Hardcoded spacing guard (components)
         run: ./scripts/ci/check_component_hardcoded_spacing.sh
 

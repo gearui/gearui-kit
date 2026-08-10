@@ -2326,6 +2326,15 @@ public final class com/gearui/foundation/badge/BadgeTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/elevation/Elevation {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/elevation/Elevation;
+	public final fun getFloating-UdJoRJA ()F
+	public final fun getModal-UdJoRJA ()F
+	public final fun getNone-UdJoRJA ()F
+	public final fun getRaised-UdJoRJA ()F
+}
+
 public abstract interface class com/gearui/foundation/interaction/InteractionSource {
 	public abstract fun getCurrentState ()Lcom/gearui/foundation/interaction/InteractionState;
 	public abstract fun getStateHistory ()Ljava/util/List;

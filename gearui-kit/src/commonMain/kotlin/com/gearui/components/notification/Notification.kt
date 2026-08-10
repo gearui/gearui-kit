@@ -20,6 +20,7 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * Notification - 顶部通知卡片组件
@@ -154,7 +155,7 @@ internal fun NotificationContent(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Spacing.sm, shapes.md)
+            .shadow(Elevation.floating, shapes.md)
             .clip(shapes.md)
             .background(colors.surface)
             // 整条点击：onClick != null 时挂在卡片上。action / close 各自的 clickable 会

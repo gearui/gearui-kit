@@ -16,6 +16,7 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * Dialog - 模态弹窗基类
@@ -101,7 +102,7 @@ internal fun DialogSurface(
     Box(
         modifier = modifier
             .widthIn(min = 280.dp, max = 360.dp)
-            .shadow(6.dp, shapes.lg)
+            .shadow(Elevation.modal, shapes.lg)
             .background(colors.surface, shapes.lg)
             .border(1.dp, colors.border, shapes.lg)
     ) {

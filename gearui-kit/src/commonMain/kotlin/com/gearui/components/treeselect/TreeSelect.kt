@@ -28,6 +28,7 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * TreeSelect - 树形选择器
@@ -99,7 +100,7 @@ fun TreeSelect(
                 modifier = Modifier
                     .width(widthDp)
                     .height(dropdownHeight)
-                    .shadow(8.dp, shapes.sm)
+                    .shadow(Elevation.floating, shapes.sm)
                     .background(colors.surface, shapes.sm)
                     .border(1.dp, colors.border, shapes.sm)
                     .padding(8.dp)
@@ -297,7 +298,7 @@ private fun TreeSelectMultipleContent(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(8.dp, shapes.sm)
+            .shadow(Elevation.floating, shapes.sm)
             .background(colors.surface, shapes.sm)
             .border(1.dp, colors.border, shapes.sm)
             .padding(8.dp)

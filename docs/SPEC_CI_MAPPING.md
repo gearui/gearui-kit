@@ -149,6 +149,22 @@ SPEC 映射：
 - 这套 Float 池仍被 Input/Tag/Surface 依赖，删不掉；解开它属于 Input/Field token 批次。
 - 在那之前，护栏只保证债务不扩散。
 
+11. 阴影标度护栏（P0，硬门禁）
+SPEC 映射：
+- 4.1 Token 治理（Elevation 四档标度）
+- 11.1 REJECT / 2. Token 与样式
+
+实现：
+- 脚本：`scripts/ci/check_component_hardcoded_elevation.sh`
+- 标度：`foundation/elevation/Elevation.kt`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0。拦两类：字面量 dp 当 elevation、以及 `Spacing.*` 当 elevation。
+- 后者是重点：两条轴都是 Dp 且数值撞车（`Spacing.xs` 与 `Elevation.raised` 同为 4dp），
+  编译通过、肉眼也对，但间距标度一调就会把阴影一起带偏。
+- border-first：Card/Cell/输入框保持无阴影，只有浮层可以有 elevation。
+
 ---
 
 ## 下一批（建议 4 周内完成）

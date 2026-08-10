@@ -25,6 +25,7 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
+import com.gearui.foundation.elevation.Elevation
 
 /**
  * PopoverTheme - 气泡主题
@@ -332,7 +333,7 @@ private fun PopoverBody(
 
     Box(
         modifier = Modifier
-            .shadow(Spacing.xs, shapes.md)
+            .shadow(Elevation.raised, shapes.md)
             .clip(shapes.md)
             .background(backgroundColor)
             .border(1.dp, borderColor, shapes.md)

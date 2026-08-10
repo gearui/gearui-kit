@@ -3984,6 +3984,17 @@ final object com.gearui.foundation.badge/BadgeSizeTokens { // com.gearui.foundat
         final fun <get-Small>(): com.gearui.foundation.badge/BadgeTokens // com.gearui.foundation.badge/BadgeSizeTokens.Small.<get-Small>|<get-Small>(){}[0]
 }
 
+final object com.gearui.foundation.elevation/Elevation { // com.gearui.foundation.elevation/Elevation|null[0]
+    final val floating // com.gearui.foundation.elevation/Elevation.floating|{}floating[0]
+        final fun <get-floating>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.elevation/Elevation.floating.<get-floating>|<get-floating>(){}[0]
+    final val modal // com.gearui.foundation.elevation/Elevation.modal|{}modal[0]
+        final fun <get-modal>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.elevation/Elevation.modal.<get-modal>|<get-modal>(){}[0]
+    final val none // com.gearui.foundation.elevation/Elevation.none|{}none[0]
+        final fun <get-none>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.elevation/Elevation.none.<get-none>|<get-none>(){}[0]
+    final val raised // com.gearui.foundation.elevation/Elevation.raised|{}raised[0]
+        final fun <get-raised>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.elevation/Elevation.raised.<get-raised>|<get-raised>(){}[0]
+}
+
 final object com.gearui.foundation.interaction/InteractionTransition { // com.gearui.foundation.interaction/InteractionTransition|null[0]
     final fun onBlur(com.gearui.foundation.interaction/MutableInteractionSource) // com.gearui.foundation.interaction/InteractionTransition.onBlur|onBlur(com.gearui.foundation.interaction.MutableInteractionSource){}[0]
     final fun onDragEnd(com.gearui.foundation.interaction/MutableInteractionSource) // com.gearui.foundation.interaction/InteractionTransition.onDragEnd|onDragEnd(com.gearui.foundation.interaction.MutableInteractionSource){}[0]
@@ -4690,6 +4701,7 @@ final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTo
 final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop|#static{}com_gearui_foundation_avatar_AvatarTokens$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeSizeTokens$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeTokens$stableprop[0]
+final val com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop // com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop|#static{}com_gearui_foundation_elevation_Elevation$stableprop[0]
 final val com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop|#static{}com_gearui_foundation_interaction_InteractionState$stableprop[0]
 final val com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Disabled$stableprop // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Disabled$stableprop|#static{}com_gearui_foundation_interaction_InteractionState_Disabled$stableprop[0]
 final val com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Dragging$stableprop // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Dragging$stableprop|#static{}com_gearui_foundation_interaction_InteractionState_Dragging$stableprop[0]
@@ -5125,6 +5137,7 @@ final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTo
 final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter|com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeTokens$stableprop_getter(){}[0]
+final fun com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop_getter(): kotlin/Int // com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop_getter|com_gearui_foundation_elevation_Elevation$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState$stableprop_getter|com_gearui_foundation_interaction_InteractionState$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Disabled$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Disabled$stableprop_getter|com_gearui_foundation_interaction_InteractionState_Disabled$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Dragging$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Dragging$stableprop_getter|com_gearui_foundation_interaction_InteractionState_Dragging$stableprop_getter(){}[0]

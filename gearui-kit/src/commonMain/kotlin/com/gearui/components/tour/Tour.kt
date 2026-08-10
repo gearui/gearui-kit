@@ -21,6 +21,7 @@ import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Tour step data
@@ -145,10 +146,10 @@ private fun TourContent(
             .shadow(Elevation.modal, OverlayDefaults.modalShape)
             .clip(OverlayDefaults.modalShape)
             .background(colors.surface)
-            .padding(24.dp)
+            .padding(Spacing.xl)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             // Header
             Row(
@@ -178,7 +179,7 @@ private fun TourContent(
 
             // Progress indicator
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 repeat(totalSteps) { index ->
                     Box(
@@ -211,7 +212,7 @@ private fun TourContent(
 
                 // Navigation buttons
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     if (onPrevious != null) {
                         Button(

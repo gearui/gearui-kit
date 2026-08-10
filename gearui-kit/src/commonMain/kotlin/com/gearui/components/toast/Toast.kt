@@ -193,7 +193,7 @@ private fun ToastSurface(toast: ToastData) {
         modifier = Modifier
             .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
-            .padding(horizontal = 24.dp, vertical = 12.dp),
+            .padding(horizontal = Spacing.xl, vertical = Spacing.md),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -214,7 +214,7 @@ private fun ToastSurface(toast: ToastData) {
                     size = 18.dp,
                     tint = textColor
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(Spacing.sm))
             }
 
             // 文字

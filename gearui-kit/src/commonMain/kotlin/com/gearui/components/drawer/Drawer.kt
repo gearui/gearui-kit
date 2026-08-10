@@ -27,6 +27,7 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * DrawerPlacement - 抽屉位置
@@ -321,7 +322,7 @@ private fun DrawerContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = Spacing.lg),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Text(
@@ -374,7 +375,7 @@ private fun DrawerContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             ) {
                 footer()
             }
@@ -409,9 +410,9 @@ private fun DrawerListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onClick() }
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                    .padding(horizontal = Spacing.lg, vertical = Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 // 图标
                 if (item.icon != null) {
@@ -475,7 +476,7 @@ fun DrawerWithHeader(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(Spacing.lg),
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Text(

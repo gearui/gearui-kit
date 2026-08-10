@@ -215,7 +215,7 @@ private fun <T> SelectDropdownContent(
     val panelShadow =
         if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
     val itemHeight = 44.dp
-    val verticalPadding = 8.dp
+    val verticalPadding = Spacing.sm
     val rowSpacing = 4.dp
     val totalHeight = (options.size * itemHeight.value + verticalPadding.value * 2f + (options.size - 1).coerceAtLeast(0) * rowSpacing.value).dp
     val panelHeight = if (totalHeight > 240.dp) 240.dp else totalHeight
@@ -448,7 +448,7 @@ private fun <T> MultiSelectDropdownContent(
     val panelShadow =
         if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
     val itemHeight = 44.dp
-    val verticalPadding = 8.dp
+    val verticalPadding = Spacing.sm
     val rowSpacing = 4.dp
     val totalHeight = (options.size * itemHeight.value + verticalPadding.value * 2f + (options.size - 1).coerceAtLeast(0) * rowSpacing.value).dp
     val panelHeight = if (totalHeight > 240.dp) 240.dp else totalHeight

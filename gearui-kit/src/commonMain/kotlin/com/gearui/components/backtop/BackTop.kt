@@ -153,6 +153,7 @@ fun BackTop(
 
             BackTopStyle.HALF_CIRCLE -> {
                 // 半圆形样式 - 贴右边显示
+                // shape-exempt: half-circle radius derives from the control's height
                 val halfCircleShape = RoundedCornerShape(
                     topStart = halfCircleHeight / 2,
                     topEnd = 0.dp,

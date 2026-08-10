@@ -297,7 +297,7 @@ private fun PopoverContent(
                     direction = ArrowDirection.UP,
                     color = backgroundColor,
                     size = arrowSize,
-                    horizontalPadding = 16.dp
+                    horizontalPadding = Spacing.lg
                 )
             }
 
@@ -313,7 +313,7 @@ private fun PopoverContent(
                     direction = ArrowDirection.DOWN,
                     color = backgroundColor,
                     size = arrowSize,
-                    horizontalPadding = 16.dp
+                    horizontalPadding = Spacing.lg
                 )
             }
         }
@@ -385,19 +385,25 @@ private fun PopoverArrow(
 /**
  * 三角形 Shape
  */
+// Arrow tips are triangle geometry approximated with corner radii, not a
+// surface radius, so they stay off the shape scale.
 private fun TriangleShape(direction: ArrowDirection) = when (direction) {
+    // shape-exempt: arrow tip geometry
     ArrowDirection.UP -> RoundedCornerShape(
         topStart = 0.dp, topEnd = 0.dp,
         bottomStart = 50.dp, bottomEnd = 50.dp
     )
+    // shape-exempt: arrow tip geometry
     ArrowDirection.DOWN -> RoundedCornerShape(
         topStart = 50.dp, topEnd = 50.dp,
         bottomStart = 0.dp, bottomEnd = 0.dp
     )
+    // shape-exempt: arrow tip geometry
     ArrowDirection.LEFT -> RoundedCornerShape(
         topStart = 0.dp, topEnd = 50.dp,
         bottomStart = 0.dp, bottomEnd = 50.dp
     )
+    // shape-exempt: arrow tip geometry
     ArrowDirection.RIGHT -> RoundedCornerShape(
         topStart = 50.dp, topEnd = 0.dp,
         bottomStart = 50.dp, bottomEnd = 0.dp

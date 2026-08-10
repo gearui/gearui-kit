@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Radius
 
 /**
  * Badge 徽标类型
@@ -313,6 +314,7 @@ private fun BadgeContent(
                 modifier = modifier
                     .height(badgeHeight)
                     .clip(
+                        // shape-exempt: pill radius derives from the badge's own height
                         RoundedCornerShape(
                             topStart = badgeHeight / 2,
                             topEnd = badgeHeight / 2,
@@ -368,10 +370,10 @@ private fun BadgeContent(
                         .size(32.dp)
                         .clip(
                             RoundedCornerShape(
-                                topStart = 0.dp,
-                                topEnd = 4.dp,
-                                bottomStart = 0.dp,
-                                bottomEnd = 0.dp
+                                topStart = Radius.none,
+                                topEnd = Radius.sm,
+                                bottomStart = Radius.none,
+                                bottomEnd = Radius.none
                             )
                         )
                         .background(backgroundColor)

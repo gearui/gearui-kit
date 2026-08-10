@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Picker - 通用选择器
@@ -112,7 +113,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.Center)
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = Spacing.lg)
                             .height(40.dp)
                             .clip(shapes.md)
                             .background(colors.muted)
@@ -122,7 +123,7 @@ object Picker {
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 32.dp),
+                            .padding(horizontal = Spacing.xxl),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         data.forEachIndexed { colIndex, columnData ->
@@ -235,7 +236,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.Center)
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = Spacing.lg)
                             .height(40.dp)
                             .clip(shapes.md)
                             .background(colors.muted)
@@ -246,7 +247,7 @@ object Picker {
                         Row(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = 32.dp),
+                                .padding(horizontal = Spacing.xxl),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             for (colIndex in 0 until columnNum) {
@@ -327,7 +328,7 @@ private fun PickerHeader(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 取消按钮
@@ -422,7 +423,7 @@ private fun WheelPickerColumn(
         state = listState,
         modifier = modifier.fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(vertical = 0.dp)
+        contentPadding = PaddingValues(vertical = Spacing.none)
     ) {
         itemsIndexed(paddedItems) { index, item ->
             val actualIndex = index - centerOffset

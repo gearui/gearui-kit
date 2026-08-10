@@ -3885,6 +3885,8 @@ final object com.gearui.foundation.layout/Spacing { // com.gearui.foundation.lay
         final fun <get-massive>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/Spacing.massive.<get-massive>|<get-massive>(){}[0]
     final val md // com.gearui.foundation.layout/Spacing.md|{}md[0]
         final fun <get-md>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/Spacing.md.<get-md>|<get-md>(){}[0]
+    final val none // com.gearui.foundation.layout/Spacing.none|{}none[0]
+        final fun <get-none>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/Spacing.none.<get-none>|<get-none>(){}[0]
     final val sm // com.gearui.foundation.layout/Spacing.sm|{}sm[0]
         final fun <get-sm>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/Spacing.sm.<get-sm>|<get-sm>(){}[0]
     final val xl // com.gearui.foundation.layout/Spacing.xl|{}xl[0]

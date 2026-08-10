@@ -20,6 +20,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 文本框布局方式
@@ -72,7 +73,7 @@ fun Textarea(
                     .fillMaxWidth()
                     .clip(shapes.lg)
                     .background(colors.muted)
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             ) {
                 TextareaContent(
                     value = value,
@@ -150,7 +151,7 @@ private fun TextareaContent(
                     required = required,
                     enabled = enabled
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
             }
 
             // 输入区域
@@ -183,7 +184,7 @@ private fun TextareaContent(
                         labelIcon = labelIcon,
                         required = required,
                         enabled = enabled,
-                        modifier = Modifier.padding(end = 16.dp)
+                        modifier = Modifier.padding(end = Spacing.lg)
                     )
                 }
 
@@ -224,7 +225,7 @@ private fun LabelRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (labelIcon != null) {
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(Spacing.xs))
         }
 
         Text(
@@ -234,7 +235,7 @@ private fun LabelRow(
         )
 
         if (required) {
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(Spacing.xs))
             Text(
                 text = "*",
                 style = Typography.BodyMedium,
@@ -309,12 +310,12 @@ private fun TextareaInputArea(
                             .clip(Theme.shapes.xl)
                             .border(1.dp, colors.border, Theme.shapes.xl)
                             .background(if (enabled && !readOnly) colors.surface else colors.muted)
-                            .padding(12.dp)
+                            .padding(Spacing.md)
                     } else {
                         Modifier
                             .clip(Theme.shapes.lg)
                             .background(colors.muted)
-                            .padding(horizontal = 10.dp, vertical = 8.dp)
+                            .padding(horizontal = 10.dp, vertical = Spacing.sm)
                     }
                 )
         ) {
@@ -364,7 +365,7 @@ private fun TextareaInputArea(
 
                 // 底部信息行
                 if (additionInfo != null || (indicator && maxLength != null)) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,

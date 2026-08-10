@@ -2354,6 +2354,7 @@ public final class com/gearui/foundation/layout/Spacing {
 	public final fun getLg-UdJoRJA ()F
 	public final fun getMassive-UdJoRJA ()F
 	public final fun getMd-UdJoRJA ()F
+	public final fun getNone-UdJoRJA ()F
 	public final fun getSm-UdJoRJA ()F
 	public final fun getXl-UdJoRJA ()F
 	public final fun getXs-UdJoRJA ()F

@@ -22,6 +22,7 @@ import kotlin.math.roundToInt
 import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.layout.Spacing
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -54,7 +55,7 @@ fun DatePickerInput(
                 text = label,
                 style = Typography.BodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
         }
 
@@ -136,13 +137,13 @@ private fun DatePickerDialogContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Spacing.lg)
     ) {
         Text(
             text = I18n.strings.dateTime.selectDateTitle,
             style = Typography.TitleMedium,
             color = colors.foreground,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
         // 年月日选择器
@@ -150,7 +151,7 @@ private fun DatePickerDialogContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             // 年份选择
             IntPickerColumn(
@@ -185,12 +186,12 @@ private fun DatePickerDialogContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Spacing.lg))
 
         // 按钮
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             Box(
                 modifier = Modifier
@@ -256,7 +257,7 @@ fun TimePickerInput(
                 text = label,
                 style = Typography.BodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
         }
 
@@ -328,13 +329,13 @@ private fun TimePickerDialogContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Spacing.lg)
     ) {
         Text(
             text = I18n.strings.dateTime.selectTimeTitle,
             style = Typography.TitleMedium,
             color = colors.foreground,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
         // 时分选择器
@@ -342,7 +343,7 @@ private fun TimePickerDialogContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             // 小时选择
             IntPickerColumn(
@@ -365,12 +366,12 @@ private fun TimePickerDialogContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Spacing.lg))
 
         // 按钮
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             Box(
                 modifier = Modifier
@@ -461,7 +462,7 @@ private fun IntPickerColumn(
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = Spacing.sm)
                 .height(itemHeight)
                 .clip(shapes.md)
                 .background(colors.surface)
@@ -521,13 +522,13 @@ fun DateTimePickerInput(
                 text = label,
                 style = Typography.BodyMedium,
                 color = if (enabled) Theme.colors.foreground else Theme.colors.mutedForeground,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             DatePickerInput(
                 value = dateValue,

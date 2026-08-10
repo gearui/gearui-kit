@@ -32,6 +32,7 @@ import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -129,7 +130,7 @@ fun <T> Select(
                 text = label,
                 style = Typography.BodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
         }
 
@@ -185,7 +186,7 @@ fun <T> Select(
 
         // 错误提示
         if (error != null) {
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
                 text = error,
                 style = Typography.BodySmall,
@@ -231,7 +232,7 @@ private fun <T> SelectDropdownContent(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             items(options) { option ->
                 SelectOptionItem(
@@ -262,7 +263,7 @@ private fun <T> SelectOptionItem(
             .background(if (isSelected) colors.muted else colors.surface)
             .clickable(enabled = !option.disabled) { onClick() }
             .height(44.dp)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = Spacing.md),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -368,7 +369,7 @@ fun <T> MultiSelect(
                 text = label,
                 style = Typography.BodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = Spacing.sm)
             )
         }
 
@@ -464,7 +465,7 @@ private fun <T> MultiSelectDropdownContent(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
             items(options) { option ->
                 val isSelected = option.value in selectedValues
@@ -483,7 +484,7 @@ private fun <T> MultiSelectDropdownContent(
                             onSelectionChange(newValues)
                         }
                         .height(44.dp)
-                        .padding(horizontal = 12.dp),
+                        .padding(horizontal = Spacing.md),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {

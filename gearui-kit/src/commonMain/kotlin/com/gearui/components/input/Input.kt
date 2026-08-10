@@ -37,6 +37,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.layout.Spacing
 
 /**
  * GearUI Input - 100% Theme 驱动
@@ -224,13 +225,13 @@ fun Input(
                             color = if (disabled) colors.mutedForeground else colors.foreground
                         )
                     }
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(Spacing.md))
                 }
 
                 // 前缀
                 if (prefix != null) {
                     prefix()
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                 }
 
                 // 输入区域
@@ -323,7 +324,7 @@ fun Input(
                 // EditText 触发"失焦→IME 隐藏→再 requestFocus→IME 弹出"的可见闪烁。
                 // 只在 tap（非拖动）时触发清除；点完再 requestInputFocus 以防万一。
                 if (clearable && value.isNotEmpty() && !disabled && !readOnly) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     Box(
                         modifier = Modifier
                             .size(20.dp)
@@ -361,13 +362,13 @@ fun Input(
 
                 // 后缀
                 if (suffix != null) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     suffix()
                 }
 
                 // 字数统计
                 if (showCounter && maxLength != null) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${value.length}/$maxLength",
                         style = Typography.BodySmall,
@@ -382,7 +383,7 @@ fun Input(
     Column(modifier = modifier) {
         // 顶部标签（labelPosition == "top" 时）
         if (label != null && labelPosition == "top") {
-            Row(modifier = Modifier.padding(bottom = 8.dp)) {
+            Row(modifier = Modifier.padding(bottom = Spacing.sm)) {
                 if (required) {
                     Text(
                         text = "*",
@@ -407,7 +408,7 @@ fun Input(
                 text = bottomText,
                 style = Typography.BodySmall,
                 color = if (hasError) colors.destructive else colors.mutedForeground,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = Spacing.xs)
             )
         }
     }

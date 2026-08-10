@@ -32,6 +32,7 @@ import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Cascader option data
@@ -237,7 +238,7 @@ private fun CascaderDropdown(
                                     val newPath = selectedPath.take(levelIndex) + option.value
                                     onSelect(newPath)
                                 }
-                                .padding(vertical = 8.dp, horizontal = 12.dp),
+                                .padding(vertical = Spacing.sm, horizontal = Spacing.md),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {

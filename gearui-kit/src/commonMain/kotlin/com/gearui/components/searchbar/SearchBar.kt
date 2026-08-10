@@ -33,6 +33,7 @@ import kotlin.math.abs
 import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.layout.Spacing
 
 /**
  * SearchBar - 100% Theme 驱动的搜索栏
@@ -142,7 +143,7 @@ fun SearchBar(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 12.dp),
+                    .padding(horizontal = Spacing.md),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // 搜索图标
@@ -157,7 +158,7 @@ fun SearchBar(
                     )
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(Spacing.sm))
 
                 Box(
                     modifier = Modifier.weight(1f),
@@ -204,7 +205,7 @@ fun SearchBar(
 
                 // 清除按钮
                 if (value.isNotEmpty() && enabled) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     Box(
                         modifier = Modifier
                             .size(20.dp)
@@ -225,7 +226,7 @@ fun SearchBar(
 
         // 取消按钮
         if (showCancel) {
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(Spacing.sm))
             Text(
                 text = I18n.strings.common.cancel,
                 style = Typography.BodyMedium,
@@ -290,14 +291,14 @@ fun SearchBarWithAction(
             modifier = Modifier.weight(1f)
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(Spacing.sm))
 
         Box(
             modifier = Modifier
                 .height(40.dp)
                 .clip(shapes.sm)
                 .background(if (enabled) colors.primary else colors.muted)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Spacing.lg),
             contentAlignment = Alignment.Center
         ) {
             Text(

@@ -23,6 +23,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.overlay.rememberTopFloatingOffset
 
 /**
  * Notification - 顶部通知卡片组件
@@ -104,10 +105,12 @@ fun Notification(
 
     if (!visible) return
 
+    val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = topOffset.dp)
+            .padding(top = resolvedTopOffset)
             .padding(horizontal = Spacing.lg),
         contentAlignment = Alignment.TopCenter
     ) {
@@ -390,13 +393,15 @@ private fun NotificationOverlayContent(
         }
     }
 
+    val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         Box(
             modifier = Modifier
-                .padding(top = topOffset.dp)
+                .padding(top = resolvedTopOffset)
                 .padding(horizontal = Spacing.lg)
         ) {
             NotificationContent(

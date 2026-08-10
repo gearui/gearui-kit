@@ -25,6 +25,7 @@ import kotlinx.coroutines.delay
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.overlay.rememberTopFloatingOffset
 
 /**
  * Snackbar - 顶部消息提示条
@@ -161,11 +162,13 @@ fun Snackbar(
 
     if (!visible) return
 
+    val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
+
     // 顶部弹出位置
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = topOffset.dp)
+            .padding(top = resolvedTopOffset)
             .padding(horizontal = Spacing.lg),
         contentAlignment = Alignment.TopCenter
     ) {
@@ -344,6 +347,9 @@ class SnackbarController internal constructor(
             options = OverlayOptions(
                 placement = OverlayPlacement.Fullscreen,
                 modal = false,
+                // Snackbar is non-blocking feedback: outside the banner, the
+                // underlying page should keep receiving taps and scrolls.
+                passThroughOutside = true,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )
         ) {
@@ -395,13 +401,15 @@ private fun SnackbarOverlayContent(
         }
     }
 
+    val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         Box(
             modifier = Modifier
-                .padding(top = topOffset.dp)
+                .padding(top = resolvedTopOffset)
                 .padding(horizontal = Spacing.lg)
         ) {
             SnackbarContent(

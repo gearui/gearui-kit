@@ -47,6 +47,13 @@ SPEC 映射：
 策略：
 - 禁止在组件/样例层重新引入 `useSafeArea` 参数或调用。
 - 限制 `safeAreaInsets` 直接访问仅能出现在 Runtime 与受控 fallback 文件。
+- 顶部非阻断浮层（Snackbar / Notification）不得直接用 `topOffset.dp` 作为顶部 padding，
+  必须先与 Runtime 稳定后的 `safeArea.top` 合并。
+- 顶部非阻断浮层通过 Overlay 显示时必须设置 `passThroughOutside = true`，避免横幅展示期间冻结整屏交互。
+- 受检文件由 `rg -l 'topOffset\s*:'` **发现**而非手写清单：手写只覆盖当时想起来的组件，
+  以后新增第三个顶部横幅会静默逃逸。发现结果为空时脚本直接 fail（说明参数被改名、匹配失效）。
+- 顶部距离的语义是「至少离顶部这么远」的**下限**，不是绝对位置；实现收在
+  `OverlayDefaults.rememberTopFloatingOffset`（`internal`，不进公开 API）。
 
 4. Single App Root 护栏
 SPEC 映射：

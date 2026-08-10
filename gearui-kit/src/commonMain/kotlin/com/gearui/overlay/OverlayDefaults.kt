@@ -8,6 +8,8 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.Shape
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Overlay 运行时默认值。
@@ -58,4 +60,23 @@ object OverlayDefaults {
      * 主题下都能真正压暗背景。
      */
     val scrimColor: Color = Color(0x8C000000)
+}
+
+/**
+ * 顶部浮动反馈（Snackbar / Notification）的实际顶部距离。
+ *
+ * 这类组件对外暴露一个 `topOffset`，语义是「至少离顶部这么远」，而不是绝对位置：
+ * 写死的 48dp 在灵动岛机型（top inset ≈ 59pt）上会让横幅压在灵动岛下面。这里取
+ * `safeArea.top + Spacing.sm` 与调用方给的下限中的较大者。
+ *
+ * 读的是 [com.gearui.runtime.RuntimeEnvironment.safeArea]（稳定后的值）而不是
+ * `rawSafeArea`：raw 值会偶发回 0，横幅会因此跳动。
+ *
+ * `internal` —— 这是浮层契约的实现细节，不是对外 API。
+ */
+@Composable
+internal fun rememberTopFloatingOffset(minOffset: Dp): Dp {
+    val safeTop = LocalRuntimeEnvironment.current.safeArea.top
+    val safeOffset = safeTop + Spacing.sm
+    return if (safeOffset > minOffset) safeOffset else minOffset
 }

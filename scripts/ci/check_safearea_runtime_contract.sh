@@ -36,7 +36,7 @@ ALLOWLIST=(
 
 tmp_hits="$(mktemp)"
 tmp_allowed="$(mktemp)"
-trap 'rm -f "$tmp_hits" "$tmp_allowed" /tmp/safearea_use_safearea_hits.txt' EXIT
+trap 'rm -f "$tmp_hits" "$tmp_allowed" /tmp/safearea_use_safearea_hits.txt /tmp/safearea_top_offset_hits.txt' EXIT
 
 rg -n 'safeAreaInsets' "$KIT_DIR" "$SAMPLE_DIR" \
   | sed "s|$ROOT_DIR/||" >"$tmp_hits" || true
@@ -58,5 +58,39 @@ if [[ -s "$tmp_hits" ]]; then
     exit 1
   fi
 fi
+
+# Rule 3: top-floating feedback overlays must resolve their public topOffset
+# against runtime safeArea, and must not freeze full-screen interaction.
+#
+# The file list is discovered, not hand-written. A hand-written list only
+# covers the components someone remembered; a third top-floating banner added
+# later would silently escape it. Anything declaring a `topOffset` parameter is
+# a top-floating overlay by definition.
+# Portable read loop rather than `mapfile`: macOS ships bash 3.2, where
+# mapfile does not exist, so that form would pass on CI and fail locally.
+TOP_FLOATING_FILES=()
+while IFS= read -r _f; do
+  TOP_FLOATING_FILES+=("$_f")
+done < <(rg -l 'topOffset[[:space:]]*:' "$KIT_DIR/com/gearui/components" | sort)
+
+if [[ ${#TOP_FLOATING_FILES[@]} -eq 0 ]]; then
+  echo "SafeArea contract: expected at least one top-floating overlay, found none."
+  echo "The discovery pattern probably drifted — check for a renamed parameter."
+  exit 1
+fi
+
+if rg -n 'padding\(top = topOffset\.dp\)' "${TOP_FLOATING_FILES[@]}" >/tmp/safearea_top_offset_hits.txt; then
+  echo "SafeArea contract violation: top floating overlays must resolve topOffset against runtime safeArea."
+  cat /tmp/safearea_top_offset_hits.txt
+  exit 1
+fi
+
+for f in "${TOP_FLOATING_FILES[@]}"; do
+  if ! rg -q 'passThroughOutside[[:space:]]*=[[:space:]]*true' "$f"; then
+    echo "Overlay contract violation: top floating overlay must set passThroughOutside = true."
+    echo "${f#"$ROOT_DIR/"}"
+    exit 1
+  fi
+done
 
 echo "[safearea-contract] passed."

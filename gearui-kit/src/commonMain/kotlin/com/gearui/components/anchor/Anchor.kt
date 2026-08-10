@@ -11,6 +11,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Anchor link item
@@ -59,7 +60,7 @@ fun Anchor(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = offsetTop),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
     ) {
         items.forEach { item ->
             AnchorLink(
@@ -83,7 +84,7 @@ private fun AnchorLink(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .padding(vertical = Spacing.xs, horizontal = Spacing.sm)
     ) {
         // Active indicator
         Box(
@@ -96,7 +97,7 @@ private fun AnchorLink(
                 )
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(Spacing.sm))
 
         Text(
             text = item.title,
@@ -123,7 +124,7 @@ fun AnchorAffix(
         modifier = modifier
             .width(200.dp)
             .background(colors.surface)
-            .padding(16.dp)
+            .padding(Spacing.lg)
     ) {
         Anchor(
             items = items,

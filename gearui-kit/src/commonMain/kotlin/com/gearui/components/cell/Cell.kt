@@ -13,6 +13,7 @@ import com.gearui.foundation.list.CellDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Cell - 列表单元格组件
@@ -68,7 +69,7 @@ fun Cell(
             )
 
             if (description != null) {
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = description,
                     style = Typography.BodySmall,
@@ -95,7 +96,7 @@ fun Cell(
 
         // 箭头
         if (arrow) {
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(Spacing.sm))
             Icon(
                 name = Icons.chevron_right,
                 size = 16.dp,

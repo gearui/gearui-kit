@@ -30,6 +30,7 @@ import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
+import com.gearui.foundation.layout.Spacing
 
 /**
  * ImageViewerState - 图片预览器状态
@@ -170,7 +171,7 @@ fun ImageViewer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f)
-                            .padding(48.dp),
+                            .padding(Spacing.huge),
                         contentAlignment = Alignment.Center
                     ) {
                         Column(
@@ -181,7 +182,7 @@ fun ImageViewer(
                                 size = 36.dp,
                                 tint = Color.White.copy(alpha = 0.5f)
                             )
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(Spacing.lg))
                             Text(
                                 text = I18n.strings.media.imageIndexFormat.formatArgs("index" to (page + 1)),
                                 style = Typography.TitleMedium,
@@ -199,7 +200,7 @@ fun ImageViewer(
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
                 .background(Color.Black.copy(alpha = 0.3f))
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -222,7 +223,7 @@ fun ImageViewer(
                     )
                 }
             } else {
-                Spacer(modifier = Modifier.width(32.dp))
+                Spacer(modifier = Modifier.width(Spacing.xxl))
             }
 
             // 标题和页码
@@ -271,7 +272,7 @@ fun ImageViewer(
                     )
                 }
             } else {
-                Spacer(modifier = Modifier.width(32.dp))
+                Spacer(modifier = Modifier.width(Spacing.xxl))
             }
         }
 
@@ -280,13 +281,13 @@ fun ImageViewer(
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 32.dp),
+                    .padding(bottom = Spacing.xxl),
                 horizontalArrangement = Arrangement.Center
             ) {
                 images.forEachIndexed { index, _ ->
                     Box(
                         modifier = Modifier
-                            .padding(horizontal = 4.dp)
+                            .padding(horizontal = Spacing.xs)
                             .size(if (index == state.currentIndex) 8.dp else 6.dp)
                             .clip(CircleShape)
                             .background(

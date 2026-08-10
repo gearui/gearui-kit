@@ -14,6 +14,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Tree node data
@@ -281,12 +282,12 @@ private fun TreeNodeView(
                 }
                 .padding(
                     start = (level * 24).dp + 8.dp,
-                    top = 4.dp,
-                    bottom = 4.dp,
-                    end = 8.dp
+                    top = Spacing.xs,
+                    bottom = Spacing.xs,
+                    end = Spacing.sm
                 ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             // Expand/collapse icon
             if (hasChildren) {
@@ -297,7 +298,7 @@ private fun TreeNodeView(
                     modifier = Modifier.width(16.dp)
                 )
             } else {
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(Spacing.lg))
             }
 
             // Checkbox

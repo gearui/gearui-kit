@@ -15,6 +15,7 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.material3.Text
+import com.gearui.foundation.layout.Spacing
 
 /**
  * RadioButton - 100% Theme 驱动的单选按钮组件
@@ -115,9 +116,9 @@ fun RadioButtonWithLabel(
                     Modifier.clickable(onClick = onClick)
                 } else Modifier
             )
-            .padding(vertical = 8.dp),
+            .padding(vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         RadioButton(
             selected = selected,
@@ -183,7 +184,7 @@ fun <T> RadioCardGroup(
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         options.forEach { option ->
             val isSelected = option == selectedOption
@@ -206,12 +207,12 @@ fun <T> RadioCardGroup(
                             Modifier.clickable { onOptionSelected(option) }
                         } else Modifier
                     )
-                    .padding(vertical = 16.dp, horizontal = 12.dp),
+                    .padding(vertical = Spacing.lg, horizontal = Spacing.md),
                 contentAlignment = Alignment.Center
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     // 图标
                     iconProvider?.let { provider ->

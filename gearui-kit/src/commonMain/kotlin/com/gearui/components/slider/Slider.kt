@@ -284,7 +284,7 @@ fun Slider(
 
         // 刻度值显示
         if (showScaleValue && steps > 0) {
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -749,7 +749,7 @@ fun RangeSlider(
 
         // 刻度值显示
         if (showScaleValue && steps > 0) {
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

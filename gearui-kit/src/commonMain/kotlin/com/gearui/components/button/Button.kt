@@ -19,6 +19,7 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Button - 100% Theme 驱动
@@ -158,7 +159,7 @@ fun Button(
                     strokeWidth = 2.dp
                 )
                 if (text.isNotEmpty()) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                 }
             }
 

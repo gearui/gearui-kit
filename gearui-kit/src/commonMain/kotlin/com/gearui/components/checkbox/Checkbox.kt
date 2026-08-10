@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Checkbox - 100% Theme 驱动的复选框组件
@@ -136,9 +137,9 @@ fun CheckboxWithLabel(
                     Modifier.clickable { onCheckedChange(!checked) }
                 } else Modifier
             )
-            .padding(vertical = 8.dp),
+            .padding(vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         Checkbox(
             checked = checked,

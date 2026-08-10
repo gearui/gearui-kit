@@ -24,6 +24,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Image fit mode
@@ -199,7 +200,7 @@ fun ImageWithState(
                             size = 20.dp,
                             tint = colors.destructive
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = loadState.message,
                             style = Typography.BodySmall,
@@ -346,7 +347,7 @@ fun ImagePlaceholder(
                 style = Typography.HeadlineLarge,
                 color = colors.mutedForeground
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = text,
                 style = Typography.BodySmall,

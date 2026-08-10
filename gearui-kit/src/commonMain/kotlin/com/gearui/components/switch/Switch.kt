@@ -18,6 +18,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Switch 尺寸枚举
@@ -188,7 +189,7 @@ fun SwitchWithLabel(
                     Modifier.clickable { onCheckedChange(!checked) }
                 } else Modifier
             )
-            .padding(vertical = 12.dp),
+            .padding(vertical = Spacing.md),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

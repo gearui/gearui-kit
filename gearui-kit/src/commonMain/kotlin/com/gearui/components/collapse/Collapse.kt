@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 折叠面板样式
@@ -51,7 +52,7 @@ fun Collapse(
 
     val containerModifier = if (style == CollapseStyle.Card) {
         modifier
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Spacing.lg)
             .clip(shapes.lg)
     } else {
         modifier
@@ -98,7 +99,7 @@ object Collapse {
 
         val containerModifier = if (style == CollapseStyle.Card) {
             modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = Spacing.lg)
                 .clip(shapes.lg)
         } else {
             modifier
@@ -154,7 +155,7 @@ private fun CollapsePanelItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onToggle)
-                .padding(16.dp),
+                .padding(Spacing.lg),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -164,7 +165,7 @@ private fun CollapsePanelItem(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
             ) {
                 panel.expandIconTextBuilder?.let { builder ->
                     Text(
@@ -189,7 +190,7 @@ private fun CollapsePanelItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             ) {
                 panel.body()
             }
@@ -229,7 +230,7 @@ fun CollapseItem(
                     enabled = enabled,
                     onClick = { onExpandChange(!expanded) }
                 )
-                .padding(16.dp),
+                .padding(Spacing.lg),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -252,7 +253,7 @@ fun CollapseItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Spacing.lg)
             ) {
                 content()
             }
@@ -270,7 +271,7 @@ fun CollapseGroup(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         items.forEachIndexed { index, item ->
             CollapseItem(

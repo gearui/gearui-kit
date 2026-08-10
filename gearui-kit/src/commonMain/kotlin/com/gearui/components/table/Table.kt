@@ -19,6 +19,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 列固定位置
@@ -189,7 +190,7 @@ private fun <T> NormalTable(
                 modifier = Modifier
                     .width(56.dp)
                     .fillMaxHeight()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = Spacing.lg),
                 contentAlignment = Alignment.Center
             ) {
                 Checkbox(
@@ -206,7 +207,7 @@ private fun <T> NormalTable(
                         else Modifier.weight(1f)
                     )
                     .fillMaxHeight()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = Spacing.lg),
                 contentAlignment = getAlignment(column.align)
             ) {
                 Text(
@@ -267,7 +268,7 @@ private fun <T> NormalTable(
                             modifier = Modifier
                                 .width(56.dp)
                                 .fillMaxHeight()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = Spacing.lg),
                             contentAlignment = Alignment.Center
                         ) {
                             Checkbox(
@@ -284,7 +285,7 @@ private fun <T> NormalTable(
                                     else Modifier.weight(1f)
                                 )
                                 .fillMaxHeight()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = Spacing.lg),
                             contentAlignment = getAlignment(column.align)
                         ) {
                             column.render(item, index)
@@ -442,7 +443,7 @@ private fun <T> ColumnContent(
                 .width(colWidth)
                 .height(rowHeight)
                 .background(colors.muted)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Spacing.lg),
             contentAlignment = getAlignment(column.align)
         ) {
             Text(
@@ -492,7 +493,7 @@ private fun <T> ColumnContent(
                             if (onRowClick != null) Modifier.clickable { onRowClick(item, index) }
                             else Modifier
                         )
-                        .padding(horizontal = 16.dp),
+                        .padding(horizontal = Spacing.lg),
                     contentAlignment = getAlignment(column.align)
                 ) {
                     column.render(item, index)

@@ -15,6 +15,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Timeline item data
@@ -175,7 +176,7 @@ private fun TimelineItemView(
 
         if (position == TimelinePosition.LEFT) {
             // Content on the left
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(Spacing.lg))
 
             Column(
                 modifier = Modifier
@@ -189,7 +190,7 @@ private fun TimelineItemView(
                 )
 
                 item.timestamp?.let { timestamp ->
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = timestamp,
                         style = Typography.BodySmall,
@@ -199,7 +200,7 @@ private fun TimelineItemView(
             }
         } else {
             // Content on the right
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(Spacing.lg))
 
             Column(
                 modifier = Modifier
@@ -214,7 +215,7 @@ private fun TimelineItemView(
                 )
 
                 item.timestamp?.let { timestamp ->
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = timestamp,
                         style = Typography.BodySmall,
@@ -285,7 +286,7 @@ fun TimelineCustom(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(Spacing.lg))
 
                 Column(
                     modifier = Modifier

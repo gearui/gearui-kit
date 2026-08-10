@@ -21,6 +21,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Transfer item data
@@ -90,7 +91,7 @@ fun Transfer(
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Left list (source)
@@ -109,7 +110,7 @@ fun Transfer(
 
         // Control buttons
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             Button(
                 text = "›",
@@ -177,7 +178,7 @@ private fun TransferList(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colors.muted)
-                .padding(12.dp)
+                .padding(Spacing.md)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -186,7 +187,7 @@ private fun TransferList(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Checkbox(
                         checked = isAllChecked,
@@ -213,7 +214,7 @@ private fun TransferList(
             }
 
             if (searchable) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacing.sm))
                 BasicTextField(
                     value = searchValue,
                     onValueChange = onSearchChange,
@@ -282,9 +283,9 @@ private fun TransferListItem(
             .clickable(enabled = !item.disabled) {
                 onCheckedChange(!checked)
             }
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = Spacing.md),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         Checkbox(
             checked = checked,

@@ -22,6 +22,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Swiper navigation type - 指示器类型
@@ -166,7 +167,7 @@ fun Swiper(
                 navigation = navigation,
                 isOuter = true
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
         }
 
         // Swiper 内容区
@@ -188,7 +189,7 @@ fun Swiper(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center)
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = Spacing.sm),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     // 左箭头
@@ -248,7 +249,7 @@ fun Swiper(
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 12.dp)
+                        .padding(bottom = Spacing.md)
                 ) {
                     SwiperIndicator(
                         currentIndex = currentContentIndex,
@@ -262,7 +263,7 @@ fun Swiper(
 
         // 外部底部指示器
         if (indicatorPosition == SwiperIndicatorPosition.OUTSIDE_BOTTOM && navigation != SwiperNavigation.NONE) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.md))
             SwiperIndicator(
                 currentIndex = currentContentIndex,
                 itemCount = itemCount,
@@ -297,14 +298,14 @@ private fun SwiperIndicator(
             SwiperNavigation.DOTS -> {
                 // 点状指示器
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     modifier = Modifier
                         .clip(Theme.shapes.full)
                         .background(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
                         )
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                        .padding(horizontal = Spacing.md, vertical = 6.dp)
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
@@ -333,7 +334,7 @@ private fun SwiperIndicator(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
                         )
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                        .padding(horizontal = Spacing.md, vertical = 6.dp)
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
@@ -362,7 +363,7 @@ private fun SwiperIndicator(
                             if (isOuter) colors.mutedForeground
                             else colors.surface.copy(alpha = 0.5f)
                         )
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .padding(horizontal = Spacing.md, vertical = Spacing.xs)
                 ) {
                     Text(
                         text = "${currentIndex + 1}/$itemCount",

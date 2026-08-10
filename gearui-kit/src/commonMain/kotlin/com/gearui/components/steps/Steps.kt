@@ -17,6 +17,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Step item data
@@ -149,7 +150,7 @@ private fun HorizontalSteps(
                         theme = theme
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
 
                     // Title
                     Text(
@@ -165,7 +166,7 @@ private fun HorizontalSteps(
 
                     // Description
                     item.description?.let { desc ->
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = desc,
                             style = Typography.BodySmall,
@@ -236,7 +237,7 @@ private fun VerticalSteps(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(Spacing.lg))
 
                 // Content
                 Column(
@@ -256,7 +257,7 @@ private fun VerticalSteps(
                     )
 
                     item.description?.let { desc ->
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = desc,
                             style = Typography.BodySmall,

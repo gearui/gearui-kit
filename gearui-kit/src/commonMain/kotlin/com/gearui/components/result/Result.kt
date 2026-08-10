@@ -16,6 +16,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Result status type
@@ -75,7 +76,7 @@ fun Result(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -94,7 +95,7 @@ fun Result(
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(Spacing.xl))
 
         // Title
         Text(
@@ -105,7 +106,7 @@ fun Result(
 
         // Description
         description?.let { desc ->
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(Spacing.md))
             Text(
                 text = desc,
                 style = Typography.BodyMedium,
@@ -115,15 +116,15 @@ fun Result(
 
         // Extra content
         extraContent?.let {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
             it()
         }
 
         // Actions
         if (primaryAction != null || secondaryAction != null) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(Spacing.xxl))
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 primaryAction?.invoke()
                 secondaryAction?.invoke()

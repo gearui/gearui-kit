@@ -14,6 +14,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * EmptyState - 100% Theme 驱动的空状态组件
@@ -44,14 +45,14 @@ fun EmptyState(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         // 图标/图片
         if (icon != null) {
             icon()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         } else {
             // 默认空状态图标
             Icon(
@@ -59,7 +60,7 @@ fun EmptyState(
                 size = 28.dp,
                 tint = colors.mutedForeground
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
         // 主要消息
@@ -71,7 +72,7 @@ fun EmptyState(
 
         // 描述文字
         if (description != null) {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = description,
                 style = Typography.BodyMedium,
@@ -81,16 +82,16 @@ fun EmptyState(
 
         // 操作区域（优先自定义）
         if (customAction != null) {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
             customAction()
         } else if (actionText != null && onAction != null) {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(Spacing.xl))
             Box(
                 modifier = Modifier
                     .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable(onClick = onAction)
-                    .padding(horizontal = 24.dp, vertical = 10.dp)
+                    .padding(horizontal = Spacing.xl, vertical = 10.dp)
             ) {
                 Text(
                     text = actionText,

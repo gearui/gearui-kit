@@ -17,6 +17,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.material3.Text
 import kotlin.math.roundToInt
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Progress - 100% Theme 驱动的进度条组件
@@ -92,7 +93,7 @@ fun LinearProgress(
 
                 // 右侧标签
                 if (showLabel) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
                         style = typography.bodySmall,

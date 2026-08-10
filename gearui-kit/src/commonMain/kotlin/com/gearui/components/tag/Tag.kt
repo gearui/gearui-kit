@@ -18,6 +18,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.interaction.*
 import com.gearui.theme.Theme
 import com.gearui.foundation.tag.TagSizeTokens
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Tag - 100% Theme 驱动的标签组件
@@ -144,7 +145,7 @@ fun Tag(
             // 图标
             if (icon != null) {
                 Box(modifier = Modifier.size(tokens.iconBoxSize)) { icon() }
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(Spacing.xs))
             }
 
             // 文字
@@ -155,7 +156,7 @@ fun Tag(
 
             // 关闭按钮
             if (closable && onClose != null) {
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(Spacing.xs))
                 Box(
                     modifier = Modifier
                         .size(tokens.iconBoxSize)

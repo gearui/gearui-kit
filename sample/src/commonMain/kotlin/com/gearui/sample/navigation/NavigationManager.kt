@@ -67,7 +67,6 @@ import com.gearui.sample.examples.swiper.SwiperExample
 import com.gearui.sample.examples.searchbar.SearchBarExample
 import com.gearui.sample.examples.bottomsheet.BottomSheetExample
 import com.gearui.sample.examples.backtop.BackTopExample
-import com.gearui.sample.examples.common.ComingSoonExample
 import com.gearui.sample.examples.dropdownmenu.DropdownMenuExample
 import com.gearui.sample.examples.fab.FabExample
 import com.gearui.sample.examples.runtime.InsetsDebugExample
@@ -105,10 +104,6 @@ object NavigationManager {
             "button" -> ButtonExample(component, onBack)
             "icon" -> IconExample(component, onBack)
             "icon-render" -> IconExample(component, onBack)
-            "font" -> ComingSoonExample(component, onBack)
-            "radius" -> ComingSoonExample(component, onBack)
-            "shadows" -> ComingSoonExample(component, onBack)
-            "theme" -> ComingSoonExample(component, onBack)
             "link" -> LinkExample(component, onBack)
             "text" -> TextExample(component, onBack)
             "tag" -> TagExample(component, onBack)
@@ -140,7 +135,6 @@ object NavigationManager {
             "tabs" -> TabsExample(component, onBack)
             "navigation-menu" -> NavigationMenuExample(component, onBack)
             "sidebar" -> SidebarExample(component, onBack)
-            "indexes" -> ComingSoonExample(component, onBack)
             "drawer" -> DrawerExample(component, onBack)
             "steps" -> StepsExample(component, onBack)
             "pagination" -> PaginationExample(component, onBack)
@@ -165,10 +159,8 @@ object NavigationManager {
             "empty" -> EmptyExample(component, onBack)
             "skeleton" -> SkeletonExample(component, onBack)
             "timeline" -> TimelineExample(component, onBack)
-            "timecounter" -> ComingSoonExample(component, onBack)
             "tree" -> TreeExample(component, onBack)
             "calendar" -> CalendarExample(component, onBack)
-            "footer" -> ComingSoonExample(component, onBack)
             "watermark" -> WatermarkExample(component, onBack)
 
             // 反馈组件 (11个)

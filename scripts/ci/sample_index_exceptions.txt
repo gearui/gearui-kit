@@ -15,14 +15,8 @@
 uncovered scaffold page infrastructure, exercised by every sample page
 
 # --- comingsoon ---
-# These seven are advertised in the official index but open a placeholder. They
-# are design-system topics rather than components, which is why they were
-# stubbed. Each must end up either implemented or removed from the index; this
-# list exists so the debt is counted rather than invisible.
-comingsoon font design-system topic, not yet written
-comingsoon radius design-system topic, superseded by the frozen shape scale
-comingsoon shadows design-system topic, superseded by the Elevation scale
-comingsoon theme design-system topic, not yet written
-comingsoon indexes navigation aid, not yet written
-comingsoon timecounter component not implemented in the SDK
-comingsoon footer component not implemented in the SDK
+# Empty. The seven placeholder entries (font, radius, shadows, theme, indexes,
+# timecounter, footer) were removed from the index before 1.0.0-beta1 rather
+# than waived: none had an SDK component behind it. radius and theme are design
+# system topics belonging to a future Design Foundations page; timecounter and
+# footer are components that do not exist yet and can be indexed when they do.

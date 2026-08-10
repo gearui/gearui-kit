@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # ripgrep is not preinstalled on the GitHub-hosted Ubuntu images (checked
       # against the 22.04 and 24.04 manifests). Four guards require it and fail

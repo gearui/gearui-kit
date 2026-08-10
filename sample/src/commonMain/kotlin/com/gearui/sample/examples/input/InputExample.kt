@@ -355,7 +355,7 @@ fun InputExample(
                     onValueChange = { errorValue = it },
                     label = "标签文字",
                     placeholder = "请输入文字",
-                    errorText = "错误提示说明"
+                    error = "错误提示说明"
                 )
 
                 // 只读状态
@@ -510,7 +510,7 @@ fun InputExample(
                 value = "禁用状态的内容",
                 onValueChange = {},
                 label = "标签文字",
-                disabled = true
+                enabled = false
             )
         }
     }

@@ -34,6 +34,8 @@ import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.FieldErrorText
 
 /**
  * TreeSelect - 树形选择器
@@ -53,6 +55,8 @@ fun TreeSelect(
     onSelect: (String?) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.selectPlaceholder,
+    enabled: Boolean = true,
+    error: String? = null,
     dropdownHeight: Dp = 300.dp
 ) {
     val colors = Theme.colors
@@ -142,11 +146,11 @@ fun TreeSelect(
                 .clip(FieldDefaults.shape)
                 .border(
                     width = FieldSizeTokens.Medium.borderWidth,
-                    color = if (expanded) colors.primary else colors.border,
+                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
                     shape = FieldDefaults.shape
                 )
-                .background(colors.surface)
-                .clickable {
+                .background(if (enabled) colors.surface else colors.muted)
+                .clickable(enabled = enabled) {
                     if (expanded) closeDropdown() else openDropdown()
                 }
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
@@ -165,6 +169,8 @@ fun TreeSelect(
                 tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 }
 
@@ -178,6 +184,8 @@ fun TreeSelectMultiple(
     onSelectedChange: (Set<String>) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.selectPlaceholder,
+    enabled: Boolean = true,
+    error: String? = null,
     dropdownHeight: Dp = 300.dp
 ) {
     val colors = Theme.colors
@@ -258,11 +266,11 @@ fun TreeSelectMultiple(
                 .clip(FieldDefaults.shape)
                 .border(
                     width = FieldSizeTokens.Medium.borderWidth,
-                    color = if (expanded) colors.primary else colors.border,
+                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
                     shape = FieldDefaults.shape
                 )
-                .background(colors.surface)
-                .clickable {
+                .background(if (enabled) colors.surface else colors.muted)
+                .clickable(enabled = enabled) {
                     if (expanded) closeDropdown() else openDropdown()
                 }
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
@@ -282,6 +290,8 @@ fun TreeSelectMultiple(
                 tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 }
 

@@ -34,6 +34,8 @@ import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.FieldErrorText
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -148,12 +150,7 @@ fun <T> Select(
                 .clip(triggerShape)
                 .border(
                     width = FieldSizeTokens.Medium.borderWidth,
-                    color = when {
-                        error != null -> colors.destructive
-                        !enabled -> colors.mutedForeground
-                        expanded -> colors.border
-                        else -> colors.border
-                    },
+                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
                     shape = triggerShape
                 )
                 .background(if (enabled) colors.surface else colors.muted)
@@ -181,19 +178,11 @@ fun <T> Select(
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = FieldDefaults.trailingIconSize,
-                tint = if (enabled) colors.mutedForeground else colors.mutedForeground
+                tint = colors.mutedForeground
             )
         }
 
-        // 错误提示
-        if (error != null) {
-            Spacer(modifier = Modifier.height(Spacing.xs))
-            Text(
-                text = error,
-                style = Typography.BodySmall,
-                color = colors.destructive
-            )
-        }
+        FieldErrorText(error)
     }
 }
 
@@ -301,6 +290,7 @@ fun <T> MultiSelect(
     enabled: Boolean = true,
     placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
+    error: String? = null,
     maxSelection: Int? = null,
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
@@ -386,7 +376,7 @@ fun <T> MultiSelect(
                 .clip(triggerShape)
                 .border(
                     FieldSizeTokens.Medium.borderWidth,
-                    if (expanded) colors.border else colors.border,
+                    fieldBorderColor(error = error, enabled = enabled, active = expanded),
                     triggerShape
                 )
                 .background(if (enabled) colors.surface else colors.muted)
@@ -411,9 +401,11 @@ fun <T> MultiSelect(
             Icon(
                 name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
                 size = FieldDefaults.trailingIconSize,
-                tint = if (enabled) colors.mutedForeground else colors.mutedForeground
+                tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 }
 

@@ -69,8 +69,8 @@ fun Input(
     labelPosition: String = "left", // "left" or "top"
     required: Boolean = false,
     helperText: String? = null,
-    errorText: String? = null,
-    disabled: Boolean = false,
+    error: String? = null,
+    enabled: Boolean = true,
     readOnly: Boolean = false,
     maxLength: Int? = null,
     showCounter: Boolean = false,
@@ -96,7 +96,7 @@ fun Input(
     val interactionSource = remember { createMutableInteractionSource() }
     val inputFocusRequester = remember { FocusRequester() }
     var isFocused by remember { mutableStateOf(false) }
-    val hasError = errorText != null
+    val hasError = error != null
 
     // 自动聚焦
     if (autoFocus) {
@@ -106,7 +106,7 @@ fun Input(
     }
 
     when {
-        disabled -> interactionSource.updateState(InteractionState.Disabled)
+        !enabled -> interactionSource.updateState(InteractionState.Disabled)
         hasError && !isFocused -> interactionSource.updateState(InteractionState.Normal)
         isFocused -> interactionSource.updateState(InteractionState.Focused)
         else -> interactionSource.updateState(InteractionState.Normal)
@@ -135,7 +135,7 @@ fun Input(
     val borderWidth = tokens.borderWidth
 
     val backgroundColor = when {
-        disabled -> colors.muted
+        !enabled -> colors.muted
         cardStyle -> colors.muted
         else -> colors.surface
     }
@@ -143,7 +143,7 @@ fun Input(
     // 输入框内容
     @Composable
     fun InputField() {
-        val canFocus = !disabled && !readOnly
+        val canFocus = enabled && !readOnly
         var focusRequestTick by remember { mutableStateOf(0) }
 
         LaunchedEffect(focusRequestTick, canFocus) {
@@ -222,7 +222,7 @@ fun Input(
                         Text(
                             text = label,
                             style = Typography.BodyMedium,
-                            color = if (disabled) colors.mutedForeground else colors.foreground
+                            color = if (!enabled) colors.mutedForeground else colors.foreground
                         )
                     }
                     Spacer(modifier = Modifier.width(Spacing.md))
@@ -253,7 +253,7 @@ fun Input(
                     BasicTextField(
                         value = value,
                         onValueChange = { newValue ->
-                            if (!readOnly && !disabled) {
+                            if (!readOnly && enabled) {
                                 if (maxLength == null || newValue.length <= maxLength) {
                                     onValueChange(newValue)
                                 }
@@ -262,7 +262,7 @@ fun Input(
                         textStyle = TextStyle(
                             fontSize = Typography.BodyMedium.fontSize,
                             fontWeight = Typography.BodyMedium.fontWeight,
-                            color = if (disabled) colors.mutedForeground else colors.foreground,
+                            color = if (!enabled) colors.mutedForeground else colors.foreground,
                             textAlign = textAlign
                         ),
                         cursorBrush = SolidColor(colors.primary),
@@ -289,7 +289,7 @@ fun Input(
                         singleLine = maxLines == 1,
                         maxLines = maxLines,
                         readOnly = readOnly,
-                        enabled = !disabled,
+                        enabled = enabled,
                         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -323,7 +323,7 @@ fun Input(
                 // 用 pointerInput 在 Initial pass 消费 down 事件，避免事件冒到底层 native
                 // EditText 触发"失焦→IME 隐藏→再 requestFocus→IME 弹出"的可见闪烁。
                 // 只在 tap（非拖动）时触发清除；点完再 requestInputFocus 以防万一。
-                if (clearable && value.isNotEmpty() && !disabled && !readOnly) {
+                if (clearable && value.isNotEmpty() && enabled && !readOnly) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Box(
                         modifier = Modifier
@@ -394,7 +394,7 @@ fun Input(
                 Text(
                     text = label,
                     style = Typography.BodyMedium,
-                    color = if (disabled) colors.mutedForeground else colors.foreground
+                    color = if (!enabled) colors.mutedForeground else colors.foreground
                 )
             }
         }
@@ -402,7 +402,7 @@ fun Input(
         InputField()
 
         // 底部提示文字
-        val bottomText = errorText ?: helperText
+        val bottomText = error ?: helperText
         if (bottomText != null) {
             Text(
                 text = bottomText,

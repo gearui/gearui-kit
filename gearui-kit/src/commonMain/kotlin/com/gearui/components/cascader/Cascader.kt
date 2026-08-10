@@ -34,6 +34,8 @@ import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.FieldErrorText
 
 /**
  * Cascader option data
@@ -62,6 +64,8 @@ fun Cascader(
     onSelect: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.selectPlaceholder,
+    enabled: Boolean = true,
+    error: String? = null,
     separator: String = " / ",
     dropdownHeight: Dp = 300.dp
 ) {
@@ -151,11 +155,11 @@ fun Cascader(
                 .clip(FieldDefaults.shape)
                 .border(
                     width = FieldSizeTokens.Medium.borderWidth,
-                    color = if (expanded) colors.primary else colors.border,
+                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
                     shape = FieldDefaults.shape
                 )
-                .background(colors.surface)
-                .clickable {
+                .background(if (enabled) colors.surface else colors.muted)
+                .clickable(enabled = enabled) {
                     if (expanded) closeDropdown() else openDropdown()
                 }
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
@@ -165,7 +169,11 @@ fun Cascader(
             Text(
                 text = displayText,
                 style = Typography.BodyMedium,
-                color = if (selectedPath.isNotEmpty()) colors.foreground else colors.mutedForeground
+                color = when {
+                    !enabled -> colors.mutedForeground
+                    selectedPath.isNotEmpty() -> colors.foreground
+                    else -> colors.mutedForeground
+                }
             )
 
             Icon(
@@ -174,6 +182,8 @@ fun Cascader(
                 tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 }
 

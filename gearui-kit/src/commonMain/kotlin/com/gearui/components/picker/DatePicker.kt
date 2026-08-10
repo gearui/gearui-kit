@@ -26,6 +26,8 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.primitives.Icon
 import com.gearui.components.icon.Icons
+import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.FieldErrorText
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -38,6 +40,7 @@ fun DatePickerInput(
     enabled: Boolean = true,
     placeholder: String = I18n.strings.dateTime.datePlaceholder,
     label: String? = null,
+    error: String? = null,
     format: String = "YYYY-MM-DD"
 ) {
     val colors = Theme.colors
@@ -70,7 +73,7 @@ fun DatePickerInput(
                 .clip(FieldDefaults.shape)
                 .border(
                     FieldSizeTokens.Medium.borderWidth,
-                    if (enabled) colors.border else colors.mutedForeground,
+                    fieldBorderColor(error = error, enabled = enabled),
                     FieldDefaults.shape,
                 )
                 .background(if (enabled) colors.surface else colors.muted)
@@ -95,6 +98,8 @@ fun DatePickerInput(
                 tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 
     // 日期选择对话框
@@ -243,6 +248,7 @@ fun TimePickerInput(
     enabled: Boolean = true,
     placeholder: String = I18n.strings.dateTime.timePlaceholder,
     label: String? = null,
+    error: String? = null,
     format: String = "HH:mm"
 ) {
     val colors = Theme.colors
@@ -272,7 +278,7 @@ fun TimePickerInput(
                 .clip(FieldDefaults.shape)
                 .border(
                     FieldSizeTokens.Medium.borderWidth,
-                    if (enabled) colors.border else colors.mutedForeground,
+                    fieldBorderColor(error = error, enabled = enabled),
                     FieldDefaults.shape,
                 )
                 .background(if (enabled) colors.surface else colors.muted)
@@ -297,6 +303,8 @@ fun TimePickerInput(
                 tint = colors.mutedForeground
             )
         }
+
+        FieldErrorText(error)
     }
 
     // 时间选择对话框

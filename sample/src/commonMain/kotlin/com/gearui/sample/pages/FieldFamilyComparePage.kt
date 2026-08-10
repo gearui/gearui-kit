@@ -47,10 +47,10 @@ import com.tencent.kuikly.compose.ui.unit.dp
  *
  * Focused state cannot be shown statically — tap a field to check it.
  *
- * The family does not expose the same states everywhere: Cascader and
- * TreeSelect take no `enabled`, and only Input and Select accept an error.
- * Those gaps show up below as missing rows, and are tracked as a separate API
- * consistency pass.
+ * The family now exposes the same states everywhere — `enabled: Boolean = true`
+ * and `error: String? = null` — so the disabled and error rows are complete.
+ * SearchBar is the one exception and takes no `error`: it is a search
+ * affordance rather than a form field, with no value to validate.
  */
 @Composable
 fun FieldFamilyComparePage() {
@@ -153,24 +153,45 @@ fun FieldFamilyComparePage() {
             }
 
             item {
-                Section("Disabled — Cascader and TreeSelect have no `enabled`") {
-                    Input(value = "Disabled", onValueChange = {}, disabled = true)
+                Section("Disabled") {
+                    Input(value = "Disabled", onValueChange = {}, enabled = false)
                     SearchBar(value = "", onValueChange = {}, enabled = false, shape = SearchBarShape.SQUARE)
                     Select(value = null, options = options, onValueChange = {}, enabled = false)
+                    Cascader(
+                        options = cascade,
+                        selectedPath = emptyList(),
+                        onSelect = {},
+                        enabled = false,
+                    )
+                    TreeSelect(nodes = tree, selectedKey = null, onSelect = {}, enabled = false)
                     DatePickerInput(value = "", onValueChange = {}, enabled = false)
                     TimePickerInput(value = "", onValueChange = {}, enabled = false)
                 }
             }
 
             item {
-                Section("Error — only Input and Select accept one") {
-                    Input(value = "bad", onValueChange = {}, errorText = "Something is wrong")
+                Section("Error — SearchBar excluded, it has no value to validate") {
+                    Input(value = "bad", onValueChange = {}, error = "Something is wrong")
                     Select(
                         value = null,
                         options = options,
                         onValueChange = {},
                         error = "Something is wrong",
                     )
+                    Cascader(
+                        options = cascade,
+                        selectedPath = emptyList(),
+                        onSelect = {},
+                        error = "Something is wrong",
+                    )
+                    TreeSelect(
+                        nodes = tree,
+                        selectedKey = null,
+                        onSelect = {},
+                        error = "Something is wrong",
+                    )
+                    DatePickerInput(value = "", onValueChange = {}, error = "Something is wrong")
+                    TimePickerInput(value = "", onValueChange = {}, error = "Something is wrong")
                 }
             }
 

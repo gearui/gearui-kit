@@ -22,6 +22,8 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.field.fieldBorderColor
 
 /**
  * 文本框布局方式
@@ -46,6 +48,7 @@ fun Textarea(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
+    error: String? = null,
     placeholder: String = "",
     label: String? = null,
     labelIcon: String? = null,
@@ -90,6 +93,7 @@ fun Textarea(
                     indicator = indicator,
                     isVertical = isVertical,
                     bordered = false,
+                    error = error,
                     required = required,
                     additionInfo = additionInfo,
                     autosize = autosize
@@ -111,11 +115,14 @@ fun Textarea(
                 indicator = indicator,
                 isVertical = isVertical,
                 bordered = bordered,
+                error = error,
                 required = required,
                 additionInfo = additionInfo,
                 autosize = autosize
             )
         }
+
+        FieldErrorText(error)
     }
 }
 
@@ -134,6 +141,7 @@ private fun TextareaContent(
     indicator: Boolean,
     isVertical: Boolean,
     bordered: Boolean,
+    error: String? = null,
     required: Boolean,
     additionInfo: String?,
     autosize: Boolean
@@ -167,6 +175,7 @@ private fun TextareaContent(
                 maxLines = maxLines,
                 indicator = indicator,
                 bordered = bordered,
+                error = error,
                 additionInfo = additionInfo,
                 autosize = autosize
             )
@@ -202,6 +211,7 @@ private fun TextareaContent(
                         maxLines = maxLines,
                         indicator = indicator,
                         bordered = bordered,
+                        error = error,
                         additionInfo = additionInfo,
                         autosize = autosize
                     )
@@ -265,6 +275,7 @@ private fun TextareaInputArea(
     maxLines: Int?,
     indicator: Boolean,
     bordered: Boolean,
+    error: String? = null,
     additionInfo: String?,
     autosize: Boolean,
     focusRequester: FocusRequester? = null,
@@ -309,7 +320,11 @@ private fun TextareaInputArea(
                     if (bordered) {
                         Modifier
                             .clip(Theme.shapes.xl)
-                            .border(BorderWidth.thin, colors.border, Theme.shapes.xl)
+                            .border(
+                                BorderWidth.thin,
+                                fieldBorderColor(error = error, enabled = enabled),
+                                Theme.shapes.xl,
+                            )
                             .background(if (enabled && !readOnly) colors.surface else colors.muted)
                             .padding(Spacing.md)
                     } else {

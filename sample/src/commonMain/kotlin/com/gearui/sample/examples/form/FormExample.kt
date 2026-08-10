@@ -264,7 +264,7 @@ fun FormExample(
                         onValueChange = { username = it },
                         placeholder = "请输入用户名",
                         size = InputSize.MEDIUM,
-                        disabled = formDisabled
+                        enabled = !formDisabled
                     )
                 }
 
@@ -282,7 +282,7 @@ fun FormExample(
                         onValueChange = { password = it },
                         placeholder = "请输入密码",
                         size = InputSize.MEDIUM,
-                        disabled = formDisabled
+                        enabled = !formDisabled
                     )
                 }
 

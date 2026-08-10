@@ -21,6 +21,7 @@ import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 
 /**
  * 日期数据类
@@ -118,8 +119,8 @@ fun Calendar(
             .clip(Theme.shapes.lg)
             .border(BorderWidth.thin, colors.border, Theme.shapes.lg)
             .background(colors.surface)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         if (showTitle && title != null) {
             Text(

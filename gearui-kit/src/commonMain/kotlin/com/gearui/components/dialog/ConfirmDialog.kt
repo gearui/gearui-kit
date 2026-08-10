@@ -13,6 +13,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * ConfirmDialog - 确认对话框
@@ -46,7 +47,7 @@ fun ConfirmDialog(
                 Box(
                     modifier = Modifier
                         .clickable { onCancel() }
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -55,7 +56,7 @@ fun ConfirmDialog(
                         color = colors.mutedForeground
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(Spacing.sm))
                 // 确认按钮
                 Button(
                     text = confirmText,

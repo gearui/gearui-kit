@@ -19,6 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * CalendarPopup - 日历弹出层组件
@@ -99,7 +100,7 @@ fun CalendarPopup(
                 .fillMaxWidth()
                 .clip(OverlayDefaults.sheetShape)
                 .background(colors.surface)
-                .padding(16.dp)
+                .padding(Spacing.lg)
         ) {
             // 标题栏
             Row(
@@ -129,7 +130,7 @@ fun CalendarPopup(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
 
             // 日历组件
             Calendar(
@@ -159,7 +160,7 @@ fun CalendarPopup(
 
             // 确认按钮
             if (showConfirmButton) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(Spacing.lg))
 
                 Button(
                     text = confirmText,
@@ -183,7 +184,7 @@ fun CalendarPopup(
             }
 
             // 底部安全区域
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacing.lg))
         }
     }
 }

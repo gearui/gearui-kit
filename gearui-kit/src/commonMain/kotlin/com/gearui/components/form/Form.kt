@@ -14,6 +14,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.StringPacks
 import com.gearui.i18n.I18n
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Form validation rule
@@ -253,7 +254,7 @@ private class FormScopeImpl(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp)
+                .padding(vertical = Spacing.md)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -270,7 +271,7 @@ private class FormScopeImpl(
                             style = Typography.BodyMedium,
                             color = colors.destructive
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
+                        Spacer(modifier = Modifier.width(Spacing.xs))
                     }
                     Text(
                         text = label,
@@ -279,7 +280,7 @@ private class FormScopeImpl(
                     )
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(Spacing.lg))
 
                 // Field content
                 Column(
@@ -289,7 +290,7 @@ private class FormScopeImpl(
 
                     // Help text
                     help?.let {
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = it,
                             style = Typography.BodySmall,
@@ -354,7 +355,7 @@ fun FormField(
 
         // Error message
         fieldState.error?.let { error ->
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
                 text = error,
                 style = Typography.BodySmall,

@@ -24,6 +24,7 @@ import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 
 /**
  * BackTop 样式
@@ -244,7 +245,7 @@ fun BackTopCustom(
                 .background(backgroundColor)
                 .border(BorderWidth.thin, borderColor, Theme.shapes.lg)
                 .clickable(onClick = onClick)
-                .padding(12.dp)
+                .padding(Spacing.md)
         ) {
             content()
         }

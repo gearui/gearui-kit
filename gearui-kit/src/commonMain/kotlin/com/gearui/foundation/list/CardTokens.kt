@@ -3,6 +3,7 @@ package com.gearui.foundation.list
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 
 /**
  * CardTokens - Card 组件尺寸规范
@@ -27,7 +28,7 @@ object CardDefaults {
      */
     val Default = CardTokens(
         cornerRadius = 8.dp,      // lg — GearUI 卡片默认圆角（冻结后 large→lg）
-        padding = 12.dp,
+        padding = Spacing.md,
         borderWidth = BorderWidth.hairline,     // border-first：发丝级描边，不引入 elevation 语义
         elevation = 0f
     )
@@ -45,6 +46,6 @@ object CardDefaults {
      * 减少内边距，提高信息密度
      */
     val Compact = Default.copy(
-        padding = 12.dp
+        padding = Spacing.md
     )
 }

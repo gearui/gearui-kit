@@ -12,6 +12,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 
 /**
  * SectionHeader - 100% Theme 驱动的章节头原语
@@ -88,13 +89,13 @@ fun SectionHeader(
             // 右侧 trailing
             when {
                 trailing != null -> {
-                    Box(modifier = Modifier.padding(start = 8.dp)) {
+                    Box(modifier = Modifier.padding(start = Spacing.sm)) {
                         trailing()
                     }
                 }
 
                 trailingText != null -> {
-                    Box(modifier = Modifier.padding(start = 8.dp)) {
+                    Box(modifier = Modifier.padding(start = Spacing.sm)) {
                         Text(
                             text = trailingText,
                             style = Typography.BodySmall,

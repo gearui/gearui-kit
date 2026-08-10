@@ -3,22 +3,21 @@
 # Ratchet: tighten this after each family is migrated to Spacing.*.
 gearui-kit/src/commonMain/kotlin/com/gearui/components/actionsheet/ActionSheet.kt	10
 gearui-kit/src/commonMain/kotlin/com/gearui/components/anchor/Anchor.kt	4
-gearui-kit/src/commonMain/kotlin/com/gearui/components/backtop/BackTop.kt	11
+gearui-kit/src/commonMain/kotlin/com/gearui/components/backtop/BackTop.kt	10
 gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomnavbar/BottomNavBar.kt	8
 gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomsheet/BottomSheet.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/button/Button.kt	19
-gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/Calendar.kt	10
-gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/CalendarPopup.kt	6
+gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/Calendar.kt	8
+gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/CalendarPopup.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/cascader/Cascader.kt	6
 gearui-kit/src/commonMain/kotlin/com/gearui/components/cell/Cell.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/checkbox/Checkbox.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/collapse/Collapse.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/contextmenu/ContextMenu.kt	5
-gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/ConfirmDialog.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/Dialog.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/drawer/Drawer.kt	9
 gearui-kit/src/commonMain/kotlin/com/gearui/components/empty/EmptyState.kt	3
-gearui-kit/src/commonMain/kotlin/com/gearui/components/form/Form.kt	6
+gearui-kit/src/commonMain/kotlin/com/gearui/components/form/Form.kt	1
 gearui-kit/src/commonMain/kotlin/com/gearui/components/grid/Grid.kt	5
 gearui-kit/src/commonMain/kotlin/com/gearui/components/image/Image.kt	7
 gearui-kit/src/commonMain/kotlin/com/gearui/components/imageviewer/ImageViewer.kt	8

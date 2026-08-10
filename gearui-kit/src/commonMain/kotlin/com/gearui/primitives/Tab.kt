@@ -14,6 +14,7 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.tab.TabSizeTokens
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Tab - 100% Theme 驱动的导航选择器单元
@@ -58,7 +59,7 @@ fun Tab(
 
             // Content Area (Icon + Text)
             Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 

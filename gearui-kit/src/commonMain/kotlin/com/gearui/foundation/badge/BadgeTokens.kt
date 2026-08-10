@@ -3,6 +3,7 @@ package com.gearui.foundation.badge
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.gearui.foundation.layout.Spacing
 
 /**
  * Badge size tokens.
@@ -26,7 +27,7 @@ object BadgeSizeTokens {
 
     val Dot = BadgeTokens(
         minSize = 8.dp,
-        horizontalPadding = 0.dp,
+        horizontalPadding = Spacing.none,
         fontSizeSp = 0,
         fontWeight = FontWeight.Normal,
         radius = 4.dp,
@@ -34,7 +35,7 @@ object BadgeSizeTokens {
 
     val Small = BadgeTokens(
         minSize = 16.dp,
-        horizontalPadding = 4.dp,
+        horizontalPadding = Spacing.xs,
         fontSizeSp = 10,
         fontWeight = FontWeight.Medium,
         radius = 2.dp,

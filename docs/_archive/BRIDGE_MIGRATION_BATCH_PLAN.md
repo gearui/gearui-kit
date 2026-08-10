@@ -1,7 +1,7 @@
 # Bridge Migration Batch Plan (Batch 8–13)
 
 Status: **Plan only — no code migrated, no call sites moved, no bridge removed.**
-Basis: `docs/RC_DEPRECATED_BRIDGE_REMOVAL_AUDIT.md` (RC-0).
+Basis: `docs/_archive/RC_DEPRECATED_BRIDGE_REMOVAL_AUDIT.md` (RC-0).
 Goal: re-group the remaining **47 `gearui-kit` files + 71 `sample` files** into executable waves so every target bridge (`Colors / Shapes / root Spacing / ComponentSpecs`) can eventually reach **lib 0 + sample 0** and be removed in Batch 13.
 
 ## 0. RC-0 reference numbers

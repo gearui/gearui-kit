@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'sample'
     spec.version                  = '1.0'
-    spec.homepage                 = 'https://github.com/zoujiaqing/tdesign-kuikly'
+    spec.homepage                 = 'https://github.com/gearui/gearui-kit'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''

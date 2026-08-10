@@ -3100,12 +3100,14 @@ final class com.gearui.runtime/RuntimeEnvironment { // com.gearui.runtime/Runtim
 }
 
 final class com.gearui.runtime/RuntimeFlags { // com.gearui.runtime/RuntimeFlags|null[0]
-    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.gearui.runtime/RuntimeFlags.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.gearui.runtime/RuntimeFlags.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
 
     final val actionSheetConsumesBottomSafeArea // com.gearui.runtime/RuntimeFlags.actionSheetConsumesBottomSafeArea|{}actionSheetConsumesBottomSafeArea[0]
         final fun <get-actionSheetConsumesBottomSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.actionSheetConsumesBottomSafeArea.<get-actionSheetConsumesBottomSafeArea>|<get-actionSheetConsumesBottomSafeArea>(){}[0]
     final val bottomNavBarConsumesBottomSafeArea // com.gearui.runtime/RuntimeFlags.bottomNavBarConsumesBottomSafeArea|{}bottomNavBarConsumesBottomSafeArea[0]
         final fun <get-bottomNavBarConsumesBottomSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.bottomNavBarConsumesBottomSafeArea.<get-bottomNavBarConsumesBottomSafeArea>|<get-bottomNavBarConsumesBottomSafeArea>(){}[0]
+    final val bottomSheetConsumesBottomSafeArea // com.gearui.runtime/RuntimeFlags.bottomSheetConsumesBottomSafeArea|{}bottomSheetConsumesBottomSafeArea[0]
+        final fun <get-bottomSheetConsumesBottomSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.bottomSheetConsumesBottomSafeArea.<get-bottomSheetConsumesBottomSafeArea>|<get-bottomSheetConsumesBottomSafeArea>(){}[0]
     final val drawerConsumesVerticalSafeArea // com.gearui.runtime/RuntimeFlags.drawerConsumesVerticalSafeArea|{}drawerConsumesVerticalSafeArea[0]
         final fun <get-drawerConsumesVerticalSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.drawerConsumesVerticalSafeArea.<get-drawerConsumesVerticalSafeArea>|<get-drawerConsumesVerticalSafeArea>(){}[0]
     final val navBarConsumesTopSafeArea // com.gearui.runtime/RuntimeFlags.navBarConsumesTopSafeArea|{}navBarConsumesTopSafeArea[0]
@@ -3118,7 +3120,8 @@ final class com.gearui.runtime/RuntimeFlags { // com.gearui.runtime/RuntimeFlags
     final fun component3(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component3|component3(){}[0]
     final fun component4(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component4|component4(){}[0]
     final fun component5(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component5|component5(){}[0]
-    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.gearui.runtime/RuntimeFlags // com.gearui.runtime/RuntimeFlags.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun component6(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component6|component6(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.gearui.runtime/RuntimeFlags // com.gearui.runtime/RuntimeFlags.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.runtime/RuntimeFlags.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.runtime/RuntimeFlags.toString|toString(){}[0]

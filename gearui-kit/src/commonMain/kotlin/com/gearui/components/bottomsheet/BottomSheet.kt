@@ -26,6 +26,9 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
 import com.gearui.foundation.border.BorderWidth
+import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.runtime.LocalRuntimeFlags
 
 /**
  * BottomSheet - 基于 Overlay 系统的底部动作面板
@@ -122,6 +125,19 @@ internal fun BottomSheetSurface(
     onItemClick: (BottomSheetItem, Int) -> Unit
 ) {
     val colors = Theme.colors
+    val runtimeFlags = LocalRuntimeFlags.current
+    val runtimeEnvironment = LocalRuntimeEnvironment.current
+    val configuration = LocalConfiguration.current
+    val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
+        if (runtimeFlags.bottomSheetConsumesBottomSafeArea) {
+            runtimeEnvironment.safeArea.bottom
+        } else {
+            Spacing.none
+        }
+    } else {
+        configuration.safeAreaInsets.bottom.dp
+    }
+    val bottomInset = if (safeAreaBottom > Spacing.lg) safeAreaBottom else Spacing.lg
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -200,11 +216,12 @@ internal fun BottomSheetSurface(
                 }
             }
 
-            // 底部安全区域
+            // 底部安全区：读真实 inset，16dp 只作为下限。写死 16dp 会让最后一行
+            // 挤到 iPhone 的 home indicator 上（该 inset 通常是 34pt）。
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(Spacing.lg)
+                    .height(bottomInset)
                     .background(colors.surface)
             )
         }

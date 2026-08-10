@@ -19,6 +19,9 @@ if rg -n '\buseSafeArea\b' "$KIT_DIR/com/gearui/components" "$SAMPLE_DIR" >/tmp/
 fi
 
 # Rule 2: forbid direct safeAreaInsets access outside approved runtime/fallback files.
+# The component entries are edge-anchored chrome that must consume an inset to
+# avoid drawing under the status bar or the home indicator. Anything else reads
+# insets through the runtime.
 ALLOWLIST=(
   "$KIT_DIR/com/gearui/runtime/RuntimeEnvironment.kt"
   "$KIT_DIR/com/gearui/runtime/RuntimeInsetsBridge.kt"
@@ -26,6 +29,7 @@ ALLOWLIST=(
   "$KIT_DIR/com/gearui/components/bottomnavbar/BottomNavBar.kt"
   "$KIT_DIR/com/gearui/components/drawer/Drawer.kt"
   "$KIT_DIR/com/gearui/components/actionsheet/ActionSheet.kt"
+  "$KIT_DIR/com/gearui/components/bottomsheet/BottomSheet.kt"
   "$KIT_DIR/com/gearui/overlay/OverlayHost.kt"
   "$SAMPLE_DIR/com/gearui/sample/examples/runtime/InsetsDebugExample.kt"
 )

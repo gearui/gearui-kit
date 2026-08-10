@@ -46,7 +46,8 @@ data class RuntimeFlags(
     val navBarConsumesTopSafeArea: Boolean = false,
     val bottomNavBarConsumesBottomSafeArea: Boolean = true,
     val drawerConsumesVerticalSafeArea: Boolean = true,
-    val actionSheetConsumesBottomSafeArea: Boolean = true
+    val actionSheetConsumesBottomSafeArea: Boolean = true,
+    val bottomSheetConsumesBottomSafeArea: Boolean = true
 )
 
 val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }

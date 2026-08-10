@@ -6,7 +6,6 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
-import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.animation.AnimatedVisibility
@@ -28,11 +27,12 @@ import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.runtime.rememberSafeAreaInset
+import com.gearui.runtime.SafeAreaEdge
 
 data class BottomNavItem(
     val id: String,
@@ -70,17 +70,11 @@ fun BottomNavBar(
 ) {
     val colors = Theme.colors
     val runtimeFlags = LocalRuntimeFlags.current
-    val runtimeEnvironment = LocalRuntimeEnvironment.current
-    val configuration = LocalConfiguration.current
-    val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
-        if (runtimeFlags.bottomNavBarConsumesBottomSafeArea) {
-            runtimeEnvironment.safeArea.bottom + safeAreaExtraBottom
-        } else {
-            safeAreaExtraBottom
-        }
-    } else {
-        configuration.safeAreaInsets.bottom.dp + safeAreaExtraBottom
-    }
+    val safeAreaBottom = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Bottom,
+        consume = runtimeFlags.bottomNavBarConsumesBottomSafeArea,
+        extra = safeAreaExtraBottom,
+    )
     val selected = selectedId ?: items.firstOrNull()?.id.orEmpty()
     val barBackground = backgroundColor ?: colors.surface
     val selectedColor = activeColor ?: colors.primary

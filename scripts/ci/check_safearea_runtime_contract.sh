@@ -22,14 +22,15 @@ fi
 # The component entries are edge-anchored chrome that must consume an inset to
 # avoid drawing under the status bar or the home indicator. Anything else reads
 # insets through the runtime.
+# No component belongs on this list. NavBar, BottomNavBar, Drawer, ActionSheet
+# and BottomSheet each used to read insets directly and were all allowlisted;
+# they now go through runtime.rememberSafeAreaInset, so the list is back to the
+# runtime itself, the overlay host, and the sample's diagnostic page. If a
+# component needs adding here, that is the signal to extend the resolver rather
+# than to widen the list.
 ALLOWLIST=(
   "$KIT_DIR/com/gearui/runtime/RuntimeEnvironment.kt"
   "$KIT_DIR/com/gearui/runtime/RuntimeInsetsBridge.kt"
-  "$KIT_DIR/com/gearui/components/navbar/NavBar.kt"
-  "$KIT_DIR/com/gearui/components/bottomnavbar/BottomNavBar.kt"
-  "$KIT_DIR/com/gearui/components/drawer/Drawer.kt"
-  "$KIT_DIR/com/gearui/components/actionsheet/ActionSheet.kt"
-  "$KIT_DIR/com/gearui/components/bottomsheet/BottomSheet.kt"
   "$KIT_DIR/com/gearui/overlay/OverlayHost.kt"
   "$SAMPLE_DIR/com/gearui/sample/examples/runtime/InsetsDebugExample.kt"
 )

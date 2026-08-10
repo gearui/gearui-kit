@@ -7,18 +7,18 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
-import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.runtime.rememberSafeAreaInset
+import com.gearui.runtime.SafeAreaEdge
 
 /**
  * NavBar - 导航栏组件
@@ -65,13 +65,10 @@ fun NavBar(
 
     // 获取安全区域
     val runtimeFlags = LocalRuntimeFlags.current
-    val runtimeEnvironment = LocalRuntimeEnvironment.current
-    val configuration = LocalConfiguration.current
-    val safeAreaTop = if (runtimeFlags.unifiedSafeAreaPipeline) {
-        if (runtimeFlags.navBarConsumesTopSafeArea) runtimeEnvironment.safeArea.top else 0.dp
-    } else {
-        configuration.safeAreaInsets.top.dp
-    }
+    val safeAreaTop = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Top,
+        consume = runtimeFlags.navBarConsumesTopSafeArea,
+    )
     val actionSlotWidth = 56.dp
 
     Column(

@@ -14,7 +14,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
@@ -24,11 +23,12 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
-import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.runtime.rememberSafeAreaInset
+import com.gearui.runtime.SafeAreaEdge
 
 /**
  * DrawerPlacement - 抽屉位置
@@ -280,18 +280,14 @@ private fun DrawerContent(
 ) {
     val colors = Theme.colors
     val runtimeFlags = LocalRuntimeFlags.current
-    val runtimeEnvironment = LocalRuntimeEnvironment.current
-    val configuration = LocalConfiguration.current
-    val topInset = if (runtimeFlags.unifiedSafeAreaPipeline) {
-        if (runtimeFlags.drawerConsumesVerticalSafeArea) runtimeEnvironment.safeArea.top else 0.dp
-    } else {
-        configuration.safeAreaInsets.top.dp
-    }
-    val bottomInset = if (runtimeFlags.unifiedSafeAreaPipeline) {
-        if (runtimeFlags.drawerConsumesVerticalSafeArea) runtimeEnvironment.safeArea.bottom else 0.dp
-    } else {
-        configuration.safeAreaInsets.bottom.dp
-    }
+    val topInset = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Top,
+        consume = runtimeFlags.drawerConsumesVerticalSafeArea,
+    )
+    val bottomInset = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Bottom,
+        consume = runtimeFlags.drawerConsumesVerticalSafeArea,
+    )
 
     Column(
         modifier = Modifier

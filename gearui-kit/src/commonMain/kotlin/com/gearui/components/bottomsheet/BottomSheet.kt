@@ -26,9 +26,9 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
 import com.gearui.foundation.border.BorderWidth
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
-import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
+import com.gearui.runtime.rememberSafeAreaInset
+import com.gearui.runtime.SafeAreaEdge
 
 /**
  * BottomSheet - 基于 Overlay 系统的底部动作面板
@@ -126,18 +126,11 @@ internal fun BottomSheetSurface(
 ) {
     val colors = Theme.colors
     val runtimeFlags = LocalRuntimeFlags.current
-    val runtimeEnvironment = LocalRuntimeEnvironment.current
-    val configuration = LocalConfiguration.current
-    val safeAreaBottom = if (runtimeFlags.unifiedSafeAreaPipeline) {
-        if (runtimeFlags.bottomSheetConsumesBottomSafeArea) {
-            runtimeEnvironment.safeArea.bottom
-        } else {
-            Spacing.none
-        }
-    } else {
-        configuration.safeAreaInsets.bottom.dp
-    }
-    val bottomInset = if (safeAreaBottom > Spacing.lg) safeAreaBottom else Spacing.lg
+    val bottomInset = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Bottom,
+        consume = runtimeFlags.bottomSheetConsumesBottomSafeArea,
+        minimum = Spacing.lg,
+    )
 
     Box(
         modifier = Modifier.fillMaxSize(),

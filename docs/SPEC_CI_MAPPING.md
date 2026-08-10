@@ -47,6 +47,13 @@ SPEC 映射：
 策略：
 - 禁止在组件/样例层重新引入 `useSafeArea` 参数或调用。
 - 限制 `safeAreaInsets` 直接访问仅能出现在 Runtime 与受控 fallback 文件。
+- **白名单里不应再出现组件**：NavBar / BottomNavBar / Drawer / ActionSheet / BottomSheet 曾各自
+  抄同一段三分支解析逻辑（选管线 → 查组件 flag → 回退 configuration），五处都得进白名单；
+  现已统一走 `runtime.rememberSafeAreaInset`，白名单从 8 项收回 4 项。
+  再有组件要进白名单，说明该扩展 resolver 而不是放宽名单。
+- **只收敛"解析"，不收敛"施加"**：padding 加在哪由组件决定。贴边 sheet 的表面必须画到视口边缘、
+  只把内容内缩（否则 home indicator 处会露出遮罩），而 Drawer 是整体内缩——
+  把施加动作也搬进 OverlayHost 会毁掉前者。
 - 顶部非阻断浮层（Snackbar / Notification）不得直接用 `topOffset.dp` 作为顶部 padding，
   必须先与 Runtime 稳定后的 `safeArea.top` 合并。
 - 顶部非阻断浮层通过 Overlay 显示时必须设置 `passThroughOutside = true`，避免横幅展示期间冻结整屏交互。

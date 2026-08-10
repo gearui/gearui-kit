@@ -160,3 +160,59 @@ fun ProvideRuntimeEnvironment(
     }
 }
 private fun minDp(a: Dp, b: Dp): Dp = if (a <= b) a else b
+
+/** 安全区的四条边。 */
+internal enum class SafeAreaEdge { Top, Bottom, Left, Right }
+
+/**
+ * 解析某条边的安全区尺寸，是组件消费 inset 的唯一入口。
+ *
+ * 在此之前，NavBar / BottomNavBar / Drawer / ActionSheet / BottomSheet 各自抄了同一段
+ * 三分支逻辑（选管线 → 查组件 flag → 回退到 configuration），改一次要改五处，而且五处
+ * 都得进 safeArea 护栏的白名单。策略收在这里之后，白名单只剩 runtime 与 OverlayHost。
+ *
+ * **只解析，不施加。** padding 加在哪由组件决定，因为这件事各不相同：贴边 sheet 的表面
+ * 必须一直画到视口边缘、只把内容内缩（否则 home indicator 处会露出一条遮罩），而
+ * Drawer 是整体内缩。把施加动作也收进 Host 会毁掉前者。
+ *
+ * @param consume 该组件是否消费这条边（运行时下发的 app 级策略）。
+ * @param extra   额外附加量，各分支都会加上。
+ * @param minimum 结果下限；sheet 用它保证即使无系统 inset 也留出呼吸空间。
+ */
+@Composable
+internal fun rememberSafeAreaInset(
+    edge: SafeAreaEdge,
+    consume: Boolean,
+    extra: Dp = 0.dp,
+    minimum: Dp = 0.dp,
+): Dp {
+    val flags = LocalRuntimeFlags.current
+    val environment = LocalRuntimeEnvironment.current
+    val configuration = LocalConfiguration.current
+
+    val stable = when (edge) {
+        SafeAreaEdge.Top -> environment.safeArea.top
+        SafeAreaEdge.Bottom -> environment.safeArea.bottom
+        SafeAreaEdge.Left -> environment.safeArea.left
+        SafeAreaEdge.Right -> environment.safeArea.right
+    }
+    val legacy = when (edge) {
+        SafeAreaEdge.Top -> configuration.safeAreaInsets.top.dp
+        SafeAreaEdge.Bottom -> configuration.safeAreaInsets.bottom.dp
+        SafeAreaEdge.Left -> configuration.safeAreaInsets.left.dp
+        SafeAreaEdge.Right -> configuration.safeAreaInsets.right.dp
+    }
+
+    // 注意：legacy 分支刻意不看 [consume]，这是迁移前的既有行为——
+    // `unifiedSafeAreaPipeline` 默认关闭时，组件级 flag 实际不生效
+    // （例如 navBarConsumesTopSafeArea 默认 false，NavBar 今天仍在消费顶部 inset）。
+    // 这里保持原样，不借重构顺手改变行为。
+    val resolved = if (flags.unifiedSafeAreaPipeline) {
+        if (consume) stable else 0.dp
+    } else {
+        legacy
+    }
+
+    val total = resolved + extra
+    return if (total > minimum) total else minimum
+}

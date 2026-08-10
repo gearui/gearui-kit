@@ -35,6 +35,7 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * SearchBar - 100% Theme 驱动的搜索栏
@@ -217,7 +218,7 @@ fun SearchBar(
                     ) {
                         Icon(
                             name = Icons.close,
-                            size = 12.dp,
+                            size = IconSizes.Default.xs,
                             tint = colors.mutedForeground
                         )
                     }

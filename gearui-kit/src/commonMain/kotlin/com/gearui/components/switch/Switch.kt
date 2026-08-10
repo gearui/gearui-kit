@@ -19,6 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Switch 尺寸枚举
@@ -142,7 +143,7 @@ fun Switch(
                     // 图标类型：显示勾/叉
                     Icon(
                         name = if (checked) Icons.check else Icons.close,
-                        size = 12.dp,
+                        size = IconSizes.Default.xs,
                         tint = thumbContentColor
                     )
                 }
@@ -150,7 +151,7 @@ fun Switch(
                     // 加载类型：显示加载指示器
                     Icon(
                         name = Icons.autorenew,
-                        size = 12.dp,
+                        size = IconSizes.Default.xs,
                         tint = thumbContentColor
                     )
                 }

@@ -49,6 +49,9 @@ jobs:
       - name: Hardcoded border width guard (stroke scale)
         run: ./scripts/ci/check_component_hardcoded_border.sh
 
+      - name: Hardcoded icon size guard (icon scale)
+        run: ./scripts/ci/check_component_hardcoded_icon_size.sh
+
       - name: Hardcoded spacing guard (components)
         run: ./scripts/ci/check_component_hardcoded_spacing.sh
 

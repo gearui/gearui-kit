@@ -7,10 +7,22 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
- * Field size tokens — shared by every input-like trigger: Input, SearchBar,
- * DatePickerInput, Select, Cascader, TreeSelect.
+ * Field size tokens — shared by every input-like trigger.
+ *
+ * The family splits in two, and the split decides the API surface:
+ *
+ *  - **Form fields** — Input, Textarea, Select, MultiSelect, Cascader,
+ *    TreeSelect, DatePickerInput, TimePickerInput. They hold a value that can
+ *    be validated, so they take `enabled: Boolean = true` *and*
+ *    `error: String? = null`.
+ *  - **Search fields** — SearchBar. It takes `enabled` but deliberately no
+ *    `error`: there is no value to validate, and giving it one would widen the
+ *    API to make two different things look alike.
+ *
+ * Geometry below is shared by both.
  *
  * These all used to size themselves independently, and had drifted: most sat
  * at 40dp with a 4dp radius, Input at 40dp with 6dp, and Select at 44dp with
@@ -71,13 +83,13 @@ object FieldDefaults {
      * Size of the trailing affordance on a field trigger — the chevron on
      * Select/Cascader/TreeSelect, the calendar and clock on the pickers.
      *
-     * 16dp is what the family already converged on, but it is not a step in
-     * [com.gearui.foundation.typography.IconSizes] (14/18/24), so it lived as
-     * a literal in seven places. Naming it here keeps the family in agreement
-     * without inventing a new step in the icon scale; reconciling IconSizes
-     * with real usage is a separate question.
+     * This is now just `IconSizes.Default.md`. It briefly needed its own
+     * literal because the icon scale was 14/18/24 and had no 16dp step, even
+     * though the whole family had settled on 16; the scale has since been
+     * reconciled with actual usage. The alias stays because "the field
+     * family's trailing icon" is the thing call sites mean.
      */
-    val trailingIconSize: Dp = 16.dp
+    val trailingIconSize: Dp = IconSizes.Default.md
 
     /** Default trigger shape for input-like controls (`Shapes.md`, 6dp). */
     val shape: Shape

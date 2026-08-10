@@ -32,6 +32,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 data class BottomNavItem(
     val id: String,
@@ -157,7 +158,7 @@ fun BottomNavBar(
                             content = {
                                 Icon(
                                     name = iconName,
-                                    size = 24.dp,
+                                    size = IconSizes.Default.xl,
                                     tint = contentColor
                                 )
                                 when {

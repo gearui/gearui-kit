@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * ImageViewerState - 图片预览器状态
@@ -179,7 +180,7 @@ fun ImageViewer(
                         ) {
                             Icon(
                                 name = Icons.image,
-                                size = 36.dp,
+                                size = IconSizes.Display.md,
                                 tint = Color.White.copy(alpha = 0.5f)
                             )
                             Spacer(modifier = Modifier.height(Spacing.lg))
@@ -218,7 +219,7 @@ fun ImageViewer(
                 ) {
                     Icon(
                         name = Icons.close,
-                        size = 18.dp,
+                        size = IconSizes.Default.lg,
                         tint = Color.White
                     )
                 }
@@ -267,7 +268,7 @@ fun ImageViewer(
                 ) {
                     Icon(
                         name = Icons.delete,
-                        size = 18.dp,
+                        size = IconSizes.Default.lg,
                         tint = Color.White
                     )
                 }

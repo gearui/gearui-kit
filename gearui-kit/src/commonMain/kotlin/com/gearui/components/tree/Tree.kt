@@ -15,6 +15,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Tree node data
@@ -293,7 +294,7 @@ private fun TreeNodeView(
             if (hasChildren) {
                 Icon(
                     name = if (isExpanded) Icons.keyboard_arrow_down else Icons.chevron_right,
-                    size = 16.dp,
+                    size = IconSizes.Default.md,
                     tint = if (node.disabled) colors.mutedForeground else colors.mutedForeground,
                     modifier = Modifier.width(16.dp)
                 )

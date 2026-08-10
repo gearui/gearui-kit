@@ -23,6 +23,7 @@ import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Swiper navigation type - 指示器类型
@@ -209,7 +210,7 @@ fun Swiper(
                         ) {
                             Icon(
                                 name = Icons.chevron_left,
-                                size = 18.dp,
+                                size = IconSizes.Default.lg,
                                 tint = colors.foreground
                             )
                         }
@@ -234,7 +235,7 @@ fun Swiper(
                         ) {
                             Icon(
                                 name = Icons.chevron_right,
-                                size = 18.dp,
+                                size = IconSizes.Default.lg,
                                 tint = colors.foreground
                             )
                         }

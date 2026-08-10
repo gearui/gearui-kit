@@ -36,6 +36,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.field.fieldBorderColor
 import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -505,7 +506,7 @@ private fun <T> MultiSelectDropdownContent(
                         if (isSelected) {
                             Icon(
                                 name = Icons.check,
-                                size = 12.dp,
+                                size = IconSizes.Default.xs,
                                 tint = colors.primaryForeground
                             )
                         }

@@ -199,7 +199,7 @@ fun ImageWithState(
                     ) {
                         Icon(
                             name = Icons.close,
-                            size = 20.dp,
+                            size = IconSizes.Default.lg,
                             tint = colors.destructive
                         )
                         Spacer(modifier = Modifier.height(Spacing.xs))
@@ -348,7 +348,7 @@ fun ImagePlaceholder(
             if (icon == null) {
                 Icon(
                     name = Icons.image,
-                    size = IconSizes.Default.large,
+                    size = IconSizes.Default.xl,
                     tint = colors.mutedForeground
                 )
             } else {

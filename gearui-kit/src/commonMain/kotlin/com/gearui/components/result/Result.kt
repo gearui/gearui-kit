@@ -17,6 +17,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Result status type
@@ -84,7 +85,7 @@ fun Result(
         if (displayIconName != null) {
             Icon(
                 name = displayIconName,
-                size = 40.dp,
+                size = IconSizes.Display.lg,
                 tint = iconColor
             )
         } else {

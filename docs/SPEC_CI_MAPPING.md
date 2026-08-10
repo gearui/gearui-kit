@@ -223,6 +223,24 @@ SPEC 映射：
 - 顺带清掉两处字符串哨兵（Rate 的 `"★"/"☆"`、Image 的 `"📷"`）：它们从不上屏，
   只是"用内置图标"的暗号，改成 `null` 后语义自明。
 
+15. 图标尺寸标度护栏（P0，硬门禁）
+SPEC 映射：
+- 4.1 Token 治理（IconSizes 标度）
+
+实现：
+- 脚本：`scripts/ci/check_component_hardcoded_icon_size.sh`
+- 标度：`foundation/typography/IconTokens.kt`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0。`IconSizes.Default.{xs,sm,md,lg,xl}` = 12/14/16/18/24（行内图标），
+  `IconSizes.Display.{sm,md,lg}` = 28/36/40（空状态/结果页插画）。
+- **标度按实际用法重定**：旧标度 `small/medium/large = 14/18/24` 缺 16dp，
+  而整个 field 家族的尾部箭头都用 16 —— 标度缺了真正需要的档位，被绕过的就是标度本身。
+  IconTokens 的 KDoc 一直写着「禁止硬编码」，实测 37 处里 34 处是字面量。
+- 行内与插画分成两组：两者尺寸区间（12-24 vs 28-40）不重叠，混成一条会让档位失真。
+- `foundation/avatar/AvatarTokens.kt` 豁免：那是头像尺寸，不是图标。
+
 ---
 
 ## 下一批（建议 4 周内完成）

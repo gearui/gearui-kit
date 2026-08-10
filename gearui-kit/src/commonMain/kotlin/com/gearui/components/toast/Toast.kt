@@ -19,6 +19,7 @@ import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Toast 类型
@@ -211,7 +212,7 @@ private fun ToastSurface(toast: ToastData) {
             if (iconName != null) {
                 Icon(
                     name = iconName,
-                    size = 18.dp,
+                    size = IconSizes.Default.lg,
                     tint = textColor
                 )
                 Spacer(modifier = Modifier.width(Spacing.sm))

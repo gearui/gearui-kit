@@ -24,6 +24,7 @@ import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Snackbar - 顶部消息提示条
@@ -236,7 +237,7 @@ internal fun SnackbarContent(
             }
             Icon(
                 name = iconName,
-                size = 20.dp,
+                size = IconSizes.Default.lg,
                 tint = iconColor
             )
         }
@@ -266,7 +267,7 @@ internal fun SnackbarContent(
         if (showCloseButton) {
             Icon(
                 name = Icons.close,
-                size = 16.dp,
+                size = IconSizes.Default.md,
                 tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)
             )

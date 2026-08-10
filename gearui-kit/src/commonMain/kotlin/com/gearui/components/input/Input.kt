@@ -38,6 +38,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * GearUI Input - 100% Theme 驱动
@@ -354,7 +355,7 @@ fun Input(
                     ) {
                         Icon(
                             name = Icons.close,
-                            size = 12.dp,
+                            size = IconSizes.Default.xs,
                             tint = colors.mutedForeground
                         )
                     }

@@ -14,6 +14,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Cell - 列表单元格组件
@@ -99,7 +100,7 @@ fun Cell(
             Spacer(modifier = Modifier.width(Spacing.sm))
             Icon(
                 name = Icons.chevron_right,
-                size = 16.dp,
+                size = IconSizes.Default.md,
                 tint = colors.mutedForeground
             )
         }

@@ -41,7 +41,7 @@ fun Icon(
     modifier: Modifier = Modifier,
 
     /** 图标尺寸 (使用 Token) */
-    size: Dp = IconSizes.Default.medium,
+    size: Dp = IconSizes.Default.lg,
 
     /** 图标着色 (null = 原色) */
     tint: Color? = null
@@ -65,7 +65,7 @@ fun Icon(
 fun Icon(
     name: String,
     modifier: Modifier = Modifier,
-    size: Dp = IconSizes.Default.medium,
+    size: Dp = IconSizes.Default.lg,
     tint: Color? = null,
     preferSvg: Boolean = false
 ) {

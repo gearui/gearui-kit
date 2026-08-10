@@ -15,6 +15,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * EmptyState - 100% Theme 驱动的空状态组件
@@ -57,7 +58,7 @@ fun EmptyState(
             // 默认空状态图标
             Icon(
                 name = Icons.image,
-                size = 28.dp,
+                size = IconSizes.Display.sm,
                 tint = colors.mutedForeground
             )
             Spacer(modifier = Modifier.height(Spacing.lg))
@@ -132,7 +133,7 @@ fun EmptyStatePreset(
         icon = {
             Icon(
                 name = iconName,
-                size = 28.dp,
+                size = IconSizes.Display.sm,
                 tint = colors.mutedForeground
             )
         },

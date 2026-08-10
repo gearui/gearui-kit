@@ -24,6 +24,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 data class Tab(
     val id: String,
@@ -174,7 +175,7 @@ private fun TabCell(
             if (item.icon != null) {
                 Icon(
                     name = item.icon,
-                    size = 16.dp,
+                    size = IconSizes.Default.md,
                     tint = contentColor
                 )
             }

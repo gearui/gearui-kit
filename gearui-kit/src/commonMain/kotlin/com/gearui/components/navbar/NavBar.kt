@@ -18,6 +18,7 @@ import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * NavBar - 导航栏组件
@@ -293,7 +294,7 @@ private fun NavBarIconButton(
         if (icon in Icons.all) {
             Icon(
                 name = icon,
-                size = 24.dp,
+                size = IconSizes.Default.xl,
                 tint = iconColor
             )
         } else {

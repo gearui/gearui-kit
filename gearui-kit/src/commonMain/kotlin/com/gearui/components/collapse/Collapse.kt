@@ -17,6 +17,7 @@ import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * 折叠面板样式
@@ -177,7 +178,7 @@ private fun CollapsePanelItem(
 
                 Icon(
                     name = Icons.keyboard_arrow_down,
-                    size = 16.dp,
+                    size = IconSizes.Default.md,
                     tint = colors.mutedForeground,
                     modifier = Modifier.rotate(rotation)
                 )
@@ -242,7 +243,7 @@ fun CollapseItem(
 
             Icon(
                 name = Icons.keyboard_arrow_down,
-                size = 16.dp,
+                size = IconSizes.Default.md,
                 tint = if (enabled) colors.mutedForeground else colors.mutedForeground,
                 modifier = Modifier.rotate(rotation)
             )

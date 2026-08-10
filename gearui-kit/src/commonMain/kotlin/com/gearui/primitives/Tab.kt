@@ -15,6 +15,7 @@ import com.gearui.foundation.tab.TabSizeTokens
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Tab - 100% Theme 驱动的导航选择器单元
@@ -66,7 +67,7 @@ fun Tab(
                 if (icon != null) {
                     Icon(
                         painter = icon,
-                        size = 18.dp
+                        size = IconSizes.Default.lg
                     )
                 }
 

@@ -36,6 +36,7 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 data class NavigationMenuItem(
     val id: String,
@@ -177,7 +178,7 @@ fun NavigationMenu(
                     if (hasPopup) {
                         Icon(
                             name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
-                            size = 16.dp,
+                            size = IconSizes.Default.md,
                             tint = textColor
                         )
                     }

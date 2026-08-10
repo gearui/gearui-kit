@@ -19,6 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Step item data
@@ -310,7 +311,7 @@ private fun StepIcon(
                 StepStatus.FINISH -> {
                     Icon(
                         name = Icons.check,
-                        size = 14.dp,
+                        size = IconSizes.Default.sm,
                         tint = contentColor
                     )
                 }
@@ -318,7 +319,7 @@ private fun StepIcon(
                 StepStatus.ERROR -> {
                     Icon(
                         name = Icons.close,
-                        size = 14.dp,
+                        size = IconSizes.Default.sm,
                         tint = contentColor
                     )
                 }

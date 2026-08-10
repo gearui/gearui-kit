@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Notification - 顶部通知卡片组件
@@ -174,7 +175,7 @@ internal fun NotificationContent(
         } else {
             Icon(
                 name = iconName,
-                size = 20.dp,
+                size = IconSizes.Default.lg,
                 tint = iconColor
             )
         }
@@ -214,7 +215,7 @@ internal fun NotificationContent(
         if (closable) {
             Icon(
                 name = Icons.close,
-                size = 18.dp,
+                size = IconSizes.Default.lg,
                 tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)
             )

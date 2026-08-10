@@ -22,6 +22,7 @@ import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * 日期数据类
@@ -226,7 +227,7 @@ private fun CalendarHeader(
         ) {
             Icon(
                 name = Icons.chevron_left,
-                size = 18.dp,
+                size = IconSizes.Default.lg,
                 tint = colors.foreground
             )
         }
@@ -248,7 +249,7 @@ private fun CalendarHeader(
         ) {
             Icon(
                 name = Icons.chevron_right,
-                size = 18.dp,
+                size = IconSizes.Default.lg,
                 tint = colors.foreground
             )
         }

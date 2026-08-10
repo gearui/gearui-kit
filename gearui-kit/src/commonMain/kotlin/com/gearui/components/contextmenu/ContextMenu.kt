@@ -44,6 +44,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * Context menu action model.
@@ -157,7 +158,7 @@ fun ContextMenu(
                             if (item.icon != null) {
                                 Icon(
                                     name = item.icon,
-                                    size = 18.dp,
+                                    size = IconSizes.Default.lg,
                                     tint = itemColor,
                                 )
                                 Spacer(Modifier.width(10.dp))

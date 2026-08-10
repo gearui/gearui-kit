@@ -20,6 +20,7 @@ import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.typography.IconSizes
 
 /**
  * CalendarPopup - 日历弹出层组件
@@ -124,7 +125,7 @@ fun CalendarPopup(
                 ) {
                     Icon(
                         name = Icons.close,
-                        size = 16.dp,
+                        size = IconSizes.Default.md,
                         tint = colors.mutedForeground
                     )
                 }

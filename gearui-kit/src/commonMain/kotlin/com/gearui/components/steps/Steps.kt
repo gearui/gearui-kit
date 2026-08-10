@@ -18,6 +18,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Step item data
@@ -180,7 +181,7 @@ private fun HorizontalSteps(
                     Box(
                         modifier = Modifier
                             .weight(0.5f)
-                            .height(2.dp)
+                            .height(BorderWidth.thick)
                             .background(
                                 if (index < current) colors.success
                                 else colors.border
@@ -227,7 +228,7 @@ private fun VerticalSteps(
                     if (index < items.size - 1) {
                         Box(
                             modifier = Modifier
-                                .width(2.dp)
+                                .width(BorderWidth.thick)
                                 .height(48.dp)
                                 .background(
                                     if (index < current) colors.success
@@ -299,7 +300,7 @@ private fun StepIcon(
             .background(backgroundColor)
             .then(
                 if (status == StepStatus.WAITING && theme != StepsTheme.DOT) {
-                    Modifier.border(2.dp, colors.border, CircleShape)
+                    Modifier.border(BorderWidth.thick, colors.border, CircleShape)
                 } else Modifier
             ),
         contentAlignment = Alignment.Center

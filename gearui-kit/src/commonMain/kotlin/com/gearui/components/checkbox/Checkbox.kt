@@ -17,6 +17,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Checkbox - 100% Theme 驱动的复选框组件
@@ -78,7 +79,7 @@ fun Checkbox(
             .size(boxSize)
             .clip(shapes.sm)
             .background(backgroundColor)
-            .border(1.5.dp, borderColor, shapes.sm)
+            .border(BorderWidth.thin, borderColor, shapes.sm)
             .then(
                 if (enabled) {
                     Modifier.clickable { onCheckedChange(!checked) }

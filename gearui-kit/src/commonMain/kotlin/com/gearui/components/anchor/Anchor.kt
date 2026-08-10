@@ -12,6 +12,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Anchor link item
@@ -89,7 +90,7 @@ private fun AnchorLink(
         // Active indicator
         Box(
             modifier = Modifier
-                .width(2.dp)
+                .width(BorderWidth.thick)
                 .height(16.dp)
                 .background(
                     if (isActive) colors.primary

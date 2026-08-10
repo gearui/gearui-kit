@@ -3801,6 +3801,17 @@ final object com.gearui.foundation.badge/BadgeSizeTokens { // com.gearui.foundat
         final fun <get-Small>(): com.gearui.foundation.badge/BadgeTokens // com.gearui.foundation.badge/BadgeSizeTokens.Small.<get-Small>|<get-Small>(){}[0]
 }
 
+final object com.gearui.foundation.border/BorderWidth { // com.gearui.foundation.border/BorderWidth|null[0]
+    final val hairline // com.gearui.foundation.border/BorderWidth.hairline|{}hairline[0]
+        final fun <get-hairline>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.border/BorderWidth.hairline.<get-hairline>|<get-hairline>(){}[0]
+    final val none // com.gearui.foundation.border/BorderWidth.none|{}none[0]
+        final fun <get-none>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.border/BorderWidth.none.<get-none>|<get-none>(){}[0]
+    final val thick // com.gearui.foundation.border/BorderWidth.thick|{}thick[0]
+        final fun <get-thick>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.border/BorderWidth.thick.<get-thick>|<get-thick>(){}[0]
+    final val thin // com.gearui.foundation.border/BorderWidth.thin|{}thin[0]
+        final fun <get-thin>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.border/BorderWidth.thin.<get-thin>|<get-thin>(){}[0]
+}
+
 final object com.gearui.foundation.elevation/Elevation { // com.gearui.foundation.elevation/Elevation|null[0]
     final val floating // com.gearui.foundation.elevation/Elevation.floating|{}floating[0]
         final fun <get-floating>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.elevation/Elevation.floating.<get-floating>|<get-floating>(){}[0]
@@ -4374,6 +4385,7 @@ final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTo
 final val com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop|#static{}com_gearui_foundation_avatar_AvatarTokens$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeSizeTokens$stableprop[0]
 final val com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop|#static{}com_gearui_foundation_badge_BadgeTokens$stableprop[0]
+final val com.gearui.foundation.border/com_gearui_foundation_border_BorderWidth$stableprop // com.gearui.foundation.border/com_gearui_foundation_border_BorderWidth$stableprop|#static{}com_gearui_foundation_border_BorderWidth$stableprop[0]
 final val com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop // com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop|#static{}com_gearui_foundation_elevation_Elevation$stableprop[0]
 final val com.gearui.foundation.field/com_gearui_foundation_field_FieldDefaults$stableprop // com.gearui.foundation.field/com_gearui_foundation_field_FieldDefaults$stableprop|#static{}com_gearui_foundation_field_FieldDefaults$stableprop[0]
 final val com.gearui.foundation.field/com_gearui_foundation_field_FieldSizeTokens$stableprop // com.gearui.foundation.field/com_gearui_foundation_field_FieldSizeTokens$stableprop|#static{}com_gearui_foundation_field_FieldSizeTokens$stableprop[0]
@@ -4783,6 +4795,7 @@ final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarSizeTo
 final fun com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.avatar/com_gearui_foundation_avatar_AvatarTokens$stableprop_getter|com_gearui_foundation_avatar_AvatarTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeSizeTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.badge/com_gearui_foundation_badge_BadgeTokens$stableprop_getter|com_gearui_foundation_badge_BadgeTokens$stableprop_getter(){}[0]
+final fun com.gearui.foundation.border/com_gearui_foundation_border_BorderWidth$stableprop_getter(): kotlin/Int // com.gearui.foundation.border/com_gearui_foundation_border_BorderWidth$stableprop_getter|com_gearui_foundation_border_BorderWidth$stableprop_getter(){}[0]
 final fun com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop_getter(): kotlin/Int // com.gearui.foundation.elevation/com_gearui_foundation_elevation_Elevation$stableprop_getter|com_gearui_foundation_elevation_Elevation$stableprop_getter(){}[0]
 final fun com.gearui.foundation.field/com_gearui_foundation_field_FieldDefaults$stableprop_getter(): kotlin/Int // com.gearui.foundation.field/com_gearui_foundation_field_FieldDefaults$stableprop_getter|com_gearui_foundation_field_FieldDefaults$stableprop_getter(){}[0]
 final fun com.gearui.foundation.field/com_gearui_foundation_field_FieldSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.field/com_gearui_foundation_field_FieldSizeTokens$stableprop_getter|com_gearui_foundation_field_FieldSizeTokens$stableprop_getter(){}[0]

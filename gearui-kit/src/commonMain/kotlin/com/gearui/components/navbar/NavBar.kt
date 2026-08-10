@@ -17,6 +17,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * NavBar - 导航栏组件
@@ -259,7 +260,7 @@ fun NavBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
+                    .height(BorderWidth.thin)
                     .background(colors.border)
             )
         }

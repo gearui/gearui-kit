@@ -34,6 +34,7 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * SearchBar - 100% Theme 驱动的搜索栏
@@ -102,7 +103,7 @@ fun SearchBar(
                 .fillMaxHeight()
                 .clip(shapeModifier)
                 .background(if (enabled) colors.surface else colors.muted)
-                .border(1.dp, colors.border, shapeModifier)
+                .border(BorderWidth.thin, colors.border, shapeModifier)
                 .pointerInput(enabled) {
                     if (enabled) {
                         val dragThreshold = 10f

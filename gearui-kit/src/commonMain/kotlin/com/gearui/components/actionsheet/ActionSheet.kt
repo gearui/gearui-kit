@@ -27,6 +27,7 @@ import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * ActionSheet - 动作面板组件
@@ -316,7 +317,7 @@ private fun ActionSheetSurface(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.5.dp)
+                        .height(BorderWidth.hairline)
                         .background(colors.border)
                 )
             }
@@ -537,7 +538,7 @@ private fun ActionSheetListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Spacing.lg)
-                    .height(0.5.dp)
+                    .height(BorderWidth.hairline)
                     .background(colors.border)
             )
         }

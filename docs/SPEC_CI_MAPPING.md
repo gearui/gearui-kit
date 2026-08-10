@@ -171,6 +171,24 @@ SPEC 映射：
   编译通过、肉眼也对，但间距标度一调就会把阴影一起带偏。
 - border-first：Card/Cell/输入框保持无阴影，只有浮层可以有 elevation。
 
+12. 描边宽度标度护栏（P0，硬门禁）
+SPEC 映射：
+- 4.1 Token 治理（BorderWidth 三档标度）
+- 11.1 REJECT / 2. Token 与样式
+
+实现：
+- 脚本：`scripts/ci/check_component_hardcoded_border.sh`
+- 标度：`foundation/border/BorderWidth.kt`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- baseline = 0。拦 `.border(<n>.dp` 与 `thickness/borderWidth = <n>.dp`。
+- border-first 设计语言里描边承担层次表达，理应与 Shapes/Elevation/Spacing 一样有命名标度；
+  在此之前是 87 处散落字面量，且已漂移（Radio/Checkbox 用 1.5dp，其余控件用 1dp）。
+- 分隔线的 `height/width` **不拦**：1dp 高的 Box 与 1dp 高的留白在文本扫描下无法区分，
+  猜错的两种代价（误报布局代码 / 放过真描边）都不可接受，交给评审。
+- 禁止新增焦点态档位（会导致内容盒尺寸变化 → 布局跳动）。
+
 ---
 
 ## 下一批（建议 4 周内完成）

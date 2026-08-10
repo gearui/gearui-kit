@@ -13,6 +13,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * SegmentedControl - 100% Theme 驱动的分段控制器
@@ -45,7 +46,7 @@ fun <T> SegmentedControl(
             .height(36.dp)
             .clip(Theme.shapes.lg)
             .background(colors.surface)
-            .border(1.dp, colors.border, Theme.shapes.lg)
+            .border(BorderWidth.thin, colors.border, Theme.shapes.lg)
             .padding(2.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
@@ -99,7 +100,7 @@ fun <T> IconSegmentedControl(
             .height(40.dp)
             .clip(Theme.shapes.lg)
             .background(colors.surface)
-            .border(1.dp, colors.border, Theme.shapes.lg)
+            .border(BorderWidth.thin, colors.border, Theme.shapes.lg)
             .padding(2.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
@@ -125,7 +126,7 @@ fun <T> IconSegmentedControl(
                 ) {
                     if (option.icon != null) {
                         option.icon.invoke()
-                        Spacer(modifier = Modifier.height(2.dp))
+                        Spacer(modifier = Modifier.height(BorderWidth.thick))
                     }
 
                     Text(

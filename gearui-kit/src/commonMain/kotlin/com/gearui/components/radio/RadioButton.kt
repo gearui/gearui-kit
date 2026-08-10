@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.material3.Text
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * RadioButton - 100% Theme 驱动的单选按钮组件
@@ -65,7 +66,7 @@ fun RadioButton(
             .clip(CircleShape)
             // 未选中不做底色填充，避免深色主题出现“黑块”
             .background(Color.Transparent)
-            .border(1.5.dp, borderColor, CircleShape)
+            .border(BorderWidth.thin, borderColor, CircleShape)
             .then(
                 if (enabled) {
                     Modifier.clickable(onClick = onClick)

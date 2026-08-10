@@ -16,6 +16,7 @@ import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Timeline item data
@@ -151,7 +152,7 @@ private fun TimelineItemView(
                     .size(12.dp)
                     .clip(CircleShape)
                     .background(dotColor)
-                    .border(2.dp, colors.surface, CircleShape),
+                    .border(BorderWidth.thick, colors.surface, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 item.icon?.let { icon ->
@@ -167,7 +168,7 @@ private fun TimelineItemView(
             if (!isLast) {
                 Box(
                     modifier = Modifier
-                        .width(2.dp)
+                        .width(BorderWidth.thick)
                         .height(48.dp)
                         .background(colors.border)
                 )
@@ -273,13 +274,13 @@ fun TimelineCustom(
                             .size(12.dp)
                             .clip(CircleShape)
                             .background(dotColor(index))
-                            .border(2.dp, colors.surface, CircleShape)
+                            .border(BorderWidth.thick, colors.surface, CircleShape)
                     )
 
                     if (!isLast) {
                         Box(
                             modifier = Modifier
-                                .width(2.dp)
+                                .width(BorderWidth.thick)
                                 .height(48.dp)
                                 .background(colors.border)
                         )

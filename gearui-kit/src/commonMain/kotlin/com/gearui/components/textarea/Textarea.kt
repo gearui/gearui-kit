@@ -21,6 +21,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * 文本框布局方式
@@ -308,7 +309,7 @@ private fun TextareaInputArea(
                     if (bordered) {
                         Modifier
                             .clip(Theme.shapes.xl)
-                            .border(1.dp, colors.border, Theme.shapes.xl)
+                            .border(BorderWidth.thin, colors.border, Theme.shapes.xl)
                             .background(if (enabled && !readOnly) colors.surface else colors.muted)
                             .padding(Spacing.md)
                     } else {

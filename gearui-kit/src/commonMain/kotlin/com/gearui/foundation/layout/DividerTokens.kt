@@ -2,6 +2,7 @@ package com.gearui.foundation.layout
 
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * DividerTokens - 分割线尺寸 Token
@@ -21,22 +22,22 @@ data class DividerTokens(
  */
 object Dividers {
     val Full = DividerTokens(
-        thickness = 0.5.dp,
-        insetStart = 0.dp,
-        insetEnd = 0.dp
+        thickness = BorderWidth.hairline,
+        insetStart = Spacing.none,
+        insetEnd = Spacing.none
     )
 
     /** 缩进分割线 (列表项) */
     val Inset = DividerTokens(
-        thickness = 0.5.dp,
-        insetStart = 16.dp,
-        insetEnd = 0.dp
+        thickness = BorderWidth.hairline,
+        insetStart = Spacing.lg,
+        insetEnd = Spacing.none
     )
 
-    /** Section 分隔块 (8dp 灰色块) */
+    /** Section 分隔块 (8dp 灰色块)。这里的 thickness 是一段留白高度而非描边，所以走 Spacing。 */
     val Section = DividerTokens(
-        thickness = 8.dp,
-        insetStart = 0.dp,
-        insetEnd = 0.dp
+        thickness = Spacing.sm,
+        insetStart = Spacing.none,
+        insetEnd = Spacing.none
     )
 }

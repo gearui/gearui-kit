@@ -23,6 +23,7 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * DatePicker - 100% Theme 驱动的日期选择器
@@ -198,7 +199,7 @@ private fun DatePickerDialogContent(
                     .weight(1f)
                     .height(40.dp)
                     .clip(shapes.sm)
-                    .border(1.dp, colors.border, shapes.sm)
+                    .border(BorderWidth.thin, colors.border, shapes.sm)
                     .clickable { onCancel() },
                 contentAlignment = Alignment.Center
             ) {
@@ -378,7 +379,7 @@ private fun TimePickerDialogContent(
                     .weight(1f)
                     .height(40.dp)
                     .clip(shapes.sm)
-                    .border(1.dp, colors.border, shapes.sm)
+                    .border(BorderWidth.thin, colors.border, shapes.sm)
                     .clickable { onCancel() },
                 contentAlignment = Alignment.Center
             ) {
@@ -466,7 +467,7 @@ private fun IntPickerColumn(
                 .height(itemHeight)
                 .clip(shapes.md)
                 .background(colors.surface)
-                .border(1.dp, colors.border, shapes.md)
+                .border(BorderWidth.thin, colors.border, shapes.md)
         )
 
         LazyColumn(

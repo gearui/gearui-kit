@@ -33,6 +33,7 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Select - 100% Theme 驱动的下拉选择器
@@ -227,7 +228,7 @@ private fun <T> SelectDropdownContent(
             .shadow(panelShadow, panelShape)
             .clip(panelShape)
             .background(colors.surface, panelShape)
-            .border(1.dp, colors.border, panelShape)
+            .border(BorderWidth.thin, colors.border, panelShape)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -460,7 +461,7 @@ private fun <T> MultiSelectDropdownContent(
             .shadow(panelShadow, panelShape)
             .clip(panelShape)
             .background(colors.surface, panelShape)
-            .border(1.dp, colors.border, panelShape)
+            .border(BorderWidth.thin, colors.border, panelShape)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -502,8 +503,7 @@ private fun <T> MultiSelectDropdownContent(
                         modifier = Modifier
                             .size(18.dp)
                             .clip(Theme.shapes.sm)
-                            .border(
-                                1.dp,
+                            .border(BorderWidth.thin,
                                 if (isSelected) colors.primary else colors.border,
                                 Theme.shapes.sm
                             )

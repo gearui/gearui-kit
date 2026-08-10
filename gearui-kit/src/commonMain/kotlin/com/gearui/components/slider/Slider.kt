@@ -26,6 +26,7 @@ import com.gearui.foundation.layout.Spacing
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Slider 样式类型
@@ -227,8 +228,7 @@ fun Slider(
                             )
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
-                            .border(
-                                width = 1.dp,
+                            .border(width = BorderWidth.thin,
                                 color = if (enabled) colors.border else colors.mutedForeground,
                                 shape = CircleShape
                             )
@@ -622,7 +622,7 @@ fun RangeSlider(
                             .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
-                            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)
+                            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -693,7 +693,7 @@ fun RangeSlider(
                             .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
-                            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, CircleShape)
+                            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {

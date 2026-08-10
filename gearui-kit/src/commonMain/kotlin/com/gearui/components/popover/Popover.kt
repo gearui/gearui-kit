@@ -27,6 +27,7 @@ import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * PopoverTheme - 气泡主题
@@ -337,7 +338,7 @@ private fun PopoverBody(
             .shadow(Elevation.raised, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
-            .border(1.dp, borderColor, OverlayDefaults.panelShape)
+            .border(BorderWidth.thin, borderColor, OverlayDefaults.panelShape)
             .padding(horizontal = Spacing.lg, vertical = Spacing.md)
     ) {
         CompositionLocalProvider(
@@ -549,7 +550,7 @@ fun PopoverMenu(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(1.dp)
+                                .height(BorderWidth.thin)
                                 .background(colors.border.copy(alpha = 0.3f))
                         )
                     }

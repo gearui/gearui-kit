@@ -15,6 +15,7 @@ import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Pagination - page number switcher with previous/next controls.
@@ -69,8 +70,7 @@ fun Pagination(
                                 if (selected) colors.primary else colors.surface,
                                 shapes.md
                             )
-                            .border(
-                                width = 1.dp,
+                            .border(width = BorderWidth.thin,
                                 color = if (selected) colors.primary else colors.border,
                                 shape = shapes.md
                             )
@@ -118,7 +118,7 @@ private fun PaginationButton(
                 if (enabled) colors.surface else colors.muted,
                 shapes.md
             )
-            .border(1.dp, colors.border, shapes.md)
+            .border(BorderWidth.thin, colors.border, shapes.md)
             .clickable(enabled = enabled) { onClick() }
             .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         contentAlignment = Alignment.Center

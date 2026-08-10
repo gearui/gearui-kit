@@ -13,6 +13,7 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Stepper - 100% Theme 驱动的步进器
@@ -63,7 +64,7 @@ fun Stepper(
         modifier = modifier
             .height(height)
             .clip(shapes.md)
-            .border(1.dp, if (enabled) colors.border else colors.mutedForeground, shapes.md),
+            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, shapes.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 减少按钮
@@ -88,7 +89,7 @@ fun Stepper(
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(1.dp)
+                .width(BorderWidth.thin)
                 .background(if (enabled) colors.border else colors.mutedForeground)
         )
 
@@ -111,7 +112,7 @@ fun Stepper(
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(1.dp)
+                .width(BorderWidth.thin)
                 .background(if (enabled) colors.border else colors.mutedForeground)
         )
 

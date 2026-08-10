@@ -17,6 +17,7 @@ import com.gearui.foundation.primitives.SurfaceTokens
 import com.gearui.foundation.list.CellDefaults
 import com.gearui.primitives.*
 import com.gearui.theme.Theme
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Cell - 100% Theme 驱动的 List 生态核心交互单元
@@ -56,7 +57,7 @@ internal fun Cell(
     val surfaceTokens = SurfaceTokens(
         height = minHeight,
         radius = 0.dp,  // Cell 通常不需要圆角
-        borderWidth = 0.dp,
+        borderWidth = BorderWidth.none,
         padding = PaddingValues(0.dp)  // Cell 自己控制 padding
     )
 

@@ -28,6 +28,7 @@ import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * DrawerPlacement - 抽屉位置
@@ -308,7 +309,7 @@ private fun DrawerContent(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.5.dp)
+                        .height(BorderWidth.hairline)
                         .background(colors.border)
                 )
             }
@@ -335,7 +336,7 @@ private fun DrawerContent(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.5.dp)
+                        .height(BorderWidth.hairline)
                         .background(colors.border)
                 )
             }
@@ -368,7 +369,7 @@ private fun DrawerContent(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(0.5.dp)
+                        .height(BorderWidth.hairline)
                         .background(colors.border)
                 )
             }
@@ -437,7 +438,7 @@ private fun DrawerListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = if (item.icon != null) 52.dp else 16.dp)
-                    .height(0.5.dp)
+                    .height(BorderWidth.hairline)
                     .background(colors.border)
             )
         }

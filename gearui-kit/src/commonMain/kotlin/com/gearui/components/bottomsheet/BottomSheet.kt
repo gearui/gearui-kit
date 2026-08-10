@@ -25,6 +25,7 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * BottomSheet - 基于 Overlay 系统的底部动作面板
@@ -298,7 +299,7 @@ private fun BottomSheetItemRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Spacing.lg)
-                    .height(0.5.dp)
+                    .height(BorderWidth.hairline)
                     .background(colors.border)
             )
         }

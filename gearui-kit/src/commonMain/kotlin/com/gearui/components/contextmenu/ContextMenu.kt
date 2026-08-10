@@ -43,6 +43,7 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Context menu action model.
@@ -113,7 +114,7 @@ fun ContextMenu(
                         .shadow(Elevation.raised, OverlayDefaults.panelShape)
                         .clip(OverlayDefaults.panelShape)
                         .background(colors.surface)
-                        .border(1.dp, colors.border, OverlayDefaults.panelShape)
+                        .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
                         .padding(Spacing.xs)
                 ) {
                     items.forEachIndexed { index, item ->

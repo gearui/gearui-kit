@@ -25,6 +25,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Image fit mode
@@ -336,7 +337,7 @@ fun ImagePlaceholder(
     Box(
         modifier = modifier
             .background(colors.muted)
-            .border(1.dp, colors.border),
+            .border(BorderWidth.thin, colors.border),
         contentAlignment = Alignment.Center
     ) {
         Column(

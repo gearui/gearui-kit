@@ -22,6 +22,7 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Tour step data
@@ -207,7 +208,7 @@ private fun TourContent(
                         onClick = onSkip
                     )
                 } else {
-                    Spacer(modifier = Modifier.width(1.dp))
+                    Spacer(modifier = Modifier.width(BorderWidth.thin))
                 }
 
                 // Navigation buttons

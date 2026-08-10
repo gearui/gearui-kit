@@ -31,6 +31,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
 
 data class BottomNavItem(
     val id: String,
@@ -104,7 +105,7 @@ fun BottomNavBar(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(1.dp)
+                        .height(BorderWidth.thin)
                         .background(colors.border)
                 )
             }
@@ -189,7 +190,7 @@ fun BottomNavBar(
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(2.dp))
+                        Spacer(modifier = Modifier.height(BorderWidth.thick))
 
                         Text(
                             text = item.label,

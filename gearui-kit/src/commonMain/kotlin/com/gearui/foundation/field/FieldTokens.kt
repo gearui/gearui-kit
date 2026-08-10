@@ -6,6 +6,7 @@ import com.gearui.theme.Theme
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Field size tokens — shared by every input-like trigger: Input, SearchBar,
@@ -49,19 +50,19 @@ object FieldSizeTokens {
     val Large = FieldTokens(
         height = 48.dp,
         paddingHorizontal = Spacing.lg,
-        borderWidth = 1.dp,
+        borderWidth = BorderWidth.thin,
     )
 
     val Medium = FieldTokens(
         height = 40.dp,
         paddingHorizontal = Spacing.md,
-        borderWidth = 1.dp,
+        borderWidth = BorderWidth.thin,
     )
 
     val Small = FieldTokens(
         height = 32.dp,
         paddingHorizontal = Spacing.sm,
-        borderWidth = 1.dp,
+        borderWidth = BorderWidth.thin,
     )
 }
 

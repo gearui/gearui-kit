@@ -19,6 +19,7 @@ import com.gearui.foundation.interaction.*
 import com.gearui.theme.Theme
 import com.gearui.foundation.tag.TagSizeTokens
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Tag - 100% Theme 驱动的标签组件
@@ -125,7 +126,7 @@ fun Tag(
             .background(finalBackgroundColor)
             .then(
                 if (variant == TagVariant.OUTLINE && interactionSource.currentState.isInteractive) {
-                    Modifier.border(1.dp, borderColor, shape)
+                    Modifier.border(BorderWidth.thin, borderColor, shape)
                 } else Modifier
             )
             .then(

@@ -23,6 +23,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * BackTop 样式
@@ -121,7 +122,7 @@ fun BackTop(
                         .size(circleSize)
                         .clip(CircleShape)
                         .background(backgroundColor)
-                        .border(1.dp, borderColor, CircleShape)
+                        .border(BorderWidth.thin, borderColor, CircleShape)
                         .clickable(onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {
@@ -169,7 +170,7 @@ fun BackTop(
                         .height(halfCircleHeight)
                         .clip(halfCircleShape)
                         .background(backgroundColor)
-                        .border(1.dp, borderColor, halfCircleShape)
+                        .border(BorderWidth.thin, borderColor, halfCircleShape)
                         .clickable(onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {
@@ -241,7 +242,7 @@ fun BackTopCustom(
                 .shadow(Elevation.raised, Theme.shapes.lg)
                 .clip(Theme.shapes.lg)
                 .background(backgroundColor)
-                .border(1.dp, borderColor, Theme.shapes.lg)
+                .border(BorderWidth.thin, borderColor, Theme.shapes.lg)
                 .clickable(onClick = onClick)
                 .padding(12.dp)
         ) {

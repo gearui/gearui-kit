@@ -20,6 +20,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * 列固定位置
@@ -127,7 +128,7 @@ fun <T> Table(
         modifier = modifier
             .fillMaxWidth()
             .then(
-                if (bordered) Modifier.border(1.dp, colors.border, Theme.shapes.lg)
+                if (bordered) Modifier.border(BorderWidth.thin, colors.border, Theme.shapes.lg)
                 else Modifier
             )
     ) {
@@ -223,7 +224,7 @@ private fun <T> NormalTable(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(0.5.dp)
+            .height(BorderWidth.hairline)
             .background(colors.border)
     )
 
@@ -298,7 +299,7 @@ private fun <T> NormalTable(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(0.5.dp)
+                            .height(BorderWidth.hairline)
                             .background(colors.border)
                     )
                 }
@@ -362,7 +363,7 @@ private fun <T> FixedColumnTable(
                 // 右边框
                 Box(
                     modifier = Modifier
-                        .width(1.dp)
+                        .width(BorderWidth.thin)
                         .fillMaxHeight()
                         .background(colors.border)
                 )
@@ -396,7 +397,7 @@ private fun <T> FixedColumnTable(
                 // 左边框
                 Box(
                     modifier = Modifier
-                        .width(1.dp)
+                        .width(BorderWidth.thin)
                         .fillMaxHeight()
                         .background(colors.border)
                 )
@@ -456,7 +457,7 @@ private fun <T> ColumnContent(
         Box(
             modifier = Modifier
                 .width(colWidth)
-                .height(0.5.dp)
+                .height(BorderWidth.hairline)
                 .background(colors.border)
         )
         // 数据行
@@ -503,7 +504,7 @@ private fun <T> ColumnContent(
                     Box(
                         modifier = Modifier
                             .width(colWidth)
-                            .height(0.5.dp)
+                            .height(BorderWidth.hairline)
                             .background(colors.border)
                     )
                 }

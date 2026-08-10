@@ -22,6 +22,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Transfer item data
@@ -170,7 +171,7 @@ private fun TransferList(
 
     Column(
         modifier = modifier
-            .border(1.dp, colors.border, Theme.shapes.lg)
+            .border(BorderWidth.thin, colors.border, Theme.shapes.lg)
             .background(colors.surface)
     ) {
         // Header

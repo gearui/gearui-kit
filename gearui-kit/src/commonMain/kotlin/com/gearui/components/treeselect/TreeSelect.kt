@@ -33,6 +33,7 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * TreeSelect - 树形选择器
@@ -106,7 +107,7 @@ fun TreeSelect(
                     .height(dropdownHeight)
                     .shadow(Elevation.floating, OverlayDefaults.panelShape)
                     .background(colors.surface, OverlayDefaults.panelShape)
-                    .border(1.dp, colors.border, OverlayDefaults.panelShape)
+                    .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
                     .padding(Spacing.sm)
             ) {
                 Tree(
@@ -304,7 +305,7 @@ private fun TreeSelectMultipleContent(
             .height(height)
             .shadow(Elevation.floating, OverlayDefaults.panelShape)
             .background(colors.surface, OverlayDefaults.panelShape)
-            .border(1.dp, colors.border, OverlayDefaults.panelShape)
+            .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
             .padding(Spacing.sm)
     ) {
         Tree(

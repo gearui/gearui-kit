@@ -11,6 +11,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * SectionHeader - 100% Theme 驱动的章节头原语
@@ -75,7 +76,7 @@ fun SectionHeader(
                 )
 
                 if (subtitle != null) {
-                    Spacer(Modifier.height(2.dp))
+                    Spacer(Modifier.height(BorderWidth.thick))
                     Text(
                         text = subtitle,
                         style = Typography.Caption,

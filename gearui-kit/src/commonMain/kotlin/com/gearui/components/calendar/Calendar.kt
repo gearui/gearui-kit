@@ -20,6 +20,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * 日期数据类
@@ -115,7 +116,7 @@ fun Calendar(
         modifier = modifier
             .fillMaxWidth()
             .clip(Theme.shapes.lg)
-            .border(1.dp, colors.border, Theme.shapes.lg)
+            .border(BorderWidth.thin, colors.border, Theme.shapes.lg)
             .background(colors.surface)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)

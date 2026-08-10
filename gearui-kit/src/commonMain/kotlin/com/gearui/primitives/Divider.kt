@@ -10,6 +10,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Divider - 100% Theme 驱动的分割线原语
@@ -56,7 +57,7 @@ fun Divider(
  */
 @Composable
 fun DividerFull() = Divider(
-    thickness = 0.5.dp,
+    thickness = BorderWidth.hairline,
     insetStart = 0.dp,
     insetEnd = 0.dp
 )
@@ -66,7 +67,7 @@ fun DividerFull() = Divider(
  */
 @Composable
 fun DividerInset() = Divider(
-    thickness = 0.5.dp,
+    thickness = BorderWidth.hairline,
     insetStart = 16.dp,
     insetEnd = 0.dp
 )

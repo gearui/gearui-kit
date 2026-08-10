@@ -23,6 +23,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
 
 data class Tab(
     val id: String,
@@ -112,7 +113,7 @@ fun Tabs(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
+                    .height(BorderWidth.thin)
                     .background(colors.border)
             )
         }
@@ -145,7 +146,7 @@ private fun TabCell(
         TabsOutlineType.CARD -> Modifier
             .clip(shapes.md)
             .background(if (selected) colors.surface else colors.muted)
-            .border(1.dp, if (selected) colors.border else Color.Transparent, shapes.md)
+            .border(BorderWidth.thin, if (selected) colors.border else Color.Transparent, shapes.md)
     }
 
     Column(
@@ -188,7 +189,7 @@ private fun TabCell(
         if (outlineType == TabsOutlineType.UNDERLINE) {
             Box(
                 modifier = Modifier
-                    .height(2.dp)
+                    .height(BorderWidth.thick)
                     .width(20.dp)
                     .background(if (selected && showIndicator) colors.primary else Color.Transparent)
             )

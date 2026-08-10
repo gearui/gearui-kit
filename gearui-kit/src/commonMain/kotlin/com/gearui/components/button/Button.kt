@@ -20,6 +20,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.border.BorderWidth
 
 /**
  * Button - 100% Theme 驱动
@@ -135,7 +136,7 @@ fun Button(
                 ButtonType.FILL -> Modifier.background(containerColor)
                 ButtonType.OUTLINE -> Modifier
                     .background(Color.Transparent)
-                    .border(1.dp, borderColor, buttonShape)
+                    .border(BorderWidth.thin, borderColor, buttonShape)
                 ButtonType.TEXT -> Modifier.background(Color.Transparent)
                 ButtonType.GHOST -> Modifier.background(Color.Transparent)
             }

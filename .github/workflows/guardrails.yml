@@ -63,3 +63,6 @@ jobs:
 
       - name: Emoji-as-icon guard
         run: ./scripts/ci/check_emoji_as_icon.sh
+
+      - name: State param naming guard (SPEC 6.1)
+        run: ./scripts/ci/check_state_param_naming.sh

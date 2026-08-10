@@ -301,6 +301,17 @@ GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的
 - 参数语义一经公开不得变更含义（即使类型不变）。
 - 同名参数在不同组件中的语义必须一致。
 
+状态参数命名边界：
+- **Field family**（Input / Textarea / Select / MultiSelect / Cascader / TreeSelect /
+  DatePickerInput / TimePickerInput）统一使用 `enabled: Boolean = true` 与
+  `error: String? = null`。Field 是表单值输入/选择控件，默认可交互；错误态是字段
+  校验结果，不应拆成 `errorText`、`status` 或 `disabled` 等局部命名。
+- **SearchBar** 属于搜索入口而不是表单字段，使用 `enabled`，但不提供 `error`。
+- **Action / affordance family**（Button / Tag / SwipeCell action / sheet item 等）可以
+  保留 `disabled: Boolean = false`。这些组件表达的是动作或标签的不可用状态，
+  `disabled` 在按钮生态中是常见且直接的语义；不为追求机械一致性做破坏性改名。
+- 禁止在同一个组件族内同时暴露 `enabled` 与 `disabled` 两套极性相反的参数。
+
 ### 6.2 文档与示例
 
 每个组件文档至少包含：

@@ -255,6 +255,23 @@ SPEC 映射：
 - 行内与插画分成两组：两者尺寸区间（12-24 vs 28-40）不重叠，混成一条会让档位失真。
 - `foundation/avatar/AvatarTokens.kt` 豁免：那是头像尺寸，不是图标。
 
+16. 状态参数命名护栏（P1）
+SPEC 映射：
+- 6.1 API 契约（状态参数命名边界）
+
+实现：
+- 脚本：`scripts/ci/check_state_param_naming.sh`
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- 只拦一条：**同一组件同时暴露 `enabled` 与 `disabled`**（极性相反的两套开关）。
+- 只看函数参数；数据模型的 `val disabled: Boolean` 合法
+  （`SelectOption(disabled = true)` 是某个选项不可选，Select 本身仍 enabled）。
+- **刻意没有**拦 `errorText` / `status` 命名：首轮跑出的 8 处全是误报——
+  Result/Progress/Steps 的 `status` 是显示变体枚举、Image 的 `errorText` 是加载失败说明，
+  都不是字段校验，靠参数名无法区分。首跑全误报的护栏会教人忽略红灯，代价大于它能拦下的漂移。
+  Field 族命名交给 SPEC 6.1 + 编译器 + apiCheck 把关。
+
 ---
 
 ## 下一批（建议 4 周内完成）

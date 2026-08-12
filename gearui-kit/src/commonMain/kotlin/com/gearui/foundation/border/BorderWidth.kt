@@ -4,34 +4,36 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * BorderWidth - 描边宽度规范（Dp 值）
+ * Stroke weight scale (Dp values).
  *
- * GearUI 是 border-first 的设计语言：层次主要靠描边而不是阴影表达（见
- * [com.gearui.foundation.elevation.Elevation]）。既然描边承担了这个角色，它就
- * 该有自己的标度——在这之前 `Shapes` / `Elevation` / `Spacing` 三条轴都有命名档位，
- * 唯独描边宽度是散落的字面量：87 处 `1.dp` / `2.dp` / `0.5.dp`。
+ * GearUI is border-first: hierarchy is carried by outlines rather than shadows
+ * (see [com.gearui.foundation.elevation.Elevation]). Since strokes do that
+ * work, they deserve a scale of their own — before this existed, Shapes,
+ * Elevation and Spacing each had named steps while stroke weight was 87
+ * scattered literals of `1.dp`, `2.dp` and `0.5.dp`.
  *
- * 三档，按视觉重量排序：
+ * Three steps plus zero, ordered by visual weight:
  *
- *   none     = 0dp    — 不描边
- *   hairline = 0.5dp  — 分隔线、表格网格线、Card 的发丝级描边
- *   thin     = 1dp    — 默认描边：输入框、按钮、面板、卡片
- *   thick    = 2dp    — 强调环：Timeline 节点、Steps 步骤点这类需要从背景里挖出来的圆点
+ *   none     = 0dp    — no outline
+ *   hairline = 0.5dp  — dividers, table grid lines, the card outline
+ *   thin     = 1dp    — the default: inputs, buttons, panels, cards
+ *   thick    = 2dp    — emphasis rings: timeline nodes, step markers, the
+ *                       dots that need to be lifted out of their background
  *
- * ⚠️ 焦点态**不要**加档位。输入框的描边宽度必须跨 focus / error 保持恒定，
- * 否则内容盒尺寸变化会导致布局跳动；详见
- * [com.gearui.foundation.field.FieldTokens]。
+ * ⚠️ Do **not** add a focus step. A field's stroke weight must stay constant
+ * across focus and error, or the content box resizes and the layout jumps; see
+ * [com.gearui.foundation.field.FieldTokens].
  */
 object BorderWidth {
-    /** 0dp - 不描边 */
+    /** 0dp - no outline */
     val none: Dp = 0.dp
 
-    /** 0.5dp - 发丝线：分隔线、网格线 */
+    /** 0.5dp - hairline: dividers, grid lines */
     val hairline: Dp = 0.5.dp
 
-    /** 1dp - 默认描边 */
+    /** 1dp - the default outline */
     val thin: Dp = 1.dp
 
-    /** 2dp - 强调环 */
+    /** 2dp - emphasis ring */
     val thick: Dp = 2.dp
 }

@@ -23,7 +23,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * - ❌ 禁止 Spacer(12.dp) / padding(8.dp)
  */
 object Spacing {
-    /** 0dp - 无间距（与 Shapes.none / Elevation.none 对齐，让"没有间距"也有名字） */
+    /** 0dp - no gap. Named for symmetry with Shapes.none and Elevation.none. */
     val none: Dp = 0.dp
 
     /** 4dp - 最小间距 (xs) */

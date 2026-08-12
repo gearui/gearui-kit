@@ -1,17 +1,22 @@
 package com.gearui.i18n
 
-// 文案按语义域拆分为小 data class，避免单类字段爆炸触发 DEX 方法字节码 / 255 参数
-// 上限。门面 [Strings] 用委托 getter 暴露稳定的调用点。新增文案加到对应域即可，
-// 三份语言包（en-US / zh-Hans / zh-Hant）必须同步补齐。
+// Copy is split into small per-domain data classes. A single class with dozens
+// of fields generates enough copy/equals/hashCode/componentN bytecode to
+// approach the DEX method and 255-parameter limits, which surfaces as an
+// Android-only runtime VerifyError on adding one more key. The [Strings] facade
+// exposes delegating getters so call sites stay stable. New copy goes into the
+// matching domain, and all three packs (en-US / zh-Hans / zh-Hant) must be
+// filled in together.
 //
-// 带 `Format` 后缀的字段是模板串，占位符形如 `{count}`，用本文件末尾的 [format]
-// 展开，不要在组件里手工拼接。
+// Fields suffixed `Format` are templates with `{name}` placeholders. Expand
+// them with [formatArgs] at the bottom of this file; never concatenate by hand
+// in a component.
 
 import androidx.compose.runtime.Immutable
 
 // ============================ common ============================
 
-/** 跨组件复用的通用动作与状态文案。 */
+/** Actions and states reused across components. */
 @Immutable
 data class CommonStrings(
     val confirm: String,
@@ -73,7 +78,7 @@ fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
 
 // ============================ theme ============================
 
-/** 主题 / 语言切换面板文案。 */
+/** Theme and language switcher copy. */
 @Immutable
 data class ThemeStrings(
     val theme: String,
@@ -111,12 +116,12 @@ fun ThemeStrings.merge(patch: ThemeStringsPatch?): ThemeStrings {
 
 // ============================ field ============================
 
-/** 输入 / 选择类组件（Select、Cascader、TreeSelect、SearchBar、Switch、Transfer、Table）。 */
+/** Input and selection controls: Select, Cascader, TreeSelect, SearchBar, Switch, Transfer, Table. */
 @Immutable
 data class FieldStrings(
     val selectPlaceholder: String,
     val searchPlaceholder: String,
-    /** 已选数量，占位符 `{count}`。 */
+    /** Selected count; placeholder `{count}`. */
     val selectedCountFormat: String,
     val switchOn: String,
     val switchOff: String,
@@ -162,7 +167,7 @@ fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
 
 // ============================ dateTime ============================
 
-/** 日期 / 时间选择与日历。 */
+/** Date and time pickers, and the calendar. */
 @Immutable
 data class DateTimeStrings(
     val datePlaceholder: String,
@@ -174,9 +179,9 @@ data class DateTimeStrings(
     val daySuffix: String,
     val hourSuffix: String,
     val minuteSuffix: String,
-    /** 日历标题，占位符 `{year}` / `{month}`。 */
+    /** Calendar heading; placeholders `{year}` and `{month}`. */
     val calendarYearMonthFormat: String,
-    /** 星期表头，从周日开始，长度必须为 7。 */
+    /** Weekday headings, starting Sunday. Must have exactly 7 entries. */
     val weekdaysShort: List<String>,
 )
 
@@ -226,7 +231,7 @@ fun DateTimeStrings.merge(patch: DateTimeStringsPatch?): DateTimeStrings {
 
 // ============================ feedback ============================
 
-/** Result / EmptyState / Form 校验等反馈态文案。 */
+/** Feedback states: Result, EmptyState and form validation. */
 @Immutable
 data class FeedbackStrings(
     val notFoundTitle: String,
@@ -310,11 +315,11 @@ fun FeedbackStrings.merge(patch: FeedbackStringsPatch?): FeedbackStrings {
 
 // ============================ media ============================
 
-/** Image / ImageViewer。 */
+/** Image and ImageViewer. */
 @Immutable
 data class MediaStrings(
     val imageEmpty: String,
-    /** 图片序号，占位符 `{index}`。 */
+    /** Image index; placeholder `{index}`. */
     val imageIndexFormat: String,
 )
 
@@ -336,14 +341,14 @@ fun MediaStrings.merge(patch: MediaStringsPatch?): MediaStrings {
 
 // ============================ guide ============================
 
-/** Tour / Rate 等引导与评价类组件。 */
+/** Guidance and rating components: Tour, Rate. */
 @Immutable
 data class GuideStrings(
     val tourSkip: String,
     val tourPrevious: String,
     val tourNext: String,
     val tourFinish: String,
-    /** 评分档位描述，从最低分到最高分，长度必须为 5。 */
+    /** Rating descriptions, lowest to highest. Must have exactly 5 entries. */
     val rateDescriptions: List<String>,
 )
 
@@ -376,10 +381,12 @@ fun GuideStrings.merge(patch: GuideStringsPatch?): GuideStrings {
 // ============================ format ============================
 
 /**
- * 展开模板串里的 `{name}` 占位符。未提供的占位符原样保留，方便定位漏配。
+ * Expands `{name}` placeholders in a template. Unsupplied placeholders are left
+ * as-is so a missing argument is visible rather than silently blank.
  *
- * 刻意不叫 `format`：Android(JVM) 上 stdlib 有 `String.format(vararg Any?)`，
- * 而 `Pair` 也是 `Any?`，同名会在 JVM target 上产生重载歧义。
+ * Deliberately not named `format`: on the Android (JVM) target the stdlib has
+ * `String.format(vararg Any?)`, and `Pair` is an `Any?`, so the same name would
+ * make the two overloads ambiguous there.
  */
 fun String.formatArgs(vararg args: Pair<String, Any?>): String {
     var out = this

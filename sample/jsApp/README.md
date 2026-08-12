@@ -1,5 +1,7 @@
 # GearUI Sample — Web (H5) host
 
+[English](./README.md) | [简体中文](./README.zh-Hans.md)
+
 Runs the GearUI sample in a browser through KuiklyUI's web renderer. Adapted
 from the official `h5App` template in the KuiklyUI repository; the host code
 under `src/jsMain/kotlin` is kept close to that template so upstream fixes can

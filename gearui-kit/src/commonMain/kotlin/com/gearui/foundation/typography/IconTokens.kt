@@ -4,22 +4,28 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * IconTokens - 图标尺寸标度
+ * Icon size scale.
  *
- * 五档全部来自实际用法，不是拍脑袋定的：统计组件层 34 处图标尺寸，
- * 18dp 用了 10 次、16dp 8 次、12dp 5 次、24dp 与 14dp 各 2 次。
+ * All five steps come from measured usage rather than from taste: across the
+ * component layer's 34 icon sizes, 18dp appeared 10 times, 16dp 8 times, 12dp
+ * 5 times, and 24dp and 14dp twice each.
  *
- *   xs = 12dp  — 控件内的微型标记（清除按钮、开关内图标、选中勾）
- *   sm = 14dp  — 密集列表里的次级图标
- *   md = 16dp  — 输入类控件的尾部指示（下拉箭头、日历、时钟）
- *   lg = 18dp  — 与正文并排的默认图标
- *   xl = 24dp  — 导航栏、标签栏等独立图标
+ *   xs = 12dp  — marks inside a control (clear button, switch glyph, checkmark)
+ *   sm = 14dp  — secondary icons in dense lists
+ *   md = 16dp  — trailing affordance on input-like controls (chevron, calendar,
+ *                clock)
+ *   lg = 18dp  — the default icon sitting inline with body text
+ *   xl = 24dp  — standalone icons in nav bars and tab bars
  *
- * 旧标度是 `small/medium/large = 14/18/24`，缺了实际用得最多的 16dp，
- * 于是 field 家族只能各写字面量——标准和用法脱节时，被绕过的是标准。
+ * The previous scale was `small/medium/large = 14/18/24` and had no 16dp step
+ * — the very size the whole field family had settled on — so the family wrote
+ * literals instead. When a scale is missing the value people need, the scale
+ * is what gets bypassed.
  *
- * 插画级图标另开 [IconSizes.Display]：空状态、结果页那种脱离文字流的图形，
- * 尺寸区间（28-40dp）和行内图标不重叠，混进一条标度只会让档位失真。
+ * Illustration icons live separately in [IconSizes.Display]: empty states and
+ * result pages draw figures outside the text flow, and their range (28-40dp)
+ * does not overlap with inline icons. Folding them into one scale would stretch
+ * it until the steps stopped meaning anything.
  */
 data class IconTokens(
     val xs: Dp,
@@ -39,9 +45,11 @@ object IconSizes {
     )
 
     /**
-     * 插画级图标：空状态、结果页、图片查看器的大控件。
+     * Illustration-scale icons: empty states, result pages, the large controls
+     * in the image viewer.
      *
-     * 它们不与文字并排，属于版面元素而非行内图标，所以不共用 [Default] 的档位。
+     * These do not sit beside text — they are layout elements rather than
+     * inline icons, which is why they do not share [Default]'s steps.
      */
     object Display {
         val sm: Dp = 28.dp

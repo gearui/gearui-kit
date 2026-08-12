@@ -1,5 +1,7 @@
 # GearUI Sample — HarmonyOS host
 
+[English](./README.md) | [简体中文](./README.zh-Hans.md)
+
 DevEco Studio project that loads the sample's Kotlin/Native shared library.
 Adapted from `ohosApp` in the KuiklyUI repository.
 

@@ -10,6 +10,11 @@
 - 官网：[https://gearui.com](https://gearui.com)
 - License：BSD 3-Clause License
 
+## 作者信息
+
+- 作者：`zoujiaqing`
+- 邮箱：`zoujiaqing@gmail.com`
+
 ## 快速接入
 
 ### 1. 发布版依赖（推荐）
@@ -118,6 +123,24 @@ private fun MainPageContent() {
 }
 ```
 
+## 平台支持
+
+| 平台 | 库 | Sample | CI |
+|---|---|---|---|
+| Android | ✅ | ✅ | ✅ |
+| iOS | ✅ | ✅ | ✅ |
+| Web (H5) | ✅ | ✅ 76 个演示页中 75 个 | ✅ |
+| 鸿蒙 | ⚠️ 仅脚手架 | ⚠️ 仅脚手架 | — |
+
+Web 走 KuiklyUI 的 web 渲染器；唯一失败的 `Table` 是 sample 自身演示文件的
+Kotlin/JS 部分链接错误，不在组件本身。详见
+[sample/jsApp/README.md](./sample/jsApp/README.md)。
+
+鸿蒙目前是**未经构建的脚手架**。它无法作为常规构建的一个 target：带 `ohosArm64`
+的 KuiklyUI 产物是基于 Kotlin `2.0.21-KBA-010` 发布的，因此鸿蒙使用一套并行构建配置，
+通过 `-c settings.ohos.gradle.kts` 显式驱动。哪些已验证、哪些没有，见
+[sample/ohosApp/README.md](./sample/ohosApp/README.md)。
+
 ## 工程说明
 
 - 组件层位于：`gearui-kit/src/commonMain/kotlin/com/gearui/components`
@@ -134,18 +157,29 @@ private fun MainPageContent() {
 
 - 架构总览：[ARCHITECTURE.md](./ARCHITECTURE.md)
 - 规范入口：[docs/SPEC.md](./docs/SPEC.md)
+- Web 宿主：[sample/jsApp/README.md](./sample/jsApp/README.md)
+- 鸿蒙宿主：[sample/ohosApp/README.md](./sample/ohosApp/README.md)
+
+文档以英文为主，`*.zh-Hans.md` 为对应中文版。**代码注释一律英文**——
+执行该约定的检查见 [docs/SPEC_CI_MAPPING.md](./docs/SPEC_CI_MAPPING.md) 第 18 条。
 
 ## 开发命令
 
 ```bash
-# 编译 Android 目标
+# 分平台编译库
 ./gradlew :gearui-kit:compileDebugKotlinAndroid
-
-# 编译 iOS 目标
 ./gradlew :gearui-kit:compileKotlinIosSimulatorArm64
+./gradlew :gearui-kit:compileKotlinJs
 
-# 运行示例应用（Android）
-./gradlew :sample:installDebug
+# 运行 sample
+./gradlew :sample:installDebug                    # Android
+./gradlew :sample:jsApp:jsBrowserDevelopmentRun   # Web，然后打开 http://localhost:8081/
+
+# 鸿蒙走并行构建配置（尚未构建通过 —— 见 sample/ohosApp/README.md）
+./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
+
+# 架构护栏 —— 共 16 条，全部可本地运行
+for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 
 ## 许可证

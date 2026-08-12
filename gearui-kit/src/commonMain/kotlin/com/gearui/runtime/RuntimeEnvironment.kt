@@ -40,9 +40,10 @@ data class RuntimeEnvironment(
 
 @Immutable
 data class RuntimeFlags(
-    // 1.0 default: page chrome consumes stabilized safe-area through PageScaffold/runtime helpers.
-    // Keep the flag as a rollback switch while host integrations settle, but the legacy path is not
-    // the standard validation model anymore.
+    // 1.0 default: page chrome consumes the stabilised safe area through
+    // PageScaffold and the runtime helpers. The flag stays as a rollback switch
+    // while host integrations settle, but the legacy path is no longer the model
+    // anything is validated against.
     val unifiedSafeAreaPipeline: Boolean = true,
     // Component safe-area consumption policy (runtime-owned, app-wide).
     val navBarConsumesTopSafeArea: Boolean = false,
@@ -163,23 +164,30 @@ fun ProvideRuntimeEnvironment(
 }
 private fun minDp(a: Dp, b: Dp): Dp = if (a <= b) a else b
 
-/** 安全区的四条边。 */
+/** The four edges of the safe area. */
 internal enum class SafeAreaEdge { Top, Bottom, Left, Right }
 
 /**
- * 解析某条边的安全区尺寸，是组件消费 inset 的唯一入口。
+ * Resolves the safe-area inset for one edge. This is the only entry point
+ * through which a component consumes an inset.
  *
- * 在此之前，NavBar / BottomNavBar / Drawer / ActionSheet / BottomSheet 各自抄了同一段
- * 三分支逻辑（选管线 → 查组件 flag → 回退到 configuration），改一次要改五处，而且五处
- * 都得进 safeArea 护栏的白名单。策略收在这里之后，白名单只剩 runtime 与 OverlayHost。
+ * NavBar, BottomNavBar, Drawer, ActionSheet and BottomSheet each used to carry
+ * the same three-branch logic — pick the pipeline, check the component's flag,
+ * fall back to LocalConfiguration. Five copies meant five places to change, and
+ * all five had to sit on the safe-area guard's allowlist. With the policy owned
+ * here, that allowlist is back to the runtime and the overlay host.
  *
- * **只解析，不施加。** padding 加在哪由组件决定，因为这件事各不相同：贴边 sheet 的表面
- * 必须一直画到视口边缘、只把内容内缩（否则 home indicator 处会露出一条遮罩），而
- * Drawer 是整体内缩。把施加动作也收进 Host 会毁掉前者。
+ * **It resolves, it does not apply.** Where the padding goes is the component's
+ * business, because it genuinely differs: an edge-anchored sheet must paint its
+ * surface to the viewport edge and inset only its content, or a strip of scrim
+ * shows through at the home indicator, whereas Drawer wants the whole content
+ * inset. Moving application in here would break the former.
  *
- * @param consume 该组件是否消费这条边（运行时下发的 app 级策略）。
- * @param extra   额外附加量，各分支都会加上。
- * @param minimum 结果下限；sheet 用它保证即使无系统 inset 也留出呼吸空间。
+ * @param consume whether this component consumes this edge (app-wide policy
+ *                supplied by the runtime).
+ * @param extra   added in every branch.
+ * @param minimum floor for the result; sheets use it to keep breathing room
+ *                even when the system reports no inset.
  */
 @Composable
 internal fun rememberSafeAreaInset(
@@ -205,9 +213,10 @@ internal fun rememberSafeAreaInset(
         SafeAreaEdge.Right -> configuration.safeAreaInsets.right.dp
     }
 
-    // 注意：legacy 分支刻意不看 [consume]，这是迁移前的既有行为。
-    // 仅作为宿主集成回滚开关保留；标准路径由 unifiedSafeAreaPipeline=true 驱动，
-    // 组件级消费策略才会真正生效。
+    // The legacy branch deliberately ignores [consume]; that is the pre-migration
+    // behaviour, kept only as a rollback switch for host integrations. The
+    // standard path runs with unifiedSafeAreaPipeline = true, where the
+    // per-component consumption policy actually takes effect.
     val resolved = if (flags.unifiedSafeAreaPipeline) {
         if (consume) stable else 0.dp
     } else {

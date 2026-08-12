@@ -123,6 +123,26 @@ private fun MainPageContent() {
 }
 ```
 
+## Supported Platforms
+
+| Platform | Library | Sample | CI |
+|---|---|---|---|
+| Android | ✅ | ✅ | ✅ |
+| iOS | ✅ | ✅ | ✅ |
+| Web (H5) | ✅ | ✅ 75 of 76 demos | ✅ |
+| HarmonyOS | ⚠️ scaffolding | ⚠️ scaffolding | — |
+
+Web runs through KuiklyUI's web renderer; the one demo that fails is `Table`,
+on a Kotlin/JS partial-linkage error in the sample's own demo file rather than
+in the component. See [sample/jsApp/README.md](./sample/jsApp/README.md).
+
+HarmonyOS is unbuilt scaffolding. It cannot be a target of the normal build:
+the KuiklyUI artifacts carrying `ohosArm64` are published against Kotlin
+`2.0.21-KBA-010`, so ohos uses a parallel build configuration selected with
+`-c settings.ohos.gradle.kts`. See
+[sample/ohosApp/README.md](./sample/ohosApp/README.md) for what is and is not
+verified.
+
 ## Project Notes
 
 - Component layer path: `gearui-kit/src/commonMain/kotlin/com/gearui/components`
@@ -139,18 +159,31 @@ private fun MainPageContent() {
 
 - Architecture overview: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Spec entry: [docs/SPEC.md](./docs/SPEC.md)
+- Web host: [sample/jsApp/README.md](./sample/jsApp/README.md)
+- HarmonyOS host: [sample/ohosApp/README.md](./sample/ohosApp/README.md)
+
+Documentation is written in English first; `*.zh-Hans.md` files are the Chinese
+counterparts. Code comments are English only — see
+[docs/SPEC_CI_MAPPING.md](./docs/SPEC_CI_MAPPING.md) entry 18 for the check
+that enforces it.
 
 ## Development Commands
 
 ```bash
-# Build Android target
+# Build the library per platform
 ./gradlew :gearui-kit:compileDebugKotlinAndroid
-
-# Build iOS target
 ./gradlew :gearui-kit:compileKotlinIosSimulatorArm64
+./gradlew :gearui-kit:compileKotlinJs
 
-# Run sample app (Android)
-./gradlew :sample:installDebug
+# Run the sample
+./gradlew :sample:installDebug                    # Android
+./gradlew :sample:jsApp:jsBrowserDevelopmentRun   # Web, then open http://localhost:8081/
+
+# HarmonyOS uses a parallel build configuration (unbuilt — see sample/ohosApp/README.md)
+./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
+
+# Architecture guardrails — 16 checks, all runnable locally
+for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 
 ## License

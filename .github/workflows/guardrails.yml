@@ -80,3 +80,6 @@ jobs:
 
       - name: State param naming guard (SPEC 6.1)
         run: ./scripts/ci/check_state_param_naming.sh
+
+      - name: English comment guard
+        run: ./scripts/ci/check_english_comments.sh

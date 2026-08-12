@@ -1,0 +1,2 @@
+# 业务 bundle 由 :sample:jsBrowserDevelopmentWebpack 产出后拷入，不入库
+src/jsMain/resources/gearui_sample.js

@@ -21,7 +21,9 @@ object KuiklyRouter {
     // or control via URL param "use_spa=1"
     private const val ENABLE_BY_DEFAULT = false
 
-    private const val DEFAULT_PAGE_NAME = "router"
+    // GearUI 的 sample 只有一个 @Page("MainDemo") 入口，内部自管导航；
+    // 官方模板默认的 "router" 页是 KuiklyUI demo 专有的，这里不存在。
+    private const val DEFAULT_PAGE_NAME = "MainDemo"
     private const val URL_PARAM_USE_SPA = "use_spa"
     private const val URL_PARAM_PAGE_NAME = "page_name"
     private const val PARAM_IS_H5 = "is_H5"

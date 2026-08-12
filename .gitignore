@@ -37,3 +37,4 @@ out/
 
 # Compose
 .compose/
+kotlin-js-store/

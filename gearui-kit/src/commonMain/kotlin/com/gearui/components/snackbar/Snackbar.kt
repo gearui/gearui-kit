@@ -28,32 +28,32 @@ import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
 
 /**
- * Snackbar - 顶部消息提示条
+ * Snackbar - top message bar
  *
- * - 从顶部弹出（默认距顶部 80dp）
- * - 支持四种类型：INFO、SUCCESS、WARNING、ERROR
- * - 自动消失（默认 3 秒）
- * - 可带操作按钮
- * - 可带关闭按钮
- * - 可带图标
+ * - rises from the top (80dp down by default)
+ * - four types: INFO, SUCCESS, WARNING, ERROR
+ * - auto-dismisses (3 seconds by default)
+ * - optional action button
+ * - optional close button
+ * - optional icon
  */
 
 /**
- * SnackbarType - Snackbar 类型/主题
+ * SnackbarType - Snackbar type and theme
  */
 enum class SnackbarType {
-    /** 普通信息 */
+    /** Information */
     INFO,
-    /** 成功 */
+    /** Success */
     SUCCESS,
-    /** 警告 */
+    /** Warning */
     WARNING,
-    /** 错误 */
+    /** Error */
     ERROR
 }
 
 /**
- * Snackbar 数据类
+ * Snackbar data
  */
 data class SnackbarData(
     val message: String,
@@ -67,9 +67,9 @@ data class SnackbarData(
 )
 
 /**
- * SnackbarHostState - Snackbar 状态管理
+ * SnackbarHostState - Snackbar state holder
  *
- * 用于通过 Overlay 系统显示 Snackbar
+ * Shows Snackbars through the overlay system.
  */
 class SnackbarHostState {
     var currentSnackbar by mutableStateOf<SnackbarData?>(null)
@@ -78,7 +78,7 @@ class SnackbarHostState {
     private var currentOverlayId: Long? = null
 
     /**
-     * 显示 Snackbar
+     * Shows a Snackbar
      */
     fun show(
         message: String,
@@ -101,7 +101,7 @@ class SnackbarHostState {
     }
 
     /**
-     * 关闭 Snackbar
+     * Dismisses the Snackbar
      */
     fun dismiss() {
         currentSnackbar?.onDismiss?.invoke()
@@ -114,7 +114,7 @@ class SnackbarHostState {
 }
 
 /**
- * 创建并记住 SnackbarHostState
+ * Creates and remembers a SnackbarHostState
  */
 @Composable
 fun rememberSnackbarHostState(): SnackbarHostState {
@@ -122,18 +122,18 @@ fun rememberSnackbarHostState(): SnackbarHostState {
 }
 
 /**
- * Snackbar 组件 - 顶部消息提示
+ * Snackbar - top message bar
  *
- * @param message 消息内容
- * @param visible 是否可见
- * @param onDismiss 关闭回调
- * @param type 类型（INFO/SUCCESS/WARNING/ERROR）
- * @param action 操作按钮文字
- * @param onActionClick 操作按钮点击回调
- * @param showCloseButton 是否显示关闭按钮
- * @param showIcon 是否显示图标
- * @param duration 自动关闭时间（毫秒），0 表示不自动关闭
- * @param topOffset 距离顶部的距离
+ * @param message message text
+ * @param visible whether it is shown
+ * @param onDismiss dismissal callback
+ * @param type INFO, SUCCESS, WARNING or ERROR
+ * @param action action button label
+ * @param onActionClick action button callback
+ * @param showCloseButton whether to show a close button
+ * @param showIcon whether to show an icon
+ * @param duration auto-dismiss delay in milliseconds; 0 disables it
+ * @param topOffset minimum distance from the top
  */
 @Composable
 fun Snackbar(
@@ -152,7 +152,7 @@ fun Snackbar(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 自动关闭定时器
+    // Auto-dismiss timer
     LaunchedEffect(visible) {
         if (visible && duration > 0) {
             delay(duration)

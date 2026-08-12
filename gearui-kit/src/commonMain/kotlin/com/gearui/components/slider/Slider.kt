@@ -29,7 +29,7 @@ import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Slider 样式类型
+ * Slider style
  */
 enum class SliderStyle {
     NORMAL,   // 普通样式
@@ -37,18 +37,18 @@ enum class SliderStyle {
 }
 
 /**
- * Slider - 滑动选择器
+ * Slider - value selection by dragging
  *
- * 特性：
- * - 单值滑动选择
- * - 左右标签
- * - 自定义范围
- * - 步进值（分段）
- * - 禁用状态
- * - 显示刻度值
- * - 显示当前值
- * - 普通/胶囊样式
- * - 点击轨道跳转
+ * Features:
+ * - single-value selection
+ * - leading and trailing labels
+ * - custom range
+ * - step values (discrete)
+ * - disabled state
+ * - tick labels
+ * - current value readout
+ * - plain or capsule style
+ * - tap the track to jump
  */
 @Composable
 fun Slider(
@@ -81,21 +81,21 @@ fun Slider(
 
     val displayValue = if (isDragging) dragValue else value
 
-    // 计算标准化值 (0-1)
+    // Normalised value (0-1)
     val normalizedValue = ((displayValue - valueRange.start) / (valueRange.endInclusive - valueRange.start))
         .coerceIn(0f, 1f)
 
-    // 轨道参数
+    // Track parameters
     val trackHeight = if (style == SliderStyle.CAPSULE) 24.dp else 4.dp
     val thumbSize = if (style == SliderStyle.CAPSULE) 18.dp else 20.dp
     val thumbRadius = thumbSize / 2
 
-    // 计算有效轨道宽度（减去滑块半径的两边）
+    // Usable track width, minus the thumb radius at each end
     fun getEffectiveWidth(): Float {
         return (sliderSize.width - with(density) { thumbSize.toPx() }).coerceAtLeast(0f)
     }
 
-    // 根据位置计算值
+    // Value for a given position
     fun calculateValue(positionX: Float): Float {
         val effectiveWidth = getEffectiveWidth()
         if (effectiveWidth <= 0) return valueRange.start
@@ -106,7 +106,7 @@ fun Slider(
 
         var newValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * ratio
 
-        // 如果有步进，对齐到最近的步进值
+        // With a step, snap to the nearest step value
         if (steps > 0) {
             val stepSize = (valueRange.endInclusive - valueRange.start) / (steps + 1)
             newValue = (newValue / stepSize).roundToInt() * stepSize
@@ -124,7 +124,7 @@ fun Slider(
         return newValue.coerceIn(valueRange)
     }
 
-    // 格式化显示值
+    // Formatted display value
     fun formatValue(v: Float): String {
         return if (v == v.roundToInt().toFloat()) {
             v.roundToInt().toString()
@@ -135,7 +135,7 @@ fun Slider(
     }
 
     Column(modifier = modifier) {
-        // 显示当前值（在滑块上方）
+        // Current value, shown above the thumb
         if (showThumbValue) {
             Spacer(modifier = Modifier.height(20.dp))
         }
@@ -145,7 +145,7 @@ fun Slider(
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 左侧标签
+            // Leading label
             if (leftLabel != null) {
                 Text(
                     text = leftLabel,
@@ -154,7 +154,7 @@ fun Slider(
                 )
             }
 
-            // 滑块容器
+            // Thumb container
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -175,7 +175,7 @@ fun Slider(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                // 轨道
+                // Track
                 when (style) {
                     SliderStyle.NORMAL -> NormalTrack(
                         normalizedValue = normalizedValue,
@@ -195,7 +195,7 @@ fun Slider(
                     )
                 }
 
-                // 滑块
+                // Thumb
                 val thumbOffsetX = with(density) {
                     val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
                     (effectiveWidth * normalizedValue).toDp()
@@ -206,7 +206,7 @@ fun Slider(
                         .align(Alignment.CenterStart)
                         .offset(x = thumbOffsetX)
                 ) {
-                    // 当前值显示（在滑块上方）
+                    // Current value, shown above the thumb
                     if (showThumbValue) {
                         Text(
                             text = formatValue(displayValue),
@@ -218,7 +218,7 @@ fun Slider(
                         )
                     }
 
-                    // 滑块本体
+                    // The thumb itself
                     Box(
                         modifier = Modifier
                             .size(thumbSize)
@@ -272,7 +272,7 @@ fun Slider(
                 }
             }
 
-            // 右侧标签
+            // Trailing label
             if (rightLabel != null) {
                 Text(
                     text = rightLabel,
@@ -282,7 +282,7 @@ fun Slider(
             }
         }
 
-        // 刻度值显示
+        // Tick labels
         if (showScaleValue && steps > 0) {
             Spacer(modifier = Modifier.height(Spacing.xs))
             Row(
@@ -306,7 +306,7 @@ fun Slider(
 }
 
 /**
- * 普通样式轨道
+ * Plain track
  */
 @Composable
 private fun NormalTrack(
@@ -324,7 +324,7 @@ private fun NormalTrack(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.CenterStart
     ) {
-        // 非激活轨道（背景）
+        // Inactive track (background)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -333,7 +333,7 @@ private fun NormalTrack(
                 .background(if (enabled) colors.muted else colors.muted)
         )
 
-        // 激活轨道
+        // Active track
         Box(
             modifier = Modifier
                 .fillMaxWidth(normalizedValue.coerceAtLeast(0.001f))
@@ -342,7 +342,7 @@ private fun NormalTrack(
                 .background(if (enabled) colors.primary else colors.mutedForeground)
         )
 
-        // 刻度点
+        // Tick marks
         if (steps > 0) {
             Row(
                 modifier = Modifier
@@ -372,7 +372,7 @@ private fun NormalTrack(
 }
 
 /**
- * 胶囊样式轨道
+ * Capsule track
  */
 @Composable
 private fun CapsuleTrack(
@@ -389,7 +389,7 @@ private fun CapsuleTrack(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.CenterStart
     ) {
-        // 非激活轨道（背景）- 胶囊形状
+        // Inactive track (background), capsule shaped
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -398,7 +398,7 @@ private fun CapsuleTrack(
                 .background(if (enabled) colors.muted else colors.muted)
         )
 
-        // 激活轨道 - 内缩一点以留出滑块空间
+        // Active track, inset slightly to leave room for the thumb
         val innerPadding = 3.dp
         Box(
             modifier = Modifier
@@ -412,14 +412,14 @@ private fun CapsuleTrack(
 }
 
 /**
- * RangeSlider - 范围选择滑块
+ * RangeSlider - range selection
  *
- * 特性：
- * - 双滑块范围选择
- * - 左右标签
- * - 自定义范围
- * - 步进值
- * - 禁用状态
+ * Features:
+ * - two thumbs for a range
+ * - leading and trailing labels
+ * - custom range
+ * - step values
+ * - disabled state
  */
 @Composable
 fun RangeSlider(
@@ -454,7 +454,7 @@ fun RangeSlider(
     val displayStart = if (draggingThumb == 0) dragStartValue else values.start
     val displayEnd = if (draggingThumb == 1) dragEndValue else values.endInclusive
 
-    // 计算标准化值
+    // Normalised values
     val startNormalized = ((displayStart - valueRange.start) / (valueRange.endInclusive - valueRange.start))
         .coerceIn(0f, 1f)
     val endNormalized = ((displayEnd - valueRange.start) / (valueRange.endInclusive - valueRange.start))
@@ -464,12 +464,12 @@ fun RangeSlider(
     val thumbRadius = thumbSize / 2
     val trackHeight = 4.dp
 
-    // 计算有效轨道宽度
+    // Usable track width
     fun getEffectiveWidth(): Float {
         return (sliderSize.width - with(density) { thumbSize.toPx() }).coerceAtLeast(0f)
     }
 
-    // 根据位置计算值
+    // Value for a given position
     fun calculateValue(positionX: Float): Float {
         val effectiveWidth = getEffectiveWidth()
         if (effectiveWidth <= 0) return valueRange.start
@@ -488,7 +488,7 @@ fun RangeSlider(
         return newValue.coerceIn(valueRange)
     }
 
-    // 格式化显示值
+    // Formatted display value
     fun formatValue(v: Float): String {
         return if (v == v.roundToInt().toFloat()) {
             v.roundToInt().toString()
@@ -517,7 +517,7 @@ fun RangeSlider(
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 左侧标签
+            // Leading label
             if (leftLabel != null) {
                 Text(
                     text = leftLabel,
@@ -526,7 +526,7 @@ fun RangeSlider(
                 )
             }
 
-            // 滑块容器
+            // Thumb container
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -561,7 +561,7 @@ fun RangeSlider(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                // 轨道背景
+                // Track background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -570,7 +570,7 @@ fun RangeSlider(
                         .background(if (enabled) colors.muted else colors.muted)
                 )
 
-                // 激活轨道（中间部分）
+                // Active track (the span between the thumbs)
                 val thumbRadiusPx = with(density) { thumbRadius.toPx() }
                 val effectiveWidth = getEffectiveWidth()
                 val startCenterPx = thumbRadiusPx + effectiveWidth * startNormalized
@@ -594,7 +594,7 @@ fun RangeSlider(
                     )
                 }
 
-                // 起始滑块
+                // Start thumb
                 val startThumbOffsetX = with(density) {
                     val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
                     (effectiveWidth * startNormalized).toDp()
@@ -665,7 +665,7 @@ fun RangeSlider(
                     )
                 }
 
-                // 结束滑块
+                // End thumb
                 val endThumbOffsetX = with(density) {
                     val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
                     (effectiveWidth * endNormalized).toDp()
@@ -737,7 +737,7 @@ fun RangeSlider(
                 }
             }
 
-            // 右侧标签
+            // Trailing label
             if (rightLabel != null) {
                 Text(
                     text = rightLabel,
@@ -747,7 +747,7 @@ fun RangeSlider(
             }
         }
 
-        // 刻度值显示
+        // Tick labels
         if (showScaleValue && steps > 0) {
             Spacer(modifier = Modifier.height(Spacing.xs))
             Row(

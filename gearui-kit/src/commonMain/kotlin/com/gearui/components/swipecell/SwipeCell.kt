@@ -28,7 +28,7 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /**
- * SwipeCellDirection - 滑动方向
+ * SwipeCellDirection - swipe direction
  */
 enum class SwipeCellDirection {
     LEFT,   // 左滑（显示右侧操作）
@@ -37,7 +37,7 @@ enum class SwipeCellDirection {
 }
 
 /**
- * SwipeCellActionTheme - 操作按钮主题
+ * SwipeCellActionTheme - action button theme
  */
 enum class SwipeCellActionTheme {
     PRIMARY,    // 主要色
@@ -47,7 +47,7 @@ enum class SwipeCellActionTheme {
 }
 
 /**
- * SwipeCellAction - 滑动操作项
+ * SwipeCellAction - one swipe action
  */
 data class SwipeCellAction(
     val label: String,
@@ -59,7 +59,7 @@ data class SwipeCellAction(
 )
 
 /**
- * SwipeCellIconPosition - 图标位置
+ * SwipeCellIconPosition - icon position
  */
 enum class SwipeCellIconPosition {
     LEFT,       // 图标在左边（横向）
@@ -67,7 +67,7 @@ enum class SwipeCellIconPosition {
 }
 
 /**
- * SwipeCellState - SwipeCell 状态管理
+ * SwipeCellState - SwipeCell state holder
  */
 @Stable
 class SwipeCellState internal constructor(
@@ -114,7 +114,7 @@ class SwipeCellState internal constructor(
 }
 
 /**
- * 记住 SwipeCell 状态
+ * Remembers a SwipeCell state
  */
 @Composable
 fun rememberSwipeCellState(
@@ -124,7 +124,7 @@ fun rememberSwipeCellState(
 }
 
 /**
- * SwipeCellGroupState - 管理一组 SwipeCell 的互斥关闭
+ * SwipeCellGroupState - keeps a group of SwipeCells mutually exclusive
  */
 @Stable
 class SwipeCellGroupState {
@@ -153,7 +153,7 @@ class SwipeCellGroupState {
 }
 
 /**
- * 记住 SwipeCell 组状态
+ * Remembers a SwipeCell group state
  */
 @Composable
 fun rememberSwipeCellGroupState(): SwipeCellGroupState {
@@ -161,27 +161,27 @@ fun rememberSwipeCellGroupState(): SwipeCellGroupState {
 }
 
 /**
- * SwipeCell - 滑动单元格组件
+ * SwipeCell - swipeable cell
  *
- * 特性：
- * - 流畅的弹性动画
- * - 支持左滑/右滑操作
- * - 支持单个或多个操作按钮
- * - 按钮高度自动匹配内容高度
- * - 支持组内互斥（打开一个自动关闭其他）
- * - 支持图标+文字
- * - 阻尼感滑动
- * - 通过设计系统 Token 控制样式
+ * Features:
+ * - smooth spring animation
+ * - swipe from either side
+ * - one or several action buttons
+ * - button height follows the content height
+ * - mutual exclusion within a group: opening one closes the others
+ * - icon plus label
+ * - damped swiping
+ * - styled through design system tokens
  *
  * @param modifier Modifier
- * @param state SwipeCell 状态
- * @param groupState 组状态，用于互斥关闭
- * @param leftActions 左侧操作项（右滑显示）
- * @param rightActions 右侧操作项（左滑显示）
- * @param tokens 设计 Token，控制尺寸、间距、动画参数
- * @param disabled 是否禁用滑动
- * @param onChange 滑动状态变化回调
- * @param content 主内容
+ * @param state SwipeCell state
+ * @param groupState group state, for mutual exclusion
+ * @param leftActions actions on the left, revealed by swiping right
+ * @param rightActions actions on the right, revealed by swiping left
+ * @param tokens design tokens controlling size, spacing and animation
+ * @param disabled whether swiping is disabled
+ * @param onChange called when the swipe state changes
+ * @param content the main content
  */
 @Composable
 fun SwipeCell(
@@ -199,20 +199,20 @@ fun SwipeCell(
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
 
-    // 从 Token 获取配置
+    // Read configuration from tokens
     val actionWidthPx = with(density) { tokens.actionWidth.toPx() }
     val openThreshold = tokens.openThreshold
     val velocityThreshold = tokens.velocityThreshold
     val dampingRatio = tokens.dampingRatio
 
-    // 内容区域尺寸
+    // Content size
     var contentSize by remember { mutableStateOf(IntSize.Zero) }
 
-    // 操作区域宽度（像素）
+    // Action area width in pixels
     val leftActionsWidth = leftActions.sumOf { it.flex } * actionWidthPx
     val rightActionsWidth = rightActions.sumOf { it.flex } * actionWidthPx
 
-    // 注册到组
+    // Register with the group
     DisposableEffect(groupState, state) {
         groupState?.register(state)
         onDispose {
@@ -225,7 +225,7 @@ fun SwipeCell(
             .fillMaxWidth()
             .clip(Theme.shapes.none)
     ) {
-        // 左侧操作区域（右滑显示）- 固定在左边
+        // Left actions, revealed by swiping right; pinned to the left
         if (leftActions.isNotEmpty() && state.offsetX.value > 0) {
             Row(
                 modifier = Modifier
@@ -251,7 +251,7 @@ fun SwipeCell(
             }
         }
 
-        // 右侧操作区域（左滑显示）- 固定在右边
+        // Right actions, revealed by swiping left; pinned to the right
         if (rightActions.isNotEmpty() && state.offsetX.value < 0) {
             Row(
                 modifier = Modifier
@@ -277,7 +277,7 @@ fun SwipeCell(
             }
         }
 
-        // 主内容区域
+        // Main content
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -289,7 +289,7 @@ fun SwipeCell(
                         Modifier.pointerInput(state) {
                             detectHorizontalDragGestures(
                                 onDragStart = {
-                                    // 开始拖动时，关闭其他 SwipeCell
+                                    // Close the other SwipeCells when a drag starts
                                     scope.launch {
                                         groupState?.closeOthers(state)
                                     }
@@ -299,9 +299,9 @@ fun SwipeCell(
                                         val currentOffset = state.offsetX.value
                                         val velocity = state.offsetX.velocity
 
-                                        // 根据偏移量和速度判断目标状态
+                                        // Pick the target state from offset and velocity
                                         when {
-                                            // 快速滑动 - 根据速度方向决定
+                                            // Fast swipe: let the direction of the velocity decide
                                             abs(velocity) > velocityThreshold -> {
                                                 if (velocity > 0 && leftActions.isNotEmpty()) {
                                                     state.openLeft(leftActionsWidth)
@@ -314,17 +314,17 @@ fun SwipeCell(
                                                     onChange?.invoke(state.currentDirection, false)
                                                 }
                                             }
-                                            // 左滑超过阈值，展开右侧操作
+                                            // Swiped left past the threshold: open the right actions
                                             currentOffset < -rightActionsWidth * openThreshold && rightActions.isNotEmpty() -> {
                                                 state.openRight(rightActionsWidth)
                                                 onChange?.invoke(SwipeCellDirection.LEFT, true)
                                             }
-                                            // 右滑超过阈值，展开左侧操作
+                                            // Swiped right past the threshold: open the left actions
                                             currentOffset > leftActionsWidth * openThreshold && leftActions.isNotEmpty() -> {
                                                 state.openLeft(leftActionsWidth)
                                                 onChange?.invoke(SwipeCellDirection.RIGHT, true)
                                             }
-                                            // 未超过阈值，收起
+                                            // Below the threshold: close
                                             else -> {
                                                 val previousDirection = state.currentDirection
                                                 state.close()
@@ -342,17 +342,17 @@ fun SwipeCell(
                                     scope.launch {
                                         val newOffset = state.offsetX.value + dragAmount
 
-                                        // 添加阻尼效果：超出范围时减缓滑动
+                                        // Damping: slow the swipe once it leaves the valid range
                                         val dampedOffset = when {
-                                            // 右滑但没有左侧操作 - 添加阻力
+                                            // Swiping right with no left actions: resist
                                             newOffset > 0 && leftActions.isEmpty() -> {
                                                 newOffset * dampingRatio
                                             }
-                                            // 左滑但没有右侧操作 - 添加阻力
+                                            // Swiping left with no right actions: resist
                                             newOffset < 0 && rightActions.isEmpty() -> {
                                                 newOffset * dampingRatio
                                             }
-                                            // 超出最大范围 - 添加阻力
+                                            // Past the maximum: resist
                                             newOffset > leftActionsWidth -> {
                                                 leftActionsWidth + (newOffset - leftActionsWidth) * dampingRatio
                                             }
@@ -378,10 +378,10 @@ fun SwipeCell(
 }
 
 /**
- * SwipeCellActionButton - 滑动操作按钮
+ * SwipeCellActionButton - a swipe action button
  *
- * 颜色使用 Theme.colors 语义色
- * 尺寸使用 SwipeCellTokens
+ * Colours come from Theme.colors semantics, sizes from SwipeCellTokens.
+ *
  */
 @Composable
 private fun SwipeCellActionButton(
@@ -392,9 +392,10 @@ private fun SwipeCellActionButton(
 ) {
     val colors = Theme.colors
 
-    // 从 Theme.colors 获取语义颜色。前景色必须与背景**同主题配对**：
-    // 之前统一用 primaryForeground，暗色主题下它是深色（primary 为浅色），
-    // 落在 destructive 红色背景上文字几乎不可见。
+    // Foreground must be paired with its **own** background from the same theme.
+    // Using primaryForeground for everything meant that in the dark theme it was
+    // a dark colour (primary being light), leaving the label nearly invisible on
+    // the destructive red background.
     val backgroundColor = when (action.theme) {
         SwipeCellActionTheme.PRIMARY -> colors.primary
         SwipeCellActionTheme.DANGER -> colors.destructive
@@ -419,7 +420,7 @@ private fun SwipeCellActionButton(
         contentAlignment = Alignment.Center
     ) {
         if (action.icon != null && action.iconPosition == SwipeCellIconPosition.TOP) {
-            // 纵向排列：图标在上
+            // Vertical: icon above
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -442,7 +443,7 @@ private fun SwipeCellActionButton(
                 }
             }
         } else if (action.icon != null && action.label.isNotEmpty()) {
-            // 横向排列：图标在左
+            // Horizontal: icon to the left
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
@@ -463,7 +464,7 @@ private fun SwipeCellActionButton(
                 )
             }
         } else if (action.icon != null) {
-            // 仅图标
+            // Icon only
             Text(
                 text = action.icon,
                 style = Typography.TitleMedium,
@@ -471,7 +472,7 @@ private fun SwipeCellActionButton(
                 maxLines = 1
             )
         } else {
-            // 仅文字
+            // Label only
             Text(
                 text = action.label,
                 style = Typography.BodyMedium,
@@ -484,8 +485,8 @@ private fun SwipeCellActionButton(
 }
 
 /**
- * SwipeCellGroup - 滑动单元格组
- * 同一组内的 SwipeCell 互斥，打开一个会关闭其他
+ * SwipeCellGroup - a group of swipeable cells.
+ * Cells in a group are mutually exclusive: opening one closes the others.
  */
 @Composable
 fun SwipeCellGroup(

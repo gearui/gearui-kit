@@ -22,7 +22,7 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Toast 类型
+ * Toast type
  */
 enum class ToastType {
     INFO,
@@ -32,7 +32,7 @@ enum class ToastType {
 }
 
 /**
- * Toast 位置
+ * Toast position
  */
 enum class ToastPosition {
     TOP,
@@ -41,7 +41,7 @@ enum class ToastPosition {
 }
 
 /**
- * Toast 数据（内部使用）
+ * Toast data (internal)
  */
 internal data class ToastData(
     val message: String,
@@ -50,33 +50,33 @@ internal data class ToastData(
 )
 
 /**
- * Toast - 全局轻提示
+ * Toast - global lightweight message
  *
- * 特点：
- * - 单例队列管理
- * - 自动消失
- * - 非模态
- * - 顶层显示（基于 Overlay 架构）
+ * Characteristics:
+ * - singleton queue
+ * - auto-dismisses
+ * - non-modal
+ * - drawn on top, through the overlay architecture
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
- * // 在 App 内使用（需要先放置 ToastHost）
- * Toast.show("保存成功")
- * Toast.success("操作成功")
- * Toast.error("操作失败")
- * Toast.warning("请注意")
+ * // inside the app, with a ToastHost already placed
+ * Toast.show("Saved")
+ * Toast.success("Done")
+ * Toast.error("Failed")
+ * Toast.warning("Careful")
  * ```
  */
 object Toast {
 
-    // 当前 Toast（只保留最新一条）
+    // Current toast; only the newest is kept
     internal var current = mutableStateOf<ToastData?>(null)
 
-    // 版本号，用于触发更新
+    // Version counter, used to trigger updates
     internal var version = mutableStateOf(0L)
 
     /**
-     * 显示普通 Toast
+     * Shows a plain toast
      */
     fun show(message: String, duration: Long = 2000L) {
         current.value = ToastData(message, duration, ToastType.INFO)
@@ -84,7 +84,7 @@ object Toast {
     }
 
     /**
-     * 显示成功 Toast
+     * Shows a success toast
      */
     fun success(message: String, duration: Long = 2000L) {
         current.value = ToastData(message, duration, ToastType.SUCCESS)
@@ -92,7 +92,7 @@ object Toast {
     }
 
     /**
-     * 显示错误 Toast
+     * Shows an error toast
      */
     fun error(message: String, duration: Long = 2000L) {
         current.value = ToastData(message, duration, ToastType.ERROR)
@@ -100,7 +100,7 @@ object Toast {
     }
 
     /**
-     * 显示警告 Toast
+     * Shows a warning toast
      */
     fun warning(message: String, duration: Long = 2000L) {
         current.value = ToastData(message, duration, ToastType.WARNING)
@@ -108,7 +108,7 @@ object Toast {
     }
 
     /**
-     * 清空当前 Toast
+     * Clears the current toast
      */
     fun clear() {
         current.value = null
@@ -116,15 +116,15 @@ object Toast {
 }
 
 /**
- * ToastHost - Toast 宿主组件
+ * ToastHost - toast host
  *
- * 必须放在 OverlayRoot 内部，用于显示全局 Toast
+ * Must sit inside OverlayRoot; displays global toasts.
  *
  * ```kotlin
  * App {
  *     OverlayRoot {
  *         ToastHost()
- *         // ... 其他内容
+ *         // ... other content
  *     }
  * }
  * ```
@@ -133,15 +133,15 @@ object Toast {
 fun ToastHost() {
     val controller = LocalOverlayController.current
 
-    // 当前显示的 overlay id
+    // Currently displayed overlay id
     var currentOverlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 监听 Toast 版本变化
+    // Watch for toast version changes
     val version = Toast.version.value
     val currentToast = Toast.current.value
 
     LaunchedEffect(version) {
-        // 如果有正在显示的，先关闭
+        // Dismiss the one already showing, if any
         currentOverlayId?.let {
             controller.dismiss(it)
             currentOverlayId = null
@@ -162,10 +162,10 @@ fun ToastHost() {
         }
         currentOverlayId = id
 
-        // 等待指定时间后消失
+        // Wait the configured time, then dismiss
         delay(toast.duration)
 
-        // 只有当前显示的还是这个 Toast 时才关闭
+        // Only dismiss if this is still the toast being shown
         if (currentOverlayId == id) {
             controller.dismiss(id)
             currentOverlayId = null

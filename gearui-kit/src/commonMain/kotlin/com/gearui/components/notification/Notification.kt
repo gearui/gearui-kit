@@ -26,31 +26,31 @@ import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
 
 /**
- * Notification - 顶部通知卡片组件
+ * Notification - top notification card
  *
- * - 从顶部弹出的通知卡片
- * - 支持标题和详细描述
- * - 支持四种状态类型
- * - 支持操作按钮
- * - 支持自动消失
+ * - a card that drops in from the top
+ * - title plus optional detail
+ * - four state types
+ * - optional action button
+ * - optional auto-dismiss
  */
 
 /**
- * NotificationType - 通知类型
+ * NotificationType - notification type
  */
 enum class NotificationType {
-    /** 普通信息 */
+    /** Information */
     INFO,
-    /** 成功 */
+    /** Success */
     SUCCESS,
-    /** 警告 */
+    /** Warning */
     WARNING,
-    /** 错误 */
+    /** Error */
     ERROR
 }
 
 /**
- * NotificationData - 通知数据
+ * NotificationData - notification data
  */
 data class NotificationData(
     val title: String,
@@ -64,18 +64,18 @@ data class NotificationData(
 )
 
 /**
- * Notification 组件
+ * Notification
  *
- * @param title 标题
- * @param visible 是否可见
- * @param onDismiss 关闭回调
- * @param message 详细描述（可选）
- * @param type 通知类型
- * @param action 操作按钮文字（可选）
- * @param onAction 操作按钮点击回调
- * @param duration 自动关闭时间（毫秒），0 表示不自动关闭
- * @param closable 是否显示关闭按钮
- * @param topOffset 距离顶部的距离
+ * @param title title
+ * @param visible whether it is shown
+ * @param onDismiss dismissal callback
+ * @param message optional detail text
+ * @param type notification type
+ * @param action optional action button label
+ * @param onAction action button callback
+ * @param duration auto-dismiss delay in milliseconds; 0 disables it
+ * @param closable whether to show a close button
+ * @param topOffset minimum distance from the top
  */
 @Composable
 fun Notification(
@@ -129,7 +129,7 @@ fun Notification(
 }
 
 /**
- * Notification 内容组件
+ * Notification content
  */
 @Composable
 internal fun NotificationContent(
@@ -141,15 +141,15 @@ internal fun NotificationContent(
     closable: Boolean,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    /** 左侧自定义内容（头像 / app 图标 / 文件图标…）。null 时回退到 type 图标。 */
+    /** Custom leading content: avatar, app icon, file icon. Falls back to the type icon when null. */
     leading: (@Composable () -> Unit)? = null,
-    /** 整条点击回调。null 时整条不可点（保持现有行为）。 */
+    /** Whole-card click callback. When null the card is not clickable, preserving existing behaviour. */
     onClick: (() -> Unit)? = null,
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 获取类型对应的图标和颜色
+    // Icon and colour for the type
     val (iconName, iconColor) = when (type) {
         NotificationType.INFO -> Icons.info to colors.primary
         NotificationType.SUCCESS -> Icons.check to colors.success
@@ -163,8 +163,8 @@ internal fun NotificationContent(
             .shadow(Elevation.floating, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(colors.surface)
-            // 整条点击：onClick != null 时挂在卡片上。action / close 各自的 clickable 会
-            // 消费自己的点击事件（Compose pointerInput 不向上冒泡），不会误触整条 onClick。
+            // Whole-card click, attached when onClick != null. The action and close
+            // buttons consume their own clicks — Compose pointerInput does not bubble
             .let { base ->
                 if (onClick != null) base.clickable { onClick(); onDismiss() } else base
             }
@@ -172,7 +172,7 @@ internal fun NotificationContent(
         horizontalArrangement = Arrangement.spacedBy(Spacing.md),
         verticalAlignment = Alignment.Top
     ) {
-        // 左侧：自定义 leading slot 优先，否则 type 图标
+        // Leading: the custom slot wins; otherwise the type icon
         if (leading != null) {
             leading()
         } else {

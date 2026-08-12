@@ -30,60 +30,60 @@ import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
 
 /**
- * ActionSheet - 动作面板组件
+ * ActionSheet - action panel
  *
- * 由用户操作后触发的一种特定的模态弹出框，呈现一组与当前情境相关的两个或多个选项。
+ * A modal panel raised by a user action, offering two or more choices relevant to the current context.
  *
- * - 列表型动作面板（可滚动）
- * - 宫格型动作面板
- * - 带描述、图标、徽标
- * - 居中/左对齐
- * - 选项状态（禁用、警告等）
- * - 点击反馈效果
+ * - list style (scrollable)
+ * - grid style
+ * - descriptions, icons and badges
+ * - centred or left aligned
+ * - item states (disabled, warning)
+ * - press feedback
  */
 
 /**
- * ActionSheet 主题类型
+ * ActionSheet style
  */
 enum class ActionSheetTheme {
-    /** 列表型 */
+    /** List */
     LIST,
-    /** 宫格型 */
+    /** Grid */
     GRID
 }
 
 /**
- * ActionSheet 对齐方式
+ * ActionSheet alignment
  */
 enum class ActionSheetAlign {
-    /** 居中对齐 */
+    /** Centred */
     CENTER,
-    /** 左对齐 */
+    /** Left aligned */
     LEFT
 }
 
 /**
- * ActionSheet 选项
+ * ActionSheet item
  */
 data class ActionSheetItem(
-    /** 选项文本 */
+    /** Item label */
     val label: String,
-    /** 选项描述 */
+    /** Item description */
     val description: String? = null,
-    /** 图标（可以是 emoji） */
+    /** Icon; may be an emoji */
     val icon: String? = null,
-    /** 徽标文本 */
+    /** Badge text */
     val badge: String? = null,
-    /** 是否显示红点 */
+    /** Whether to show a red dot */
     val showRedPoint: Boolean = false,
-    /** 是否禁用 */
+    /** Whether the item is disabled */
     val disabled: Boolean = false,
-    /** 自定义文字颜色 */
+    /** Custom label colour */
     val textColor: Color? = null
 )
 
 /**
- * ActionSheet 状态管理
+ * ActionSheet state
  */
 object ActionSheet {
     private var currentVisible = mutableStateOf(false)
@@ -98,7 +98,7 @@ object ActionSheet {
     private var currentGridColumns = mutableStateOf(4)
 
     /**
-     * 显示列表型动作面板
+     * Shows a list-style action panel
      */
     fun showList(
         items: List<ActionSheetItem>,
@@ -121,7 +121,7 @@ object ActionSheet {
     }
 
     /**
-     * 显示宫格型动作面板
+     * Shows a grid-style action panel
      */
     fun showGrid(
         items: List<ActionSheetItem>,
@@ -144,15 +144,15 @@ object ActionSheet {
     }
 
     /**
-     * 关闭动作面板
+     * Dismisses the action panel
      */
     fun dismiss() {
         currentVisible.value = false
     }
 
     /**
-     * ActionSheet 宿主组件
-     * 需要放置在页面根部
+     * ActionSheet host.
+     * Must be placed at the root of the page.
      */
     @Composable
     fun Host() {
@@ -193,7 +193,7 @@ object ActionSheet {
 }
 
 /**
- * ActionSheet 内容组件
+ * ActionSheet content
  */
 @Composable
 fun ActionSheetContent(
@@ -288,7 +288,7 @@ private fun ActionSheetSurface(
                 .background(colors.surface)
                 .clickable { /* 阻止点击穿透 */ }
         ) {
-            // 描述文本
+            // Description
             if (description != null) {
                 Box(
                     modifier = Modifier
@@ -306,7 +306,7 @@ private fun ActionSheetSurface(
                         color = colors.mutedForeground
                     )
                 }
-                // 分隔线
+                // Divider
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -315,7 +315,7 @@ private fun ActionSheetSurface(
                 )
             }
 
-            // 内容区域
+            // Content area
             when (theme) {
                 ActionSheetTheme.LIST -> {
                     ActionSheetList(
@@ -334,9 +334,9 @@ private fun ActionSheetSurface(
                 }
             }
 
-            // 取消按钮
+            // Cancel button
             if (showCancel) {
-                // 间隔
+                // Gap
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -344,7 +344,7 @@ private fun ActionSheetSurface(
                         .background(colors.muted)
                 )
 
-                // 取消按钮 - 带点击效果
+                // Cancel button, with press feedback
                 var cancelPressed by remember { mutableStateOf(false) }
                 Box(
                     modifier = Modifier
@@ -368,14 +368,14 @@ private fun ActionSheetSurface(
                 }
             }
 
-            // 底部安全区
+            // Bottom safe area
             Spacer(modifier = Modifier.height(bottomInset))
         }
     }
 }
 
 /**
- * 列表型动作面板内容 - 支持滚动
+ * List-style content, scrollable
  */
 @Composable
 private fun ActionSheetList(
@@ -386,7 +386,7 @@ private fun ActionSheetList(
 ) {
     val colors = Theme.colors
 
-    // 计算列表高度：每项56dp（有描述则78dp），最大不超过 maxHeight
+    // List height: 56dp per item, 78dp when it has a description, capped at maxHeight
     val itemHeightNormal = 56
     val itemHeightWithDesc = 78
     var totalHeightValue = 0
@@ -418,7 +418,7 @@ private fun ActionSheetList(
 }
 
 /**
- * 列表项 - 带点击反馈效果
+ * List item, with press feedback
  */
 @Composable
 private fun ActionSheetListItem(
@@ -460,7 +460,7 @@ private fun ActionSheetListItem(
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 图标
+            // Icon
             if (item.icon != null) {
                 Text(
                     text = item.icon,
@@ -470,7 +470,7 @@ private fun ActionSheetListItem(
                 Spacer(modifier = Modifier.width(Spacing.sm))
             }
 
-            // 文本内容
+            // Text content
             Column(
                 horizontalAlignment = when (align) {
                     ActionSheetAlign.CENTER -> Alignment.CenterHorizontally
@@ -484,7 +484,7 @@ private fun ActionSheetListItem(
                         color = textColor
                     )
 
-                    // 徽标
+                    // Badge
                     if (item.badge != null) {
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
@@ -501,7 +501,7 @@ private fun ActionSheetListItem(
                         }
                     }
 
-                    // 红点
+                    // Red dot
                     if (item.showRedPoint && item.badge == null) {
                         Spacer(modifier = Modifier.width(Spacing.xs))
                         Box(
@@ -513,7 +513,7 @@ private fun ActionSheetListItem(
                     }
                 }
 
-                // 描述
+                // Description
                 if (item.description != null) {
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
@@ -525,7 +525,7 @@ private fun ActionSheetListItem(
             }
         }
 
-        // 分隔线
+        // Divider
         if (showDivider) {
             Box(
                 modifier = Modifier
@@ -539,7 +539,7 @@ private fun ActionSheetListItem(
 }
 
 /**
- * 宫格型动作面板内容 - 支持滚动
+ * Grid-style content, scrollable
  */
 @Composable
 private fun ActionSheetGrid(
@@ -550,7 +550,7 @@ private fun ActionSheetGrid(
     val colors = Theme.colors
     val rows = (items.size + columns - 1) / columns
 
-    // 每行高度 96dp，最多显示 2 行，超过则滚动
+    // Rows are 96dp; at most two are shown before it scrolls
     val rowHeight = 96.dp
     val maxRows = 2
     val displayRows = minOf(rows, maxRows)
@@ -591,7 +591,7 @@ private fun ActionSheetGrid(
 }
 
 /**
- * 宫格行
+ * Grid row
  */
 @Composable
 private fun ActionSheetGridRow(
@@ -620,7 +620,7 @@ private fun ActionSheetGridRow(
                     }
                 )
             } else {
-                // 空占位
+                // Empty placeholder
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
@@ -628,7 +628,7 @@ private fun ActionSheetGridRow(
 }
 
 /**
- * 宫格项 - 带点击反馈效果
+ * Grid item, with press feedback
  */
 @Composable
 private fun ActionSheetGridItem(
@@ -655,7 +655,7 @@ private fun ActionSheetGridItem(
             .padding(Spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // 图标区域
+        // Icon area
         Box {
             if (item.icon != null) {
                 Box(
@@ -673,7 +673,7 @@ private fun ActionSheetGridItem(
                 }
             }
 
-            // 徽标
+            // Badge
             if (item.badge != null) {
                 Box(
                     modifier = Modifier
@@ -691,7 +691,7 @@ private fun ActionSheetGridItem(
                 }
             }
 
-            // 红点
+            // Red dot
             if (item.showRedPoint && item.badge == null) {
                 Box(
                     modifier = Modifier
@@ -706,7 +706,7 @@ private fun ActionSheetGridItem(
 
         Spacer(modifier = Modifier.height(Spacing.sm))
 
-        // 文本
+        // Label
         Text(
             text = item.label,
             style = Typography.BodySmall,

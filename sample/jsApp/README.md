@@ -10,9 +10,12 @@ be diffed in.
 ```bash
 # from the repository root
 ./gradlew :sample:jsApp:jsBrowserDevelopmentRun
+# then open http://localhost:8081/
 ```
 
-That is the whole command. The sample's JS bundle and the icon assets are
+That is the whole command. The dev server listens on 8081 rather than
+webpack's default 8080, which is busy often enough to be worth avoiding; pass
+`-PwebPort=9000` to change it. The sample's JS bundle and the icon assets are
 staged into the host's resources by Gradle (`copySampleJsBundle`,
 `copySampleAssets`), so there is nothing to copy by hand.
 

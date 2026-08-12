@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+
 plugins {
     kotlin("multiplatform")
 }
@@ -14,6 +16,12 @@ kotlin {
                 // Export nothing; see webpack.config.d/output.js for why this
                 // host must not carry a UMD wrapper.
                 output?.library = null
+
+                // webpack's default is 8080, which is busy often enough to be
+                // worth making overridable: -PwebPort=9000
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).copy(
+                    port = (findProperty("webPort") as String?)?.toInt() ?: 8081,
+                )
             }
         }
         binaries.executable()

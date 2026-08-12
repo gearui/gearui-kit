@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
         // so KuiklyUI's safeAreaInsets is the single source of top padding.
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // 创建容器
+        // Create the container
         container = FrameLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -35,17 +35,17 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
 
         setContentView(container)
 
-        // 注册状态栏控制器
+        // Register the status bar controller
         StatusBarControllerImpl.register(this)
 
         if (KuiklyRenderAdapterManager.krImageAdapter == null) {
             KuiklyRenderAdapterManager.krImageAdapter = SampleImageAdapter(applicationContext)
         }
 
-        // 初始化 KuiklyUI 委托
+        // Initialise the KuiklyUI delegate
         kuiklyDelegator = KuiklyRenderViewBaseDelegator(this)
 
-        // 默认打开 MainDemo 页面
+        // Open the MainDemo page by default
         kuiklyDelegator.onAttach(
             container,
             "",

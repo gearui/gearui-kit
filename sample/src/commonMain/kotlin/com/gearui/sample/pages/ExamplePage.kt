@@ -17,12 +17,12 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.theme.Theme
 
 /**
- * ExamplePage - 组件示例页面通用包装器
+ * ExamplePage - shared wrapper for component example pages
  *
- * 为每个组件提供统一的展示容器：
- * - 顶部导航栏（使用 NavBar，带返回按钮）
- * - 可滚动的内容区域（使用 GearLazyColumn，支持滚动关闭弹层）
- * - 一致的样式和布局
+ * Gives every component the same container:
+ * - a top navigation bar (NavBar, with a back button)
+ * - a scrollable content area (GearLazyColumn, dismissing floating layers on scroll)
+ * - consistent styling and layout
  */
 @Composable
 fun ExamplePage(
@@ -45,7 +45,7 @@ fun ExamplePage(
             .fillMaxSize()
             .background(colors.background)
     ) {
-        // 顶部导航栏 - 使用 NavBar
+        // Top navigation bar - NavBar
         NavBar(
             title = component.nameEn,
             centerTitle = true,
@@ -54,7 +54,7 @@ fun ExamplePage(
             backgroundColor = navBarColor
         )
 
-        // 示例内容区域 - 使用 GearLazyColumn（支持滚动关闭弹层）
+        // Example content area - GearLazyColumn (dismisses floating layers on scroll)
         GearLazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,9 +76,9 @@ fun ExamplePage(
 }
 
 /**
- * ExampleSection - 示例区块
+ * ExampleSection - example block
  *
- * 用于组织同一组件的不同示例
+ * Groups the different examples of one component
  */
 @Composable
 fun ExampleSection(
@@ -94,7 +94,7 @@ fun ExampleSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // 标题和描述
+        // Title and description
         if (title.isNotEmpty()) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
@@ -114,7 +114,7 @@ fun ExampleSection(
         }
 
         if (useCardContainer) {
-            // 示例内容
+            // Example content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

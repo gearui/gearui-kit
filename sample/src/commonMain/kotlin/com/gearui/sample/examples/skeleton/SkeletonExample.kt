@@ -23,7 +23,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Skeleton 组件示例
+ * Skeleton component examples
  */
 @Composable
 fun SkeletonExample(
@@ -36,13 +36,13 @@ fun SkeletonExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础骨架屏
+        // Basic skeletons
         ExampleSection(
             title = "基础用法",
             description = "不同形状的骨架屏"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 矩形骨架
+                // Rectangle
                 Text(
                     text = "矩形骨架",
                     style = Typography.BodySmall,
@@ -55,7 +55,7 @@ fun SkeletonExample(
                         .height(40.dp)
                 )
 
-                // 圆形骨架
+                // Circle
                 Text(
                     text = "圆形骨架",
                     style = Typography.BodySmall,
@@ -76,7 +76,7 @@ fun SkeletonExample(
                     )
                 }
 
-                // 文本骨架
+                // Text
                 Text(
                     text = "文本骨架",
                     style = Typography.BodySmall,
@@ -91,13 +91,13 @@ fun SkeletonExample(
             }
         }
 
-        // 动画类型
+        // Animation types
         ExampleSection(
             title = "动画类型",
             description = "脉冲动画、波浪动画、无动画"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 脉冲动画
+                // Pulse
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "脉冲动画 (PULSE)",
@@ -112,7 +112,7 @@ fun SkeletonExample(
                     )
                 }
 
-                // 波浪动画
+                // Wave
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "波浪动画 (WAVE)",
@@ -127,7 +127,7 @@ fun SkeletonExample(
                     )
                 }
 
-                // 无动画
+                // No animation
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "无动画 (NONE)",
@@ -144,7 +144,7 @@ fun SkeletonExample(
             }
         }
 
-        // 文本骨架
+        // Text skeleton
         ExampleSection(
             title = "多行文本",
             description = "SkeletonText 支持多行文本"
@@ -173,7 +173,7 @@ fun SkeletonExample(
             }
         }
 
-        // 头像和图片
+        // Avatars and images
         ExampleSection(
             title = "头像和图片",
             description = "SkeletonAvatar 和 SkeletonImage"
@@ -234,7 +234,7 @@ fun SkeletonExample(
             }
         }
 
-        // 列表项模板
+        // List row template
         ExampleSection(
             title = "列表项模板",
             description = "SkeletonListItem 常用于列表加载"
@@ -256,7 +256,7 @@ fun SkeletonExample(
             }
         }
 
-        // 卡片模板
+        // Card template
         ExampleSection(
             title = "卡片模板",
             description = "SkeletonCard 常用于卡片加载"
@@ -267,7 +267,7 @@ fun SkeletonExample(
             )
         }
 
-        // 文章模板
+        // Article template
         ExampleSection(
             title = "文章模板",
             description = "SkeletonArticle 常用于文章加载"
@@ -278,7 +278,7 @@ fun SkeletonExample(
             )
         }
 
-        // 网格模板
+        // Grid template
         ExampleSection(
             title = "网格模板",
             description = "SkeletonGrid 常用于网格加载"
@@ -291,7 +291,7 @@ fun SkeletonExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Skeleton 组件特性"

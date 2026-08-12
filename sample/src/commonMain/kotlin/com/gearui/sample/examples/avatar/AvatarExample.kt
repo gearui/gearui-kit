@@ -11,7 +11,7 @@ import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 
 /**
- * Avatar 组件示例
+ * Avatar component examples
  */
 @Composable
 fun AvatarExample(
@@ -22,7 +22,7 @@ fun AvatarExample(
         component = component,
         onBack = onBack
     ) {
-        // 头像类型
+        // Avatar types
         ExampleSection(
             title = "头像类型",
             description = "图片、文字、图标头像"
@@ -43,7 +43,7 @@ fun AvatarExample(
             }
         }
 
-        // 头像尺寸
+        // Avatar sizes
         ExampleSection(
             title = "头像尺寸",
             description = "提供多种尺寸的头像"
@@ -71,7 +71,7 @@ fun AvatarExample(
             }
         }
 
-        // 头像形状
+        // Avatar shapes
         ExampleSection(
             title = "头像形状",
             description = "圆形和方形头像"
@@ -90,7 +90,7 @@ fun AvatarExample(
             }
         }
 
-        // 带徽标的头像
+        // Avatar with a badge
         ExampleSection(
             title = "带徽标的头像",
             description = "头像右上角显示徽标"

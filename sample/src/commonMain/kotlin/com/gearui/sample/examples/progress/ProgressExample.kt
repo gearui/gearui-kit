@@ -21,9 +21,9 @@ import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
 
 /**
- * Progress 进度条组件示例
+ * Progress component examples
  *
- * 进度展示组件，支持线性和环形
+ * Shows progress, linear or circular
  */
 @Composable
 fun ProgressExample(
@@ -32,11 +32,11 @@ fun ProgressExample(
 ) {
     val colors = Theme.colors
 
-    // 动态进度
+    // Dynamic progress
     var dynamicProgress by remember { mutableStateOf(0f) }
     var isRunning by remember { mutableStateOf(false) }
 
-    // 自动进度动画
+    // Automatic progress animation
     LaunchedEffect(isRunning) {
         if (isRunning) {
             while (dynamicProgress < 1f) {
@@ -51,7 +51,7 @@ fun ProgressExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础线性进度条
+        // Basic linear progress bar
         ExampleSection(
             title = "基础进度条",
             description = "不同进度值的展示"
@@ -77,7 +77,7 @@ fun ProgressExample(
             }
         }
 
-        // 不同状态
+        // States
         ExampleSection(
             title = "不同状态",
             description = "主色、成功、警告、危险状态"
@@ -156,7 +156,7 @@ fun ProgressExample(
             }
         }
 
-        // 标签位置
+        // Label position
         ExampleSection(
             title = "标签位置",
             description = "右侧显示和内部显示"
@@ -194,7 +194,7 @@ fun ProgressExample(
             }
         }
 
-        // 不同高度
+        // Heights
         ExampleSection(
             title = "不同高度",
             description = "自定义进度条高度"
@@ -259,7 +259,7 @@ fun ProgressExample(
             }
         }
 
-        // 环形进度条
+        // Circular progress
         ExampleSection(
             title = "环形进度条",
             description = "圆形进度展示"
@@ -295,7 +295,7 @@ fun ProgressExample(
             }
         }
 
-        // 不同尺寸的环形进度
+        // Circular progress sizes
         ExampleSection(
             title = "环形进度尺寸",
             description = "自定义环形进度条大小"
@@ -356,7 +356,7 @@ fun ProgressExample(
             }
         }
 
-        // 动态进度
+        // Dynamic progress
         ExampleSection(
             title = "动态进度",
             description = "带动画的进度变化"
@@ -413,7 +413,7 @@ fun ProgressExample(
             }
         }
 
-        // 应用场景
+        // Use cases
         ExampleSection(
             title = "应用场景",
             description = "实际使用中的进度展示"
@@ -422,7 +422,7 @@ fun ProgressExample(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 文件上传
+                // File upload
                 Column {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -447,7 +447,7 @@ fun ProgressExample(
                     )
                 }
 
-                // 存储空间
+                // Storage space
                 Column {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -473,7 +473,7 @@ fun ProgressExample(
                     )
                 }
 
-                // 任务完成度
+                // Task completion
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -500,7 +500,7 @@ fun ProgressExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Progress 组件特性"

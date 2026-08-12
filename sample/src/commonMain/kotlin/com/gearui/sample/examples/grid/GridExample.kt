@@ -16,9 +16,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Grid 组件示例
+ * Grid component examples
  *
- * 栅格布局系统，实现响应式布局
+ * A grid layout system for responsive layouts
  */
 @Composable
 fun GridExample(
@@ -31,7 +31,7 @@ fun GridExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法 - 2列
+        // Basic usage - 2 columns
         ExampleSection(
             title = "基础用法 - 2列",
             description = "2列等宽网格布局"
@@ -62,7 +62,7 @@ fun GridExample(
             }
         }
 
-        // 3列布局
+        // 3 columns
         ExampleSection(
             title = "3列布局",
             description = "3列等宽网格布局"
@@ -93,7 +93,7 @@ fun GridExample(
             }
         }
 
-        // 4列布局
+        // 4 columns
         ExampleSection(
             title = "4列布局",
             description = "4列等宽网格布局，适合图标展示"
@@ -138,7 +138,7 @@ fun GridExample(
             }
         }
 
-        // 不同间距
+        // Gaps
         ExampleSection(
             title = "自定义间距",
             description = "可以设置不同的水平和垂直间距"
@@ -169,7 +169,7 @@ fun GridExample(
             }
         }
 
-        // 响应式网格
+        // Responsive grid
         ExampleSection(
             title = "响应式网格",
             description = "根据容器宽度自动调整列数"
@@ -200,7 +200,7 @@ fun GridExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Grid 组件特性"

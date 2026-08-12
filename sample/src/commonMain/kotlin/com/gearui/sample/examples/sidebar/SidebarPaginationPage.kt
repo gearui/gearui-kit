@@ -10,20 +10,20 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * SideBar 切页用法页面
+ * SideBar page-switching usage page
  *
- * 特点：
- * - 点击侧边栏项，直接切换到对应页面内容
- * - 不需要滚动联动
+ * Features:
+ * - tapping a sidebar item switches straight to that page's content
+ * - no scroll linkage needed
  */
 @Composable
 fun SidebarPaginationPage(onBack: () -> Unit) {
     val colors = Theme.colors
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 生成数据
+    // Builds the data
     val items = remember {
         (0..99).map { index ->
             SidebarItemData(
@@ -41,7 +41,7 @@ fun SidebarPaginationPage(onBack: () -> Unit) {
         onBack = onBack
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            // 左侧侧边栏
+            // Sidebar on the left
             Sidebar(
                 items = items,
                 selectedIndex = selectedIndex,
@@ -49,7 +49,7 @@ fun SidebarPaginationPage(onBack: () -> Unit) {
                 style = SidebarStyle.NORMAL
             )
 
-            // 右侧内容区 - 切页内容
+            // Content area on the right - the switched page
             Box(
                 modifier = Modifier
                     .weight(1f)

@@ -1,7 +1,7 @@
 package com.gearui.sample.config
 
 /**
- * 组件配置中心 - 管理所有组件的元数据
+ * Component configuration - metadata for every component
  *
  */
 data class ComponentInfo(
@@ -25,7 +25,7 @@ enum class ComponentCategory {
 
 object ComponentConfig {
     val all: List<ComponentInfo> = listOf(
-        // 基础组件
+        // Basic components
         ComponentInfo("button", "按钮", "Button", ComponentCategory.BASIC, "/components/button", "用于触发操作", "Trigger actions"),
         ComponentInfo("icon", "图标", "Icon", ComponentCategory.BASIC, "/components/icon", "图标展示", "Icon display"),
         ComponentInfo("icon-render", "图标渲染验证", "Icon Render", ComponentCategory.BASIC, "/components/icon-render", "PNG/SVG 资源渲染能力验证", "PNG/SVG resource rendering"),
@@ -35,7 +35,7 @@ object ComponentConfig {
         ComponentInfo("badge", "徽标", "Badge", ComponentCategory.BASIC, "/components/badge", "消息数量提示", "Message count indicator"),
         ComponentInfo("divider", "分割线", "Divider", ComponentCategory.BASIC, "/components/divider", "内容分隔", "Content separator"),
 
-        // 表单组件
+        // Form components
         ComponentInfo("input", "输入框", "Input", ComponentCategory.FORM, "/components/input", "文本输入", "Text input"),
         ComponentInfo("checkbox", "复选框", "Checkbox", ComponentCategory.FORM, "/components/checkbox", "多选操作", "Multiple selection"),
         ComponentInfo("radio", "单选框", "Radio", ComponentCategory.FORM, "/components/radio", "单选操作", "Single selection"),
@@ -54,7 +54,7 @@ object ComponentConfig {
         ComponentInfo("transfer", "穿梭框", "Transfer", ComponentCategory.FORM, "/components/transfer", "数据穿梭选择", "Data transfer"),
         ComponentInfo("treeselect", "树选择", "TreeSelect", ComponentCategory.FORM, "/components/treeselect", "树形选择器", "Tree selector"),
 
-        // 导航组件
+        // Navigation components
         ComponentInfo("navbar", "导航栏", "NavBar", ComponentCategory.NAVIGATION, "/components/navbar", "H5页面导航栏", "Page navigation bar"),
         ComponentInfo("bottom-navbar", "底部导航栏", "BottomNavBar", ComponentCategory.NAVIGATION, "/components/bottom-navbar", "应用底部主导航", "App bottom navigation"),
         ComponentInfo("tabs", "选项卡", "Tabs", ComponentCategory.NAVIGATION, "/components/tabs", "内容切换", "Content switching"),
@@ -71,7 +71,7 @@ object ComponentConfig {
         ComponentInfo("navigator-kuikly-spike", "Navigator Kuikly 验证", "Navigator Spike", ComponentCategory.NAVIGATION, "/components/navigator-kuikly-spike", "Navigator Phase 0 运行时能力验证", "Navigator Phase 0 runtime spike"),
         ComponentInfo("navigator-v1-demo", "Navigator v1 演示", "Navigator v1 Demo", ComponentCategory.NAVIGATION, "/components/navigator-v1-demo", "Navigator v1 栈式跳转 + 边缘滑动返回", "Navigator v1 stack + edge swipe pop"),
 
-        // 数据展示
+        // Data display
         ComponentInfo("list", "列表", "List", ComponentCategory.DATA_DISPLAY, "/components/list", "列表展示", "List display"),
         ComponentInfo("card", "卡片", "Card", ComponentCategory.DATA_DISPLAY, "/components/card", "卡片容器", "Card container"),
         ComponentInfo("cell", "单元格", "Cell", ComponentCategory.DATA_DISPLAY, "/components/cell", "列表单元组件", "List cell component"),
@@ -88,7 +88,7 @@ object ComponentConfig {
         ComponentInfo("calendar", "日历", "Calendar", ComponentCategory.DATA_DISPLAY, "/components/calendar", "日历展示", "Calendar display"),
         ComponentInfo("watermark", "水印", "Watermark", ComponentCategory.DATA_DISPLAY, "/components/watermark", "页面水印", "Page watermark"),
 
-        // 反馈组件
+        // Feedback components
         ComponentInfo("swipecell", "滑动单元格", "SwipeCell", ComponentCategory.FEEDBACK, "/components/swipecell", "滑动操作单元格", "Swipeable cell"),
         ComponentInfo("actionsheet", "动作面板", "ActionSheet", ComponentCategory.FEEDBACK, "/components/actionsheet", "底部动作面板", "Bottom action sheet"),
         ComponentInfo("toast", "轻提示", "Toast", ComponentCategory.FEEDBACK, "/components/toast", "消息提示", "Message toast"),
@@ -105,7 +105,7 @@ object ComponentConfig {
         ComponentInfo("result", "结果", "Result", ComponentCategory.FEEDBACK, "/components/result", "操作结果反馈", "Operation result"),
         ComponentInfo("tour", "引导", "Tour", ComponentCategory.FEEDBACK, "/components/tour", "功能引导", "Feature guide"),
 
-        // 布局组件
+        // Layout components
         ComponentInfo("grid", "栅格", "Grid", ComponentCategory.LAYOUT, "/components/grid", "栅格布局", "Grid layout"),
         ComponentInfo("swiper", "轮播", "Swiper", ComponentCategory.LAYOUT, "/components/swiper", "内容轮播", "Content carousel"),
         ComponentInfo("searchbar", "搜索栏", "SearchBar", ComponentCategory.LAYOUT, "/components/searchbar", "搜索输入", "Search input"),
@@ -115,21 +115,21 @@ object ComponentConfig {
     )
 
     /**
-     * 按分类获取组件
+     * Components in a category
      */
     fun getByCategory(category: ComponentCategory): List<ComponentInfo> {
         return all.filter { it.category == category }
     }
 
     /**
-     * 按 ID 获取组件
+     * Component by ID
      */
     fun getById(id: String): ComponentInfo? {
         return all.find { it.id == id }
     }
 
     /**
-     * 所有分类及其组件数量
+     * Every category and how many components it holds
      */
     val categoryCounts: Map<ComponentCategory, Int> = all
         .groupBy { it.category }
@@ -137,14 +137,14 @@ object ComponentConfig {
 }
 
 /**
- * 根据语言代码获取组件的本地化名称
+ * Localised component name for a language code
  */
 fun ComponentInfo.localizedName(isEnglish: Boolean): String {
     return if (isEnglish) nameEn else nameZh
 }
 
 /**
- * 根据语言代码获取组件的本地化描述
+ * Localised component description for a language code
  */
 fun ComponentInfo.localizedDescription(isEnglish: Boolean): String {
     return if (isEnglish) descriptionEn else descriptionZh

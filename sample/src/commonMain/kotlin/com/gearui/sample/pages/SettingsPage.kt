@@ -22,7 +22,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 
 /**
- * 主题风格选项
+ * Theme style options
  */
 enum class ThemeStyle(val displayName: String) {
     LIGHT("浅色模式"),
@@ -32,7 +32,7 @@ enum class ThemeStyle(val displayName: String) {
 }
 
 /**
- * 设置状态
+ * Settings state
  */
 class SettingsState {
     var languageTag by mutableStateOf("zh-Hans")
@@ -40,16 +40,16 @@ class SettingsState {
 }
 
 /**
- * 全局设置状态
+ * Global settings state
  */
 val LocalSettingsState = staticCompositionLocalOf { SettingsState() }
 
 /**
- * SettingsPage - 设置页面
+ * SettingsPage - settings screen
  *
- * 支持：
- * - 语言切换（中文/英文）- 实时生效
- * - 主题风格切换（浅色/深色/跟随系统）- 实时生效
+ * Supports:
+ * - language switching (Chinese / English), applied immediately
+ * - theme style switching (light / dark / follow system), applied immediately
  */
 @Composable
 fun SettingsPage(
@@ -62,7 +62,7 @@ fun SettingsPage(
     val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
     val languageOptions = DefaultSampleLanguageOptions
 
-    // 根据当前语言获取主题风格显示名称
+    // Display name of the theme style in the current language
     val themeDisplayNames = mapOf(
         ThemeStyle.LIGHT to coreStrings.light,
         ThemeStyle.DARK to coreStrings.dark,
@@ -79,7 +79,7 @@ fun SettingsPage(
             .fillMaxSize()
             .background(colors.background)
     ) {
-        // 顶部导航栏
+        // Top navigation bar
         NavBar(
             title = sampleStrings.settingsTitle,
             centerTitle = true,
@@ -88,7 +88,7 @@ fun SettingsPage(
             backgroundColor = navBarColor
         )
 
-        // 设置内容
+        // Settings content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -96,7 +96,7 @@ fun SettingsPage(
                 .padding(Spacing.lg),
             verticalArrangement = Arrangement.spacedBy(Spacing.xl)
         ) {
-            // 语言设置
+            // Language
             SettingsCardSection(title = coreStrings.language) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                     languageOptions.forEach { language ->
@@ -110,10 +110,10 @@ fun SettingsPage(
                 }
             }
 
-            // 主题风格设置 - 横向卡片单选框
+            // Theme style - horizontal card radio group
             SettingsCardSection(title = coreStrings.theme) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                    // 第一行：浅色 + 深色
+                    // First row: light + dark
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                         RadioCardItemCompact(
                             selected = settingsState.themeStyle == ThemeStyle.LIGHT,
@@ -128,7 +128,7 @@ fun SettingsPage(
                             modifier = Modifier.weight(1f)
                         )
                     }
-                    // 第二行：暗紫 + 跟随系统
+                    // Second row: deep purple + follow system
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                         RadioCardItemCompact(
                             selected = settingsState.themeStyle == ThemeStyle.DARK_PURPLE,
@@ -146,7 +146,7 @@ fun SettingsPage(
                 }
             }
 
-            // 关于
+            // About
             SettingsCardSection(
                 title = sampleStrings.aboutTitle
             ) {
@@ -179,7 +179,7 @@ fun SettingsPage(
 }
 
 /**
- * 设置卡片分组
+ * Settings card group
  */
 @Composable
 private fun SettingsCardSection(
@@ -192,20 +192,20 @@ private fun SettingsCardSection(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
-        // 分组标题
+        // Group title
         Text(
             text = title,
             style = Typography.TitleMedium,
             color = colors.foreground
         )
 
-        // 分组内容
+        // Group content
         content()
     }
 }
 
 /**
- * 卡片样式单选项（纵向，带描述）
+ * Card-style radio option (vertical, with a description)
  */
 @Composable
 private fun RadioCardItem(
@@ -258,7 +258,7 @@ private fun RadioCardItem(
 
 
 /**
- * 卡片样式单选项（横向，紧凑）
+ * Card-style radio option (horizontal, compact)
  */
 @Composable
 private fun RadioCardItemCompact(
@@ -298,7 +298,7 @@ private fun RadioCardItemCompact(
 }
 
 /**
- * 信息展示行
+ * Information row
  */
 @Composable
 private fun SettingsInfoRow(

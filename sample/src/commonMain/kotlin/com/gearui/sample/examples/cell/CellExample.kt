@@ -12,7 +12,7 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Column
 
 /**
- * Cell 组件示例
+ * Cell component examples
  */
 @Composable
 fun CellExample(

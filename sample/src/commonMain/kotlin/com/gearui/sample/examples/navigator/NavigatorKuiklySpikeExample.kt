@@ -421,9 +421,9 @@ private fun BackHandlerLifoSpikeSection() {
 }
 
 /**
- * Scenario D：callback 内立刻把自己 dispose（armed = false 触发 recomposition →
- * DisposableEffect onDispose → removeCallback）。下一次 BACK 必须 consumed=false，
- * 即「pop 到 Navigator 栈底时让出给 Kuikly delegator」的最小验证。
+ * Scenario D: the callback disposes itself immediately (armed = false triggers recomposition ->
+ * DisposableEffect onDispose -> removeCallback). The next BACK must report consumed=false, which is
+ * the minimal check that popping to the bottom of the Navigator stack yields to the Kuikly delegator.
  */
 @Composable
 private fun OneShotBackHandlerSection() {

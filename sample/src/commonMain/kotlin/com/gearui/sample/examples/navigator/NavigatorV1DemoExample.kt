@@ -36,14 +36,14 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * Navigator v1 demo：
  *
- * - 用 [Navigator] 包一个 main → detail 栈式跳转
- * - 演示 push / pop / forcePop / popTo / replace / resetTo
- * - 演示 onPopRequest 的 Allow / Pending（dirty 拦截）
- * - 演示 onEntryRemoved 的 exactly-once 通知
- * - 演示边缘右滑返回 + 系统 BACK 让出
+ * - wraps a main -> detail stack in a [Navigator]
+ * - demonstrates push / pop / forcePop / popTo / replace / resetTo
+ * - demonstrates onPopRequest with Allow and Pending (a dirty-state interception)
+ * - demonstrates the exactly-once onEntryRemoved notification
+ * - demonstrates the edge swipe back and yielding the system BACK
  *
- * 这一页**不**走 sample 外层 SwipeBackHost——Navigator 内部已自带 swipeBack，
- * 套两层会冲突。MainDemo 已对 `navigator-v1-demo` 这个 id 走 bypass 分支。
+ * This page deliberately does **not** use the sample's outer SwipeBackHost - Navigator already
+ * carries swipeBack, and nesting the two conflicts. MainDemo routes the `navigator-v1-demo` id through a bypass branch.
  */
 @Composable
 fun NavigatorV1DemoExample(
@@ -138,7 +138,7 @@ private fun MainScreen(
                     "dirty_editor",
                     NavOptions(
                         onPopRequest = { _ ->
-                            // 演示 dirty 拦截：直接 Pending，业务自己弹确认 UI
+                            // Demonstrates a dirty-state interception: return Pending and show your own confirmation UI
                             PopDecision.Pending
                         },
                     ),

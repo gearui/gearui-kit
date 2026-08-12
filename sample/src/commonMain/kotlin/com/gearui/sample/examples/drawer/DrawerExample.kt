@@ -21,7 +21,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Drawer 组件示例
+ * Drawer component examples
  *
  */
 @Composable
@@ -31,12 +31,12 @@ fun DrawerExample(
 ) {
     val colors = Theme.colors
 
-    // 生成菜单项
+    // Builds the menu items
     val menuItems = List(15) { index ->
         DrawerItem(title = "菜单${index + 1}")
     }
 
-    // 带图标的菜单项
+    // Menu items with icons
     val icons = listOf("🏠", "👤", "⚙️", "📱", "💬", "🔔", "📊", "📁", "🔍", "❤️", "⭐", "📝", "🎵", "📷", "🎮")
     val iconMenuItems = List(15) { index ->
         DrawerItem(
@@ -50,7 +50,7 @@ fun DrawerExample(
         )
     }
 
-    // 各示例的状态
+    // State of each example
     var showBaseDrawer by remember { mutableStateOf(false) }
     var showIconDrawer by remember { mutableStateOf(false) }
     var showTitleDrawer by remember { mutableStateOf(false) }
@@ -61,9 +61,9 @@ fun DrawerExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础抽屉
+        // Basic drawer
         ExampleSection(
             title = "基础抽屉",
             description = "最基本的抽屉，仅包含文本菜单项"
@@ -88,7 +88,7 @@ fun DrawerExample(
             )
         }
 
-        // 带图标抽屉
+        // Drawer with icons
         ExampleSection(
             title = "带图标抽屉",
             description = "每个菜单项带有图标"
@@ -113,9 +113,9 @@ fun DrawerExample(
             )
         }
 
-        // ==================== 组件样式 ====================
+        // ==================== Component styles ====================
 
-        // 带标题抽屉
+        // Drawer with a title
         ExampleSection(
             title = "带标题抽屉",
             description = "抽屉顶部显示标题"
@@ -141,7 +141,7 @@ fun DrawerExample(
             )
         }
 
-        // 带底部操作抽屉
+        // Drawer with footer actions
         ExampleSection(
             title = "带底部操作抽屉",
             description = "抽屉底部显示操作按钮"
@@ -179,7 +179,7 @@ fun DrawerExample(
             )
         }
 
-        // 自定义样式抽屉
+        // Custom style drawer
         ExampleSection(
             title = "自定义背景色抽屉",
             description = "可自定义抽屉的背景颜色"
@@ -206,7 +206,7 @@ fun DrawerExample(
             )
         }
 
-        // ==================== 使用说明 ====================
+        // ==================== Usage notes ====================
 
         ExampleSection(
             title = "API 说明",
@@ -271,7 +271,7 @@ fun DrawerExample(
             }
         }
 
-        // DrawerItem 说明
+        // DrawerItem notes
         ExampleSection(
             title = "DrawerItem 说明",
             description = "列表项数据结构"

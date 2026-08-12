@@ -18,11 +18,11 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * TreeSelect 组件示例
+ * TreeSelect component examples
  *
- * - 基础树形选择
- * - 多选树形选择
- * - 三级树形选择
+ * - basic tree select
+ * - multi-select tree
+ * - three-level tree
  */
 @Composable
 fun TreeSelectExample(
@@ -46,7 +46,7 @@ fun TreeSelectExample(
         }
     }
 
-    // 三级树节点
+    // Three-level tree nodes
     val thirdLevelOptions = remember {
         listOf(
             TreeNode(
@@ -96,7 +96,7 @@ fun TreeSelectExample(
         )
     }
 
-    // 部门树节点（用于多选演示）
+    // Department tree nodes (for the multi-select demo)
     val departmentNodes = remember {
         listOf(
             TreeNode(
@@ -128,7 +128,7 @@ fun TreeSelectExample(
         )
     }
 
-    // 状态
+    // State
     var basicSelectedKey by remember { mutableStateOf<String?>(null) }
     var thirdSelectedKey by remember { mutableStateOf<String?>(null) }
     var multiSelectedKeys by remember { mutableStateOf<Set<String>>(emptySet()) }
@@ -137,9 +137,9 @@ fun TreeSelectExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 基础树形选择
+        // Basic tree select
         ExampleSection(
             title = "基础树形选择",
             description = "二级树形结构，点击叶子节点选择"
@@ -162,7 +162,7 @@ fun TreeSelectExample(
             }
         }
 
-        // 多选树形选择
+        // Multi-select tree
         ExampleSection(
             title = "多选树形选择",
             description = "支持复选框多选模式"
@@ -183,7 +183,7 @@ fun TreeSelectExample(
                     )
                 }
 
-                // 快捷操作按钮
+                // Shortcut buttons
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -209,9 +209,9 @@ fun TreeSelectExample(
             }
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 三级树形选择
+        // Three-level tree select
         ExampleSection(
             title = "三级树形选择",
             description = "支持三级嵌套的树形结构"
@@ -235,7 +235,7 @@ fun TreeSelectExample(
             }
         }
 
-        // ========== 快速测试 ==========
+        // ========== Quick test ==========
 
         ExampleSection(
             title = "快速测试",

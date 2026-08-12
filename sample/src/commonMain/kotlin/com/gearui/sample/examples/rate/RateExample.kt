@@ -16,7 +16,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Rate 组件示例
+ * Rate component examples
  */
 @Composable
 fun RateExample(
@@ -25,26 +25,26 @@ fun RateExample(
 ) {
     val colors = Theme.colors
 
-    // 基础评分
+    // Basic rating
     var rating1 by remember { mutableStateOf(3f) }
 
-    // 半星评分
+    // Half-star rating
     var rating2 by remember { mutableStateOf(3.5f) }
 
-    // 带描述评分
+    // Rating with descriptions
     var rating3 by remember { mutableStateOf(4f) }
 
-    // 自定义数量
+    // Custom count
     var rating4 by remember { mutableStateOf(7f) }
 
-    // 显示文字
+    // Showing text
     var rating5 by remember { mutableStateOf(3f) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "点击星星进行评分"
@@ -63,7 +63,7 @@ fun RateExample(
             }
         }
 
-        // 半星评分
+        // Half-star rating
         ExampleSection(
             title = "半星评分",
             description = "设置 allowHalf=true 支持半星选择"
@@ -83,7 +83,7 @@ fun RateExample(
             }
         }
 
-        // 带描述文字
+        // With description text
         ExampleSection(
             title = "带描述评分",
             description = "根据评分显示对应的描述文字"
@@ -95,7 +95,7 @@ fun RateExample(
             )
         }
 
-        // 显示分数
+        // Showing the score
         ExampleSection(
             title = "显示分数",
             description = "设置 showText=true 显示当前分数"
@@ -107,7 +107,7 @@ fun RateExample(
             )
         }
 
-        // 自定义数量
+        // Custom count
         ExampleSection(
             title = "自定义星星数量",
             description = "通过 count 参数设置星星总数"
@@ -140,7 +140,7 @@ fun RateExample(
             }
         }
 
-        // 不同尺寸
+        // Sizes
         ExampleSection(
             title = "不同尺寸",
             description = "通过 size 参数调整星星大小"
@@ -202,7 +202,7 @@ fun RateExample(
             }
         }
 
-        // 只读模式
+        // Read-only mode
         ExampleSection(
             title = "只读展示",
             description = "使用 RateDisplay 只读显示评分"
@@ -255,7 +255,7 @@ fun RateExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Rate 组件特性"

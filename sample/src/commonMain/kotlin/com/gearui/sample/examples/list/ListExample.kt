@@ -13,7 +13,7 @@ import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
 
 /**
- * List 列表组件示例
+ * List component examples
  */
 @Composable
 fun ListExample(
@@ -26,7 +26,7 @@ fun ListExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础列表
+        // Basic list
         ExampleSection(
             title = "基础列表",
             description = "简单的列表展示"
@@ -45,7 +45,7 @@ fun ListExample(
             }
         }
 
-        // 带图标列表
+        // List with icons
         ExampleSection(
             title = "带图标列表",
             description = "左侧显示图标"
@@ -63,7 +63,7 @@ fun ListExample(
             }
         }
 
-        // 多行列表
+        // Multi-line list
         ExampleSection(
             title = "多行列表",
             description = "显示标题和描述"

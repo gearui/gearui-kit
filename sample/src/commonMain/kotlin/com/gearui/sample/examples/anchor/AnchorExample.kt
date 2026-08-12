@@ -22,7 +22,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Anchor 组件示例
+ * Anchor component examples
  *
  */
 @Composable
@@ -36,7 +36,7 @@ fun AnchorExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "点击锚点项可以高亮选中"
@@ -66,7 +66,7 @@ fun AnchorExample(
             }
         }
 
-        // 带偏移量
+        // With an offset
         ExampleSection(
             title = "带偏移量",
             description = "可以设置顶部偏移量"
@@ -86,7 +86,7 @@ fun AnchorExample(
             )
         }
 
-        // 固定侧边栏样式
+        // Fixed sidebar style
         ExampleSection(
             title = "固定侧边栏样式",
             description = "使用 AnchorAffix 创建固定的锚点导航"
@@ -104,7 +104,7 @@ fun AnchorExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 锚点导航
+                // Anchor navigation
                 AnchorAffix(
                     items = items,
                     activeKey = activeKey,
@@ -112,7 +112,7 @@ fun AnchorExample(
                     modifier = Modifier.width(150.dp)
                 )
 
-                // 模拟内容区域
+                // Mock content area
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -140,7 +140,7 @@ fun AnchorExample(
             }
         }
 
-        // 动态添加锚点
+        // Adding anchors at runtime
         ExampleSection(
             title = "动态锚点",
             description = "可以动态添加和移除锚点项"
@@ -193,7 +193,7 @@ fun AnchorExample(
             }
         }
 
-        // 清除选中
+        // Clearing the selection
         ExampleSection(
             title = "清除选中",
             description = "可以清除当前选中状态"
@@ -234,7 +234,7 @@ fun AnchorExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Anchor 组件特性"

@@ -15,9 +15,9 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Text 组件示例
+ * Text component examples
  *
- * 用于展示文本信息
+ * Displays text
  */
 @Composable
 fun TextExample(
@@ -31,9 +31,9 @@ fun TextExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 使用示例 ====================
+        // ==================== Examples ====================
 
-        // 普通文本
+        // Plain text
         ExampleSection(
             title = "普通文本",
             description = "基础文本展示"
@@ -45,7 +45,7 @@ fun TextExample(
             )
         }
 
-        // 指定常用属性
+        // Common properties
         ExampleSection(
             title = "指定常用属性",
             description = "自定义字体大小和颜色"
@@ -63,7 +63,7 @@ fun TextExample(
             }
         }
 
-        // 字体层级
+        // Type scale
         ExampleSection(
             title = "字体层级",
             description = "系统提供的标准字体层级"
@@ -112,7 +112,7 @@ fun TextExample(
             }
         }
 
-        // 文字颜色
+        // Text colours
         ExampleSection(
             title = "文字颜色",
             description = "语义化的文字颜色"
@@ -138,7 +138,7 @@ fun TextExample(
                     style = Typography.BodyLarge,
                     color = colors.mutedForeground
                 )
-                // 反色文字
+                // Inverted text
                 Box(
                     modifier = Modifier
                         .background(colors.foreground)
@@ -153,7 +153,7 @@ fun TextExample(
             }
         }
 
-        // 语义颜色
+        // Semantic colours
         ExampleSection(
             title = "语义颜色",
             description = "表达不同含义的文字颜色"
@@ -182,7 +182,7 @@ fun TextExample(
             }
         }
 
-        // 带背景色的文字
+        // Text on a background colour
         ExampleSection(
             title = "带背景色的文字",
             description = "文字配合背景色使用"
@@ -235,7 +235,7 @@ fun TextExample(
             }
         }
 
-        // 文字截断
+        // Truncation
         ExampleSection(
             title = "文字截断",
             description = "超长文字的省略处理"
@@ -258,7 +258,7 @@ fun TextExample(
             }
         }
 
-        // 中英文混排
+        // Mixed Chinese and Latin text
         ExampleSection(
             title = "中英文混排",
             description = "中英文混合显示"
@@ -289,7 +289,7 @@ fun TextExample(
             }
         }
 
-        // 次要和三级文本
+        // Secondary and tertiary text
         ExampleSection(
             title = "语义化文本",
             description = "使用 secondary 和 tertiary 参数"

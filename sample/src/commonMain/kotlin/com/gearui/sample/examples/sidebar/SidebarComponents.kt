@@ -22,7 +22,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 
 /**
- * 侧边栏样式
+ * Sidebar style
  */
 enum class SidebarStyle {
     NORMAL,  // 通栏样式
@@ -30,7 +30,7 @@ enum class SidebarStyle {
 }
 
 /**
- * 侧边栏项数据
+ * Sidebar item data
  */
 data class SidebarItemData(
     val index: Int,
@@ -43,7 +43,7 @@ data class SidebarItemData(
 )
 
 /**
- * 侧边栏子页面通用布局
+ * Shared layout for the sidebar sub-pages
  */
 @Composable
 fun SidebarSubPageLayout(
@@ -59,7 +59,7 @@ fun SidebarSubPageLayout(
             .fillMaxSize()
             .background(colors.background)
     ) {
-        // 顶部导航栏
+        // Top navigation bar
         NavBar(
             title = title,
             centerTitle = true,
@@ -68,10 +68,10 @@ fun SidebarSubPageLayout(
             backgroundColor = colors.surface
         )
 
-        // 顶部操作区（可选）
+        // Optional top action area
         topContent?.invoke()
 
-        // 主内容区
+        // Main content area
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -83,7 +83,7 @@ fun SidebarSubPageLayout(
 }
 
 /**
- * 侧边栏组件
+ * Sidebar component
  */
 @Composable
 fun Sidebar(
@@ -134,7 +134,7 @@ fun Sidebar(
 }
 
 /**
- * 侧边栏项
+ * Sidebar item
  */
 @Composable
 private fun SidebarItem(
@@ -187,7 +187,7 @@ private fun SidebarItem(
                 color = textColor
             )
 
-            // 徽标
+            // Badge
             if (item.showDot) {
                 Spacer(modifier = Modifier.width(Spacing.xs))
                 Badge(type = BadgeType.RedPoint)
@@ -197,7 +197,7 @@ private fun SidebarItem(
             }
         }
 
-        // 选中指示器（仅 NORMAL 样式）
+        // Selection indicator (NORMAL style only)
         if (selected && style == SidebarStyle.NORMAL) {
             Box(
                 modifier = Modifier
@@ -211,7 +211,7 @@ private fun SidebarItem(
 }
 
 /**
- * 带图标的侧边栏项
+ * Sidebar item with an icon
  */
 @Composable
 private fun SidebarItemWithIcon(
@@ -248,7 +248,7 @@ private fun SidebarItemWithIcon(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.xs)
         ) {
-            // 图标行（带徽标）
+            // Icon row (with a badge)
             Box {
                 Text(
                     text = item.icon ?: "",
@@ -272,7 +272,7 @@ private fun SidebarItemWithIcon(
             )
         }
 
-        // 选中指示器
+        // Selection indicator
         if (selected) {
             Box(
                 modifier = Modifier
@@ -286,7 +286,7 @@ private fun SidebarItemWithIcon(
 }
 
 /**
- * 内容区块 - 锚点内容
+ * Content block - anchor content
  */
 @Composable
 fun ContentSection(index: Int) {
@@ -297,7 +297,7 @@ fun ContentSection(index: Int) {
             .fillMaxWidth()
             .background(colors.surface)
     ) {
-        // 标题
+        // Title
         Text(
             text = "标题$index",
             style = Typography.TitleSmall,
@@ -309,7 +309,7 @@ fun ContentSection(index: Int) {
             )
         )
 
-        // 列表项
+        // List items
         repeat(3) {
             ContentListItem()
             DividerFull()
@@ -318,7 +318,7 @@ fun ContentSection(index: Int) {
 }
 
 /**
- * 内容列表项
+ * Content list item
  */
 @Composable
 fun ContentListItem() {
@@ -331,7 +331,7 @@ fun ContentListItem() {
         horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 图片占位
+        // Image placeholder
         Box(
             modifier = Modifier
                 .size(48.dp)
@@ -345,7 +345,7 @@ fun ContentListItem() {
             )
         }
 
-        // 标题
+        // Title
         Text(
             text = "标题",
             style = Typography.BodyLarge,
@@ -355,7 +355,7 @@ fun ContentListItem() {
 }
 
 /**
- * 切页内容 - 网格布局
+ * Page content - grid layout
  */
 @Composable
 fun PageGridContent(index: Int) {
@@ -374,7 +374,7 @@ fun PageGridContent(index: Int) {
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
-        // 网格内容 - 3列4行
+        // Grid content - 3 columns, 4 rows
         Column(
             verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
@@ -397,7 +397,7 @@ fun PageGridContent(index: Int) {
 }
 
 /**
- * 网格项
+ * Grid item
  */
 @Composable
 private fun GridItem(

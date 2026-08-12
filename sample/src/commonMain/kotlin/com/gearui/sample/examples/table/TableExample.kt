@@ -22,11 +22,11 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Table 组件示例
+ * Table component examples
  *
  *
- * 表格常用于展示同类结构下的多种数据，易于组织、对比和分析等，
- * 并可对数据进行搜索、筛选、排序等操作。一般包括表头、数据行和表尾三部分。
+ * Tables present several pieces of data sharing one structure, making them easy to organise,
+ * compare and analyse, and support search, filtering and sorting. A table usually has a header, data rows and a footer.
  */
 @Composable
 fun TableExample(
@@ -35,7 +35,7 @@ fun TableExample(
 ) {
     val colors = Theme.colors
 
-    // 生成基础示例数据
+    // Basic sample data
     fun generateData(count: Int, longContentIndex: Int = -1): List<Map<String, String>> {
         return List(count) { index ->
             if (index == longContentIndex) {
@@ -56,7 +56,7 @@ fun TableExample(
         }
     }
 
-    // 生成横向平铺数据
+    // Wide sample data
     fun generateHorizontalData(): List<Map<String, String>> {
         val data = mutableListOf<Map<String, String>>()
         data.add(mapOf(
@@ -74,16 +74,16 @@ fun TableExample(
         return data
     }
 
-    // 选择状态
+    // Selection state
     val selectionState = rememberTableSelectionState<Map<String, String>>()
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础表格
+        // Basic table
         ExampleSection(
             title = "基础表格",
             description = "最基本的表格展示"
@@ -141,7 +141,7 @@ fun TableExample(
             )
         }
 
-        // 带操作按钮表格
+        // Table with action buttons
         ExampleSection(
             title = "带操作按钮表格",
             description = "表格列中包含操作按钮"
@@ -218,7 +218,7 @@ fun TableExample(
             )
         }
 
-        // 带图标操作表格
+        // Table with icon actions
         ExampleSection(
             title = "带图标操作表格",
             description = "使用图标作为操作按钮"
@@ -289,7 +289,7 @@ fun TableExample(
             )
         }
 
-        // 可选择表格
+        // Selectable table
         ExampleSection(
             title = "可选择表格",
             description = "支持多选行功能"
@@ -358,7 +358,7 @@ fun TableExample(
             }
         }
 
-        // 固定列+滚动表格
+        // Pinned columns + horizontal scrolling
         ExampleSection(
             title = "固定列+滚动表格",
             description = "左侧列固定，中间列可横向滚动，右侧操作列固定"
@@ -495,7 +495,7 @@ fun TableExample(
             )
         }
 
-        // 横向平铺可滚动表格
+        // Wide scrollable table
         ExampleSection(
             title = "横向平铺可滚动表格",
             description = "内容较宽时可横向滚动"
@@ -544,9 +544,9 @@ fun TableExample(
             )
         }
 
-        // ==================== 组件样式 ====================
+        // ==================== Component styles ====================
 
-        // 带斑马纹表格样式
+        // Zebra-striped table
         ExampleSection(
             title = "带斑马纹表格样式",
             description = "隔行变色，提高可读性"
@@ -605,7 +605,7 @@ fun TableExample(
             )
         }
 
-        // 带边框表格样式
+        // Bordered table
         ExampleSection(
             title = "带边框表格样式",
             description = "单元格带边框线"
@@ -664,7 +664,7 @@ fun TableExample(
             )
         }
 
-        // 内容居中表格
+        // Centred content
         ExampleSection(
             title = "内容居中表格",
             description = "所有列内容居中对齐"
@@ -725,7 +725,7 @@ fun TableExample(
             )
         }
 
-        // 空数据表格
+        // Empty table
         ExampleSection(
             title = "空数据表格",
             description = "无数据时显示空状态提示"
@@ -783,7 +783,7 @@ fun TableExample(
             )
         }
 
-        // 简单表格
+        // Simple table
         ExampleSection(
             title = "简单表格",
             description = "使用字符串数组快速创建表格"
@@ -802,7 +802,7 @@ fun TableExample(
             )
         }
 
-        // 带状态标签表格
+        // Table with status tags
         ExampleSection(
             title = "带状态标签表格",
             description = "使用标签展示状态信息"

@@ -21,7 +21,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * SwipeCell 组件示例
+ * SwipeCell component examples
  */
 @Composable
 fun SwipeCellExample(
@@ -30,20 +30,20 @@ fun SwipeCellExample(
 ) {
     val colors = Theme.colors
 
-    // 操作结果提示
+    // Result message
     var actionResult by remember { mutableStateOf("") }
 
-    // 可删除列表项
+    // Deletable list items
     var deleteList by remember { mutableStateOf(listOf("可删除项 1", "可删除项 2", "可删除项 3")) }
 
-    // 组状态 - 用于互斥
+    // Group state - keeps them mutually exclusive
     val groupState = rememberSwipeCellGroupState()
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 左滑单操作
+        // Swipe left, one action
         ExampleSection(
             title = "左滑单操作",
             description = "向左滑动显示单个操作按钮"
@@ -89,7 +89,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 左滑双操作
+        // Swipe left, two actions
         ExampleSection(
             title = "左滑双操作",
             description = "向左滑动显示两个操作按钮"
@@ -116,7 +116,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 左滑三操作
+        // Swipe left, three actions
         ExampleSection(
             title = "左滑三操作",
             description = "向左滑动显示三个操作按钮"
@@ -148,7 +148,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 右滑单操作
+        // Swipe right, one action
         ExampleSection(
             title = "右滑单操作",
             description = "向右滑动显示操作按钮"
@@ -170,7 +170,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 左右滑操作
+        // Swipe both ways
         ExampleSection(
             title = "左右滑操作",
             description = "支持左右两个方向滑动"
@@ -204,7 +204,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 带图标的滑动操作
+        // Swipe actions with icons
         ExampleSection(
             title = "带图标的滑动操作",
             description = "操作按钮支持图标+文字"
@@ -212,7 +212,7 @@ fun SwipeCellExample(
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 图标+文字（横向）
+                // Icon + text (horizontal)
                 SwipeCell(
                     groupState = groupState,
                     rightActions = listOf(
@@ -238,7 +238,7 @@ fun SwipeCellExample(
                     )
                 }
 
-                // 仅图标
+                // Icon only
                 SwipeCell(
                     groupState = groupState,
                     rightActions = listOf(
@@ -262,7 +262,7 @@ fun SwipeCellExample(
                     )
                 }
 
-                // 图标+文字（纵向）
+                // Icon + text (vertical)
                 SwipeCell(
                     groupState = groupState,
                     rightActions = listOf(
@@ -291,7 +291,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 滑动删除列表
+        // Swipe-to-delete list
         ExampleSection(
             title = "滑动删除列表",
             description = "常见的滑动删除交互场景（同组互斥）"
@@ -344,7 +344,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 操作结果
+        // Result
         if (actionResult.isNotEmpty()) {
             ExampleSection(
                 title = "操作结果",
@@ -358,7 +358,7 @@ fun SwipeCellExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "SwipeCell 组件特性"

@@ -19,7 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Swiper 组件示例
+ * Swiper component examples
  */
 @Composable
 fun SwiperExample(
@@ -28,7 +28,7 @@ fun SwiperExample(
 ) {
     val colors = Theme.colors
 
-    // 轮播图颜色列表
+    // Carousel colours
     val slideColors = listOf(
         colors.primary,
         colors.success,
@@ -42,9 +42,9 @@ fun SwiperExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 点状 (dots)
+        // Dots
         ExampleSection(
             title = "点状 (dots)",
             description = "默认点状指示器"
@@ -72,7 +72,7 @@ fun SwiperExample(
             }
         }
 
-        // 点条状 (dots-bar)
+        // Dots bar
         ExampleSection(
             title = "点条状 (dots-bar)",
             description = "选中时指示器变为长条"
@@ -99,7 +99,7 @@ fun SwiperExample(
             }
         }
 
-        // 分式 (fraction)
+        // Fraction
         ExampleSection(
             title = "分式 (fraction)",
             description = "显示当前页码/总页数"
@@ -126,7 +126,7 @@ fun SwiperExample(
             }
         }
 
-        // 切换按钮 (controls)
+        // Controls
         ExampleSection(
             title = "切换按钮 (controls)",
             description = "显示左右切换箭头"
@@ -154,7 +154,7 @@ fun SwiperExample(
             }
         }
 
-        // 无指示器
+        // No indicator
         ExampleSection(
             title = "无指示器",
             description = "隐藏指示器，仅支持手势滑动"
@@ -181,9 +181,9 @@ fun SwiperExample(
             }
         }
 
-        // ========== 组件样式 ==========
+        // ========== Component styles ==========
 
-        // 内部指示器
+        // Inner indicator
         ExampleSection(
             title = "内部指示器",
             description = "指示器显示在轮播图内部底部"
@@ -210,7 +210,7 @@ fun SwiperExample(
             }
         }
 
-        // 外部指示器
+        // Outer indicator
         ExampleSection(
             title = "外部指示器",
             description = "指示器显示在轮播图下方"
@@ -237,7 +237,7 @@ fun SwiperExample(
             }
         }
 
-        // 顶部指示器
+        // Top indicator
         ExampleSection(
             title = "顶部指示器",
             description = "指示器显示在轮播图上方"
@@ -264,9 +264,9 @@ fun SwiperExample(
             }
         }
 
-        // ========== 其他配置 ==========
+        // ========== Other configuration ==========
 
-        // 非循环模式
+        // Non-looping mode
         ExampleSection(
             title = "非循环模式",
             description = "滑动到边界时停止"
@@ -293,7 +293,7 @@ fun SwiperExample(
             }
         }
 
-        // 监听索引变化
+        // Reacting to index changes
         var currentIndex by remember { mutableStateOf(0) }
         ExampleSection(
             title = "监听索引变化",
@@ -330,7 +330,7 @@ fun SwiperExample(
             }
         }
 
-        // 自定义自动播放间隔
+        // Custom autoplay interval
         ExampleSection(
             title = "快速轮播",
             description = "自动播放间隔 1.5 秒"
@@ -357,7 +357,7 @@ fun SwiperExample(
             }
         }
 
-        // 少量页面
+        // Few pages
         ExampleSection(
             title = "少量页面",
             description = "只有 2 张的轮播图"

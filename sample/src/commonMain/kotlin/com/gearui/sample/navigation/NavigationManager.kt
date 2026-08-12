@@ -83,16 +83,16 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * NavigationManager - 导航管理器
+ * NavigationManager - navigation manager
  *
- * 负责根据组件 ID 路由到对应的示例页面
+ * Routes to the matching example page by component ID
  *
- * 已注册组件总数：动态统计
+ * Total registered components: counted dynamically
  */
 object NavigationManager {
 
     /**
-     * 获取组件的示例页面
+     * Returns the example page for a component
      */
     @Composable
     fun getExamplePage(
@@ -100,7 +100,7 @@ object NavigationManager {
         onBack: () -> Unit
     ) {
         when (component.id) {
-            // 基础组件
+            // Basic components
             "button" -> ButtonExample(component, onBack)
             "icon" -> IconExample(component, onBack)
             "icon-render" -> IconExample(component, onBack)
@@ -110,7 +110,7 @@ object NavigationManager {
             "badge" -> BadgeExample(component, onBack)
             "divider" -> DividerExample(component, onBack)
 
-            // 表单组件 (15个)
+            // Form components (15)
             "input" -> InputExample(component, onBack)
             "checkbox" -> CheckboxExample(component, onBack)
             "radio" -> RadioExample(component, onBack)
@@ -129,7 +129,7 @@ object NavigationManager {
             "transfer" -> TransferExample(component, onBack)
             "treeselect" -> TreeSelectExample(component, onBack)
 
-            // 导航组件 (9个)
+            // Navigation components (9)
             "navbar" -> NavbarExample(component, onBack)
             "bottom-navbar" -> BottomNavBarExample(component, onBack)
             "tabs" -> TabsExample(component, onBack)
@@ -146,7 +146,7 @@ object NavigationManager {
             "navigator-kuikly-spike" -> NavigatorKuiklySpikeExample(component, onBack)
             "navigator-v1-demo" -> NavigatorV1DemoExample(component, onBack)
 
-            // 数据展示组件 (15个)
+            // Data display components (15)
             "list" -> ListExample(component, onBack)
             "card" -> CardExample(component, onBack)
             "cell" -> CellExample(component, onBack)
@@ -163,7 +163,7 @@ object NavigationManager {
             "calendar" -> CalendarExample(component, onBack)
             "watermark" -> WatermarkExample(component, onBack)
 
-            // 反馈组件 (11个)
+            // Feedback components (11)
             "swipecell" -> SwipeCellExample(component, onBack)
             "actionsheet" -> ActionSheetExample(component, onBack)
             "toast" -> ToastExample(component, onBack)
@@ -180,7 +180,7 @@ object NavigationManager {
             "result" -> ResultExample(component, onBack)
             "tour" -> TourExample(component, onBack)
 
-            // 布局组件 (5个)
+            // Layout components (5)
             "grid" -> GridExample(component, onBack)
             "swiper" -> SwiperExample(component, onBack)
             "searchbar" -> SearchBarExample(component, onBack)
@@ -188,16 +188,16 @@ object NavigationManager {
             "bottomsheet" -> BottomSheetExample(component, onBack)
             "backtop" -> BackTopExample(component, onBack)
 
-            // 未找到的组件
+            // Component not found
             else -> PlaceholderExample(component, onBack)
         }
     }
 }
 
 /**
- * 占位示例页面
+ * Placeholder example page
  *
- * 用于还未实现的组件示例
+ * Used for component examples that are not implemented yet
  */
 @Composable
 private fun PlaceholderExample(

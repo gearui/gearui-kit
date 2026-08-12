@@ -19,7 +19,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Textarea 多行文本框示例
+ * Textarea component examples
  *
  */
 @Composable
@@ -29,32 +29,32 @@ fun TextareaExample(
 ) {
     val colors = Theme.colors
 
-    // 组件类型
+    // Component types
     var basicText by remember { mutableStateOf("") }
     var basicTitleText by remember { mutableStateOf("") }
     var autoHeightText by remember { mutableStateOf("") }
     var maxLengthText by remember { mutableStateOf("") }
 
-    // 组件状态
+    // Component states
     var disabledText by remember { mutableStateOf("") }
 
-    // 组件样式
+    // Component styles
     var verticalText by remember { mutableStateOf("") }
     var cardText by remember { mutableStateOf("") }
 
-    // 特殊样式
+    // Special styles
     var borderedText by remember { mutableStateOf("") }
     var labelIconText by remember { mutableStateOf("") }
     var requiredText by remember { mutableStateOf("") }
 
-    // 原始 Kuikly BasicTextField 对照测试
+    // Control test against the raw Kuikly BasicTextField
     var rawText by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 原始 Kuikly BasicTextField（无 gearui-kit 包装）
+        // Raw Kuikly BasicTextField (no gearui-kit wrapper)
         ExampleSection(
             title = "原始 BasicTextField（对照组）",
             description = "直接用 Kuikly BasicTextField，无任何 gearui 包装"
@@ -80,13 +80,13 @@ fun TextareaExample(
             }
         }
 
-        // 组件类型
+        // Component types
         ExampleSection(
             title = "组件类型",
             description = ""
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 基础多文本输入框
+                // Basic multi-line input
                 Column {
                     SectionTitle("基础多文本输入框")
                     Textarea(
@@ -99,7 +99,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 带标题多文本输入框
+                // Multi-line input with a title
                 Column {
                     SectionTitle("带标题多文本输入框")
                     Textarea(
@@ -113,7 +113,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 自动增高多文本输入框
+                // Self-growing multi-line input
                 Column {
                     SectionTitle("自动增高多文本输入框")
                     Textarea(
@@ -126,7 +126,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 设置字符数限制
+                // With a character limit
                 Column {
                     SectionTitle("设置字符数限制")
                     Textarea(
@@ -144,7 +144,7 @@ fun TextareaExample(
             }
         }
 
-        // 组件状态
+        // Component states
         ExampleSection(
             title = "组件状态",
             description = ""
@@ -164,13 +164,13 @@ fun TextareaExample(
             }
         }
 
-        // 组件样式
+        // Component styles
         ExampleSection(
             title = "组件样式",
             description = ""
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 竖排样式
+                // Stacked style
                 Column {
                     SectionTitle("竖排样式")
                     Textarea(
@@ -187,7 +187,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 卡片样式
+                // Card style
                 Column {
                     SectionTitle("卡片样式")
                     Textarea(
@@ -206,13 +206,13 @@ fun TextareaExample(
             }
         }
 
-        // 特殊样式
+        // Special styles
         ExampleSection(
             title = "特殊样式",
             description = ""
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 标签外置输入框
+                // Label outside the input
                 Column {
                     SectionTitle("标签外置输入框")
                     Textarea(
@@ -230,7 +230,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 自定义标题
+                // Custom title
                 Column {
                     SectionTitle("自定义标题")
                     Textarea(
@@ -247,7 +247,7 @@ fun TextareaExample(
                     )
                 }
 
-                // 必填和辅助说明
+                // Required, with helper text
                 Column {
                     SectionTitle("必填和辅助说明")
                     Textarea(
@@ -271,7 +271,7 @@ fun TextareaExample(
 }
 
 /**
- * 小节标题
+ * Section title
  */
 @Composable
 private fun SectionTitle(title: String) {

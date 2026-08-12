@@ -11,27 +11,27 @@ import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
 
 /**
- * SideBar 非通栏选项样式页面
+ * SideBar outlined item style page
  *
- * 特点：
- * - 侧边栏项有圆角边框，不是通栏的
- * - 选中项高亮显示
+ * Features:
+ * - sidebar items have a rounded border rather than filling the width
+ * - the selected item is highlighted
  */
 @Composable
 fun SidebarOutlinePage(onBack: () -> Unit) {
     val colors = Theme.colors
     val coroutineScope = rememberCoroutineScope()
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 右侧内容滚动状态
+    // Scroll state of the content on the right
     val contentListState = rememberLazyListState(initialFirstVisibleItemIndex = 1)
 
-    // 锁定滚动监听
+    // Locks the scroll listener
     var scrollLock by remember { mutableStateOf(false) }
 
-    // 生成数据
+    // Builds the data
     val items = remember {
         (0..19).map { index ->
             SidebarItemData(
@@ -44,7 +44,7 @@ fun SidebarOutlinePage(onBack: () -> Unit) {
         }
     }
 
-    // 监听右侧内容滚动
+    // Watches the content scrolling on the right
     LaunchedEffect(contentListState.firstVisibleItemIndex) {
         if (!scrollLock) {
             val newIndex = contentListState.firstVisibleItemIndex
@@ -54,7 +54,7 @@ fun SidebarOutlinePage(onBack: () -> Unit) {
         }
     }
 
-    // 点击侧边栏项的处理
+    // Sidebar item tap handling
     fun onItemSelected(index: Int) {
         if (selectedIndex == index) return
         selectedIndex = index
@@ -71,7 +71,7 @@ fun SidebarOutlinePage(onBack: () -> Unit) {
         onBack = onBack
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            // 左侧侧边栏（非通栏样式）
+            // Sidebar on the left (outlined style)
             Sidebar(
                 items = items,
                 selectedIndex = selectedIndex,
@@ -79,7 +79,7 @@ fun SidebarOutlinePage(onBack: () -> Unit) {
                 style = SidebarStyle.OUTLINE
             )
 
-            // 右侧内容区
+            // Content area on the right
             LazyColumn(
                 state = contentListState,
                 modifier = Modifier
@@ -91,7 +91,7 @@ fun SidebarOutlinePage(onBack: () -> Unit) {
                     ContentSection(index = index)
                 }
 
-                // 底部留白
+                // Bottom blank space
                 item {
                     Spacer(modifier = Modifier.height(500.dp))
                 }

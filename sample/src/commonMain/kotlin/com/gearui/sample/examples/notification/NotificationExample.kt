@@ -17,12 +17,12 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Notification 组件示例
+ * Notification component examples
  *
- * - 顶部弹出的通知卡片
- * - 支持标题 + 详情
- * - 支持四种状态
- * - 支持操作按钮
+ * - a notification card dropping in from the top
+ * - title plus detail
+ * - four states
+ * - an action button
  */
 @Composable
 fun NotificationExample(
@@ -31,16 +31,16 @@ fun NotificationExample(
 ) {
     val colors = Theme.colors
 
-    // 使用 Overlay 系统的 Notification 控制器
+    // Notification controller backed by the Overlay system
     val notificationController = rememberNotificationController()
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 纯标题通知
+        // Title-only notification
         ExampleSection(
             title = "纯标题的通知",
             description = "只显示标题，不带详细描述"
@@ -59,7 +59,7 @@ fun NotificationExample(
             )
         }
 
-        // 带描述的通知
+        // Notification with a description
         ExampleSection(
             title = "带描述的通知",
             description = "显示标题和详细描述"
@@ -79,7 +79,7 @@ fun NotificationExample(
             )
         }
 
-        // 带操作的通知
+        // Notification with an action
         ExampleSection(
             title = "带操作的通知",
             description = "带有操作按钮的通知"
@@ -107,7 +107,7 @@ fun NotificationExample(
             )
         }
 
-        // 不可关闭的通知
+        // Non-dismissable notification
         ExampleSection(
             title = "不可关闭的通知",
             description = "隐藏关闭按钮，只能自动消失"
@@ -129,9 +129,9 @@ fun NotificationExample(
             )
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 普通通知
+        // Normal notification
         ExampleSection(
             title = "普通通知",
             description = "普通信息提示"
@@ -150,7 +150,7 @@ fun NotificationExample(
             )
         }
 
-        // 成功通知
+        // Success notification
         ExampleSection(
             title = "成功通知",
             description = "操作成功时的通知"
@@ -169,7 +169,7 @@ fun NotificationExample(
             )
         }
 
-        // 警示通知
+        // Warning notification
         ExampleSection(
             title = "警示通知",
             description = "警告信息的通知"
@@ -188,7 +188,7 @@ fun NotificationExample(
             )
         }
 
-        // 错误通知
+        // Error notification
         ExampleSection(
             title = "错误通知",
             description = "错误信息的通知"
@@ -207,7 +207,7 @@ fun NotificationExample(
             )
         }
 
-        // ========== 快速切换测试 ==========
+        // ========== Rapid switching test ==========
 
         ExampleSection(
             title = "快速切换测试",

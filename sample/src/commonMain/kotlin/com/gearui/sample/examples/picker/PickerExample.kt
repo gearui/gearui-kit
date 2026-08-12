@@ -14,9 +14,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Picker 组件示例
+ * Picker component examples
  *
- * 用于一组预设数据中的选择
+ * Selects from a preset set of values
  */
 @Composable
 fun PickerExample(
@@ -25,14 +25,14 @@ fun PickerExample(
 ) {
     val colors = Theme.colors
 
-    // 基础选择器数据
+    // Basic picker data
     val cityData = listOf("广州市", "韶关市", "深圳市", "珠海市", "汕头市")
 
-    // 多列选择器数据（年份+季节）
+    // Multi-column picker data (year + season)
     val yearData = (2020..2026).map { "${it}年" }
     val seasonData = listOf("春", "夏", "秋", "冬")
 
-    // 联动选择器数据（省-市-区）
+    // Linked picker data (province - city - district)
     val areaData = mapOf(
         "广东省" to mapOf(
             "深圳市" to listOf("南山区", "宝安区", "罗湖区", "福田区"),
@@ -51,7 +51,7 @@ fun PickerExample(
         )
     )
 
-    // 各选择器状态
+    // State of each picker
     var showCityPicker by remember { mutableStateOf(false) }
     var selectedCity by remember { mutableStateOf("") }
 
@@ -71,9 +71,9 @@ fun PickerExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础选择器 - 地区
+        // Basic picker - region
         ExampleSection(
             title = "基础选择器",
             description = "单列数据选择"
@@ -86,7 +86,7 @@ fun PickerExample(
             )
         }
 
-        // 基础选择器 - 时间（多列）
+        // Basic picker - time (multiple columns)
         ExampleSection(
             title = "基础选择器 - 时间",
             description = "多列独立数据选择"
@@ -99,7 +99,7 @@ fun PickerExample(
             )
         }
 
-        // 联动选择器
+        // Linked picker
         ExampleSection(
             title = "联动选择器",
             description = "多列数据联动选择"
@@ -112,9 +112,9 @@ fun PickerExample(
             )
         }
 
-        // ==================== 组件样式 ====================
+        // ==================== Component styles ====================
 
-        // 带标题选择器
+        // Picker with a title
         ExampleSection(
             title = "带标题选择器",
             description = "显示标题的选择器"
@@ -127,7 +127,7 @@ fun PickerExample(
             )
         }
 
-        // 无标题选择器
+        // Picker without a title
         ExampleSection(
             title = "无标题选择器",
             description = "不显示标题的选择器"
@@ -140,7 +140,7 @@ fun PickerExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Picker 组件特性"
@@ -175,9 +175,9 @@ fun PickerExample(
         }
     }
 
-    // ==================== Picker 弹窗 ====================
+    // ==================== Picker dialogs ====================
 
-    // 基础选择器 - 地区
+    // Basic picker - region
     Picker.Single(
         visible = showCityPicker,
         title = "选择地区",
@@ -191,7 +191,7 @@ fun PickerExample(
         onDismiss = { showCityPicker = false }
     )
 
-    // 基础选择器 - 时间（多列）
+    // Basic picker - time (multiple columns)
     Picker.Multi(
         visible = showTimePicker,
         title = "选择时间",
@@ -210,7 +210,7 @@ fun PickerExample(
         onDismiss = { showTimePicker = false }
     )
 
-    // 联动选择器
+    // Linked picker
     Picker.Linked(
         visible = showAreaPicker,
         title = "选择地区",
@@ -225,7 +225,7 @@ fun PickerExample(
         onDismiss = { showAreaPicker = false }
     )
 
-    // 带标题选择器
+    // Picker with a title
     Picker.Single(
         visible = showAreaWithTitlePicker,
         title = "带标题选择器",
@@ -239,7 +239,7 @@ fun PickerExample(
         onDismiss = { showAreaWithTitlePicker = false }
     )
 
-    // 无标题选择器
+    // Picker without a title
     Picker.Single(
         visible = showAreaNoTitlePicker,
         title = null,

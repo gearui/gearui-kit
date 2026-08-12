@@ -19,7 +19,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Radio 组件示例
+ * Radio component examples
  */
 @Composable
 fun RadioExample(
@@ -32,9 +32,9 @@ fun RadioExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 纵向单选框
+        // Vertical radio buttons
         var verticalSelected by remember { mutableStateOf("0") }
         ExampleSection(
             title = "纵向单选框",
@@ -59,7 +59,7 @@ fun RadioExample(
             }
         }
 
-        // 横向单选框
+        // Horizontal radio buttons
         var horizontalSelected by remember { mutableStateOf("1") }
         ExampleSection(
             title = "横向单选框",
@@ -87,9 +87,9 @@ fun RadioExample(
             }
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 单选框状态
+        // Radio button states
         ExampleSection(
             title = "单选框状态",
             description = "禁用状态下的选中与未选中"
@@ -110,9 +110,9 @@ fun RadioExample(
             }
         }
 
-        // ========== 组件样式 ==========
+        // ========== Component styles ==========
 
-        // 单选框尺寸
+        // Radio button sizes
         var sizeSelected by remember { mutableStateOf("medium") }
         ExampleSection(
             title = "单选框尺寸",
@@ -170,7 +170,7 @@ fun RadioExample(
             }
         }
 
-        // 勾选显示位置
+        // Marker position
         var positionSelected1 by remember { mutableStateOf(true) }
         var positionSelected2 by remember { mutableStateOf(true) }
         ExampleSection(
@@ -178,13 +178,13 @@ fun RadioExample(
             description = "单选框在左侧或右侧"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
-                // 单选框在右侧（默认）
+                // Radio on the right (default)
                 RadioButtonWithLabel(
                     selected = positionSelected1,
                     onClick = { positionSelected1 = !positionSelected1 },
                     label = "单选框在右侧"
                 )
-                // 单选框在左侧
+                // Radio on the left
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -206,9 +206,9 @@ fun RadioExample(
             }
         }
 
-        // ========== 特殊样式 ==========
+        // ========== Special styles ==========
 
-        // 纵向卡片单选框
+        // Vertical card radio buttons
         var cardVerticalSelected by remember { mutableStateOf("1") }
         ExampleSection(
             title = "纵向卡片单选框",
@@ -226,7 +226,7 @@ fun RadioExample(
             }
         }
 
-        // 横向卡片单选框
+        // Horizontal card radio buttons
         var cardHorizontalSelected by remember { mutableStateOf("1") }
         ExampleSection(
             title = "横向卡片单选框",
@@ -264,7 +264,7 @@ fun RadioExample(
             }
         }
 
-        // 单选框组
+        // Radio group
         var groupSelected by remember { mutableStateOf("选项B") }
         ExampleSection(
             title = "单选框组",
@@ -280,7 +280,7 @@ fun RadioExample(
 }
 
 /**
- * 卡片样式单选项（纵向，带描述）
+ * Card-style radio option (vertical, with a description)
  */
 @Composable
 private fun RadioCardItem(
@@ -330,7 +330,7 @@ private fun RadioCardItem(
 }
 
 /**
- * 卡片样式单选项（横向，紧凑）
+ * Card-style radio option (horizontal, compact)
  */
 @Composable
 private fun RadioCardItemCompact(

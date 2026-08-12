@@ -11,31 +11,31 @@ import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
 
 /**
- * SideBar 带图标侧边导航页面
+ * SideBar with icons page
  *
- * 特点：
- * - 侧边栏项带有图标
- * - 与锚点用法类似的滚动联动
+ * Features:
+ * - sidebar items carry icons
+ * - scroll linkage like the anchor usage
  */
 @Composable
 fun SidebarIconPage(onBack: () -> Unit) {
     val colors = Theme.colors
     val coroutineScope = rememberCoroutineScope()
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 右侧内容滚动状态
+    // Scroll state of the content on the right
     val contentListState = rememberLazyListState(initialFirstVisibleItemIndex = 1)
 
-    // 锁定滚动监听
+    // Locks the scroll listener
     var scrollLock by remember { mutableStateOf(false) }
 
-    // 图标列表
+    // Icon list
     val icons = listOf("🏠", "📂", "🛒", "📋", "👤", "⚙️", "❓", "ℹ️", "🔔", "❤️",
         "⭐", "📌", "🎯", "💡", "🔧", "📊", "📈", "🗂️", "📁", "🔍")
 
-    // 生成数据
+    // Builds the data
     val items = remember {
         (0..19).map { index ->
             SidebarItemData(
@@ -49,7 +49,7 @@ fun SidebarIconPage(onBack: () -> Unit) {
         }
     }
 
-    // 监听右侧内容滚动
+    // Watches the content scrolling on the right
     LaunchedEffect(contentListState.firstVisibleItemIndex) {
         if (!scrollLock) {
             val newIndex = contentListState.firstVisibleItemIndex
@@ -59,7 +59,7 @@ fun SidebarIconPage(onBack: () -> Unit) {
         }
     }
 
-    // 点击侧边栏项的处理
+    // Sidebar item tap handling
     fun onItemSelected(index: Int) {
         if (selectedIndex == index) return
         selectedIndex = index
@@ -76,7 +76,7 @@ fun SidebarIconPage(onBack: () -> Unit) {
         onBack = onBack
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            // 左侧侧边栏（带图标）
+            // Sidebar on the left (with icons)
             Sidebar(
                 items = items,
                 selectedIndex = selectedIndex,
@@ -85,7 +85,7 @@ fun SidebarIconPage(onBack: () -> Unit) {
                 showIcon = true
             )
 
-            // 右侧内容区
+            // Content area on the right
             LazyColumn(
                 state = contentListState,
                 modifier = Modifier
@@ -97,7 +97,7 @@ fun SidebarIconPage(onBack: () -> Unit) {
                     ContentSection(index = index)
                 }
 
-                // 底部留白
+                // Bottom blank space
                 item {
                     Spacer(modifier = Modifier.height(500.dp))
                 }

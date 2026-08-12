@@ -14,19 +14,19 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Sidebar 侧边栏组件示例 - 主入口页面
+ * Sidebar component examples - the index page
  *
- * 用于内容分类后的展示切换。
+ * Switches between categorised content.
  */
 @Composable
 fun SidebarExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    // 子页面导航状态
+    // Sub-page navigation state
     var currentSubPage by remember { mutableStateOf<SidebarSubPage?>(null) }
 
-    // 如果有子页面，显示子页面
+    // Show the sub-page when there is one
     currentSubPage?.let { subPage ->
         when (subPage) {
             SidebarSubPage.ANCHOR -> SidebarAnchorPage(onBack = { currentSubPage = null })
@@ -40,12 +40,12 @@ fun SidebarExample(
         return
     }
 
-    // 主入口页面
+    // The index page
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 组件类型
+        // Component types
         ExampleSection(
             title = "组件类型",
             description = "侧边导航用法"
@@ -85,7 +85,7 @@ fun SidebarExample(
             )
         }
 
-        // 组件样式
+        // Component styles
         ExampleSection(
             title = "组件样式",
             description = "侧边导航样式"
@@ -111,7 +111,7 @@ fun SidebarExample(
             }
         }
 
-        // 高级用法
+        // Advanced usage
         ExampleSection(
             title = "高级用法",
             description = "延迟加载与自定义颜色"
@@ -140,7 +140,7 @@ fun SidebarExample(
 }
 
 /**
- * Sidebar 子页面枚举
+ * Sidebar sub-page enum
  */
 enum class SidebarSubPage {
     ANCHOR,           // 锚点用法

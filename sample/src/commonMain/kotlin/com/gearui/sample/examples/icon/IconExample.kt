@@ -33,7 +33,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Icon 组件示例（图标展示页）
+ * Icon component examples (the icon gallery)
  */
 @Composable
 fun IconExample(

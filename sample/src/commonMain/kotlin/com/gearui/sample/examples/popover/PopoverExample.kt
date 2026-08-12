@@ -24,7 +24,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Popover 组件示例
+ * Popover component examples
  */
 @Composable
 fun PopoverExample(
@@ -33,11 +33,11 @@ fun PopoverExample(
 ) {
     val colors = Theme.colors
 
-    // 基础 Popover 状态
+    // Basic Popover state
     val basicPopoverState = rememberPopoverState()
     val noArrowPopoverState = rememberPopoverState()
 
-    // 不同主题的 Popover 状态
+    // Popover state for each theme
     val darkPopoverState = rememberPopoverState()
     val lightPopoverState = rememberPopoverState()
     val brandPopoverState = rememberPopoverState()
@@ -45,16 +45,16 @@ fun PopoverExample(
     val warningPopoverState = rememberPopoverState()
     val errorPopoverState = rememberPopoverState()
 
-    // 位置演示
+    // Placement demo
     val topPopoverState = rememberPopoverState()
     val bottomPopoverState = rememberPopoverState()
     val leftPopoverState = rememberPopoverState()
     val rightPopoverState = rememberPopoverState()
 
-    // 自定义内容
+    // Custom content
     val customPopoverState = rememberPopoverState()
 
-    // PopoverMenu 菜单
+    // PopoverMenu
     val menuState = rememberPopoverState()
     var menuResult by remember { mutableStateOf("") }
 
@@ -62,7 +62,7 @@ fun PopoverExample(
         component = component,
         onBack = onBack
     ) {
-        // 带箭头/不带箭头
+        // With and without an arrow
         ExampleSection(
             title = "带箭头/不带箭头",
             description = "控制气泡是否显示箭头指示器"
@@ -112,7 +112,7 @@ fun PopoverExample(
             }
         }
 
-        // 主题风格
+        // Theme styles
         ExampleSection(
             title = "主题风格",
             description = "支持深色、浅色、品牌色、成功、警告、错误六种主题"
@@ -120,7 +120,7 @@ fun PopoverExample(
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // 第一行：深色、浅色、品牌色
+                // First row: dark, light, brand
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxWidth()
@@ -193,7 +193,7 @@ fun PopoverExample(
                     }
                 }
 
-                // 第二行：成功、警告、错误
+                // Second row: success, warning, error
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxWidth()
@@ -267,7 +267,7 @@ fun PopoverExample(
             }
         }
 
-        // 弹出位置
+        // Placement
         ExampleSection(
             title = "弹出位置",
             description = "支持上、下、左、右四个基本方向，共12种位置"
@@ -277,7 +277,7 @@ fun PopoverExample(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 顶部弹出
+                // Above
                 Popover(
                     state = topPopoverState,
                     placement = PopoverPlacement.TOP,
@@ -296,7 +296,7 @@ fun PopoverExample(
                     )
                 }
 
-                // 左右弹出
+                // Left and right
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(48.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -338,7 +338,7 @@ fun PopoverExample(
                     }
                 }
 
-                // 底部弹出
+                // Below
                 Popover(
                     state = bottomPopoverState,
                     placement = PopoverPlacement.BOTTOM,
@@ -359,7 +359,7 @@ fun PopoverExample(
             }
         }
 
-        // 自定义内容
+        // Custom content
         ExampleSection(
             title = "自定义内容",
             description = "气泡内容支持完全自定义"
@@ -409,7 +409,7 @@ fun PopoverExample(
             }
         }
 
-        // PopoverMenu 菜单
+        // PopoverMenu
         ExampleSection(
             title = "菜单式气泡",
             description = "带菜单项的气泡弹出，支持图标、禁用、危险操作"
@@ -461,7 +461,7 @@ fun PopoverExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Popover 组件特性介绍"

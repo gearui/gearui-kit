@@ -19,9 +19,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Breadcrumb 组件示例
+ * Breadcrumb component examples
  *
- * 面包屑导航示例展示
+ * Breadcrumb navigation showcase
  */
 @Composable
 fun BreadcrumbExample(
@@ -30,14 +30,14 @@ fun BreadcrumbExample(
 ) {
     val colors = Theme.colors
 
-    // 点击结果
+    // Tap result
     var clickedItem by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "使用斜杠分隔的面包屑导航"
@@ -62,13 +62,13 @@ fun BreadcrumbExample(
             }
         }
 
-        // 自定义分隔符
+        // Custom separators
         ExampleSection(
             title = "自定义分隔符",
             description = "可以使用不同的分隔符"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 箭头分隔符
+                // Arrow separator
                 Breadcrumb(
                     items = listOf(
                         BreadcrumbItem("首页"),
@@ -79,7 +79,7 @@ fun BreadcrumbExample(
                     onItemClick = { clickedItem = it.label }
                 )
 
-                // 点号分隔符
+                // Dot separator
                 Breadcrumb(
                     items = listOf(
                         BreadcrumbItem("首页"),
@@ -90,7 +90,7 @@ fun BreadcrumbExample(
                     onItemClick = { clickedItem = it.label }
                 )
 
-                // 横杠分隔符
+                // Dash separator
                 Breadcrumb(
                     items = listOf(
                         BreadcrumbItem("首页"),
@@ -103,7 +103,7 @@ fun BreadcrumbExample(
             }
         }
 
-        // 带图标
+        // With icons
         ExampleSection(
             title = "带图标",
             description = "面包屑项可以带有图标"
@@ -118,7 +118,7 @@ fun BreadcrumbExample(
             )
         }
 
-        // 多级路径
+        // Deep paths
         ExampleSection(
             title = "多级路径",
             description = "支持多级嵌套路径"
@@ -135,7 +135,7 @@ fun BreadcrumbExample(
             )
         }
 
-        // 折叠模式
+        // Collapsed mode
         ExampleSection(
             title = "折叠模式",
             description = "路径过长时可以折叠中间项"
@@ -154,7 +154,7 @@ fun BreadcrumbExample(
             )
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "某些面包屑项可以禁用"
@@ -169,7 +169,7 @@ fun BreadcrumbExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Breadcrumb 组件特性"
@@ -206,7 +206,7 @@ fun BreadcrumbExample(
 }
 
 /**
- * 面包屑项数据
+ * Breadcrumb item data
  */
 private data class BreadcrumbItem(
     val label: String,
@@ -215,7 +215,7 @@ private data class BreadcrumbItem(
 )
 
 /**
- * 基础面包屑导航
+ * Basic breadcrumb navigation
  */
 @Composable
 private fun Breadcrumb(
@@ -246,7 +246,7 @@ private fun Breadcrumb(
                     .padding(horizontal = 4.dp, vertical = 2.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 图标
+                // Icon
                 if (item.icon != null) {
                     Text(
                         text = item.icon,
@@ -260,7 +260,7 @@ private fun Breadcrumb(
                     Spacer(modifier = Modifier.width(4.dp))
                 }
 
-                // 文字
+                // Text
                 Text(
                     text = item.label,
                     style = Typography.BodyMedium,
@@ -272,7 +272,7 @@ private fun Breadcrumb(
                 )
             }
 
-            // 分隔符
+            // Separator
             if (!isLast) {
                 Text(
                     text = " $separator ",
@@ -285,7 +285,7 @@ private fun Breadcrumb(
 }
 
 /**
- * 折叠面包屑导航
+ * Collapsed breadcrumb navigation
  */
 @Composable
 private fun BreadcrumbCollapsed(
@@ -306,7 +306,7 @@ private fun BreadcrumbCollapsed(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 第一项
+            // First item
             val firstItem = items.first()
             Text(
                 text = firstItem.label,
@@ -324,7 +324,7 @@ private fun BreadcrumbCollapsed(
                 color = colors.mutedForeground
             )
 
-            // 折叠的省略号
+            // Collapsed ellipsis
             Text(
                 text = "...",
                 style = Typography.BodyMedium,
@@ -341,7 +341,7 @@ private fun BreadcrumbCollapsed(
                 color = colors.mutedForeground
             )
 
-            // 最后一项
+            // Last item
             val lastItem = items.last()
             Text(
                 text = lastItem.label,

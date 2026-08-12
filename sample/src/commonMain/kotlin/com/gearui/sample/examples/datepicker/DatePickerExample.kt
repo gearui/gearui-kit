@@ -15,9 +15,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * DatePicker 组件示例
+ * DatePicker component examples
  *
- * 日期时间选择器，支持日期、时间和日期时间选择
+ * Date and time pickers: date, time, and both together
  */
 @Composable
 fun DatePickerExample(
@@ -30,7 +30,7 @@ fun DatePickerExample(
         component = component,
         onBack = onBack
     ) {
-        // 日期选择器
+        // Date picker
         ExampleSection(
             title = "日期选择器",
             description = "选择年月日"
@@ -53,7 +53,7 @@ fun DatePickerExample(
             }
         }
 
-        // 带默认值
+        // With a default value
         ExampleSection(
             title = "带默认值",
             description = "设置初始日期值"
@@ -68,7 +68,7 @@ fun DatePickerExample(
             )
         }
 
-        // 时间选择器
+        // Time picker
         ExampleSection(
             title = "时间选择器",
             description = "选择时分"
@@ -91,7 +91,7 @@ fun DatePickerExample(
             }
         }
 
-        // 时间带默认值
+        // Time with a default value
         ExampleSection(
             title = "时间默认值",
             description = "设置初始时间值"
@@ -106,7 +106,7 @@ fun DatePickerExample(
             )
         }
 
-        // 日期时间选择器
+        // Date and time picker
         ExampleSection(
             title = "日期时间选择器",
             description = "同时选择日期和时间"
@@ -131,7 +131,7 @@ fun DatePickerExample(
             }
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "不可交互的选择器"
@@ -155,7 +155,7 @@ fun DatePickerExample(
             }
         }
 
-        // 无标签
+        // Without a label
         ExampleSection(
             title = "无标签样式",
             description = "不显示标签的选择器"
@@ -183,7 +183,7 @@ fun DatePickerExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "DatePicker 组件特性"

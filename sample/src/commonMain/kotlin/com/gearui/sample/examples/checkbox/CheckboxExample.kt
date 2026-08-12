@@ -10,7 +10,7 @@ import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 
 /**
- * Checkbox 组件示例
+ * Checkbox component examples
  */
 @Composable
 fun CheckboxExample(
@@ -21,7 +21,7 @@ fun CheckboxExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础复选框
+        // Basic checkboxes
         var checked1 by remember { mutableStateOf(false) }
         var checked2 by remember { mutableStateOf(true) }
         ExampleSection(
@@ -40,7 +40,7 @@ fun CheckboxExample(
             }
         }
 
-        // 带标签的复选框
+        // Checkboxes with labels
         var labelChecked1 by remember { mutableStateOf(false) }
         var labelChecked2 by remember { mutableStateOf(true) }
         ExampleSection(
@@ -61,7 +61,7 @@ fun CheckboxExample(
             }
         }
 
-        // 复选框尺寸
+        // Checkbox sizes
         var sizeChecked by remember { mutableStateOf(true) }
         ExampleSection(
             title = "复选框尺寸",
@@ -89,7 +89,7 @@ fun CheckboxExample(
             }
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "不可操作的复选框"
@@ -108,7 +108,7 @@ fun CheckboxExample(
             }
         }
 
-        // 复选框组
+        // Checkbox group
         var selectedOptions by remember {
             mutableStateOf(setOf("选项1", "选项3"))
         }

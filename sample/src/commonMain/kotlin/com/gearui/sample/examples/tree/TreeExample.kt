@@ -19,7 +19,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Tree 组件示例
+ * Tree component examples
  */
 @Composable
 fun TreeExample(
@@ -28,7 +28,7 @@ fun TreeExample(
 ) {
     val colors = Theme.colors
 
-    // 基础树形数据
+    // Basic tree data
     val basicTreeData = listOf(
         TreeNode(
             key = "1",
@@ -60,7 +60,7 @@ fun TreeExample(
         )
     )
 
-    // 带图标的树形数据
+    // Tree data with icons
     val iconTreeData = listOf(
         TreeNode(
             key = "folder-1",
@@ -91,7 +91,7 @@ fun TreeExample(
         )
     )
 
-    // 带禁用节点的数据
+    // Data with disabled nodes
     val disabledTreeData = listOf(
         TreeNode(
             key = "d1",
@@ -112,20 +112,20 @@ fun TreeExample(
         )
     )
 
-    // 基础展开状态
+    // Basic expansion state
     var basicExpanded by remember { mutableStateOf(setOf("1")) }
 
-    // 可选中树的状态
+    // Checkable tree state
     val checkableTreeState = rememberTreeState()
 
-    // 点击反馈
+    // Tap feedback
     var clickedNode by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "点击节点展开/收起子节点"
@@ -156,7 +156,7 @@ fun TreeExample(
             }
         }
 
-        // 带复选框
+        // With checkboxes
         ExampleSection(
             title = "带复选框",
             description = "设置 checkable=true 支持节点选中"
@@ -211,7 +211,7 @@ fun TreeExample(
             }
         }
 
-        // 带图标
+        // With icons
         ExampleSection(
             title = "自定义图标",
             description = "通过 icon 属性设置节点图标"
@@ -232,7 +232,7 @@ fun TreeExample(
             }
         }
 
-        // 禁用节点
+        // Disabled nodes
         ExampleSection(
             title = "禁用节点",
             description = "设置 disabled=true 禁用指定节点"
@@ -257,14 +257,14 @@ fun TreeExample(
             }
         }
 
-        // 默认展开全部
+        // Expanded by default
         ExampleSection(
             title = "默认展开全部",
             description = "初始化时展开所有节点"
         ) {
             val allExpandedState = rememberTreeState()
 
-            // 初始展开全部
+            // Expand everything initially
             LaunchedEffect(Unit) {
                 allExpandedState.expandAll(basicTreeData)
             }
@@ -283,7 +283,7 @@ fun TreeExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Tree 组件特性"

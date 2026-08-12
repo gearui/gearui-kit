@@ -15,7 +15,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Select 组件示例
+ * Select component examples
  */
 @Composable
 fun SelectExample(
@@ -29,7 +29,7 @@ fun SelectExample(
     var selectedHobbies by remember { mutableStateOf<Set<String>>(emptySet()) }
     var requiredCity by remember { mutableStateOf<String?>(null) }
 
-    // 城市选项
+    // City options
     val cityOptions = listOf(
         SelectOption("beijing", "北京"),
         SelectOption("shanghai", "上海"),
@@ -39,7 +39,7 @@ fun SelectExample(
         SelectOption("chengdu", "成都")
     )
 
-    // 水果选项（带禁用）
+    // Fruit options (with a disabled one)
     val fruitOptions = listOf(
         SelectOption("apple", "苹果 🍎"),
         SelectOption("banana", "香蕉 🍌"),
@@ -48,7 +48,7 @@ fun SelectExample(
         SelectOption("watermelon", "西瓜 🍉")
     )
 
-    // 爱好选项
+    // Hobby options
     val hobbyOptions = listOf(
         SelectOption("reading", "阅读 📚"),
         SelectOption("music", "音乐 🎵"),
@@ -62,7 +62,7 @@ fun SelectExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础单选
+        // Basic single select
         ExampleSection(
             title = "基础单选",
             description = "单选下拉选择"
@@ -75,7 +75,7 @@ fun SelectExample(
             )
         }
 
-        // 带标签
+        // With a label
         ExampleSection(
             title = "带标签",
             description = "显示字段标签"
@@ -89,7 +89,7 @@ fun SelectExample(
             )
         }
 
-        // 多选模式
+        // Multi-select mode
         ExampleSection(
             title = "多选模式",
             description = "支持选择多个选项"
@@ -103,7 +103,7 @@ fun SelectExample(
             )
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "不可交互"
@@ -117,7 +117,7 @@ fun SelectExample(
             )
         }
 
-        // 错误状态
+        // Error state
         ExampleSection(
             title = "错误状态",
             description = "显示错误提示"

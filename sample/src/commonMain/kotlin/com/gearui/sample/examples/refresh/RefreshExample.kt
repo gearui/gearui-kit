@@ -13,9 +13,9 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * 下拉刷新展示页。
+ * Pull-to-refresh page.
  *
- * 说明：KuiklyUI 已提供该能力，本页先提供入口和交互预期说明，后续补充完整示例。
+ * Note: KuiklyUI already provides this capability. For now this page is an entry point describing the expected interaction; a full example follows.
  */
 @Composable
 fun RefreshExample(

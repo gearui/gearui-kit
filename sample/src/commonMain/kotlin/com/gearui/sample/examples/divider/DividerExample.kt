@@ -17,7 +17,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Divider 组件示例
+ * Divider component examples
  */
 @Composable
 fun DividerExample(
@@ -30,7 +30,7 @@ fun DividerExample(
         component = component,
         onBack = onBack
     ) {
-        // 全宽分割线
+        // Full-width divider
         ExampleSection(
             title = "全宽分割线",
             description = "占据容器全部宽度的分割线"
@@ -53,7 +53,7 @@ fun DividerExample(
             }
         }
 
-        // 缩进分割线
+        // Inset divider
         ExampleSection(
             title = "缩进分割线",
             description = "左侧有缩进的分割线，常用于列表项"
@@ -82,7 +82,7 @@ fun DividerExample(
             }
         }
 
-        // 章节分隔
+        // Section separator
         ExampleSection(
             title = "章节分隔",
             description = "用于分隔不同章节的粗分割线"
@@ -118,7 +118,7 @@ fun DividerExample(
             }
         }
 
-        // 自定义分割线
+        // Custom divider
         ExampleSection(
             title = "自定义分割线",
             description = "自定义粗细和缩进的分割线"

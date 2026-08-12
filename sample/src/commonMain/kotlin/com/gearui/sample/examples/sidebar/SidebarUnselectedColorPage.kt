@@ -15,35 +15,35 @@ import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.launch
 
 /**
- * SideBar 未选中颜色自定义页面
+ * SideBar unselected colour customisation page
  *
- * 特点：
- * - 自定义未选中项的文字颜色（红色）
- * - 带图标的侧边栏
- * - 支持动态更新 children
+ * Features:
+ * - custom text colour for unselected items (red)
+ * - sidebar with icons
+ * - children can be updated at runtime
  */
 @Composable
 fun SidebarUnselectedColorPage(onBack: () -> Unit) {
     val colors = Theme.colors
     val coroutineScope = rememberCoroutineScope()
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 右侧内容滚动状态
+    // Scroll state of the content on the right
     val contentListState = rememberLazyListState(initialFirstVisibleItemIndex = 1)
 
-    // 锁定滚动监听
+    // Locks the scroll listener
     var scrollLock by remember { mutableStateOf(false) }
 
-    // 图标列表
+    // Icon list
     val icons = listOf("🏠", "📂", "🛒", "📋", "👤", "⚙️", "❓", "ℹ️", "🔔", "❤️",
         "⭐", "📌", "🎯", "💡", "🔧", "📊", "📈", "🗂️", "📁", "🔍")
 
-    // 数据版本（用于触发更新）
+    // Data version (used to trigger updates)
     var dataVersion by remember { mutableStateOf(0) }
 
-    // 生成数据
+    // Builds the data
     val items = remember(dataVersion) {
         val prefix = if (dataVersion == 0) "选项" else "变更"
         (0..19).map { index ->
@@ -58,10 +58,10 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
         }
     }
 
-    // 自定义未选中文字颜色
+    // Custom unselected text colour
     val customUnSelectedTextColor = Color(0xFFFF0000) // 红色
 
-    // 监听右侧内容滚动
+    // Watches the content scrolling on the right
     LaunchedEffect(contentListState.firstVisibleItemIndex) {
         if (!scrollLock) {
             val newIndex = contentListState.firstVisibleItemIndex
@@ -71,7 +71,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
         }
     }
 
-    // 点击侧边栏项的处理
+    // Sidebar item tap handling
     fun onItemSelected(index: Int) {
         if (selectedIndex == index) return
         selectedIndex = index
@@ -87,7 +87,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
         title = "SideBar 自定义未选中颜色",
         onBack = onBack,
         topContent = {
-            // 顶部测试按钮
+            // Test buttons at the top
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,7 +106,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
         }
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            // 左侧侧边栏（带图标，自定义未选中颜色）
+            // Sidebar on the left (with icons and a custom unselected colour)
             Sidebar(
                 items = items,
                 selectedIndex = selectedIndex,
@@ -116,7 +116,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
                 unSelectedTextColor = customUnSelectedTextColor
             )
 
-            // 右侧内容区
+            // Content area on the right
             LazyColumn(
                 state = contentListState,
                 modifier = Modifier
@@ -128,7 +128,7 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
                     ContentSection(index = index)
                 }
 
-                // 底部留白
+                // Bottom blank space
                 item {
                     Spacer(modifier = Modifier.height(500.dp))
                 }

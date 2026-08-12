@@ -15,14 +15,14 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Stepper 步进器组件示例
+ * Stepper component examples
  */
 @Composable
 fun StepperExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    // 各示例的状态
+    // State of each example
     var basicValue by remember { mutableStateOf(1) }
     var smallValue by remember { mutableStateOf(1) }
     var mediumValue by remember { mutableStateOf(1) }
@@ -35,7 +35,7 @@ fun StepperExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础步进器
+        // Basic stepper
         ExampleSection(
             title = "基础步进器",
             description = "数字增减控制"
@@ -47,7 +47,7 @@ fun StepperExample(
             )
         }
 
-        // 不同尺寸
+        // Sizes
         ExampleSection(
             title = "不同尺寸",
             description = "小、中、大三种尺寸"
@@ -76,7 +76,7 @@ fun StepperExample(
             }
         }
 
-        // 设置范围
+        // Bounds
         ExampleSection(
             title = "设置范围",
             description = "最小值 1，最大值 10"
@@ -90,7 +90,7 @@ fun StepperExample(
             )
         }
 
-        // 设置步长
+        // Step size
         ExampleSection(
             title = "设置步长",
             description = "每次增减 5"
@@ -105,7 +105,7 @@ fun StepperExample(
             )
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "不可操作的步进器"
@@ -118,7 +118,7 @@ fun StepperExample(
             )
         }
 
-        // 带标签的步进器
+        // Stepper with a label
         ExampleSection(
             title = "带标签的步进器",
             description = "使用 StepperWithLabel 组件"

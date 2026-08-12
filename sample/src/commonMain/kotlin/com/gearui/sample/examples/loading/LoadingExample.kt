@@ -22,9 +22,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Loading 加载组件示例
+ * Loading component examples
  *
- * 用于表示页面或操作的加载状态，给予用户反馈的同时减缓等待的焦虑感
+ * Shows that a page or an action is loading, giving feedback and easing the wait
  */
 @Composable
 fun LoadingExample(
@@ -33,16 +33,16 @@ fun LoadingExample(
 ) {
     val colors = Theme.colors
 
-    // 全屏加载状态
+    // Fullscreen loading state
     var showFullScreen by remember { mutableStateOf(false) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 纯图标
+        // Icon only
         ExampleSection(
             title = "纯图标",
             description = "三种图标类型：圆形、菊花状、点状"
@@ -94,7 +94,7 @@ fun LoadingExample(
             }
         }
 
-        // 图标加文字横向
+        // Icon and text, horizontal
         ExampleSection(
             title = "图标加文字横向",
             description = "图标在左，文字在右"
@@ -120,7 +120,7 @@ fun LoadingExample(
             }
         }
 
-        // 图标加文字竖向
+        // Icon and text, vertical
         ExampleSection(
             title = "图标加文字竖向",
             description = "图标在上，文字在下"
@@ -146,7 +146,7 @@ fun LoadingExample(
             }
         }
 
-        // 纯文字
+        // Text only
         ExampleSection(
             title = "纯文字",
             description = "不显示图标，仅显示文字"
@@ -184,9 +184,9 @@ fun LoadingExample(
             }
         }
 
-        // ==================== 组件尺寸 ====================
+        // ==================== Component sizes ====================
 
-        // 大尺寸
+        // Large
         ExampleSection(
             title = "大尺寸",
             description = "LoadingSize.LARGE"
@@ -204,7 +204,7 @@ fun LoadingExample(
             }
         }
 
-        // 中尺寸
+        // Medium
         ExampleSection(
             title = "中尺寸",
             description = "LoadingSize.MEDIUM（默认）"
@@ -222,7 +222,7 @@ fun LoadingExample(
             }
         }
 
-        // 小尺寸
+        // Small
         ExampleSection(
             title = "小尺寸",
             description = "LoadingSize.SMALL"
@@ -240,7 +240,7 @@ fun LoadingExample(
             }
         }
 
-        // ==================== 自定义颜色 ====================
+        // ==================== Custom colours ====================
 
         ExampleSection(
             title = "自定义颜色",
@@ -308,7 +308,7 @@ fun LoadingExample(
             }
         }
 
-        // ==================== 全屏加载 ====================
+        // ==================== Fullscreen loading ====================
 
         ExampleSection(
             title = "全屏加载",
@@ -336,7 +336,7 @@ fun LoadingExample(
             }
         }
 
-        // ==================== 加载场景 ====================
+        // ==================== Loading scenarios ====================
 
         ExampleSection(
             title = "加载场景",
@@ -346,7 +346,7 @@ fun LoadingExample(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 按钮加载状态
+                // Button loading state
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -363,7 +363,7 @@ fun LoadingExample(
                     )
                 }
 
-                // 列表加载
+                // List loading
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -379,7 +379,7 @@ fun LoadingExample(
                     )
                 }
 
-                // 居中验证（多个Loading并排）
+                // Centring check (several Loadings side by side)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -401,7 +401,7 @@ fun LoadingExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Loading 组件特性"
@@ -446,13 +446,13 @@ fun LoadingExample(
         }
     }
 
-    // 全屏加载层
+    // Fullscreen loading layer
     FullScreenLoading(
         visible = showFullScreen,
         text = "加载中，请稍候..."
     )
 
-    // 自动关闭全屏加载（3秒后）
+    // Dismiss the fullscreen loading automatically (after 3 seconds)
     LaunchedEffect(showFullScreen) {
         if (showFullScreen) {
             kotlinx.coroutines.delay(3000)

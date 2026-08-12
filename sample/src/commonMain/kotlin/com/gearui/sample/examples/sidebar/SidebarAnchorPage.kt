@@ -14,28 +14,28 @@ import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.launch
 
 /**
- * SideBar 锚点用法页面
+ * SideBar anchor usage page
  *
- * 特点：
- * - 左侧侧边栏与右侧内容区锚点联动
- * - 点击侧边栏项，右侧内容滚动到对应位置
- * - 右侧内容滚动时，左侧侧边栏自动选中对应项
+ * Features:
+ * - the sidebar on the left is anchored to the content on the right
+ * - tapping a sidebar item scrolls the content to the matching position
+ * - scrolling the content selects the matching sidebar item
  */
 @Composable
 fun SidebarAnchorPage(onBack: () -> Unit) {
     val colors = Theme.colors
     val coroutineScope = rememberCoroutineScope()
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 右侧内容滚动状态
+    // Scroll state of the content on the right
     val contentListState = rememberLazyListState(initialFirstVisibleItemIndex = 1)
 
-    // 锁定滚动监听（防止点击选择时触发滚动监听）
+    // Locks the scroll listener (so tapping to select does not trigger it)
     var scrollLock by remember { mutableStateOf(false) }
 
-    // 生成数据
+    // Builds the data
     val items = remember {
         (0..19).map { index ->
             SidebarItemData(
@@ -48,7 +48,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
         }
     }
 
-    // 监听右侧内容滚动，更新左侧选中项
+    // Watches the content scrolling and updates the selected item
     LaunchedEffect(contentListState.firstVisibleItemIndex) {
         if (!scrollLock) {
             val newIndex = contentListState.firstVisibleItemIndex
@@ -58,7 +58,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
         }
     }
 
-    // 点击侧边栏项的处理
+    // Sidebar item tap handling
     fun onItemSelected(index: Int) {
         if (selectedIndex == index) return
         selectedIndex = index
@@ -74,7 +74,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
         title = "SideBar 锚点用法",
         onBack = onBack,
         topContent = {
-            // 顶部测试按钮
+            // Test buttons at the top
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -84,7 +84,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
                 Button(
                     text = "更新 children",
                     onClick = {
-                        // 模拟更新数据
+                        // Simulate a data update
                     },
                     size = ButtonSize.MEDIUM,
                     block = true
@@ -93,7 +93,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
         }
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            // 左侧侧边栏
+            // Sidebar on the left
             Sidebar(
                 items = items,
                 selectedIndex = selectedIndex,
@@ -101,7 +101,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
                 style = SidebarStyle.NORMAL
             )
 
-            // 右侧内容区 - 锚点内容
+            // Content area on the right - anchor content
             LazyColumn(
                 state = contentListState,
                 modifier = Modifier
@@ -113,7 +113,7 @@ fun SidebarAnchorPage(onBack: () -> Unit) {
                     ContentSection(index = index)
                 }
 
-                // 底部留白，确保最后一项可以滚动到顶部
+                // Bottom blank space, so the last item can scroll to the top
                 item {
                     Spacer(modifier = Modifier.height(500.dp))
                 }

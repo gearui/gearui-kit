@@ -14,9 +14,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Transfer 组件示例
+ * Transfer component examples
  *
- * 穿梭框组件，用于双栏数据选择
+ * A transfer box, for selecting data across two columns
  */
 @Composable
 fun TransferExample(
@@ -29,7 +29,7 @@ fun TransferExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础穿梭框
+        // Basic transfer
         ExampleSection(
             title = "基础穿梭框",
             description = "双栏穿梭选择，支持左右移动数据"
@@ -63,7 +63,7 @@ fun TransferExample(
             }
         }
 
-        // 带搜索的穿梭框
+        // Transfer with search
         ExampleSection(
             title = "带搜索功能",
             description = "支持在列表中搜索过滤选项"
@@ -93,7 +93,7 @@ fun TransferExample(
             )
         }
 
-        // 禁用项
+        // Disabled items
         ExampleSection(
             title = "禁用项",
             description = "部分选项可设置为禁用状态"
@@ -120,7 +120,7 @@ fun TransferExample(
             )
         }
 
-        // 自定义标题
+        // Custom titles
         ExampleSection(
             title = "自定义标题",
             description = "可自定义左右列表的标题"
@@ -146,7 +146,7 @@ fun TransferExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Transfer 组件特性"

@@ -18,7 +18,7 @@ import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * ImageViewer 组件示例（示例页）
+ * ImageViewer component examples
  */
 @Composable
 fun ImageViewerExample(
@@ -26,7 +26,7 @@ fun ImageViewerExample(
     onBack: () -> Unit
 ) {
     val images = remember {
-        // 当前 sample 使用占位图，业务接入时替换为真实 Painter 列表
+        // This sample uses placeholders; swap in a real list of Painters when integrating
         listOf<Painter?>(null, null)
     }
 

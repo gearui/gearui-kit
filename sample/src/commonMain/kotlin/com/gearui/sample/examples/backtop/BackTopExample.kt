@@ -20,7 +20,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * BackTop 组件示例
+ * BackTop component examples
  *
  */
 @Composable
@@ -30,7 +30,7 @@ fun BackTopExample(
 ) {
     val colors = Theme.colors
 
-    // 各个示例的显示状态
+    // Visibility state of each example
     var showCircleLight by remember { mutableStateOf(false) }
     var showCircleDark by remember { mutableStateOf(false) }
     var showCircleWithText by remember { mutableStateOf(false) }
@@ -42,7 +42,7 @@ fun BackTopExample(
         component = component,
         onBack = onBack
     ) {
-        // 圆形样式 - 亮色主题
+        // Circle style - light theme
         ExampleSection(
             title = "圆形-亮色主题",
             description = "默认样式，白底黑字，48dp 圆形按钮"
@@ -85,7 +85,7 @@ fun BackTopExample(
             }
         }
 
-        // 圆形样式 - 暗色主题
+        // Circle style - dark theme
         ExampleSection(
             title = "圆形-暗色主题",
             description = "黑底白字，适合浅色背景"
@@ -128,7 +128,7 @@ fun BackTopExample(
             }
         }
 
-        // 圆形样式 - 带文字
+        // Circle style - with text
         ExampleSection(
             title = "圆形-带文字",
             description = "显示图标和文字，使用 showText = true"
@@ -172,7 +172,7 @@ fun BackTopExample(
             }
         }
 
-        // 半圆形样式 - 亮色主题
+        // Half circle style - light theme
         ExampleSection(
             title = "半圆形-亮色主题",
             description = "贴边显示的半圆形按钮"
@@ -215,7 +215,7 @@ fun BackTopExample(
             }
         }
 
-        // 半圆形样式 - 暗色主题
+        // Half circle style - dark theme
         ExampleSection(
             title = "半圆形-暗色主题",
             description = "暗色主题的半圆形按钮"
@@ -258,7 +258,7 @@ fun BackTopExample(
             }
         }
 
-        // 自定义内容
+        // Custom content
         ExampleSection(
             title = "自定义内容",
             description = "使用 BackTopCustom 完全自定义按钮内容"
@@ -315,7 +315,7 @@ fun BackTopExample(
             }
         }
 
-        // API 说明
+        // API notes
         ExampleSection(
             title = "API 说明",
             description = "BackTop 组件参数"

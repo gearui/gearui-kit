@@ -17,7 +17,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Timeline 组件示例
+ * Timeline component examples
  */
 @Composable
 fun TimelineExample(
@@ -30,7 +30,7 @@ fun TimelineExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础时间轴
+        // Basic timeline
         ExampleSection(
             title = "基础用法",
             description = "展示时间流程的基础时间轴"
@@ -61,7 +61,7 @@ fun TimelineExample(
             )
         }
 
-        // 不同颜色
+        // Colours
         ExampleSection(
             title = "颜色主题",
             description = "支持多种颜色表示不同状态"
@@ -97,7 +97,7 @@ fun TimelineExample(
             )
         }
 
-        // 右侧模式
+        // Right-hand mode
         ExampleSection(
             title = "右侧模式",
             description = "内容显示在右侧"
@@ -125,7 +125,7 @@ fun TimelineExample(
             )
         }
 
-        // 交替模式
+        // Alternating mode
         ExampleSection(
             title = "交替模式",
             description = "内容左右交替显示"
@@ -162,7 +162,7 @@ fun TimelineExample(
             )
         }
 
-        // 倒序显示
+        // Reverse order
         ExampleSection(
             title = "倒序显示",
             description = "时间轴倒序排列"
@@ -187,7 +187,7 @@ fun TimelineExample(
             )
         }
 
-        // 自定义内容
+        // Custom content
         ExampleSection(
             title = "自定义内容",
             description = "使用 TimelineCustom 自定义内容"
@@ -250,7 +250,7 @@ fun TimelineExample(
             }
         }
 
-        // 实际应用：物流追踪
+        // Real use case: parcel tracking
         ExampleSection(
             title = "物流追踪",
             description = "实际应用场景示例"
@@ -287,7 +287,7 @@ fun TimelineExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Timeline 组件特性"

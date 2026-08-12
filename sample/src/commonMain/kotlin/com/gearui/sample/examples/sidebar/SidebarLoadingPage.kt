@@ -17,33 +17,33 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * SideBar 延迟加载页面
+ * SideBar deferred loading page
  *
- * 特点：
- * - 初始显示加载状态
- * - 3秒后加载数据并显示侧边栏
+ * Features:
+ * - shows a loading state at first
+ * - loads the data and shows the sidebar after 3 seconds
  */
 @Composable
 fun SidebarLoadingPage(onBack: () -> Unit) {
     val colors = Theme.colors
     val coroutineScope = rememberCoroutineScope()
 
-    // 加载状态
+    // Loading state
     var isLoading by remember { mutableStateOf(true) }
 
-    // 当前选中的索引
+    // Currently selected index
     var selectedIndex by remember { mutableStateOf(1) }
 
-    // 右侧内容滚动状态
+    // Scroll state of the content on the right
     val contentListState = rememberLazyListState()
 
-    // 锁定滚动监听
+    // Locks the scroll listener
     var scrollLock by remember { mutableStateOf(false) }
 
-    // 数据
+    // Data
     var items by remember { mutableStateOf<List<SidebarItemData>>(emptyList()) }
 
-    // 模拟延迟加载
+    // Simulated deferred loading
     LaunchedEffect(Unit) {
         delay(3000) // 延迟3秒
         items = (0..19).map { index ->
@@ -57,11 +57,11 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
         }
         isLoading = false
 
-        // 初始滚动到选中项
+        // Scroll to the selected item initially
         contentListState.scrollToItem(selectedIndex)
     }
 
-    // 监听右侧内容滚动
+    // Watches the content scrolling on the right
     LaunchedEffect(contentListState.firstVisibleItemIndex, isLoading) {
         if (!scrollLock && !isLoading && items.isNotEmpty()) {
             val newIndex = contentListState.firstVisibleItemIndex
@@ -71,7 +71,7 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
         }
     }
 
-    // 点击侧边栏项的处理
+    // Sidebar item tap handling
     fun onItemSelected(index: Int) {
         if (selectedIndex == index) return
         selectedIndex = index
@@ -88,7 +88,7 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
         onBack = onBack
     ) {
         if (isLoading) {
-            // 加载中状态
+            // Loading state
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -106,9 +106,9 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
                 }
             }
         } else {
-            // 加载完成，显示侧边栏
+            // Loaded: show the sidebar
             Row(modifier = Modifier.fillMaxSize()) {
-                // 左侧侧边栏
+                // Sidebar on the left
                 Sidebar(
                     items = items,
                     selectedIndex = selectedIndex,
@@ -116,7 +116,7 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
                     style = SidebarStyle.NORMAL
                 )
 
-                // 右侧内容区
+                // Content area on the right
                 LazyColumn(
                     state = contentListState,
                     modifier = Modifier
@@ -128,7 +128,7 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
                         ContentSection(index = index)
                     }
 
-                    // 底部留白
+                    // Bottom blank space
                     item {
                         Spacer(modifier = Modifier.height(500.dp))
                     }

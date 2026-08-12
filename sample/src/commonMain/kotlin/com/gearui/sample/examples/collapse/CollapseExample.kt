@@ -15,16 +15,16 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Collapse 组件示例
+ * Collapse component examples
  *
- * 组件类型：
- * - Basic 基础折叠面板
- * - with Operation Instructions 带操作说明
- * - Accordion 手风琴式
+ * Component types:
+ * - Basic collapse panel
+ * - with operation instructions
+ * - Accordion
  *
- * 组件样式：
- * - Block Style 通栏样式
- * - Card Style 卡片样式
+ * Component styles:
+ * - block style
+ * - card style
  */
 
 private const val SAMPLE_CONTENT = "折叠面板内容区域可以自定义，支持任意内容。" +
@@ -38,25 +38,25 @@ fun CollapseExample(
 ) {
     val colors = Theme.colors
 
-    // 基础折叠面板状态
+    // Basic collapse panel state
     var basicExpandedList by remember { mutableStateOf(listOf(false, false, false, false, false)) }
 
-    // 通栏样式状态
+    // Block style state
     var blockExpandedList by remember { mutableStateOf(listOf(false, false, false, false, false)) }
 
-    // 卡片样式状态
+    // Card style state
     var cardExpandedList by remember { mutableStateOf(listOf(false, false, false, false, false)) }
 
-    // 带操作说明状态
+    // Operation instructions state
     var withOpTextExpandedList by remember { mutableStateOf(listOf(false, false, false, false, false)) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 基础折叠面板
+        // Basic collapse panel
         ExampleSection(
             title = "Basic 基础折叠面板",
             description = "最基础的折叠面板用法"
@@ -90,7 +90,7 @@ fun CollapseExample(
             )
         }
 
-        // 带操作说明
+        // With operation instructions
         ExampleSection(
             title = "with Operation Instructions 带操作说明",
             description = "展开图标旁显示操作说明文案"
@@ -127,7 +127,7 @@ fun CollapseExample(
             )
         }
 
-        // 手风琴模式
+        // Accordion mode
         ExampleSection(
             title = "Accordion 手风琴式",
             description = "同时只展开一个面板"
@@ -156,9 +156,9 @@ fun CollapseExample(
             )
         }
 
-        // ========== 组件样式 ==========
+        // ========== Component styles ==========
 
-        // 通栏样式
+        // Block style
         ExampleSection(
             title = "Block Style 通栏样式",
             description = "默认通栏风格，无边距"
@@ -192,7 +192,7 @@ fun CollapseExample(
             )
         }
 
-        // 卡片样式
+        // Card style
         ExampleSection(
             title = "Card Style 卡片样式",
             description = "卡片风格，有圆角和边距"

@@ -20,7 +20,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Steps 组件示例
+ * Steps component examples
  */
 @Composable
 fun StepsExample(
@@ -29,17 +29,17 @@ fun StepsExample(
 ) {
     val colors = Theme.colors
 
-    // 可交互步骤条状态
+    // Interactive steps state
     var currentStep by remember { mutableStateOf(1) }
 
-    // 表单向导状态
+    // Form wizard state
     var formStep by remember { mutableStateOf(0) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础步骤条
+        // Basic steps
         ExampleSection(
             title = "基础用法",
             description = "水平步骤条，展示流程进度"
@@ -55,7 +55,7 @@ fun StepsExample(
             )
         }
 
-        // 带描述的步骤条
+        // Steps with descriptions
         ExampleSection(
             title = "带描述",
             description = "每个步骤可以添加描述信息"
@@ -83,7 +83,7 @@ fun StepsExample(
             )
         }
 
-        // 可交互步骤条
+        // Interactive steps
         ExampleSection(
             title = "可交互",
             description = "点击按钮切换步骤"
@@ -120,7 +120,7 @@ fun StepsExample(
             }
         }
 
-        // 垂直步骤条
+        // Vertical steps
         ExampleSection(
             title = "垂直布局",
             description = "纵向展示的步骤条"
@@ -149,13 +149,13 @@ fun StepsExample(
             )
         }
 
-        // 点状主题
+        // Dot theme
         ExampleSection(
             title = "点状主题",
             description = "简洁的点状步骤指示器"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                // 水平点状
+                // Horizontal dots
                 Steps(
                     current = 2,
                     theme = StepsTheme.DOT,
@@ -167,7 +167,7 @@ fun StepsExample(
                     )
                 )
 
-                // 垂直点状
+                // Vertical dots
                 Steps(
                     current = 1,
                     direction = StepsDirection.VERTICAL,
@@ -181,7 +181,7 @@ fun StepsExample(
             }
         }
 
-        // 错误状态
+        // Error state
         ExampleSection(
             title = "错误状态",
             description = "当前步骤显示错误状态"
@@ -210,7 +210,7 @@ fun StepsExample(
             )
         }
 
-        // 自定义图标
+        // Custom icons
         ExampleSection(
             title = "自定义图标",
             description = "每个步骤可以使用自定义图标"
@@ -238,7 +238,7 @@ fun StepsExample(
             )
         }
 
-        // 实际应用：表单向导
+        // Real use case: a form wizard
         ExampleSection(
             title = "表单向导",
             description = "实际应用场景示例"
@@ -262,7 +262,7 @@ fun StepsExample(
                     )
                 )
 
-                // 模拟表单内容
+                // Mock form content
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -334,7 +334,7 @@ fun StepsExample(
                             if (formStep < 2) {
                                 formStep++
                             } else {
-                                // 重置演示
+                                // Reset the demo
                                 formStep = 0
                             }
                         },
@@ -345,7 +345,7 @@ fun StepsExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Steps 组件特性"

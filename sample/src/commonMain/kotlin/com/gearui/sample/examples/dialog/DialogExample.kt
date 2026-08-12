@@ -19,7 +19,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Dialog 对话框组件示例
+ * Dialog component examples
  *
  */
 @Composable
@@ -29,21 +29,21 @@ fun DialogExample(
 ) {
     val colors = Theme.colors
 
-    // 各种对话框的显示状态
+    // Visibility state of each dialog
     var showConfirmDialog by remember { mutableStateOf(false) }
     var showAlertDialog by remember { mutableStateOf(false) }
     var showConfirmNoTitle by remember { mutableStateOf(false) }
     var showCustomDialog by remember { mutableStateOf(false) }
     var showDangerDialog by remember { mutableStateOf(false) }
 
-    // 操作结果提示
+    // Result message
     var resultText by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 反馈对话框 - 带标题
+        // Feedback dialog - with a title
         ExampleSection(
             title = "反馈对话框",
             description = "带标题和内容的确认对话框"
@@ -81,7 +81,7 @@ fun DialogExample(
             )
         }
 
-        // 反馈对话框 - 无标题
+        // Feedback dialog - without a title
         ExampleSection(
             title = "无标题对话框",
             description = "仅有内容的简洁对话框"
@@ -103,7 +103,7 @@ fun DialogExample(
             )
         }
 
-        // 警告对话框
+        // Alert dialog
         ExampleSection(
             title = "警告对话框",
             description = "单按钮提示对话框"
@@ -123,7 +123,7 @@ fun DialogExample(
             )
         }
 
-        // 危险操作确认
+        // Destructive action confirmation
         ExampleSection(
             title = "危险操作",
             description = "需要用户确认的危险操作"
@@ -149,7 +149,7 @@ fun DialogExample(
             )
         }
 
-        // 自定义内容对话框
+        // Dialog with custom content
         ExampleSection(
             title = "自定义内容",
             description = "支持自定义对话框内容"
@@ -205,7 +205,7 @@ fun DialogExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Dialog 组件特性"

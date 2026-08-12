@@ -18,10 +18,10 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * BottomSheet 组件示例
+ * BottomSheet component examples
  *
- * 基于 Overlay 系统实现，无论在哪里调用都能全屏弹出。
- * BottomSheet 可以直接放在 ExampleSection 内部，因为它使用 Overlay 系统。
+ * Built on the Overlay system, so it fills the screen wherever it is called from.
+ * A BottomSheet can sit directly inside an ExampleSection precisely because it uses the Overlay system.
  */
 @Composable
 fun BottomSheetExample(
@@ -30,7 +30,7 @@ fun BottomSheetExample(
 ) {
     val colors = Theme.colors
 
-    // 各种底部面板的状态
+    // State of each bottom sheet
     val basicSheetState = remember { BottomSheetState() }
     val titleSheetState = remember { BottomSheetState() }
     val iconSheetState = remember { BottomSheetState() }
@@ -40,14 +40,14 @@ fun BottomSheetExample(
     var disabledSheetVisible by remember { mutableStateOf(false) }
     var customCancelSheetVisible by remember { mutableStateOf(false) }
 
-    // 操作结果
+    // Result
     var selectedAction by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "简单的选项列表"
@@ -68,7 +68,7 @@ fun BottomSheetExample(
                 }
             }
 
-            // BottomSheet 基于 Overlay 系统，可以放在任何地方
+            // BottomSheet is built on the Overlay system, so it can go anywhere
             BottomSheet(
                 visible = basicSheetState.visible,
                 onDismiss = { basicSheetState.hide() },
@@ -83,7 +83,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 带标题和描述
+        // With a title and a description
         ExampleSection(
             title = "带标题和描述",
             description = "可以添加标题和描述信息"
@@ -110,7 +110,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 带图标
+        // With icons
         ExampleSection(
             title = "带图标",
             description = "选项可以带有图标"
@@ -173,7 +173,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 危险操作
+        // Destructive action
         ExampleSection(
             title = "危险操作",
             description = "危险操作项会高亮显示"
@@ -201,7 +201,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 禁用选项
+        // Disabled option
         ExampleSection(
             title = "禁用选项",
             description = "某些选项可以设置为禁用状态"
@@ -230,7 +230,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 不显示取消按钮
+        // Without a cancel button
         ExampleSection(
             title = "不显示取消按钮",
             description = "可以隐藏底部的取消按钮"
@@ -256,7 +256,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 多选项
+        // Many options
         ExampleSection(
             title = "多选项",
             description = "支持多个选项"
@@ -286,7 +286,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 自定义取消文字
+        // Custom cancel wording
         ExampleSection(
             title = "自定义取消文字",
             description = "可以自定义取消按钮的文字"
@@ -314,7 +314,7 @@ fun BottomSheetExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "BottomSheet 组件特性"

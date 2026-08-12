@@ -16,7 +16,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Card 卡片组件示例
+ * Card component examples
  */
 @Composable
 fun CardExample(
@@ -29,7 +29,7 @@ fun CardExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础卡片
+        // Basic card
         ExampleSection(
             title = "基础卡片",
             description = "简单的卡片容器",
@@ -47,7 +47,7 @@ fun CardExample(
             }
         }
 
-        // 带封面卡片
+        // Card with a cover
         ExampleSection(
             title = "带封面卡片",
             description = "顶部显示图片",
@@ -72,7 +72,7 @@ fun CardExample(
             }
         }
 
-        // 卡片操作
+        // Card actions
         ExampleSection(
             title = "卡片操作",
             description = "底部操作按钮",

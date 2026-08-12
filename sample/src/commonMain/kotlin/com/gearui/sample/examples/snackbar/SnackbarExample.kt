@@ -18,11 +18,11 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Snackbar 组件示例
+ * Snackbar component examples
  *
- * - 消息从顶部弹出（默认距顶部 80dp）
- * - 支持四种状态：普通/成功/警告/错误
- * - 支持带图标、带关闭按钮、带操作按钮
+ * - the message drops in from the top (80dp below the top by default)
+ * - four states: normal / success / warning / error
+ * - supports an icon, a close button and an action button
  */
 @Composable
 fun SnackbarExample(
@@ -31,16 +31,16 @@ fun SnackbarExample(
 ) {
     val colors = Theme.colors
 
-    // 使用 Overlay 系统的 Snackbar 控制器
+    // Snackbar controller backed by the Overlay system
     val snackbarController = rememberSnackbarController()
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 纯文字的通知
+        // Text-only notice
         ExampleSection(
             title = "纯文字的通知",
             description = "最基本的消息提示，不带图标"
@@ -60,7 +60,7 @@ fun SnackbarExample(
             )
         }
 
-        // 带图标的通知
+        // Notice with an icon
         ExampleSection(
             title = "带图标的通知",
             description = "带有状态图标的消息提示"
@@ -80,7 +80,7 @@ fun SnackbarExample(
             )
         }
 
-        // 带关闭的通知
+        // Notice with a close button
         ExampleSection(
             title = "带关闭的通知",
             description = "可手动关闭的消息提示"
@@ -102,7 +102,7 @@ fun SnackbarExample(
             )
         }
 
-        // 带按钮的通知
+        // Notice with a button
         ExampleSection(
             title = "带按钮的通知",
             description = "带有操作按钮的消息提示"
@@ -116,7 +116,7 @@ fun SnackbarExample(
                         showIcon = true,
                         action = "撤销",
                         onActionClick = {
-                            // 点击撤销后显示成功提示
+                            // Show a success message after the undo
                             snackbarController.showSuccess("已撤销删除操作")
                         },
                         duration = 5000L
@@ -128,9 +128,9 @@ fun SnackbarExample(
             )
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 普通通知
+        // Normal notice
         ExampleSection(
             title = "普通通知",
             description = "普通信息提示"
@@ -146,7 +146,7 @@ fun SnackbarExample(
             )
         }
 
-        // 成功通知
+        // Success notice
         ExampleSection(
             title = "成功通知",
             description = "操作成功时的消息提示"
@@ -162,7 +162,7 @@ fun SnackbarExample(
             )
         }
 
-        // 警示通知
+        // Warning notice
         ExampleSection(
             title = "警示通知",
             description = "警告信息的消息提示"
@@ -178,7 +178,7 @@ fun SnackbarExample(
             )
         }
 
-        // 错误通知
+        // Error notice
         ExampleSection(
             title = "错误通知",
             description = "错误信息的消息提示"
@@ -194,9 +194,9 @@ fun SnackbarExample(
             )
         }
 
-        // ========== 综合示例 ==========
+        // ========== Combined example ==========
 
-        // 带关闭和操作按钮
+        // With a close button and an action button
         ExampleSection(
             title = "综合示例",
             description = "同时带图标、关闭按钮和操作按钮"
@@ -222,7 +222,7 @@ fun SnackbarExample(
             )
         }
 
-        // 快速切换测试
+        // Rapid switching test
         ExampleSection(
             title = "快速切换测试",
             description = "快速点击不同按钮测试切换效果"

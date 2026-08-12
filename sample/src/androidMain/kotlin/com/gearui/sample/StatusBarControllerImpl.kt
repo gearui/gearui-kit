@@ -9,8 +9,8 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.toArgb
 
 /**
- * Android 系统栏控制器实现
- * 控制状态栏和导航栏（输入法背景）颜色
+ * Android system bar controller implementation
+ * Controls the status bar and navigation bar (the IME background) colours
  */
 actual object StatusBarControllerImpl {
 
@@ -25,7 +25,7 @@ actual object StatusBarControllerImpl {
     }
 
     /**
-     * 检测系统是否为深色模式
+     * Whether the system is in dark mode
      */
     actual fun isSystemDarkMode(): Boolean {
         val activity = this.activity ?: return false
@@ -37,17 +37,17 @@ actual object StatusBarControllerImpl {
         val activity = this.activity ?: return
 
         activity.runOnUiThread {
-            // 设置状态栏背景颜色
+            // Status bar background colour
             activity.window.statusBarColor = color.toArgb()
 
-            // 设置导航栏背景颜色（输入法弹出时的背景）
+            // Navigation bar background colour (the background behind the IME)
             activity.window.navigationBarColor = color.toArgb()
 
-            // 设置系统栏图标颜色
+            // System bar icon colour
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 val controller = activity.window.insetsController
                 if (darkIcons) {
-                    // 浅色背景 - 深色图标
+                    // Light background - dark icons
                     controller?.setSystemBarsAppearance(
                         WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
                                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
@@ -55,7 +55,7 @@ actual object StatusBarControllerImpl {
                                 WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                     )
                 } else {
-                    // 深色背景 - 浅色图标
+                    // Dark background - light icons
                     controller?.setSystemBarsAppearance(
                         0,
                         WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or

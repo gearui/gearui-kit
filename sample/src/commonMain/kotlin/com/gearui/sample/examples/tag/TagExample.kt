@@ -15,7 +15,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Tag 组件示例
+ * Tag component examples
  */
 @Composable
 fun TagExample(
@@ -28,7 +28,7 @@ fun TagExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础标签
+        // Basic tags
         ExampleSection(
             title = "基础标签",
             description = "不同主题的标签样式"
@@ -42,7 +42,7 @@ fun TagExample(
             }
         }
 
-        // 浅色标签
+        // Light tags
         ExampleSection(
             title = "浅色标签",
             description = "浅色背景的标签样式"
@@ -56,7 +56,7 @@ fun TagExample(
             }
         }
 
-        // 标签尺寸
+        // Tag sizes
         ExampleSection(
             title = "标签尺寸",
             description = "不同尺寸的标签"

@@ -23,9 +23,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Result 组件示例
+ * Result component examples
  *
- * 结果页组件，用于展示操作结果反馈
+ * A result page, for feedback after an action
  */
 @Composable
 fun ResultExample(
@@ -34,14 +34,14 @@ fun ResultExample(
 ) {
     val colors = Theme.colors
 
-    // 操作结果提示
+    // Result message
     var actionResult by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 成功结果
+        // Success
         ExampleSection(
             title = "成功结果",
             description = "操作成功的反馈页面"
@@ -67,7 +67,7 @@ fun ResultExample(
             )
         }
 
-        // 错误结果
+        // Error
         ExampleSection(
             title = "错误结果",
             description = "操作失败的反馈页面"
@@ -86,7 +86,7 @@ fun ResultExample(
             )
         }
 
-        // 警告结果
+        // Warning
         ExampleSection(
             title = "警告结果",
             description = "警告提示的反馈页面"
@@ -105,7 +105,7 @@ fun ResultExample(
             )
         }
 
-        // 信息提示
+        // Information
         ExampleSection(
             title = "信息提示",
             description = "普通信息的反馈页面"
@@ -117,7 +117,7 @@ fun ResultExample(
             )
         }
 
-        // 404 页面
+        // 404 page
         ExampleSection(
             title = "404 页面",
             description = "页面不存在的反馈"
@@ -133,7 +133,7 @@ fun ResultExample(
             )
         }
 
-        // 403 无权限
+        // 403, no permission
         ExampleSection(
             title = "403 无权限",
             description = "无权访问的反馈页面"
@@ -149,7 +149,7 @@ fun ResultExample(
             )
         }
 
-        // 空数据
+        // Empty data
         ExampleSection(
             title = "空数据状态",
             description = "暂无数据的反馈页面"
@@ -167,7 +167,7 @@ fun ResultExample(
             )
         }
 
-        // 网络错误
+        // Network error
         ExampleSection(
             title = "网络错误",
             description = "网络异常的反馈页面"
@@ -177,7 +177,7 @@ fun ResultExample(
             )
         }
 
-        // 操作结果提示
+        // Result message
         if (actionResult.isNotEmpty()) {
             ExampleSection(
                 title = "操作反馈",
@@ -191,7 +191,7 @@ fun ResultExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Result 组件特性"

@@ -15,9 +15,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Segmented 组件示例
+ * Segmented component examples
  *
- * 分段控制器，用于选项切换
+ * A segmented control, for switching between options
  */
 @Composable
 fun SegmentedExample(
@@ -30,7 +30,7 @@ fun SegmentedExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础分段控制器
+        // Basic segmented control
         ExampleSection(
             title = "基础用法",
             description = "简单的选项切换"
@@ -63,7 +63,7 @@ fun SegmentedExample(
             }
         }
 
-        // 两个选项
+        // Two options
         ExampleSection(
             title = "两个选项",
             description = "简单的二选一切换"
@@ -87,7 +87,7 @@ fun SegmentedExample(
             }
         }
 
-        // 多个选项
+        // Several options
         ExampleSection(
             title = "多个选项",
             description = "支持多个选项切换"
@@ -122,7 +122,7 @@ fun SegmentedExample(
             }
         }
 
-        // 自定义对象类型
+        // Custom object type
         ExampleSection(
             title = "自定义对象类型",
             description = "使用自定义对象作为选项值"
@@ -153,7 +153,7 @@ fun SegmentedExample(
             }
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "整个控制器不可交互"
@@ -170,7 +170,7 @@ fun SegmentedExample(
             )
         }
 
-        // 带图标的分段控制器
+        // Segmented control with icons
         ExampleSection(
             title = "带图标选项",
             description = "选项可包含图标"
@@ -211,7 +211,7 @@ fun SegmentedExample(
             }
         }
 
-        // 实际应用示例
+        // Real use case
         ExampleSection(
             title = "实际应用",
             description = "切换内容显示"
@@ -234,7 +234,7 @@ fun SegmentedExample(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // 根据选项显示不同内容
+                // Different content per option
                 when (activeTab) {
                     "intro" -> Text(
                         text = "GearUI 是一个现代化的 Compose 组件库，提供丰富的 UI 组件。",
@@ -255,7 +255,7 @@ fun SegmentedExample(
             }
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "SegmentedControl 组件特性"

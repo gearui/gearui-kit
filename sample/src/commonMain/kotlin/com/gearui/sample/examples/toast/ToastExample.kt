@@ -16,7 +16,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Toast 轻提示组件示例
+ * Toast component examples
  *
  */
 @Composable
@@ -30,7 +30,7 @@ fun ToastExample(
         component = component,
         onBack = onBack
     ) {
-        // 纯文字提示
+        // Text-only message
         ExampleSection(
             title = "纯文字",
             description = "最基础的 Toast，仅显示文字"
@@ -55,7 +55,7 @@ fun ToastExample(
             }
         }
 
-        // 成功提示
+        // Success message
         ExampleSection(
             title = "成功提示",
             description = "操作成功后的反馈"
@@ -82,7 +82,7 @@ fun ToastExample(
             }
         }
 
-        // 错误提示
+        // Error message
         ExampleSection(
             title = "错误提示",
             description = "操作失败后的反馈"
@@ -109,7 +109,7 @@ fun ToastExample(
             }
         }
 
-        // 警告提示
+        // Warning message
         ExampleSection(
             title = "警告提示",
             description = "需要用户注意的信息"
@@ -136,7 +136,7 @@ fun ToastExample(
             }
         }
 
-        // 自定义时长
+        // Custom duration
         ExampleSection(
             title = "自定义时长",
             description = "控制 Toast 显示时间"
@@ -161,7 +161,7 @@ fun ToastExample(
             }
         }
 
-        // 连续提示
+        // Consecutive messages
         ExampleSection(
             title = "连续提示",
             description = "多个 Toast 排队显示"
@@ -177,7 +177,7 @@ fun ToastExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Toast 组件特性"

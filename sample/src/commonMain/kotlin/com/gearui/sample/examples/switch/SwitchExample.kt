@@ -11,22 +11,22 @@ import com.gearui.sample.pages.ExampleSection
 import com.tencent.kuikly.compose.ui.graphics.Color
 
 /**
- * Switch 组件示例
+ * Switch component examples
  *
- * 用于控制某个功能的开启和关闭。
+ * Turns a feature on and off.
  */
 @Composable
 fun SwitchExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    // 组件类型状态
+    // Component type state
     var baseSwitch by remember { mutableStateOf(false) }
     var textSwitch by remember { mutableStateOf(true) }
     var iconSwitch by remember { mutableStateOf(true) }
     var colorSwitch by remember { mutableStateOf(true) }
 
-    // 组件样式状态
+    // Component style state
     var sizeLarge by remember { mutableStateOf(true) }
     var sizeMedium by remember { mutableStateOf(true) }
     var sizeSmall by remember { mutableStateOf(true) }
@@ -35,9 +35,9 @@ fun SwitchExample(
         component = component,
         onBack = onBack
     ) {
-        // 组件类型
+        // Component types
         ExampleSection(title = "组件类型") {
-            // 基础开关
+            // Basic switch
             Cell(
                 title = "基础开关",
                 trailing = {
@@ -48,7 +48,7 @@ fun SwitchExample(
                 }
             )
 
-            // 带文字开关
+            // Switch with text
             Cell(
                 title = "带文字开关",
                 trailing = {
@@ -60,7 +60,7 @@ fun SwitchExample(
                 }
             )
 
-            // 带图标开关
+            // Switch with icons
             Cell(
                 title = "带图标开关",
                 trailing = {
@@ -72,7 +72,7 @@ fun SwitchExample(
                 }
             )
 
-            // 自定义颜色开关
+            // Switch with custom colours
             Cell(
                 title = "自定义颜色开关",
                 trailing = {
@@ -85,9 +85,9 @@ fun SwitchExample(
             )
         }
 
-        // 组件状态
+        // Component states
         ExampleSection(title = "组件状态") {
-            // 加载状态 - 关闭
+            // Loading state - off
             Cell(
                 title = "加载状态",
                 trailing = {
@@ -99,7 +99,7 @@ fun SwitchExample(
                 }
             )
 
-            // 加载状态 - 开启
+            // Loading state - on
             Cell(
                 title = "加载状态",
                 trailing = {
@@ -111,7 +111,7 @@ fun SwitchExample(
                 }
             )
 
-            // 禁用状态 - 关闭
+            // Disabled state - off
             Cell(
                 title = "禁用状态",
                 trailing = {
@@ -123,7 +123,7 @@ fun SwitchExample(
                 }
             )
 
-            // 禁用状态 - 开启
+            // Disabled state - on
             Cell(
                 title = "禁用状态",
                 trailing = {
@@ -136,9 +136,9 @@ fun SwitchExample(
             )
         }
 
-        // 组件样式
+        // Component styles
         ExampleSection(title = "组件样式") {
-            // 大尺寸 32
+            // Large, 32
             Cell(
                 title = "大尺寸32",
                 trailing = {
@@ -150,7 +150,7 @@ fun SwitchExample(
                 }
             )
 
-            // 中尺寸 28
+            // Medium, 28
             Cell(
                 title = "中尺寸28",
                 trailing = {
@@ -162,7 +162,7 @@ fun SwitchExample(
                 }
             )
 
-            // 小尺寸 24
+            // Small, 24
             Cell(
                 title = "小尺寸24",
                 trailing = {

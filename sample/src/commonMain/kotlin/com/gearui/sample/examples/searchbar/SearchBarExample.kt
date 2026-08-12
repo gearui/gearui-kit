@@ -15,7 +15,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * SearchBar 组件示例
+ * SearchBar component examples
  *
  */
 @Composable
@@ -25,7 +25,7 @@ fun SearchBarExample(
 ) {
     val colors = Theme.colors
 
-    // 各种搜索栏的状态
+    // State of each search bar
     var basicSearchValue by remember { mutableStateOf("") }
     var roundedSearchValue by remember { mutableStateOf("") }
     var squareSearchValue by remember { mutableStateOf("") }
@@ -33,14 +33,14 @@ fun SearchBarExample(
     var actionSearchValue by remember { mutableStateOf("") }
     var disabledSearchValue by remember { mutableStateOf("搜索内容") }
 
-    // 搜索结果提示
+    // Search result message
     var searchResult by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // 基础搜索栏
+        // Basic search bar
         ExampleSection(
             title = "基础搜索栏",
             description = "最基本的搜索输入框"
@@ -62,7 +62,7 @@ fun SearchBarExample(
             }
         }
 
-        // 圆角样式
+        // Rounded style
         ExampleSection(
             title = "圆角搜索栏",
             description = "圆角矩形样式的搜索框"
@@ -75,7 +75,7 @@ fun SearchBarExample(
             )
         }
 
-        // 直角样式
+        // Square style
         ExampleSection(
             title = "直角搜索栏",
             description = "直角矩形样式的搜索框"
@@ -88,7 +88,7 @@ fun SearchBarExample(
             )
         }
 
-        // 带取消按钮
+        // With a cancel button
         ExampleSection(
             title = "带取消按钮",
             description = "显示取消按钮，点击可清空并取消搜索"
@@ -115,7 +115,7 @@ fun SearchBarExample(
             }
         }
 
-        // 带操作按钮
+        // With an action button
         ExampleSection(
             title = "带搜索按钮",
             description = "右侧带搜索按钮，点击触发搜索"
@@ -141,7 +141,7 @@ fun SearchBarExample(
             }
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "不可编辑的搜索框"
@@ -154,7 +154,7 @@ fun SearchBarExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "SearchBar 组件特性"

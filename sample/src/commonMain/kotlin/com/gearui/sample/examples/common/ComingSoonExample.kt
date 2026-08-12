@@ -9,7 +9,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * 通用占位示例页：用于已注册但尚未完成细节对齐的组件。
+ * Shared placeholder example page: for components that are registered but whose details are not aligned yet.
  */
 @Composable
 fun ComingSoonExample(

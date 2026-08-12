@@ -20,9 +20,9 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * NavBar 导航栏组件示例
+ * NavBar component examples
  *
- * 用于不同页面之间切换或者跳转，位于内容区的上方，系统状态栏的下方。
+ * Used to move between pages. Sits above the content area and below the system status bar.
  */
 @Composable
 fun NavbarExample(
@@ -35,9 +35,9 @@ fun NavbarExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础H5导航栏
+        // Basic H5 navigation bar
         ExampleSection(
             title = "基础H5导航栏",
             description = "高度48，标题字体加粗，启用默认返回按钮"
@@ -57,7 +57,7 @@ fun NavbarExample(
             }
         }
 
-        // 带右侧操作按钮
+        // With a trailing action button
         ExampleSection(
             title = "带右侧操作按钮",
             description = "支持右侧添加图标按钮"
@@ -83,7 +83,7 @@ fun NavbarExample(
             }
         }
 
-        // 带左侧关闭按钮
+        // With a leading close button
         ExampleSection(
             title = "带左侧关闭按钮",
             description = "可自定义左侧按钮图标"
@@ -109,7 +109,7 @@ fun NavbarExample(
             }
         }
 
-        // 多操作按钮
+        // Several action buttons
         ExampleSection(
             title = "多操作按钮",
             description = "支持左右两侧添加多个图标按钮"
@@ -139,7 +139,7 @@ fun NavbarExample(
             }
         }
 
-        // 带搜索导航栏
+        // With a search field
         ExampleSection(
             title = "带搜索导航栏",
             description = "集成搜索组件的导航栏"
@@ -155,7 +155,7 @@ fun NavbarExample(
                     useDefaultBack = true,
                     onBackClick = { Toast.show("返回") },
                     titleWidget = {
-                        // 搜索框样式
+                        // Search box style
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -178,7 +178,7 @@ fun NavbarExample(
             }
         }
 
-        // 带图片导航栏
+        // With an image
         ExampleSection(
             title = "带图片导航栏",
             description = "使用图片或Logo作为标题"
@@ -194,7 +194,7 @@ fun NavbarExample(
                     useDefaultBack = true,
                     onBackClick = { Toast.show("返回") },
                     titleWidget = {
-                        // 模拟Logo图片
+                        // Mock logo image
                         Box(
                             modifier = Modifier
                                 .width(80.dp)
@@ -213,9 +213,9 @@ fun NavbarExample(
             }
         }
 
-        // ==================== 组件样式 ====================
+        // ==================== Component styles ====================
 
-        // 标题居中
+        // Centred title
         ExampleSection(
             title = "标题居中",
             description = "默认标题居中显示"
@@ -242,7 +242,7 @@ fun NavbarExample(
             }
         }
 
-        // 标题居左
+        // Leading title
         ExampleSection(
             title = "标题居左",
             description = "标题左对齐显示"
@@ -269,7 +269,7 @@ fun NavbarExample(
             }
         }
 
-        // 大标题尺寸
+        // Large title
         ExampleSection(
             title = "大标题尺寸",
             description = "扩展高度(104)，带副标题区域"
@@ -309,7 +309,7 @@ fun NavbarExample(
             }
         }
 
-        // 自定义颜色
+        // Custom colours
         ExampleSection(
             title = "自定义颜色",
             description = "支持自定义背景色、文字色"
@@ -318,7 +318,7 @@ fun NavbarExample(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                // 深色背景
+                // Dark background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -340,7 +340,7 @@ fun NavbarExample(
                     )
                 }
 
-                // 红色背景
+                // Red background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -362,7 +362,7 @@ fun NavbarExample(
                     )
                 }
 
-                // 渐变效果模拟 - 使用淡色背景
+                // Mock gradient - a tinted background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -385,7 +385,7 @@ fun NavbarExample(
             }
         }
 
-        // 无返回按钮
+        // Without a back button
         ExampleSection(
             title = "无返回按钮",
             description = "不显示左侧返回按钮"

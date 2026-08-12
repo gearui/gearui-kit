@@ -14,9 +14,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Cascader 组件示例
+ * Cascader component examples
  *
- * 级联选择器，用于多级关联选择
+ * A cascading select, for choosing through several linked levels
  */
 @Composable
 fun CascaderExample(
@@ -29,7 +29,7 @@ fun CascaderExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础级联选择
+        // Basic cascading select
         ExampleSection(
             title = "基础用法",
             description = "点击展开下一级选项"
@@ -103,7 +103,7 @@ fun CascaderExample(
             }
         }
 
-        // 默认值
+        // Default value
         ExampleSection(
             title = "默认值",
             description = "设置初始选中值"
@@ -151,7 +151,7 @@ fun CascaderExample(
             )
         }
 
-        // 自定义分隔符
+        // Custom separator
         ExampleSection(
             title = "自定义分隔符",
             description = "使用自定义分隔符显示选中值"
@@ -210,7 +210,7 @@ fun CascaderExample(
             )
         }
 
-        // 禁用选项
+        // Disabled options
         ExampleSection(
             title = "禁用选项",
             description = "部分选项可设置为禁用状态"
@@ -257,7 +257,7 @@ fun CascaderExample(
             )
         }
 
-        // 使用说明
+        // Usage notes
         ExampleSection(
             title = "使用说明",
             description = "Cascader 组件特性"

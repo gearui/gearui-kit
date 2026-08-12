@@ -19,8 +19,9 @@ allprojects {
 }
 
 apiValidation {
-    // sample is an app, not part of the public API surface
-    ignoredProjects.add("sample")
+    // sample and its platform hosts are apps, not part of the public API surface.
+    // ignoredProjects matches on project name, so the subprojects need naming too.
+    ignoredProjects.addAll(listOf("sample", "jsApp"))
 
     // Freeze the KLib ABI for non-JVM targets (iOS) as well.
     // The dump is host-sensitive: iOS targets only dump on macOS;

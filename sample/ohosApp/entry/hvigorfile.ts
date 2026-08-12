@@ -88,7 +88,7 @@ function kuiklyCopyAssets(): HvigorPlugin {
         run: (taskContext) => {
           console.log('kuikly copy assets start');
           const sourceDir = path.join(node.getNodePath(),
-            '..', '..', 'src', 'commonMain', 'assets');
+            '..', '..', 'demo', 'src', 'commonMain', 'assets');
           const destDir = path.join(node.getNodePath(),
             'build', 'default', 'intermediates', 'res', 'default', 'resources', 'resfile');
           console.log(`assets file copy from: ${sourceDir}`);

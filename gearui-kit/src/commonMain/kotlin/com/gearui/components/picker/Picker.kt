@@ -23,18 +23,18 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Picker - 通用选择器
+ * Picker - general-purpose picker
  *
  *
- * 用于一组预设数据中的选择，支持：
- * - 单列选择
- * - 多列独立选择
- * - 多列联动选择
+ * Selects from a preset set of values. Supports:
+ * - single column
+ * - multiple independent columns
+ * - multiple linked columns
  */
 object Picker {
 
     /**
-     * 显示单列选择器
+     * Shows a single-column picker
      */
     @Composable
     fun Single(
@@ -62,7 +62,7 @@ object Picker {
     }
 
     /**
-     * 显示多列独立选择器
+     * Shows a picker with independent columns
      */
     @Composable
     fun Multi(
@@ -77,7 +77,7 @@ object Picker {
         val colors = Theme.colors
         val shapes = Theme.shapes
 
-        // 当前选中索引
+        // Currently selected indices
         val currentIndexes = remember(data, selectedIndexes) {
             mutableStateListOf<Int>().apply {
                 data.forEachIndexed { colIndex, _ ->
@@ -95,20 +95,20 @@ object Picker {
                     .fillMaxWidth()
                     .background(colors.surface)
             ) {
-                // 头部：取消 - 标题 - 确定
+                // Header: cancel - title - confirm
                 PickerHeader(
                     title = title,
                     onCancel = onCancel,
                     onConfirm = { onConfirm(currentIndexes.toList()) }
                 )
 
-                // 选择器内容
+                // Picker body
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                 ) {
-                    // 选中框背景
+                // Selection band background
                     Box(
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -119,7 +119,7 @@ object Picker {
                             .background(colors.muted)
                     )
 
-                    // 滚轮选择列
+                    // Wheel columns
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
@@ -145,7 +145,7 @@ object Picker {
                         }
                     }
 
-                    // 上方渐变遮罩
+                    // Top gradient mask
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
@@ -161,7 +161,7 @@ object Picker {
                             )
                     )
 
-                    // 下方渐变遮罩
+                    // Bottom gradient mask
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -178,14 +178,14 @@ object Picker {
                     )
                 }
 
-                // 底部安全区
+                // Bottom safe area
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
 
     /**
-     * 显示多列联动选择器
+     * Shows a picker with linked columns
      */
     @Composable
     fun Linked(
@@ -201,12 +201,12 @@ object Picker {
         val colors = Theme.colors
         val shapes = Theme.shapes
 
-        // 解析联动数据
+        // Parse the linked data
         val model = remember(data, initialData) {
             LinkedPickerModel(data, columnNum, initialData)
         }
 
-        // 强制刷新计数器
+        // Counter used to force a refresh
         var refreshKey by remember { mutableStateOf(0) }
 
         BottomSheet.Host(
@@ -218,20 +218,20 @@ object Picker {
                     .fillMaxWidth()
                     .background(colors.surface)
             ) {
-                // 头部
+                // Header
                 PickerHeader(
                     title = title,
                     onCancel = onCancel,
                     onConfirm = { onConfirm(model.getSelectedData()) }
                 )
 
-                // 选择器内容
+                // Picker body
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                 ) {
-                    // 选中框背景
+                // Selection band background
                     Box(
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -242,7 +242,7 @@ object Picker {
                             .background(colors.muted)
                     )
 
-                    // 联动滚轮列 - 使用 key 强制刷新
+                    // Linked wheel columns, keyed to force a refresh
                     key(refreshKey) {
                         Row(
                             modifier = Modifier
@@ -261,7 +261,7 @@ object Picker {
                                             initialIndex = selectedIndex.coerceIn(0, columnData.size - 1),
                                             onSelectedChange = { index ->
                                                 model.onColumnSelected(colIndex, index)
-                                                // 触发刷新后续列
+                                                // Refresh the columns after this one
                                                 if (colIndex < columnNum - 1) {
                                                     refreshKey++
                                                 }
@@ -274,7 +274,7 @@ object Picker {
                         }
                     }
 
-                    // 上方渐变遮罩
+                    // Top gradient mask
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
@@ -290,7 +290,7 @@ object Picker {
                             )
                     )
 
-                    // 下方渐变遮罩
+                    // Bottom gradient mask
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -314,7 +314,7 @@ object Picker {
 }
 
 /**
- * Picker 头部
+ * Picker header
  */
 @Composable
 private fun PickerHeader(
@@ -331,7 +331,7 @@ private fun PickerHeader(
             .padding(horizontal = Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 取消按钮
+        // Cancel button
         Text(
             text = I18n.strings.common.cancel,
             style = Typography.BodyLarge,
@@ -339,7 +339,7 @@ private fun PickerHeader(
             modifier = Modifier.clickable { onCancel() }
         )
 
-        // 标题
+        // Title
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center
@@ -353,7 +353,7 @@ private fun PickerHeader(
             }
         }
 
-        // 确定按钮
+        // Confirm button
         Text(
             text = I18n.strings.common.ok,
             style = Typography.BodyLarge,
@@ -364,7 +364,7 @@ private fun PickerHeader(
 }
 
 /**
- * 滚轮选择列 - 带吸附效果
+ * Wheel column, with snapping
  */
 @Composable
 private fun WheelPickerColumn(
@@ -378,7 +378,7 @@ private fun WheelPickerColumn(
     val visibleItems = 5
     val centerOffset = visibleItems / 2
 
-    // 添加占位项使选中项可以居中
+    // Padding items so the selected row can sit in the centre
     val paddedItems = remember(items) {
         val padding = List(centerOffset) { "" }
         padding + items + padding
@@ -389,29 +389,29 @@ private fun WheelPickerColumn(
     )
     val coroutineScope = rememberCoroutineScope()
 
-    // 当前选中的实际索引
+    // Actual selected index
     var currentSelectedIndex by remember { mutableStateOf(initialIndex) }
 
-    // 监听滚动状态，滚动停止时吸附到最近的项
+    // Watch the scroll state and snap to the nearest item when it stops
     LaunchedEffect(listState.isScrollInProgress) {
         if (!listState.isScrollInProgress) {
-            // 滚动停止时，吸附到最近项
+            // Scrolling stopped: snap to the nearest item
             val firstVisibleIndex = listState.firstVisibleItemIndex
             val firstVisibleOffset = listState.firstVisibleItemScrollOffset
 
-            // 计算应该吸附到哪个索引
+            // Work out which index to snap to
             val targetIndex = if (firstVisibleOffset > 60) { // 超过一半高度则跳到下一个
                 firstVisibleIndex + 1
             } else {
                 firstVisibleIndex
             }.coerceIn(0, items.size - 1)
 
-            // 吸附动画
+            // Snap animation
             if (targetIndex != listState.firstVisibleItemIndex || firstVisibleOffset != 0) {
                 listState.animateScrollToItem(targetIndex)
             }
 
-            // 更新选中项
+            // Update the selection
             if (targetIndex != currentSelectedIndex && targetIndex in items.indices) {
                 currentSelectedIndex = targetIndex
                 onSelectedChange(targetIndex)
@@ -429,7 +429,7 @@ private fun WheelPickerColumn(
             val actualIndex = index - centerOffset
             val distanceFromCenter = abs(index - (listState.firstVisibleItemIndex + centerOffset))
 
-            // 根据距离中心的距离计算透明度
+    // Opacity derived from distance to the centre
             val alpha = when (distanceFromCenter) {
                 0 -> 1f
                 1 -> 0.6f
@@ -465,7 +465,7 @@ private fun WheelPickerColumn(
 }
 
 /**
- * 联动选择器数据模型
+ * Linked picker data model
  */
 private class LinkedPickerModel(
     private val data: Map<String, Any>,
@@ -476,7 +476,7 @@ private class LinkedPickerModel(
     private val columnDataCache = mutableStateListOf<List<String>>()
 
     init {
-        // 初始化各列数据
+        // Initialise each column
         for (i in 0 until columnNum) {
             val columnData = getColumnDataInternal(i)
             columnDataCache.add(columnData)
@@ -510,7 +510,7 @@ private class LinkedPickerModel(
         if (index in columnData.indices) {
             selectedData[colIndex] = columnData[index]
 
-            // 更新后续列的数据
+            // Update the data of the columns after this one
             for (i in (colIndex + 1) until columnNum) {
                 val newColumnData = getColumnDataInternal(i)
                 if (i < columnDataCache.size) {

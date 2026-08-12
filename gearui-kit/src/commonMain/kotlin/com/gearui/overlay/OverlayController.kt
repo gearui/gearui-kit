@@ -4,9 +4,9 @@ import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.geometry.Rect
 
 /**
- * Overlay 事件类型
+ * Overlay event type
  *
- * 用于 Runtime 统一事件分发
+ * Used by the Runtime for unified event dispatch
  */
 enum class OverlayEvent {
     OutsideClick,   // 点击外部
@@ -18,10 +18,10 @@ enum class OverlayEvent {
 }
 
 /**
- * OverlayController - Overlay 核心状态管理器
+ * OverlayController - core Overlay state manager
  *
- * 这是 Overlay 系统的唯一真相来源（Single Source of Truth）
- * 所有关闭逻辑通过 DismissPolicy 声明，由 Runtime 统一调度
+ * The single source of truth for the Overlay system.
+ * Every dismissal is declared through DismissPolicy and scheduled by the Runtime.
  */
 @Stable
 class OverlayController {
@@ -32,13 +32,13 @@ class OverlayController {
     private var nextId = 0L
 
     /**
-     * 显示 Overlay
+     * Shows an Overlay
      *
-     * @param anchorBounds 锚点位置（可选，null 则使用 placement 定位）
-     * @param options 配置选项（包含 dismissPolicy）
-     * @param onDismiss 关闭时的回调
-     * @param content 内容
-     * @return Overlay ID，可用于 dismiss
+     * @param anchorBounds anchor position; null means position by placement
+     * @param options configuration, including dismissPolicy
+     * @param onDismiss called when dismissed
+     * @param content the content
+     * @return the Overlay ID, usable with dismiss
      */
     fun show(
         anchorBounds: Rect? = null,
@@ -61,7 +61,7 @@ class OverlayController {
     }
 
     /**
-     * 关闭指定 Overlay
+     * Dismisses one Overlay
      */
     fun dismiss(id: Long) {
         println("[GearUI] Overlay.dismiss id=$id")
@@ -71,7 +71,7 @@ class OverlayController {
     }
 
     /**
-     * 关闭所有 Overlay
+     * Dismisses every Overlay
      */
     fun dismissAll() {
         println("[GearUI] Overlay.dismissAll count=${_items.size}")
@@ -80,15 +80,15 @@ class OverlayController {
     }
 
     /**
-     * 是否有 Overlay 显示
+     * Whether any Overlay is showing
      */
     fun hasOverlay(): Boolean = _items.isNotEmpty()
 
     /**
-     * 分发事件，根据各 Overlay 的 DismissPolicy 决定是否关闭
+     * Dispatches an event; each Overlay dismisses or not according to its DismissPolicy
      *
-     * 这是 Overlay Runtime 的核心方法
-     * 所有关闭逻辑集中在此处理，组件层不应该有任何关闭逻辑
+     * This is the core method of the Overlay Runtime.
+     * All dismissal logic lives here; component code must contain none of it.
      */
     fun dispatchEvent(event: OverlayEvent) {
         println("[GearUI] Overlay.dispatchEvent event=$event, items=${_items.size}")
@@ -115,9 +115,9 @@ class OverlayController {
     }
 
     /**
-     * 根据条件关闭 Overlay
+     * Dismisses Overlays matching a predicate
      *
-     * 用于更灵活的关闭场景
+     * For more flexible dismissal cases
      */
     fun dismissByPolicy(predicate: (OverlayDismissPolicy) -> Boolean) {
         val itemsToRemove = _items.filter { predicate(it.options.dismissPolicy) }
@@ -129,7 +129,7 @@ class OverlayController {
 }
 
 /**
- * Overlay 项数据
+ * Overlay item data
  */
 internal data class OverlayItem(
     val id: Long,
@@ -140,23 +140,23 @@ internal data class OverlayItem(
 )
 
 /**
- * 全局 Overlay Controller（通过 CompositionLocal 注入）
+ * Global Overlay Controller, injected through a CompositionLocal
  */
 val LocalOverlayController = staticCompositionLocalOf<OverlayController> {
     error("OverlayController not provided. Did you forget to wrap your app with OverlayRoot?")
 }
 
 /**
- * OverlayManager - 全局事件通知入口
+ * OverlayManager - global event notification entry point
  *
- * 提供静态方法供外部组件（如 ScrollView）通知 Overlay 系统
- * 事件源在组件层，消费在 Overlay Runtime
+ * Static methods that let outside components (ScrollView and friends) notify the Overlay system.
+ * Events originate in component code and are consumed by the Overlay Runtime.
  */
 object OverlayManager {
     private var controller: OverlayController? = null
 
     /**
-     * 内部方法：绑定 Controller
+     * Internal: binds the Controller
      */
     internal fun bind(controller: OverlayController) {
         println("[GearUI] OverlayManager.bind controller=$controller")
@@ -164,7 +164,7 @@ object OverlayManager {
     }
 
     /**
-     * 内部方法：解绑 Controller
+     * Internal: unbinds the Controller
      */
     internal fun unbind() {
         println("[GearUI] OverlayManager.unbind")
@@ -172,9 +172,9 @@ object OverlayManager {
     }
 
     /**
-     * 通知滚动事件
+     * Notifies a scroll event
      *
-     * 由 ScrollView / LazyColumn 等滚动组件调用
+     * Called by scrolling components such as ScrollView / LazyColumn
      */
     fun notifyScroll() {
         println("[GearUI] OverlayManager.notifyScroll controller=$controller")
@@ -182,28 +182,28 @@ object OverlayManager {
     }
 
     /**
-     * 通知点击外部事件
+     * Notifies a tap-outside event
      */
     fun notifyOutsideClick() {
         controller?.dispatchEvent(OverlayEvent.OutsideClick)
     }
 
     /**
-     * 通知返回键事件
+     * Notifies a back-key event
      */
     fun notifyBackPress() {
         controller?.dispatchEvent(OverlayEvent.BackPress)
     }
 
     /**
-     * 通知路由切换事件
+     * Notifies a route change event
      */
     fun notifyRouteChange() {
         controller?.dispatchEvent(OverlayEvent.RouteChange)
     }
 
     /**
-     * 是否有 Overlay 显示
+     * Whether any Overlay is showing
      */
     fun hasOverlay(): Boolean = controller?.hasOverlay() ?: false
 }

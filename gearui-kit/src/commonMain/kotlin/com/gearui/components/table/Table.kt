@@ -23,7 +23,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * 列固定位置
+ * Pinned column side
  */
 enum class TableColFixed {
     NONE,   // 不固定
@@ -95,9 +95,9 @@ fun <T> rememberTableSelectionState(): TableSelectionState<T> {
  * Table - Data table component
  *
  *
- * 规则：
- * - 普通表格：按行生成，支持上下滚动
- * - 固定列表格：按列生成，左右固定列不动，中间列可左右滚动，所有行联动
+ * Rules:
+ * - plain table: generated row by row, scrolls vertically
+ * - pinned-column table: generated column by column; the left and right pinned columns stay put, the middle scrolls horizontally, and all rows move together
  */
 @Composable
 fun <T> Table(
@@ -116,12 +116,12 @@ fun <T> Table(
     val colors = Theme.colors
     val actualSelectionState = selectionState ?: rememberTableSelectionState()
 
-    // 分类列：左固定、非固定、右固定
+    // Split the columns into left-pinned, unpinned and right-pinned
     val fixedLeftCols = columns.filter { it.fixed == TableColFixed.LEFT }
     val nonFixedCols = columns.filter { it.fixed == TableColFixed.NONE }
     val fixedRightCols = columns.filter { it.fixed == TableColFixed.RIGHT }
 
-    // 检查是否有固定列
+    // Check whether any column is pinned
     val hasFixedCols = fixedLeftCols.isNotEmpty() || fixedRightCols.isNotEmpty()
 
     Column(
@@ -133,7 +133,7 @@ fun <T> Table(
             )
     ) {
         if (hasFixedCols) {
-            // 有固定列：按列生成，中间可左右滚动
+            // Has pinned columns: generate by column, middle area scrolls horizontally
             FixedColumnTable(
                 data = data,
                 fixedLeftCols = fixedLeftCols,
@@ -147,7 +147,7 @@ fun <T> Table(
                 onRowClick = onRowClick
             )
         } else {
-            // 普通表格：按行生成，只支持上下滚动
+            // Plain table: generate by row, vertical scrolling only
             NormalTable(
                 data = data,
                 columns = columns,
@@ -163,7 +163,7 @@ fun <T> Table(
 }
 
 /**
- * 普通表格 - 按行生成，只支持上下滚动
+ * Plain table - generated row by row, vertical scrolling only
  */
 @Composable
 private fun <T> NormalTable(
@@ -178,7 +178,7 @@ private fun <T> NormalTable(
 ) {
     val colors = Theme.colors
 
-    // 表头
+    // Header
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -220,7 +220,7 @@ private fun <T> NormalTable(
         }
     }
 
-    // 表头下分割线
+    // Divider under the header
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +228,7 @@ private fun <T> NormalTable(
             .background(colors.border)
     )
 
-    // 数据区域
+    // Data area
     if (data.isEmpty()) {
         Box(
             modifier = Modifier
@@ -294,7 +294,7 @@ private fun <T> NormalTable(
                     }
                 }
 
-                // 行分割线
+                // Row divider
                 if (index < data.size - 1) {
                     Box(
                         modifier = Modifier
@@ -309,12 +309,12 @@ private fun <T> NormalTable(
 }
 
 /**
- * 固定列表格 - 按列生成
+ * Pinned-column table - generated column by column
  *
- * - 左固定列：不动
- * - 中间列：LazyRow 实现左右滚动，每个 item 是一整列（表头+所有数据行）
- * - 右固定列：不动
- * - 所有行联动滚动
+ * - left pinned columns: fixed
+ * - middle columns: a LazyRow scrolling horizontally, each item being a whole column (header + every data row)
+ * - right pinned columns: fixed
+ * - every row scrolls together
  */
 @Composable
 private fun <T> FixedColumnTable(
@@ -332,7 +332,7 @@ private fun <T> FixedColumnTable(
     val colors = Theme.colors
     val defaultCellWidth = 100.dp
 
-    // 计算总高度
+    // Total height
     val headerHeight = rowHeight + 0.5.dp
     val dataHeight = if (data.isNotEmpty()) {
         rowHeight * data.size + 0.5.dp * (data.size - 1)
@@ -342,12 +342,12 @@ private fun <T> FixedColumnTable(
     val totalHeight = headerHeight + dataHeight
 
     Row(modifier = Modifier.fillMaxWidth().height(totalHeight)) {
-        // ========== 左固定列 ==========
+        // ========== Left pinned columns ==========
         if (fixedLeftCols.isNotEmpty()) {
             Row {
                 fixedLeftCols.forEach { column ->
                     val colWidth = column.width ?: defaultCellWidth
-                    // 每列是一个 Column（表头 + 所有数据行）
+                    // Each column is one Column (header + every data row)
                     ColumnContent(
                         column = column,
                         colWidth = colWidth,
@@ -360,7 +360,7 @@ private fun <T> FixedColumnTable(
                         showEmptyText = false
                     )
                 }
-                // 右边框
+                // Right border
                 Box(
                     modifier = Modifier
                         .width(BorderWidth.thin)
@@ -370,7 +370,7 @@ private fun <T> FixedColumnTable(
             }
         }
 
-        // ========== 中间可滚动列 ==========
+        // ========== Middle scrollable columns ==========
         LazyRow(
             modifier = Modifier.weight(1f).fillMaxHeight(),
             userScrollEnabled = true
@@ -391,10 +391,10 @@ private fun <T> FixedColumnTable(
             }
         }
 
-        // ========== 右固定列 ==========
+        // ========== Right pinned columns ==========
         if (fixedRightCols.isNotEmpty()) {
             Row {
-                // 左边框
+                // Left border
                 Box(
                     modifier = Modifier
                         .width(BorderWidth.thin)
@@ -421,7 +421,7 @@ private fun <T> FixedColumnTable(
 }
 
 /**
- * 单列内容（表头 + 所有数据行）
+ * A single column (header + every data row)
  */
 @Composable
 private fun <T> ColumnContent(
@@ -438,7 +438,7 @@ private fun <T> ColumnContent(
     val colors = Theme.colors
 
     Column {
-        // 表头
+        // Header
         Box(
             modifier = Modifier
                 .width(colWidth)
@@ -453,14 +453,14 @@ private fun <T> ColumnContent(
                 color = colors.mutedForeground
             )
         }
-        // 表头下分割线
+        // Divider under the header
         Box(
             modifier = Modifier
                 .width(colWidth)
                 .height(BorderWidth.hairline)
                 .background(colors.border)
         )
-        // 数据行
+        // Data rows
         if (data.isEmpty()) {
             Box(
                 modifier = Modifier
@@ -499,7 +499,7 @@ private fun <T> ColumnContent(
                 ) {
                     column.render(item, index)
                 }
-                // 行分割线
+                // Row divider
                 if (index < data.size - 1) {
                     Box(
                         modifier = Modifier
@@ -514,7 +514,7 @@ private fun <T> ColumnContent(
 }
 
 /**
- * 获取对齐方式
+ * Resolves the alignment
  */
 private fun getAlignment(align: TableAlign): Alignment {
     return when (align) {

@@ -4,52 +4,52 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * Spacing - 全局间距规范
+ * Spacing - global spacing scale
  *
- * 参考: 内部间距规范
+ * Reference: internal spacing specification
  *
- * 基于 8px 网格系统:
- * - spacer4:   4px  (0.5倍)
- * - spacer8:   8px  (1倍, 基础单位)
- * - spacer12:  12px (1.5倍)
- * - spacer16:  16px (2倍)
- * - spacer24:  24px (3倍)
- * - spacer32:  32px (4倍)
- * - spacer40:  40px (5倍)
- * - spacer48:  48px (6倍)
+ * Built on an 8px grid:
+ * - spacer4:   4px  (0.5x)
+ * - spacer8:   8px  (1x, the base unit)
+ * - spacer12:  12px (1.5x)
+ * - spacer16:  16px (2x)
+ * - spacer24:  24px (3x)
+ * - spacer32:  32px (4x)
+ * - spacer40:  40px (5x)
+ * - spacer48:  48px (6x)
  *
- * 使用原则:
- * - ✅ 强制使用 Spacing.md / Spacing.lg
- * - ❌ 禁止 Spacer(12.dp) / padding(8.dp)
+ * Rules:
+ * - ✅ always use Spacing.md / Spacing.lg
+ * - ❌ never write Spacer(12.dp) / padding(8.dp)
  */
 object Spacing {
     /** 0dp - no gap. Named for symmetry with Shapes.none and Elevation.none. */
     val none: Dp = 0.dp
 
-    /** 4dp - 最小间距 (xs) */
+    /** 4dp - smallest gap (xs) */
     val xs: Dp = 4.dp
 
-    /** 8dp - 基础间距 (sm) */
+    /** 8dp - base gap (sm) */
     val sm: Dp = 8.dp
 
-    /** 12dp - 紧凑间距 (md) - 最常用 */
+    /** 12dp - compact gap (md) - most used */
     val md: Dp = 12.dp
 
-    /** 16dp - 标准间距 (lg) */
+    /** 16dp - standard gap (lg) */
     val lg: Dp = 16.dp
 
-    /** 24dp - 中等间距 (xl) */
+    /** 24dp - medium gap (xl) */
     val xl: Dp = 24.dp
 
-    /** 32dp - 较大间距 (xxl) */
+    /** 32dp - large gap (xxl) */
     val xxl: Dp = 32.dp
 
-    /** 40dp - 大间距 */
+    /** 40dp - larger gap */
     val xxxl: Dp = 40.dp
 
-    /** 48dp - 超大间距 */
+    /** 48dp - extra large gap */
     val huge: Dp = 48.dp
 
-    /** 64dp - 特大间距 */
+    /** 64dp - largest gap */
     val massive: Dp = 64.dp
 }

@@ -5,12 +5,12 @@ import com.gearui.unit.TextUnit
 import com.tencent.kuikly.compose.ui.unit.sp
 
 /**
- * TextStyle - 文本样式 Token
+ * TextStyle - text style token
  *
- * 包含:
- * - fontSize: 字号
- * - lineHeight: 行高
- * - fontWeight: 字重
+ * Contains:
+ * - fontSize
+ * - lineHeight
+ * - fontWeight
  */
 data class TextStyle(
     val fontSize: TextUnit,
@@ -19,33 +19,33 @@ data class TextStyle(
 )
 
 /**
- * Typography - 语义化排版系统
+ * Typography - semantic type scale
  *
- * 参考: 内部字体规范
+ * Reference: internal type specification
  *
- * 层级体系:
- * - Display: 超大标题 (64sp/48sp) - 营销页面
- * - Headline: 大标题 (36sp/28sp/24sp) - 页面标题
- * - Title: 标题 (20sp/18sp/16sp/14sp) - 区块标题
- * - Body: 正文 (18sp/16sp/14sp/12sp/10sp) - 内容文本
- * - Mark: 强调 (16sp/14sp/12sp/10sp) - 加粗版正文
- * - Link: 链接 (16sp/14sp/12sp) - 可点击文本
+ * Hierarchy:
+ * - Display: oversized headings (64sp/48sp) - marketing pages
+ * - Headline: large headings (36sp/28sp/24sp) - page titles
+ * - Title: headings (20sp/18sp/16sp/14sp) - section titles
+ * - Body: body copy (18sp/16sp/14sp/12sp/10sp) - content text
+ * - Mark: emphasis (16sp/14sp/12sp/10sp) - bold body copy
+ * - Link: links (16sp/14sp/12sp) - tappable text
  *
- * 使用原则:
- * - ✅ 强制使用语义化名称 (TitleLarge/BodyMedium)
- * - ❌ 禁止硬编码 fontSize
+ * Rules:
+ * - ✅ always use the semantic names (TitleLarge / BodyMedium)
+ * - ❌ never hardcode fontSize
  */
 object Typography {
 
-    /* ---------- Display (超大标题) ---------- */
+    /* ---------- Display (oversized headings) ---------- */
 
-    /** Display Large - 64sp/72sp - 营销大标题 */
+    /** Display Large - 64sp/72sp - marketing heading */
     val DisplayLarge = TextStyle(64.sp, 72.sp, FontWeight.SemiBold)
 
     /** Display Medium - 48sp/56sp */
     val DisplayMedium = TextStyle(48.sp, 56.sp, FontWeight.SemiBold)
 
-    /* ---------- Headline (大标题) ---------- */
+    /* ---------- Headline (large headings) ---------- */
 
     /** Headline Large - 36sp/44sp */
     val HeadlineLarge = TextStyle(36.sp, 44.sp, FontWeight.SemiBold)
@@ -56,7 +56,7 @@ object Typography {
     /** Headline Small - 24sp/32sp */
     val HeadlineSmall = TextStyle(24.sp, 32.sp, FontWeight.SemiBold)
 
-    /* ---------- Title (标题) ---------- */
+    /* ---------- Title (headings) ---------- */
 
     /** Title Extra Large - 20sp/28sp */
     val TitleExtraLarge = TextStyle(20.sp, 28.sp, FontWeight.SemiBold)
@@ -70,7 +70,7 @@ object Typography {
     /** Title Small - 14sp/22sp */
     val TitleSmall = TextStyle(14.sp, 22.sp, FontWeight.Normal)
 
-    /* ---------- Body (正文) ---------- */
+    /* ---------- Body (body copy) ---------- */
 
     /** Body Extra Large - 18sp/26sp */
     val BodyExtraLarge = TextStyle(18.sp, 26.sp, FontWeight.Normal)
@@ -78,7 +78,7 @@ object Typography {
     /** Body Large - 16sp/24sp */
     val BodyLarge = TextStyle(16.sp, 24.sp, FontWeight.Normal)
 
-    /** Body Medium - 14sp/22sp (最常用) */
+    /** Body Medium - 14sp/22sp (most used) */
     val BodyMedium = TextStyle(14.sp, 22.sp, FontWeight.Normal)
 
     /** Body Small - 12sp/20sp */
@@ -87,21 +87,21 @@ object Typography {
     /** Body Extra Small - 10sp/16sp */
     val BodyExtraSmall = TextStyle(10.sp, 16.sp, FontWeight.Normal)
 
-    /* ---------- Mark (强调) ---------- */
+    /* ---------- Mark (emphasis) ---------- */
 
-    /** Mark Large - 16sp/24sp - 加粗 */
+    /** Mark Large - 16sp/24sp - bold */
     val MarkLarge = TextStyle(16.sp, 24.sp, FontWeight.SemiBold)
 
-    /** Mark Medium - 14sp/22sp - 加粗 */
+    /** Mark Medium - 14sp/22sp - bold */
     val MarkMedium = TextStyle(14.sp, 22.sp, FontWeight.SemiBold)
 
-    /** Mark Small - 12sp/20sp - 加粗 */
+    /** Mark Small - 12sp/20sp - bold */
     val MarkSmall = TextStyle(12.sp, 20.sp, FontWeight.SemiBold)
 
-    /** Mark Extra Small - 10sp/16sp - 加粗 */
+    /** Mark Extra Small - 10sp/16sp - bold */
     val MarkExtraSmall = TextStyle(10.sp, 16.sp, FontWeight.SemiBold)
 
-    /* ---------- Link (链接) ---------- */
+    /* ---------- Link ---------- */
 
     /** Link Large - 16sp/24sp */
     val LinkLarge = TextStyle(16.sp, 24.sp, FontWeight.Normal)
@@ -112,13 +112,13 @@ object Typography {
     /** Link Small - 12sp/20sp */
     val LinkSmall = TextStyle(12.sp, 20.sp, FontWeight.Normal)
 
-    /* ---------- Caption (辅助文字) ---------- */
+    /* ---------- Caption (supporting text) ---------- */
 
-    /** Caption - 12sp/18sp - 辅助说明 */
+    /** Caption - 12sp/18sp - supporting note */
     val Caption = TextStyle(12.sp, 18.sp, FontWeight.Normal)
 
-    /* ---------- Label (标签文字) ---------- */
+    /* ---------- Label ---------- */
 
-    /** Label - 10sp/16sp - 标签/徽章 */
+    /** Label - 10sp/16sp - label / badge */
     val Label = TextStyle(10.sp, 16.sp, FontWeight.Medium)
 }

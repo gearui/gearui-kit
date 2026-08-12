@@ -23,20 +23,20 @@ import kotlin.math.sin
 import com.gearui.foundation.typography.Typography
 
 /**
- * Loading - 加载指示器组件
+ * Loading - loading indicator
  *
- * - 三种图标类型：圆形(circle)、点状(point)、菊花状(activity)
- * - 三种尺寸：小/中/大
- * - 横向/纵向布局
- * - 可选文字说明
- * - 自定义颜色和动画速度
+ * - three icon types: circle, point, activity
+ * - three sizes: small / medium / large
+ * - horizontal or vertical layout
+ * - optional caption
+ * - custom colour and animation speed
  *
- * @param size 尺寸
- * @param icon 图标类型
- * @param text 文字说明
- * @param layout 布局方向
- * @param color 自定义颜色
- * @param duration 动画周期（毫秒）
+ * @param size the size
+ * @param icon icon type
+ * @param text caption
+ * @param layout layout direction
+ * @param color custom colour
+ * @param duration animation period in milliseconds
  */
 @Composable
 fun Loading(
@@ -63,7 +63,7 @@ fun Loading(
     }
 
     val content: @Composable () -> Unit = {
-        // 图标
+        // Icon
         when (icon) {
             LoadingIcon.CIRCLE -> {
                 CircularLoadingIndicator(
@@ -89,7 +89,7 @@ fun Loading(
             }
         }
 
-        // 文字
+        // Text
         if (text != null) {
             val spacing = when (size) {
                 LoadingSize.SMALL -> 6.dp
@@ -141,7 +141,7 @@ fun Loading(
 }
 
 /**
- * CircularLoadingIndicator - 圆形旋转加载指示器
+ * CircularLoadingIndicator - spinning circular indicator
  */
 @Composable
 private fun CircularLoadingIndicator(
@@ -169,7 +169,7 @@ private fun CircularLoadingIndicator(
         val startAngle = rotation - 90f
         val stroke = strokeWidth.toPx()
 
-        // 计算绘制区域，留出 stroke 的边距防止裁切
+        // Inset the drawing area by the stroke width so it is not clipped
         val arcSize = this.size.width - stroke
         val topLeft = Offset(stroke / 2, stroke / 2)
 
@@ -189,7 +189,7 @@ private fun CircularLoadingIndicator(
 }
 
 /**
- * ActivityLoadingIndicator - 菊花状加载指示器（类似 iOS 风格）
+ * ActivityLoadingIndicator - spoke indicator (iOS style)
  */
 @Composable
 private fun ActivityLoadingIndicator(
@@ -241,7 +241,7 @@ private fun ActivityLoadingIndicator(
 }
 
 /**
- * PointLoadingIndicator - 点状加载指示器（三点跳动）
+ * PointLoadingIndicator - dot indicator (three bouncing dots)
  */
 @Composable
 private fun PointLoadingIndicator(
@@ -251,7 +251,7 @@ private fun PointLoadingIndicator(
 ) {
     val infiniteTransition = rememberInfiniteTransition()
 
-    // 三个点的动画，错开 1/3 周期
+    // Three dot animations, offset by a third of the period each
     val offset1 by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
@@ -320,46 +320,46 @@ private fun PointLoadingIndicator(
 }
 
 /**
- * Loading 尺寸枚举
+ * Loading size
  */
 enum class LoadingSize {
-    /** 小尺寸 - 18dp */
+    /** small - 18dp */
     SMALL,
 
-    /** 中尺寸 - 21dp (默认) */
+    /** medium - 21dp (default) */
     MEDIUM,
 
-    /** 大尺寸 - 24dp */
+    /** large - 24dp */
     LARGE
 }
 
 /**
- * Loading 图标类型
+ * Loading icon type
  */
 enum class LoadingIcon {
-    /** 圆形旋转 */
+    /** spinning circle */
     CIRCLE,
 
-    /** 菊花状（iOS 风格） */
+    /** spokes (iOS style) */
     ACTIVITY,
 
-    /** 点状跳动 */
+    /** bouncing dots */
     POINT
 }
 
 /**
- * Loading 布局方向
+ * Loading layout direction
  */
 enum class LoadingLayout {
-    /** 横向布局 (图标在左，文字在右) */
+    /** horizontal (icon left, text right) */
     HORIZONTAL,
 
-    /** 纵向布局 (图标在上，文字在下) */
+    /** vertical (icon top, text below) */
     VERTICAL
 }
 
 /**
- * FullScreenLoading - 全屏遮罩加载
+ * FullScreenLoading - fullscreen scrim loader
  */
 @Composable
 fun FullScreenLoading(

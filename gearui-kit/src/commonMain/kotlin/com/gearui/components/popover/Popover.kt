@@ -30,7 +30,7 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * PopoverTheme - 气泡主题
+ * PopoverTheme - bubble theme
  */
 enum class PopoverTheme {
     DARK,       // 深色主题
@@ -42,7 +42,7 @@ enum class PopoverTheme {
 }
 
 /**
- * PopoverPlacement - 弹出位置
+ * PopoverPlacement - popup position
  */
 enum class PopoverPlacement {
     TOP_LEFT,       // 上左
@@ -60,7 +60,7 @@ enum class PopoverPlacement {
 }
 
 /**
- * PopoverState - Popover 状态管理
+ * PopoverState - Popover state management
  */
 @Stable
 class PopoverState {
@@ -81,7 +81,7 @@ class PopoverState {
 }
 
 /**
- * 记住 Popover 状态
+ * Remembers a Popover state
  */
 @Composable
 fun rememberPopoverState(): PopoverState {
@@ -89,16 +89,16 @@ fun rememberPopoverState(): PopoverState {
 }
 
 /**
- * Popover - 气泡弹出框
+ * Popover - popup bubble
  *
- * 使用 GearUI Overlay 系统实现精确定位
+ * Positioned precisely through the GearUI Overlay system
  *
- * 特性：
- * - 6种主题颜色
- * - 12种弹出位置
- * - 可选箭头显示
- * - 自定义内容
- * - 点击外部关闭
+ * Features:
+ * - 6 theme colours
+ * - 12 placements
+ * - optional arrow
+ * - custom content
+ * - tap outside to dismiss
  */
 @Composable
 fun Popover(
@@ -115,10 +115,10 @@ fun Popover(
     val colors = Theme.colors
     val overlay = rememberOverlay()
 
-    // 触发元素的边界
+    // Bounds of the trigger element
     var triggerBounds by remember { mutableStateOf<Rect?>(null) }
 
-    // 根据主题获取背景色和文字颜色
+    // Background and text colour derived from the theme
     val backgroundColor = remember(theme, colors) {
         when (theme) {
             PopoverTheme.DARK -> colors.foreground
@@ -148,11 +148,11 @@ fun Popover(
         }
     }
 
-    // 使用 key 来管理 overlay 的生命周期
+    // Key the overlay so its lifecycle can be managed
     val isVisible = state.isVisible
     val bounds = triggerBounds
 
-    // 使用 DisposableEffect 来管理 overlay
+    // DisposableEffect drives the overlay lifecycle
     if (isVisible && bounds != null) {
         val currentPlacement = placement
         val currentOffset = offset
@@ -210,7 +210,7 @@ fun Popover(
         }
     }
 
-    // 触发元素
+    // Trigger element
     Box(
         modifier = modifier
             .onGloballyPositioned { coordinates ->
@@ -224,7 +224,7 @@ fun Popover(
 }
 
 /**
- * Popover 内容布局
+ * Popover content layout
  */
 @Composable
 private fun PopoverContent(
@@ -237,13 +237,13 @@ private fun PopoverContent(
 ) {
     val arrowSize = 8.dp
 
-    // 根据 placement 决定箭头位置
+    // Arrow position follows the placement
     val isTop = placement in listOf(PopoverPlacement.TOP, PopoverPlacement.TOP_LEFT, PopoverPlacement.TOP_RIGHT)
     val isBottom = placement in listOf(PopoverPlacement.BOTTOM, PopoverPlacement.BOTTOM_LEFT, PopoverPlacement.BOTTOM_RIGHT)
     val isLeft = placement in listOf(PopoverPlacement.LEFT, PopoverPlacement.LEFT_TOP, PopoverPlacement.LEFT_BOTTOM)
     val isRight = placement in listOf(PopoverPlacement.RIGHT, PopoverPlacement.RIGHT_TOP, PopoverPlacement.RIGHT_BOTTOM)
 
-    // 箭头对齐
+    // Arrow alignment
     val arrowAlignment = when (placement) {
         PopoverPlacement.TOP_LEFT, PopoverPlacement.BOTTOM_LEFT -> Alignment.Start
         PopoverPlacement.TOP_RIGHT, PopoverPlacement.BOTTOM_RIGHT -> Alignment.End
@@ -253,7 +253,7 @@ private fun PopoverContent(
     }
 
     if (isLeft || isRight) {
-        // 横向布局 (左/右)
+        // Horizontal layout (left / right)
         Row(
             verticalAlignment = when (arrowAlignment) {
                 Alignment.Top -> Alignment.Top
@@ -285,7 +285,7 @@ private fun PopoverContent(
             }
         }
     } else {
-        // 纵向布局 (上/下)
+        // Vertical layout (top / bottom)
         Column(
             horizontalAlignment = when (arrowAlignment) {
                 Alignment.Start -> Alignment.Start
@@ -322,7 +322,7 @@ private fun PopoverContent(
 }
 
 /**
- * Popover 主体内容
+ * Popover body content
  */
 @Composable
 private fun PopoverBody(
@@ -350,14 +350,14 @@ private fun PopoverBody(
 }
 
 /**
- * 箭头方向
+ * Arrow direction
  */
 enum class ArrowDirection {
     UP, DOWN, LEFT, RIGHT
 }
 
 /**
- * Popover 箭头
+ * Popover arrow
  */
 @Composable
 private fun PopoverArrow(
@@ -384,7 +384,7 @@ private fun PopoverArrow(
 }
 
 /**
- * 三角形 Shape
+ * Triangle Shape
  */
 // Arrow tips are triangle geometry approximated with corner radii, not a
 // surface radius, so they stay off the shape scale.
@@ -412,23 +412,23 @@ private fun TriangleShape(direction: ArrowDirection) = when (direction) {
 }
 
 /**
- * 将 PopoverPlacement 转换为 OverlayPlacement
+ * Converts a PopoverPlacement into an OverlayPlacement
  */
 private fun placementToOverlay(placement: PopoverPlacement): OverlayPlacement {
     return when (placement) {
-        // 上方
+        // Above
         PopoverPlacement.TOP_LEFT -> OverlayPlacement.TopLeft
         PopoverPlacement.TOP -> OverlayPlacement.TopCenter
         PopoverPlacement.TOP_RIGHT -> OverlayPlacement.TopRight
-        // 下方
+        // Below
         PopoverPlacement.BOTTOM_LEFT -> OverlayPlacement.BottomLeft
         PopoverPlacement.BOTTOM -> OverlayPlacement.BottomCenter
         PopoverPlacement.BOTTOM_RIGHT -> OverlayPlacement.BottomRight
-        // 左侧
+        // Left
         PopoverPlacement.LEFT_TOP -> OverlayPlacement.LeftTop
         PopoverPlacement.LEFT -> OverlayPlacement.LeftCenter
         PopoverPlacement.LEFT_BOTTOM -> OverlayPlacement.LeftBottom
-        // 右侧
+        // Right
         PopoverPlacement.RIGHT_TOP -> OverlayPlacement.RightTop
         PopoverPlacement.RIGHT -> OverlayPlacement.RightCenter
         PopoverPlacement.RIGHT_BOTTOM -> OverlayPlacement.RightBottom
@@ -436,12 +436,12 @@ private fun placementToOverlay(placement: PopoverPlacement): OverlayPlacement {
 }
 
 /**
- * Popover 文字颜色的 CompositionLocal
+ * CompositionLocal carrying the Popover text colour
  */
 val LocalPopoverTextColor = compositionLocalOf { Color.Unspecified }
 
 /**
- * Tooltip - 简化的文本提示
+ * Tooltip - simplified text hint
  */
 @Composable
 fun Tooltip(
@@ -484,7 +484,7 @@ fun Tooltip(
 }
 
 /**
- * PopoverMenuItem - Popover 菜单项
+ * PopoverMenuItem - Popover menu item
  */
 data class PopoverMenuItem(
     val label: String,
@@ -495,7 +495,7 @@ data class PopoverMenuItem(
 )
 
 /**
- * PopoverMenu - 带菜单项的 Popover
+ * PopoverMenu - Popover holding menu items
  */
 @Composable
 fun PopoverMenu(

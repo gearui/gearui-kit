@@ -34,7 +34,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * ImageViewerState - 图片预览器状态
+ * ImageViewerState - image viewer state
  */
 @Stable
 class ImageViewerState(
@@ -57,7 +57,7 @@ class ImageViewerState(
 }
 
 /**
- * 记住 ImageViewer 状态
+ * Remembers an ImageViewer state
  */
 @Composable
 fun rememberImageViewerState(
@@ -67,28 +67,28 @@ fun rememberImageViewerState(
 }
 
 /**
- * ImageViewer - 图片预览组件
+ * ImageViewer - fullscreen image preview
  *
- * 特性：
- * - 全屏图片预览
- * - 支持左右滑动切换
- * - 显示页码指示器
- * - 支持关闭按钮
- * - 支持删除按钮
- * - 支持图片标题/描述
- * - 点击关闭
- * - 支持长按回调
+ * Features:
+ * - fullscreen preview
+ * - swipe between images
+ * - page indicator
+ * - optional close button
+ * - optional delete button
+ * - optional caption
+ * - tap to dismiss
+ * - long-press callback
  *
- * @param images 图片列表（Painter 列表，null 显示占位符）
- * @param state 预览器状态
- * @param labels 图片标题列表（可选）
- * @param showIndex 是否显示页码
- * @param showCloseBtn 是否显示关闭按钮
- * @param showDeleteBtn 是否显示删除按钮
- * @param onClose 关闭回调
- * @param onDelete 删除回调
- * @param onIndexChange 页码变化回调
- * @param onLongPress 长按回调
+ * @param images image list as Painters; null renders a placeholder
+ * @param state viewer state
+ * @param labels optional captions
+ * @param showIndex whether to show the page number
+ * @param showCloseBtn whether to show the close button
+ * @param showDeleteBtn whether to show the delete button
+ * @param onClose close callback
+ * @param onDelete delete callback
+ * @param onIndexChange page change callback
+ * @param onLongPress long-press callback
  */
 @Composable
 fun ImageViewer(
@@ -121,7 +121,7 @@ fun ImageViewer(
         pageCount = { images.size }
     )
 
-    // 同步 pagerState 到 state
+    // Keep pagerState and state in sync
     LaunchedEffect(pagerState.currentPage) {
         state.currentIndex = pagerState.currentPage
         onIndexChange?.invoke(pagerState.currentPage)
@@ -132,7 +132,7 @@ fun ImageViewer(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        // 图片内容区
+        // Image area
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
@@ -152,7 +152,7 @@ fun ImageViewer(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                // 图片或占位符
+                // Image or placeholder
                 val painter = images.getOrNull(page)
                 if (painter != null) {
                     val imageModifier = when {
@@ -167,7 +167,7 @@ fun ImageViewer(
                         modifier = imageModifier
                     )
                 } else {
-                    // 占位符
+                    // Placeholder
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -195,7 +195,7 @@ fun ImageViewer(
             }
         }
 
-        // 顶部导航栏
+        // Top bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -205,7 +205,7 @@ fun ImageViewer(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 关闭按钮
+            // Close button
             if (showCloseBtn) {
                 Box(
                     modifier = Modifier
@@ -227,12 +227,12 @@ fun ImageViewer(
                 Spacer(modifier = Modifier.width(Spacing.xxl))
             }
 
-            // 标题和页码
+            // Caption and page number
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.weight(1f)
             ) {
-                // 标题
+                // Caption
                 labels?.getOrNull(state.currentIndex)?.let { label ->
                     if (label.isNotEmpty()) {
                         Text(
@@ -244,7 +244,7 @@ fun ImageViewer(
                     }
                 }
 
-                // 页码
+                // Page number
                 if (showIndex && images.size > 1) {
                     Text(
                         text = "${state.currentIndex + 1} / ${images.size}",
@@ -254,7 +254,7 @@ fun ImageViewer(
                 }
             }
 
-            // 删除按钮
+            // Delete button
             if (showDeleteBtn) {
                 Box(
                     modifier = Modifier
@@ -277,7 +277,7 @@ fun ImageViewer(
             }
         }
 
-        // 底部指示器（多张图片时显示）
+        // Bottom indicator, shown when there is more than one image
         if (images.size > 1) {
             Row(
                 modifier = Modifier
@@ -305,16 +305,16 @@ fun ImageViewer(
 }
 
 /**
- * ImageViewerDialog - 以对话框形式显示图片预览
+ * ImageViewerDialog - image preview presented as a dialog
  *
- * 用法：
+ * Usage:
  * ```kotlin
  * val viewerState = rememberImageViewerState()
  *
- * // 在某处触发显示
- * Button(onClick = { viewerState.show(0) }) { Text("查看图片") }
+ * // trigger it from somewhere
+ * Button(onClick = { viewerState.show(0) }) { Text("View images") }
  *
- * // 渲染 Viewer
+ * // render the viewer
  * if (viewerState.isVisible) {
  *     ImageViewer(
  *         images = imageList,
@@ -339,7 +339,7 @@ fun ImageViewerTrigger(
     val colors = Theme.colors
     val state = rememberImageViewerState(initialIndex)
 
-    // 缩略图网格
+    // Thumbnail grid
     val displayImages = images.take(maxDisplay)
     val columns = when {
         displayImages.size <= 1 -> 1
@@ -381,7 +381,7 @@ fun ImageViewerTrigger(
                             )
                         }
 
-                        // 显示更多数量
+                        // "more" count
                         if (index == maxDisplay - 1 && images.size > maxDisplay) {
                             Box(
                                 modifier = Modifier
@@ -402,7 +402,7 @@ fun ImageViewerTrigger(
         }
     }
 
-    // 图片预览器
+    // The image viewer
     if (state.isVisible) {
         ImageViewer(
             images = images,

@@ -3,20 +3,20 @@ package com.gearui.navigation
 import androidx.compose.runtime.Stable
 
 /**
- * Navigator v1 公共 API 类型。
+ * Public API types for Navigator v1.
  *
- * 设计取向（参见 `gearui-kit/docs/NAVIGATOR_SWIPE_BACK_DESIGN.md`）：
- * - **不**公开 typed params；参数由业务层用 outer state holder + [Navigator.onEntryRemoved] 桥接
- * - **不**公开 SaveableStateHolder；Navigator 内部按 [NavEntry.key] 自管
- * - back 接入复用 Kuikly `BackHandler`，topmost-only 语义；Navigator 栈底必须 dispose 自己的 BackHandler
+ * Design choices (see `gearui-kit/docs/NAVIGATOR_SWIPE_BACK_DESIGN.md`):
+ * - Typed params are **not** exposed; callers bridge them with an outer state holder plus [Navigator.onEntryRemoved]
+ * - SaveableStateHolder is **not** exposed; Navigator manages it internally by [NavEntry.key]
+ * - Back handling reuses Kuikly `BackHandler` and its topmost-only semantics, so Navigator must dispose its own handler at the bottom of the stack
  */
 
 /**
- * 栈中的一项。
+ * One item in the stack.
  *
- * @property route 业务 dispatch key（"chat", "profile_edit"）
- * @property key entry 唯一身份；同 route 多次 push 需要业务传不同 key，否则 SaveableState 会串
- * @property options 行为开关（swipeBack / transition / presentation / pop 拦截）
+ * @property route dispatch key, such as "chat" or "profile_edit"
+ * @property key unique identity; pushing the same route twice needs distinct keys or their SaveableState will be shared
+ * @property options behaviour switches: swipeBack, transition, presentation, pop interception
  */
 @Stable
 data class NavEntry(
@@ -26,7 +26,7 @@ data class NavEntry(
 )
 
 /**
- * 单个 entry 的行为开关。默认值跟普通业务页面一致：可滑返回、push 动画、Push 呈现。
+ * Per-entry behaviour switches. Defaults match an ordinary page: swipe back allowed, push animation, Push presentation.
  */
 @Stable
 data class NavOptions(
@@ -34,9 +34,9 @@ data class NavOptions(
     val transition: NavTransition = NavTransition.SlidePush,
     val presentation: NavPresentation = NavPresentation.Push,
     /**
-     * pop 拦截钩子。返回 [PopDecision.Pending] 时本次 BACK 已视为 consumed，
-     * Navigator **不**保留 continuation；业务弹确认框后自己调
-     * [NavigatorController.forcePop] 继续，或显式 [NavigatorController.pop] 取消。
+     * Pop interception hook. Returning [PopDecision.Pending] means this BACK is
+     * already consumed and Navigator keeps **no** continuation; after showing a
+     * confirmation the caller calls [NavigatorController.forcePop] to continue, or [NavigatorController.pop] to cancel.
      */
     val onPopRequest: ((PopRequest) -> PopDecision)? = null,
 ) {
@@ -45,55 +45,55 @@ data class NavOptions(
     }
 }
 
-/** 入场/出场动画风格。Commit 1 只实现瞬切；Commit 2 会加 [SlidePush]/[FadeIn]/[ModalSheet] 实现。 */
+/** Enter and exit animation style. Commit 1 only implements the instant cut; [SlidePush], [FadeIn] and [ModalSheet] arrive in Commit 2. */
 enum class NavTransition { SlidePush, FadeIn, ModalSheet }
 
-/** 呈现语义。 */
+/** Presentation semantics. */
 enum class NavPresentation {
-    /** 普通页面入栈，参与微信式 edge swipe pop。previous 层在 swipe/动画期间保留。 */
+    /** An ordinary page push, taking part in the WeChat-style edge swipe pop. The previous layer is kept during the swipe and the animation. */
     Push,
 
-    /** 覆盖式沉浸层（图片/视频预览）。previous 层一直保留，但不参与 edge swipe；关闭直接回 previous。 */
+    /** An immersive overlay such as an image or video preview. The previous layer is kept but does not take part in edge swipe; closing returns straight to it. */
     Overlay,
 
-    /** 全屏模态（任务/表单弹层）。previous 层不跟随位移；不参与 edge swipe。 */
+    /** A fullscreen modal such as a task or form sheet. The previous layer does not move with it and edge swipe does not apply. */
     Modal,
 }
 
-/** Pop 请求附带的上下文。 */
+/** Context carried with a pop request. */
 @Stable
 data class PopRequest(
     val entry: NavEntry,
     val reason: PopReason,
 )
 
-/** Pop 发起方。 */
+/** What initiated the pop. */
 enum class PopReason {
-    /** 系统返回键（Kuikly BackHandler）。 */
+    /** The system back button, via Kuikly BackHandler. */
     BackButton,
 
-    /** 左边缘右滑提交。 */
+    /** A committed edge swipe. */
     EdgeSwipe,
 
-    /** 业务代码主动调 [NavigatorController.pop]。 */
+    /** A direct call to [NavigatorController.pop]. */
     Programmatic,
 }
 
 /**
- * [NavOptions.onPopRequest] 的返回值。
+ * Return value of [NavOptions.onPopRequest].
  *
- * - [Allow]：放行，Navigator 继续 pop 流程
- * - [Deny]：本次 BACK 被业务吃掉，不 pop（栈结构不变）
- * - [Pending]：本次 BACK 已视为 consumed，业务弹确认框；Navigator 不挂 continuation，
- *   业务必须显式调 [NavigatorController.forcePop] 才能真正 pop，或者什么都不调 = 取消
+ * - [Allow]: proceed; Navigator continues the pop.
+ * - [Deny]: the caller swallows this BACK and the stack is unchanged.
+ * - [Pending]: this BACK counts as consumed and the caller shows a confirmation. Navigator keeps
+ *   no continuation, so the caller must call [NavigatorController.forcePop] to actually pop; doing nothing cancels.
  */
 enum class PopDecision { Allow, Deny, Pending }
 
 /**
- * Navigator 操作入口。Composition 中通过 [EntryScope.controller] 拿到引用。
+ * Entry point for driving the Navigator. Obtained in composition through [EntryScope.controller].
  *
- * 注意：业务不要从 [EntryScope.entry] 推断「全局当前页」——`entry` 是该层渲染的 entry，
- * Navigator 在 transition 期间会同时渲染 current 和 previous 两层。
+ * Note: do not infer "the globally current page" from [EntryScope.entry]. That is the entry
+ * rendered by this layer, and during a transition Navigator renders both current and previous.
  */
 @Stable
 interface NavigatorController {
@@ -104,27 +104,27 @@ interface NavigatorController {
 
     fun push(route: String, key: String? = null, options: NavOptions = NavOptions.Default)
 
-    /** 触发 [NavOptions.onPopRequest]；按返回值决定真 pop / 拒绝 / 挂起。栈底返回 false。 */
+    /** Fires [NavOptions.onPopRequest] and pops, refuses or suspends accordingly. Returns false at the bottom of the stack. */
     fun pop(): Boolean
 
-    /** 跳过 [NavOptions.onPopRequest]，用于业务确认 dirty 后继续返回。栈底返回 false。 */
+    /** Skips [NavOptions.onPopRequest], for continuing after the caller has confirmed a dirty state. Returns false at the bottom of the stack. */
     fun forcePop(): Boolean
 
-    /** 弹到栈中最近一个 [route] 匹配的 entry。已经在栈顶或栈中无匹配返回 false。 */
+    /** Pops to the nearest entry matching [route]. Returns false if already on top or no match exists. */
     fun popTo(route: String): Boolean
 
     fun replace(route: String, key: String? = null, options: NavOptions = NavOptions.Default)
 
-    /** 清栈到只剩 [route]。所有被移除的 entry 触发 onEntryRemoved。 */
+    /** Clears the stack down to [route]. Every removed entry fires onEntryRemoved. */
     fun resetTo(route: String)
 }
 
 /**
- * 单个 entry 渲染时的局部作用域。
+ * Local scope for one rendered entry.
  *
- * - [entry] 是**这层**渲染的 entry（不一定是栈顶）
- * - [isTop] = 是否为栈顶；transition 中 previous 层渲染时为 false
- * - [isForeground] = top 且无 transition 进行中；业务可借此暂停轮询/动画
+ * - [entry] is the entry rendered by **this layer**, which is not necessarily the top
+ * - [isTop] is whether it is the top; false for the previous layer during a transition
+ * - [isForeground] is top with no transition in flight; callers can pause polling or animation on it
  */
 @Stable
 interface EntryScope {

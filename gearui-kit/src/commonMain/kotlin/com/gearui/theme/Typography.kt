@@ -6,30 +6,30 @@ import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.sp
 
 /**
- * GearUI Framework 语义排版系统
+ * GearUI Framework semantic type scale
  *
- * 参考: 内部字体规范
+ * Reference: internal type specification
  *
- * ⚠️ 规则：
- * 组件层 ONLY 使用这些语义文本样式
- * 禁止出现 fontSize = xx.sp / 硬编码值
+ * ⚠️ Rule:
+ * Component code uses ONLY these semantic text styles.
+ * No `fontSize = xx.sp` and no hardcoded values.
  *
- * 使用方式：
+ * Usage:
  * val typography = Theme.typography
  * Text(text, style = Typography.BodyMedium)
  */
 @Immutable
 data class Typography(
 
-    /* ---------- Display (超大标题) ---------- */
+    /* ---------- Display (oversized headings) ---------- */
 
-    /** Display Large - 64sp/72sp - 营销大标题 */
+    /** Display Large - 64sp/72sp - marketing heading */
     val displayLarge: TextStyle,
 
     /** Display Medium - 48sp/56sp */
     val displayMedium: TextStyle,
 
-    /* ---------- Headline (大标题) ---------- */
+    /* ---------- Headline (large headings) ---------- */
 
     /** Headline Large - 36sp/44sp */
     val headlineLarge: TextStyle,
@@ -40,7 +40,7 @@ data class Typography(
     /** Headline Small - 24sp/32sp */
     val headlineSmall: TextStyle,
 
-    /* ---------- Title (标题) ---------- */
+    /* ---------- Title (headings) ---------- */
 
     /** Title Extra Large - 20sp/28sp */
     val titleExtraLarge: TextStyle,
@@ -54,7 +54,7 @@ data class Typography(
     /** Title Small - 14sp/22sp */
     val titleSmall: TextStyle,
 
-    /* ---------- Body (正文) ---------- */
+    /* ---------- Body (body copy) ---------- */
 
     /** Body Extra Large - 18sp/26sp */
     val bodyExtraLarge: TextStyle,
@@ -62,7 +62,7 @@ data class Typography(
     /** Body Large - 16sp/24sp */
     val bodyLarge: TextStyle,
 
-    /** Body Medium - 14sp/22sp (最常用) */
+    /** Body Medium - 14sp/22sp (most used) */
     val bodyMedium: TextStyle,
 
     /** Body Small - 12sp/20sp */
@@ -71,21 +71,21 @@ data class Typography(
     /** Body Extra Small - 10sp/16sp */
     val bodyExtraSmall: TextStyle,
 
-    /* ---------- Mark (强调) ---------- */
+    /* ---------- Mark (emphasis) ---------- */
 
-    /** Mark Large - 16sp/24sp - 加粗 */
+    /** Mark Large - 16sp/24sp - bold */
     val markLarge: TextStyle,
 
-    /** Mark Medium - 14sp/22sp - 加粗 */
+    /** Mark Medium - 14sp/22sp - bold */
     val markMedium: TextStyle,
 
-    /** Mark Small - 12sp/20sp - 加粗 */
+    /** Mark Small - 12sp/20sp - bold */
     val markSmall: TextStyle,
 
-    /** Mark Extra Small - 10sp/16sp - 加粗 */
+    /** Mark Extra Small - 10sp/16sp - bold */
     val markExtraSmall: TextStyle,
 
-    /* ---------- Link (链接) ---------- */
+    /* ---------- Link ---------- */
 
     /** Link Large - 16sp/24sp */
     val linkLarge: TextStyle,
@@ -98,10 +98,10 @@ data class Typography(
 
     /* ---------- Caption / Label ---------- */
 
-    /** Caption - 12sp/18sp - 辅助说明 */
+    /** Caption - 12sp/18sp - supporting note */
     val caption: TextStyle,
 
-    /** Label - 10sp/16sp - 标签/徽章 */
+    /** Label - 10sp/16sp - label / badge */
     val label: TextStyle,
 )
 
@@ -111,13 +111,13 @@ data class Typography(
 object Typographies {
 
     /**
-     * Default Typography - 默认排版
+     * Default Typography
      *
-     * 字号/行高/字重完全对齐
+     * Sizes, line heights and weights fully aligned
      */
     val Default = Typography(
 
-        // Display (超大标题)
+        // Display (oversized headings)
         displayLarge = TextStyle(
             fontSize = 64.sp,
             lineHeight = 72.sp,
@@ -129,7 +129,7 @@ object Typographies {
             fontWeight = FontWeight.SemiBold
         ),
 
-        // Headline (大标题)
+        // Headline (large headings)
         headlineLarge = TextStyle(
             fontSize = 36.sp,
             lineHeight = 44.sp,
@@ -146,7 +146,7 @@ object Typographies {
             fontWeight = FontWeight.SemiBold
         ),
 
-        // Title (标题)
+        // Title (headings)
         titleExtraLarge = TextStyle(
             fontSize = 20.sp,
             lineHeight = 28.sp,
@@ -168,7 +168,7 @@ object Typographies {
             fontWeight = FontWeight.Normal
         ),
 
-        // Body (正文)
+        // Body (body copy)
         bodyExtraLarge = TextStyle(
             fontSize = 18.sp,
             lineHeight = 26.sp,
@@ -195,7 +195,7 @@ object Typographies {
             fontWeight = FontWeight.Normal
         ),
 
-        // Mark (强调)
+        // Mark (emphasis)
         markLarge = TextStyle(
             fontSize = 16.sp,
             lineHeight = 24.sp,
@@ -217,7 +217,7 @@ object Typographies {
             fontWeight = FontWeight.SemiBold
         ),
 
-        // Link (链接)
+        // Link
         linkLarge = TextStyle(
             fontSize = 16.sp,
             lineHeight = 24.sp,

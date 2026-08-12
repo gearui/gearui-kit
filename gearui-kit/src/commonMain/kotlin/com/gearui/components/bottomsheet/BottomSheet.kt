@@ -31,29 +31,29 @@ import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
 
 /**
- * BottomSheet - 基于 Overlay 系统的底部动作面板
+ * BottomSheet - bottom action panel built on the overlay system
  *
- * 使用 GearUI Overlay 系统实现，无论在哪里调用都能全屏弹出。
+ * Built on the GearUI overlay system, so it presents full-screen wherever it is called from.
  *
- * 特性：
- * - 基于 Overlay 系统，全局弹出
- * - 底部弹出面板
- * - 列表型选项（支持滚动）
- * - 支持取消按钮
- * - 支持标题/描述
- * - 点击遮罩关闭
- * - 危险项高亮
+ * Features:
+ * - global presentation through the overlay system
+ * - panel rising from the bottom
+ * - list of options, scrollable
+ * - optional cancel button
+ * - optional title and description
+ * - dismiss by tapping the scrim
+ * - destructive items highlighted
  *
- * @param visible 是否显示
- * @param onDismiss 关闭回调
- * @param title 标题
- * @param description 描述
- * @param items 选项列表
- * @param showCancel 是否显示取消按钮
- * @param cancelText 取消按钮文字
- * @param closeOnClickOutside 点击外部是否关闭
- * @param maxListHeight 列表最大高度，超过则滚动，默认 400dp
- * @param onItemClick 选项点击回调
+ * @param visible whether it is shown
+ * @param onDismiss dismissal callback
+ * @param title title
+ * @param description description
+ * @param items option list
+ * @param showCancel whether to show a cancel button
+ * @param cancelText cancel button label
+ * @param closeOnClickOutside whether tapping outside dismisses
+ * @param maxListHeight maximum list height before scrolling; 400dp by default
+ * @param onItemClick option click callback
  */
 @Composable
 fun BottomSheet(
@@ -111,7 +111,7 @@ fun BottomSheet(
 }
 
 /**
- * BottomSheetSurface - BottomSheet 统一视觉容器
+ * BottomSheetSurface - the shared visual container for BottomSheet
  */
 @Composable
 internal fun BottomSheetSurface(
@@ -140,18 +140,18 @@ internal fun BottomSheetSurface(
             modifier = Modifier
                 .fillMaxWidth()
                 .pointerInput(Unit) {
-                    // 阻止事件穿透到背景
+                    // Stop events reaching the backdrop
                     detectTapGestures { }
                 }
         ) {
-            // 主面板
+            // Main panel
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(OverlayDefaults.sheetShape)
                     .background(colors.surface)
             ) {
-                // 标题区域
+            // Title area
                 if (title != null || description != null) {
                     Column(
                         modifier = Modifier
@@ -180,7 +180,7 @@ internal fun BottomSheetSurface(
                     DividerFull()
                 }
 
-                // 选项列表 - 支持滚动
+                // Option list, scrollable
                 BottomSheetItemList(
                     items = items,
                     maxHeight = maxListHeight,
@@ -189,7 +189,7 @@ internal fun BottomSheetSurface(
                 )
             }
 
-            // 取消按钮
+            // Cancel button
             if (showCancel) {
                 Spacer(modifier = Modifier.height(Spacing.sm))
 
@@ -209,8 +209,8 @@ internal fun BottomSheetSurface(
                 }
             }
 
-            // 底部安全区：读真实 inset，16dp 只作为下限。写死 16dp 会让最后一行
-            // 挤到 iPhone 的 home indicator 上（该 inset 通常是 34pt）。
+            // Bottom safe area: read the real inset and treat 16dp only as a floor.
+            // A hardcoded 16dp pushes the last row onto the home indicator (about 34pt).
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -222,7 +222,7 @@ internal fun BottomSheetSurface(
 }
 
 /**
- * BottomSheetItemList - 选项列表（支持滚动）
+ * BottomSheetItemList - option list, scrollable
  */
 @Composable
 private fun BottomSheetItemList(
@@ -233,7 +233,7 @@ private fun BottomSheetItemList(
 ) {
     val colors = Theme.colors
 
-    // 计算列表高度：每项 56dp，最大不超过 maxHeight
+    // List height: 56dp per item, capped at maxHeight
     val itemHeight = 56
     val totalHeightValue = items.size * itemHeight
     val totalHeight = totalHeightValue.dp
@@ -261,7 +261,7 @@ private fun BottomSheetItemList(
 }
 
 /**
- * BottomSheetItemRow - 底部面板选项行
+ * BottomSheetItemRow - one option row
  */
 @Composable
 private fun BottomSheetItemRow(
@@ -303,7 +303,7 @@ private fun BottomSheetItemRow(
             }
         }
 
-        // 分隔线
+        // Divider
         if (showDivider) {
             Box(
                 modifier = Modifier

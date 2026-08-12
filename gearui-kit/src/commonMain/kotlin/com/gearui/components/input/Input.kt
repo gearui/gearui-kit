@@ -41,23 +41,23 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * GearUI Input - 100% Theme 驱动
+ * GearUI Input - fully theme-driven
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：ColorTokens / 硬编码颜色
+ * ✅ Rule: the first line is always val colors = Theme.colors
+ * ❌ Never: ColorTokens or hardcoded colours
  *
- * 支持功能：
- * - 基础输入
- * - 标签（左侧/顶部）
- * - 必填标记
- * - 前缀/后缀
- * - 清除按钮
- * - 字数限制
- * - 密码模式
- * - 多行输入
- * - 卡片样式
- * - 文本对齐
- * - 状态（正常/错误/禁用/只读）
+ * Supports:
+ * - plain input
+ * - label, leading or above
+ * - required marker
+ * - prefix and suffix
+ * - clear button
+ * - character limit
+ * - password mode
+ * - multiline
+ * - card style
+ * - text alignment
+ * - states: normal, error, disabled, read-only
  */
 @Composable
 fun Input(
@@ -99,7 +99,7 @@ fun Input(
     var isFocused by remember { mutableStateOf(false) }
     val hasError = error != null
 
-    // 自动聚焦
+    // Autofocus
     if (autoFocus) {
         LaunchedEffect(Unit) {
             inputFocusRequester.requestFocus()
@@ -125,8 +125,8 @@ fun Input(
         InputSize.SMALL -> FieldDefaults.compactShape
     }
 
-    // 不让 borderColor 依赖 isFocused：Kuikly 下 modifier 链在 focus 瞬间重建，
-    // 会让底层 EditText 被重建，恰好发生在 tap 处理过程中就会表现为"偶发失焦"。
+    // borderColor must not depend on isFocused. On Kuikly the modifier chain is
+    // rebuilt the moment focus changes, which recreates the underlying EditText;
     val borderColor = when {
         hasError -> colors.destructive
         else -> colors.border
@@ -141,7 +141,7 @@ fun Input(
         else -> colors.surface
     }
 
-    // 输入框内容
+    // Input content
     @Composable
     fun InputField() {
         val canFocus = enabled && !readOnly
@@ -179,11 +179,11 @@ fun Input(
                 .then(borderModifier)
         }
 
-        // 关键：用 pointerInput + requireUnconsumed=false 拦住所有 tap。
-        // Compose 的 clickable 在子 composable（BasicTextField）消费事件时不会触发，
-        // 所以点击输入框本体时外层 clickable 完全收不到事件 —— 靠 clickable 抢焦点
-        // 只能覆盖 padding 点击，无法兜底 Kuikly EditText 内部的偶发失焦。
-        // 用 pointerInput 忽略消费状态，在 UP 时无条件 requestInputFocus 抢回焦点。
+        // Key detail: pointerInput with requireUnconsumed = false catches every tap.
+        // Compose's clickable never fires when a child composable (BasicTextField)
+        // consumes the event, so tapping the field itself never reaches an outer
+        // clickable — that only covers taps on the padding, and cannot compensate
+        // for Kuikly's intermittent focus loss inside the EditText. pointerInput
         Box(
             modifier = containerModifier
                 .pointerInput(canFocus) {
@@ -210,7 +210,7 @@ fun Input(
                     ),
                 verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
             ) {
-                // 左侧标签（labelPosition == "left" 时）
+                // Leading label, when labelPosition == "left"
                 if (label != null && labelPosition == "left") {
                     Row {
                         if (required) {
@@ -229,14 +229,14 @@ fun Input(
                     Spacer(modifier = Modifier.width(Spacing.md))
                 }
 
-                // 前缀
+                // Prefix
                 if (prefix != null) {
                     prefix()
                     Spacer(modifier = Modifier.width(Spacing.sm))
                 }
 
-                // 输入区域
-                // 架构要点：
+                // Input area.
+                // Architecture notes:
                 // 1) BasicTextField 用 fillMaxWidth，不要 fillMaxSize，否则 tap 落不到外层。
                 // 2) placeholder 放回 decorationBox 里：它是 BasicTextField 自己的渲染树，
                 //    tap 打在 placeholder 上和 tap 打在 innerTextField 上被 BasicTextField 统一处理，

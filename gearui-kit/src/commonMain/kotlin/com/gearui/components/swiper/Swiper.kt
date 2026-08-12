@@ -26,7 +26,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Swiper navigation type - 指示器类型
+ * Swiper navigation type - indicator style
  */
 enum class SwiperNavigation {
     DOTS,       // 点状指示器
@@ -36,7 +36,7 @@ enum class SwiperNavigation {
 }
 
 /**
- * Swiper indicator position - 指示器位置
+ * Swiper indicator position
  */
 enum class SwiperIndicatorPosition {
     BOTTOM,           // 内部底部
@@ -45,28 +45,28 @@ enum class SwiperIndicatorPosition {
 }
 
 /**
- * Swiper - 轮播图组件
+ * Swiper - carousel
  *
- * 特性：
- * - 使用 HorizontalPager 实现丝滑滑动
- * - 支持自动播放（用户滑动后重置计时器）
- * - 多种指示器类型（点状、点条状、分数）
- * - 指示器动画效果
- * - 支持循环/非循环模式（真正的无限循环）
- * - 支持箭头导航
+ * Features:
+ * - smooth swiping via HorizontalPager
+ * - autoplay, with the timer reset after a manual swipe
+ * - several indicator styles: dots, dot bars, fraction
+ * - animated indicators
+ * - looping or non-looping, with genuine infinite loop
+ * - optional arrow navigation
  *
- * @param itemCount 轮播项数量
+ * @param itemCount number of slides
  * @param modifier Modifier
- * @param initialIndex 初始索引
- * @param autoPlay 是否自动播放
- * @param autoPlayInterval 自动播放间隔（毫秒）
- * @param loop 是否循环
- * @param navigation 指示器类型
- * @param indicatorPosition 指示器位置
- * @param showArrows 是否显示箭头
- * @param height 轮播图高度
- * @param onIndexChanged 索引变化回调
- * @param content 内容
+ * @param initialIndex initial index
+ * @param autoPlay whether to autoplay
+ * @param autoPlayInterval autoplay interval in milliseconds
+ * @param loop whether to loop
+ * @param navigation indicator style
+ * @param indicatorPosition indicator position
+ * @param showArrows whether to show arrows
+ * @param height carousel height
+ * @param onIndexChanged index change callback
+ * @param content slide content
  */
 @Composable
 fun Swiper(
@@ -88,7 +88,7 @@ fun Swiper(
     val colors = Theme.colors
     val scope = rememberCoroutineScope()
 
-    // 循环模式下，在前后各添加一个虚拟页面
+    // In loop mode, add one virtual page at each end
     // [lastPage, page0, page1, ..., pageN, firstPage]
     val totalPages = if (loop && itemCount > 1) itemCount + 2 else itemCount
     val startIndex = if (loop && itemCount > 1) initialIndex + 1 else initialIndex
@@ -98,7 +98,7 @@ fun Swiper(
         pageCount = { totalPages }
     )
 
-    // 将 pager 页面索引转换为实际内容索引
+    // Map a pager page index to the real content index
     fun pageToContentIndex(page: Int): Int {
         return if (loop && itemCount > 1) {
             when (page) {
@@ -111,36 +111,36 @@ fun Swiper(
         }
     }
 
-    // 当前实际内容索引
+    // Current real content index
     val currentContentIndex = pageToContentIndex(pagerState.currentPage)
 
-    // 通知索引变化
+    // Report index changes
     LaunchedEffect(currentContentIndex) {
         onIndexChanged?.invoke(currentContentIndex)
     }
 
-    // 处理循环边界跳转
+    // Handle the loop boundary jump
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (loop && itemCount > 1 && !pagerState.isScrollInProgress) {
             when (pagerState.currentPage) {
                 0 -> {
-                    // 滑到虚拟首页，跳转到真实的最后一页
+                    // Reached the virtual first page: jump to the real last page
                     pagerState.scrollToPage(totalPages - 2)
                 }
                 totalPages - 1 -> {
-                    // 滑到虚拟尾页，跳转到真实的第一页
+                    // Reached the virtual last page: jump to the real first page
                     pagerState.scrollToPage(1)
                 }
             }
         }
     }
 
-    // 自动播放计时器重置 key
-    // 当用户滑动结束后（isScrollInProgress 从 true 变为 false），重置计时器
-    // 使用 settledPage 而不是 currentPage，确保滑动完全停止后才重置
+    // Key that resets the autoplay timer.
+    // Reset once the user finishes swiping (isScrollInProgress goes true -> false).
+    // settledPage rather than currentPage, so the reset waits for the swipe to stop.
     var autoPlayResetKey by remember { mutableStateOf(0) }
 
-    // 监听滑动状态变化，滑动结束时重置自动播放计时器
+    // Watch the scroll state and reset the autoplay timer when it settles
     LaunchedEffect(pagerState.isScrollInProgress) {
         if (!pagerState.isScrollInProgress) {
             // 滑动结束，重置自动播放计时器

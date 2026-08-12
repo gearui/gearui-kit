@@ -31,7 +31,7 @@ import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
 
 /**
- * DrawerPlacement - 抽屉位置
+ * DrawerPlacement - which edge the drawer sits on
  */
 enum class DrawerPlacement {
     LEFT,
@@ -39,7 +39,7 @@ enum class DrawerPlacement {
 }
 
 /**
- * DrawerItem - 抽屉列表项数据
+ * DrawerItem - one drawer list item
  *
  */
 data class DrawerItem(
@@ -51,19 +51,19 @@ data class DrawerItem(
 private const val DRAWER_ANIMATION_DURATION = 300
 
 /**
- * Drawer - 抽屉导航组件
+ * Drawer - side navigation drawer
  *
  *
- * 特性：
- * - 侧边抽屉（左/右）
- * - 滑入滑出动画
- * - 全屏覆盖（包括状态栏）
- * - 支持标题
- * - 支持列表项（带图标）
- * - 支持底部插槽
- * - 支持自定义内容
- * - 遮罩层
- * - 点击遮罩关闭
+ * Features:
+ * - left or right side drawer
+ * - slide in and out
+ * - covers the full screen, status bar included
+ * - optional title
+ * - list items with icons
+ * - optional bottom slot
+ * - custom content
+ * - scrim
+ * - dismiss by tapping the scrim
  */
 @Composable
 fun Drawer(
@@ -88,27 +88,27 @@ fun Drawer(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 共享的动画目标状态
+    // Shared animation target
     val animationTarget = remember { mutableStateOf(false) }
 
-    // Overlay 是否应该显示
+    // Whether the overlay should be shown
     var shouldShowOverlay by remember { mutableStateOf(false) }
 
-    // 响应 visible 变化
+    // React to visible changes
     LaunchedEffect(visible) {
         if (visible) {
-            // 显示：先显示 Overlay，稍后触发入场动画
+            // Showing: present the overlay first, then start the enter animation
             shouldShowOverlay = true
         } else {
-            // 关闭：先触发退场动画
+            // Hiding: run the exit animation first
             animationTarget.value = false
-            // 等待动画完成后移除 Overlay
+            // Remove the overlay once the animation finishes
             kotlinx.coroutines.delay(DRAWER_ANIMATION_DURATION.toLong() + 50)
             shouldShowOverlay = false
         }
     }
 
-    // 管理 Overlay 显示
+    // Overlay presentation
     LaunchedEffect(shouldShowOverlay) {
         if (shouldShowOverlay && overlayId == null) {
             overlayId = controller.show(
@@ -141,7 +141,7 @@ fun Drawer(
                     modifier = modifier
                 )
             }
-            // Overlay 显示后触发入场动画
+            // Start the enter animation once the overlay is on screen
             kotlinx.coroutines.delay(16) // 等待一帧确保 Overlay 已渲染
             animationTarget.value = true
         } else if (!shouldShowOverlay && overlayId != null) {
@@ -158,9 +158,9 @@ fun Drawer(
 }
 
 /**
- * DrawerOverlayContent - Drawer 在 Overlay 中的内容
+ * DrawerOverlayContent - the drawer content inside the overlay
  *
- * 使用共享的 MutableState 来控制动画
+ * Animation is driven through a shared MutableState.
  */
 @Composable
 private fun DrawerOverlayContent(
@@ -182,17 +182,17 @@ private fun DrawerOverlayContent(
 ) {
     val colors = Theme.colors
 
-    // 读取共享状态
+    // Read the shared state
     val targetVisible = animationTarget.value
 
-    // 遮罩透明度动画
+    // Scrim opacity animation
     val maskAlpha by animateFloatAsState(
         targetValue = if (targetVisible) 1f else 0f,
         animationSpec = tween(DRAWER_ANIMATION_DURATION),
         label = "maskAlpha"
     )
 
-    // 抽屉滑动动画 (0 = 完全隐藏, 1 = 完全显示)
+    // Drawer slide animation (0 = fully hidden, 1 = fully shown)
     val slideProgress by animateFloatAsState(
         targetValue = if (targetVisible) 1f else 0f,
         animationSpec = tween(DRAWER_ANIMATION_DURATION),
@@ -200,7 +200,7 @@ private fun DrawerOverlayContent(
     )
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // 遮罩层
+        // Scrim
         if (showOverlay) {
             Box(
                 modifier = Modifier
@@ -219,7 +219,7 @@ private fun DrawerOverlayContent(
             )
         }
 
-        // 抽屉内容
+        // Drawer content
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = when (placement) {

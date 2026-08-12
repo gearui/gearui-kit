@@ -5,7 +5,7 @@ gearui-kit/src/commonMain/kotlin/com/gearui/App.kt	22
 gearui-kit/src/commonMain/kotlin/com/gearui/components/anchor/Anchor.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/backtop/BackTop.kt	17
 gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomnavbar/BottomNavBar.kt	13
-gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomsheet/BottomSheet.kt	47
+gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomsheet/BottomSheet.kt	15
 gearui-kit/src/commonMain/kotlin/com/gearui/components/button/Button.kt	20
 gearui-kit/src/commonMain/kotlin/com/gearui/components/button/ButtonEnums.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/Calendar.kt	9
@@ -17,13 +17,13 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/collapse/Collapse.kt	9
 gearui-kit/src/commonMain/kotlin/com/gearui/components/contextmenu/ContextMenu.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/ConfirmDialog.kt	6
 gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/Dialog.kt	19
-gearui-kit/src/commonMain/kotlin/com/gearui/components/drawer/Drawer.kt	45
+gearui-kit/src/commonMain/kotlin/com/gearui/components/drawer/Drawer.kt	17
 gearui-kit/src/commonMain/kotlin/com/gearui/components/empty/EmptyState.kt	21
 gearui-kit/src/commonMain/kotlin/com/gearui/components/form/Form.kt	8
 gearui-kit/src/commonMain/kotlin/com/gearui/components/grid/Grid.kt	15
 gearui-kit/src/commonMain/kotlin/com/gearui/components/image/Image.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/imageviewer/ImageViewer.kt	41
-gearui-kit/src/commonMain/kotlin/com/gearui/components/input/Input.kt	44
+gearui-kit/src/commonMain/kotlin/com/gearui/components/input/Input.kt	16
 gearui-kit/src/commonMain/kotlin/com/gearui/components/loading/Loading.kt	31
 gearui-kit/src/commonMain/kotlin/com/gearui/components/navbar/NavBar.kt	28
 gearui-kit/src/commonMain/kotlin/com/gearui/components/notification/Notification.kt	19
@@ -43,7 +43,7 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/skeleton/Skeleton.kt	1
 gearui-kit/src/commonMain/kotlin/com/gearui/components/snackbar/Snackbar.kt	23
 gearui-kit/src/commonMain/kotlin/com/gearui/components/stepper/Stepper.kt	20
 gearui-kit/src/commonMain/kotlin/com/gearui/components/steps/Steps.kt	4
-gearui-kit/src/commonMain/kotlin/com/gearui/components/swiper/Swiper.kt	51
+gearui-kit/src/commonMain/kotlin/com/gearui/components/swiper/Swiper.kt	19
 gearui-kit/src/commonMain/kotlin/com/gearui/components/switch/Switch.kt	25
 gearui-kit/src/commonMain/kotlin/com/gearui/components/table/Table.kt	31
 gearui-kit/src/commonMain/kotlin/com/gearui/components/tag/Tag.kt	18
@@ -79,9 +79,9 @@ gearui-kit/src/commonMain/kotlin/com/gearui/gestures/SwipeBack.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/navigation/NavApi.kt	39
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/Overlay.kt	5
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayController.kt	32
-gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayPlacement.kt	41
+gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayPlacement.kt	13
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Avatar.kt	9
-gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Badge.kt	48
+gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Badge.kt	16
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/composite/Card.kt	15
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/composite/Cell.kt	17
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/composite/ListItem.kt	18

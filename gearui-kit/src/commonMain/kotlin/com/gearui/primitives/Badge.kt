@@ -19,89 +19,89 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Radius
 
 /**
- * Badge 徽标类型
+ * Badge type
  */
 enum class BadgeType {
-    /** 红点样式 - 小圆点，无内容 */
+    /** Red dot - a small dot with no content */
     RedPoint,
 
-    /** 消息样式 - 圆形/椭圆形，显示数字 */
+    /** Message - round or oval, showing a number */
     Message,
 
-    /** 气泡样式 - 左下角小尖角的气泡 */
+    /** Bubble - a bubble with a small tail at the bottom left */
     Bubble,
 
-    /** 方形样式 - 带圆角的方形 */
+    /** Square - a rounded square */
     Square,
 
-    /** 角标样式 - 45度斜角标签 */
+    /** Subscript - a 45-degree corner label */
     Subscript
 }
 
 /**
- * Badge 尺寸
+ * Badge size
  */
 enum class BadgeSize {
-    /** 大尺寸 - 高度 20dp */
+    /** Large - 20dp tall */
     Large,
 
-    /** 小尺寸 - 高度 16dp（默认） */
+    /** Small - 16dp tall (default) */
     Small
 }
 
 /**
- * Badge 圆角大小
+ * Badge corner radius
  */
 enum class BadgeBorder {
-    /** 大圆角 - 8dp */
+    /** Large - 8dp */
     Large,
 
-    /** 小圆角 - 2dp */
+    /** Small - 2dp */
     Small
 }
 
 /**
- * Badge 颜色主题
+ * Badge colour theme
  */
 enum class BadgeTheme {
-    /** 错误/危险 - 红色（默认） */
+    /** Error / danger - red (default) */
     Error,
 
-    /** 主要 - 品牌色 */
+    /** Primary - brand colour */
     Primary,
 
-    /** 成功 - 绿色 */
+    /** Success - green */
     Success,
 
-    /** 警告 - 橙色 */
+    /** Warning - orange */
     Warning,
 
-    /** 中性 - 灰色 */
+    /** Neutral - grey */
     Neutral
 }
 
 /**
- * Badge - 徽标组件
+ * Badge
  *
- * 用于告知用户，该区域的状态变化或者待处理任务的数量。
+ * Signals a change of state, or a count of pending items, for the area it marks.
  *
- * 徽标会部分超出子控件边界显示，而不是完全在控件内部。
+ * A badge deliberately overhangs its child rather than sitting fully inside it.
  *
- * 支持的类型：
- * - RedPoint: 红点样式，用于简单提醒
- * - Message: 消息样式，显示数字
- * - Bubble: 气泡样式，可显示文字
- * - Square: 方形样式，带圆角
- * - Subscript: 角标样式，45度斜角
+ * Types:
+ * - RedPoint: a plain dot, for a simple "something changed"
+ * - Message: a number
+ * - Bubble: text in a bubble
+ * - Square: a rounded square
+ * - Subscript: a 45-degree corner label
  *
  * Example:
  * ```kotlin
- * // 红点徽标
+ * // red dot
  * Badge(type = BadgeType.RedPoint) {
  *     Icon(...)
  * }
  *
- * // 数字徽标
+ * // numeric badge
  * Badge(
  *     type = BadgeType.Message,
  *     count = 99
@@ -109,7 +109,7 @@ enum class BadgeTheme {
  *     Icon(...)
  * }
  *
- * // 气泡徽标
+ * // bubble badge
  * Badge(
  *     type = BadgeType.Bubble,
  *     message = "NEW"
@@ -137,7 +137,7 @@ fun Badge(
 ) {
     val colors = Theme.colors
 
-    // 根据主题获取背景色
+    // Background colour for the theme
     val backgroundColor = color ?: when (theme) {
         BadgeTheme.Error -> colors.destructive
         BadgeTheme.Primary -> colors.primary
@@ -146,7 +146,7 @@ fun Badge(
         BadgeTheme.Neutral -> colors.mutedForeground
     }
 
-    // 文字颜色：彩色填充上的内容色按主题取对应 foreground（明暗自适应）
+    // Content colour: take the matching foreground for the theme, so it adapts to light and dark
     val contentColor = textColor ?: when (theme) {
         BadgeTheme.Error -> colors.destructiveForeground
         BadgeTheme.Primary -> colors.primaryForeground

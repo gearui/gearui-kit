@@ -18,7 +18,7 @@
     ],
     "buildModeSet": [
       {
-        "name": "debug"
+        "name": "debug",
       },
       {
         "name": "release"
@@ -37,6 +37,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "render",
+      "srcPath": "../core-render-ohos",
     }
   ]
 }

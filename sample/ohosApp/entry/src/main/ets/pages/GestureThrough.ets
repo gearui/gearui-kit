@@ -79,7 +79,7 @@ struct GestureThrough {
       //   Stack().width(50).height(50).backgroundColor(Color.Red)
       // }.hitTestBehavior(HitTestMode.None).opacity(0.5)
       Kuikly({
-        pageName: this.pageName ?? 'router',
+        pageName: this.pageName ?? 'MainDemo',
         pageData: this.pageData,
         delegate: this.kuiklyViewDelegate,
         contextCode: '',

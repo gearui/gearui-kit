@@ -11,10 +11,10 @@ import kotlinx.coroutines.delay
 /**
  * ListScope - List DSL API
  *
- * 提供声明式 API:
- * - item() - 单个列表项
- * - items() - 批量列表项
- * - section() - 分组 (header + items)
+ * Declarative API:
+ * - item() - a single list item
+ * - items() - a batch of list items
+ * - section() - a group (header + items)
  */
 interface ListScope {
     fun item(
@@ -35,7 +35,7 @@ interface ListScope {
 }
 
 /**
- * ListScopeImpl - DSL 实现核心
+ * ListScopeImpl - core of the DSL implementation
  */
 internal class ListScopeImpl(
     private val lazy: LazyListScope,
@@ -78,26 +78,26 @@ internal class ListScopeImpl(
 }
 
 /**
- * List - 虚拟化列表 Primitive
+ * List - virtualised list primitive
  *
- * 地位等价于:
+ * Equivalent in role to:
  * - Material3: LazyColumn
  * - Flutter: ListView
  * - Ant Design: List
  *
- * 职责:
- * - 虚拟化渲染 (性能)
- * - 统一 spacing/divider
- * - Section 支持
- * - 统一 physics
- * - 滚动时通知 Overlay 关闭
+ * Responsibilities:
+ * - virtualised rendering (performance)
+ * - consistent spacing / dividers
+ * - section support
+ * - consistent physics
+ * - telling Overlays to dismiss on scroll
  *
- * 使用场景:
+ * Use cases:
  * - Gallery
- * - Chat 消息列表
- * - Settings 列表
- * - Feed 流
- * - 任何长列表
+ * - chat message lists
+ * - settings lists
+ * - feeds
+ * - any long list
  */
 @Composable
 fun List(
@@ -109,7 +109,7 @@ fun List(
 ) {
     var lastOffset by remember { mutableStateOf(0) }
 
-    // 轮询监听 scroll offset 变化
+    // Polls for scroll offset changes
     LaunchedEffect(state) {
         while (true) {
             val offset = state.firstVisibleItemIndex * 10000 + state.firstVisibleItemScrollOffset

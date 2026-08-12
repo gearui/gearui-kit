@@ -30,7 +30,7 @@ import com.gearui.foundation.field.fieldBorderColor
 import com.gearui.foundation.field.FieldErrorText
 
 /**
- * DatePicker - 100% Theme 驱动的日期选择器
+ * DatePicker - fully Theme-driven date picker
  */
 @Composable
 fun DatePickerInput(
@@ -48,14 +48,14 @@ fun DatePickerInput(
 
     var showPicker by remember { mutableStateOf(false) }
 
-    // 解析当前值
+    // Parse the current value
     val parts = value.split("-")
     var selectedYear by remember(value) { mutableStateOf(parts.getOrNull(0)?.toIntOrNull() ?: 2024) }
     var selectedMonth by remember(value) { mutableStateOf(parts.getOrNull(1)?.toIntOrNull() ?: 1) }
     var selectedDay by remember(value) { mutableStateOf(parts.getOrNull(2)?.toIntOrNull() ?: 1) }
 
     Column(modifier = modifier) {
-        // 标签
+        // Label
         if (label != null) {
             Text(
                 text = label,
@@ -65,7 +65,7 @@ fun DatePickerInput(
             )
         }
 
-        // 输入触发器
+        // Input trigger
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,7 +102,7 @@ fun DatePickerInput(
         FieldErrorText(error)
     }
 
-    // 日期选择对话框
+    // Date selection dialog
     Dialog.Host(
         visible = showPicker,
         onDismiss = { showPicker = false }
@@ -155,14 +155,14 @@ private fun DatePickerDialogContent(
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
-        // 年月日选择器
+        // Year / month / day wheels
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
-            // 年份选择
+            // Year
             IntPickerColumn(
                 items = (2020..2030).toList(),
                 selectedItem = selectedYear,
@@ -171,7 +171,7 @@ private fun DatePickerDialogContent(
                 suffix = I18n.strings.dateTime.yearSuffix
             )
 
-            // 月份选择
+            // Month
             IntPickerColumn(
                 items = (1..12).toList(),
                 selectedItem = selectedMonth,
@@ -180,7 +180,7 @@ private fun DatePickerDialogContent(
                 suffix = I18n.strings.dateTime.monthSuffix
             )
 
-            // 日期选择
+            // Day
             val daysInMonth = when (selectedMonth) {
                 2 -> if (selectedYear % 4 == 0) 29 else 28
                 4, 6, 9, 11 -> 30
@@ -197,7 +197,7 @@ private fun DatePickerDialogContent(
 
         Spacer(modifier = Modifier.height(Spacing.lg))
 
-        // 按钮
+        // Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(Spacing.md)
@@ -238,7 +238,7 @@ private fun DatePickerDialogContent(
 }
 
 /**
- * TimePicker - 时间选择器
+ * TimePicker - time picker
  */
 @Composable
 fun TimePickerInput(
@@ -256,7 +256,7 @@ fun TimePickerInput(
 
     var showPicker by remember { mutableStateOf(false) }
 
-    // 解析当前值
+    // Parse the current value
     val parts = value.split(":")
     var selectedHour by remember(value) { mutableStateOf(parts.getOrNull(0)?.toIntOrNull() ?: 0) }
     var selectedMinute by remember(value) { mutableStateOf(parts.getOrNull(1)?.toIntOrNull() ?: 0) }
@@ -307,7 +307,7 @@ fun TimePickerInput(
         FieldErrorText(error)
     }
 
-    // 时间选择对话框
+    // Time selection dialog
     Dialog.Host(
         visible = showPicker,
         onDismiss = { showPicker = false }
@@ -351,14 +351,14 @@ private fun TimePickerDialogContent(
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
 
-        // 时分选择器
+        // Hour / minute wheels
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
-            // 小时选择
+            // Hour
             IntPickerColumn(
                 items = (0..23).toList(),
                 selectedItem = selectedHour,
@@ -368,7 +368,7 @@ private fun TimePickerDialogContent(
                 padZero = true
             )
 
-            // 分钟选择
+            // Minute
             IntPickerColumn(
                 items = (0..59).toList(),
                 selectedItem = selectedMinute,
@@ -381,7 +381,7 @@ private fun TimePickerDialogContent(
 
         Spacer(modifier = Modifier.height(Spacing.lg))
 
-        // 按钮
+        // Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(Spacing.md)
@@ -422,7 +422,7 @@ private fun TimePickerDialogContent(
 }
 
 /**
- * 整数选择器列 - 可滚动的选项列表
+ * Integer wheel column - a scrollable option list
  */
 @Composable
 private fun IntPickerColumn(
@@ -442,7 +442,7 @@ private fun IntPickerColumn(
     val itemHeightPx = with(density) { itemHeight.toPx() }
     val centerPadding = itemHeight * 2
 
-    // 滚动到选中项
+    // Scroll to the selected item
     LaunchedEffect(selectedItem) {
         val index = items.indexOf(selectedItem)
         if (index >= 0 && !listState.isScrollInProgress) {
@@ -450,7 +450,7 @@ private fun IntPickerColumn(
         }
     }
 
-    // 滚动结束时吸附到最近项，并更新选中值（标准交互）
+    // Snap to the nearest item when scrolling ends and update the selection (standard behaviour)
     LaunchedEffect(listState.isScrollInProgress) {
         if (!listState.isScrollInProgress && items.isNotEmpty()) {
             val firstIndex = listState.firstVisibleItemIndex
@@ -470,7 +470,7 @@ private fun IntPickerColumn(
             .clip(shapes.sm)
             .background(colors.muted)
     ) {
-        // 居中选中高亮层（统一视觉层次）
+    // Centred selection highlight (keeps the visual hierarchy consistent)
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -517,7 +517,7 @@ private fun IntPickerColumn(
 }
 
 /**
- * DateTimePicker - 日期时间选择器
+ * DateTimePicker - combined date and time picker
  */
 @Composable
 fun DateTimePickerInput(

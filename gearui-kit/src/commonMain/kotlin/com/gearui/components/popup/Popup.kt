@@ -18,35 +18,35 @@ import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Popup - 锚点浮层基类
+ * Popup - base for anchored floating layers
  *
- * 所有锚点定位的浮层组件的基础：
+ * The foundation of every anchor-positioned floating component:
  * - Dropdown
  * - Tooltip
  * - Popover
  * - SelectMenu
  * - ContextMenu
  *
- * 特点：
- * - 非模态（不阻断交互）
- * - 锚点定位（相对于触发元素）
- * - 可选遮罩
- * - 点击外部关闭
+ * Characteristics:
+ * - non-modal (does not block interaction)
+ * - anchored (positioned relative to the trigger)
+ * - optional scrim
+ * - tap outside to dismiss
  */
 object Popup {
 
     /**
-     * 声明式 Popup
+     * Declarative Popup
      *
-     * @param visible 是否显示
-     * @param anchorBounds 锚点位置
-     * @param placement 弹出位置
-     * @param offsetX X 轴偏移
-     * @param offsetY Y 轴偏移
-     * @param dismissOnOutside 点击外部是否关闭
-     * @param autoFlip 空间不足时是否自动翻转
-     * @param onDismiss 关闭回调
-     * @param content 内容
+     * @param visible whether it is shown
+     * @param anchorBounds anchor position
+     * @param placement popup placement
+     * @param offsetX offset on the X axis
+     * @param offsetY offset on the Y axis
+     * @param dismissOnOutside whether tapping outside dismisses it
+     * @param autoFlip whether to flip automatically when space runs out
+     * @param onDismiss dismiss callback
+     * @param content the content
      */
     @Composable
     fun Host(
@@ -63,22 +63,22 @@ object Popup {
         val controller = LocalOverlayController.current
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
-        // 记录打开时的锚点位置，用于检测滚动
+        // Anchor position recorded at open time, used to detect scrolling
         var anchorBoundsWhenOpened by remember { mutableStateOf<Rect?>(null) }
 
-        // 保持 onDismiss 回调最新
+        // Keep the onDismiss callback current
         val onDismissState = rememberUpdatedState(onDismiss)
 
-        // 监听 visible 变化
+        // React to visible changes
         LaunchedEffect(visible) {
             if (visible) {
-                // 居中弹出时 anchorBounds 可以为 null
-                // 锚点弹出时需要 anchorBounds
+                // anchorBounds may be null for a centred popup
+                // an anchored popup requires anchorBounds
                 val needsAnchor = placement != OverlayPlacement.Center &&
                                   placement != OverlayPlacement.Fullscreen
 
                 if (needsAnchor && anchorBounds == null) {
-                    // 需要锚点但没有，不显示
+                    // Anchor required but missing: do not show
                     return@LaunchedEffect
                 }
 
@@ -106,12 +106,12 @@ object Popup {
             }
         }
 
-        // 检测滚动：当 anchorBounds 变化且 Overlay 打开时，关闭 Overlay
+        // Scroll detection: dismiss the Overlay when anchorBounds moves while it is open
         LaunchedEffect(anchorBounds) {
             if (visible && overlayId != null && anchorBoundsWhenOpened != null && anchorBounds != null) {
                 val openedBounds = anchorBoundsWhenOpened!!
                 val currentBounds = anchorBounds
-                // 如果位置发生了明显变化（超过 1 像素），说明发生了滚动
+                // A visible shift (more than 1 pixel) means the page scrolled
                 if (kotlin.math.abs(openedBounds.top - currentBounds.top) > 1f ||
                     kotlin.math.abs(openedBounds.left - currentBounds.left) > 1f) {
                     overlayId?.let { controller.dismiss(it) }
@@ -119,7 +119,7 @@ object Popup {
             }
         }
 
-        // 组件销毁时关闭
+        // Dismiss when the component leaves composition
         DisposableEffect(Unit) {
             onDispose {
                 overlayId?.let { controller.dismiss(it) }
@@ -129,7 +129,7 @@ object Popup {
 }
 
 /**
- * PopupSurface - Popup 统一视觉容器
+ * PopupSurface - shared visual container for Popup
  */
 @Composable
 internal fun PopupSurface(

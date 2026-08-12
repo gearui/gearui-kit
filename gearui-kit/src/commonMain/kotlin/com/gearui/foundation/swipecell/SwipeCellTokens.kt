@@ -5,56 +5,56 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.layout.Spacing
 
 /**
- * SwipeCellTokens - SwipeCell 组件设计规范
+ * SwipeCellTokens - design tokens for SwipeCell
  *
- * 参考: 内部组件规范swipe_cell/td_swipe_cell_style.dart
+ * Reference: internal component spec swipe_cell/td_swipe_cell_style.dart
  *
- * 设计原则：
- * - 所有尺寸、间距使用语义化 Token
- * - 颜色通过 Theme.colors 获取，不在此定义
- * - 支持不同尺寸适配
+ * Design rules:
+ * - every size and gap comes from a semantic token
+ * - colours come from Theme.colors and are not defined here
+ * - several size profiles are supported
  */
 data class SwipeCellTokens(
-    /** 操作按钮宽度 - 每个 flex 单位的基础宽度 */
+    /** Action button width - base width of one flex unit */
     val actionWidth: Dp,
 
-    /** 操作按钮最小宽度 */
+    /** Minimum action button width */
     val actionMinWidth: Dp,
 
-    /** 操作按钮水平内边距 */
+    /** Action button horizontal padding */
     val actionPaddingHorizontal: Dp,
 
-    /** 操作按钮垂直内边距 */
+    /** Action button vertical padding */
     val actionPaddingVertical: Dp,
 
-    /** 图标与文字间距 */
+    /** Gap between icon and text */
     val iconSpacing: Dp,
 
-    /** 打开阈值比例 (0-1)，滑动超过此比例自动打开 */
+    /** Open threshold ratio (0-1); dragging past this opens automatically */
     val openThreshold: Float,
 
-    /** 快速滑动速度阈值 (像素/秒) */
+    /** Fling velocity threshold (pixels/second) */
     val velocityThreshold: Float,
 
-    /** 阻尼系数 - 超出边界时的阻力 */
+    /** Damping factor - resistance past the bounds */
     val dampingRatio: Float,
 
-    /** 弹性动画阻尼比 */
+    /** Spring animation damping ratio */
     val springDampingRatio: Float,
 
-    /** 弹性动画刚度 */
+    /** Spring animation stiffness */
     val springStiffness: Float
 )
 
 /**
- * SwipeCell 默认 Token 配置
+ * Default SwipeCell token profiles
  */
 object SwipeCellDefaults {
 
     /**
-     * 标准配置 - 适用于大多数场景
+     * Standard - fits most cases
      *
-     * 操作按钮宽度 80dp，足够显示 2 个中文字符 + 内边距
+     * Action button width 80dp, enough for 2 CJK characters plus padding
      */
     val Default = SwipeCellTokens(
         actionWidth = 80.dp,
@@ -70,9 +70,9 @@ object SwipeCellDefaults {
     )
 
     /**
-     * 紧凑配置 - 适用于多操作按钮场景
+     * Compact - for rows with several action buttons
      *
-     * 操作按钮宽度 64dp，适合仅图标或短文字
+     * Action button width 64dp, suited to icon-only or short labels
      */
     val Compact = SwipeCellTokens(
         actionWidth = 64.dp,
@@ -88,9 +88,9 @@ object SwipeCellDefaults {
     )
 
     /**
-     * 宽松配置 - 适用于单按钮或长文字场景
+     * Loose - for a single button or longer text
      *
-     * 操作按钮宽度 96dp，足够显示 3-4 个中文字符
+     * Action button width 96dp, enough for 3-4 CJK characters
      */
     val Large = SwipeCellTokens(
         actionWidth = 96.dp,

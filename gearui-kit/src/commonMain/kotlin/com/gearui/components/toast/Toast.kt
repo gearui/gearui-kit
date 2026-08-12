@@ -175,14 +175,14 @@ fun ToastHost() {
 }
 
 /**
- * ToastSurface - Toast 视觉容器（内部使用）
+ * ToastSurface - Toast visual container (internal)
  */
 @Composable
 private fun ToastSurface(toast: ToastData) {
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 颜色映射：类型 → 视觉
+    // Colour mapping: type -> visuals
     val (backgroundColor, textColor) = when (toast.type) {
         ToastType.INFO -> colors.foreground to colors.background
         ToastType.SUCCESS -> colors.success to colors.successForeground
@@ -201,7 +201,7 @@ private fun ToastSurface(toast: ToastData) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            // 图标
+            // Icon
             val iconName = when (toast.type) {
                 ToastType.INFO -> null
                 ToastType.SUCCESS -> Icons.check
@@ -218,7 +218,7 @@ private fun ToastSurface(toast: ToastData) {
                 Spacer(modifier = Modifier.width(Spacing.sm))
             }
 
-            // 文字
+            // Text
             Text(
                 text = toast.message,
                 style = Typography.BodyMedium,
@@ -229,9 +229,9 @@ private fun ToastSurface(toast: ToastData) {
 }
 
 /**
- * ToastState - Toast 局部状态管理
+ * ToastState - local Toast state
  *
- * 用于在单个页面内管理 Toast 状态，不依赖 Overlay 系统
+ * Manages Toast state within a single page, independent of the Overlay system
  */
 class ToastState {
     var visible by mutableStateOf(false)
@@ -257,7 +257,7 @@ class ToastState {
 }
 
 /**
- * rememberToastState - 记住 Toast 局部状态
+ * rememberToastState - remembers a local Toast state
  */
 @Composable
 fun rememberToastState(): ToastState {
@@ -265,16 +265,16 @@ fun rememberToastState(): ToastState {
 }
 
 /**
- * LocalToast - 局部 Toast 组件
+ * LocalToast - local Toast component
  *
- * 不依赖 Overlay 系统，直接在当前布局中显示
+ * Independent of the Overlay system; renders inside the current layout
  *
- * @param message 消息内容
- * @param visible 是否可见
- * @param onDismiss 消失回调
- * @param type Toast 类型
- * @param duration 显示时长（毫秒）
- * @param position 显示位置
+ * @param message message body
+ * @param visible whether it is visible
+ * @param onDismiss dismissal callback
+ * @param type Toast type
+ * @param duration display duration in milliseconds
+ * @param position display position
  */
 @Composable
 fun LocalToast(
@@ -288,7 +288,7 @@ fun LocalToast(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 自动消失
+    // Auto-dismiss
     LaunchedEffect(visible) {
         if (visible) {
             delay(duration)
@@ -298,7 +298,7 @@ fun LocalToast(
 
     if (!visible) return
 
-    // 颜色映射
+    // Colour mapping
     val (backgroundColor, textColor) = when (type) {
         ToastType.INFO -> colors.foreground to colors.background
         ToastType.SUCCESS -> colors.success to colors.successForeground
@@ -306,7 +306,7 @@ fun LocalToast(
         ToastType.ERROR -> colors.destructive to colors.destructiveForeground
     }
 
-    // 位置对齐
+    // Position alignment
     val alignment = when (position) {
         ToastPosition.TOP -> Alignment.TopCenter
         ToastPosition.CENTER -> Alignment.Center
@@ -343,9 +343,9 @@ fun LocalToast(
 }
 
 /**
- * LocalToastHost - 局部 Toast 宿主容器
+ * LocalToastHost - local Toast host container
  *
- * 配合 ToastState 使用，放在页面根布局中
+ * Used with ToastState, placed in the page root layout
  */
 @Composable
 fun LocalToastHost(

@@ -1,13 +1,10 @@
 # Frozen per-file count of Chinese comment lines.
 # Format: <path>	<count>. Counts may shrink freely; growth fails CI.
 # Ratchet: translate a file's comments when you touch it and lower its entry.
-gearui-kit/src/commonMain/kotlin/com/gearui/App.kt	22
 gearui-kit/src/commonMain/kotlin/com/gearui/components/anchor/Anchor.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/backtop/BackTop.kt	17
 gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomnavbar/BottomNavBar.kt	13
 gearui-kit/src/commonMain/kotlin/com/gearui/components/bottomsheet/BottomSheet.kt	15
-gearui-kit/src/commonMain/kotlin/com/gearui/components/button/Button.kt	20
-gearui-kit/src/commonMain/kotlin/com/gearui/components/button/ButtonEnums.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/Calendar.kt	9
 gearui-kit/src/commonMain/kotlin/com/gearui/components/calendar/CalendarPopup.kt	16
 gearui-kit/src/commonMain/kotlin/com/gearui/components/cascader/Cascader.kt	6
@@ -18,33 +15,20 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/contextmenu/ContextMenu.k
 gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/ConfirmDialog.kt	6
 gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/Dialog.kt	19
 gearui-kit/src/commonMain/kotlin/com/gearui/components/drawer/Drawer.kt	17
-gearui-kit/src/commonMain/kotlin/com/gearui/components/empty/EmptyState.kt	21
 gearui-kit/src/commonMain/kotlin/com/gearui/components/form/Form.kt	8
 gearui-kit/src/commonMain/kotlin/com/gearui/components/grid/Grid.kt	15
 gearui-kit/src/commonMain/kotlin/com/gearui/components/image/Image.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/input/Input.kt	16
-gearui-kit/src/commonMain/kotlin/com/gearui/components/navbar/NavBar.kt	28
 gearui-kit/src/commonMain/kotlin/com/gearui/components/notification/Notification.kt	19
-gearui-kit/src/commonMain/kotlin/com/gearui/components/picker/DatePicker.kt	22
-gearui-kit/src/commonMain/kotlin/com/gearui/components/popup/Popup.kt	27
-gearui-kit/src/commonMain/kotlin/com/gearui/components/progress/Progress.kt	27
-gearui-kit/src/commonMain/kotlin/com/gearui/components/radio/RadioButton.kt	28
 gearui-kit/src/commonMain/kotlin/com/gearui/components/rate/Rate.kt	6
 gearui-kit/src/commonMain/kotlin/com/gearui/components/result/Result.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/scaffold/PageScaffold.kt	11
-gearui-kit/src/commonMain/kotlin/com/gearui/components/searchbar/SearchBar.kt	21
 gearui-kit/src/commonMain/kotlin/com/gearui/components/segmented/SegmentedControl.kt	11
-gearui-kit/src/commonMain/kotlin/com/gearui/components/select/Select.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/components/skeleton/Skeleton.kt	1
-gearui-kit/src/commonMain/kotlin/com/gearui/components/snackbar/Snackbar.kt	23
-gearui-kit/src/commonMain/kotlin/com/gearui/components/stepper/Stepper.kt	20
 gearui-kit/src/commonMain/kotlin/com/gearui/components/steps/Steps.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/swiper/Swiper.kt	19
-gearui-kit/src/commonMain/kotlin/com/gearui/components/switch/Switch.kt	25
 gearui-kit/src/commonMain/kotlin/com/gearui/components/tag/Tag.kt	18
-gearui-kit/src/commonMain/kotlin/com/gearui/components/textarea/Textarea.kt	24
 gearui-kit/src/commonMain/kotlin/com/gearui/components/timeline/Timeline.kt	3
-gearui-kit/src/commonMain/kotlin/com/gearui/components/toast/Toast.kt	20
 gearui-kit/src/commonMain/kotlin/com/gearui/components/tour/Tour.kt	10
 gearui-kit/src/commonMain/kotlin/com/gearui/components/transfer/Transfer.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/tree/Tree.kt	19
@@ -58,17 +42,12 @@ gearui-kit/src/commonMain/kotlin/com/gearui/foundation/list/CellTokens.kt	7
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/BasicTextField.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/GearLazyColumn.kt	12
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/Icon.kt	10
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/List.kt	19
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/ScrollView.kt	17
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/Surface.kt	28
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/primitives/Text.kt	20
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/scroll/ListTokens.kt	10
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/scroll/ScrollPhysics.kt	12
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/scroll/ScrollState.kt	15
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/scroll/ScrollTokens.kt	12
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/swipecell/SwipeCellTokens.kt	23
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/tab/TabTokens.kt	3
-gearui-kit/src/commonMain/kotlin/com/gearui/gestures/SwipeBack.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/Overlay.kt	5
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayPlacement.kt	13
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Avatar.kt	9
@@ -86,7 +65,6 @@ gearui-kit/src/commonMain/kotlin/com/gearui/primitives/TabState.kt	7
 gearui-kit/src/commonMain/kotlin/com/gearui/runtime/RuntimeEnvironment.kt	13
 gearui-kit/src/commonMain/kotlin/com/gearui/system/StatusBarController.kt	7
 gearui-kit/src/commonMain/kotlin/com/gearui/theme/Colors.kt	1
-gearui-kit/src/commonMain/kotlin/com/gearui/theme/Theme.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/unit/Unit.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/View.kt	13
 sample/jsApp/src/jsMain/kotlin/manager/KuiklyRouter.kt	2

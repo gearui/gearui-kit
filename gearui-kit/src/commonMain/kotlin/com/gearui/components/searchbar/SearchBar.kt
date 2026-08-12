@@ -38,17 +38,17 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * SearchBar - 100% Theme 驱动的搜索栏
+ * SearchBar - fully Theme-driven search bar
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 搜索输入框
- * - 清除按钮
- * - 搜索图标
- * - 取消按钮
- * - 占位符
+ * Features:
+ * - search input
+ * - clear button
+ * - search icon
+ * - cancel button
+ * - placeholder
  */
 @Composable
 fun SearchBar(
@@ -63,7 +63,7 @@ fun SearchBar(
     shape: SearchBarShape = SearchBarShape.ROUNDED,
     alignment: SearchBarAlignment = SearchBarAlignment.LEFT
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val typography = Theme.typography
     val shapes = Theme.shapes
@@ -97,7 +97,7 @@ fun SearchBar(
             .height(FieldSizeTokens.Medium.height),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 搜索框主体
+        // Search box body
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -148,7 +148,7 @@ fun SearchBar(
                     .padding(horizontal = Spacing.md),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 搜索图标
+                // Search icon
                 Box(
                     modifier = if (onSearch != null && enabled) Modifier.clickable { onSearch(value) } else Modifier,
                     contentAlignment = Alignment.Center
@@ -205,7 +205,7 @@ fun SearchBar(
                     )
                 }
 
-                // 清除按钮
+                // Clear button
                 if (value.isNotEmpty() && enabled) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Box(
@@ -226,7 +226,7 @@ fun SearchBar(
             }
         }
 
-        // 取消按钮
+        // Cancel button
         if (showCancel) {
             Spacer(modifier = Modifier.width(Spacing.sm))
             Text(
@@ -244,29 +244,29 @@ fun SearchBar(
 }
 
 /**
- * SearchBarShape - 搜索框形状
+ * SearchBarShape - search box shape
  */
 enum class SearchBarShape {
-    /** 圆角矩形 */
+    /** rounded rectangle */
     ROUNDED,
 
-    /** 直角矩形 */
+    /** square corners */
     SQUARE
 }
 
 /**
- * SearchBarAlignment - 搜索框对齐方式
+ * SearchBarAlignment - search box alignment
  */
 enum class SearchBarAlignment {
-    /** 左对齐（默认） */
+    /** leading (default) */
     LEFT,
 
-    /** 居中对齐 */
+    /** centred */
     CENTER
 }
 
 /**
- * SearchBarWithAction - 带操作按钮的搜索栏
+ * SearchBarWithAction - search bar with an action button
  */
 @Composable
 fun SearchBarWithAction(

@@ -21,20 +21,20 @@ import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
 
 /**
- * NavBar - 导航栏组件
+ * NavBar - navigation bar
  *
- * 用于不同页面之间切换或者跳转，位于内容区的上方，系统状态栏的下方。
+ * Used to move between pages. Sits above the content area and below the system status bar.
  *
- * 特性：
- * - 支持标题居中/左对齐
- * - 支持左侧返回按钮
- * - 支持左右侧自定义操作按钮
- * - 支持自定义标题组件
- * - 支持副标题
- * - 支持自定义背景色
+ * Features:
+ * - centred or left-aligned title
+ * - optional back button on the left
+ * - custom action buttons on either side
+ * - custom title component
+ * - subtitle
+ * - custom background colour
  *
- * - centerTitle=true: 使用 Box 层叠布局，标题绝对居中
- * - centerTitle=false: 使用 Row 布局，标题在左侧按钮之后
+ * - centerTitle=true: a Box overlay layout, so the title is absolutely centred
+ * - centerTitle=false: a Row layout, with the title after the left buttons
  */
 @Composable
 fun NavBar(
@@ -52,9 +52,9 @@ fun NavBar(
     belowTitleWidget: (@Composable () -> Unit)? = null,
     rightWidget: (@Composable () -> Unit)? = null,
     /**
-     * [rightWidget] 槽位宽度。默认 `null` 走 [actionSlotWidth]（=56dp，跟纯图标按钮一致）。
-     * 如果 rightWidget 里放的是"完成 / 创建(N)"等文字按钮，需要显式传一个更大的值
-     * （建议 80-120dp）；title 居中时的左右 padding 会跟随这个值，避免与标题重叠。
+     * Slot width for [rightWidget]. `null` (the default) uses [actionSlotWidth] (56dp, matching an icon-only button).
+     * If rightWidget holds a text button such as "Done" or "Create (N)", pass a larger value explicitly
+     * (80-120dp suggested); the padding on both sides of a centred title follows this value so the two do not overlap.
      */
     rightWidgetWidth: Dp? = null,
     showBottomDivider: Boolean = true
@@ -63,7 +63,7 @@ fun NavBar(
     val bgColor = backgroundColor ?: colors.surface
     val textColor = titleColor ?: colors.foreground
 
-    // 获取安全区域
+    // Safe area insets
     val runtimeFlags = LocalRuntimeFlags.current
     val safeAreaTop = rememberSafeAreaInset(
         edge = SafeAreaEdge.Top,
@@ -76,21 +76,21 @@ fun NavBar(
             .fillMaxWidth()
             .background(bgColor)
     ) {
-        // 顶部安全区域填充
+        // Top safe area filler
         if (safeAreaTop > 0.dp) {
             Spacer(modifier = Modifier.height(safeAreaTop))
         }
         if (centerTitle) {
-            // 居中模式：使用 Box 层叠布局，确保标题绝对居中
+            // Centred mode: a Box overlay layout keeps the title absolutely centred
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height)
             ) {
-                // 上层：左侧操作区域
+                // Upper layer: left action area
                 val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
                 val rightCount = rightItems.size
-                // 标题两侧留白：取左右操作区域中较大的宽度，确保标题居中不被遮挡
+                // Padding beside the title: the larger of the two action areas, so the centred title is never covered
                 val leftSlotWidth = (leftCount * actionSlotWidth.value).dp
                 val rightSlotWidth = when {
                     rightWidget != null -> rightWidgetWidth ?: actionSlotWidth
@@ -98,7 +98,7 @@ fun NavBar(
                 }
                 val titlePadding = maxOf(leftSlotWidth, rightSlotWidth)
 
-                // 底层：标题区域（绝对居中，避开左右按钮）
+                // Lower layer: title area (absolutely centred, clear of the side buttons)
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -145,7 +145,7 @@ fun NavBar(
                     }
                 }
 
-                // 上层：右侧操作区域
+                // Upper layer: right action area
                 if (rightWidget != null) {
                     Box(
                         modifier = Modifier
@@ -179,14 +179,14 @@ fun NavBar(
                 }
             }
         } else {
-            // 左对齐模式：使用 Row 布局
+            // Left-aligned mode: a Row layout
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 左侧按钮区域
+                // Left button area
                 if (useDefaultBack) {
                     NavBarIconButton(
                         icon = Icons.chevron_left,
@@ -208,7 +208,7 @@ fun NavBar(
                     )
                 }
 
-                // 标题区域
+                // Title area
                 Box(
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.CenterStart
@@ -224,7 +224,7 @@ fun NavBar(
                     }
                 }
 
-                // 右侧按钮区域
+                // Right button area
                 if (rightWidget != null) {
                     Box(
                         modifier = Modifier
@@ -249,7 +249,7 @@ fun NavBar(
             }
         }
 
-        // 副标题区域
+        // Subtitle area
         if (belowTitleWidget != null) {
             belowTitleWidget()
         }
@@ -266,7 +266,7 @@ fun NavBar(
 }
 
 /**
- * NavBar 图标按钮
+ * NavBar icon button
  */
 @Composable
 private fun NavBarIconButton(
@@ -305,7 +305,7 @@ private fun NavBarIconButton(
 }
 
 /**
- * NavBar 项数据类
+ * NavBar item data class
  */
 data class NavBarItem(
     val icon: String,

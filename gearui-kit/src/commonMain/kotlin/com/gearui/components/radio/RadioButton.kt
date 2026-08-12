@@ -19,16 +19,16 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * RadioButton - 100% Theme 驱动的单选按钮组件
+ * RadioButton - fully Theme-driven radio button
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 选中/未选中状态
- * - 禁用状态
- * - 2种尺寸
- * - 自动跟随主题色
+ * Features:
+ * - selected / unselected state
+ * - disabled state
+ * - 2 sizes
+ * - follows the theme colour automatically
  */
 @Composable
 fun RadioButton(
@@ -38,20 +38,20 @@ fun RadioButton(
     enabled: Boolean = true,
     size: RadioSize = RadioSize.MEDIUM
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 尺寸参数
+    // Size parameters
     val outerSize = when (size) {
         RadioSize.LARGE -> 24.dp
         RadioSize.MEDIUM -> 20.dp
         RadioSize.SMALL -> 16.dp
     }
-    // 选中点收敛到更小比例，统一视觉层次
+    // The selected dot is kept proportionally smaller to keep the visual hierarchy consistent
     val innerSize = outerSize * 0.38f
 
-    // ⭐ 颜色映射：Theme 语义 → Radio 视觉
+    // ⭐ Colour mapping: Theme semantics -> Radio visuals
     val borderColor = when {
         !enabled -> colors.mutedForeground
         selected -> colors.primary
@@ -64,7 +64,7 @@ fun RadioButton(
         modifier = modifier
             .size(outerSize)
             .clip(CircleShape)
-            // 未选中不做底色填充，避免深色主题出现“黑块”
+            // Unselected is left unfilled so dark themes do not show a "black block"
             .background(Color.Transparent)
             .border(BorderWidth.thin, borderColor, CircleShape)
             .then(
@@ -74,7 +74,7 @@ fun RadioButton(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // 选中标记 (内圆)
+        // Selected marker (inner circle)
         if (selected) {
             Box(
                 modifier = Modifier
@@ -87,7 +87,7 @@ fun RadioButton(
 }
 
 /**
- * Radio 尺寸枚举
+ * Radio size
  */
 enum class RadioSize {
     LARGE,
@@ -96,7 +96,7 @@ enum class RadioSize {
 }
 
 /**
- * RadioButtonWithLabel - 带标签的单选按钮
+ * RadioButtonWithLabel - radio button with a label
  */
 @Composable
 fun RadioButtonWithLabel(
@@ -136,11 +136,11 @@ fun RadioButtonWithLabel(
 }
 
 /**
- * RadioGroup - 单选按钮组
+ * RadioGroup - group of radio buttons
  *
- * @param options 选项列表
- * @param selectedOption 当前选中的选项
- * @param onOptionSelected 选项变化回调
+ * @param options the options
+ * @param selectedOption currently selected option
+ * @param onOptionSelected selection change callback
  */
 @Composable
 fun <T> RadioGroup(
@@ -163,12 +163,12 @@ fun <T> RadioGroup(
 }
 
 /**
- * RadioCardGroup - 卡片式单选按钮组（横向排列）
+ * RadioCardGroup - card-style radio group (laid out horizontally)
  *
- * @param options 选项列表
- * @param selectedOption 当前选中的选项
- * @param onOptionSelected 选项变化回调
- * @param iconProvider 图标提供者（可选）
+ * @param options the options
+ * @param selectedOption currently selected option
+ * @param onOptionSelected selection change callback
+ * @param iconProvider optional icon provider
  */
 @Composable
 fun <T> RadioCardGroup(
@@ -215,7 +215,7 @@ fun <T> RadioCardGroup(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
-                    // 图标
+                    // Icon
                     iconProvider?.let { provider ->
                         Text(
                             text = provider(option),
@@ -223,7 +223,7 @@ fun <T> RadioCardGroup(
                         )
                     }
 
-                    // 标签
+                    // Label
                     Text(
                         text = labelProvider(option),
                         color = if (isSelected) colors.primary
@@ -231,7 +231,7 @@ fun <T> RadioCardGroup(
                         else colors.mutedForeground
                     )
 
-                    // 选中指示器
+                    // Selected indicator
                     if (isSelected) {
                         Box(
                             modifier = Modifier

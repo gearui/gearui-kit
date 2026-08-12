@@ -22,7 +22,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Switch 尺寸枚举
+ * Switch size
  */
 enum class SwitchSize {
     LARGE,   // 大尺寸 52x32
@@ -31,7 +31,7 @@ enum class SwitchSize {
 }
 
 /**
- * Switch 类型枚举
+ * Switch type
  */
 enum class SwitchType {
     FILL,    // 填充型（默认）
@@ -41,7 +41,7 @@ enum class SwitchType {
 }
 
 /**
- * Switch 尺寸数据类
+ * Switch size data class
  */
 private data class SwitchDimensions(
     val trackWidth: Dp,
@@ -51,16 +51,16 @@ private data class SwitchDimensions(
 )
 
 /**
- * Switch - 开关组件
+ * Switch - toggle switch
  *
- * 特性：
- * - 开/关状态切换
- * - 禁用状态（整体透明度 0.4）
- * - 加载状态（显示加载指示器，不可点击）
- * - 文字类型（滑块内显示开/关文字）
- * - 图标类型（滑块内显示勾/叉图标）
- * - 3种尺寸（大、中、小）
- * - 自定义轨道颜色
+ * Features:
+ * - on / off toggling
+ * - disabled state (whole control at 0.4 opacity)
+ * - loading state (shows an indicator and is not clickable)
+ * - text type (on/off text inside the thumb)
+ * - icon type (tick/cross icon inside the thumb)
+ * - 3 sizes (large, medium, small)
+ * - custom track colour
  */
 @Composable
 fun Switch(
@@ -83,26 +83,26 @@ fun Switch(
         SwitchSize.SMALL -> SwitchDimensions(39.dp, 24.dp, 20.dp, 2.dp)
     }
 
-    // 加载状态时不可点击
+    // Not clickable while loading
     val switchEnabled = enabled && type != SwitchType.LOADING
 
-    // 轨道颜色
+    // Track colour
     val activeTrackColor = trackOnColor ?: colors.primary
     val inactiveTrackColor = trackOffColor ?: colors.mutedForeground
 
     val trackColor = if (checked) activeTrackColor else inactiveTrackColor
 
-    // 滑块内容颜色
+    // Thumb content colour
     val thumbContentColor = if (checked) colors.primary else colors.mutedForeground
 
-    // 滑块位置
+    // Thumb position
     val thumbOffset = if (checked) {
         dimensions.trackWidth - dimensions.thumbSize - dimensions.thumbPadding
     } else {
         dimensions.thumbPadding
     }
 
-    // 整体透明度：禁用时 0.4
+    // Overall opacity: 0.4 when disabled
     val alpha = if (enabled) 1f else 0.4f
 
     Box(
@@ -119,7 +119,7 @@ fun Switch(
             ),
         contentAlignment = Alignment.CenterStart
     ) {
-        // 滑块
+        // Thumb
         Box(
             modifier = Modifier
                 .offset(x = thumbOffset)
@@ -128,10 +128,10 @@ fun Switch(
                 .background(colors.surface),
             contentAlignment = Alignment.Center
         ) {
-            // 滑块内容
+            // Thumb content
             when (type) {
                 SwitchType.TEXT -> {
-                    // 文字类型：显示开/关
+                    // Text type: on/off wording
                     Text(
                         text = if (checked) openText else closeText,
                         style = Typography.BodySmall,
@@ -140,7 +140,7 @@ fun Switch(
                     )
                 }
                 SwitchType.ICON -> {
-                    // 图标类型：显示勾/叉
+                    // Icon type: tick/cross
                     Icon(
                         name = if (checked) Icons.check else Icons.close,
                         size = IconSizes.Default.xs,
@@ -148,7 +148,7 @@ fun Switch(
                     )
                 }
                 SwitchType.LOADING -> {
-                    // 加载类型：显示加载指示器
+                    // Loading type: the indicator
                     Icon(
                         name = Icons.autorenew,
                         size = IconSizes.Default.xs,
@@ -156,7 +156,7 @@ fun Switch(
                     )
                 }
                 SwitchType.FILL -> {
-                    // 填充类型：无内容
+                    // Filled type: no content
                 }
             }
         }
@@ -164,7 +164,7 @@ fun Switch(
 }
 
 /**
- * SwitchWithLabel - 带标签的开关
+ * SwitchWithLabel - switch with a label
  */
 @Composable
 fun SwitchWithLabel(
@@ -179,7 +179,7 @@ fun SwitchWithLabel(
     val colors = Theme.colors
     val typography = Theme.typography
 
-    // 加载状态时不可点击
+    // Not clickable while loading
     val switchEnabled = enabled && type != SwitchType.LOADING
 
     Row(

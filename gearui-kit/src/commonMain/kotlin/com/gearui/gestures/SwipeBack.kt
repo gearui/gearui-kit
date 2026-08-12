@@ -12,13 +12,13 @@ import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import kotlin.math.abs
 
 /**
- * 边缘返回手势配置
+ * Edge-swipe back gesture configuration
  *
- * @param edgeWidthDp          左边缘热区宽度（dp），触摸起始点须在此范围内
- * @param commitDistanceDp     位移提交阈值（dp），超过此值视为用户确认返回
- * @param minFlingDistanceDp   最小 fling 位移（dp），速度足够时允许更短位移触发提交
- * @param flingVelocityDpPerSec  fling 速度阈值（dp/s）
- * @param directionRatio       水平意图比：abs(dx) 须大于 abs(dy) * ratio，排除垂直滑动误触
+ * @param edgeWidthDp          width of the left edge hot zone (dp); the touch must start inside it
+ * @param commitDistanceDp     commit distance threshold (dp); past this the user is taken to have confirmed the back
+ * @param minFlingDistanceDp   minimum fling distance (dp); a fast enough flick may commit over a shorter distance
+ * @param flingVelocityDpPerSec  fling velocity threshold (dp/s)
+ * @param directionRatio       horizontal intent ratio: abs(dx) must exceed abs(dy) * ratio, ruling out vertical drags
  */
 data class SwipeBackConfig(
     val edgeWidthDp: Float = 24f,
@@ -29,24 +29,24 @@ data class SwipeBackConfig(
 )
 
 /**
- * 为任意 Composable 附加左边缘右滑返回手势。
+ * Attaches the left-edge swipe-back gesture to any composable.
  *
- * gearui-kit 只负责识别手势过程并回调，不感知任何导航状态。
+ * gearui-kit only recognises the gesture and reports it; it knows nothing about navigation state.
  *
- * 手势状态机：
- *   Idle → Tracking（触摸在边缘内）
- *        → Recognized（通过水平意图 + touch-slop 判定）→ 开始 consume 事件
- *        → Committed（位移 or 速度满足阈值）→ onCommit()
- *        or Cancelled（抬手未达阈值 or 识别失败）→ onCancel()
+ * Gesture state machine:
+ *   Idle -> Tracking (touch started inside the edge)
+ *        -> Recognized (horizontal intent + touch slop met) -> starts consuming events
+ *        -> Committed (distance or velocity threshold met) -> onCommit()
+ *        or Cancelled (released short of the threshold, or recognition failed) -> onCancel()
  *
- * consume 时机：仅在 Recognized 之后才接管事件，不会提前抢夺子组件的手势。
+ * Consumption: events are taken over only after Recognized, so child gestures are never stolen early.
  *
- * @param enabled       false 时完全跳过手势识别（根页面、模态页等）
- * @param config        手势参数，可按平台或页面类型调整
- * @param onStart       手势识别成功时回调（Recognized 阶段）
- * @param onProgress    拖动过程中持续回调；progress ∈ [0f, 1f]（相对 commitDistance），dragX 为绝对像素偏移
- * @param onCancel      用户放手但未达提交条件
- * @param onCommit      满足提交条件，应在此执行返回导航
+ * @param enabled       false skips recognition entirely (root pages, modal pages, ...)
+ * @param config        gesture parameters, tunable per platform or page type
+ * @param onStart       fired once the gesture is recognised (the Recognized phase)
+ * @param onProgress    fired continuously while dragging; progress is in [0f, 1f] (relative to commitDistance) and dragX is the absolute pixel offset
+ * @param onCancel      released without meeting the commit conditions
+ * @param onCommit      commit conditions met; perform the back navigation here
  */
 fun Modifier.swipeBack(
     enabled: Boolean = true,
@@ -76,12 +76,12 @@ fun Modifier.swipeBack(
             val velocityTracker = VelocityTracker()
             velocityTracker.addPosition(down.uptimeMillis, down.position)
 
-            // ── Tracking：等待 horizontal touch-slop 或取消 ──────────────
+            // -- Tracking: wait for horizontal touch slop, or cancel ------------
             val slopChange: PointerInputChange? =
                 awaitHorizontalTouchSlopOrCancellation(down.id) { change, overSlop ->
                     totalDx += overSlop
                     totalDy = change.position.y - startY
-                    // 垂直意图过强时拒绝识别
+                    // Refuse recognition when the vertical intent is too strong
                     if (abs(totalDx) > abs(totalDy) * config.directionRatio && totalDx > 0f) {
                         change.consume()
                         recognized = true
@@ -90,13 +90,13 @@ fun Modifier.swipeBack(
 
             if (!recognized || slopChange == null) return@awaitEachGesture
 
-            // ── Recognized：接管后续事件 ─────────────────────────────────
+            // -- Recognized: take over the remaining events ----------------------
             onStart?.invoke()
 
             var dragX = totalDx
             velocityTracker.addPosition(slopChange.uptimeMillis, slopChange.position)
 
-            // 持续读取 move 事件
+            // Keep reading move events
             var pointer = slopChange.id
             var committed = false
             while (true) {
@@ -106,7 +106,7 @@ fun Modifier.swipeBack(
 
                 val dx = change.positionChange().x
                 val dy = change.positionChange().y
-                // 过程中若垂直分量远大于水平，取消识别
+                // Cancel if the vertical component grows far beyond the horizontal one
                 dragX += dx
                 if (dragX < 0f) dragX = 0f  // 不允许往左滑
 
@@ -117,7 +117,7 @@ fun Modifier.swipeBack(
                 onProgress?.invoke(progress, dragX)
             }
 
-            // ── End：判断 commit or cancel ───────────────────────────────
+            // -- End: commit or cancel -------------------------------------------
             val velocity = velocityTracker.calculateVelocity()
             val vx = velocity.x
             val isFling = vx >= flingVelocityPxPerSec && dragX >= minFlingPx

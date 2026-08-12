@@ -18,16 +18,16 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * EmptyState - 100% Theme 驱动的空状态组件
+ * EmptyState - fully Theme-driven empty state
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 空状态提示
- * - 自定义图标/图片
- * - 操作按钮
- * - 多种预设状态
+ * Features:
+ * - empty state message
+ * - custom icon or image
+ * - action button
+ * - several presets
  */
 @Composable
 fun EmptyState(
@@ -39,7 +39,7 @@ fun EmptyState(
     onAction: (() -> Unit)? = null,
     customAction: (@Composable () -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val shapes = Theme.shapes
 
@@ -50,12 +50,12 @@ fun EmptyState(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // 图标/图片
+        // Icon / image
         if (icon != null) {
             icon()
             Spacer(modifier = Modifier.height(Spacing.lg))
         } else {
-            // 默认空状态图标
+            // Default empty state icon
             Icon(
                 name = Icons.image,
                 size = IconSizes.Display.sm,
@@ -64,14 +64,14 @@ fun EmptyState(
             Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
-        // 主要消息
+        // Primary message
         Text(
             text = message,
             style = Typography.TitleMedium,
             color = colors.foreground
         )
 
-        // 描述文字
+        // Description text
         if (description != null) {
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
@@ -81,7 +81,7 @@ fun EmptyState(
             )
         }
 
-        // 操作区域（优先自定义）
+        // Action area (a custom one wins)
         if (customAction != null) {
             Spacer(modifier = Modifier.height(Spacing.xl))
             customAction()
@@ -105,7 +105,7 @@ fun EmptyState(
 }
 
 /**
- * EmptyStateType - 预设空状态类型
+ * EmptyStateType - preset empty states
  */
 @Composable
 fun EmptyStatePreset(
@@ -145,21 +145,21 @@ fun EmptyStatePreset(
 }
 
 /**
- * EmptyStateType - 空状态类型
+ * EmptyStateType - empty state type
  */
 enum class EmptyStateType {
-    /** 无数据 */
+    /** no data */
     NO_DATA,
 
-    /** 无搜索结果 */
+    /** no search results */
     NO_SEARCH_RESULT,
 
-    /** 无网络 */
+    /** no network */
     NO_NETWORK,
 
-    /** 错误 */
+    /** error */
     ERROR,
 
-    /** 无权限 */
+    /** no permission */
     NO_PERMISSION
 }

@@ -14,63 +14,63 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.text.TextStyle as KuiklyTextStyle
 
 /**
- * Text - 100% Theme 驱动的文本原语
+ * Text - fully Theme-driven text primitive
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 改造要点：
- * - 移除 TextColors 依赖
- * - 直接使用 Theme.colors
- * - 支持 primary/secondary/tertiary 语义
+ * Rework notes:
+ * - the TextColors dependency is gone
+ * - Theme.colors is used directly
+ * - primary / secondary / tertiary semantics are supported
  */
 @Composable
 fun Text(
     text: String,
     modifier: Modifier = Modifier,
 
-    /** 文本样式 Token (语义化) */
+    /** text style token (semantic) */
     style: TextStyle = Typography.BodyMedium,
 
-    /** 文本颜色 - 直接指定 */
+    /** text colour - set explicitly */
     color: Color? = null,
 
-    /** 是否次要文本（使用 textSecondary） */
+    /** whether this is secondary text (uses textSecondary) */
     secondary: Boolean = false,
 
-    /** 是否三级文本（使用 textTertiary） */
+    /** whether this is tertiary text (uses textTertiary) */
     tertiary: Boolean = false,
 
-    /** 最大行数 */
+    /** maximum number of lines */
     maxLines: Int = Int.MAX_VALUE,
 
-    /** 溢出处理 */
+    /** overflow handling */
     overflow: TextOverflow = TextOverflow.Clip,
 
-    /** 是否自动换行 */
+    /** whether to wrap automatically */
     softWrap: Boolean = true,
 
-    /** 字号 - 向后兼容参数，优先级高于 style.fontSize */
+    /** font size - backwards-compatible parameter, takes precedence over style.fontSize */
     fontSize: TextUnit? = null,
 
-    /** 字重 - 向后兼容参数，优先级高于 style.fontWeight */
+    /** font weight - backwards-compatible parameter, takes precedence over style.fontWeight */
     fontWeight: FontWeight? = null
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val themeColors = Theme.colors
 
-    // 颜色优先级：color > tertiary > secondary > primary
+    // Colour precedence: color > tertiary > secondary > primary
     val finalColor = color ?: when {
         tertiary -> themeColors.mutedForeground
         secondary -> themeColors.mutedForeground
         else -> themeColors.foreground
     }
 
-    // 字号和字重支持覆盖
+    // Font size and weight can be overridden
     val finalFontSize = fontSize ?: style.fontSize
     val finalFontWeight = fontWeight ?: style.fontWeight
 
-    // 将 GearUI TextStyle 转换为 Kuikly TextStyle
+    // Converts a GearUI TextStyle into a Kuikly TextStyle
     val kuiklyStyle = KuiklyTextStyle(
         fontSize = finalFontSize,
         lineHeight = style.lineHeight,

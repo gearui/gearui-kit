@@ -16,26 +16,26 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
 
 /**
- * Surface - KuiklyUI Design System 的核心 Primitive
+ * Surface - the core primitive of the KuiklyUI Design System
  *
- * 地位等价于:
+ * Equivalent in role to:
  * - Material3: Surface
  * - Flutter: Container + InkWell
  * - FluentUI: BaseButton / Surface
  * - AntD: InternalBase
  *
- * 职责: 统一处理所有组件的 7 件核心事项
- * 1. 交互状态 (pressed/focused/disabled/hovered)
- * 2. 动画 (press scale/ripple/opacity)
- * 3. 背景色
- * 4. 边框
- * 5. 圆角
- * 6. 点击事件
- * 7. Tokens 注入
+ * Responsibility: handles the same 7 concerns for every component
+ * 1. interaction state (pressed / focused / disabled / hovered)
+ * 2. animation (press scale / ripple / opacity)
+ * 3. background colour
+ * 4. border
+ * 5. corner radius
+ * 6. click handling
+ * 7. token injection
  *
- * 设计原则: 组件层 0 逻辑
- * - 组件不再出现: clickable/background/border/clip/interactionSource/animation
- * - 组件只负责: tokens + content 组合
+ * Design rule: component code carries no such logic
+ * - components never contain clickable / background / border / clip / interactionSource / animation
+ * - components only combine tokens + content
  */
 @Composable
 fun Surface(
@@ -67,15 +67,15 @@ fun Surface(
     }
 
     // =========================
-    // Animation (统一动画系统)
+    // Animation (unified animation system)
     // =========================
     val targetScale = if (isPressed && enabled) tokens.pressScale else 1f
 
     // =========================
     // Surface Node (Primitive View)
     // =========================
-    // height = 0.dp 表示"高度由内容决定"（自适应），不施加固定高度。
-    // Card / 包装容器类组件依赖此语义；其它定高组件（Button / Tag 等）传具体高度。
+    // height = 0.dp means "height decided by the content" (self-sizing); no fixed height is applied.
+    // Card and other wrapper components rely on this; fixed-height components (Button, Tag, ...) pass a concrete height.
     Box(
         modifier = modifier
             .then(if (tokens.height > 0.dp) Modifier.height(tokens.height) else Modifier)
@@ -103,42 +103,42 @@ fun Surface(
 }
 
 /**
- * Surface 尺寸 + 结构 Tokens
+ * Surface size and structure tokens
  */
 data class SurfaceTokens(
-    /** 高度 */
+    /** height */
     val height: Dp,
 
-    /** 圆角半径 */
+    /** corner radius */
     val radius: Dp,
 
-    /** 边框宽度 */
+    /** border width */
     val borderWidth: Dp = 0.dp,
 
-    /** 内边距 */
+    /** inner padding */
     val padding: PaddingValues = PaddingValues(0.dp),
 
-    /** 按压缩放比例 */
+    /** press scale factor */
     val pressScale: Float = 0.98f
 )
 
 /**
- * Surface 状态颜色 Tokens
+ * Surface state colour tokens
  */
 data class SurfaceColorTokens(
-    /** 正常背景色 */
+    /** normal background */
     val background: Color,
 
-    /** 边框颜色 */
+    /** border colour */
     val border: Color = Color.Transparent,
 
-    /** 禁用背景色 */
+    /** disabled background */
     val disabledBackground: Color,
 
-    /** 禁用边框色 */
+    /** disabled border colour */
     val disabledBorder: Color = Color.Transparent,
 
-    /** 按压背景色 */
+    /** pressed background */
     val pressedBackground: Color = background
 )
 

@@ -23,16 +23,16 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Button - 100% Theme 驱动
+ * Button - fully Theme-driven
  *
- * 支持：
- * - 4种类型：填充(fill)、描边(outline)、文字(text)、幽灵(ghost)
- * - 4种主题：primary、danger、warning、success、default、light
- * - 4种尺寸：large、medium、small、extraSmall
- * - 5种形状：rectangle、round、square、circle、filled
- * - 图标支持：左侧/右侧图标
- * - 状态：loading、disabled
- * - 通栏模式：block
+ * Supports:
+ * - 4 types: fill, outline, text, ghost
+ * - 6 colour themes: primary, danger, warning, success, default, light
+ * - 4 sizes: large, medium, small, extraSmall
+ * - 5 shapes: rectangle, round, square, circle, filled
+ * - icons: leading or trailing
+ * - states: loading, disabled
+ * - full-width mode: block
  */
 @Composable
 fun Button(
@@ -53,7 +53,7 @@ fun Button(
 ) {
     val colors = Theme.colors
 
-    // 尺寸配置
+    // Size configuration
     val height: Dp = when (size) {
         ButtonSize.LARGE -> 48.dp
         ButtonSize.MEDIUM -> 40.dp
@@ -82,7 +82,7 @@ fun Button(
         ButtonSize.EXTRA_SMALL -> 14.dp
     }
 
-    // 形状配置
+    // Shape configuration
     val buttonShape: Shape = when (shape) {
         ButtonShape.RECTANGLE -> Theme.shapes.lg
         ButtonShape.ROUND -> RoundedCornerShape(height / 2)
@@ -91,7 +91,7 @@ fun Button(
         ButtonShape.FILLED -> RoundedCornerShape(height / 2)
     }
 
-    // 是否是方形/圆形（只有图标，没有文字）
+    // Whether it is square / circular (icon only, no text)
     val hasIcon = icon != null || iconWidget != null
     val isIconOnly = text.isEmpty() && hasIcon
     val buttonWidth = if (isIconOnly && (shape == ButtonShape.SQUARE || shape == ButtonShape.CIRCLE)) {
@@ -100,7 +100,7 @@ fun Button(
         Dp.Unspecified
     }
 
-    // 颜色配置
+    // Colour configuration
     val (containerColor, contentColor, borderColor) = getButtonColors(
         theme = theme,
         type = type,
@@ -125,7 +125,7 @@ fun Button(
         else -> null
     }
 
-    // 按钮修饰符
+    // Button modifier
     val buttonModifier = modifier
         .then(if (block) Modifier.fillMaxWidth() else Modifier)
         .then(if (buttonWidth != Dp.Unspecified) Modifier.width(buttonWidth) else Modifier)
@@ -164,7 +164,7 @@ fun Button(
                 }
             }
 
-            // 左侧图标
+            // Leading icon
             if (!loading && resolvedIcon != null && iconPosition == ButtonIconPosition.LEFT) {
                 resolvedIcon()
                 if (text.isNotEmpty()) {
@@ -172,7 +172,7 @@ fun Button(
                 }
             }
 
-            // 文字
+            // Text
             if (text.isNotEmpty()) {
                 Text(
                     text = text,
@@ -186,7 +186,7 @@ fun Button(
                 )
             }
 
-            // 右侧图标
+            // Trailing icon
             if (!loading && resolvedIcon != null && iconPosition == ButtonIconPosition.RIGHT) {
                 if (text.isNotEmpty()) {
                     Spacer(modifier = Modifier.width(iconTextSpacing))
@@ -198,7 +198,7 @@ fun Button(
 }
 
 /**
- * 获取按钮颜色
+ * Resolves the button colours
  */
 @Composable
 private fun getButtonColors(
@@ -207,7 +207,7 @@ private fun getButtonColors(
     disabled: Boolean,
     colors: com.gearui.theme.Colors
 ): Triple<Color, Color, Color> {
-    // 主题基础色
+    // Theme base colour
     val primaryColor: Color
     val lightColor: Color
 
@@ -238,7 +238,7 @@ private fun getButtonColors(
         }
     }
 
-    // 彩色实底上的文字色：按主题取对应 foreground（明暗自适应），不再统一用 primaryForeground
+    // Text colour on a solid coloured fill: the matching foreground for the theme (adapting to light/dark), no longer primaryForeground for everything
     val onFillColor = when (theme) {
         ButtonTheme.DANGER -> colors.destructiveForeground
         ButtonTheme.WARNING -> colors.warningForeground

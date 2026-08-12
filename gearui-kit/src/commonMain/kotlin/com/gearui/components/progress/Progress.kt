@@ -20,17 +20,17 @@ import kotlin.math.roundToInt
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Progress - 100% Theme 驱动的进度条组件
+ * Progress - fully Theme-driven progress bar
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 线性进度条
- * - 环形进度条
- * - 支持状态色（成功/警告/危险）
- * - 标签显示（内部/右侧）
- * - 动画过渡
+ * Features:
+ * - linear progress bar
+ * - circular progress bar
+ * - status colours (success / warning / danger)
+ * - label placement (inside / right)
+ * - animated transitions
  */
 @Composable
 fun LinearProgress(
@@ -42,7 +42,7 @@ fun LinearProgress(
     height: Dp = 8.dp,
     animated: Boolean = true
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val typography = Theme.typography
     val shapes = Theme.shapes
@@ -61,7 +61,7 @@ fun LinearProgress(
         ProgressStatus.DANGER -> colors.destructive
     }
 
-    // 进度条内文字（>50% 时压在 progressColor 实底上）的文字色，按 status 取对应 foreground
+    // Colour of the text inside the bar (which sits on solid progressColor past 50%), taken from the matching status foreground
     val progressForeground = when (status) {
         ProgressStatus.PRIMARY -> colors.primaryForeground
         ProgressStatus.SUCCESS -> colors.successForeground
@@ -75,7 +75,7 @@ fun LinearProgress(
                 modifier = modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 进度条
+                // Progress bar
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -91,7 +91,7 @@ fun LinearProgress(
                     )
                 }
 
-                // 右侧标签
+                // Right-hand label
                 if (showLabel) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
@@ -111,7 +111,7 @@ fun LinearProgress(
                     .background(colors.muted),
                 contentAlignment = Alignment.Center
             ) {
-                // 进度条
+                // Progress bar
                 Box(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -120,7 +120,7 @@ fun LinearProgress(
                         .align(Alignment.CenterStart)
                 )
 
-                // 内部标签
+                // Inline label
                 if (showLabel) {
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
@@ -134,7 +134,7 @@ fun LinearProgress(
 }
 
 /**
- * CircularProgress - 环形进度条
+ * CircularProgress - circular progress bar
  */
 @Composable
 fun CircularProgress(
@@ -170,13 +170,13 @@ fun CircularProgress(
         Canvas(modifier = Modifier.size(size)) {
             val sweepAngle = 360f * animatedProgress
 
-            // 背景圆环
+            // Background ring
             drawCircle(
                 color = colors.muted,
                 style = Stroke(width = strokeWidth.toPx())
             )
 
-            // 进度圆环
+            // Progress ring
             drawArc(
                 color = progressColor,
                 startAngle = -90f,
@@ -189,7 +189,7 @@ fun CircularProgress(
             )
         }
 
-        // 中心标签
+        // Centre label
         if (showLabel) {
             Text(
                 text = "${(normalizedProgress * 100).roundToInt()}%",
@@ -201,29 +201,29 @@ fun CircularProgress(
 }
 
 /**
- * ProgressStatus - 进度条状态
+ * ProgressStatus - progress bar status
  */
 enum class ProgressStatus {
-    /** 主要色 */
+    /** primary */
     PRIMARY,
 
-    /** 成功 */
+    /** success */
     SUCCESS,
 
-    /** 警告 */
+    /** warning */
     WARNING,
 
-    /** 危险 */
+    /** danger */
     DANGER
 }
 
 /**
- * ProgressLabelPosition - 标签位置
+ * ProgressLabelPosition - label placement
  */
 enum class ProgressLabelPosition {
-    /** 内部显示 */
+    /** inside the bar */
     INSIDE,
 
-    /** 右侧显示 */
+    /** to the right */
     RIGHT
 }

@@ -164,7 +164,7 @@ fun Snackbar(
 
     val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
 
-    // 顶部弹出位置
+    // Top popup position
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -185,7 +185,7 @@ fun Snackbar(
 }
 
 /**
- * Snackbar 内容组件
+ * Snackbar content
  */
 @Composable
 internal fun SnackbarContent(
@@ -201,7 +201,7 @@ internal fun SnackbarContent(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 根据类型获取背景色
+    // Background colour from the type
     val backgroundColor = when (type) {
         SnackbarType.INFO -> colors.surface
         SnackbarType.SUCCESS -> colors.success.copy(alpha = 0.12f)
@@ -209,7 +209,7 @@ internal fun SnackbarContent(
         SnackbarType.ERROR -> colors.destructive.copy(alpha = 0.12f)
     }
 
-    // 根据类型获取图标颜色
+    // Icon colour from the type
     val iconColor = when (type) {
         SnackbarType.INFO -> colors.primary
         SnackbarType.SUCCESS -> colors.success
@@ -217,7 +217,7 @@ internal fun SnackbarContent(
         SnackbarType.ERROR -> colors.destructive
     }
 
-    // 文字颜色
+    // Text colour
     val textColor = colors.foreground
 
     Row(
@@ -230,7 +230,7 @@ internal fun SnackbarContent(
         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 图标
+        // Icon
         if (showIcon) {
             val iconName = when (type) {
                 SnackbarType.INFO -> Icons.info
@@ -245,7 +245,7 @@ internal fun SnackbarContent(
             )
         }
 
-        // 消息文字
+        // Message text
         Text(
             text = message,
             style = Typography.BodyMedium,
@@ -253,7 +253,7 @@ internal fun SnackbarContent(
             modifier = Modifier.weight(1f)
         )
 
-        // 操作按钮
+        // Action button
         if (action != null && onActionClick != null) {
             Text(
                 text = action,
@@ -266,7 +266,7 @@ internal fun SnackbarContent(
             )
         }
 
-        // 关闭按钮
+        // Close button
         if (showCloseButton) {
             Icon(
                 name = Icons.close,
@@ -279,9 +279,9 @@ internal fun SnackbarContent(
 }
 
 /**
- * SnackbarHost - Snackbar 宿主，配合 SnackbarHostState 使用
+ * SnackbarHost - Snackbar host, used together with SnackbarHostState
  *
- * 放置在页面顶层，用于显示 Snackbar
+ * Placed at the top level of a page to display Snackbars
  */
 @Composable
 fun SnackbarHost(
@@ -309,9 +309,9 @@ fun SnackbarHost(
 }
 
 /**
- * 通过 Overlay 系统显示 Snackbar（全局顶部弹出）
+ * Shows a Snackbar through the Overlay system (globally, from the top)
  *
- * 这是推荐的使用方式，可以在任何地方调用
+ * This is the recommended usage; it can be called from anywhere
  */
 @Composable
 fun rememberSnackbarController(): SnackbarController {
@@ -320,7 +320,7 @@ fun rememberSnackbarController(): SnackbarController {
 }
 
 /**
- * Snackbar 控制器 - 通过 Overlay 系统显示 Snackbar
+ * Snackbar controller - shows Snackbars through the Overlay system
  */
 class SnackbarController internal constructor(
     private val overlayController: com.gearui.overlay.OverlayController
@@ -328,7 +328,7 @@ class SnackbarController internal constructor(
     private var currentOverlayId: Long? = null
 
     /**
-     * 显示 Snackbar
+     * Shows a Snackbar
      */
     fun show(
         message: String,
@@ -340,7 +340,7 @@ class SnackbarController internal constructor(
         duration: Long = 3000L,
         topOffset: Float = 80f
     ) {
-        // 先关闭之前的
+        // Dismiss the previous one first
         dismiss()
 
         currentOverlayId = overlayController.show(
@@ -368,7 +368,7 @@ class SnackbarController internal constructor(
     }
 
     /**
-     * 关闭当前 Snackbar
+     * Dismisses the current Snackbar
      */
     fun dismiss() {
         currentOverlayId?.let {
@@ -379,7 +379,7 @@ class SnackbarController internal constructor(
 }
 
 /**
- * Overlay 模式下的 Snackbar 内容
+ * Snackbar content in Overlay mode
  */
 @Composable
 private fun SnackbarOverlayContent(
@@ -393,7 +393,7 @@ private fun SnackbarOverlayContent(
     topOffset: Float,
     onDismiss: () -> Unit
 ) {
-    // 自动关闭定时器
+    // Auto-dismiss timer
     LaunchedEffect(Unit) {
         if (duration > 0) {
             delay(duration)
@@ -427,7 +427,7 @@ private fun SnackbarOverlayContent(
 
 
 /**
- * 显示普通信息提示
+ * Shows an informational message
  */
 fun SnackbarController.showInfo(
     message: String,
@@ -438,7 +438,7 @@ fun SnackbarController.showInfo(
 ) = show(message, SnackbarType.INFO, action, onActionClick, showCloseButton, true, duration)
 
 /**
- * 显示成功提示
+ * Shows a success message
  */
 fun SnackbarController.showSuccess(
     message: String,
@@ -449,7 +449,7 @@ fun SnackbarController.showSuccess(
 ) = show(message, SnackbarType.SUCCESS, action, onActionClick, showCloseButton, true, duration)
 
 /**
- * 显示警告提示
+ * Shows a warning message
  */
 fun SnackbarController.showWarning(
     message: String,
@@ -460,7 +460,7 @@ fun SnackbarController.showWarning(
 ) = show(message, SnackbarType.WARNING, action, onActionClick, showCloseButton, true, duration)
 
 /**
- * 显示错误提示
+ * Shows an error message
  */
 fun SnackbarController.showError(
     message: String,

@@ -39,15 +39,15 @@ import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Select - 100% Theme 驱动的下拉选择器
+ * Select - fully Theme-driven dropdown select
  *
- * 使用 GearUI Overlay 系统实现：
- * - 真正的浮层，不破坏页面布局
- * - 无全屏遮罩（点击外部关闭）
- * - 自动方向判断（底部空间不足时向上展开）
- * - 选项可滚动
- * - 宽度跟随触发器
- * - 支持 triggerOverlaid 连体覆盖模式
+ * Built on the GearUI Overlay system:
+ * - a real floating layer, leaving the page layout untouched
+ * - no fullscreen scrim (tap outside to dismiss)
+ * - automatic direction (opens upwards when there is no room below)
+ * - scrollable options
+ * - width follows the trigger
+ * - supports the triggerOverlaid joined mode
  */
 @Composable
 fun <T> Select(
@@ -69,23 +69,23 @@ fun <T> Select(
     val selectedOption = options.find { it.value == value }
     val triggerShape = FieldDefaults.shape
 
-    // 用 State 包装，让 lambda 内部能访问最新值
+    // Wrapped in State so the lambdas can read the current value
     val valueState = rememberUpdatedState(value)
     val onValueChangeState = rememberUpdatedState(onValueChange)
 
-    // 关闭下拉（仅清除状态，不调用 dismiss，因为 dismiss 会触发 onDismiss）
+    // Closes the dropdown (state only; not dismiss, which would fire onDismiss)
     fun clearDropdownState() {
         overlayId = null
         expanded = false
     }
 
-    // 关闭下拉（手动调用 dismiss）
+    // Closes the dropdown (calling dismiss explicitly)
     fun closeDropdown() {
         overlayId?.let { overlay.dismiss(it) }
-        // 注意：状态清除由 onDismiss 回调处理
+        // Note: state clearing is handled by the onDismiss callback
     }
 
-    // 打开下拉
+    // Opens the dropdown
     fun openDropdown() {
         if (anchorBounds == null) return
 
@@ -101,11 +101,11 @@ fun <T> Select(
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
             onDismiss = {
-                // 无论是手动关闭还是点击外部关闭，都清除状态
+                // Clear the state whether the close was manual or from a tap outside
                 clearDropdownState()
             }
         ) {
-            // 直接从 State 对象读取最新值
+            // Read the current value straight from the State object
             SelectDropdownContent(
                 options = options,
                 selectedValue = valueState.value,
@@ -120,7 +120,7 @@ fun <T> Select(
         expanded = true
     }
 
-    // 组件销毁时关闭 Overlay
+    // Dismiss the Overlay when the component leaves composition
     DisposableEffect(Unit) {
         onDispose {
             overlayId?.let { overlay.dismiss(it) }
@@ -128,7 +128,7 @@ fun <T> Select(
     }
 
     Column(modifier = modifier) {
-        // 标签
+        // Label
         if (label != null) {
             Text(
                 text = label,
@@ -138,7 +138,7 @@ fun <T> Select(
             )
         }
 
-        // 触发器
+        // Trigger
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -188,7 +188,7 @@ fun <T> Select(
 }
 
 /**
- * SelectDropdownContent - 下拉内容（使用 LazyColumn 可滚动）
+ * SelectDropdownContent - dropdown content (scrollable, via LazyColumn)
  */
 @Composable
 private fun <T> SelectDropdownContent(
@@ -237,7 +237,7 @@ private fun <T> SelectDropdownContent(
 }
 
 /**
- * SelectOptionItem - 选项项
+ * SelectOptionItem - one option row
  */
 @Composable
 private fun <T> SelectOptionItem(
@@ -270,7 +270,7 @@ private fun <T> SelectOptionItem(
 }
 
 /**
- * SelectOption - 选项数据类
+ * SelectOption - option data class
  */
 data class SelectOption<T>(
     val value: T,
@@ -280,7 +280,7 @@ data class SelectOption<T>(
 )
 
 /**
- * MultiSelect - 多选下拉选择器
+ * MultiSelect - multi-select dropdown
  */
 @Composable
 fun <T> MultiSelect(
@@ -302,7 +302,7 @@ fun <T> MultiSelect(
     var overlayId by remember { mutableStateOf<Long?>(null) }
     val triggerShape = FieldDefaults.shape
 
-    // 用 State 包装，让 lambda 内部能访问最新值
+    // Wrapped in State so the lambdas can read the current value
     val valuesState = rememberUpdatedState(values)
     val onValuesChangeState = rememberUpdatedState(onValuesChange)
 
@@ -333,7 +333,7 @@ fun <T> MultiSelect(
                 clearDropdownState()
             }
         ) {
-            // 直接从 State 对象读取最新值
+            // Read the current value straight from the State object
             MultiSelectDropdownContent(
                 options = options,
                 selectedValues = valuesState.value,
@@ -411,7 +411,7 @@ fun <T> MultiSelect(
 }
 
 /**
- * Select 面板模式
+ * Select panel mode
  */
 enum class SelectPanelMode {
     ITEM_ALIGNED,
@@ -424,7 +424,7 @@ private fun SelectPanelMode.offsetY() = when (this) {
 }
 
 /**
- * MultiSelectDropdownContent - 多选下拉内容
+ * MultiSelectDropdownContent - multi-select dropdown content
  */
 @Composable
 private fun <T> MultiSelectDropdownContent(

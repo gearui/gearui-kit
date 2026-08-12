@@ -20,15 +20,15 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
 
 /**
- * App - GearUI 应用统一入口
+ * App - the single entry point of a GearUI application
  *
- * 整合所有 GearUI 基础设施：
- * - I18n（语言运行时，对所有库共享）
- * - Theme（视觉 runtime）
- * - OverlayRoot（层级 runtime）
- * - ToastHost（全局轻提示）
+ * Wires up all GearUI infrastructure:
+ * - I18n (language runtime, shared by every library)
+ * - Theme (visual runtime)
+ * - OverlayRoot (layering runtime)
+ * - ToastHost (global lightweight messages)
  *
- * 架构层级：
+ * Layering:
  * ```
  * App (languageTag + themeMode + ...)
  *     ↓
@@ -36,7 +36,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     ↓
  * I18nProvider (LocalStrings)
  *     ↓
- * ProvideSystemDarkMode (系统深色状态)
+ * ProvideSystemDarkMode (system dark state)
  *     ↓
  * Theme (resolved dark boolean → colors)
  *     ↓
@@ -44,36 +44,36 @@ import com.tencent.kuikly.compose.ui.Modifier
  *     ↓
  * OverlayRoot + ToastHost
  *     ↓
- * 应用内容
+ * application content
  * ```
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
  * App(
  *     languageTag = userLanguage,
  *     themeMode = ThemeMode.System,
  *     isSystemDark = StatusBarControllerImpl.isSystemDarkMode(),
  *     stringsOverrides = mapOf(
- *         "zh-Hans" to StringsPatch(common = CommonStringsPatch(confirm = "确定一下")),
+ *         "en-US" to StringsPatch(common = CommonStringsPatch(confirm = "Got it")),
  *     ),
  * ) {
  *     MainPage()
  * }
  * ```
  *
- * 上层库（privchat-ui 等）只需在内部读 `LocalLanguageTag.current` 即可
- * 自动响应语言切换；不需要应用层重复传 languageTag。详见
- * `docs/I18N_INTEGRATION.md`。
+ * Downstream libraries (privchat-ui and friends) only read `LocalLanguageTag.current`
+ * internally to follow language changes; the application layer never passes languageTag again. See
+ * `docs/I18N_INTEGRATION.md`.
  *
- * @param themeMode 主题模式 (Light/Dark/System)
- * @param isSystemDark 系统是否为深色模式（仅当 themeMode 为 System 时生效）
- * @param theme 自定义主题规格（可选）
- * @param languageTag BCP47 语言标签（如 "zh-Hans"、"en-US"）
- * @param fallbackLanguageTag 当 [languageTag] 没有匹配语言包时的 fallback；
- *   作用于 GearUI 自身和所有上层库
- * @param stringsOverrides 字段级覆盖 GearUI 内置文案，按语言 tag 分组
- * @param runtimeFlags Runtime 行为开关
- * @param keyboardDismissMode 输入框失焦策略（默认点击空白或滚动时自动收起键盘）
+ * @param themeMode theme mode (Light / Dark / System)
+ * @param isSystemDark whether the system is in dark mode (only used when themeMode is System)
+ * @param theme optional custom theme spec
+ * @param languageTag BCP47 language tag (such as "zh-Hans" or "en-US")
+ * @param fallbackLanguageTag fallback used when [languageTag] matches no language pack;
+ *   applies to GearUI itself and to every downstream library
+ * @param stringsOverrides field-level overrides of GearUI's built-in copy, grouped by language tag
+ * @param runtimeFlags Runtime behaviour switches
+ * @param keyboardDismissMode focus-loss policy for text fields (by default tapping empty space or scrolling hides the keyboard)
  */
 @Composable
 fun App(

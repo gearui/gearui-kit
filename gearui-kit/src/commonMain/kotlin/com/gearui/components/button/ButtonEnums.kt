@@ -1,89 +1,89 @@
 package com.gearui.components.button
 
 /**
- * 按钮尺寸
+ * Button size
  */
 enum class ButtonSize {
-    /** 大尺寸 - 48dp高度 */
+    /** large - 48dp tall */
     LARGE,
 
-    /** 中等尺寸 - 40dp高度（默认） */
+    /** medium - 40dp tall (default) */
     MEDIUM,
 
-    /** 小尺寸 - 32dp高度 */
+    /** small - 32dp tall */
     SMALL,
 
-    /** 超小尺寸 - 28dp高度 */
+    /** extra small - 28dp tall */
     EXTRA_SMALL
 }
 
 /**
- * 按钮类型
+ * Button type
  */
 enum class ButtonType {
-    /** 填充按钮（默认） */
+    /** filled button (default) */
     FILL,
 
-    /** 描边按钮 */
+    /** outlined button */
     OUTLINE,
 
-    /** 文本按钮 */
+    /** text button */
     TEXT,
 
-    /** 幽灵按钮（透明背景） */
+    /** ghost button (transparent background) */
     GHOST
 }
 
 /**
- * 按钮主题色
+ * Button colour theme
  */
 enum class ButtonTheme {
-    /** 主要/品牌色（默认） */
+    /** primary / brand (default) */
     PRIMARY,
 
-    /** 危险色 */
+    /** danger */
     DANGER,
 
-    /** 警告色 */
+    /** warning */
     WARNING,
 
-    /** 成功色 */
+    /** success */
     SUCCESS,
 
-    /** 默认/灰色 */
+    /** default / grey */
     DEFAULT,
 
-    /** 浅色/淡色 */
+    /** light / tinted */
     LIGHT
 }
 
 /**
- * 按钮形状
+ * Button shape
  */
 enum class ButtonShape {
-    /** 矩形（默认，圆角6dp） */
+    /** rectangle (default, 6dp radius) */
     RECTANGLE,
 
-    /** 圆角矩形（圆角9dp） */
+    /** rounded rectangle (9dp radius) */
     ROUND,
 
-    /** 正方形（无圆角） */
+    /** square (no radius) */
     SQUARE,
 
-    /** 圆形（完全圆角） */
+    /** circle (fully rounded) */
     CIRCLE,
 
-    /** 填充圆角（最大圆角，形成胶囊状） */
+    /** pill (maximum radius) */
     FILLED
 }
 
 /**
- * 图标位置
+ * Icon position
  */
 enum class ButtonIconPosition {
-    /** 左侧 */
+    /** leading */
     LEFT,
 
-    /** 右侧 */
+    /** trailing */
     RIGHT
 }

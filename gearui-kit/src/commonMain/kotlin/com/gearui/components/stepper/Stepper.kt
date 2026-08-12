@@ -16,17 +16,17 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Stepper - 100% Theme 驱动的步进器
+ * Stepper - fully Theme-driven stepper
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 数字增减控制
- * - 最小/最大值限制
- * - 步长控制
- * - 禁用状态
- * - 3种尺寸
+ * Features:
+ * - increment / decrement controls
+ * - minimum and maximum bounds
+ * - step size
+ * - disabled state
+ * - 3 sizes
  */
 @Composable
 fun Stepper(
@@ -40,7 +40,7 @@ fun Stepper(
     size: StepperSize = StepperSize.MEDIUM,
     disableInput: Boolean = false
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val typography = Theme.typography
     val shapes = Theme.shapes
@@ -67,7 +67,7 @@ fun Stepper(
             .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, shapes.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 减少按钮
+        // Decrement button
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -85,7 +85,7 @@ fun Stepper(
             )
         }
 
-        // 分割线
+        // Divider
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -93,7 +93,7 @@ fun Stepper(
                 .background(if (enabled) colors.border else colors.mutedForeground)
         )
 
-        // 数值显示
+        // Value display
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -108,7 +108,7 @@ fun Stepper(
             )
         }
 
-        // 分割线
+        // Divider
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -116,7 +116,7 @@ fun Stepper(
                 .background(if (enabled) colors.border else colors.mutedForeground)
         )
 
-        // 增加按钮
+        // Increment button
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -137,21 +137,21 @@ fun Stepper(
 }
 
 /**
- * StepperSize - 步进器尺寸
+ * StepperSize - stepper size
  */
 enum class StepperSize {
-    /** 小尺寸 - 24dp */
+    /** small - 24dp */
     SMALL,
 
-    /** 中尺寸 - 32dp */
+    /** medium - 32dp */
     MEDIUM,
 
-    /** 大尺寸 - 40dp */
+    /** large - 40dp */
     LARGE
 }
 
 /**
- * StepperWithLabel - 带标签的步进器
+ * StepperWithLabel - stepper with a label
  */
 @Composable
 fun StepperWithLabel(

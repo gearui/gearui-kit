@@ -26,7 +26,7 @@ import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.fieldBorderColor
 
 /**
- * 文本框布局方式
+ * Textarea layout direction
  */
 enum class TextareaLayout {
     HORIZONTAL, // 水平布局（标签在左）
@@ -34,12 +34,12 @@ enum class TextareaLayout {
 }
 
 /**
- * Textarea - 多行文本输入框
+ * Textarea - multi-line text input
  *
- * 关键点：
- * 1. 使用 BasicTextField 的 minLines/maxLines 参数让输入框自己控制高度
- * 2. 不使用外层 Box 的 heightIn 约束，避免换行时的跳动
- * 3. decorationBox 用于放置占位符，与输入框同层
+ * Key points:
+ * 1. BasicTextField's minLines/maxLines let the field manage its own height
+ * 2. No heightIn constraint on the outer Box, which would make it jump on wrap
+ * 3. decorationBox holds the placeholder, on the same layer as the field
  */
 @Composable
 fun Textarea(
@@ -68,10 +68,10 @@ fun Textarea(
 
     val isVertical = layout == TextareaLayout.VERTICAL
 
-    // 整体容器
+    // Outer container
     Column(modifier = modifier) {
         if (cardStyle) {
-            // 卡片样式
+            // Card style
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -100,7 +100,7 @@ fun Textarea(
                 )
             }
         } else {
-            // 普通样式
+            // Plain style
             TextareaContent(
                 value = value,
                 onValueChange = onValueChange,
@@ -150,9 +150,9 @@ private fun TextareaContent(
     val shapes = Theme.shapes
 
     if (isVertical) {
-        // 垂直布局
+        // Vertical layout
         Column {
-            // 标签行
+            // Label row
             if (label != null) {
                 LabelRow(
                     label = label,
@@ -163,7 +163,7 @@ private fun TextareaContent(
                 Spacer(modifier = Modifier.height(Spacing.sm))
             }
 
-            // 输入区域
+            // Input area
             TextareaInputArea(
                 value = value,
                 onValueChange = onValueChange,
@@ -181,13 +181,13 @@ private fun TextareaContent(
             )
         }
     } else {
-        // 水平布局
+        // Horizontal layout
         Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.Top
             ) {
-                // 标签
+                // Label
                 if (label != null) {
                     LabelRow(
                         label = label,
@@ -198,7 +198,7 @@ private fun TextareaContent(
                     )
                 }
 
-                // 输入区域
+                // Input area
                 Column(modifier = Modifier.weight(1f)) {
                     TextareaInputArea(
                         value = value,
@@ -258,10 +258,10 @@ private fun LabelRow(
 
 /**
  *
- * 关键实现：
- * 1. BasicTextField 使用 minLines/maxLines 控制高度
- * 2. decorationBox 放置占位符
- * 3. 不使用外层固定高度的 Box
+ * Key implementation notes:
+ * 1. BasicTextField controls the height through minLines/maxLines
+ * 2. decorationBox holds the placeholder
+ * 3. No outer Box with a fixed height
  */
 @Composable
 private fun TextareaInputArea(
@@ -299,8 +299,8 @@ private fun TextareaInputArea(
         }
     }
 
-    // autosize == true 时，maxLines = null（无限制）
-    // 否则 maxLines = widget.maxLines ?? minLines
+    // maxLines = null (unbounded) when autosize == true,
+    // otherwise maxLines = widget.maxLines ?: minLines
     val effectiveMaxLines = when {
         autosize && maxLines != null -> maxLines
         autosize -> Int.MAX_VALUE
@@ -309,7 +309,7 @@ private fun TextareaInputArea(
     }
 
     Column(modifier = modifier) {
-        // 输入框容器
+        // Field container
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -379,7 +379,7 @@ private fun TextareaInputArea(
                     }
                 )
 
-                // 底部信息行
+                // Footer info row
                 if (additionInfo != null || (indicator && maxLength != null)) {
                     Spacer(modifier = Modifier.height(Spacing.sm))
                     Row(
@@ -412,7 +412,7 @@ private fun TextareaInputArea(
 }
 
 /**
- * AutoResizeTextarea - 自动调整高度的文本框
+ * AutoResizeTextarea - self-sizing text area
  */
 @Composable
 fun AutoResizeTextarea(

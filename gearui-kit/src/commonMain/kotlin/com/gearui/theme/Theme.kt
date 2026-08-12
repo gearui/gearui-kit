@@ -3,36 +3,36 @@ package com.gearui.theme
 import androidx.compose.runtime.*
 
 /* --------------------------------------------------------- */
-/* ThemeMode - 三态主题策略 */
-/* 对齐 Flutter ThemeMode / iOS UIUserInterfaceStyle */
+/* ThemeMode - three-state theme strategy */
+/* Aligned with Flutter ThemeMode / iOS UIUserInterfaceStyle */
 /* --------------------------------------------------------- */
 
 enum class ThemeMode {
-    /** 强制浅色主题 */
+    /** force the light theme */
     Light,
-    /** 强制深色主题 */
+    /** force the dark theme */
     Dark,
-    /** 跟随系统 */
+    /** follow the system */
     System
 }
 
 /* --------------------------------------------------------- */
-/* CompositionLocal - 主题状态 */
+/* CompositionLocal - theme state */
 /* --------------------------------------------------------- */
 
 val LocalThemeColors = staticCompositionLocalOf { Themes.Light.colors }
 val LocalThemeTypography = staticCompositionLocalOf { Typographies.Default }
 val LocalThemeShapes = staticCompositionLocalOf { ShapesDefault.Default }
 
-/** 系统深色模式状态（由平台层提供） */
+/** System dark mode state, supplied by the platform layer */
 val LocalSystemDarkMode = staticCompositionLocalOf { false }
 
 /* --------------------------------------------------------- */
-/* 主题解析逻辑 */
+/* Theme resolution */
 /* --------------------------------------------------------- */
 
 /**
- * 解析 ThemeMode 为实际的 dark boolean
+ * Resolves a ThemeMode into an actual dark boolean
  */
 @Composable
 fun resolveDarkMode(mode: ThemeMode): Boolean {
@@ -45,31 +45,31 @@ fun resolveDarkMode(mode: ThemeMode): Boolean {
 }
 
 /**
- * 根据 dark boolean 获取主题规格
+ * Returns the theme spec for a dark boolean
  */
 private fun resolveThemeSpec(isDark: Boolean): ThemeSpec {
     return if (isDark) Themes.Dark else Themes.Light
 }
 
 /* --------------------------------------------------------- */
-/* ⭐ Theme 核心 Composable */
+/* ⭐ Theme core composable */
 /* --------------------------------------------------------- */
 
 /**
- * Theme - GearUI 主题包装器
+ * Theme - GearUI theme wrapper
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
  * Theme(mode = ThemeMode.Dark) {
- *     // 深色主题内容
+ *     // dark theme content
  * }
  * ```
  *
- * @param mode 主题模式（Light/Dark/System）
- * @param theme 自定义主题规格（优先级高于 mode）
- * @param typography 排版系统
- * @param shapes 形状系统
- * @param content 内容
+ * @param mode theme mode (Light / Dark / System)
+ * @param theme custom theme spec (takes precedence over mode)
+ * @param typography the type scale
+ * @param shapes the shape scale
+ * @param content the content
  */
 @Composable
 fun Theme(
@@ -79,7 +79,7 @@ fun Theme(
     shapes: Shapes = ShapesDefault.Default,
     content: @Composable () -> Unit
 ) {
-    // 解析最终主题
+    // Resolve the final theme
     val resolved = theme ?: resolveThemeSpec(resolveDarkMode(mode))
 
     CompositionLocalProvider(
@@ -91,8 +91,8 @@ fun Theme(
 }
 
 /**
- * 提供系统深色模式状态
- * 应在 App 最外层调用，由平台层传入系统深色模式状态
+ * Provides the system dark mode state.
+ * Call this at the outermost level of the App; the platform layer supplies the value.
  */
 @Composable
 fun ProvideSystemDarkMode(
@@ -106,19 +106,19 @@ fun ProvideSystemDarkMode(
 }
 
 /* --------------------------------------------------------- */
-/* Theme 便捷访问对象 */
+/* Convenience accessor for the theme */
 /* --------------------------------------------------------- */
 
 object Theme {
-    /** 当前主题颜色 */
+    /** current theme colours */
     val colors: Colors
         @Composable get() = LocalThemeColors.current
 
-    /** 当前排版系统 */
+    /** current type scale */
     val typography: Typography
         @Composable get() = LocalThemeTypography.current
 
-    /** 当前形状系统 */
+    /** current shape scale */
     val shapes: Shapes
         @Composable get() = LocalThemeShapes.current
 }

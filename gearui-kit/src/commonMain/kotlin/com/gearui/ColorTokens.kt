@@ -1,70 +1,70 @@
 package com.gearui
 
 /**
- * GearUI 颜色 Token（纯静态常量）
+ * GearUI colour tokens (plain static constants).
  *
- * 设计原则：
- * - 不可变
- * - 无状态
- * - 跨 runtime 安全
- * - 可序列化
+ * Principles:
+ * - immutable
+ * - stateless
+ * - safe across runtimes
+ * - serialisable
  */
 object ColorTokens {
 
-    // ============ 品牌色系（10 级） ============
+    // ============ Brand ramp (10 steps) ============
 
-    /** 品牌色 1 - 最浅 */
+    /** Brand 1 - lightest */
     const val Brand1 = 0xFFF2F3FF.toInt()
 
-    /** 品牌色 2 */
+    /** Brand 2 */
     const val Brand2 = 0xFFD9E1FF.toInt()
 
-    /** 品牌色 3 */
+    /** Brand 3 */
     const val Brand3 = 0xFFB5C7FF.toInt()
 
-    /** 品牌色 4 */
+    /** Brand 4 */
     const val Brand4 = 0xFF8EABFF.toInt()
 
-    /** 品牌色 5 */
+    /** Brand 5 */
     const val Brand5 = 0xFF618DFF.toInt()
 
-    /** 品牌色 6 */
+    /** Brand 6 */
     const val Brand6 = 0xFF366EF4.toInt()
 
-    /** 品牌色 7 - 主品牌色 */
+    /** Brand 7 - the primary brand colour */
     const val Brand7 = 0xFF0052D9.toInt()
 
-    /** 品牌色 8 */
+    /** Brand 8 */
     const val Brand8 = 0xFF003CAB.toInt()
 
-    /** 品牌色 9 */
+    /** Brand 9 */
     const val Brand9 = 0xFF002A7C.toInt()
 
-    /** 品牌色 10 - 最深 */
+    /** Brand 10 - darkest */
     const val Brand10 = 0xFF001A57.toInt()
 
-    // ============ 语义化品牌色 ============
+    // ============ Semantic brand colours ============
 
-    /** 品牌浅色（用于背景等） */
+    /** Brand light, for backgrounds and similar */
     const val BrandLight = Brand1
 
-    /** 品牌聚焦色 */
+    /** Brand focus */
     const val BrandFocus = Brand2
 
-    /** 品牌禁用色 */
+    /** Brand disabled */
     const val BrandDisabled = Brand3
 
-    /** 品牌悬停色 */
+    /** Brand hover */
     const val BrandHover = Brand6
 
-    /** 品牌常规色 */
+    /** Brand normal */
     const val BrandNormal = Brand7
 
-    /** 品牌点击色 */
+    /** Brand active */
     const val BrandClick = Brand8
 
 
-    // ============ 错误色系（10 级） ============
+    // ============ Error ramp (10 steps) ============
 
     const val Error1 = 0xFFFDECEE.toInt()
     const val Error2 = 0xFFF9D7D9.toInt()
@@ -85,7 +85,7 @@ object ColorTokens {
     const val ErrorClick = Error7
 
 
-    // ============ 警告色系（10 级） ============
+    // ============ Warning ramp (10 steps) ============
 
     const val Warning1 = 0xFFFEF3E6.toInt()
     const val Warning2 = 0xFFF9E0C7.toInt()
@@ -106,7 +106,7 @@ object ColorTokens {
     const val WarningClick = Warning6
 
 
-    // ============ 成功色系（10 级） ============
+    // ============ Success ramp (10 steps) ============
 
     const val Success1 = 0xFFE8F8F2.toInt()
     const val Success2 = 0xFFBCEBDC.toInt()
@@ -127,7 +127,7 @@ object ColorTokens {
     const val SuccessClick = Success6
 
 
-    // ============ 中性色系（14 级） ============
+    // ============ Neutral ramp (14 steps) ============
 
     const val Gray1 = 0xFFFFFFFF.toInt()
     const val Gray2 = 0xFFF9F9F9.toInt()
@@ -145,68 +145,68 @@ object ColorTokens {
     const val Gray14 = 0xFF000000.toInt()
 
 
-    // ============ 文本色系 ============
+    // ============ Text colours ============
 
-    /** 主要文本色（黑色 90% 透明度） */
+    /** Primary text (black at 90% opacity) */
     const val TextPrimary = 0xE6000000.toInt()
 
-    /** 次要文本色（黑色 60% 透明度） */
+    /** Secondary text (black at 60% opacity) */
     const val TextSecondary = 0x99000000.toInt()
 
-    /** 占位文本色（黑色 40% 透明度） */
+    /** Placeholder text (black at 40% opacity) */
     const val TextPlaceholder = 0x66000000.toInt()
 
-    /** 禁用文本色（黑色 25% 透明度） */
+    /** Disabled text (black at 25% opacity) */
     const val TextDisabled = 0x40000000.toInt()
 
-    /** 品牌文本色 */
+    /** Brand text */
     const val TextBrand = BrandNormal
 
-    /** 链接文本色 */
+    /** Link text */
     const val TextLink = BrandNormal
 
-    /** 白色主文本（白色 90% 透明度） */
+    /** Primary text on dark (white at 90% opacity) */
     const val TextWhite1 = 0xE6FFFFFF.toInt()
 
-    /** 白色次文本（白色 55% 透明度） */
+    /** Secondary text on dark (white at 55% opacity) */
     const val TextWhite2 = 0x8CFFFFFF.toInt()
 
-    /** 白色占位文本（白色 35% 透明度） */
+    /** Placeholder text on dark (white at 35% opacity) */
     const val TextWhite3 = 0x59FFFFFF.toInt()
 
-    /** 白色禁用文本（白色 22% 透明度） */
+    /** Disabled text on dark (white at 22% opacity) */
     const val TextWhite4 = 0x38FFFFFF.toInt()
 
 
-    // ============ 背景色系 ============
+    // ============ Background colours ============
 
-    /** 页面背景色 */
+    /** Page background */
     const val BgPage = Gray3
 
-    /** 容器背景色 */
+    /** Container background */
     const val BgContainer = Gray1
 
-    /** 次要容器背景色 */
+    /** Secondary container background */
     const val BgContainerSecondary = Gray2
 
 
-    // ============ 边框色系 ============
+    // ============ Border colours ============
 
-    /** 组件描边色 */
+    /** Component outline */
     const val Stroke = Gray6
 
-    /** 组件边框色 */
+    /** Component border */
     const val Border = Gray4
 
 
-    // ============ 蒙层色系 ============
+    // ============ Mask colours ============
 
-    /** 蒙层背景（黑色 60% 透明度） */
+    /** Mask background (black at 60% opacity) */
     const val MaskOverlay = 0x99000000.toInt()
 
-    /** 蒙层背景深色（黑色 80% 透明度） */
+    /** Mask background, dark (black at 80% opacity) */
     const val MaskOverlayDark = 0xCC000000.toInt()
 
-    /** 蒙层背景浅色（黑色 40% 透明度） */
+    /** Mask background, light (black at 40% opacity) */
     const val MaskOverlayLight = 0x66000000.toInt()
 }

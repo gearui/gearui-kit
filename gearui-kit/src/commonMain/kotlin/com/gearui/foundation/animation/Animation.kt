@@ -1,101 +1,101 @@
 package com.gearui.foundation.animation
 
 /**
- * GearUI 动画系统
+ * GearUI animation system
  *
- * 统一管理所有组件的动画规范，确保整个设计系统的动画风格一致。
+ * One place for every component's animation spec, so motion stays consistent
  *
- * 设计原则：
- * - 快速响应：短时长动画（80-150ms）用于即时反馈
- * - 平滑过渡：中等时长（200-300ms）用于状态切换
- * - 自然流畅：使用 ease 曲线而非线性
- * - 性能优先：避免过度动画
+ * Principles:
+ * - Immediate feedback uses short durations (80-150ms)
+ * - State changes use medium durations (200-300ms)
+ * - Ease curves rather than linear, so motion reads as natural
+ * - Restraint: avoid animating for its own sake
  */
 object Animation {
 
-    // ============ 时长定义 ============
+    // ============ Durations ============
 
     /**
-     * 极快动画 - 40ms
-     * 用于：微小的视觉反馈（如波纹扩散的开始）
+     * Instant - 40ms
+     * For: the smallest visual acknowledgements, such as a ripple starting
      */
     const val DURATION_INSTANT = 40
 
     /**
-     * 快速动画 - 80ms
-     * 用于：按钮按下、开关切换等即时反馈
+     * Fast - 80ms
+     * For: immediate feedback like a button press or a switch toggle
      */
     const val DURATION_FAST = 80
 
     /**
-     * 标准动画 - 150ms
-     * 用于：淡入淡出、透明度变化、小幅位移
+     * Standard - 150ms
+     * For: fades, opacity changes, small movements
      */
     const val DURATION_NORMAL = 150
 
     /**
-     * 中等动画 - 200ms
-     * 用于：卡片展开、列表项滑动
+     * Medium - 200ms
+     * For: card expansion, list item swipes
      */
     const val DURATION_MEDIUM = 200
 
     /**
-     * 慢速动画 - 300ms
-     * 用于：页面过渡、抽屉展开/收起
+     * Slow - 300ms
+     * For: page transitions, drawer open and close
      */
     const val DURATION_SLOW = 300
 
     /**
-     * 超慢动画 - 500ms
-     * 用于：复杂的多阶段动画
+     * Very slow - 500ms
+     * For: complex multi-stage sequences
      */
     const val DURATION_VERY_SLOW = 500
 
-    // ============ 缓动曲线 ============
+    // ============ Easing curves ============
 
     /**
-     * 标准缓动 - Ease
-     * 最常用的曲线，适合大部分场景
+     * Standard easing - Ease
+     * The common case; suits most situations
      */
     const val EASING_STANDARD = "ease"
 
     /**
-     * 缓入 - Ease In
-     * 用于：元素离开屏幕
+     * Ease In
+     * For: elements leaving the screen
      */
     const val EASING_EASE_IN = "ease-in"
 
     /**
-     * 缓出 - Ease Out
-     * 用于：元素进入屏幕
+     * Ease Out
+     * For: elements entering the screen
      */
     const val EASING_EASE_OUT = "ease-out"
 
     /**
-     * 缓入缓出 - Ease In Out
-     * 用于：元素在屏幕内移动
+     * Ease In Out
+     * For: elements moving within the screen
      */
     const val EASING_EASE_IN_OUT = "ease-in-out"
 
     /**
-     * 线性 - Linear
-     * 用于：旋转、进度条等匀速动画
+     * Linear
+     * For: constant-speed motion such as spinners and progress bars
      */
     const val EASING_LINEAR = "linear"
 
     /**
-     * 弹性 - Spring
-     * 用于：有物理感的交互（iOS 风格）
+     * Spring
+     * For: interactions that should feel physical (iOS style)
      */
     const val EASING_SPRING = "spring"
 
-    // ============ 预设动画配置 ============
+    // ============ Preset animation specs ============
 
     /**
-     * 按钮按下动画
-     * - 时长：80ms
-     * - 曲线：Ease Out
-     * - 效果：缩放到 0.98
+     * Button press
+     * - Duration: 80ms
+     * - Curve: Ease Out
+     * - Effect: scale to 0.98
      */
     object Press {
         const val duration = DURATION_FAST
@@ -104,9 +104,9 @@ object Animation {
     }
 
     /**
-     * 淡入淡出动画
-     * - 时长：150ms
-     * - 曲线：Ease In Out
+     * Fade
+     * - Duration: 150ms
+     * - Curve: Ease In Out
      */
     object Fade {
         const val duration = DURATION_NORMAL
@@ -114,9 +114,9 @@ object Animation {
     }
 
     /**
-     * 缩放动画
-     * - 时长：200ms
-     * - 曲线：Ease Out
+     * Scale
+     * - Duration: 200ms
+     * - Curve: Ease Out
      */
     object Scale {
         const val duration = DURATION_MEDIUM
@@ -124,9 +124,9 @@ object Animation {
     }
 
     /**
-     * 滑动动画
-     * - 时长：200ms
-     * - 曲线：Ease In Out
+     * Slide
+     * - Duration: 200ms
+     * - Curve: Ease In Out
      */
     object Slide {
         const val duration = DURATION_MEDIUM
@@ -134,9 +134,9 @@ object Animation {
     }
 
     /**
-     * 旋转动画
-     * - 时长：300ms
-     * - 曲线：Linear
+     * Rotate
+     * - Duration: 300ms
+     * - Curve: Linear
      */
     object Rotate {
         const val duration = DURATION_SLOW
@@ -144,9 +144,9 @@ object Animation {
     }
 
     /**
-     * 弹性动画
-     * - 时长：500ms
-     * - 曲线：Spring
+     * Spring
+     * - Duration: 500ms
+     * - Curve: Spring
      */
     object Bounce {
         const val duration = DURATION_VERY_SLOW
@@ -154,9 +154,9 @@ object Animation {
     }
 
     /**
-     * 展开/收起动画
-     * - 时长：300ms
-     * - 曲线：Ease In Out
+     * Expand / collapse
+     * - Duration: 300ms
+     * - Curve: Ease In Out
      */
     object Expand {
         const val duration = DURATION_SLOW
@@ -164,9 +164,9 @@ object Animation {
     }
 
     /**
-     * 波纹动画
-     * - 时长：200ms
-     * - 曲线：Ease Out
+     * Ripple
+     * - Duration: 200ms
+     * - Curve: Ease Out
      */
     object Ripple {
         const val duration = DURATION_MEDIUM
@@ -176,24 +176,24 @@ object Animation {
     }
 
     /**
-     * 加载动画
-     * - 时长：1000ms（循环）
-     * - 曲线：Linear
+     * Loading
+     * - Duration: 1000ms, looping
+     * - Curve: Linear
      */
     object Loading {
         const val duration = 1000
         const val easing = EASING_LINEAR
     }
 
-    // ============ 动画参数计算 ============
+    // ============ Derived durations ============
 
     /**
-     * 根据距离计算动画时长
+     * Scales a duration by travel distance.
      *
-     * @param distance 移动距离（dp）
-     * @param baseDistance 基准距离（dp）
-     * @param baseDuration 基准时长（ms）
-     * @return 计算后的时长
+     * @param distance travel distance in dp
+     * @param baseDistance reference distance in dp
+     * @param baseDuration reference duration in ms
+     * @return the scaled duration
      */
     fun calculateDurationByDistance(
         distance: Float,
@@ -205,12 +205,12 @@ object Animation {
     }
 
     /**
-     * 根据元素大小计算动画时长
+     * Scales a duration by element size.
      *
-     * @param size 元素大小
-     * @param baseSize 基准大小
-     * @param baseDuration 基准时长
-     * @return 计算后的时长
+     * @param size element size
+     * @param baseSize reference size
+     * @param baseDuration reference duration
+     * @return the scaled duration
      */
     fun calculateDurationBySize(
         size: Float,
@@ -223,41 +223,41 @@ object Animation {
 }
 
 /**
- * 动画延迟策略
+ * Animation delay presets
  */
 object AnimationDelay {
 
     /**
-     * 无延迟
+     * No delay
      */
     const val NONE = 0
 
     /**
-     * 极短延迟 - 50ms
+     * Very short - 50ms
      */
     const val TINY = 50
 
     /**
-     * 短延迟 - 100ms
+     * Short - 100ms
      */
     const val SHORT = 100
 
     /**
-     * 中等延迟 - 200ms
+     * Medium - 200ms
      */
     const val MEDIUM = 200
 
     /**
-     * 长延迟 - 300ms
+     * Long - 300ms
      */
     const val LONG = 300
 
     /**
-     * 计算列表项的交错延迟
+     * Staggered delay for a list item.
      *
-     * @param index 项索引
-     * @param baseDelay 基础延迟（ms）
-     * @return 计算后的延迟
+     * @param index item index
+     * @param baseDelay base delay in ms
+     * @return the staggered delay
      */
     fun calculateStaggerDelay(index: Int, baseDelay: Int = 30): Int {
         return index * baseDelay
@@ -265,22 +265,22 @@ object AnimationDelay {
 }
 
 /**
- * 动画组合策略
+ * Animation composition strategies
  */
 object AnimationCombination {
 
     /**
-     * 顺序执行
+     * Run in sequence
      */
     const val SEQUENTIAL = "sequential"
 
     /**
-     * 并行执行
+     * Run in parallel
      */
     const val PARALLEL = "parallel"
 
     /**
-     * 交错执行
+     * Run staggered
      */
     const val STAGGER = "stagger"
 }

@@ -1,75 +1,75 @@
 package com.gearui.foundation.interaction
 
 /**
- * GearUI 组件交互状态
+ * Component interaction state.
  *
- * 统一管理所有组件的交互状态，避免在每个组件中重复状态判断逻辑。
- * 所有交互组件（Button、Input、Card 等）共享此状态系统。
+ * One place for the interaction state every component shares, so the same state
+ * logic is not rewritten per component. Button, Input, Card and the rest use it.
  *
- * 设计原则：
- * - 状态互斥：同一时间只能处于一种状态
- * - 优先级明确：Disabled > Loading > Pressed > Focused > Normal
- * - 语义清晰：每个状态都有明确的交互含义
+ * Principles:
+ * - States are mutually exclusive: only one at a time.
+ * - Priority is explicit: Disabled > Loading > Pressed > Focused > Normal.
+ * - Each state means one interaction, unambiguously.
  */
 sealed class InteractionState {
 
     /**
-     * 正常状态 - 默认状态，可交互
+     * Normal - the default; interactive.
      */
     object Normal : InteractionState()
 
     /**
-     * 按下状态 - 用户正在触摸/点击组件
+     * Pressed - the user is touching or clicking the component.
      */
     object Pressed : InteractionState()
 
     /**
-     * 聚焦状态 - 组件获得焦点（键盘导航、Tab 键等）
+     * Focused - the component holds focus (keyboard navigation, Tab).
      */
     object Focused : InteractionState()
 
     /**
-     * 悬停状态 - 鼠标悬停（主要用于桌面端）
+     * Hovered - pointer hover, mainly on desktop.
      */
     object Hovered : InteractionState()
 
     /**
-     * 禁用状态 - 组件不可交互
+     * Disabled - not interactive.
      */
     object Disabled : InteractionState()
 
     /**
-     * 加载状态 - 组件正在执行异步操作，不可交互
+     * Loading - an async operation is running; not interactive.
      */
     object Loading : InteractionState()
 
     /**
-     * 长按状态 - 用户长按组件
+     * LongPressed - the user is long-pressing the component.
      */
     object LongPressed : InteractionState()
 
     /**
-     * 拖拽状态 - 组件正在被拖拽
+     * Dragging - the component is being dragged.
      */
     object Dragging : InteractionState()
 }
 
 /**
- * 交互状态扩展属性
+ * Interaction state extensions
  */
 
 /**
- * 是否可交互
+ * Whether the component is interactive.
  *
- * Disabled 和 Loading 状态下不可交互
+ * Disabled and Loading are not.
  */
 val InteractionState.isInteractive: Boolean
     get() = this !is InteractionState.Disabled && this !is InteractionState.Loading
 
 /**
- * 是否处于激活状态
+ * Whether the state counts as active.
  *
- * Pressed、Focused、Hovered、LongPressed、Dragging 都视为激活状态
+ * Pressed, Focused, Hovered, LongPressed and Dragging all do.
  */
 val InteractionState.isActive: Boolean
     get() = when (this) {
@@ -83,54 +83,54 @@ val InteractionState.isActive: Boolean
     }
 
 /**
- * 是否需要禁用样式
+ * Whether the disabled styling applies.
  */
 val InteractionState.needsDisabledStyle: Boolean
     get() = this is InteractionState.Disabled || this is InteractionState.Loading
 
 /**
- * 交互状态源
+ * Interaction state source.
  *
- * 用于跟踪当前组件的交互状态
+ * Tracks the current interaction state of a component.
  */
 interface InteractionSource {
     /**
-     * 当前交互状态
+     * Current interaction state
      */
     val currentState: InteractionState
 
     /**
-     * 状态历史（用于动画和过渡）
+     * State history, used for animation and transitions
      */
     val stateHistory: List<InteractionState>
 }
 
 /**
- * 可变交互状态源
+ * Mutable interaction state source
  */
 interface MutableInteractionSource : InteractionSource {
     /**
-     * 更新交互状态
+     * Sets the interaction state
      */
     fun updateState(newState: InteractionState)
 
     /**
-     * 尝试更新状态（根据优先级）
+     * Attempts a state change, respecting priority.
      *
-     * @return 是否成功更新
+     * @return whether the state actually changed
      */
     fun tryUpdateState(newState: InteractionState): Boolean
 }
 
 /**
- * 创建可变交互状态源
+ * Creates a mutable interaction state source
  */
 fun createMutableInteractionSource(
     initialState: InteractionState = InteractionState.Normal
 ): MutableInteractionSource = MutableInteractionSourceImpl(initialState)
 
 /**
- * 交互状态源实现
+ * Interaction state source implementation
  */
 private class MutableInteractionSourceImpl(
     initialState: InteractionState
@@ -150,7 +150,7 @@ private class MutableInteractionSourceImpl(
             _currentState = newState
             _stateHistory.add(newState)
 
-            // 保持历史记录在合理范围内
+            // Keep the history from growing without bound
             if (_stateHistory.size > 10) {
                 _stateHistory.removeAt(0)
             }
@@ -158,7 +158,7 @@ private class MutableInteractionSourceImpl(
     }
 
     override fun tryUpdateState(newState: InteractionState): Boolean {
-        // 状态优先级：Disabled > Loading > LongPressed > Pressed > Dragging > Focused > Hovered > Normal
+        // Priority: Disabled > Loading > LongPressed > Pressed > Dragging > Focused > Hovered > Normal
         val canUpdate = when (_currentState) {
             is InteractionState.Disabled -> newState is InteractionState.Normal
             is InteractionState.Loading -> newState is InteractionState.Normal || newState is InteractionState.Disabled
@@ -179,19 +179,19 @@ private class MutableInteractionSourceImpl(
 }
 
 /**
- * 状态过渡辅助函数
+ * State transition helpers
  */
 object InteractionTransition {
 
     /**
-     * 处理按下事件
+     * Handles a press
      */
     fun onPressStart(source: MutableInteractionSource) {
         source.tryUpdateState(InteractionState.Pressed)
     }
 
     /**
-     * 处理释放事件
+     * Handles a release
      */
     fun onPressEnd(source: MutableInteractionSource) {
         if (source.currentState is InteractionState.Pressed) {
@@ -200,14 +200,14 @@ object InteractionTransition {
     }
 
     /**
-     * 处理聚焦事件
+     * Handles focus gained
      */
     fun onFocus(source: MutableInteractionSource) {
         source.tryUpdateState(InteractionState.Focused)
     }
 
     /**
-     * 处理失焦事件
+     * Handles focus lost
      */
     fun onBlur(source: MutableInteractionSource) {
         if (source.currentState is InteractionState.Focused) {
@@ -216,14 +216,14 @@ object InteractionTransition {
     }
 
     /**
-     * 处理悬停开始
+     * Handles hover start
      */
     fun onHoverStart(source: MutableInteractionSource) {
         source.tryUpdateState(InteractionState.Hovered)
     }
 
     /**
-     * 处理悬停结束
+     * Handles hover end
      */
     fun onHoverEnd(source: MutableInteractionSource) {
         if (source.currentState is InteractionState.Hovered) {
@@ -232,14 +232,14 @@ object InteractionTransition {
     }
 
     /**
-     * 处理长按开始
+     * Handles long-press start
      */
     fun onLongPressStart(source: MutableInteractionSource) {
         source.tryUpdateState(InteractionState.LongPressed)
     }
 
     /**
-     * 处理长按结束
+     * Handles long-press end
      */
     fun onLongPressEnd(source: MutableInteractionSource) {
         if (source.currentState is InteractionState.LongPressed) {
@@ -248,14 +248,14 @@ object InteractionTransition {
     }
 
     /**
-     * 处理拖拽开始
+     * Handles drag start
      */
     fun onDragStart(source: MutableInteractionSource) {
         source.tryUpdateState(InteractionState.Dragging)
     }
 
     /**
-     * 处理拖拽结束
+     * Handles drag end
      */
     fun onDragEnd(source: MutableInteractionSource) {
         if (source.currentState is InteractionState.Dragging) {

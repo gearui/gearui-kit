@@ -24,24 +24,24 @@ import com.gearui.runtime.LocalRuntimeFlags
 import kotlinx.coroutines.delay
 
 /**
- * OverlayHost - Overlay 渲染宿主
+ * OverlayHost - the render host for overlays.
  *
- * 这是整个 Overlay 系统最关键的组件
- * 所有 Overlay 都在这里渲染，永远在最顶层
+ * The most load-bearing piece of the overlay system: every overlay renders
+ * here, always on top of everything else.
  *
- * 职责：
- * - 渲染所有 Overlay
- * - 处理 outsideClick 事件
- * - 处理 scroll（拖拽）关闭 - 当有需要 scroll 关闭的 overlay 时，监听拖拽
- * - 处理 timeout 自动关闭
- * - 绑定 OverlayManager 供外部通知事件
+ * Responsibilities:
+ * - render every overlay
+ * - handle outside-click dismissal
+ * - handle scroll (drag) dismissal, by listening for drags whenever an overlay asks for it
+ * - handle timeout dismissal
+ * - bind OverlayManager so callers can notify it of events
  */
 @Composable
 fun OverlayHost(
     controller: OverlayController,
     content: @Composable () -> Unit
 ) {
-    // 绑定 OverlayManager
+    // Bind the OverlayManager
     DisposableEffect(controller) {
         OverlayManager.bind(controller)
         onDispose {
@@ -50,11 +50,11 @@ fun OverlayHost(
     }
 
     Box(Modifier.fillMaxSize()) {
-        // App 正常内容
+        // Normal app content
         content()
 
-        // Overlay 层（永远在最顶层）
-        // 滚动关闭由 GearLazyColumn 等组件通过 OverlayManager.notifyScroll() 触发
+        // Overlay layer, always on top.
+        // Scroll dismissal is triggered by components such as GearLazyColumn via OverlayManager.notifyScroll().
         controller.items.forEach { item ->
             OverlayItemLayout(
                 item = item,
@@ -65,7 +65,7 @@ fun OverlayHost(
 }
 
 /**
- * Overlay 项布局（处理定位）
+ * Overlay item layout, including positioning.
  */
 @Composable
 private fun OverlayItemLayout(
@@ -82,7 +82,7 @@ private fun OverlayItemLayout(
     var popupSize by remember { mutableStateOf(IntSize.Zero) }
     var screenSize by remember { mutableStateOf(IntSize.Zero) }
 
-    // 位置是否已就绪（需要先测量 popupSize）
+    // Whether the position is settled; popupSize has to be measured first.
     val isPositionReady = popupSize != IntSize.Zero && screenSize != IntSize.Zero
 
     val offset = remember(item.anchorBounds, popupSize, screenSize, item.options) {
@@ -95,7 +95,7 @@ private fun OverlayItemLayout(
         )
     }
 
-    // 处理 timeout 自动关闭
+    // Timeout dismissal
     LaunchedEffect(item.id, policy.timeoutMillis) {
         policy.timeoutMillis?.let { timeout ->
             delay(timeout)
@@ -109,16 +109,17 @@ private fun OverlayItemLayout(
             .zIndex(1000f + options.zIndex)
             .onSizeChanged { screenSize = it }
     ) {
-        // ===== 背景触摸层（用于触摸外部关闭或阻断事件穿透）=====
+        // ===== Backdrop touch layer: outside-click dismissal and event blocking =====
         if (options.modal || options.maskColor != null) {
-            // 有遮罩的情况 - 拦截所有手势，阻止穿透到背后的可滚动内容
+            // With a scrim: intercept every gesture so nothing reaches scrollable content behind.
             Box(
                 Modifier
                     .fillMaxSize()
                     .background(options.maskColor ?: OverlayDefaults.scrimColor)
-                    // 抢先消费所有 pointer change，让背后的 LazyColumn 等
-                    // 可滚动组件拿不到事件。`detectDragGestures` 不够强，会
-                    // 让 down 事件先到底层，被 native scroll view 拦走。
+                    // Consume every pointer change up front so a LazyColumn behind
+                    // never sees them. detectDragGestures is not enough — it lets the
+                    // down event reach the layer below first, where the native scroll
+                    // view takes it.
                     .pointerInput(item.id) {
                         awaitEachGesture {
                             val down = awaitFirstDown(requireUnconsumed = false)
@@ -130,7 +131,7 @@ private fun OverlayItemLayout(
                             }
                         }
                     }
-                    // 处理点击（根据 policy.outsideClick 决定是否关闭）
+                    // Click handling; policy.outsideClick decides whether it dismisses.
                     .clickable(
                         onClick = {
                             if (policy.outsideClick) {
@@ -140,7 +141,7 @@ private fun OverlayItemLayout(
                     )
             )
         } else if (policy.outsideClick || policy.scroll) {
-            // 透明触摸层 - 处理点击关闭和拖拽关闭
+            // Transparent touch layer for click and drag dismissal.
             Box(
                 Modifier
                     .fillMaxSize()
@@ -152,13 +153,13 @@ private fun OverlayItemLayout(
                             var totalDrag = 0f
                             var isDrag = false
 
-                            // 跟踪移动
+                            // Track movement
                             while (true) {
                                 val event = awaitPointerEvent()
                                 val change = event.changes.firstOrNull() ?: break
 
                                 if (!change.pressed) {
-                                    // 手指抬起 - 如果不是拖拽，则是点击
+                                // Finger lifted: if it was not a drag, it was a tap.
                                     if (!isDrag && policy.outsideClick) {
                                         controller.dismiss(item.id)
                                     }
@@ -168,7 +169,7 @@ private fun OverlayItemLayout(
                                 val delta = change.positionChange()
                                 totalDrag += kotlin.math.abs(delta.x) + kotlin.math.abs(delta.y)
 
-                                // 移动超过阈值，认为是拖拽
+                                // Moved past the threshold, so treat it as a drag.
                                 if (!isDrag && totalDrag > dragThreshold) {
                                     isDrag = true
                                     if (policy.scroll) {
@@ -181,10 +182,10 @@ private fun OverlayItemLayout(
             )
         }
 
-        // ===== Overlay 内容（在点击层之上）=====
-        // 内容区域需要拦截点击，防止事件穿透到背景层导致关闭
+        // ===== Overlay content, above the touch layer =====
+        // Content must intercept clicks, or they fall through to the backdrop and dismiss it.
         if (options.placement == OverlayPlacement.Fullscreen) {
-            // Fullscreen 模式：直接填满整个屏幕，不需要位置计算
+            // Fullscreen: fills the screen, no position calculation needed.
             val safeTop = if (options.safeAreaTop) {
                 if (runtimeFlags.unifiedSafeAreaPipeline) {
                     runtimeEnvironment.safeArea.top
@@ -221,16 +222,18 @@ private fun OverlayItemLayout(
             } else {
                 0.dp
             }
-            // passThroughOutside：非模态横幅（如 in-app 消息通知）不该冻结整屏交互，
-            // 内容之外的手势要落到下面的页面上；默认仍是拦截层（模态/对话框语义不变）。
+            // passThroughOutside: a non-modal banner such as an in-app notification must
+            // not freeze the whole screen — gestures outside its content belong to the
+            // page below. The default is still to intercept, so modal and dialog
+            // semantics are unchanged.
             val fullscreenModifier = if (options.passThroughOutside) {
                 Modifier.fillMaxSize()
             } else {
                 Modifier
                     .fillMaxSize()
-                    // 拦截点击事件，不让它传递到背景层
+                    // Intercept clicks so they do not reach the backdrop.
                     .clickable(onClick = {
-                        // 空操作，只是拦截事件
+                        // Intentionally empty: interception is the point.
                     })
             }
             Box(fullscreenModifier) {
@@ -248,16 +251,16 @@ private fun OverlayItemLayout(
                 }
             }
         } else {
-            // 其他模式：需要位置计算和测量
+            // Other placements need measurement and position calculation.
             Box(
                 Modifier
                     .offset { offset }
                     .onSizeChanged { popupSize = it }
-                    // 位置未就绪时完全透明，就绪后显示
+                    // Fully transparent until the position is settled, then shown.
                     .alpha(if (isPositionReady) 1f else 0f)
-                    // 拦截点击事件，不让它传递到背景层
+                    // Intercept clicks so they do not reach the backdrop.
                     .clickable(onClick = {
-                        // 空操作，只是拦截事件
+                        // Intentionally empty: interception is the point.
                     })
             ) {
                 item.content()
@@ -267,13 +270,13 @@ private fun OverlayItemLayout(
 }
 
 /**
- * 位置计算核心算法
- * 支持 12 种位置 + Center + Fullscreen
+ * Position calculation.
+ * Supports 12 placements plus Center and Fullscreen.
  *
- * 修复：
- * 1. 边界约束考虑锚点位置，避免弹层覆盖锚点
- * 2. 自动翻转后正确计算位置
- * 3. 弹层超大时的合理处理
+ * Fixes:
+ * 1. Boundary clamping accounts for the anchor, so the overlay never covers it.
+ * 2. Positions are recalculated correctly after an automatic flip.
+ * 3. Sensible handling when the overlay is larger than the space available.
  */
 private fun computeOffset(
     anchor: Rect?,
@@ -284,7 +287,7 @@ private fun computeOffset(
 ): IntOffset {
 
     if (anchor == null) {
-        // 无锚点，使用屏幕居中
+        // No anchor: centre on screen.
         return when (options.placement) {
             OverlayPlacement.Center -> IntOffset(
                 ((screenSize.width - popupSize.width) / 2).coerceAtLeast(0),
@@ -298,13 +301,13 @@ private fun computeOffset(
     val offsetX = with(density) { options.offsetX.roundToPx() }
     val offsetY = with(density) { options.offsetY.roundToPx() }
 
-    // 计算各方向可用空间（Float）
+    // Available space in each direction (Float)
     val spaceBelow = screenSize.height - anchor.bottom
     val spaceAbove = anchor.top
     val spaceRight = screenSize.width - anchor.right
     val spaceLeft = anchor.left
 
-    // 判断是否需要翻转（基于弹出方向）
+    // Decide whether a flip is needed, based on the requested direction.
     val isVerticalPlacement = options.placement in listOf(
         OverlayPlacement.TopLeft, OverlayPlacement.TopCenter, OverlayPlacement.TopRight,
         OverlayPlacement.BottomLeft, OverlayPlacement.BottomCenter, OverlayPlacement.BottomRight
@@ -326,14 +329,14 @@ private fun computeOffset(
         OverlayPlacement.RightTop, OverlayPlacement.RightCenter, OverlayPlacement.RightBottom
     )
 
-    // 决定实际弹出方向（考虑自动翻转）
+    // Resolve the actual direction, taking auto-flip into account.
     val actuallyAbove = when {
         isTopPlacement -> {
-            // 原本在上方，检查是否需要翻转到下方
+            // Requested above: check whether it needs to flip below.
             if (options.autoFlip && spaceAbove < popupSize.height && spaceBelow > spaceAbove) false else true
         }
         isBottomPlacement -> {
-            // 原本在下方，检查是否需要翻转到上方
+            // Requested below: check whether it needs to flip above.
             if (options.autoFlip && spaceBelow < popupSize.height && spaceAbove > spaceBelow) true else false
         }
         else -> false // 左右方向不适用
@@ -341,57 +344,57 @@ private fun computeOffset(
 
     val actuallyLeft = when {
         isLeftPlacement -> {
-            // 左侧放不下时，如果右侧空间更大就翻转
+            // Does not fit on the left; flip if there is more room on the right.
             val shouldFlip = options.autoFlip && spaceLeft < popupSize.width && spaceRight > spaceLeft
             println("[GearUI] LeftPlacement: spaceLeft=$spaceLeft, popupWidth=${popupSize.width}, spaceRight=$spaceRight, shouldFlip=$shouldFlip")
             !shouldFlip
         }
         isRightPlacement -> {
-            // 右侧放不下时，如果左侧空间更大就翻转
+            // Does not fit on the right; flip if there is more room on the left.
             val shouldFlip = options.autoFlip && spaceRight < popupSize.width && spaceLeft > spaceRight
             shouldFlip
         }
         else -> false
     }
 
-    // 计算 X 坐标
+    // X coordinate
     val x = when (options.placement) {
-        // 上方/下方 - 左对齐
+        // Above / below, left aligned
         OverlayPlacement.TopLeft,
         OverlayPlacement.BottomLeft ->
             (anchor.left + offsetX).toInt()
 
-        // 上方/下方 - 居中
+        // Above / below, centred
         OverlayPlacement.TopCenter,
         OverlayPlacement.BottomCenter ->
             (anchor.center.x - popupSize.width / 2f + offsetX).toInt()
 
-        // 上方/下方 - 右对齐
+        // Above / below, right aligned
         OverlayPlacement.TopRight,
         OverlayPlacement.BottomRight ->
             (anchor.right - popupSize.width + offsetX).toInt()
 
-        // 左侧 - popup 在 anchor 左边
+        // Left: the popup sits to the left of the anchor.
         OverlayPlacement.LeftTop,
         OverlayPlacement.LeftCenter,
         OverlayPlacement.LeftBottom -> {
             if (actuallyLeft) {
-                // 弹层在锚点左边，右边缘对齐锚点左边缘，再减去偏移
+                // Right edge aligns to the anchor's left edge, minus the offset.
                 (anchor.left - popupSize.width - offsetX).toInt()
             } else {
-                // 翻转到右侧
+                // Flipped to the right
                 (anchor.right + offsetX).toInt()
             }
         }
 
-        // 右侧 - popup 在 anchor 右边
+        // Right: the popup sits to the right of the anchor.
         OverlayPlacement.RightTop,
         OverlayPlacement.RightCenter,
         OverlayPlacement.RightBottom -> {
             if (!actuallyLeft) {
                 (anchor.right + offsetX).toInt()
             } else {
-                // 翻转到左侧
+                // Flipped to the left
                 (anchor.left - popupSize.width - offsetX).toInt()
             }
         }
@@ -402,43 +405,43 @@ private fun computeOffset(
         OverlayPlacement.Fullscreen -> 0
     }
 
-    // 计算 Y 坐标
+    // Y coordinate
     val y = when (options.placement) {
-        // 上方 - popup 在 anchor 上面
+        // Above: the popup sits above the anchor.
         OverlayPlacement.TopLeft,
         OverlayPlacement.TopCenter,
         OverlayPlacement.TopRight -> {
             if (actuallyAbove) {
                 (anchor.top - popupSize.height + offsetY).toInt()
             } else {
-                // 翻转到下方
+                // Flipped below
                 (anchor.bottom + offsetY).toInt()
             }
         }
 
-        // 下方 - popup 在 anchor 下面
+        // Below: the popup sits below the anchor.
         OverlayPlacement.BottomLeft,
         OverlayPlacement.BottomCenter,
         OverlayPlacement.BottomRight -> {
             if (!actuallyAbove) {
                 (anchor.bottom + offsetY).toInt()
             } else {
-                // 翻转到上方
+                // Flipped above
                 (anchor.top - popupSize.height + offsetY).toInt()
             }
         }
 
-        // 左侧/右侧 - 顶部对齐
+        // Left / right, top aligned
         OverlayPlacement.LeftTop,
         OverlayPlacement.RightTop ->
             (anchor.top + offsetY).toInt()
 
-        // 左侧/右侧 - 垂直居中
+        // Left / right, vertically centred
         OverlayPlacement.LeftCenter,
         OverlayPlacement.RightCenter ->
             (anchor.center.y - popupSize.height / 2f + offsetY).toInt()
 
-        // 左侧/右侧 - 底部对齐
+        // Left / right, bottom aligned
         OverlayPlacement.LeftBottom,
         OverlayPlacement.RightBottom ->
             (anchor.bottom - popupSize.height + offsetY).toInt()
@@ -449,47 +452,47 @@ private fun computeOffset(
         OverlayPlacement.Fullscreen -> 0
     }
 
-    // 边界约束 - 核心修复
-    // 对于垂直方向弹出（上/下），约束时要避免覆盖锚点
+    // Boundary clamping — the core of the fix.
+    // For vertical placements, clamping must avoid covering the anchor.
     val constrainedX: Int
     val constrainedY: Int
 
     if (isVerticalPlacement) {
-        // 垂直弹出：X 方向正常约束，Y 方向要考虑锚点
+        // Vertical: clamp X normally; Y has to respect the anchor.
         constrainedX = x.coerceIn(0, (screenSize.width - popupSize.width).coerceAtLeast(0))
 
         constrainedY = if (actuallyAbove) {
-            // 在上方：底部不能超过 anchor.top
+            // Above: the bottom must not pass anchor.top.
             val maxY = (anchor.top - popupSize.height).toInt()
             val minY = 0
             if (maxY < minY) {
-                // 空间不足，贴顶显示
+                // Not enough room, so pin to the top of the screen.
                 minY
             } else {
                 y.coerceIn(minY, maxY)
             }
         } else {
-            // 在下方：顶部不能小于 anchor.bottom
+            // Below: the top must not go above anchor.bottom.
             val minY = anchor.bottom.toInt()
             val maxY = (screenSize.height - popupSize.height).coerceAtLeast(minY)
             y.coerceIn(minY, maxY)
         }
     } else if (isLeftPlacement || isRightPlacement) {
-        // 水平弹出：Y 方向正常约束，X 方向要考虑锚点
+        // Horizontal: clamp Y normally; X has to respect the anchor.
         constrainedY = y.coerceIn(0, (screenSize.height - popupSize.height).coerceAtLeast(0))
 
         constrainedX = if (actuallyLeft) {
-            // 在左侧：弹层右边缘紧贴锚点左边缘
+            // Left: the popup's right edge meets the anchor's left edge.
             // x = anchor.left - popupSize.width - offsetX
-            // 如果空间不足，让弹层超出屏幕左边，不要压住锚点
+            // If there is not enough room, let it overflow off-screen rather than cover the anchor.
             x // 不做约束，直接用计算好的位置（可能是负数，超出屏幕左边）
         } else {
-            // 在右侧：弹层左边缘紧贴锚点右边缘
-            // 如果空间不足，让弹层超出屏幕右边，不要压住锚点
+            // Right: the popup's left edge meets the anchor's right edge.
+            // If there is not enough room, let it overflow off-screen rather than cover the anchor.
             x // 不做约束
         }
     } else {
-        // 居中或全屏：正常约束
+        // Centre or fullscreen: clamp normally.
         constrainedX = x.coerceIn(0, (screenSize.width - popupSize.width).coerceAtLeast(0))
         constrainedY = y.coerceIn(0, (screenSize.height - popupSize.height).coerceAtLeast(0))
     }

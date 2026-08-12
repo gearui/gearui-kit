@@ -2,7 +2,6 @@
 # Format: <path>	<count>. Counts may shrink freely; growth fails CI.
 # Ratchet: translate a file's comments when you touch it and lower its entry.
 gearui-kit/src/commonMain/kotlin/com/gearui/App.kt	22
-gearui-kit/src/commonMain/kotlin/com/gearui/ColorTokens.kt	50
 gearui-kit/src/commonMain/kotlin/com/gearui/components/actionsheet/ActionSheet.kt	54
 gearui-kit/src/commonMain/kotlin/com/gearui/components/anchor/Anchor.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/backtop/BackTop.kt	17
@@ -59,8 +58,6 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/transfer/Transfer.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/tree/Tree.kt	19
 gearui-kit/src/commonMain/kotlin/com/gearui/components/treeselect/TreeSelect.kt	12
 gearui-kit/src/commonMain/kotlin/com/gearui/components/watermark/Watermark.kt	2
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/animation/Animation.kt	87
-gearui-kit/src/commonMain/kotlin/com/gearui/foundation/interaction/InteractionState.kt	44
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/layout/DividerTokens.kt	6
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/layout/Radius.kt	12
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/layout/SectionTokens.kt	7
@@ -83,10 +80,8 @@ gearui-kit/src/commonMain/kotlin/com/gearui/foundation/tab/TabTokens.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/foundation/typography/Typography.kt	33
 gearui-kit/src/commonMain/kotlin/com/gearui/gestures/SwipeBack.kt	26
 gearui-kit/src/commonMain/kotlin/com/gearui/navigation/NavApi.kt	39
-gearui-kit/src/commonMain/kotlin/com/gearui/navigation/Navigator.kt	133
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/Overlay.kt	5
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayController.kt	32
-gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayHost.kt	80
 gearui-kit/src/commonMain/kotlin/com/gearui/overlay/OverlayPlacement.kt	41
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Avatar.kt	9
 gearui-kit/src/commonMain/kotlin/com/gearui/primitives/Badge.kt	48

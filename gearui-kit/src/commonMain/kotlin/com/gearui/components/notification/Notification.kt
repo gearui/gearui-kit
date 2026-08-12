@@ -183,7 +183,7 @@ internal fun NotificationContent(
             )
         }
 
-        // 内容区
+        // Content area
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
@@ -214,7 +214,7 @@ internal fun NotificationContent(
             }
         }
 
-        // 关闭按钮
+        // Close button
         if (closable) {
             Icon(
                 name = Icons.close,
@@ -227,7 +227,7 @@ internal fun NotificationContent(
 }
 
 /**
- * NotificationHost - 通知宿主容器（传统用法）
+ * NotificationHost - notification host container (legacy usage)
  */
 @Composable
 fun NotificationHost(
@@ -255,7 +255,7 @@ fun NotificationHost(
 }
 
 /**
- * NotificationHostState - 传统状态管理
+ * NotificationHostState - legacy state management
  */
 class NotificationHostState {
     var currentNotification by mutableStateOf<NotificationData?>(null)
@@ -288,17 +288,17 @@ class NotificationHostState {
 }
 
 /**
- * 创建并记住 NotificationHostState
+ * Creates and remembers a NotificationHostState
  */
 @Composable
 fun rememberNotificationHostState(): NotificationHostState {
     return remember { NotificationHostState() }
 }
 
-// ============ Overlay 系统集成 ============
+// ============ Overlay system integration ============
 
 /**
- * 通过 Overlay 系统显示 Notification（推荐用法）
+ * Shows a Notification through the Overlay system (recommended)
  */
 @Composable
 fun rememberNotificationController(): NotificationController {
@@ -307,7 +307,7 @@ fun rememberNotificationController(): NotificationController {
 }
 
 /**
- * NotificationController - 通过 Overlay 系统显示通知
+ * NotificationController - shows notifications through the Overlay system
  */
 class NotificationController internal constructor(
     private val overlayController: com.gearui.overlay.OverlayController
@@ -315,7 +315,7 @@ class NotificationController internal constructor(
     private var currentOverlayId: Long? = null
 
     /**
-     * 显示通知
+     * Shows a notification
      */
     fun show(
         title: String,
@@ -329,14 +329,14 @@ class NotificationController internal constructor(
         leading: (@Composable () -> Unit)? = null,
         onClick: (() -> Unit)? = null,
     ) {
-        // 先关闭之前的
+        // Dismiss the previous one first
         dismiss()
 
         currentOverlayId = overlayController.show(
             options = OverlayOptions(
                 placement = OverlayPlacement.Fullscreen,
                 modal = false,
-                // 通知是非阻断提示：横幅之外的区域照常可点/可滚，不冻结整屏交互。
+                // A notification is non-blocking: everything outside the banner stays tappable and scrollable, and the whole screen is never frozen.
                 passThroughOutside = true,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )
@@ -358,7 +358,7 @@ class NotificationController internal constructor(
     }
 
     /**
-     * 关闭当前通知
+     * Dismisses the current notification
      */
     fun dismiss() {
         currentOverlayId?.let {
@@ -369,7 +369,7 @@ class NotificationController internal constructor(
 }
 
 /**
- * Overlay 模式下的 Notification 内容
+ * Notification content in Overlay mode
  */
 @Composable
 private fun NotificationOverlayContent(
@@ -385,7 +385,7 @@ private fun NotificationOverlayContent(
     leading: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
-    // 自动关闭定时器
+    // Auto-dismiss timer
     LaunchedEffect(Unit) {
         if (duration > 0) {
             delay(duration)
@@ -419,10 +419,10 @@ private fun NotificationOverlayContent(
     }
 }
 
-// ============ 便捷函数 ============
+// ============ Convenience functions ============
 
 /**
- * 显示普通信息通知
+ * Shows an informational notification
  */
 fun NotificationController.showInfo(
     title: String,
@@ -434,7 +434,7 @@ fun NotificationController.showInfo(
 ) = show(title, message, NotificationType.INFO, action, onAction, duration, closable)
 
 /**
- * 显示成功通知
+ * Shows a success notification
  */
 fun NotificationController.showSuccess(
     title: String,
@@ -446,7 +446,7 @@ fun NotificationController.showSuccess(
 ) = show(title, message, NotificationType.SUCCESS, action, onAction, duration, closable)
 
 /**
- * 显示警告通知
+ * Shows a warning notification
  */
 fun NotificationController.showWarning(
     title: String,
@@ -458,7 +458,7 @@ fun NotificationController.showWarning(
 ) = show(title, message, NotificationType.WARNING, action, onAction, duration, closable)
 
 /**
- * 显示错误通知
+ * Shows an error notification
  */
 fun NotificationController.showError(
     title: String,

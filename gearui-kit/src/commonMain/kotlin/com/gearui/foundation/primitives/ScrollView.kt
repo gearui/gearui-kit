@@ -8,30 +8,30 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.foundation.scroll.*
 
 /**
- * ScrollView - 页面级滚动容器 Primitive
+ * ScrollView - page-level scrolling container primitive
  *
- * 地位等价于:
+ * Equivalent in role to:
  * - Material3: Scaffold body
  * - Flutter: CustomScrollView
  *
- * 职责:
- * - 统一 padding/spacing
- * - 统一 bounce/physics
- * - 统一 scrollbar 策略
- * - Safe area 处理
+ * Responsibilities:
+ * - consistent padding / spacing
+ * - consistent bounce / physics
+ * - a consistent scrollbar policy
+ * - safe area handling
  *
- * 实现注意:
- * - KuiklyUI 不支持 Modifier.verticalScroll
- * - 使用 LazyColumn 实现滚动容器
+ * Implementation note:
+ * - KuiklyUI does not support Modifier.verticalScroll
+ * - the scrolling container is built on LazyColumn
  *
- * 使用场景:
- * - 普通页面滚动
- * - 表单页
- * - 详情页
+ * Use for:
+ * - ordinary page scrolling
+ * - form pages
+ * - detail pages
  *
- * 不使用场景:
- * - 长列表 (用 List)
- * - 虚拟化场景 (用 List)
+ * Do not use for:
+ * - long lists (use List)
+ * - virtualised cases (use List)
  */
 @Composable
 fun ScrollView(

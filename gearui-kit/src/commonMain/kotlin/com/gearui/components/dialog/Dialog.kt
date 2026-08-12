@@ -20,31 +20,31 @@ import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Dialog - 模态弹窗基类
+ * Dialog - base for modal dialogs
  *
- * 所有模态弹窗的基础：
+ * The foundation of every modal dialog:
  * - Dialog
  * - ConfirmDialog
  * - AlertDialog
  * - InputDialog
  * - ImageDialog
  *
- * 特点：
- * - 模态（阻断交互）
- * - 居中显示
- * - 有遮罩
- * - 可选点击外部关闭
+ * Characteristics:
+ * - modal (blocks interaction)
+ * - centred
+ * - has a scrim
+ * - optionally dismissed by tapping outside
  */
 object Dialog {
 
     /**
-     * 声明式 Dialog
+     * Declarative Dialog
      *
-     * @param visible 是否显示
-     * @param dismissOnOutside 点击外部是否关闭
-     * @param maskColor 遮罩颜色
-     * @param onDismiss 关闭回调
-     * @param content 内容
+     * @param visible whether it is shown
+     * @param dismissOnOutside whether tapping outside dismisses it
+     * @param maskColor scrim colour
+     * @param onDismiss dismiss callback
+     * @param content the content
      */
     @Composable
     fun Host(
@@ -90,7 +90,7 @@ object Dialog {
 }
 
 /**
- * DialogSurface - Dialog 统一视觉容器
+ * DialogSurface - shared visual container for Dialog
  */
 @Composable
 internal fun DialogSurface(
@@ -112,7 +112,7 @@ internal fun DialogSurface(
 }
 
 /**
- * DialogContent - Dialog 内容布局辅助
+ * DialogContent - Dialog content layout helper
  */
 @Composable
 fun DialogContent(
@@ -128,7 +128,7 @@ fun DialogContent(
             .fillMaxWidth()
             .padding(Spacing.xl)
     ) {
-        // 标题
+        // Title
         if (title != null) {
             com.gearui.foundation.primitives.Text(
                 text = title,
@@ -138,7 +138,7 @@ fun DialogContent(
             Spacer(modifier = Modifier.height(Spacing.sm))
         }
 
-        // 消息
+        // Message
         if (message != null) {
             com.gearui.foundation.primitives.Text(
                 text = message,
@@ -148,13 +148,13 @@ fun DialogContent(
             Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
-        // 自定义内容
+        // Custom content
         if (content != null) {
             content()
             Spacer(modifier = Modifier.height(Spacing.lg))
         }
 
-        // 操作按钮
+        // Action buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,

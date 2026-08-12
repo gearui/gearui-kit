@@ -237,10 +237,10 @@ fun Input(
 
                 // Input area.
                 // Architecture notes:
-                // 1) BasicTextField 用 fillMaxWidth，不要 fillMaxSize，否则 tap 落不到外层。
-                // 2) placeholder 放回 decorationBox 里：它是 BasicTextField 自己的渲染树，
-                //    tap 打在 placeholder 上和 tap 打在 innerTextField 上被 BasicTextField 统一处理，
-                //    不会像 sibling Text 那样截走焦点。
+                // 1) BasicTextField uses fillMaxWidth, not fillMaxSize; otherwise taps never reach the outer layer.
+                // 2) The placeholder goes back inside decorationBox: it belongs to BasicTextField's own render
+                //    tree, so a tap on the placeholder and a tap on innerTextField are handled the same way
+                //    and it cannot steal focus the way a sibling Text does.
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -268,9 +268,9 @@ fun Input(
                         ),
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
-                            // isPassword 必须走 KeyboardType.Password:Kuikly iOS 的掩码
-                            // 通道是原生 secureTextEntry(由 keyboardType=password 触发),
-                            // visualTransformation 在 Kuikly 桥接下不生效。
+                            // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
+                            // channel is the native secureTextEntry (triggered by keyboardType=password),
+                            // and visualTransformation has no effect across the Kuikly bridge.
                             keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
                             imeAction = when {
                                 onSend != null -> ImeAction.Send
@@ -320,10 +320,11 @@ fun Input(
                     )
                 }
 
-                // 清除按钮
-                // 用 pointerInput 在 Initial pass 消费 down 事件，避免事件冒到底层 native
-                // EditText 触发"失焦→IME 隐藏→再 requestFocus→IME 弹出"的可见闪烁。
-                // 只在 tap（非拖动）时触发清除；点完再 requestInputFocus 以防万一。
+                // Clear button
+                // pointerInput consumes the down event in the Initial pass so it never reaches the
+                // underlying native EditText, which would produce a visible "blur -> IME hides ->
+                // requestFocus -> IME reappears" flicker. Clearing fires on tap only, not on drag,
+                // and requestInputFocus is called afterwards as a safeguard.
                 if (clearable && value.isNotEmpty() && enabled && !readOnly) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Box(
@@ -361,13 +362,13 @@ fun Input(
                     }
                 }
 
-                // 后缀
+                // Suffix
                 if (suffix != null) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     suffix()
                 }
 
-                // 字数统计
+                // Character counter
                 if (showCounter && maxLength != null) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
@@ -380,9 +381,9 @@ fun Input(
         }
     }
 
-    // 主布局
+    // Main layout
     Column(modifier = modifier) {
-        // 顶部标签（labelPosition == "top" 时）
+        // Top label (when labelPosition == "top")
         if (label != null && labelPosition == "top") {
             Row(modifier = Modifier.padding(bottom = Spacing.sm)) {
                 if (required) {
@@ -402,7 +403,7 @@ fun Input(
 
         InputField()
 
-        // 底部提示文字
+        // Helper text below
         val bottomText = error ?: helperText
         if (bottomText != null) {
             Text(

@@ -22,16 +22,16 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Tag - 100% Theme 驱动的标签组件
+ * Tag - fully Theme-driven tag
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：TagColorTokens / Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: TagColorTokens, Color(0x...) or hardcoded colours
  *
- * 支持：
- * - 5种主题：PRIMARY, SUCCESS, WARNING, DANGER, DEFAULT
- * - 3种变体：DARK (填充), LIGHT (浅色), OUTLINE (描边)
- * - 3种尺寸：LARGE, MEDIUM, SMALL
- * - 可关闭、可点击、图标支持
+ * Supports:
+ * - 5 themes: PRIMARY, SUCCESS, WARNING, DANGER, DEFAULT
+ * - 3 variants: DARK (filled), LIGHT (tinted), OUTLINE
+ * - 3 sizes: LARGE, MEDIUM, SMALL
+ * - closable, clickable, icon support
  */
 @Composable
 fun Tag(
@@ -46,14 +46,14 @@ fun Tag(
     onClose: (() -> Unit)? = null,
     icon: (@Composable () -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val shapes = Theme.shapes
 
     val interactionSource = remember { createMutableInteractionSource() }
     if (disabled) interactionSource.updateState(InteractionState.Disabled)
 
-    // 尺寸 Tokens
+    // Size tokens
     val tokens = when (size) {
         TagSize.LARGE -> TagSizeTokens.Large
         TagSize.MEDIUM -> TagSizeTokens.Medium
@@ -67,8 +67,8 @@ fun Tag(
         TagSize.SMALL -> shapes.sm     // Radius.Small = 3dp
     }
 
-    // ⭐ 颜色映射：Theme 语义 → Tag 视觉
-    // 根据 theme 获取语义颜色
+    // ⭐ Colour mapping: Theme semantics -> Tag visuals
+    // Semantic colour from the theme
     val (themeColor, themeLightColor) = when (theme) {
         TagTheme.PRIMARY -> colors.primary to colors.muted
         TagTheme.SUCCESS -> colors.success to colors.success.copy(alpha = 0.12f)
@@ -77,7 +77,7 @@ fun Tag(
         TagTheme.DEFAULT -> colors.mutedForeground to colors.muted
     }
 
-    // DARK 变体（彩色实底）上的文字色：按主题取对应 foreground（明暗自适应）
+    // Text colour on the DARK variant (a solid coloured fill): the matching foreground for the theme, adapting to light/dark
     val themeForeground = when (theme) {
         TagTheme.PRIMARY -> colors.primaryForeground
         TagTheme.SUCCESS -> colors.successForeground
@@ -86,7 +86,7 @@ fun Tag(
         TagTheme.DEFAULT -> colors.primaryForeground
     }
 
-    // 根据 variant 决定背景色和文字色
+    // Background and text colour follow the variant
     val (backgroundColor, textColor, borderColor) = when (variant) {
         TagVariant.DARK -> Triple(
             themeColor,           // 深色背景
@@ -107,7 +107,7 @@ fun Tag(
         )
     }
 
-    // 禁用态颜色
+    // Disabled colours
     val finalBackgroundColor = if (!interactionSource.currentState.isInteractive) {
         colors.muted
     } else {
@@ -143,19 +143,19 @@ fun Tag(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxHeight()
         ) {
-            // 图标
+            // Icon
             if (icon != null) {
                 Box(modifier = Modifier.size(tokens.iconBoxSize)) { icon() }
                 Spacer(modifier = Modifier.width(Spacing.xs))
             }
 
-            // 文字
+            // Text
             Text(
                 text = text,
                 color = finalTextColor
             )
 
-            // 关闭按钮
+            // Close button
             if (closable && onClose != null) {
                 Spacer(modifier = Modifier.width(Spacing.xs))
                 Box(

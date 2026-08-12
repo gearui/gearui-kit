@@ -7,36 +7,36 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * ListItem - 100% Theme 驱动的语义化列表项组件
+ * ListItem - fully Theme-driven semantic list row
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：TextColors / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: TextColors or hardcoded colours
  *
- * 改造要点：
- * - 移除 TextColors 依赖
- * - 直接使用 Theme.colors.foreground/mutedForeground
+ * Rework notes:
+ * - the TextColors dependency is gone
+ * - Theme.colors.foreground / mutedForeground are used directly
  *
- * 👉 这是业务 90% 会使用的组件
+ * 👉 This is the component product code will reach for 90% of the time
  *
- * 本质：Cell 的语义化封装
+ * In essence: a semantic wrapper over Cell
  *
- * 职责：
- * - 提供 title/subtitle/value 三段式语义 API
- * - 自动处理文字样式（无需手写 Text）
- * - 自动处理颜色（primary/secondary）
- * - 自动处理箭头（有 onClick 就显示）
+ * Responsibilities:
+ * - offers the three-part title / subtitle / value semantic API
+ * - applies the text styles (no hand-written Text)
+ * - applies the colours (primary / secondary)
+ * - shows the chevron automatically (whenever onClick is present)
  *
  * Example:
  * ```
  * ListItem(
- *     title = "账号与安全",
+ *     title = "Account and security",
  *     onClick = { navigateToSecurity() }
  * )
  *
  * ListItem(
- *     title = "消息通知",
- *     subtitle = "接收新消息通知",
- *     value = "已开启"
+ *     title = "Notifications",
+ *     subtitle = "Receive new message alerts",
+ *     value = "On"
  * )
  * ```
  */
@@ -51,7 +51,7 @@ fun ListItem(
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
 
     Cell(

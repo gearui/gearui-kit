@@ -227,7 +227,7 @@ private fun DrawerOverlayContent(
                 DrawerPlacement.RIGHT -> Alignment.CenterEnd
             }
         ) {
-            // 计算偏移量
+            // Offset
             val offsetX = when (placement) {
                 DrawerPlacement.LEFT -> -width.value * (1f - slideProgress)
                 DrawerPlacement.RIGHT -> width.value * (1f - slideProgress)
@@ -266,7 +266,7 @@ private fun DrawerOverlayContent(
 }
 
 /**
- * DrawerContent - 抽屉内容组件
+ * DrawerContent - drawer content
  */
 @Composable
 private fun DrawerContent(
@@ -294,7 +294,7 @@ private fun DrawerContent(
             .fillMaxSize()
             .padding(top = topInset, bottom = bottomInset)
     ) {
-        // 无标题抽屉也保留与页面 NavBar 一致的顶部栏高度，避免顶部安全区与正文错位
+        // A drawer without a title still keeps the same top bar height as the page NavBar, so the safe area and the body stay aligned
         if (titleWidget == null && title == null) {
             Spacer(
                 modifier = Modifier
@@ -311,7 +311,7 @@ private fun DrawerContent(
             }
         }
 
-        // 标题区域
+        // Title area
         if (titleWidget != null) {
             titleWidget()
         } else if (title != null) {
@@ -338,7 +338,7 @@ private fun DrawerContent(
             }
         }
 
-        // 列表区域
+        // List area
         if (items != null && items.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
@@ -359,7 +359,7 @@ private fun DrawerContent(
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        // 底部区域
+        // Footer area
         if (footer != null) {
             if (bordered) {
                 Box(
@@ -381,7 +381,7 @@ private fun DrawerContent(
 }
 
 /**
- * DrawerListItem - 抽屉列表项
+ * DrawerListItem - drawer list row
  */
 @Composable
 private fun DrawerListItem(
@@ -392,7 +392,7 @@ private fun DrawerListItem(
     val colors = Theme.colors
 
     Column {
-        // 如果有自定义内容，使用自定义内容
+            // Custom content wins when present
         if (item.content != null) {
             Box(
                 modifier = Modifier
@@ -402,7 +402,7 @@ private fun DrawerListItem(
                 item.content.invoke()
             }
         } else {
-            // 默认的标题+图标布局
+            // Default title + icon layout
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -411,7 +411,7 @@ private fun DrawerListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
-                // 图标
+                // Icon
                 if (item.icon != null) {
                     Box(
                         modifier = Modifier.size(24.dp),
@@ -420,7 +420,7 @@ private fun DrawerListItem(
                         item.icon.invoke()
                     }
                 }
-                // 标题
+                // Title
                 Text(
                     text = item.title,
                     style = Typography.BodyLarge,
@@ -428,7 +428,7 @@ private fun DrawerListItem(
                 )
             }
         }
-        // 分割线
+        // Divider
         if (bordered) {
             Box(
                 modifier = Modifier
@@ -442,7 +442,7 @@ private fun DrawerListItem(
 }
 
 /**
- * DrawerWithHeader - 带标题的抽屉（兼容旧 API）
+ * DrawerWithHeader - drawer with a header (legacy API)
  */
 @Composable
 fun DrawerWithHeader(
@@ -466,7 +466,7 @@ fun DrawerWithHeader(
         modifier = modifier
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // 标题栏
+            // Title bar
             if (header != null) {
                 header()
             } else {
@@ -484,7 +484,7 @@ fun DrawerWithHeader(
                 }
             }
 
-            // 内容区
+            // Content area
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -493,7 +493,7 @@ fun DrawerWithHeader(
                 content()
             }
 
-            // 底部区域
+            // Footer area
             if (footer != null) {
                 footer()
             }
@@ -502,7 +502,7 @@ fun DrawerWithHeader(
 }
 
 /**
- * DrawerState - 抽屉状态管理
+ * DrawerState - drawer state
  */
 class DrawerState {
     var isOpen by mutableStateOf(false)

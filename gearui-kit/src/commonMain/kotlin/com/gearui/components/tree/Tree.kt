@@ -31,7 +31,7 @@ data class TreeNode(
 /**
  * Tree - Tree view component
  *
- * 树形控件
+ * Tree control
  *
  * Features:
  * - Expandable nodes
@@ -45,9 +45,9 @@ data class TreeNode(
  *     nodes = listOf(
  *         TreeNode(
  *             key = "1",
- *             title = "父节点",
+ *             title = "Parent node",
  *             children = listOf(
- *                 TreeNode(key = "1-1", title = "子节点")
+ *                 TreeNode(key = "1-1", title = "Child node")
  *             )
  *         )
  *     )
@@ -72,7 +72,7 @@ fun Tree(
     var internalExpanded by remember { mutableStateOf(expandedKeys) }
     val expanded = if (onExpandedChange != null) expandedKeys else internalExpanded
 
-    // 构建节点关系映射
+    // Build the node relationship maps
     val nodeMap = remember(nodes) { buildNodeMap(nodes) }
     val parentMap = remember(nodes) { buildParentMap(nodes) }
 
@@ -89,7 +89,7 @@ fun Tree(
                     onCheckedChange?.invoke(newKeys)
                 },
                 onNodeCheckedChange = { targetNode, checked ->
-                    // 父子联动逻辑
+                    // Parent/child linkage
                     val newCheckedKeys = handleNodeCheck(
                         targetNode = targetNode,
                         checked = checked,
@@ -120,7 +120,7 @@ fun Tree(
 }
 
 /**
- * 构建节点映射 key -> TreeNode
+ * Builds the node map key -> TreeNode
  */
 private fun buildNodeMap(nodes: List<TreeNode>): Map<String, TreeNode> {
     val map = mutableMapOf<String, TreeNode>()
@@ -135,7 +135,7 @@ private fun buildNodeMap(nodes: List<TreeNode>): Map<String, TreeNode> {
 }
 
 /**
- * 构建父节点映射 childKey -> parentNode
+ * Builds the parent map childKey -> parentNode
  */
 private fun buildParentMap(nodes: List<TreeNode>): Map<String, TreeNode> {
     val map = mutableMapOf<String, TreeNode>()
@@ -152,7 +152,7 @@ private fun buildParentMap(nodes: List<TreeNode>): Map<String, TreeNode> {
 }
 
 /**
- * 获取节点的所有后代节点的 key
+ * Returns the keys of every descendant of a node
  */
 private fun getAllDescendantKeys(node: TreeNode): Set<String> {
     val keys = mutableSetOf<String>()
@@ -167,7 +167,7 @@ private fun getAllDescendantKeys(node: TreeNode): Set<String> {
 }
 
 /**
- * 获取节点的所有祖先节点
+ * Returns every ancestor of a node
  */
 private fun getAncestors(nodeKey: String, parentMap: Map<String, TreeNode>): List<TreeNode> {
     val ancestors = mutableListOf<TreeNode>()
@@ -181,7 +181,7 @@ private fun getAncestors(nodeKey: String, parentMap: Map<String, TreeNode>): Lis
 }
 
 /**
- * 检查节点的所有子节点是否全部选中
+ * Whether every child of a node is checked
  */
 private fun areAllChildrenChecked(node: TreeNode, checkedKeys: Set<String>): Boolean {
     if (node.children.isEmpty()) return true
@@ -191,7 +191,7 @@ private fun areAllChildrenChecked(node: TreeNode, checkedKeys: Set<String>): Boo
 }
 
 /**
- * 检查节点是否有任意子节点被选中
+ * Whether any child of a node is checked
  */
 private fun hasAnyChildChecked(node: TreeNode, checkedKeys: Set<String>): Boolean {
     if (node.children.isEmpty()) return false
@@ -201,7 +201,7 @@ private fun hasAnyChildChecked(node: TreeNode, checkedKeys: Set<String>): Boolea
 }
 
 /**
- * 处理节点勾选，实现父子联动
+ * Handles node checking, including parent/child linkage
  */
 private fun handleNodeCheck(
     targetNode: TreeNode,
@@ -213,24 +213,24 @@ private fun handleNodeCheck(
     val newKeys = currentCheckedKeys.toMutableSet()
 
     if (checked) {
-        // 选中：添加自己和所有后代
+        // Checking: add this node and every descendant
         newKeys.add(targetNode.key)
         newKeys.addAll(getAllDescendantKeys(targetNode))
 
-        // 向上更新祖先节点
+        // Walk up and update the ancestors
         val ancestors = getAncestors(targetNode.key, parentMap)
         for (ancestor in ancestors) {
-            // 如果所有子节点都被选中，则选中父节点
+            // Check the parent once all of its children are checked
             if (areAllChildrenChecked(ancestor, newKeys)) {
                 newKeys.add(ancestor.key)
             }
         }
     } else {
-        // 取消选中：移除自己和所有后代
+        // Unchecking: remove this node and every descendant
         newKeys.remove(targetNode.key)
         newKeys.removeAll(getAllDescendantKeys(targetNode))
 
-        // 向上更新祖先节点（取消选中）
+        // Walk up and update the ancestors (unchecking)
         val ancestors = getAncestors(targetNode.key, parentMap)
         for (ancestor in ancestors) {
             newKeys.remove(ancestor.key)
@@ -261,7 +261,7 @@ private fun TreeNodeView(
     val hasChildren = node.children.isNotEmpty()
     val isChecked = node.key in checkedKeys
 
-    // 计算半选状态：有子节点被选中但不是全部选中
+    // Indeterminate state: some children checked, but not all
     val isIndeterminate = if (hasChildren) {
         val hasAnyChecked = hasAnyChildChecked(node, checkedKeys)
         val allChecked = areAllChildrenChecked(node, checkedKeys)
@@ -308,7 +308,7 @@ private fun TreeNodeView(
                     checked = isChecked,
                     indeterminate = isIndeterminate,
                     onCheckedChange = { checked ->
-                        // 使用联动回调
+                        // Use the linkage-aware callback
                         onNodeCheckedChange?.invoke(node, checked)
                     },
                     enabled = !node.disabled

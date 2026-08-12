@@ -20,19 +20,19 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Cell - 100% Theme 驱动的 List 生态核心交互单元
+ * Cell - fully Theme-driven core interaction unit of the List family
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：CellTokens.background / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: CellTokens.background or hardcoded colours
  *
- * 改造要点：
- * - 移除 CellTokens 的颜色硬编码
- * - 直接使用 Theme.colors.background
+ * Rework notes:
+ * - the hardcoded colours in CellTokens are gone
+ * - Theme.colors.background is used directly
  *
- * 职责：
- * - 左中右三段式布局模板
- * - 统一交互状态（pressed/disabled）
- * - 统一最小高度
+ * Responsibilities:
+ * - the leading / middle / trailing layout template
+ * - consistent interaction states (pressed / disabled)
+ * - a consistent minimum height
  */
 @Composable
 internal fun Cell(
@@ -51,7 +51,7 @@ internal fun Cell(
     showArrow: Boolean = false,
     showDivider: Boolean = true
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
 
     val surfaceTokens = SurfaceTokens(
@@ -61,7 +61,7 @@ internal fun Cell(
         padding = PaddingValues(0.dp)  // Cell 自己控制 padding
     )
 
-    // ⭐ 使用 Theme.colors - Cell 使用 surface 背景
+    // ⭐ Uses Theme.colors - Cell takes the surface background
     val surfaceColors = SurfaceColorTokens(
         background = colors.surface,
         disabledBackground = colors.surface,
@@ -87,13 +87,13 @@ internal fun Cell(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 左侧内容（Leading）
+                // Leading content
                 leading?.let {
                     it()
                     HorizontalSpacer(Spacing.md)
                 }
 
-                // 中间内容（Title + Subtitle）
+                // Middle content (title + subtitle)
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -105,16 +105,16 @@ internal fun Cell(
                     }
                 }
 
-                // 右侧内容（Trailing）
+                // Trailing content
                 if (trailing != null) {
                     HorizontalSpacer(Spacing.sm)
                     trailing()
                 }
 
-                // 箭头指示器（showArrow）
+                // Chevron indicator (showArrow)
                 if (showArrow) {
                     HorizontalSpacer(Spacing.sm)
-                    // TODO: 使用 Icon + Icons.ChevronRight
+                    // TODO: use Icon + Icons.ChevronRight
                     Box(modifier = Modifier.size(16.dp))
                 }
             }

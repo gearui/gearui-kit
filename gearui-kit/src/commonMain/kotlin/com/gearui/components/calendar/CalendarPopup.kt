@@ -23,11 +23,11 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * CalendarPopup - 日历弹出层组件
+ * CalendarPopup - calendar in a popup layer
  *
- * 以弹出层形式展示日历选择器
+ * Presents the calendar picker as a popup
  *
- * 注意：此组件需要配合 OverlayRoot 使用
+ * Note: this component requires an OverlayRoot
  *
  * Example:
  * ```kotlin
@@ -53,17 +53,17 @@ fun CalendarPopup(
     modifier: Modifier = Modifier,
     title: String = I18n.strings.dateTime.selectDateTitle,
     type: CalendarType = CalendarType.Single,
-    // 单选
+    // Single selection
     initialDate: CalendarDate? = null,
     onConfirm: ((CalendarDate) -> Unit)? = null,
-    // 多选
+    // Multiple selection
     initialDates: List<CalendarDate> = emptyList(),
     onConfirmMultiple: ((List<CalendarDate>) -> Unit)? = null,
-    // 区间
+    // Range
     initialRangeStart: CalendarDate? = null,
     initialRangeEnd: CalendarDate? = null,
     onConfirmRange: ((CalendarDate?, CalendarDate?) -> Unit)? = null,
-    // 通用配置
+    // Shared configuration
     minDate: CalendarDate? = null,
     maxDate: CalendarDate? = null,
     autoClose: Boolean = true,
@@ -74,17 +74,17 @@ fun CalendarPopup(
 
     val colors = Theme.colors
 
-    // 内部状态
+    // Internal state
     var selectedDate by remember(initialDate) { mutableStateOf(initialDate) }
     var selectedDates by remember(initialDates) { mutableStateOf(initialDates) }
     var rangeStart by remember(initialRangeStart) { mutableStateOf(initialRangeStart) }
     var rangeEnd by remember(initialRangeEnd) { mutableStateOf(initialRangeEnd) }
 
-    // 遮罩层 + 内容
+    // Scrim + content
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        // 遮罩层
+        // Scrim
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -94,7 +94,7 @@ fun CalendarPopup(
                 }
         )
 
-        // 日历内容 - 从底部弹出
+        // Calendar content - slides up from the bottom
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -103,7 +103,7 @@ fun CalendarPopup(
                 .background(colors.surface)
                 .padding(Spacing.lg)
         ) {
-            // 标题栏
+        // Title bar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -115,7 +115,7 @@ fun CalendarPopup(
                     color = colors.foreground
                 )
 
-                // 关闭按钮
+                // Close button
                 Box(
                     modifier = Modifier
                         .size(24.dp)
@@ -133,7 +133,7 @@ fun CalendarPopup(
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
-            // 日历组件
+            // The calendar itself
             Calendar(
                 type = type,
                 selectedDate = selectedDate,
@@ -159,7 +159,7 @@ fun CalendarPopup(
                 showTitle = false
             )
 
-            // 确认按钮
+            // Confirm button
             if (showConfirmButton) {
                 Spacer(modifier = Modifier.height(Spacing.lg))
 
@@ -184,7 +184,7 @@ fun CalendarPopup(
                 )
             }
 
-            // 底部安全区域
+        // Bottom safe area
             Spacer(modifier = Modifier.height(Spacing.lg))
         }
     }

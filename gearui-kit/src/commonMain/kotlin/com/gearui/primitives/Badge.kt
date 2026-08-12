@@ -155,7 +155,7 @@ fun Badge(
         BadgeTheme.Neutral -> colors.primaryForeground
     }
 
-    // 计算显示的文本
+    // Text to display
     val displayText = remember(count, maxCount, message) {
         when {
             message != null -> message
@@ -166,7 +166,7 @@ fun Badge(
         }
     }
 
-    // 是否显示徽标
+    // Whether the badge is shown
     val visible = remember(count, message, showZero) {
         when {
             message != null -> true
@@ -175,7 +175,7 @@ fun Badge(
         }
     }
 
-    // 尺寸计算
+    // Sizing
     val badgeHeight = when (size) {
         BadgeSize.Large -> 20.dp
         BadgeSize.Small -> 16.dp
@@ -186,7 +186,7 @@ fun Badge(
         BadgeSize.Small -> 8.dp
     }
 
-    // 计算默认偏移量 - 让徽标部分超出子控件边界
+    // Default offset, so the badge sticks out past the child bounds
     val defaultOffset = when (type) {
         BadgeType.RedPoint -> Pair(dotSize / 2, -(dotSize / 2))
         BadgeType.Message -> {
@@ -203,7 +203,7 @@ fun Badge(
 
     val actualOffset = offset ?: defaultOffset
 
-    // 如果有 content，使用 Box 叠加；否则只显示徽标
+    // With content, overlay in a Box; otherwise render the badge alone
     if (content != null) {
         Box(modifier = modifier) {
             content()
@@ -228,7 +228,7 @@ fun Badge(
             }
         }
     } else {
-        // 独立徽标
+        // Standalone badge
         if (visible) {
             BadgeContent(
                 type = type,
@@ -246,7 +246,7 @@ fun Badge(
 }
 
 /**
- * 徽标内容渲染
+ * Renders the badge content
  */
 @Composable
 private fun BadgeContent(
@@ -260,13 +260,13 @@ private fun BadgeContent(
     size: BadgeSize,
     modifier: Modifier = Modifier
 ) {
-    // 根据尺寸计算字体大小
+    // Font size derived from the badge size
     val fontSize = when (size) {
         BadgeSize.Large -> 12.sp
         BadgeSize.Small -> 10.sp
     }
 
-    // 使用 Kuikly 的 TextStyle，设置行高等于字体大小确保垂直居中
+    // Kuikly TextStyle with line height equal to the font size, which keeps it vertically centred
     val textStyle = TextStyle(
         fontSize = fontSize,
         fontWeight = FontWeight.Medium,
@@ -277,7 +277,7 @@ private fun BadgeContent(
 
     when (type) {
         BadgeType.RedPoint -> {
-            // 红点样式 - 小圆点
+            // Dot style - a small circle
             Box(
                 modifier = modifier
                     .size(dotSize)
@@ -287,7 +287,7 @@ private fun BadgeContent(
         }
 
         BadgeType.Message -> {
-            // 消息样式 - 圆形/椭圆形数字
+            // Message style - circular / oval number
             val isSingleChar = displayText.length == 1
             val horizontalPadding = if (isSingleChar) 0.dp else 5.dp
 
@@ -309,7 +309,7 @@ private fun BadgeContent(
         }
 
         BadgeType.Bubble -> {
-            // 气泡样式 - 左下角小尖角
+            // Bubble style - a small tail at the bottom left
             Row(
                 modifier = modifier
                     .height(badgeHeight)
@@ -335,7 +335,7 @@ private fun BadgeContent(
         }
 
         BadgeType.Square -> {
-            // 方形样式
+            // Square style
             val cornerRadius = when (border) {
                 BadgeBorder.Large -> 8.dp
                 BadgeBorder.Small -> 2.dp
@@ -358,8 +358,8 @@ private fun BadgeContent(
         }
 
         BadgeType.Subscript -> {
-            // 角标样式 - 三角形裁剪
-            // 由于 Kuikly 不支持 CustomClipper，使用简化的实现
+            // Corner style - a clipped triangle
+            // Kuikly has no CustomClipper, so this is a simplified implementation
             Box(
                 modifier = modifier
                     .size(32.dp)
@@ -378,7 +378,7 @@ private fun BadgeContent(
                         )
                         .background(backgroundColor)
                 ) {
-                    // 文字显示在右上角
+                    // Text sits in the top right corner
                     Row(
                         modifier = Modifier
                             .align(Alignment.TopEnd)

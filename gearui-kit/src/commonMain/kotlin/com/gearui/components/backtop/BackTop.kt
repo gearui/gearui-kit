@@ -27,36 +27,36 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
 
 /**
- * BackTop 样式
+ * BackTop style
  *
  */
 enum class BackTopStyle {
-    /** 圆形 - 48dp */
+    /** circle - 48dp */
     CIRCLE,
-    /** 半圆形 - 贴边显示 */
+    /** half circle - hugs the edge */
     HALF_CIRCLE
 }
 
 /**
- * BackTop 主题
+ * BackTop theme
  *
  */
 enum class BackTopTheme {
-    /** 亮色主题 - 白底黑字 */
+    /** light - dark text on white */
     LIGHT,
-    /** 暗色主题 - 黑底白字 */
+    /** dark - white text on black */
     DARK
 }
 
 /**
- * BackTop - 返回顶部按钮
+ * BackTop - back-to-top button
  *
  *
  * Features:
- * - 两种样式：圆形 (CIRCLE) 和半圆形 (HALF_CIRCLE)
- * - 两种主题：亮色 (LIGHT) 和暗色 (DARK)
- * - 可选显示文字
- * - 平滑的显示/隐藏动画
+ * - two styles: CIRCLE and HALF_CIRCLE
+ * - two themes: LIGHT and DARK
+ * - optional text
+ * - smooth show / hide animation
  *
  * Example:
  * ```
@@ -86,7 +86,7 @@ fun BackTop(
 ) {
     val colors = Theme.colors
 
-    // 根据主题确定颜色
+    // Colours from the theme
     val backgroundColor = when (theme) {
         BackTopTheme.LIGHT -> colors.surface
         BackTopTheme.DARK -> colors.foreground
@@ -102,7 +102,7 @@ fun BackTop(
         BackTopTheme.DARK -> colors.border
     }
 
-    // 根据样式确定尺寸和形状
+    // Size and shape from the style
     val circleSize = 48.dp
     val halfCircleWidth = 24.dp
     val halfCircleHeight = 40.dp
@@ -115,7 +115,7 @@ fun BackTop(
     ) {
         when (style) {
             BackTopStyle.CIRCLE -> {
-                // 圆形样式
+                // Circle style
                 Box(
                     modifier = Modifier
                         .offset(x = -offset.first, y = -offset.second)
@@ -154,7 +154,7 @@ fun BackTop(
             }
 
             BackTopStyle.HALF_CIRCLE -> {
-                // 半圆形样式 - 贴右边显示
+                // Half circle style - hugs the right edge
                 // shape-exempt: half-circle radius derives from the control's height
                 val halfCircleShape = RoundedCornerShape(
                     topStart = halfCircleHeight / 2,
@@ -207,7 +207,7 @@ fun BackTop(
 /**
  * BackTop with custom content
  *
- * 完全自定义内容的返回顶部按钮
+ * Back-to-top button with fully custom content
  */
 @Composable
 fun BackTopCustom(
@@ -220,7 +220,7 @@ fun BackTopCustom(
 ) {
     val colors = Theme.colors
 
-    // 根据主题确定颜色
+    // Colours from the theme
     val backgroundColor = when (theme) {
         BackTopTheme.LIGHT -> colors.surface
         BackTopTheme.DARK -> colors.foreground

@@ -20,16 +20,16 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Checkbox - 100% Theme 驱动的复选框组件
+ * Checkbox - fully Theme-driven checkbox
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 选中/未选中状态
- * - 禁用状态
- * - 2种尺寸
- * - 自动跟随主题色
+ * Features:
+ * - checked / unchecked state
+ * - disabled state
+ * - 2 sizes
+ * - follows the theme colour automatically
  */
 @Composable
 fun Checkbox(
@@ -40,11 +40,11 @@ fun Checkbox(
     indeterminate: Boolean = false,
     size: CheckboxSize = CheckboxSize.MEDIUM
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 尺寸参数
+    // Size parameters
     val boxSize = when (size) {
         CheckboxSize.LARGE -> 24.dp
         CheckboxSize.MEDIUM -> 20.dp
@@ -52,10 +52,10 @@ fun Checkbox(
     }
     val checkSize = boxSize * 0.6f
 
-    // 是否显示为选中状态（包括半选）
+    // Whether it renders as checked (indeterminate counts)
     val isActive = checked || indeterminate
 
-    // ⭐ 颜色映射：Theme 语义 → Checkbox 视觉
+    // ⭐ Colour mapping: Theme semantics -> Checkbox visuals
     val backgroundColor = when {
         !enabled && isActive -> colors.muted
         !enabled -> colors.surface
@@ -87,7 +87,7 @@ fun Checkbox(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // 半选标记 - 或 选中标记 ✓
+        // Indeterminate marker, or the ✓ tick
         when {
             indeterminate -> {
                 Icon(
@@ -108,7 +108,7 @@ fun Checkbox(
 }
 
 /**
- * Checkbox 尺寸枚举
+ * Checkbox size
  */
 enum class CheckboxSize {
     LARGE,
@@ -117,7 +117,7 @@ enum class CheckboxSize {
 }
 
 /**
- * CheckboxWithLabel - 带标签的复选框
+ * CheckboxWithLabel - checkbox with a label
  */
 @Composable
 fun CheckboxWithLabel(
@@ -157,7 +157,7 @@ fun CheckboxWithLabel(
 }
 
 /**
- * CheckboxGroup - 复选框组
+ * CheckboxGroup - group of checkboxes
  */
 @Composable
 fun CheckboxGroup(

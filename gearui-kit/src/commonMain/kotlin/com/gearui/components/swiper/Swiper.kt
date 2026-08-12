@@ -143,16 +143,16 @@ fun Swiper(
     // Watch the scroll state and reset the autoplay timer when it settles
     LaunchedEffect(pagerState.isScrollInProgress) {
         if (!pagerState.isScrollInProgress) {
-            // 滑动结束，重置自动播放计时器
+            // Swipe finished: reset the autoplay timer
             autoPlayResetKey++
         }
     }
 
-    // 自动播放 - 只有在非滑动状态下才执行
+    // Autoplay - only runs while not being dragged
     LaunchedEffect(autoPlayResetKey, autoPlay) {
         if (autoPlay && itemCount > 1 && !pagerState.isScrollInProgress) {
             delay(autoPlayInterval)
-            // 再次检查是否正在滑动，避免用户在等待期间开始滑动
+            // Check again for a drag, in case the user started one during the wait
             if (!pagerState.isScrollInProgress) {
                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
             }
@@ -160,7 +160,7 @@ fun Swiper(
     }
 
     Column(modifier = modifier.fillMaxWidth()) {
-        // 顶部指示器
+        // Top indicator
         if (indicatorPosition == SwiperIndicatorPosition.TOP && navigation != SwiperNavigation.NONE) {
             SwiperIndicator(
                 currentIndex = currentContentIndex,
@@ -171,9 +171,9 @@ fun Swiper(
             Spacer(modifier = Modifier.height(Spacing.sm))
         }
 
-        // Swiper 内容区
+        // Swiper content area
         Box(modifier = Modifier.fillMaxWidth().height(height)) {
-            // HorizontalPager - 核心滑动组件
+            // HorizontalPager - the actual swiping component
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
@@ -184,7 +184,7 @@ fun Swiper(
                 }
             }
 
-            // 箭头导航
+            // Arrow navigation
             if (showArrows && itemCount > 1) {
                 Row(
                     modifier = Modifier
@@ -193,7 +193,7 @@ fun Swiper(
                         .padding(horizontal = Spacing.sm),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    // 左箭头
+                    // Left arrow
                     val showLeftArrow = loop || currentContentIndex > 0
                     if (showLeftArrow) {
                         Box(
@@ -218,7 +218,7 @@ fun Swiper(
                         Spacer(modifier = Modifier.size(32.dp))
                     }
 
-                    // 右箭头
+                    // Right arrow
                     val showRightArrow = loop || currentContentIndex < itemCount - 1
                     if (showRightArrow) {
                         Box(
@@ -245,7 +245,7 @@ fun Swiper(
                 }
             }
 
-            // 内部底部指示器
+            // Inner bottom indicator
             if (indicatorPosition == SwiperIndicatorPosition.BOTTOM && navigation != SwiperNavigation.NONE) {
                 Box(
                     modifier = Modifier
@@ -262,7 +262,7 @@ fun Swiper(
             }
         }
 
-        // 外部底部指示器
+        // Outer bottom indicator
         if (indicatorPosition == SwiperIndicatorPosition.OUTSIDE_BOTTOM && navigation != SwiperNavigation.NONE) {
             Spacer(modifier = Modifier.height(Spacing.md))
             SwiperIndicator(
@@ -276,7 +276,7 @@ fun Swiper(
 }
 
 /**
- * SwiperIndicator - 指示器组件
+ * SwiperIndicator - the indicator
  */
 @Composable
 private fun SwiperIndicator(
@@ -287,7 +287,7 @@ private fun SwiperIndicator(
 ) {
     val colors = Theme.colors
 
-    // 颜色配置：外部用品牌色，内部用白色
+    // Colours: brand colour outside, white inside
     val activeColor = if (isOuter) colors.primary else colors.primaryForeground
     val inactiveColor = if (isOuter) colors.border else colors.primaryForeground.copy(alpha = 0.4f)
 
@@ -297,7 +297,7 @@ private fun SwiperIndicator(
     ) {
         when (navigation) {
             SwiperNavigation.DOTS -> {
-                // 点状指示器
+                // Dot indicator
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     modifier = Modifier
@@ -310,7 +310,7 @@ private fun SwiperIndicator(
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
-                        // 动画尺寸
+                        // Animated size
                         val size by animateDpAsState(
                             targetValue = if (isActive) 8.dp else 6.dp,
                             animationSpec = tween(durationMillis = 150)
@@ -326,7 +326,7 @@ private fun SwiperIndicator(
             }
 
             SwiperNavigation.DOTS_BAR -> {
-                // 点条状指示器（选中时变长条）
+                // Bar indicator (the selected dot stretches into a bar)
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     modifier = Modifier
@@ -339,7 +339,7 @@ private fun SwiperIndicator(
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
-                        // 动画宽度
+                        // Animated width
                         val width by animateDpAsState(
                             targetValue = if (isActive) 20.dp else 6.dp,
                             animationSpec = tween(durationMillis = 200)
@@ -356,7 +356,7 @@ private fun SwiperIndicator(
             }
 
             SwiperNavigation.FRACTION -> {
-                // 分数指示器
+                // Fraction indicator
                 Box(
                     modifier = Modifier
                         .clip(Theme.shapes.xl)
@@ -380,7 +380,7 @@ private fun SwiperIndicator(
 }
 
 /**
- * SwiperState - 外部控制状态
+ * SwiperState - externally controlled state
  */
 @Stable
 class SwiperState(

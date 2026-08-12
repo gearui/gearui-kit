@@ -34,21 +34,21 @@ data class TourStep(
 )
 
 /**
- * Tour - 漫游式引导组件
+ * Tour - guided walkthrough
  *
- * 基于 Overlay 系统实现
+ * Built on the Overlay system
  *
  * Features:
- * - 分步引导
- * - 遮罩层
- * - 导航控制
+ * - step by step guidance
+ * - a scrim
+ * - navigation controls
  *
  * Example:
  * ```
  * val tourState = rememberTourState(
  *     steps = listOf(
- *         TourStep(title = "欢迎", description = "这是第一步"),
- *         TourStep(title = "功能介绍", description = "这是第二步")
+ *         TourStep(title = "Welcome", description = "This is step one"),
+ *         TourStep(title = "Features", description = "This is step two")
  *     )
  * )
  *
@@ -74,10 +74,10 @@ fun Tour(
 
     LaunchedEffect(isVisible, state.currentIndex) {
         if (isVisible && currentStep != null) {
-            // 先关闭旧的
+            // Dismiss the previous one first
             overlayId?.let { controller.dismiss(it) }
 
-            // 捕获当前值，避免在 lambda 中引用可能变为 null 的 state
+            // Capture the current value; the state referenced in the lambda may become null
             val stepSnapshot = currentStep
             val indexSnapshot = state.currentIndex
             val totalSteps = state.steps.size
@@ -100,7 +100,7 @@ fun Tour(
                     onPrevious = if (hasPrevious) ({ state.previous() }) else null,
                     onNext = if (hasNext) ({ state.next() }) else null,
                     onFinish = {
-                        // 先关闭 overlay，再调用回调
+                        // Dismiss the overlay first, then fire the callback
                         overlayId?.let { controller.dismiss(it) }
                         overlayId = null
                         state.finish()

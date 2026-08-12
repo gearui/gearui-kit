@@ -13,22 +13,22 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * Divider - 100% Theme 驱动的分割线原语
+ * Divider - fully Theme-driven divider primitive
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 改造要点：
- * - 移除 DividerTokens 的颜色硬编码
- * - 直接使用 Theme.colors.border
+ * Rework notes:
+ * - the hardcoded colours in DividerTokens are gone
+ * - Theme.colors.border is used directly
  */
 
 /**
- * 基础分割线组件
+ * Base divider
  *
- * @param thickness 线条粗细
- * @param insetStart 左侧缩进
- * @param insetEnd 右侧缩进
+ * @param thickness line thickness
+ * @param insetStart leading inset
+ * @param insetEnd trailing inset
  */
 @Composable
 fun Divider(
@@ -36,7 +36,7 @@ fun Divider(
     insetStart: Dp = 0.dp,
     insetEnd: Dp = 0.dp
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
 
     Box(
@@ -49,11 +49,11 @@ fun Divider(
 }
 
 /**
- * 便捷别名（常用分割线直接调用）
+ * Convenience aliases for the common dividers
  */
 
 /**
- * 全宽分割线（最常用）
+ * Full-width divider (the common case)
  */
 @Composable
 fun DividerFull() = Divider(
@@ -63,7 +63,7 @@ fun DividerFull() = Divider(
 )
 
 /**
- * 左缩进分割线（列表项专用）
+ * Leading-inset divider (for list rows)
  */
 @Composable
 fun DividerInset() = Divider(
@@ -73,7 +73,7 @@ fun DividerInset() = Divider(
 )
 
 /**
- * 章节分隔（8dp 灰色色块）
+ * Section separator (an 8dp grey block)
  */
 @Composable
 fun DividerSection() {

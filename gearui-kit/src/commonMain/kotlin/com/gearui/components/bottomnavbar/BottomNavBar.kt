@@ -125,9 +125,9 @@ fun BottomNavBar(
                             .fillMaxHeight()
                             .then(
                                 if (!item.disabled) {
-                                    // 选中项也要回调：再次点击当前 tab 是一个有意义的交互
-                                    // （回到列表顶部 / 跳下一条未读，微信、Telegram 都这么做）。
-                                    // 控件不替业务吞事件，是否忽略重复选中由调用方决定。
+                                    // The selected item fires the callback too: tapping the current tab again is a meaningful
+                                    // interaction (scroll the list back to top, jump to the next unread; both WeChat and Telegram do it).
+                                    // The control does not swallow the event on the caller's behalf; ignoring a repeat selection is the caller's call.
                                     Modifier.clickable { onSelect(item.id) }
                                 } else {
                                     Modifier
@@ -137,15 +137,15 @@ fun BottomNavBar(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        // icon + badge 联合布局（自定义 Layout）：
-                        // - layout 尺寸**恒定**（不随 badge 出现/消失变化），所有 tab 一致
-                        // - icon 视觉**居中**于 layout（左右各预留 badge 半宽空间，badge 占满右半）
-                        // - badge 中心对齐 icon 右上角，完全落在 bounds 内（绕开 Kuikly 裁剪）
+                        // Combined icon + badge layout (a custom Layout):
+                        // - the layout size is **constant** (it does not change as the badge appears or disappears), identical for every tab
+                        // - the icon is **centred** in the layout (half a badge width is reserved on each side, and the badge fills the right half)
+                        // - the badge centre sits at the icon's top-right corner, entirely inside the bounds (working around Kuikly clipping)
                         //
-                        // 数学：layout = (iconW + badgeMaxW, iconH + badgeMaxH/2)
-                        //   "99+" 场景：(24 + 30, 24 + 8) = (54, 32)
-                        //   icon 中心点 = (27, 20) = layout 几何中心 → 视觉上 tab 内严格居中
-                        //   badge 中心 = (27 + 12, 20 - 12) = (39, 8) = icon 右上角 → 视觉漂浮
+                        // The maths: layout = (iconW + badgeMaxW, iconH + badgeMaxH/2)
+                        //   the "99+" case: (24 + 30, 24 + 8) = (54, 32)
+                        //   icon centre = (27, 20) = the geometric centre of the layout -> visually centred within the tab
+                        //   badge centre = (27 + 12, 20 - 12) = (39, 8) = the icon's top-right corner -> floats visually
                         val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
                         com.tencent.kuikly.compose.ui.layout.Layout(
@@ -173,8 +173,8 @@ fun BottomNavBar(
                             val totalW = iconP.width + reservedW           // = 54
                             val totalH = iconP.height + reservedH / 2      // = 32
                             layout(totalW, totalH) {
-                                // icon 水平居中：左侧留 reservedW/2，右侧留 reservedW/2
-                                // icon 垂直顶部留 reservedH/2，下方贴底
+                                // Icon centred horizontally: reservedW/2 on the left and reservedW/2 on the right
+                                // Icon has reservedH/2 above and sits flush with the bottom
                                 val iconX = reservedW / 2
                                 val iconY = reservedH / 2
                                 iconP.place(iconX, iconY)

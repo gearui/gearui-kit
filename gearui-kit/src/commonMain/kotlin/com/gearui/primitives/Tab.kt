@@ -18,12 +18,12 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Tab - 100% Theme 驱动的导航选择器单元
+ * Tab - fully Theme-driven navigation selector unit
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：TabColorTokens / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: TabColorTokens or hardcoded colours
  *
- * 改造要点：
+ * Rework notes:
  * - selected: colors.primary
  * - unselected: colors.mutedForeground
  * - indicator: colors.primary
@@ -43,7 +43,7 @@ fun Tab(
     horizontalPadding: Dp = 16.dp,
     indicatorHeight: Dp = TabSizeTokens.Medium.indicatorHeight
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val typography = Theme.typography
 
@@ -80,7 +80,7 @@ fun Tab(
 
             Spacer(Modifier.height(4.dp))
 
-            // Indicator (下划线)
+            // Indicator (underline)
             if (selected) {
                 Box(
                     Modifier

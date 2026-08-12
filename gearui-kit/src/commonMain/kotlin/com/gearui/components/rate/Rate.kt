@@ -21,7 +21,7 @@ import com.gearui.foundation.layout.Spacing
 /**
  * Rate - Rating component
  *
- * 评分组件
+ * Rating component
  *
  * Features:
  * - Half star support
@@ -49,9 +49,9 @@ fun Rate(
     count: Int = 5,
     allowHalf: Boolean = false,
     readonly: Boolean = false,
-    /** 自定义实心字形；留空则使用内置星形图标。与 [emptyIcon] 必须成对提供。 */
+    /** Custom filled glyph; left empty the built-in star icon is used. Must be supplied together with [emptyIcon]. */
     icon: String? = null,
-    /** 自定义空心字形；留空则使用内置星形图标。 */
+    /** Custom empty glyph; left empty the built-in star icon is used. */
     emptyIcon: String? = null,
     size: Dp = 24.dp,
     gap: Dp = 4.dp,
@@ -60,9 +60,9 @@ fun Rate(
 ) {
     val colors = Theme.colors
     val displayValue = value
-    // 之前用 "★"/"☆" 两个字面量当哨兵：默认值时其实画的是 Icons.star_*，
-    // 字符串本身从不渲染。null 把"用内置图标"这件事说清楚，也让
-    // check_emoji_as_icon 不必为一个从不上屏的字形误报。
+    // These used to be the two literals "★"/"☆" acting as sentinels: at the default value what was
+    // actually drawn was Icons.star_*, and the strings never rendered. null states "use the built-in
+    // icon" plainly, and stops check_emoji_as_icon flagging a glyph that never reaches the screen.
     val useDefaultStarIcons = icon == null && emptyIcon == null
     val clampedValue = displayValue.coerceIn(0f, count.toFloat())
     val totalWidth = (size.value * count + gap.value * (count - 1).coerceAtLeast(0)).dp

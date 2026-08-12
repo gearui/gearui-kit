@@ -16,16 +16,16 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * SegmentedControl - 100% Theme 驱动的分段控制器
+ * SegmentedControl - fully Theme-driven segmented control
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 多选项分段切换
- * - 选中态高亮
- * - 禁用状态
- * - 自适应宽度
+ * Features:
+ * - switching between several segments
+ * - highlighted selection
+ * - disabled state
+ * - self-sizing width
  */
 @Composable
 fun <T> SegmentedControl(
@@ -36,7 +36,7 @@ fun <T> SegmentedControl(
     enabled: Boolean = true,
     labelProvider: (T) -> String = { it.toString() }
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val typography = Theme.typography
     val shapes = Theme.shapes
@@ -81,7 +81,7 @@ fun <T> SegmentedControl(
 }
 
 /**
- * IconSegmentedControl - 带图标的分段控制器
+ * IconSegmentedControl - segmented control with icons
  */
 @Composable
 fun <T> IconSegmentedControl(
@@ -145,7 +145,7 @@ fun <T> IconSegmentedControl(
 }
 
 /**
- * SegmentedOption - 分段选项数据类
+ * SegmentedOption - segment option data class
  */
 data class SegmentedOption<T>(
     val value: T,

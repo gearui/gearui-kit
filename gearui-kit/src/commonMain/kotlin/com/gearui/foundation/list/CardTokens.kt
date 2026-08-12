@@ -6,15 +6,15 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
 
 /**
- * CardTokens - Card 组件尺寸规范
+ * CardTokens - Card sizing spec
  *
  *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors.surface
+ * ⚠️ Note: colours are not defined here; use Theme.colors.surface
  *
- * 使用场景：
- * - 信息聚合展示
- * - 表单分组
- * - 内容模块
+ * Use cases:
+ * - aggregated information
+ * - form groups
+ * - content modules
  */
 data class CardTokens(
     val cornerRadius: Dp,
@@ -34,16 +34,16 @@ object CardDefaults {
     )
 
     /**
-     * 扁平 Card（无阴影）
-     * 适用于已有背景色分层的场景
+     * Flat card (no shadow)
+     * For layouts that already separate layers with background colour
      */
     val Flat = Default.copy(
         elevation = 0f
     )
 
     /**
-     * 紧凑 Card
-     * 减少内边距，提高信息密度
+     * Compact card
+     * Less padding, denser information
      */
     val Compact = Default.copy(
         padding = Spacing.md

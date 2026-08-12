@@ -27,11 +27,11 @@ data class KeyboardInset(
 @Immutable
 data class RuntimeEnvironment(
     /**
-     * 稳定后的安全区（去抖 + 粘滞 + host override 合并）。**页面/组件布局只用这个**。
+     * Stabilised safe area (debounced + sticky + merged with the host override). **Page and component layout uses only this.**
      */
     val safeArea: SafeArea = SafeArea(),
     /**
-     * 运行时/host 原始安全区，仅用于诊断；可能偶发回 0 或不完整，不要直接用于布局。
+     * Raw safe area from the runtime or host, for diagnostics only; it may briefly report 0 or be incomplete, so never lay out against it.
      */
     val rawSafeArea: SafeArea = SafeArea(),
     /** IME geometry is not a system safe area and must never be consumed by page chrome. */
@@ -57,17 +57,17 @@ val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }
 val LocalRuntimeFlags = staticCompositionLocalOf { RuntimeFlags() }
 
 /**
- * 顶部安全区稳定器。
+ * Top safe area stabiliser.
  *
- * Kuikly iOS 2.21.0 及以后在 Scene 尚未 active 时可能先上报 0；同一方向内只过滤这种瞬时 0，
- * 非零变化必须立即接受（通话状态栏、分屏和窗口变化都可能合法改变 top）。方向改变时清空
- * 缓存，避免把竖屏值带入横屏。
+ * Kuikly iOS 2.21.0 and later may report 0 while the Scene is not yet active, so within one orientation only that transient 0
+ * is filtered; a non-zero change must be accepted immediately (an in-call status bar, split screen and window changes may all
+ * legitimately move top). The cache is cleared on orientation change, so a portrait value is never carried into landscape.
  *
- * bottom 只缓存最后一个非键盘系统值。键盘显示期间以及隐藏通知与系统 safe-area 恢复之间的
- * 短暂窗口，都不会让 IME 高度污染系统安全区。
+ * bottom caches only the last non-keyboard system value. Neither the time the keyboard is shown nor the short window between
+ * the hide notification and the system restoring its safe area lets the IME height pollute it.
  *
- * 这是 remember 作用域内对象的普通字段（非 Compose State）；驱动重算的是 LocalConfiguration
- * 提供的反应式 raw 值，字段只是缓存，故在 composition 中调用 [stabilize] 不违反 Compose 规则。
+ * These are plain fields on an object inside a remember scope (not Compose State); recomposition is driven by the reactive raw
+ * values from LocalConfiguration and the fields are only a cache, so calling [stabilize] during composition is legal.
  */
 internal class SafeAreaStabilizer {
     private var lastNonZeroTop: Dp = 0.dp
@@ -130,10 +130,10 @@ fun ProvideRuntimeEnvironment(
         left = safeInsets.left.dp,
         right = safeInsets.right.dp
     )
-    // host override（如 Android 某些机型补测的 inset）先并入 raw。
+    // The host override (an inset re-measured on certain Android devices, for instance) is merged into raw first.
     val rawSafeArea = RuntimeInsetsBridge.mergeWith(baseSafeArea)
-    // iOS 的 statusBarHeight 在 keyWindow 暂不可用时仍有设备级 fallback，可确保首帧至少不
-    // 与状态栏重叠；宿主随后上报真实 safeAreaInsets 后会替换它。
+    // iOS statusBarHeight still has a device-level fallback while keyWindow is unavailable, which at least keeps the
+    // first frame clear of the status bar; the host replaces it once it reports the real safeAreaInsets.
     val isPortrait = configuration.pageViewHeight >= configuration.pageViewWidth
     val fallbackTop = if (configuration.isIOS && isPortrait && configuration.statusBarHeight > 0f) {
         configuration.statusBarHeight.dp

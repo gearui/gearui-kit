@@ -5,26 +5,26 @@ import com.tencent.kuikly.compose.foundation.ExperimentalFoundationApi
 import com.tencent.kuikly.compose.foundation.lazy.LazyListState
 
 /**
- * ScrollState - ScrollView 状态封装
+ * ScrollState - ScrollView state wrapper
  *
- * 目的:
- * - 隔离 KuiklyUI 底层 API
- * - 未来可替换底层引擎
- * - 提供统一的滚动控制接口
+ * Purpose:
+ * - isolates the underlying KuiklyUI API
+ * - leaves room to swap the underlying engine later
+ * - offers one scroll control interface
  *
- * 注意: KuiklyUI 不支持 ScrollState,使用 LazyListState 实现
+ * Note: KuiklyUI has no ScrollState, so this is built on LazyListState
  */
 @Stable
 class ScrollState internal constructor(
     val raw: LazyListState
 ) {
-    /** 首个可见项索引 */
+    /** index of the first visible item */
     val firstVisibleItemIndex: Int get() = raw.firstVisibleItemIndex
 
-    /** 首个可见项滚动偏移 */
+    /** scroll offset of the first visible item */
     val firstVisibleItemScrollOffset: Int get() = raw.firstVisibleItemScrollOffset
 
-    /** 是否正在滚动 */
+    /** whether it is scrolling */
     val isScrollInProgress: Boolean get() = raw.isScrollInProgress
 
     suspend fun scrollToTop() = raw.scrollToItem(0)
@@ -33,7 +33,7 @@ class ScrollState internal constructor(
 }
 
 /**
- * 创建并记住 ScrollState
+ * Creates and remembers a ScrollState
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -42,19 +42,19 @@ fun rememberScrollState(): ScrollState {
 }
 
 /**
- * ListState - List 状态封装
+ * ListState - List state wrapper
  */
 @Stable
 class ListState internal constructor(
     val raw: LazyListState
 ) {
-    /** 首个可见项索引 */
+    /** index of the first visible item */
     val firstVisibleItemIndex: Int get() = raw.firstVisibleItemIndex
 
-    /** 首个可见项滚动偏移 */
+    /** scroll offset of the first visible item */
     val firstVisibleItemScrollOffset: Int get() = raw.firstVisibleItemScrollOffset
 
-    /** 是否正在滚动 */
+    /** whether it is scrolling */
     val isScrollInProgress: Boolean get() = raw.isScrollInProgress
 
     suspend fun scrollToTop() = raw.scrollToItem(0)
@@ -63,7 +63,7 @@ class ListState internal constructor(
 }
 
 /**
- * 创建并记住 ListState
+ * Creates and remembers a ListState
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

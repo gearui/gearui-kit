@@ -5,11 +5,11 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
 
 /**
- * DividerTokens - 分割线尺寸 Token
+ * DividerTokens - divider sizing tokens
  *
- * 参考: 内部组件规范divider/td_divider.dart
+ * Reference: internal component spec divider/td_divider.dart
  *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors.border
+ * ⚠️ Note: colours are not defined here; use Theme.colors.border
  */
 data class DividerTokens(
     val thickness: Dp,
@@ -18,7 +18,7 @@ data class DividerTokens(
 )
 
 /**
- * Dividers - 预设分割线样式
+ * Dividers - preset divider styles
  */
 object Dividers {
     val Full = DividerTokens(
@@ -27,14 +27,14 @@ object Dividers {
         insetEnd = Spacing.none
     )
 
-    /** 缩进分割线 (列表项) */
+    /** inset divider (list rows) */
     val Inset = DividerTokens(
         thickness = BorderWidth.hairline,
         insetStart = Spacing.lg,
         insetEnd = Spacing.none
     )
 
-    /** Section 分隔块 (8dp 灰色块)。这里的 thickness 是一段留白高度而非描边，所以走 Spacing。 */
+    /** Section separator block (an 8dp grey block). The thickness here is a height of blank space rather than a stroke, so it comes from Spacing. */
     val Section = DividerTokens(
         thickness = Spacing.sm,
         insetStart = Spacing.none,

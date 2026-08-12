@@ -20,7 +20,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * 折叠面板样式
+ * Collapse panel style
  */
 enum class CollapseStyle {
     Block,
@@ -28,7 +28,7 @@ enum class CollapseStyle {
 }
 
 /**
- * CollapsePanel - 折叠面板项
+ * CollapsePanel - one collapse panel
  */
 data class CollapsePanel(
     val value: Any? = null,
@@ -39,7 +39,7 @@ data class CollapsePanel(
 )
 
 /**
- * Collapse - 折叠面板组件
+ * Collapse - collapse panel component
  */
 @Composable
 fun Collapse(
@@ -82,7 +82,7 @@ fun Collapse(
 }
 
 /**
- * Collapse.Accordion - 手风琴模式
+ * Collapse.Accordion - accordion mode
  */
 object Collapse {
     @Composable
@@ -133,7 +133,7 @@ object Collapse {
 }
 
 /**
- * 单个折叠面板项 - 简单显示/隐藏，不做动画
+ * A single collapse panel - plain show/hide with no animation
  */
 @Composable
 private fun CollapsePanelItem(
@@ -142,7 +142,7 @@ private fun CollapsePanelItem(
 ) {
     val colors = Theme.colors
 
-    // 箭头旋转动画
+    // Arrow rotation animation
     val rotation by animateFloatAsState(
         targetValue = if (panel.isExpanded) 180f else 0f,
         animationSpec = tween(durationMillis = 200)
@@ -151,7 +151,7 @@ private fun CollapsePanelItem(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        // 标题栏
+        // Title bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -185,7 +185,7 @@ private fun CollapsePanelItem(
             }
         }
 
-        // 内容区 - 展开时显示
+        // Content area - shown when expanded
         if (panel.isExpanded) {
             DividerFull()
             Box(
@@ -199,7 +199,7 @@ private fun CollapsePanelItem(
     }
 }
 
-// ============ 兼容旧 API ============
+// ============ Legacy API compatibility ============
 
 @Composable
 fun CollapseItem(

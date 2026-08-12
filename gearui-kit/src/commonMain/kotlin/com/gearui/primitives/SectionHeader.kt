@@ -15,20 +15,20 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
 
 /**
- * SectionHeader - 100% Theme 驱动的章节头原语
+ * SectionHeader - fully Theme-driven section header primitive
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：SectionTokens / TextColors / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: SectionTokens, TextColors or hardcoded colours
  *
- * 改造要点：
- * - 移除 SectionTokens 的颜色硬编码
- * - 直接使用 Theme.colors.foreground/mutedForeground
- * - 背景使用 colors.background
+ * Rework notes:
+ * - the hardcoded colours in SectionTokens are gone
+ * - Theme.colors.foreground / mutedForeground are used directly
+ * - the background uses colors.background
  *
- * 使用场景：
- * - 页面主标题（"设置"、"我的"）
- * - 分组标题（"基础组件"、"表单组件"）
- * - 列表分组（"最近使用"、"全部应用"）
+ * Use cases:
+ * - page titles ("Settings", "Me")
+ * - group titles ("Basic components", "Form components")
+ * - list groups ("Recently used", "All apps")
  */
 @Composable
 fun SectionHeader(
@@ -42,7 +42,7 @@ fun SectionHeader(
     paddingHorizontal: Dp = 16.dp,
     paddingVertical: Dp = 12.dp
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
 
     val clickableModifier = if (onClick != null) {
@@ -65,7 +65,7 @@ fun SectionHeader(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 左侧标题区域
+            // Leading title area
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
@@ -86,7 +86,7 @@ fun SectionHeader(
                 }
             }
 
-            // 右侧 trailing
+            // Trailing area
             when {
                 trailing != null -> {
                     Box(modifier = Modifier.padding(start = Spacing.sm)) {

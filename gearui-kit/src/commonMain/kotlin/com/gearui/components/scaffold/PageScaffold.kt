@@ -14,19 +14,19 @@ import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 
 /**
- * 页面根脚手架——**统一消费 safe-area** 的唯一正确入口。
+ * Page root scaffold - the one correct place where safe-area is **consumed**.
  *
- * 架构原则（替代「NavBar 内部独揽 top safe-area」的旧设计）：
- * - safe-area 在框架根层（[com.gearui.runtime.ProvideRuntimeEnvironment]）稳定化为 stableInsets；
- * - 页面根容器 [PageScaffold] 按**显式声明的策略**消费；
- * - NavBar / SearchBar / 自定义 header 都只是放在 safe-area 之下的普通顶部组件，
- *   无论页面顶部是什么，都不会压到状态栏。
+ * Architectural rules (replacing the old design where NavBar owned the top safe-area):
+ * - safe-area is stabilised into stableInsets at the framework root ([com.gearui.runtime.ProvideRuntimeEnvironment]);
+ * - the page root container [PageScaffold] consumes it according to an **explicitly declared policy**;
+ * - NavBar, SearchBar and custom headers are just ordinary top components sitting below the safe area,
+ *   so whatever is at the top of a page, it never runs under the status bar.
  *
- * 策略由页面显式声明，不靠组件去猜：
- * @param consumeTopSafeArea    顶部留出状态栏安全区（默认 true）。
- * @param consumeBottomSafeArea 底部留出 home indicator 安全区（默认 false；底部通常由
- *                              BottomNavBar / 输入框各自消费，避免双重留白）。
- * @param edgeToEdge            全屏页（如图片预览）：忽略安全区，由页面控件自处理（top/bottom=0）。
+ * The policy is declared by the page and never guessed by a component:
+ * @param consumeTopSafeArea    leave room for the status bar at the top (default true).
+ * @param consumeBottomSafeArea leave room for the home indicator at the bottom (default false; the bottom is usually
+ *                              consumed by BottomNavBar or an input field, and doing both would double the padding).
+ * @param edgeToEdge            fullscreen pages (image preview and the like): ignore the safe area and let the page handle it (top/bottom = 0).
  */
 @Composable
 fun PageScaffold(

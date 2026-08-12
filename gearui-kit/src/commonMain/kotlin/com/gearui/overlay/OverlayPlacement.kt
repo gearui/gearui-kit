@@ -134,39 +134,39 @@ data class OverlayOptions(
     /** Y offset */
     val offsetY: Dp = 4.dp,
 
-    /** 是否为模态弹层（阻断底层交互） */
+    /** whether it is modal (blocks interaction underneath) */
     val modal: Boolean = false,
 
-    /** 遮罩颜色，null 表示无遮罩 */
+    /** scrim colour; null means no scrim */
     val maskColor: Color? = null,
 
-    /** 层级 */
+    /** z-order */
     val zIndex: Float = 0f,
 
-    /** 空间不足时自动翻转方向 */
+    /** flip direction automatically when space runs out */
     val autoFlip: Boolean = true,
 
-    /** 关闭策略（唯一关闭入口） */
+    /** dismissal policy (the single dismissal entry point) */
     val dismissPolicy: OverlayDismissPolicy = OverlayDismissPolicy(),
 
-    /** Fullscreen 模式下是否应用顶部安全区 */
+    /** whether the top safe area applies in Fullscreen mode */
     val safeAreaTop: Boolean = false,
 
-    /** Fullscreen 模式下是否应用底部安全区 */
+    /** whether the bottom safe area applies in Fullscreen mode */
     val safeAreaBottom: Boolean = false,
 
-    /** Fullscreen 模式下是否应用左侧安全区 */
+    /** whether the left safe area applies in Fullscreen mode */
     val safeAreaLeft: Boolean = false,
 
-    /** Fullscreen 模式下是否应用右侧安全区 */
+    /** whether the right safe area applies in Fullscreen mode */
     val safeAreaRight: Boolean = false,
 
     /**
-     * 内容之外的区域是否放行手势（仅 Fullscreen、非 modal 生效）。
+     * Whether gestures pass through outside the content (Fullscreen and non-modal only).
      *
-     * Fullscreen 默认铺一层全屏点击拦截层，非模态的通知横幅用它就会在整个展示期间
-     * 冻结全屏交互 —— 用户点不动列表、按不了返回。置 true 时不铺该层，横幅本身仍可点，
-     * 其余区域的滚动/点击照常落到下面的页面（微信式 in-app 横幅语义）。
+     * Fullscreen lays a fullscreen tap interceptor by default, and a non-modal notification banner using it would freeze the
+     * whole screen for as long as it is shown - the user could not scroll the list or press back. Set to true and that layer
+     * is not laid: the banner stays tappable while scrolls and taps elsewhere reach the page below (WeChat-style in-app banner).
      */
     val passThroughOutside: Boolean = false
 )

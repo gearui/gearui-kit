@@ -5,29 +5,29 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * ScrollTokens - 滚动容器设计规范
+ * ScrollTokens - scrolling container design spec
  *
- * 统一所有页面的:
+ * Keeps the following the same on every page:
  * - Content padding
- * - 元素间距
- * - Bounce 行为
- * - Scrollbar 显示策略
+ * - gaps between elements
+ * - bounce behaviour
+ * - scrollbar visibility policy
  */
 data class ScrollTokens(
-    /** 内容区 padding */
+    /** content area padding */
     val contentPadding: PaddingValues,
 
-    /** 元素间距 */
+    /** gap between elements */
     val spacing: Dp,
 
-    /** 是否启用弹性回弹 */
+    /** whether elastic bounce is enabled */
     val bounceEnabled: Boolean,
 
-    /** 是否显示滚动条 */
+    /** whether the scrollbar is shown */
     val showScrollbar: Boolean
 ) {
     companion object {
-        /** 默认页面滚动 */
+        /** default page scrolling */
         val Default = ScrollTokens(
             contentPadding = PaddingValues(16.dp),
             spacing = 12.dp,
@@ -35,12 +35,12 @@ data class ScrollTokens(
             showScrollbar = false
         )
 
-        /** 密集布局 */
+        /** dense layout */
         val Dense = Default.copy(
             spacing = 8.dp
         )
 
-        /** 无 padding 场景（如全屏） */
+        /** no padding (fullscreen, for instance) */
         val None = Default.copy(
             contentPadding = PaddingValues(0.dp)
         )

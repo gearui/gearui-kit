@@ -12,9 +12,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Watermark - 平铺文字水印
+ * Watermark - tiled text watermark
  *
- * 采用可组合布局实现平铺效果，避免依赖 Canvas API。
+ * Tiling is built out of composable layout rather than the Canvas API.
  */
 @Composable
 fun Watermark(

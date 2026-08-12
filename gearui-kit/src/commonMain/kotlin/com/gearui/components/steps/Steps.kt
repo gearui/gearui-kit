@@ -59,7 +59,7 @@ enum class StepsTheme {
 /**
  * Steps - Step progress indicator
  *
- * 步骤条组件
+ * Steps component
  *
  * Features:
  * - Horizontal/Vertical layout
@@ -73,9 +73,9 @@ enum class StepsTheme {
  * Steps(
  *     current = 1,
  *     items = listOf(
- *         StepItem(title = "步骤一", description = "描述文字"),
- *         StepItem(title = "步骤二", description = "描述文字"),
- *         StepItem(title = "步骤三", description = "描述文字")
+ *         StepItem(title = "Step one", description = "Description text"),
+ *         StepItem(title = "Step two", description = "Description text"),
+ *         StepItem(title = "Step three", description = "Description text")
  *     )
  * )
  * ```

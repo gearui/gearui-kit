@@ -51,7 +51,7 @@ enum class TimelineMode {
 /**
  * Timeline - Timeline component
  *
- * 时间轴组件
+ * Timeline component
  *
  * Features:
  * - Multiple modes (left, right, alternate)
@@ -65,12 +65,12 @@ enum class TimelineMode {
  * Timeline(
  *     items = listOf(
  *         TimelineItem(
- *             content = "创建订单",
+ *             content = "Order created",
  *             timestamp = "2024-01-01 10:00",
  *             color = TimelineColor.SUCCESS
  *         ),
  *         TimelineItem(
- *             content = "支付完成",
+ *             content = "Payment completed",
  *             timestamp = "2024-01-01 10:05"
  *         )
  *     )

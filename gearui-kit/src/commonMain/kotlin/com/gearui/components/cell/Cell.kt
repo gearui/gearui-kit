@@ -17,9 +17,9 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Cell - 列表单元格组件
+ * Cell - list cell
  *
- * 用于列表展示，支持标题、描述、箭头等
+ * For list rows; supports a title, a description, a chevron and more
  */
 @Composable
 fun Cell(
@@ -55,13 +55,13 @@ fun Cell(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 左侧图标
+        // Leading icon
         if (leading != null) {
             leading()
             Spacer(modifier = Modifier.width(10.dp))
         }
 
-        // 中间内容
+        // Middle content
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
@@ -79,7 +79,7 @@ fun Cell(
             }
         }
 
-        // 右侧说明文字
+        // Trailing description text
         if (note != null) {
             Spacer(modifier = Modifier.width(10.dp))
             Text(
@@ -89,13 +89,13 @@ fun Cell(
             )
         }
 
-        // 右侧自定义内容
+        // Trailing custom content
         if (trailing != null) {
             Spacer(modifier = Modifier.width(10.dp))
             trailing()
         }
 
-        // 箭头
+        // Chevron
         if (arrow) {
             Spacer(modifier = Modifier.width(Spacing.sm))
             Icon(

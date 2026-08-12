@@ -35,7 +35,7 @@ enum class ResultStatus {
 /**
  * Result - Result page component
  *
- * 结果页组件
+ * Result page component
  *
  * Features:
  * - Multiple status types (success, error, warning, etc.)
@@ -48,10 +48,10 @@ enum class ResultStatus {
  * ```
  * Result(
  *     status = ResultStatus.SUCCESS,
- *     title = "操作成功",
- *     description = "您的操作已成功完成",
+ *     title = "Success",
+ *     description = "Your action completed successfully",
  *     primaryAction = {
- *         Button(text = "返回首页", onClick = { })
+ *         Button(text = "Back to home", onClick = { })
  *     }
  * )
  * ```

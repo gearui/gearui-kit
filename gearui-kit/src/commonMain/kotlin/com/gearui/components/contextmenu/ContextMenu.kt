@@ -108,8 +108,8 @@ fun ContextMenu(
             ) {
                 Column(
                     modifier = Modifier
-                        // width(IntrinsicSize.Max): 列宽 = 最长 item 的固有宽度，
-                        // 配合 widthIn 防止极短/极长内容跑偏；这样不会出现"短文字撑满 max"的虚胖。
+                        // width(IntrinsicSize.Max): the column width is the intrinsic width of the longest item,
+                        // with widthIn keeping very short or very long content in check, so short text does not bloat out to max.
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
                         .shadow(Elevation.raised, OverlayDefaults.panelShape)

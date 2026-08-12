@@ -41,7 +41,7 @@ enum class SkeletonVariant {
 /**
  * Skeleton - Loading placeholder component
  *
- * 骨架屏组件
+ * Skeleton component
  *
  * Features:
  * - Multiple animation types (pulse, wave)

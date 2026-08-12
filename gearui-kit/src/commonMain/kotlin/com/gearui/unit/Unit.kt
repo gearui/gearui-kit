@@ -1,10 +1,10 @@
 package com.gearui.unit
 
 /**
- * GearUI Unit 系统
+ * GearUI unit system
  *
- * 封装底层 Kuikly Compose UI 单位类型，保持 GearUI 框架独立性
- * 使用方式：import com.gearui.unit.*
+ * Wraps the underlying Kuikly Compose UI unit types so the GearUI framework stays independent
+ * Usage: import com.gearui.unit.*
  */
 
 // Type aliases

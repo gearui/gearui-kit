@@ -36,7 +36,7 @@ data class TransferItem(
 /**
  * Transfer - Dual-list transfer component
  *
- * 穿梭框组件
+ * Transfer component
  *
  * Features:
  * - Dual list selection
@@ -48,8 +48,8 @@ data class TransferItem(
  * Example:
  * ```
  * val items = listOf(
- *     TransferItem(key = "1", label = "选项 1"),
- *     TransferItem(key = "2", label = "选项 2")
+ *     TransferItem(key = "1", label = "Option 1"),
+ *     TransferItem(key = "2", label = "Option 2")
  * )
  *
  * Transfer(

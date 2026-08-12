@@ -5,19 +5,19 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
 
 /**
- * TabRow - Tab 导航容器
+ * TabRow - Tab navigation container
  *
- * 职责：
- * - 横向排列 Tab 组件
- * - 提供统一的导航容器
- * - 管理 Tab 布局
+ * Responsibilities:
+ * - lays Tab components out horizontally
+ * - provides one navigation container
+ * - manages the Tab layout
  *
- * 设计原则：
- * - 声明式 API
- * - 与 TabState 配合使用
- * - 支持任意数量的 Tab
+ * Design rules:
+ * - declarative API
+ * - used together with TabState
+ * - any number of Tabs
  *
- * 使用示例：
+ * Example:
  * ```
  * val state = rememberTabState()
  * TabRow(state) { s ->

@@ -20,14 +20,14 @@ import com.gearui.foundation.avatar.AvatarSizeTokens
 import com.gearui.theme.Theme
 
 /**
- * Avatar - 100% Theme 驱动的身份表达容器
+ * Avatar - fully Theme-driven identity container
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: hardcoded colours
  *
- * 改造要点：
- * - 使用 Theme.colors.muted 作为背景
- * - 使用 Theme.colors.mutedForeground 作为内容颜色
+ * Rework notes:
+ * - Theme.colors.muted is used as the background
+ * - Theme.colors.mutedForeground is used for the content
  */
 @Composable
 fun Avatar(
@@ -40,8 +40,8 @@ fun Avatar(
     size: Dp = AvatarSizeTokens.Medium.size,
     radius: Dp = AvatarSizeTokens.Medium.radius,  // 圆形
 
-    // 上层（PrivChatAvatar 等）可强制固定 fallback 配色，避免 light/dark theme
-    // 与 bitmap（如 QR 中心头像）渲染产物视觉不一致。null 时退回 Theme.colors。
+    // Downstream code (PrivChatAvatar and friends) can pin the fallback colours so the light/dark
+    // theme does not disagree visually with a bitmap (such as the avatar at the centre of a QR code).
     backgroundColor: Color? = null,
     contentColor: Color? = null,
 
@@ -51,7 +51,7 @@ fun Avatar(
 
     onClick: (() -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val resolvedBackground = backgroundColor ?: colors.muted
     val resolvedContent = contentColor ?: colors.mutedForeground

@@ -19,31 +19,31 @@ import com.gearui.foundation.typography.*
 /**
  * Icon - Icon Engine Primitive
  *
- * 地位等价于:
+ * Equivalent in role to:
  * - Material3: Icon
  * - Ant Design: Icon
  * - Flutter: Icon
  *
- * 设计目标:
- * - ✅ Size Token 化
- * - ✅ Tint Token 化
- * - ✅ 零硬编码
+ * Design goals:
+ * - ✅ size comes from a token
+ * - ✅ tint comes from a token
+ * - ✅ nothing hardcoded
  *
- * 所有组件必须使用此 Primitive:
+ * Every component must use this primitive:
  * - Button/Input/Tag/List/NavBar
  *
- * ❌ 禁止在组件中直接使用 Image()
- * ✅ 强制使用 Icon()
+ * ❌ Never call Image() directly in a component
+ * ✅ Always use Icon()
  */
 @Composable
 fun Icon(
     painter: Painter,
     modifier: Modifier = Modifier,
 
-    /** 图标尺寸 (使用 Token) */
+    /** icon size (from a token) */
     size: Dp = IconSizes.Default.lg,
 
-    /** 图标着色 (null = 原色) */
+    /** icon tint (null = original colours) */
     tint: Color? = null
 ) {
     Image(

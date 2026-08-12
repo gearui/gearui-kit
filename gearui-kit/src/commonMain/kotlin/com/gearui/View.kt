@@ -8,14 +8,14 @@ import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
 
 /**
- * View - GearUI 界面基类
+ * View - base class for a GearUI screen
  *
- * 自动挂载 GearUI Runtime：
- * - Theme（主题）
- * - OverlayRoot（浮层容器）
- * - ToastHost（轻提示）
+ * Mounts the GearUI Runtime automatically:
+ * - Theme
+ * - OverlayRoot (floating layer container)
+ * - ToastHost (lightweight messages)
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
  * @Page("MainDemo")
  * class MainDemo : View() {
@@ -27,7 +27,7 @@ import com.gearui.theme.ThemeSpec
  * }
  * ```
  *
- * 自定义主题：
+ * Custom theme:
  * ```kotlin
  * @Page("DarkPage")
  * class DarkPage : View() {
@@ -44,28 +44,28 @@ import com.gearui.theme.ThemeSpec
 abstract class View : ComposeContainer() {
 
     /**
-     * 自定义主题规格（可选覆盖）
+     * Optional custom theme spec
      */
     open fun themeSpec(): ThemeSpec? = null
 
     /**
-     * 自定义主题模式（可选覆盖）
+     * Optional custom theme mode
      */
     open fun themeMode(): ThemeMode? = null
 
     /**
-     * Runtime feature flags（用于渐进启用 runtime 规范能力）
+     * Runtime feature flags (for enabling runtime capabilities gradually)
      */
     open fun runtimeFlags(): RuntimeFlags = RuntimeFlags()
 
     /**
-     * 是否由 View 基类自动包装 App。
-     * 默认开启；如页面需要自行控制唯一 App 入口，可覆写为 false。
+     * Whether the View base class wraps App automatically.
+     * On by default; override to false when a page needs to own the single App entry point itself.
      */
     open fun autoWrapApp(): Boolean = true
 
     /**
-     * 界面内容（子类必须实现）
+     * Screen content (subclasses must implement this)
      */
     @Composable
     protected abstract fun Content()

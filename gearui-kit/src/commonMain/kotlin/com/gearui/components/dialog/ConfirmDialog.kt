@@ -16,9 +16,9 @@ import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
 
 /**
- * ConfirmDialog - 确认对话框
+ * ConfirmDialog - confirmation dialog
  *
- * 带确认/取消按钮的标准对话框
+ * The standard dialog with confirm and cancel buttons
  */
 @Composable
 fun ConfirmDialog(
@@ -43,7 +43,7 @@ fun ConfirmDialog(
             title = title,
             message = message,
             actions = {
-                // 取消按钮 - 文本样式
+                // Cancel button - text style
                 Box(
                     modifier = Modifier
                         .clickable { onCancel() }
@@ -57,7 +57,7 @@ fun ConfirmDialog(
                     )
                 }
                 Spacer(modifier = Modifier.width(Spacing.sm))
-                // 确认按钮
+                // Confirm button
                 Button(
                     text = confirmText,
                     onClick = onConfirm,
@@ -70,9 +70,9 @@ fun ConfirmDialog(
 }
 
 /**
- * AlertDialog - 警告对话框
+ * AlertDialog - alert dialog
  *
- * 单按钮的提示对话框
+ * A single-button message dialog
  */
 @Composable
 fun AlertDialog(

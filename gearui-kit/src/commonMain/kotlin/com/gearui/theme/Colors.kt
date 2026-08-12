@@ -109,7 +109,7 @@ object Themes {
 
     val Dark = ThemeSpec(
         colors = Colors(
-            // 中性灰阶梯：纯中性（R=G=B），对标 iOS，去除旧 zinc 蓝味
+            // Neutral grey ramp: truly neutral (R=G=B), matching iOS, with the old zinc blue cast removed
             background = Color(0xFF0A0A0A),
             foreground = Color(0xFFFAFAFA),
             surface = Color(0xFF121212),

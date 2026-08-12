@@ -19,21 +19,21 @@ import com.gearui.foundation.list.CardDefaults
 import com.gearui.theme.Theme
 
 /**
- * Card - 100% Theme 驱动的内容容器卡片
+ * Card - fully Theme-driven content container
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 改造要点：
- * - 移除 CardTokens 的颜色硬编码
- * - 直接使用 Theme.colors.surface
- * - 边框使用 colors.border
+ * Rework notes:
+ * - the hardcoded colours in CardTokens are gone
+ * - Theme.colors.surface is used directly
+ * - the border uses colors.border
  *
- * 职责：
- * - 提供圆角容器
- * - 统一内边距
- * - 统一阴影
- * - 可选点击交互
+ * Responsibilities:
+ * - a rounded container
+ * - consistent inner padding
+ * - consistent shadow
+ * - optional click interaction
  *
  * Example:
  * ```
@@ -43,7 +43,7 @@ import com.gearui.theme.Theme
  * }
  *
  * Card(onClick = { }) {
- *     // 可点击卡片
+ *     // clickable card
  * }
  * ```
  */
@@ -59,10 +59,10 @@ fun Card(
     interactionSource: MutableInteractionSource = remember { createMutableInteractionSource() },
     content: @Composable ColumnScope.() -> Unit
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这个
+    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
 
-    // 颜色语义映射
+    // Semantic colour mapping
     val finalContainerColor = containerColor ?: colors.surface
     val finalBorderColor = borderColor ?: colors.border
 

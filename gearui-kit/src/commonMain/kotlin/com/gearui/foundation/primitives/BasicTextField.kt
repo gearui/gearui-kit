@@ -20,11 +20,11 @@ import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 
 /**
- * GearUI 无样式输入原语。
+ * GearUI unstyled input primitive.
  *
- * - 不附带边框、背景、内边距等视觉样式
- * - 提供主题默认文本样式与光标色
- * - 可选 placeholder
+ * - carries no border, background or padding
+ * - supplies the theme default text style and cursor colour
+ * - optional placeholder
  */
 @Composable
 fun BasicTextField(

@@ -9,7 +9,7 @@ import com.gearui.foundation.typography.TextStyle
 /**
  * SectionHeader Tokens
  *
- * 章节头视觉规范 Token（iOS/Material/Ant Design 通用模式）
+ * Section header visual tokens (the pattern shared by iOS, Material and Ant Design)
  */
 data class SectionTokens(
     val height: Dp,
@@ -23,8 +23,8 @@ data class SectionTokens(
 
 object Sections {
     /**
-     * 标准章节头（最常用）
-     * 例: "基础组件"、"表单组件"
+     * Standard section header (the common case)
+     * e.g. "Basic components", "Form components"
      */
     val Default = SectionTokens(
         height = 32.dp,
@@ -37,8 +37,8 @@ object Sections {
     )
 
     /**
-     * 大标题章节头（页面主标题）
-     * 例: "设置"、"我的"
+     * Large section header (page title)
+     * e.g. "Settings", "Me"
      */
     val Large = SectionTokens(
         height = 44.dp,
@@ -51,8 +51,8 @@ object Sections {
     )
 
     /**
-     * 紧凑章节头（List 内分组）
-     * 例: "最近使用"、"全部应用"
+     * Compact section header (a group inside a List)
+     * e.g. "Recently used", "All apps"
      */
     val Compact = SectionTokens(
         height = 28.dp,

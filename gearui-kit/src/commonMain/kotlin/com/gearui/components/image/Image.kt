@@ -61,7 +61,7 @@ sealed class ImageLoadState {
 /**
  * GearImage - Enhanced image component
  *
- * 图片展示组件
+ * Image display component
  *
  * Features:
  * - Multiple fit modes
@@ -331,7 +331,7 @@ fun ImageGallery(
 fun ImagePlaceholder(
     modifier: Modifier = Modifier,
     text: String = I18n.strings.media.imageEmpty,
-    /** 自定义字形；留空则使用内置图标。 */
+    /** Custom glyph; left empty the built-in icon is used. */
     icon: String? = null
 ) {
     val colors = Theme.colors

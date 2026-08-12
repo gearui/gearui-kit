@@ -3,11 +3,11 @@ package com.gearui.overlay
 import androidx.compose.runtime.*
 
 /**
- * OverlayRoot - App 根节点包装器
+ * OverlayRoot - App root wrapper
  *
- * 必须在 App 最外层使用，提供 Overlay 能力
+ * Must wrap the outermost level of the App to provide the Overlay capability
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
  * @Composable
  * fun App() {
@@ -31,9 +31,9 @@ fun OverlayRoot(
 }
 
 /**
- * 获取 Overlay Controller
+ * Returns the Overlay Controller
  *
- * 使用方式：
+ * Usage:
  * ```kotlin
  * val overlay = rememberOverlay()
  *

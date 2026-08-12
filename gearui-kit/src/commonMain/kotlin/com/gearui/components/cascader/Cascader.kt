@@ -48,14 +48,14 @@ data class CascaderOption(
 )
 
 /**
- * Cascader - 级联选择器
+ * Cascader - cascading select
  *
- * 基于 Overlay 系统实现
+ * Built on the Overlay system
  *
  * Features:
- * - 多级选择
- * - 动态加载
- * - 真正的浮层，不破坏布局
+ * - multi-level selection
+ * - dynamic loading
+ * - a real floating layer, leaving the layout untouched
  */
 @Composable
 fun Cascader(
@@ -78,7 +78,7 @@ fun Cascader(
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 用 State 包装
+    // Wrapped in State
     val selectedPathState = rememberUpdatedState(selectedPath)
     val onSelectState = rememberUpdatedState(onSelect)
 

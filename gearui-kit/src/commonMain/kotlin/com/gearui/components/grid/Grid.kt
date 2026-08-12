@@ -8,16 +8,16 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 
 /**
- * Grid - 100% Theme 驱动的网格布局
+ * Grid - fully Theme-driven grid layout
  *
- * ✅ 规则：第一行永远是 val colors = Theme.colors
- * ❌ 禁止：Color(0x...) / 硬编码颜色
+ * ✅ Rule: the first line is always `val colors = Theme.colors`
+ * ❌ Never: Color(0x...) or hardcoded colours
  *
- * 特性：
- * - 自适应列数
- * - 固定列数
- * - 自定义间距
- * - 响应式布局
+ * Features:
+ * - adaptive column count
+ * - fixed column count
+ * - custom gaps
+ * - responsive layout
  */
 @Composable
 fun Grid(
@@ -27,7 +27,7 @@ fun Grid(
     verticalSpacing: Dp = 8.dp,
     content: @Composable GridScope.() -> Unit
 ) {
-    // ⭐ Framework Rule #1: 第一行永远是这三个
+    // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
     val typography = Theme.typography
     val shapes = Theme.shapes
@@ -50,7 +50,7 @@ fun Grid(
                         item()
                     }
                 }
-                // 填充空白
+                // Fill the blanks
                 repeat(columns - rowItems.size) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -60,7 +60,7 @@ fun Grid(
 }
 
 /**
- * GridScope - Grid 作用域
+ * GridScope - Grid scope
  */
 interface GridScope {
     fun item(content: @Composable () -> Unit)
@@ -75,7 +75,7 @@ private class GridScopeImpl : GridScope {
 }
 
 /**
- * ResponsiveGrid - 响应式网格（根据宽度自动调整列数）
+ * ResponsiveGrid - responsive grid (column count follows the width)
  */
 @Composable
 fun ResponsiveGrid(
@@ -85,8 +85,8 @@ fun ResponsiveGrid(
     verticalSpacing: Dp = 8.dp,
     content: @Composable GridScope.() -> Unit
 ) {
-    // 简化实现：固定 3 列
-    // TODO: 需要测量容器宽度来动态计算列数
+    // Simplified: a fixed 3 columns
+    // TODO: measure the container width to compute the column count
     Grid(
         columns = 3,
         modifier = modifier,
@@ -97,7 +97,7 @@ fun ResponsiveGrid(
 }
 
 /**
- * GridItem - 网格项辅助函数
+ * GridItem - grid item helper
  */
 @Composable
 fun GridItem(

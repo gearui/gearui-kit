@@ -3,15 +3,15 @@ package com.gearui.foundation.scroll
 import com.tencent.kuikly.compose.ui.Modifier
 
 /**
- * ScrollPhysics - 统一滚动手感层
+ * ScrollPhysics - unified scroll feel
  *
- * 全局只需要改这里即可统一:
- * - iOS 弹性回弹
+ * Changing this one place changes it globally:
+ * - iOS elastic bounce
  * - Android EdgeEffect
- * - 滚动阻尼
- * - 惯性参数
+ * - scroll damping
+ * - inertia parameters
  *
- * 未来扩展:
+ * Future extensions:
  * - Custom friction
  * - Snap scrolling
  * - Overscroll effects
@@ -20,25 +20,25 @@ sealed class ScrollPhysics {
 
     abstract fun modifier(): Modifier
 
-    /** 跟随平台默认行为 */
+    /** follow the platform default */
     object Platform : ScrollPhysics() {
         override fun modifier() = Modifier
     }
 
-    /** iOS 风格弹性回弹 */
+    /** iOS-style elastic bounce */
     object IOS : ScrollPhysics() {
         override fun modifier() = Modifier
-        // TODO: 添加 iOS bounce 效果
+        // TODO: add the iOS bounce effect
         // .overscroll(orientation = Orientation.Vertical)
     }
 
-    /** Android 风格 EdgeEffect */
+    /** Android-style EdgeEffect */
     object Android : ScrollPhysics() {
         override fun modifier() = Modifier
-        // TODO: 添加 Android edge glow 效果
+        // TODO: add the Android edge glow effect
     }
 
-    /** 关闭所有效果 */
+    /** all effects off */
     object None : ScrollPhysics() {
         override fun modifier() = Modifier
     }

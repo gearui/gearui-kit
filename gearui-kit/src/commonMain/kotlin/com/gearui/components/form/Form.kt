@@ -22,14 +22,14 @@ import com.gearui.foundation.layout.Spacing
 data class FormRule(
     val required: Boolean = false,
     val validator: ((String) -> Boolean)? = null,
-    /** 留空时回落到 [FormMessages]，由 [rememberFormFieldState] 按当前语言注入。 */
+    /** Left empty, this falls back to [FormMessages], injected by [rememberFormFieldState] for the current language. */
     val message: String = ""
 )
 
 /**
- * 校验发生在 [FormFieldState.validate] 里，那是普通类而不是 composable，读不到
- * [com.gearui.i18n.LocalStrings]。所以文案在构造期注入；直接 new [FormFieldState]
- * 时回落到英文包（库的 fallback 语言），而不是硬编码字面量。
+ * Validation happens inside [FormFieldState.validate], which is a plain class rather than a composable and
+ * therefore cannot read [com.gearui.i18n.LocalStrings]. So the copy is injected at construction time; constructing
+ * a [FormFieldState] directly falls back to the English pack (the library fallback language), not to a hardcoded literal.
  */
 data class FormMessages(
     val validationFailed: String,
@@ -45,7 +45,7 @@ data class FormMessages(
     }
 }
 
-/** 按当前语言环境创建字段状态；优先用这个而不是直接构造 [FormFieldState]。 */
+/** Creates a field state for the current locale; prefer this over constructing [FormFieldState] directly. */
 @Composable
 fun rememberFormFieldState(
     initialValue: String = "",
@@ -153,7 +153,7 @@ fun rememberFormState(): FormState {
 /**
  * Form - Form container with validation
  *
- * 表单容器，支持验证规则
+ * Form container with validation rules
  *
  * Features:
  * - Field validation with rules
@@ -169,11 +169,11 @@ fun rememberFormState(): FormState {
  *     formState = formState
  * ) {
  *     FormItem(
- *         label = "用户名",
+ *         label = "Username",
  *         required = true
  *     ) {
  *         val fieldState = rememberFormFieldState(
- *             rules = listOf(FormRule(required = true, message = "请输入用户名"))
+ *             rules = listOf(FormRule(required = true, message = "Please enter a username"))
  *         )
  *         TextField(
  *             value = fieldState.value,

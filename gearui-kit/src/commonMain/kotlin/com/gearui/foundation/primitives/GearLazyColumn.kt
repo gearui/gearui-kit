@@ -20,18 +20,18 @@ import com.gearui.overlay.OverlayManager
 import kotlin.math.abs
 
 /**
- * GearLazyColumn - 封装的垂直懒加载列表
+ * GearLazyColumn - wrapped vertical lazy list
  *
- * 相比原生 LazyColumn 增加了：
- * - 用户拖拽时自动通知 OverlayManager，支持滚动关闭弹层
- * - 使用 awaitFirstDown + 移动检测，确保是拖拽而非点击
+ * On top of the plain LazyColumn it adds:
+ * - notifying OverlayManager when the user drags, so floating layers dismiss on scroll
+ * - awaitFirstDown plus movement detection, so a drag is told apart from a tap
  *
- * 核心原理：
- * - 监听的是"用户开始拖拽"，不是"点击"
- * - 只有当手指移动超过阈值时才触发关闭
- * - 这样点击 Select 触发器不会误触发关闭
+ * How it works:
+ * - it listens for "the user started dragging", not for "a tap"
+ * - dismissal only fires once the finger moves past a threshold
+ * - so tapping a Select trigger does not dismiss it by accident
  *
- * 使用方式与 LazyColumn 完全相同
+ * Used exactly like LazyColumn
  */
 @Composable
 fun GearLazyColumn(
@@ -54,7 +54,7 @@ fun GearLazyColumn(
                 var totalDrag = 0f
                 var notified = false
 
-                // 持续跟踪移动，直到手指抬起
+                // Keep tracking movement until the finger lifts
                 while (true) {
                     val event = awaitPointerEvent()
                     val change = event.changes.firstOrNull() ?: break
@@ -64,7 +64,7 @@ fun GearLazyColumn(
                     val delta = change.positionChange()
                     totalDrag += abs(delta.x) + abs(delta.y)
 
-                    // 移动超过阈值，认为是拖拽，通知关闭
+                    // Moved past the threshold: treat it as a drag and notify
                     if (!notified && totalDrag > dragThreshold) {
                         OverlayManager.notifyScroll()
                         focusManager.clearFocus()
@@ -83,7 +83,7 @@ fun GearLazyColumn(
 }
 
 /**
- * GearLazyRow - 封装的水平懒加载列表
+ * GearLazyRow - wrapped horizontal lazy list
  */
 @Composable
 fun GearLazyRow(

@@ -9,26 +9,26 @@ import com.gearui.unit.Dp
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Spacer - 统一间距原语
+ * Spacer - unified spacing primitive
  *
- * ✅ 作用：替代所有 Spacer(Modifier.height(xx.dp)) 硬编码
- * ✅ 原则：只允许使用 Spacing 中定义的语义化间距值
+ * ✅ Purpose: replaces every hardcoded Spacer(Modifier.height(xx.dp))
+ * ✅ Rule: only the semantic values defined in Spacing may be used
  *
- * 使用场景：
- * - 垂直布局组件之间的间距
- * - 水平布局元素之间的间距
- * - 章节之间的分隔
+ * Use cases:
+ * - gaps between components in a vertical layout
+ * - gaps between elements in a horizontal layout
+ * - separation between sections
  */
 
 /**
- * 垂直间距（最常用）
+ * Vertical gap (the common case)
  *
  * Example:
  * ```
  * Column {
- *     Button("按钮1")
+ *     Button("Button 1")
  *     VerticalSpacer(Spacing.md)
- *     Button("按钮2")
+ *     Button("Button 2")
  * }
  * ```
  */
@@ -38,14 +38,14 @@ fun VerticalSpacer(height: Dp = Spacing.md) {
 }
 
 /**
- * 水平间距
+ * Horizontal gap
  *
  * Example:
  * ```
  * Row {
- *     Button("确定")
+ *     Button("OK")
  *     HorizontalSpacer(Spacing.sm)
- *     Button("取消")
+ *     Button("Cancel")
  * }
  * ```
  */
@@ -55,7 +55,7 @@ fun HorizontalSpacer(width: Dp = Spacing.md) {
 }
 
 /**
- * 便捷别名（常用间距直接调用）
+ * Convenience aliases for the common gaps
  */
 @Composable
 fun SpacerSmall() = VerticalSpacer(Spacing.sm)

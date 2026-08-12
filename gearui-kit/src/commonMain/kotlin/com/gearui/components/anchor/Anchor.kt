@@ -26,7 +26,7 @@ data class AnchorItem(
 /**
  * Anchor - Anchor navigation component
  *
- * 锚点导航组件
+ * Anchor navigation component
  *
  * Features:
  * - Auto highlight current section
@@ -38,7 +38,7 @@ data class AnchorItem(
  * ```
  * Anchor(
  *     items = listOf(
- *         AnchorItem(key = "intro", title = "介绍"),
+ *         AnchorItem(key = "intro", title = "Introduction"),
  *         AnchorItem(key = "api", title = "API"),
  *         AnchorItem(key = "faq", title = "FAQ")
  *     ),

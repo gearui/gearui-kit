@@ -38,15 +38,15 @@ import com.gearui.foundation.field.fieldBorderColor
 import com.gearui.foundation.field.FieldErrorText
 
 /**
- * TreeSelect - 树形选择器
+ * TreeSelect - tree select
  *
- * 基于 Overlay 系统实现的树形下拉选择器
+ * A dropdown tree select built on the Overlay system
  *
  * Features:
- * - 下拉树形视图
- * - 单选/多选支持
- * - 真正的浮层，不破坏布局
- * - 滚动自动关闭（由 Overlay Runtime 统一处理）
+ * - dropdown tree view
+ * - single and multiple selection
+ * - a real floating layer, leaving the layout untouched
+ * - dismisses on scroll (handled centrally by the Overlay Runtime)
  */
 @Composable
 fun TreeSelect(
@@ -68,7 +68,7 @@ fun TreeSelect(
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 用 State 包装，让 lambda 内部能访问最新值
+    // Wrapped in State so the lambdas can read the current value
     val selectedKeyState = rememberUpdatedState(selectedKey)
     val onSelectState = rememberUpdatedState(onSelect)
 
@@ -175,7 +175,7 @@ fun TreeSelect(
 }
 
 /**
- * TreeSelectMultiple - 多选树形选择器
+ * TreeSelectMultiple - multi-select tree select
  */
 @Composable
 fun TreeSelectMultiple(
@@ -197,7 +197,7 @@ fun TreeSelectMultiple(
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 内部状态用于 Overlay 中的实时更新
+    // Internal state, for live updates inside the Overlay
     var internalSelectedKeys by remember(selectedKeys) { mutableStateOf(selectedKeys) }
 
     fun clearDropdownState() {
@@ -215,7 +215,7 @@ fun TreeSelectMultiple(
         val bounds = anchorBounds!!
         val anchorWidth = bounds.width
 
-        // 同步内部状态
+        // Sync the internal state
         internalSelectedKeys = selectedKeys
 
         overlayId = overlay.show(
@@ -227,7 +227,7 @@ fun TreeSelectMultiple(
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
             onDismiss = {
-                // 关闭时同步外部状态
+                // Sync the outer state on dismiss
                 onSelectedChange(internalSelectedKeys)
                 clearDropdownState()
             }
@@ -296,7 +296,7 @@ fun TreeSelectMultiple(
 }
 
 /**
- * 多选树内容组件 - 用于在 Overlay 中保持状态
+ * Multi-select tree content - keeps its state inside the Overlay
  */
 @Composable
 private fun TreeSelectMultipleContent(

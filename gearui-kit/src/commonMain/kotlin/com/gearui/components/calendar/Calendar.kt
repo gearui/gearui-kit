@@ -25,7 +25,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * 日期数据类
+ * Date data class
  */
 data class CalendarDate(
     val year: Int,
@@ -62,7 +62,7 @@ data class CalendarDate(
 }
 
 /**
- * 日历选择类型
+ * Calendar selection mode
  */
 enum class CalendarType {
     Single,
@@ -71,7 +71,7 @@ enum class CalendarType {
 }
 
 /**
- * 日期选中状态
+ * Date selection state
  */
 enum class DateSelectType {
     Selected,
@@ -83,7 +83,7 @@ enum class DateSelectType {
 }
 
 /**
- * Calendar - 日历组件
+ * Calendar - calendar component
  */
 @Composable
 fun Calendar(
@@ -156,7 +156,7 @@ fun Calendar(
 
         CalendarWeekHeader(firstDayOfWeek = firstDayOfWeek)
 
-        // 使用 key 强制在选中状态变化时重组
+        // key forces recomposition when the selection changes
         key(selectedDate, selectedDates.hashCode(), rangeStart, rangeEnd) {
             CalendarGrid(
                 year = displayMonth.year,
@@ -346,7 +346,7 @@ private fun CalendarGrid(
                             val isToday = currentDate == today
                             val isDisabled = selectType == DateSelectType.Disabled
 
-                            // 使用 key 确保每个单元格在状态变化时正确重组
+                            // key makes sure each cell recomposes correctly when the state changes
                             key(currentDate, selectType) {
                                 CalendarCell(
                                     day = currentDay,
@@ -377,7 +377,7 @@ private fun CalendarCell(
 ) {
     val colors = Theme.colors
 
-    // 根据选中状态计算样式
+    // Style derived from the selection state
     val backgroundColor: Color
     val textColor: Color
 
@@ -408,7 +408,7 @@ private fun CalendarCell(
         }
     }
 
-    // 计算形状
+    // Shape
     val shape = when (selectType) {
         DateSelectType.Selected -> CircleShape
         DateSelectType.Start -> RoundedCornerShape(topStart = cellHeight / 2, bottomStart = cellHeight / 2)
@@ -416,7 +416,7 @@ private fun CalendarCell(
         else -> Theme.shapes.none
     }
 
-    // 是否需要背景
+    // Whether a background is needed
     val needBackground = selectType == DateSelectType.Selected ||
             selectType == DateSelectType.Start ||
             selectType == DateSelectType.End ||

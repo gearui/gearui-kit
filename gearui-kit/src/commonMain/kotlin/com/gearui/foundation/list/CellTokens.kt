@@ -4,13 +4,13 @@ import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * CellTokens - Cell 组件尺寸规范
+ * CellTokens - Cell sizing spec
  *
- * Cell = List 生态的核心交互单元
+ * Cell = the core interaction unit of the List family
  *
- * 参考: 内部组件规范cell/td_cell_style.dart
+ * Reference: internal component spec cell/td_cell_style.dart
  *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
+ * ⚠️ Note: colours are not defined here; use Theme.colors
  */
 data class CellTokens(
     val minHeight: Dp,
@@ -22,7 +22,7 @@ data class CellTokens(
 
 object CellDefaults {
     /**
-     * 标准 Cell（最常用）
+     * Standard cell (the common case)
      */
     val Default = CellTokens(
         minHeight = 52.dp,
@@ -33,8 +33,8 @@ object CellDefaults {
     )
 
     /**
-     * 紧凑 Cell（信息密度高的场景）
-     * 44dp 高度 = iOS Compact 模式
+     * Compact cell (for dense information)
+     * 44dp tall = the iOS Compact mode
      */
     val Compact = Default.copy(
         minHeight = 44.dp,

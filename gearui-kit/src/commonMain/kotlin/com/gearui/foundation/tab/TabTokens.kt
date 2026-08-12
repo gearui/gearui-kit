@@ -4,11 +4,11 @@ import com.tencent.kuikly.compose.ui.unit.*
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Tab 尺寸规范
+ * Tab sizing spec
  *
- * 参考: GearUI 组件尺寸规范
+ * Reference: the GearUI component sizing spec
  *
- * ⚠️ 注意：颜色不在这里定义，应使用 Theme.colors
+ * ⚠️ Note: colours are not defined here; use Theme.colors
  */
 data class TabTokens(
     val height: Dp,

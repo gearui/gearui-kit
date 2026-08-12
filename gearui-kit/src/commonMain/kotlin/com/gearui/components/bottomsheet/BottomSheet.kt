@@ -317,29 +317,29 @@ private fun BottomSheetItemRow(
 }
 
 /**
- * BottomSheetItem - 底部面板选项数据类
+ * BottomSheetItem - bottom sheet option data class
  */
 data class BottomSheetItem(
-    /** 选项文本 */
+    /** option label */
     val label: String,
 
-    /** 选项图标（可选） */
+    /** optional option icon */
     val icon: (@Composable () -> Unit)? = null,
 
-    /** 是否为危险操作（红色文字） */
+    /** whether it is a destructive action (red text) */
     val danger: Boolean = false,
 
-    /** 是否禁用 */
+    /** whether it is disabled */
     val disabled: Boolean = false,
 
-    /** 附加数据 */
+    /** attached payload */
     val data: Any? = null
 )
 
 /**
- * BottomSheet.Host - 基于 Overlay 系统的通用底部弹出容器
+ * BottomSheet.Host - general bottom sheet container built on the Overlay system
  *
- * 用于自定义内容的底部弹出面板
+ * For bottom sheets holding custom content
  */
 object BottomSheet {
 
@@ -385,7 +385,7 @@ object BottomSheet {
 }
 
 /**
- * BottomSheetHostSurface - 自定义内容的底部弹出容器
+ * BottomSheetHostSurface - bottom sheet container for custom content
  */
 @Composable
 private fun BottomSheetHostSurface(
@@ -403,7 +403,7 @@ private fun BottomSheetHostSurface(
                 .clip(OverlayDefaults.sheetShape)
                 .background(colors.surface)
                 .pointerInput(Unit) {
-                    // 阻止事件穿透到背景
+                    // Stop events passing through to the background
                     detectTapGestures { }
                 }
         ) {
@@ -413,9 +413,9 @@ private fun BottomSheetHostSurface(
 }
 
 /**
- * BottomSheetState - 便捷状态管理类
+ * BottomSheetState - convenience state holder
  *
- * 使用方式：
+ * Usage:
  * ```
  * val sheetState = remember { BottomSheetState() }
  *
@@ -423,11 +423,11 @@ private fun BottomSheetHostSurface(
  *     visible = sheetState.visible,
  *     onDismiss = { sheetState.hide() },
  *     items = listOf(
- *         BottomSheetItem("分享"),
- *         BottomSheetItem("删除", danger = true)
+ *         BottomSheetItem("Share"),
+ *         BottomSheetItem("Delete", danger = true)
  *     ),
  *     onItemClick = { item, index ->
- *         // 处理点击
+ *         // handle the tap
  *     }
  * )
  * ```

@@ -33,7 +33,7 @@ import com.gearui.theme.ThemeSpec
 import kotlinx.coroutines.launch
 
 /**
- * 导航页面枚举
+ * Navigation page enum
  */
 enum class AppPage {
     HOME,
@@ -42,14 +42,14 @@ enum class AppPage {
 }
 
 /**
- * GearUI 示例主页面
+ * GearUI sample main page
  *
- * - HomePage: 组件列表页
- * - ExamplePages: 62 个组件的独立展示页
- * - SettingsPage: 设置页面
- * - NavigationManager: 导航管理
+ * - HomePage: the component index
+ * - ExamplePages: 62 standalone component pages
+ * - SettingsPage: settings
+ * - NavigationManager: navigation
  *
- * 支持动态主题和语言切换
+ * Supports switching theme and language at runtime
  */
 @Page("MainDemo")
 class MainDemo : View() {
@@ -62,13 +62,13 @@ class MainDemo : View() {
 
 @Composable
 fun MainDemoContent() {
-    // 设置状态 - 控制主题和语言
+    // Settings state - drives theme and language
     val settingsState = remember { SettingsState() }
 
-    // 获取系统深色模式状态
+    // System dark mode state
     val isSystemDark = StatusBarControllerImpl.isSystemDarkMode()
 
-    // 根据设置状态计算主题模式和自定义主题
+    // Theme mode and custom theme derived from the settings state
     val (themeMode, customTheme) = when (settingsState.themeStyle) {
         ThemeStyle.LIGHT -> ThemeMode.Light to null
         ThemeStyle.DARK -> ThemeMode.Dark to null
@@ -76,17 +76,17 @@ fun MainDemoContent() {
         ThemeStyle.SYSTEM -> ThemeMode.System to null
     }
 
-    // 使用 App 统一入口（整合 i18n + Theme + Overlay + Toast）
+    // App as the single entry point (i18n + Theme + Overlay + Toast together)
     App(
         themeMode = themeMode,
         isSystemDark = isSystemDark,
         theme = customTheme,
         languageTag = settingsState.languageTag,
     ) {
-        // 更新状态栏颜色
+        // Update the status bar colour
         StatusBarEffect(themeStyle = settingsState.themeStyle)
 
-        // sample 自身的语言包，依赖 App 已挂的 LocalLanguageTag
+        // The sample's own language pack, relying on the LocalLanguageTag that App already provides
         SampleI18nProvider {
             CompositionLocalProvider(LocalSettingsState provides settingsState) {
                 MainDemoContentInner(settingsState = settingsState)
@@ -96,16 +96,16 @@ fun MainDemoContent() {
 }
 
 /**
- * 状态栏颜色同步效果
- * 根据当前主题自动更新状态栏
+ * Status bar colour synchronisation
+ * Updates the status bar to match the current theme
  */
 @Composable
 private fun StatusBarEffect(themeStyle: ThemeStyle) {
     val colors = Theme.colors
     val statusBarColor = if (themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
 
-    // 使用 surface 颜色作为状态栏背景
-    // 深色主题用浅色图标，浅色主题用深色图标
+    // The surface colour is used as the status bar background
+    // Dark theme takes light icons, light theme takes dark icons
     val forceLightIcons = themeStyle == ThemeStyle.DARK_PURPLE
     val isDarkTheme = if (forceLightIcons) true else {
         (statusBarColor.red + statusBarColor.green + statusBarColor.blue) / 3f < 0.5f
@@ -120,8 +120,8 @@ private fun StatusBarEffect(themeStyle: ThemeStyle) {
 }
 
 /**
- * 状态栏控制器实现（平台特定）
- * 在 Android 端由 MainActivity 注册实际实现
+ * Status bar controller implementation (platform specific)
+ * On Android the real implementation is registered by MainActivity
  */
 expect object StatusBarControllerImpl {
     fun setStatusBarColor(color: com.tencent.kuikly.compose.ui.graphics.Color, darkIcons: Boolean)
@@ -130,11 +130,11 @@ expect object StatusBarControllerImpl {
 
 @Composable
 private fun MainDemoContentInner(settingsState: SettingsState) {
-    // 导航状态管理
+    // Navigation state
     var currentPage by remember { mutableStateOf(AppPage.HOME) }
     var currentComponent by remember { mutableStateOf<ComponentInfo?>(null) }
 
-    // 首页列表滚动状态
+    // Home list scroll state
     val homeListState = rememberLazyListState()
 
     fun returnToHome() {
@@ -159,7 +159,7 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
         AppPage.COMPONENT_DETAIL -> {
             currentComponent?.let { component ->
                 if (component.id == "navigator-kuikly-spike" || component.id == "navigator-v1-demo") {
-                    // 这两个详情页内部自带 swipeBack/Navigator，绕过外层 SwipeBackHost 避免手势冲突
+                    // These two detail pages carry their own swipeBack/Navigator, so they bypass the outer SwipeBackHost to avoid gesture conflicts
                     NavigationManager.getExamplePage(
                         component = component,
                         onBack = { returnToHome() }

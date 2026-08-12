@@ -17,9 +17,9 @@ import com.gearui.foundation.layout.Spacing
 import kotlin.math.roundToInt
 
 /**
- * Slider 滑块组件示例
+ * Slider component examples
  *
- * 用于选择横轴上的数值、区间、档位。
+ * Selects a value, a range or a step along an axis.
  */
 @Composable
 fun SliderExample(
@@ -32,9 +32,9 @@ fun SliderExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 单游标滑块
+        // Single-thumb slider
         var singleValue by remember { mutableStateOf(10f) }
         ExampleSection(
             title = "单游标滑块",
@@ -48,7 +48,7 @@ fun SliderExample(
             )
         }
 
-        // 双游标滑块
+        // Two-thumb slider
         ExampleSection(
             title = "双游标滑块",
             description = "选择数值范围"
@@ -61,7 +61,7 @@ fun SliderExample(
             )
         }
 
-        // 带数值单游标滑块
+        // Single-thumb slider with a value
         var singleWithNumberValue by remember { mutableStateOf(10f) }
         ExampleSection(
             title = "带数值单游标滑块",
@@ -78,7 +78,7 @@ fun SliderExample(
             )
         }
 
-        // 带数值双游标滑块
+        // Two-thumb slider with values
         ExampleSection(
             title = "带数值双游标滑块",
             description = "显示左右标签和当前值"
@@ -116,7 +116,7 @@ fun SliderExample(
             }
         }
 
-        // 带刻度单游标滑块
+        // Single-thumb slider with ticks
         var scaleValue by remember { mutableStateOf(60f) }
         ExampleSection(
             title = "带刻度单游标滑块",
@@ -132,7 +132,7 @@ fun SliderExample(
                     valueRange = 0f..100f,
                     modifier = Modifier.fillMaxWidth()
                 )
-                // 刻度标签
+                // Tick labels
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -148,7 +148,7 @@ fun SliderExample(
             }
         }
 
-        // 带刻度双游标滑块
+        // Two-thumb slider with ticks
         ExampleSection(
             title = "带刻度双游标滑块",
             description = "显示刻度值"
@@ -163,7 +163,7 @@ fun SliderExample(
                     valueRange = 0f..100f,
                     modifier = Modifier.fillMaxWidth()
                 )
-                // 刻度标签
+                // Tick labels
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -179,9 +179,9 @@ fun SliderExample(
             }
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "单游标禁用"
@@ -197,7 +197,7 @@ fun SliderExample(
             )
         }
 
-        // 禁用状态 - 带数值双游标
+        // Disabled state - two thumbs with values
         ExampleSection(
             title = "",
             description = "带数值双游标禁用"
@@ -236,7 +236,7 @@ fun SliderExample(
             }
         }
 
-        // 禁用状态 - 带刻度双游标
+        // Disabled state - two thumbs with ticks
         ExampleSection(
             title = "",
             description = "带刻度双游标禁用"
@@ -252,7 +252,7 @@ fun SliderExample(
                     enabled = false,
                     modifier = Modifier.fillMaxWidth()
                 )
-                // 刻度标签
+                // Tick labels
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -268,9 +268,9 @@ fun SliderExample(
             }
         }
 
-        // ========== 特殊样式 ==========
+        // ========== Special styles ==========
 
-        // 胶囊型滑块示例
+        // Pill-shaped slider
         var capsuleValue by remember { mutableStateOf(40f) }
         ExampleSection(
             title = "胶囊型滑块",
@@ -280,7 +280,7 @@ fun SliderExample(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
-                // 带数值
+                // With a value
                 Slider(
                     value = capsuleValue,
                     onValueChange = { capsuleValue = it },
@@ -289,7 +289,7 @@ fun SliderExample(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // 带标签
+                // With a label
                 var capsuleValue2 by remember { mutableStateOf(40f) }
                 Slider(
                     value = capsuleValue2,
@@ -302,7 +302,7 @@ fun SliderExample(
             }
         }
 
-        // ========== 实际应用场景 ==========
+        // ========== Real use cases ==========
 
         ExampleSection(
             title = "应用场景",
@@ -312,7 +312,7 @@ fun SliderExample(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
-                // 音量控制
+                // Volume control
                 var volumeValue by remember { mutableStateOf(70f) }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(Spacing.xs)
@@ -342,7 +342,7 @@ fun SliderExample(
                     )
                 }
 
-                // 亮度控制
+                // Brightness control
                 var brightnessValue by remember { mutableStateOf(80f) }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(Spacing.xs)
@@ -372,7 +372,7 @@ fun SliderExample(
                     )
                 }
 
-                // 价格筛选
+                // Price filter
                 var priceValue by remember { mutableStateOf(500f) }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(Spacing.xs)
@@ -402,7 +402,7 @@ fun SliderExample(
                     )
                 }
 
-                // 温度调节
+                // Temperature control
                 var temperatureValue by remember { mutableStateOf(24f) }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(Spacing.xs)

@@ -23,13 +23,13 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Tour 组件示例
+ * Tour component examples
  *
- * 漫游式引导组件，用于新用户引导或功能介绍
- * - 支持多步骤引导
- * - 支持上一步/下一步导航
- * - 支持跳过功能
- * - 显示进度指示器
+ * A guided walkthrough, for onboarding new users or introducing a feature
+ * - multiple steps
+ * - previous / next navigation
+ * - skipping
+ * - a progress indicator
  */
 @Composable
 fun TourExample(
@@ -38,7 +38,7 @@ fun TourExample(
 ) {
     val colors = Theme.colors
 
-    // 基础引导状态
+    // Basic tour state
     val basicTourState = rememberTourState(
         steps = listOf(
             TourStep(
@@ -56,7 +56,7 @@ fun TourExample(
         )
     )
 
-    // 多步骤引导状态
+    // Multi-step tour state
     val multiStepTourState = rememberTourState(
         steps = listOf(
             TourStep(
@@ -82,7 +82,7 @@ fun TourExample(
         )
     )
 
-    // 带跳过的引导状态
+    // Skippable tour state
     val skipTourState = rememberTourState(
         steps = listOf(
             TourStep(
@@ -100,7 +100,7 @@ fun TourExample(
         )
     )
 
-    // 场景引导状态
+    // Scenario tour state
     val sceneTourState = rememberTourState(
         steps = listOf(
             TourStep(
@@ -121,7 +121,7 @@ fun TourExample(
         )
     )
 
-    // 记录引导完成状态
+    // Records whether the tour has been completed
     var basicTourCompleted by remember { mutableStateOf(false) }
     var multiStepTourCompleted by remember { mutableStateOf(false) }
     var skipTourSkipped by remember { mutableStateOf(false) }
@@ -130,9 +130,9 @@ fun TourExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 基础用法
+        // Basic usage
         ExampleSection(
             title = "基础用法",
             description = "简单的三步引导流程"
@@ -164,7 +164,7 @@ fun TourExample(
             }
         }
 
-        // 多步骤引导
+        // Multi-step tour
         ExampleSection(
             title = "多步骤引导",
             description = "五步详细操作教程"
@@ -196,7 +196,7 @@ fun TourExample(
             }
         }
 
-        // 可跳过的引导
+        // Skippable tour
         ExampleSection(
             title = "可跳过的引导",
             description = "用户可以随时跳过引导"
@@ -229,15 +229,15 @@ fun TourExample(
             }
         }
 
-        // ========== 使用场景 ==========
+        // ========== Use cases ==========
 
-        // 模拟场景
+        // A mock scenario
         ExampleSection(
             title = "场景示例",
             description = "模拟实际界面中的引导效果"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                // 模拟界面
+                // Mock interface
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -250,13 +250,13 @@ fun TourExample(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        // 顶部栏
+                        // Top bar
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            // 搜索框模拟
+                            // Mock search box
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -275,7 +275,7 @@ fun TourExample(
 
                             Spacer(modifier = Modifier.width(8.dp))
 
-                            // 筛选按钮
+                            // Filter button
                             Box(
                                 modifier = Modifier
                                     .size(36.dp)
@@ -291,7 +291,7 @@ fun TourExample(
                             }
                         }
 
-                        // 内容区域
+                        // Content area
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -307,7 +307,7 @@ fun TourExample(
                             )
                         }
 
-                        // 底部添加按钮
+                        // Bottom add button
                         Box(
                             modifier = Modifier.fillMaxWidth(),
                             contentAlignment = Alignment.CenterEnd
@@ -344,7 +344,7 @@ fun TourExample(
             }
         }
 
-        // ========== 快速测试 ==========
+        // ========== Quick test ==========
 
         ExampleSection(
             title = "快速测试",

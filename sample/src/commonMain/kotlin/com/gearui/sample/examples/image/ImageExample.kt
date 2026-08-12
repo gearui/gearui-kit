@@ -25,9 +25,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * Image 组件示例
+ * Image component examples
  *
- * 用于展示效果，主要为上下左右居中裁切、拉伸、平铺等方式
+ * Shows how images are cropped to the centre, stretched, tiled and so on
  */
 @Composable
 fun ImageExample(
@@ -40,9 +40,9 @@ fun ImageExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 裁剪和拉伸
+        // Crop and stretch
         ExampleSection(
             title = "组件类型",
             description = "不同的图片填充模式"
@@ -51,7 +51,7 @@ fun ImageExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 裁剪
+                // Crop
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -71,7 +71,7 @@ fun ImageExample(
                     )
                 }
 
-                // 拉伸
+                // Stretch
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -99,7 +99,7 @@ fun ImageExample(
             }
         }
 
-        // 适应高和适应宽
+        // Fit height and fit width
         ExampleSection(
             title = "适应模式",
             description = "适应高度或宽度"
@@ -108,7 +108,7 @@ fun ImageExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 适应高
+                // Fit height
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -134,7 +134,7 @@ fun ImageExample(
                     }
                 }
 
-                // 适应宽
+                // Fit width
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -162,7 +162,7 @@ fun ImageExample(
             }
         }
 
-        // 图片形状
+        // Image shapes
         ExampleSection(
             title = "图片形状",
             description = "方形、圆角方形、圆形"
@@ -171,7 +171,7 @@ fun ImageExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 方形
+                // Square
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -189,7 +189,7 @@ fun ImageExample(
                     )
                 }
 
-                // 圆角方形
+                // Rounded square
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -208,7 +208,7 @@ fun ImageExample(
                     )
                 }
 
-                // 圆形
+                // Circle
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -228,9 +228,9 @@ fun ImageExample(
             }
         }
 
-        // ========== 组件状态 ==========
+        // ========== Component states ==========
 
-        // 加载状态
+        // Loading state
         ExampleSection(
             title = "组件状态 - 加载中",
             description = "默认提示和自定义提示"
@@ -239,7 +239,7 @@ fun ImageExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 加载默认提示
+                // Default loading message
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -264,7 +264,7 @@ fun ImageExample(
                     }
                 }
 
-                // 加载自定义提示
+                // Custom loading message
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -281,7 +281,7 @@ fun ImageExample(
                             .background(colors.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        // 自定义加载指示器（使用圆圈模拟）
+                        // Custom loading indicator (a circle standing in for one)
                         Box(
                             modifier = Modifier
                                 .size(24.dp)
@@ -293,7 +293,7 @@ fun ImageExample(
             }
         }
 
-        // 失败状态
+        // Failure state
         ExampleSection(
             title = "组件状态 - 加载失败",
             description = "默认提示和自定义提示"
@@ -302,7 +302,7 @@ fun ImageExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // 失败默认提示
+                // Default failure message
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -321,7 +321,7 @@ fun ImageExample(
                     )
                 }
 
-                // 失败自定义提示
+                // Custom failure message
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -348,7 +348,7 @@ fun ImageExample(
             }
         }
 
-        // ========== 头像组件 ==========
+        // ========== Avatar ==========
 
         ExampleSection(
             title = "头像组件",
@@ -425,7 +425,7 @@ fun ImageExample(
             }
         }
 
-        // ========== 带边框 ==========
+        // ========== With a border ==========
 
         ExampleSection(
             title = "带边框图片",
@@ -495,7 +495,7 @@ fun ImageExample(
             }
         }
 
-        // ========== 图片占位符 ==========
+        // ========== Image placeholder ==========
 
         ExampleSection(
             title = "图片占位符",
@@ -522,7 +522,7 @@ fun ImageExample(
             }
         }
 
-        // ========== 图片画廊 ==========
+        // ========== Image gallery ==========
 
         ExampleSection(
             title = "图片画廊",

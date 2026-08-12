@@ -25,9 +25,9 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Calendar 日历组件示例
+ * Calendar component examples
  *
- * 按照日历形式展示数据或日期的容器。
+ * A container that presents data or dates in calendar form.
  */
 @Composable
 fun CalendarExample(
@@ -36,24 +36,24 @@ fun CalendarExample(
 ) {
     val colors = Theme.colors
 
-    // 单选状态
+    // Single selection state
     var singleSelectedDate by remember { mutableStateOf<CalendarDate?>(null) }
     var showSingleCalendar by remember { mutableStateOf(false) }
 
-    // 多选状态
+    // Multiple selection state
     var multipleSelectedDates by remember { mutableStateOf<List<CalendarDate>>(emptyList()) }
     var showMultipleCalendar by remember { mutableStateOf(false) }
 
-    // 区间选择状态
+    // Range selection state
     var rangeStartDate by remember { mutableStateOf<CalendarDate?>(null) }
     var rangeEndDate by remember { mutableStateOf<CalendarDate?>(null) }
     var showRangeCalendar by remember { mutableStateOf(false) }
 
-    // 不使用 Popup 的日历
+    // Calendar without a popup
     var blockCalendarDate by remember { mutableStateOf<CalendarDate?>(null) }
     var blockCalendarMonth by remember { mutableStateOf(CalendarDate(2024, 1, 1)) }
 
-    // 应用场景
+    // Use cases
     var appointmentDate by remember { mutableStateOf<CalendarDate?>(null) }
     var showAppointmentCalendar by remember { mutableStateOf(false) }
 
@@ -66,7 +66,7 @@ fun CalendarExample(
             component = component,
             onBack = onBack
         ) {
-            // ========== 组件类型 ==========
+            // ========== Component types ==========
             ExampleSection(
                 title = "组件类型",
                 description = "不同选择模式的日历"
@@ -77,7 +77,7 @@ fun CalendarExample(
                         .clip(RoundedCornerShape(8.dp))
                         .background(colors.surface)
                 ) {
-                    // 单个选择日历
+                    // Single selection calendar
                     Cell(
                         title = "单个选择日历",
                         note = singleSelectedDate?.let { "${it.year}-${it.month}-${it.day}" } ?: "请选择",
@@ -85,7 +85,7 @@ fun CalendarExample(
                         onClick = { showSingleCalendar = true }
                     )
 
-                    // 分割线
+                    // Divider
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -94,7 +94,7 @@ fun CalendarExample(
                             .background(colors.border)
                     )
 
-                    // 多个选择日历
+                    // Multiple selection calendar
                     Cell(
                         title = "多个选择日历",
                         note = if (multipleSelectedDates.isNotEmpty())
@@ -104,7 +104,7 @@ fun CalendarExample(
                         onClick = { showMultipleCalendar = true }
                     )
 
-                    // 分割线
+                    // Divider
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -113,7 +113,7 @@ fun CalendarExample(
                             .background(colors.border)
                     )
 
-                    // 区间选择日历
+                    // Range selection calendar
                     Cell(
                         title = "区间选择日历",
                         note = if (rangeStartDate != null && rangeEndDate != null)
@@ -125,7 +125,7 @@ fun CalendarExample(
                 }
             }
 
-            // ========== 不使用 Popup ==========
+            // ========== Without a popup ==========
             ExampleSection(
                 title = "不使用 Popup",
                 description = "日历直接嵌入页面展示"
@@ -134,7 +134,7 @@ fun CalendarExample(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
-                    // 月份切换按钮
+                    // Month switch buttons
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(Spacing.lg, Alignment.CenterHorizontally)
@@ -165,7 +165,7 @@ fun CalendarExample(
                         )
                     }
 
-                    // 日历直接展示
+                    // Calendar shown inline
                     Calendar(
                         type = CalendarType.Single,
                         selectedDate = blockCalendarDate,
@@ -178,7 +178,7 @@ fun CalendarExample(
                         }
                     )
 
-                    // 显示选中日期
+                    // Selected dates
                     if (blockCalendarDate != null) {
                         Text(
                             text = "已选择: ${blockCalendarDate!!.year}年${blockCalendarDate!!.month}月${blockCalendarDate!!.day}日",
@@ -189,7 +189,7 @@ fun CalendarExample(
                 }
             }
 
-            // ========== 应用场景 ==========
+            // ========== Use cases ==========
             ExampleSection(
                 title = "应用场景",
                 description = "实际使用示例"
@@ -198,7 +198,7 @@ fun CalendarExample(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(Spacing.lg)
                 ) {
-                    // 预约日期选择
+                    // Booking date selection
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -215,7 +215,7 @@ fun CalendarExample(
                         )
                     }
 
-                    // 出行日期选择
+                    // Travel date selection
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -235,9 +235,9 @@ fun CalendarExample(
             }
         }
 
-        // ========== Popup 弹窗 ==========
+        // ========== Popup dialogs ==========
 
-        // 单选日历 Popup
+        // Single selection calendar popup
         CalendarPopup(
             visible = showSingleCalendar,
             onClose = { showSingleCalendar = false },
@@ -249,7 +249,7 @@ fun CalendarExample(
             }
         )
 
-        // 多选日历 Popup
+        // Multiple selection calendar popup
         CalendarPopup(
             visible = showMultipleCalendar,
             onClose = { showMultipleCalendar = false },
@@ -261,7 +261,7 @@ fun CalendarExample(
             }
         )
 
-        // 区间选择日历 Popup
+        // Range selection calendar popup
         CalendarPopup(
             visible = showRangeCalendar,
             onClose = { showRangeCalendar = false },
@@ -275,7 +275,7 @@ fun CalendarExample(
             }
         )
 
-        // 预约日期 Popup
+        // Booking date popup
         CalendarPopup(
             visible = showAppointmentCalendar,
             onClose = { showAppointmentCalendar = false },
@@ -287,7 +287,7 @@ fun CalendarExample(
             }
         )
 
-        // 出行日期 Popup
+        // Travel date popup
         CalendarPopup(
             visible = showTravelCalendar,
             onClose = { showTravelCalendar = false },

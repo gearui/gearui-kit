@@ -16,9 +16,9 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
- * ActionSheet 动作面板组件示例
+ * ActionSheet component examples
  *
- * 由用户操作后触发的一种特定的模态弹出框，呈现一组与当前情境相关的两个或多个选项。
+ * A modal panel raised by a user action, offering two or more options relevant to the current context.
  */
 @Composable
 fun ActionSheetExample(
@@ -27,7 +27,7 @@ fun ActionSheetExample(
 ) {
     val colors = Theme.colors
 
-    // ActionSheet 状态
+    // ActionSheet state
     var showBasicList by remember { mutableStateOf(false) }
     var showDescList by remember { mutableStateOf(false) }
     var showIconList by remember { mutableStateOf(false) }
@@ -48,15 +48,15 @@ fun ActionSheetExample(
             component = component,
             onBack = onBack
         ) {
-            // ==================== 组件类型 ====================
+            // ==================== Component types ====================
 
-            // 列表型动作面板
+            // List-style action sheet
             ExampleSection(
                 title = "列表型动作面板",
                 description = "常规列表、带描述、带图标、带徽标"
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // 常规列表
+                    // Plain list
                     Button(
                         text = "常规列表",
                         onClick = { showBasicList = true },
@@ -65,7 +65,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带描述列表
+                    // List with descriptions
                     Button(
                         text = "带描述列表",
                         onClick = { showDescList = true },
@@ -74,7 +74,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带图标列表
+                    // List with icons
                     Button(
                         text = "带图标列表",
                         onClick = { showIconList = true },
@@ -83,7 +83,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带徽标列表
+                    // List with badges
                     Button(
                         text = "带徽标列表",
                         onClick = { showBadgeList = true },
@@ -92,7 +92,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带Cell描述列表
+                    // List with Cell descriptions
                     Button(
                         text = "带Cell描述列表",
                         onClick = { showItemDescList = true },
@@ -103,13 +103,13 @@ fun ActionSheetExample(
                 }
             }
 
-            // 宫格型动作面板
+            // Grid-style action sheet
             ExampleSection(
                 title = "宫格型动作面板",
                 description = "常规宫格、带描述、带徽标"
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // 常规宫格
+                    // Plain grid
                     Button(
                         text = "常规宫格",
                         onClick = { showBasicGrid = true },
@@ -118,7 +118,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带描述宫格
+                    // Grid with descriptions
                     Button(
                         text = "带描述宫格",
                         onClick = { showDescGrid = true },
@@ -127,7 +127,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 带徽标宫格
+                    // Grid with badges
                     Button(
                         text = "带徽标宫格",
                         onClick = { showBadgeGrid = true },
@@ -138,15 +138,15 @@ fun ActionSheetExample(
                 }
             }
 
-            // ==================== 组件状态 ====================
+            // ==================== Component states ====================
 
-            // 列表型选项状态
+            // List option states
             ExampleSection(
                 title = "列表型选项状态",
                 description = "默认、自定义颜色、禁用、警告"
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // 列表型选项状态
+                    // List option states
                     Button(
                         text = "列表型选项状态",
                         onClick = { showStateList = true },
@@ -155,7 +155,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 列表型带图标状态
+                    // List option states with icons
                     Button(
                         text = "列表型带图标状态",
                         onClick = { showIconStateList = true },
@@ -166,15 +166,15 @@ fun ActionSheetExample(
                 }
             }
 
-            // ==================== 组件样式 ====================
+            // ==================== Component styles ====================
 
-            // 列表型对齐方式
+            // List alignment
             ExampleSection(
                 title = "列表型对齐方式",
                 description = "居中对齐、左对齐"
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // 居中带徽标列表
+                    // Centred list with badges
                     Button(
                         text = "居中带徽标列表",
                         onClick = { showCenterBadgeList = true },
@@ -183,7 +183,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 居中带图标列表
+                    // Centred list with icons
                     Button(
                         text = "居中带图标列表",
                         onClick = { showCenterIconList = true },
@@ -192,7 +192,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 左对齐带徽标列表
+                    // Leading-aligned list with badges
                     Button(
                         text = "左对齐带徽标列表",
                         onClick = { showLeftBadgeList = true },
@@ -201,7 +201,7 @@ fun ActionSheetExample(
                         block = true
                     )
 
-                    // 左对齐带图标列表
+                    // Leading-aligned list with icons
                     Button(
                         text = "左对齐带图标列表",
                         onClick = { showLeftIconList = true },
@@ -213,9 +213,9 @@ fun ActionSheetExample(
             }
         }
 
-        // ==================== ActionSheet 弹窗 ====================
+        // ==================== ActionSheet dialogs ====================
 
-        // 常规列表
+        // Plain list
         if (showBasicList) {
             ActionSheetContent(
                 visible = true,
@@ -234,7 +234,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带描述列表
+        // List with descriptions
         if (showDescList) {
             ActionSheetContent(
                 visible = true,
@@ -254,7 +254,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带图标列表
+        // List with icons
         if (showIconList) {
             ActionSheetContent(
                 visible = true,
@@ -273,7 +273,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带徽标列表
+        // List with badges
         if (showBadgeList) {
             ActionSheetContent(
                 visible = true,
@@ -292,7 +292,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带Cell描述列表
+        // List with Cell descriptions
         if (showItemDescList) {
             ActionSheetContent(
                 visible = true,
@@ -311,7 +311,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 常规宫格
+        // Plain grid
         if (showBasicGrid) {
             ActionSheetContent(
                 visible = true,
@@ -335,7 +335,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带描述宫格
+        // Grid with descriptions
         if (showDescGrid) {
             ActionSheetContent(
                 visible = true,
@@ -360,7 +360,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 带徽标宫格
+        // Grid with badges
         if (showBadgeGrid) {
             ActionSheetContent(
                 visible = true,
@@ -384,7 +384,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 列表型选项状态
+        // List option states
         if (showStateList) {
             ActionSheetContent(
                 visible = true,
@@ -403,7 +403,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 列表型带图标状态
+        // List option states with icons
         if (showIconStateList) {
             ActionSheetContent(
                 visible = true,
@@ -422,7 +422,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 居中带徽标列表
+        // Centred list with badges
         if (showCenterBadgeList) {
             ActionSheetContent(
                 visible = true,
@@ -442,7 +442,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 居中带图标列表
+        // Centred list with icons
         if (showCenterIconList) {
             ActionSheetContent(
                 visible = true,
@@ -463,7 +463,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 左对齐带徽标列表
+        // Leading-aligned list with badges
         if (showLeftBadgeList) {
             ActionSheetContent(
                 visible = true,
@@ -484,7 +484,7 @@ fun ActionSheetExample(
             )
         }
 
-        // 左对齐带图标列表
+        // Leading-aligned list with icons
         if (showLeftIconList) {
             ActionSheetContent(
                 visible = true,

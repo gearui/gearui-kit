@@ -24,9 +24,9 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Input 组件示例
+ * Input component examples
  *
- * 用于在预设的一组选项中执行单项选择，并呈现选择结果。
+ * Lets the user type text and shows the result.
  */
 @Composable
 fun InputExample(
@@ -39,15 +39,15 @@ fun InputExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础输入框
+        // Basic input
         ExampleSection(
             title = "基础输入框",
             description = "标准文本输入框"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 带标签
+                // With a label
                 var value1 by remember { mutableStateOf("") }
                 Input(
                     value = value1,
@@ -56,7 +56,7 @@ fun InputExample(
                     placeholder = "Please enter text"
                 )
 
-                // 必填项
+                // Required
                 var value2 by remember { mutableStateOf("") }
                 Input(
                     value = value2,
@@ -66,7 +66,7 @@ fun InputExample(
                     placeholder = "请输入文字"
                 )
 
-                // 选填项
+                // Optional
                 var value3 by remember { mutableStateOf("") }
                 Input(
                     value = value3,
@@ -75,7 +75,7 @@ fun InputExample(
                     placeholder = "请输入文字(选填)"
                 )
 
-                // 纯输入框（无标签）
+                // Bare input (no label)
                 var value4 by remember { mutableStateOf("") }
                 Input(
                     value = value4,
@@ -83,7 +83,7 @@ fun InputExample(
                     placeholder = "请输入文字"
                 )
 
-                // 带辅助说明
+                // With helper text
                 var value5 by remember { mutableStateOf("") }
                 Input(
                     value = value5,
@@ -95,7 +95,7 @@ fun InputExample(
             }
         }
 
-        // 带字数限制输入框
+        // Input with a character limit
         ExampleSection(
             title = "带字数限制输入框",
             description = "限制最大输入字符数"
@@ -125,13 +125,13 @@ fun InputExample(
             }
         }
 
-        // 带操作输入框
+        // Input with actions
         ExampleSection(
             title = "带操作输入框",
             description = "输入框右侧带操作按钮或图标"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 带清除图标
+                // With a clear icon
                 var value1 by remember { mutableStateOf("可清除的内容") }
                 Input(
                     value = value1,
@@ -142,7 +142,7 @@ fun InputExample(
                     onClear = { value1 = "" }
                 )
 
-                // 带操作按钮
+                // With an action button
                 var value2 by remember { mutableStateOf("") }
                 Input(
                     value = value2,
@@ -159,7 +159,7 @@ fun InputExample(
                     }
                 )
 
-                // 带图标按钮
+                // With an icon button
                 var value3 by remember { mutableStateOf("") }
                 Input(
                     value = value3,
@@ -177,7 +177,7 @@ fun InputExample(
             }
         }
 
-        // 带图标输入框
+        // Input with an icon
         ExampleSection(
             title = "带图标输入框",
             description = "输入框左侧带图标"
@@ -212,13 +212,13 @@ fun InputExample(
             }
         }
 
-        // 特定类型输入框
+        // Specific input types
         ExampleSection(
             title = "特定类型输入框",
             description = "密码、验证码、手机号、价格等"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 密码输入框
+                // Password
                 var password by remember { mutableStateOf("") }
                 var showPassword by remember { mutableStateOf(false) }
                 Input(
@@ -236,7 +236,7 @@ fun InputExample(
                     }
                 )
 
-                // 验证码输入框
+                // Verification code
                 var verifyCode by remember { mutableStateOf("") }
                 Input(
                     value = verifyCode,
@@ -273,7 +273,7 @@ fun InputExample(
                     }
                 )
 
-                // 手机号输入框
+                // Phone number
                 var phone by remember { mutableStateOf("") }
                 var countdown by remember { mutableStateOf(0) }
                 Input(
@@ -304,7 +304,7 @@ fun InputExample(
                     }
                 )
 
-                // 价格输入框
+                // Price
                 var price by remember { mutableStateOf("") }
                 Input(
                     value = price,
@@ -321,7 +321,7 @@ fun InputExample(
                     }
                 )
 
-                // 数量输入框
+                // Quantity
                 var quantity by remember { mutableStateOf("") }
                 Input(
                     value = quantity,
@@ -340,15 +340,15 @@ fun InputExample(
             }
         }
 
-        // ==================== 组件状态 ====================
+        // ==================== Component states ====================
 
-        // 输入框状态
+        // Input states
         ExampleSection(
             title = "输入框状态",
             description = "错误提示、只读状态"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 错误状态
+                // Error state
                 var errorValue by remember { mutableStateOf("错误的输入内容") }
                 Input(
                     value = errorValue,
@@ -358,7 +358,7 @@ fun InputExample(
                     error = "错误提示说明"
                 )
 
-                // 只读状态
+                // Read-only state
                 Input(
                     value = "不可编辑文字",
                     onValueChange = {},
@@ -368,13 +368,13 @@ fun InputExample(
             }
         }
 
-        // 信息超长状态
+        // Overlong content
         ExampleSection(
             title = "信息超长状态",
             description = "标签超长、输入超长"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // 标签超长
+                // Overlong label
                 var value1 by remember { mutableStateOf("") }
                 Input(
                     value = value1,
@@ -383,7 +383,7 @@ fun InputExample(
                     placeholder = "请输入文字"
                 )
 
-                // 输入超长
+                // Overlong input
                 Input(
                     value = "输入文字超长不超过两行输入文字超长不超过两行",
                     onValueChange = {},
@@ -393,9 +393,9 @@ fun InputExample(
             }
         }
 
-        // ==================== 组件样式 ====================
+        // ==================== Component styles ====================
 
-        // 内容位置
+        // Content alignment
         ExampleSection(
             title = "内容位置",
             description = "左对齐、居中、右对齐"
@@ -427,7 +427,7 @@ fun InputExample(
             }
         }
 
-        // 竖排样式
+        // Stacked style
         ExampleSection(
             title = "竖排样式",
             description = "标签在输入框上方"
@@ -449,7 +449,7 @@ fun InputExample(
             )
         }
 
-        // 非通栏样式
+        // Inset style
         ExampleSection(
             title = "非通栏样式",
             description = "卡片式输入框"
@@ -470,7 +470,7 @@ fun InputExample(
             }
         }
 
-        // 标签外置样式
+        // Label outside style
         ExampleSection(
             title = "标签外置样式",
             description = "标签在输入框外部上方"
@@ -501,7 +501,7 @@ fun InputExample(
             }
         }
 
-        // 禁用状态
+        // Disabled state
         ExampleSection(
             title = "禁用状态",
             description = "输入框不可交互"

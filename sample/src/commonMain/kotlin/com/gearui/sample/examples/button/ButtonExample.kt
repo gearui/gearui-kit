@@ -15,9 +15,9 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Button 组件示例
+ * Button component examples
  *
- * 用于开启一个闭环的操作任务，如"删除"对象、"购买"商品等。
+ * Starts a self-contained task, such as deleting an object or buying an item.
  */
 @Composable
 fun ButtonExample(
@@ -30,9 +30,9 @@ fun ButtonExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== 组件类型 ====================
+        // ==================== Component types ====================
 
-        // 基础按钮
+        // Basic buttons
         ExampleSection(
             title = "基础按钮",
             description = "填充、浅色填充、默认、描边、文字按钮"
@@ -41,21 +41,21 @@ fun ButtonExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                // 填充按钮 - Primary
+                // Filled button - Primary
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
                     type = ButtonType.FILL
                 )
-                // 填充按钮 - Light
+                // Filled button - Light
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.LIGHT,
                     type = ButtonType.FILL
                 )
-                // 填充按钮 - Default
+                // Filled button - Default
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("点击了按钮") },
@@ -68,14 +68,14 @@ fun ButtonExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                // 描边按钮
+                // Outlined button
                 Button(
                     text = "描边按钮",
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
                     type = ButtonType.OUTLINE
                 )
-                // 文字按钮
+                // Text button
                 Button(
                     text = "文字按钮",
                     onClick = { Toast.show("点击了按钮") },
@@ -85,7 +85,7 @@ fun ButtonExample(
             }
         }
 
-        // 图标按钮
+        // Icon buttons
         ExampleSection(
             title = "图标按钮",
             description = "带图标的按钮、纯图标按钮、加载按钮"
@@ -94,14 +94,14 @@ fun ButtonExample(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                // 带图标的填充按钮
+                // Filled button with an icon
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
                     icon = Icons.call
                 )
-                // 纯图标方形按钮
+                // Icon-only square button
                 Button(
                     text = "",
                     onClick = { Toast.show("点击了按钮") },
@@ -109,7 +109,7 @@ fun ButtonExample(
                     shape = ButtonShape.SQUARE,
                     icon = Icons.call
                 )
-                // 加载中按钮
+                // Loading button
                 Button(
                     text = "加载中",
                     onClick = {},
@@ -119,7 +119,7 @@ fun ButtonExample(
             }
         }
 
-        // 幽灵按钮
+        // Ghost buttons
         ExampleSection(
             title = "幽灵按钮",
             description = "透明背景的按钮，用于深色背景"
@@ -155,7 +155,7 @@ fun ButtonExample(
             }
         }
 
-        // 组合按钮
+        // Button groups
         ExampleSection(
             title = "组合按钮",
             description = "多个按钮并排使用"
@@ -183,7 +183,7 @@ fun ButtonExample(
             }
         }
 
-        // 通栏按钮
+        // Full-width buttons
         ExampleSection(
             title = "通栏按钮",
             description = "占据整行宽度的按钮"
@@ -202,9 +202,9 @@ fun ButtonExample(
             }
         }
 
-        // ==================== 组件状态 ====================
+        // ==================== Component states ====================
 
-        // 按钮禁用状态
+        // Disabled state
         ExampleSection(
             title = "按钮禁用状态",
             description = "不可点击的按钮"
@@ -255,9 +255,9 @@ fun ButtonExample(
             }
         }
 
-        // ==================== 组件主题 ====================
+        // ==================== Component themes ====================
 
-        // 按钮尺寸
+        // Button sizes
         ExampleSection(
             title = "按钮尺寸",
             description = "Large(48)、Medium(40)、Small(32)、ExtraSmall(28)"
@@ -294,7 +294,7 @@ fun ButtonExample(
             }
         }
 
-        // 按钮形状
+        // Button shapes
         ExampleSection(
             title = "按钮形状",
             description = "矩形、方形、圆角、圆形、胶囊"
@@ -304,14 +304,14 @@ fun ButtonExample(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                // 矩形
+                // Rectangle
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("Rectangle") },
                     theme = ButtonTheme.PRIMARY,
                     shape = ButtonShape.RECTANGLE
                 )
-                // 方形
+                // Square
                 Button(
                     text = "",
                     onClick = { Toast.show("Square") },
@@ -319,14 +319,14 @@ fun ButtonExample(
                     shape = ButtonShape.SQUARE,
                     icon = Icons.star
                 )
-                // 圆角
+                // Rounded
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("Round") },
                     theme = ButtonTheme.PRIMARY,
                     shape = ButtonShape.ROUND
                 )
-                // 圆形
+                // Circle
                 Button(
                     text = "",
                     onClick = { Toast.show("Circle") },
@@ -339,7 +339,7 @@ fun ButtonExample(
             Row(
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                // 胶囊/填充圆角
+                // Pill / filled radius
                 Button(
                     text = "填充按钮",
                     onClick = { Toast.show("Filled") },
@@ -349,13 +349,13 @@ fun ButtonExample(
             }
         }
 
-        // 按钮主题
+        // Button themes
         ExampleSection(
             title = "按钮主题",
             description = "Default、Primary、Danger、Light 主题"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Default 主题
+                // Default theme
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.padding(start = 16.dp)
@@ -380,7 +380,7 @@ fun ButtonExample(
                     )
                 }
 
-                // Primary 主题
+                // Primary theme
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.padding(start = 16.dp)
@@ -405,7 +405,7 @@ fun ButtonExample(
                     )
                 }
 
-                // Danger 主题
+                // Danger theme
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.padding(start = 16.dp)
@@ -430,7 +430,7 @@ fun ButtonExample(
                     )
                 }
 
-                // Light 主题
+                // Light theme
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.padding(start = 16.dp)

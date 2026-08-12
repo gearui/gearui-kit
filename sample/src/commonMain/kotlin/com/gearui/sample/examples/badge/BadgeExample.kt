@@ -27,9 +27,9 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 
 /**
- * Badge 徽标组件示例
+ * Badge component examples
  *
- * 用于告知用户，该区域的状态变化或者待处理任务的数量。
+ * Tells the user about a status change in an area, or how many items are waiting.
  */
 @Composable
 fun BadgeExample(
@@ -38,16 +38,16 @@ fun BadgeExample(
 ) {
     val colors = Theme.colors
 
-    // 动态计数
+    // Dynamic count
     var messageCount by remember { mutableStateOf(8) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 红点徽标
+        // Dot badge
         ExampleSection(
             title = "红点徽标",
             description = "用于消息提醒，无具体数值"
@@ -56,7 +56,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(32.dp)
             ) {
-                // 文字 + 红点
+                // Text + dot
                 Badge(
                     type = BadgeType.RedPoint,
                     theme = BadgeTheme.Error
@@ -68,7 +68,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 图标 + 红点
+                // Icon + dot
                 Badge(
                     type = BadgeType.RedPoint,
                     theme = BadgeTheme.Error
@@ -76,7 +76,7 @@ fun BadgeExample(
                     IconBox()
                 }
 
-                // 按钮 + 红点
+                // Button + dot
                 Badge(
                     type = BadgeType.RedPoint,
                     theme = BadgeTheme.Error
@@ -90,7 +90,7 @@ fun BadgeExample(
             }
         }
 
-        // 数字徽标
+        // Number badge
         ExampleSection(
             title = "数字徽标",
             description = "显示具体消息数量"
@@ -99,7 +99,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(32.dp)
             ) {
-                // 文字 + 数字
+                // Text + number
                 Badge(
                     type = BadgeType.Message,
                     count = messageCount,
@@ -112,7 +112,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 图标 + 数字
+                // Icon + number
                 Badge(
                     type = BadgeType.Message,
                     count = messageCount,
@@ -121,7 +121,7 @@ fun BadgeExample(
                     IconBox()
                 }
 
-                // 按钮 + 数字
+                // Button + number
                 Badge(
                     type = BadgeType.Message,
                     count = messageCount,
@@ -136,7 +136,7 @@ fun BadgeExample(
             }
         }
 
-        // 自定义徽标
+        // Custom badge
         ExampleSection(
             title = "自定义徽标",
             description = "自定义显示内容和样式"
@@ -145,7 +145,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // 显示数字
+                // Showing a number
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -164,7 +164,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 显示数字0
+                // Showing zero
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -184,7 +184,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 不显示数字0
+                // Hiding zero
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -206,9 +206,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 组件样式 ==========
+        // ========== Component styles ==========
 
-        // 圆形徽标（Message 类型）
+        // Round badge (Message type)
         ExampleSection(
             title = "圆形徽标",
             description = "Message 类型，默认圆形样式"
@@ -242,7 +242,7 @@ fun BadgeExample(
             }
         }
 
-        // 方形徽标（Square 类型）
+        // Square badge (Square type)
         ExampleSection(
             title = "方形徽标",
             description = "Square 类型，带圆角"
@@ -251,7 +251,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // 大圆角
+                // Large radius
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -271,7 +271,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 小圆角
+                // Small radius
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -293,7 +293,7 @@ fun BadgeExample(
             }
         }
 
-        // 气泡徽标（Bubble 类型）
+        // Bubble badge (Bubble type)
         ExampleSection(
             title = "气泡徽标",
             description = "Bubble 类型，左下角小尖角"
@@ -302,7 +302,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // 领积分
+                // Claim points
                 Badge(
                     type = BadgeType.Bubble,
                     message = "领积分",
@@ -331,7 +331,7 @@ fun BadgeExample(
             }
         }
 
-        // 角标（Subscript 类型）
+        // Corner badge (Subscript type)
         ExampleSection(
             title = "角标",
             description = "Subscript 类型，用于列表项"
@@ -348,7 +348,7 @@ fun BadgeExample(
                         arrow = true,
                         onClick = {}
                     )
-                    // 角标
+                    // Corner badge
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -377,7 +377,7 @@ fun BadgeExample(
                         arrow = true,
                         onClick = {}
                     )
-                    // 角标
+                    // Corner badge
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -393,9 +393,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 组件尺寸 ==========
+        // ========== Component sizes ==========
 
-        // 尺寸对比
+        // Size comparison
         ExampleSection(
             title = "组件尺寸",
             description = "Large / Small 两种尺寸"
@@ -425,7 +425,7 @@ fun BadgeExample(
                     )
                 }
 
-                // Small (默认)
+                // Small (default)
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -465,9 +465,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 徽标颜色 ==========
+        // ========== Badge colours ==========
 
-        // 徽标主题色
+        // Badge themes
         ExampleSection(
             title = "徽标颜色",
             description = "不同语义的徽标颜色主题"
@@ -476,7 +476,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // Error - 红色
+                // Error - red
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -495,7 +495,7 @@ fun BadgeExample(
                     )
                 }
 
-                // Primary - 主题色
+                // Primary - theme colour
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -514,7 +514,7 @@ fun BadgeExample(
                     )
                 }
 
-                // Success - 绿色
+                // Success - green
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -533,7 +533,7 @@ fun BadgeExample(
                     )
                 }
 
-                // Warning - 橙色
+                // Warning - orange
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -552,7 +552,7 @@ fun BadgeExample(
                     )
                 }
 
-                // Neutral - 灰色
+                // Neutral - grey
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -573,9 +573,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 数量上限 ==========
+        // ========== Maximum count ==========
 
-        // 数量超限显示
+        // Overflowing the maximum
         ExampleSection(
             title = "数量上限",
             description = "超过最大数量显示 max+"
@@ -584,7 +584,7 @@ fun BadgeExample(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // 未超限
+                // Under the limit
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -604,7 +604,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 刚好99
+                // Exactly 99
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -624,7 +624,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 超过99
+                // Over 99
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -644,7 +644,7 @@ fun BadgeExample(
                     )
                 }
 
-                // 自定义上限999
+                // Custom limit of 999
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -668,9 +668,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 独立徽标 ==========
+        // ========== Standalone badge ==========
 
-        // 独立使用
+        // Standalone usage
         ExampleSection(
             title = "独立徽标",
             description = "不依附于其他元素的徽标"
@@ -689,9 +689,9 @@ fun BadgeExample(
             }
         }
 
-        // ========== 交互演示 ==========
+        // ========== Interactive demo ==========
 
-        // 动态计数
+        // Dynamic count
         ExampleSection(
             title = "动态计数",
             description = "点击按钮改变徽标数字"
@@ -701,7 +701,7 @@ fun BadgeExample(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 徽标显示
+                // Badge display
                 Badge(
                     type = BadgeType.Message,
                     count = messageCount,
@@ -711,7 +711,7 @@ fun BadgeExample(
                     LargeIconBox()
                 }
 
-                // 操作按钮
+                // Action buttons
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -742,7 +742,7 @@ fun BadgeExample(
 }
 
 /**
- * 小图标盒子
+ * Small icon box
  */
 @Composable
 private fun IconBox() {
@@ -762,7 +762,7 @@ private fun IconBox() {
 }
 
 /**
- * 大图标盒子
+ * Large icon box
  */
 @Composable
 private fun LargeIconBox(showShopIcon: Boolean = false) {
@@ -782,7 +782,7 @@ private fun LargeIconBox(showShopIcon: Boolean = false) {
 }
 
 /**
- * 头像盒子
+ * Avatar box
  */
 @Composable
 private fun AvatarBox(size: Int) {

@@ -34,7 +34,7 @@ import com.gearui.overlay.OverlayDefaults
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 
 /**
- * Form 组件示例
+ * Form component examples
  */
 @Composable
 fun FormExample(
@@ -44,13 +44,13 @@ fun FormExample(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 表单布局方式：水平 / 垂直
+    // Form layout: horizontal / vertical
     var isHorizontal by remember { mutableStateOf(true) }
 
-    // 表单禁用状态
+    // Form disabled state
     var formDisabled by remember { mutableStateOf(false) }
 
-    // 表单数据
+    // Form data
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf<String?>(null) }
@@ -60,7 +60,7 @@ fun FormExample(
     var selfEvaluation by remember { mutableStateOf(2f) }
     var resume by remember { mutableStateOf("") }
 
-    // 验证错误
+    // Validation errors
     var usernameError by remember { mutableStateOf<String?>(null) }
     var passwordError by remember { mutableStateOf<String?>(null) }
     var genderError by remember { mutableStateOf<String?>(null) }
@@ -70,14 +70,14 @@ fun FormExample(
     var rateError by remember { mutableStateOf<String?>(null) }
     var resumeError by remember { mutableStateOf<String?>(null) }
 
-    // 性别选项
+    // Gender options
     val genderOptions = listOf(
         "男" to "0",
         "女" to "1",
         "保密" to "2"
     )
 
-    // 籍贯选项（简化版）
+    // Place of origin options (shortened)
     val placeOptions = listOf(
         "北京市/北京市/东城区",
         "北京市/北京市/西城区",
@@ -87,11 +87,11 @@ fun FormExample(
     )
     var showPlacePicker by remember { mutableStateOf(false) }
 
-    // 验证函数
+    // Validation
     fun validate(): Boolean {
         var valid = true
 
-        // 用户名验证
+        // Username
         if (username.isBlank()) {
             usernameError = "输入不能为空"
             valid = false
@@ -99,7 +99,7 @@ fun FormExample(
             usernameError = null
         }
 
-        // 密码验证 - 只能输入8个字符英文
+        // Password - exactly 8 latin characters
         val passwordRegex = Regex("^[a-zA-Z]{8}$")
         if (!passwordRegex.matches(password)) {
             passwordError = "只能输入8个字符英文"
@@ -108,7 +108,7 @@ fun FormExample(
             passwordError = null
         }
 
-        // 性别验证
+        // Gender
         if (gender == null) {
             genderError = "不能为空"
             valid = false
@@ -116,7 +116,7 @@ fun FormExample(
             genderError = null
         }
 
-        // 生日验证
+        // Date of birth
         if (birthday.isBlank()) {
             birthdayError = "不能为空"
             valid = false
@@ -124,7 +124,7 @@ fun FormExample(
             birthdayError = null
         }
 
-        // 籍贯验证
+        // Place of origin
         if (place.isBlank()) {
             placeError = "不能为空"
             valid = false
@@ -132,7 +132,7 @@ fun FormExample(
             placeError = null
         }
 
-        // 年限验证
+        // Years of experience
         if (years < 3) {
             yearsError = "输入的数字不能大于用户所填生日对应的年龄"
             valid = false
@@ -140,7 +140,7 @@ fun FormExample(
             yearsError = null
         }
 
-        // 自我评价验证
+        // Self assessment
         if (selfEvaluation < 4) {
             rateError = "分数过低会影响整体评价"
             valid = false
@@ -148,7 +148,7 @@ fun FormExample(
             rateError = null
         }
 
-        // 个人简介验证
+        // Bio
         if (resume.isBlank()) {
             resumeError = "不能为空"
             valid = false
@@ -159,7 +159,7 @@ fun FormExample(
         return valid
     }
 
-    // 重置函数
+    // Reset
     fun reset() {
         username = ""
         password = ""
@@ -184,17 +184,17 @@ fun FormExample(
         component = component,
         onBack = onBack
     ) {
-        // 基础类型
+        // Basic types
         ExampleSection(
             title = "基础类型",
             description = "基础表单"
         ) {
-            // 布局切换按钮
+            // Layout toggle buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
-                // 水平排布按钮
+                // Horizontal layout button
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -211,7 +211,7 @@ fun FormExample(
                     )
                 }
 
-                // 垂直排布按钮
+                // Vertical layout button
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -231,7 +231,7 @@ fun FormExample(
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
-            // 禁用态开关
+            // Disabled toggle
             Cell(
                 title = "禁用态",
                 trailing = {
@@ -244,14 +244,14 @@ fun FormExample(
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
-            // 表单内容
+            // Form content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shapes.md)
                     .background(colors.surface)
             ) {
-                // 用户名
+                // Username
                 FormItem(
                     label = "用户名",
                     required = true,
@@ -270,7 +270,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 密码
+                // Password
                 FormItem(
                     label = "密码",
                     required = true,
@@ -288,7 +288,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 性别
+                // Gender
                 FormItem(
                     label = "性别",
                     required = true,
@@ -324,7 +324,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 生日
+                // Date of birth
                 FormItem(
                     label = "生日",
                     required = true,
@@ -341,7 +341,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 籍贯
+                // Place of origin
                 FormItem(
                     label = "籍贯",
                     required = true,
@@ -373,7 +373,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 年限
+                // Years of experience
                 FormItem(
                     label = "年限",
                     required = false,
@@ -392,7 +392,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 自我评价
+                // Self assessment
                 FormItem(
                     label = "自我评价",
                     required = false,
@@ -410,7 +410,7 @@ fun FormExample(
 
                 FormDivider()
 
-                // 个人简介
+                // Bio
                 FormItem(
                     label = "个人简介",
                     required = true,
@@ -433,7 +433,7 @@ fun FormExample(
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
-            // 提交/重置按钮
+                // Submit / reset buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
@@ -459,7 +459,7 @@ fun FormExample(
         }
     }
 
-    // 籍贯选择弹窗
+    // Place of origin picker dialog
     if (showPlacePicker) {
         PlacePickerDialog(
             options = placeOptions,
@@ -474,7 +474,7 @@ fun FormExample(
 }
 
 /**
- * 表单项组件
+ * Form field component
  */
 @Composable
 private fun FormItem(
@@ -488,14 +488,14 @@ private fun FormItem(
     val colors = Theme.colors
 
     if (isHorizontal) {
-        // 水平布局
+        // Horizontal layout
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Spacing.lg, vertical = Spacing.md),
             verticalAlignment = Alignment.Top
         ) {
-            // 标签
+            // Label
             Row(
                 modifier = Modifier.width(82.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -517,11 +517,11 @@ private fun FormItem(
 
             Spacer(modifier = Modifier.width(Spacing.lg))
 
-            // 内容
+            // Content
             Column(modifier = Modifier.weight(1f)) {
                 content()
 
-                // 帮助文字
+                // Helper text
                 if (help != null && error == null) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
@@ -531,7 +531,7 @@ private fun FormItem(
                     )
                 }
 
-                // 错误提示
+                // Error message
                 if (error != null) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
@@ -543,13 +543,13 @@ private fun FormItem(
             }
         }
     } else {
-        // 垂直布局
+        // Vertical layout
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Spacing.lg, vertical = Spacing.md)
         ) {
-            // 标签
+            // Label
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = label,
@@ -568,10 +568,10 @@ private fun FormItem(
 
             Spacer(modifier = Modifier.height(Spacing.sm))
 
-            // 内容
+            // Content
             content()
 
-            // 帮助文字
+            // Helper text
             if (help != null && error == null) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -581,7 +581,7 @@ private fun FormItem(
                 )
             }
 
-            // 错误提示
+            // Error message
             if (error != null) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -595,7 +595,7 @@ private fun FormItem(
 }
 
 /**
- * 表单分割线
+ * Form divider
  */
 @Composable
 private fun FormDivider() {
@@ -610,7 +610,7 @@ private fun FormDivider() {
 }
 
 /**
- * 籍贯选择弹窗
+ * Place of origin picker dialog
  */
 @Composable
 private fun PlacePickerDialog(
@@ -622,7 +622,7 @@ private fun PlacePickerDialog(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // 简单的弹窗实现
+    // A simple dialog implementation
     Box(
         modifier = Modifier
             .fillMaxSize()

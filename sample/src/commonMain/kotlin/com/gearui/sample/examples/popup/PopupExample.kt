@@ -23,10 +23,10 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /**
- * Popup 组件示例
+ * Popup component examples
  *
- * - 组件类型：顶部弹出、左侧弹出、居中弹出、底部弹出、右侧弹出
- * - 组件示例：各种带标题、关闭按钮的变体
+ * - component types: from the top, left, centre, bottom and right
+ * - component examples: variants with titles and close buttons
  */
 @Composable
 fun PopupExample(
@@ -35,14 +35,14 @@ fun PopupExample(
 ) {
     val colors = Theme.colors
 
-    // ========== 组件类型状态 ==========
+    // ========== Component type state ==========
     var showTopPopup by remember { mutableStateOf(false) }
     var showLeftPopup by remember { mutableStateOf(false) }
     var showCenterPopup by remember { mutableStateOf(false) }
     var showBottomPopup by remember { mutableStateOf(false) }
     var showRightPopup by remember { mutableStateOf(false) }
 
-    // ========== 组件示例状态 ==========
+    // ========== Component example state ==========
     var showBottomWithTitleAndOp by remember { mutableStateOf(false) }
     var showBottomWithOp by remember { mutableStateOf(false) }
     var showBottomWithTitleAndClose by remember { mutableStateOf(false) }
@@ -51,7 +51,7 @@ fun PopupExample(
     var showCenterWithClose by remember { mutableStateOf(false) }
     var showCenterWithUnderClose by remember { mutableStateOf(false) }
 
-    // 锚点位置
+    // Anchor position
     var topAnchor by remember { mutableStateOf<Rect?>(null) }
     var leftAnchor by remember { mutableStateOf<Rect?>(null) }
     var bottomAnchor by remember { mutableStateOf<Rect?>(null) }
@@ -61,9 +61,9 @@ fun PopupExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== 组件类型 ==========
+        // ========== Component types ==========
 
-        // 顶部弹出
+        // From the top
         ExampleSection(
             title = "顶部弹出",
             description = "从锚点上方弹出"
@@ -100,7 +100,7 @@ fun PopupExample(
             }
         }
 
-        // 左侧弹出
+        // From the left
         ExampleSection(
             title = "左侧弹出",
             description = "从锚点左侧弹出"
@@ -137,7 +137,7 @@ fun PopupExample(
             }
         }
 
-        // 居中弹出
+        // Centred
         ExampleSection(
             title = "居中弹出",
             description = "屏幕居中弹出"
@@ -173,7 +173,7 @@ fun PopupExample(
             }
         }
 
-        // 底部弹出
+        // From the bottom
         ExampleSection(
             title = "底部弹出",
             description = "从锚点下方弹出"
@@ -210,7 +210,7 @@ fun PopupExample(
             }
         }
 
-        // 右侧弹出
+        // From the right
         ExampleSection(
             title = "右侧弹出",
             description = "从锚点右侧弹出"
@@ -247,9 +247,9 @@ fun PopupExample(
             }
         }
 
-        // ========== 组件示例 ==========
+        // ========== Component examples ==========
 
-        // 底部弹出层-带标题及操作
+        // Bottom sheet - title and actions
         ExampleSection(
             title = "底部弹出层-带标题及操作",
             description = "包含标题栏和取消/确定操作按钮"
@@ -273,7 +273,7 @@ fun PopupExample(
                         .width(300.dp)
                         .background(colors.surface)
                 ) {
-                    // 标题栏
+                    // Title bar
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -299,7 +299,7 @@ fun PopupExample(
                             modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
                         )
                     }
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -310,7 +310,7 @@ fun PopupExample(
             }
         }
 
-        // 底部弹出层-带操作
+        // Bottom sheet - actions
         ExampleSection(
             title = "底部弹出层-带操作",
             description = "只有取消/确定操作按钮，无标题"
@@ -334,7 +334,7 @@ fun PopupExample(
                         .width(300.dp)
                         .background(colors.surface)
                 ) {
-                    // 操作栏
+                    // Action bar
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -355,7 +355,7 @@ fun PopupExample(
                             modifier = Modifier.clickable { showBottomWithOp = false }
                         )
                     }
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -366,7 +366,7 @@ fun PopupExample(
             }
         }
 
-        // 底部弹出层-带标题及关闭
+        // Bottom sheet - title and close
         ExampleSection(
             title = "底部弹出层-带标题及关闭",
             description = "包含居中标题和关闭按钮"
@@ -390,7 +390,7 @@ fun PopupExample(
                         .width(300.dp)
                         .background(colors.surface)
                 ) {
-                    // 标题栏
+                    // Title bar
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -411,7 +411,7 @@ fun PopupExample(
                                 .clickable { showBottomWithTitleAndClose = false }
                         )
                     }
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -422,7 +422,7 @@ fun PopupExample(
             }
         }
 
-        // 底部弹出层-带关闭
+        // Bottom sheet - close only
         ExampleSection(
             title = "底部弹出层-带关闭",
             description = "只有关闭按钮，无标题"
@@ -446,7 +446,7 @@ fun PopupExample(
                         .width(300.dp)
                         .background(colors.surface)
                 ) {
-                    // 关闭按钮
+                    // Close button
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -461,7 +461,7 @@ fun PopupExample(
                                 .clickable { showBottomWithClose = false }
                         )
                     }
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -472,7 +472,7 @@ fun PopupExample(
             }
         }
 
-        // 底部弹出层-仅标题
+        // Bottom sheet - title only
         ExampleSection(
             title = "底部弹出层-仅标题",
             description = "只有标题，无关闭按钮"
@@ -496,7 +496,7 @@ fun PopupExample(
                         .width(300.dp)
                         .background(colors.surface)
                 ) {
-                    // 标题栏
+                    // Title bar
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -509,7 +509,7 @@ fun PopupExample(
                             color = colors.foreground
                         )
                     }
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -520,7 +520,7 @@ fun PopupExample(
             }
         }
 
-        // 居中弹出层-带关闭
+        // Centred popup - with close
         ExampleSection(
             title = "居中弹出层-带关闭",
             description = "居中显示，右上角关闭按钮"
@@ -546,7 +546,7 @@ fun PopupExample(
                         .height(240.dp)
                         .background(colors.surface)
                 ) {
-                    // 关闭按钮
+                    // Close button
                     Text(
                         text = "✕",
                         style = Typography.TitleMedium,
@@ -560,7 +560,7 @@ fun PopupExample(
             }
         }
 
-        // 居中弹出层-关闭在下方
+        // Centred popup - close below
         ExampleSection(
             title = "居中弹出层-关闭在下方",
             description = "居中显示，关闭按钮在弹层下方"
@@ -584,14 +584,14 @@ fun PopupExample(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // 内容区
+                    // Content area
                     Box(
                         modifier = Modifier
                             .width(240.dp)
                             .height(240.dp)
                             .background(colors.surface)
                     )
-                    // 关闭按钮
+                    // Close button
                     Text(
                         text = "✕",
                         style = Typography.TitleLarge,

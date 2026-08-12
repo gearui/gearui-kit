@@ -30,14 +30,14 @@ import com.gearui.sample.config.localizedDescription
 import com.gearui.theme.Theme
 
 /**
- * HomePage - 组件列表主页
+ * HomePage - component index
  *
- * 按分类展示所有组件，点击跳转到对应的详情页
- * 使用 NavBar 作为顶部导航栏
+ * Lists every component by category; tapping one opens its detail page
+ * Uses NavBar as the top navigation bar
  *
- * @param listState 列表滚动状态，从外部传入以保持滚动位置
- * @param onComponentClick 组件点击回调
- * @param onSettingsClick 设置按钮点击回调
+ * @param listState list scroll state, passed in so the scroll position survives
+ * @param onComponentClick component tap callback
+ * @param onSettingsClick settings button tap callback
  */
 @Composable
 fun HomePage(
@@ -54,7 +54,7 @@ fun HomePage(
 
     val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
 
-    // 根据搜索关键词过滤组件（搜索同时匹配中英文）
+    // Filter components by search keyword (matching both English and Chinese)
     val filteredComponents = remember(searchQuery) {
         if (searchQuery.isEmpty()) {
             ComponentConfig.all
@@ -74,7 +74,7 @@ fun HomePage(
         consumeBottomSafeArea = true
     ) {
         Column(modifier = Modifier.fillMaxSize().background(colors.background)) {
-            // 复合顶部区域：NavBar + SearchBar 一体化
+            // Combined top area: NavBar and SearchBar as one
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -93,7 +93,7 @@ fun HomePage(
                     )
                 )
 
-                // 搜索栏
+                // Search bar
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,7 +111,7 @@ fun HomePage(
                     )
                 }
 
-                // 分割线应在搜索栏下方
+                // The divider belongs below the search bar
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -120,16 +120,16 @@ fun HomePage(
                 )
             }
 
-            // 组件列表
+            // Component list
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
             ) {
 
-                // 显示搜索结果或分类列表
+                // Search results, or the category list
                 if (searchQuery.isNotEmpty()) {
-                    // 搜索模式：显示过滤后的结果
+                    // Search mode: filtered results
                     if (filteredComponents.isEmpty()) {
                         item(key = "no_results") {
                             Box(
@@ -164,7 +164,7 @@ fun HomePage(
                         }
                     }
                 } else {
-                    // 正常模式：按分类展示
+                    // Normal mode: grouped by category
                     ComponentCategory.entries.forEach { category ->
                         val components = ComponentConfig.getByCategory(category)
 
@@ -196,7 +196,7 @@ fun HomePage(
                     }
                 }
 
-                // 底部空白（包含安全区域）
+                // Bottom blank space (including the safe area)
                 item {
                     Spacer(modifier = Modifier.height(32.dp))
                 }
@@ -206,7 +206,7 @@ fun HomePage(
     }
 
     /**
-     * 获取分类的本地化名称
+     * Localised category name
      */
     private fun getCategoryDisplayName(category: ComponentCategory, strings: SampleStrings): String {
         return when (category) {
@@ -220,7 +220,7 @@ fun HomePage(
     }
 
     /**
-     * 分类标题
+     * Category header
      */
     @Composable
     private fun CategoryHeader(
@@ -273,7 +273,7 @@ fun HomePage(
     }
 
     /**
-     * 组件列表项
+     * Component list row
      */
     @Composable
     private fun ComponentListItem(
@@ -303,14 +303,14 @@ fun HomePage(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    // 组件名称
+                    // Component name
                     Text(
                         text = name,
                         style = Typography.BodyLarge,
                         color = colors.foreground
                     )
 
-                    // 组件描述
+                    // Component description
                     if (description.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -320,7 +320,7 @@ fun HomePage(
                         )
                     }
 
-                    // 如果在搜索模式，显示组件ID
+                    // Show the component ID in search mode
                     if (searchQuery.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -331,7 +331,7 @@ fun HomePage(
                     }
             }
 
-            // 右箭头
+            // Chevron
             Text(
                 text = "›",
                 style = Typography.TitleLarge,

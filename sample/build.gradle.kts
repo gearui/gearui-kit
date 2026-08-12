@@ -19,6 +19,21 @@ kotlin {
     }
 
     // iOS targets
+    js(IR) {
+        moduleName = "gearui_sample"
+        browser {
+            webpackTask {
+                outputFileName = "gearui_sample.js"
+            }
+            commonWebpackConfig {
+                // 只导出入口函数，不挂全局对象（与官方 demo 一致）
+                output?.library = null
+                devtool = "source-map"
+            }
+        }
+        binaries.executable()
+    }
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -108,6 +123,7 @@ android {
 
 // KSP 配置
 dependencies {
+    add("kspJs", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
     add("kspAndroid", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
     add("kspIosX64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
     add("kspIosArm64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")

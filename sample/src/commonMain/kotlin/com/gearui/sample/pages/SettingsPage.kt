@@ -16,6 +16,7 @@ import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
+import com.gearui.sample.SampleBuildInfo
 import com.gearui.sample.i18n.DefaultSampleLanguageOptions
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.theme.Theme
@@ -165,7 +166,7 @@ fun SettingsPage(
                 ) {
                     SettingsInfoRow(
                         title = sampleStrings.versionLabel,
-                        value = "1.0.0"
+                        value = SampleBuildInfo.VERSION
                     )
                     SettingsInfoRow(
                         title = "GearUI Kit",

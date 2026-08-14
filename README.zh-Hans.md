@@ -7,6 +7,8 @@
 ## 发布信息
 
 - 坐标：`com.gearui:gearui-kit:1.0.0-beta1`
+- 2026-08-15 起可从 Maven Central 获取（首个公开版本）
+- 支持平台：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）
 - 官网：[https://gearui.com](https://gearui.com)
 - License：BSD 3-Clause License
 
@@ -19,7 +21,9 @@
 
 ### 1. 发布版依赖（推荐）
 
-如果版本已发布到远端仓库（如 Maven Central）：
+已发布到 Maven Central。只需声明根坐标一行——Gradle 会读 module metadata，
+按当前编译目标自动解析到对应平台包（`-android`、`-js`、`-iosarm64` …）。
+那些带后缀的坐标不要手写。
 
 ```kotlin
 repositories {
@@ -76,20 +80,38 @@ dependencies {
 ```bash
 export ORG_GRADLE_PROJECT_mavenCentralUsername=<Central_Portal_Token_名称>
 export ORG_GRADLE_PROJECT_mavenCentralPassword=<Central_Portal_Token_密码>
-export ORG_GRADLE_PROJECT_signingInMemoryKey='-----BEGIN PGP PRIVATE KEY BLOCK-----...'
-export ORG_GRADLE_PROJECT_signingInMemoryKeyId=<short_key_id>
+# base64 单行：gpg --export-secret-keys <指纹> | base64 | tr -d '\n'
+export ORG_GRADLE_PROJECT_signingInMemoryKey=<base64_GPG_私钥>
 export ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=<GPG_口令>
 ```
 
-然后执行发布：
+**不要**设置 `signingInMemoryKeyId`，除非你要指定某个 subkey；Gradle 只在 subkey
+里查找，填主密钥 id 会让所有签名任务报 "no configured signatory"。
+详见 `gearui-kit/build.gradle.kts` 里的说明。
+
+**必须在 macOS 上发布**——三个 iOS target 只有 macOS 能编，在 Linux 上它们会从
+上传内容里静默消失，而不是让构建失败。
 
 ```bash
-# 上传到 Central Portal staging deployment；在 Portal 网页手动 close + release
 ./gradlew :gearui-kit:publishToMavenCentral
-
-# 或上传并自动 release
-./gradlew :gearui-kit:publishAndReleaseToMavenCentral
 ```
+
+⚠️ 插件 0.30.0 下这条命令会**报 BUILD SUCCESSFUL 但什么都没上传**：它是个
+lifecycle task（日志 `Skipping task ... as it has no actions`），产物只落到
+`build/publish/staging/<uuid>/`。1.0.0-beta1 是直接把该 bundle POST 到 Portal 发的：
+
+```bash
+TOKEN=$(printf '%s:%s' "$USERNAME" "$PASSWORD" | base64)
+curl -X POST -H "Authorization: Bearer $TOKEN" \
+  -F "bundle=@build/publish/staging/<uuid>.zip" \
+  "https://central.sonatype.com/api/v1/publisher/upload?name=com.gearui:gearui-kit:<版本>&publishingType=USER_MANAGED"
+# -> 返回 deployment id，然后轮询：
+curl -X POST -H "Authorization: Bearer $TOKEN" \
+  "https://central.sonatype.com/api/v1/publisher/status?id=<deployment_id>"
+```
+
+`USER_MANAGED` 会停在 VALIDATED，最后那下 Publish 保持由人来点。
+永远以 Portal 的状态为准，不要相信 Gradle 的退出码。
 
 ## 基础使用
 

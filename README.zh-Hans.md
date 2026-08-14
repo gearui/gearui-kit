@@ -17,6 +17,16 @@
 - 作者：`zoujiaqing`
 - 邮箱：`zoujiaqing@gmail.com`
 
+## 界面截图
+
+在 iPhone 17 Pro 模拟器上运行 sample 截取。
+
+| 首页（中文） | 首页（英文） | 设置页（亮色） | 设置页（暗色） |
+| --- | --- | --- | --- |
+| <img src="docs/screenshots/home-zh.png" width="220" alt="中文组件索引" /> | <img src="docs/screenshots/home-en.png" width="220" alt="英文组件索引" /> | <img src="docs/screenshots/settings-light.png" width="220" alt="设置页亮色主题" /> | <img src="docs/screenshots/settings-dark.png" width="220" alt="设置页暗色主题" /> |
+
+语言与主题都在设置页运行时切换，所有组件自动跟随，无需逐屏适配。
+
 ## 快速接入
 
 ### 1. 发布版依赖（推荐）
@@ -200,7 +210,7 @@ Kotlin/JS 部分链接错误，不在组件本身。详见
 # 鸿蒙走并行构建配置（尚未构建通过 —— 见 sample/ohosApp/README.md）
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# 架构护栏 —— 共 16 条，全部可本地运行
+# 架构护栏 —— 共 17 条，全部可本地运行
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

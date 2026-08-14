@@ -17,6 +17,17 @@ A Kotlin Multiplatform UI component library built on Kuikly.
 - Author: `zoujiaqing`
 - Email: `zoujiaqing@gmail.com`
 
+## Screenshots
+
+Captured from the sample app on an iPhone 17 Pro simulator.
+
+| Home (Chinese) | Home (English) | Settings (Light) | Settings (Dark) |
+| --- | --- | --- | --- |
+| <img src="docs/screenshots/home-zh.png" width="220" alt="Component index in Chinese" /> | <img src="docs/screenshots/home-en.png" width="220" alt="Component index in English" /> | <img src="docs/screenshots/settings-light.png" width="220" alt="Settings page, light theme" /> | <img src="docs/screenshots/settings-dark.png" width="220" alt="Settings page, dark theme" /> |
+
+Language and theme are switched at runtime from the settings page; every
+component follows both without any per-screen wiring.
+
 ## Quick Integration
 
 ### 1. Published Dependency (Recommended)
@@ -205,7 +216,7 @@ that enforces it.
 # HarmonyOS uses a parallel build configuration (unbuilt — see sample/ohosApp/README.md)
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# Architecture guardrails — 16 checks, all runnable locally
+# Architecture guardrails — 17 checks, all runnable locally
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

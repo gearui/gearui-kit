@@ -95,13 +95,28 @@ android {
 // Credentials (env or ~/.gradle/gradle.properties):
 //   ORG_GRADLE_PROJECT_mavenCentralUsername    Central Portal user token name
 //   ORG_GRADLE_PROJECT_mavenCentralPassword    Central Portal user token secret
-//   ORG_GRADLE_PROJECT_signingInMemoryKey      ASCII-armored GPG private key
-//   ORG_GRADLE_PROJECT_signingInMemoryKeyId    short key id (last 8 hex)
+//   ORG_GRADLE_PROJECT_signingInMemoryKey      GPG private key, base64 encoded
 //   ORG_GRADLE_PROJECT_signingInMemoryKeyPassword
+//
+// Two things about the key that cost an afternoon:
+//
+//   Store it base64 encoded on a single line:
+//       gpg --export-secret-keys <fpr> | base64 | tr -d '\n'
+//   The ASCII-armored form has to survive Java Properties escaping (every
+//   newline written as a literal \n), and getting that wrong fails late and
+//   unhelpfully with "Could not read PGP secret key".
+//
+//   Do NOT set signingInMemoryKeyId unless you mean a specific subkey.
+//   Gradle's useInMemoryPgpKeys(keyId, ...) searches subkeys only, so passing
+//   the master key's short id finds nothing and every signing task dies with
+//   "no configured signatory". Omitted, it uses the primary key.
 //
 // Publish:
 //   ./gradlew :gearui-kit:publishToMavenCentral           (manual close + release on Portal)
 //   ./gradlew :gearui-kit:publishAndReleaseToMavenCentral (auto-release after upload)
+//
+// Publish from macOS: the three iOS targets only build there, and on Linux
+// they are silently absent from the upload rather than failing it.
 val hasSigningKey = !providers
     .gradleProperty("signingInMemoryKey")
     .orElse(providers.environmentVariable("ORG_GRADLE_PROJECT_signingInMemoryKey"))

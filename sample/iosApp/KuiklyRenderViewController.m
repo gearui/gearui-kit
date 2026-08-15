@@ -112,12 +112,26 @@
     // delegator 会自动创建和管理 render view
     [_delegator viewDidLoadWithView:self.view];
 
-    [self installKuiklyBackProbeOverlay];
+    [self installKuiklyBackProbeOverlayIfEnabled];
 }
 
 #pragma mark - Phase 0 BACK probe
 
-- (void)installKuiklyBackProbeOverlay {
+// Off by default: it floats over every screen of the sample, which is wrong for
+// a demo app people look at. It is still the only way to fire a native BACK on
+// iOS — unlike Android there is no automatic bridge, the host has to call
+// `onBackPressedWithCompletion:` itself — so it stays available behind a flag
+// for work on the Navigator BACK chain:
+//
+//     xcrun simctl launch <device> com.gearui.kit.sample -GearUIBackProbe YES
+//
+// or add `-GearUIBackProbe YES` to the scheme's launch arguments in Xcode.
+- (void)installKuiklyBackProbeOverlayIfEnabled {
+#if DEBUG
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"GearUIBackProbe"]) {
+        return;
+    }
+
     if (self.kuiklyBackProbeButton != nil) {
         return;
     }
@@ -157,6 +171,7 @@
         [label.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
         [label.heightAnchor constraintGreaterThanOrEqualToConstant:36],
     ]];
+#endif
 }
 
 - (void)handleKuiklyBackProbeTap:(UIButton *)sender {

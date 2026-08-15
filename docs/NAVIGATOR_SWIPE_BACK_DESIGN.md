@@ -391,6 +391,13 @@ fun dispatchOnBackEvent() {
 - Composable consumer 必须用 `DisposableEffect` 注册/注销，确保页面卸载、Dialog 关闭、Navigator unmount 后不会残留 back consumer
 - `MainActivity.dispatchKeyEvent` 继续调用 `kuiklyDelegator.onBackPressed()` 并尊重其 Boolean 返回值；Navigator 不应绕开 Kuikly delegator 直接接管 Android key event
 - iOS 没有自动 BACK 桥（没有等价 `dispatchKeyEvent`）——必须由业务宿主主动调 `[delegator onBackPressedWithCompletion:]`（NavigationController pop / 自定义 navbar back / edge swipe gesture / 其他业务触发器）
+- sample 的 iOS 宿主内置了一个手动触发 BACK 的探针（`KuiklyRenderViewController.installKuiklyBackProbeOverlayIfEnabled`），**默认关闭**，仅 DEBUG 构建可用。调试 BACK 链路时用启动参数打开：
+
+  ```bash
+  xcrun simctl launch <device> com.gearui.kit.sample -GearUIBackProbe YES
+  ```
+
+  或在 Xcode scheme 的 launch arguments 里加 `-GearUIBackProbe YES`。它会浮在所有页面之上，所以不能常开。
 
 ### 5.4 手势事件分发（复用已验证的能力）
 

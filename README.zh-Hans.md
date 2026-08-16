@@ -213,10 +213,10 @@ dependencies {
 @Page("MainPage")
 class MainPage : View() {
     @Composable
+    // View mounts the App root (theme, i18n, overlays, safe area) for you.
+    // Override themeMode() / themeSpec() to change it; do not call App() here.
     override fun Content() {
-        GearApp(themeMode = ThemeMode.System) {
-            MainPageContent()
-        }
+        MainPageContent()
     }
 }
 

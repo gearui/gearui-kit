@@ -27,6 +27,131 @@
 
 语言与主题都在设置页运行时切换，所有组件自动跟随，无需逐屏适配。
 
+## 组件一览
+
+<!-- component-index:begin -->
+**72 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+
+| 分类 | 组件 |
+| --- | --- |
+| 基础（7） | `Button`、`Icon`、`Link`、`Text`、`Tag`、`Badge`、`Divider` |
+| 表单（17） | `Input`、`Checkbox`、`Radio`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
+| 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
+| 数据展示（15） | `List`、`Card`、`Cell`、`Table`、`Image`、`ImageViewer`、`Avatar`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
+| 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
+| 布局（6） | `Grid`、`Swiper`、`SearchBar`、`Refresh`、`BottomSheet`、`BackTop` |
+
+<details>
+<summary>各组件用途</summary>
+
+**基础**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `Button` | 按钮 | 用于触发操作 |
+| `Icon` | 图标 | 图标展示 |
+| `Link` | 链接 | 文本链接样式 |
+| `Text` | 文本 | 文本展示 |
+| `Tag` | 标签 | 标记和分类 |
+| `Badge` | 徽标 | 消息数量提示 |
+| `Divider` | 分割线 | 内容分隔 |
+
+**表单**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `Input` | 输入框 | 文本输入 |
+| `Checkbox` | 复选框 | 多选操作 |
+| `Radio` | 单选框 | 单选操作 |
+| `Switch` | 开关 | 开关选择 |
+| `Slider` | 滑块 | 数值选择 |
+| `Stepper` | 步进器 | 数字增减 |
+| `Textarea` | 多行输入 | 多行文本输入 |
+| `Rate` | 评分 | 评分操作 |
+| `Select` | 下拉选择 | 下拉选择器 |
+| `Picker` | 选择器 | 多列选择 |
+| `DatePicker` | 日期选择 | 日期时间选择 |
+| `DropdownMenu` | 下拉菜单 | 筛选下拉菜单 |
+| `Upload` | 上传 | 文件上传 |
+| `Form` | 表单 | 表单容器 |
+| `Cascader` | 级联选择 | 级联选择器 |
+| `Transfer` | 穿梭框 | 数据穿梭选择 |
+| `TreeSelect` | 树选择 | 树形选择器 |
+
+**导航**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `NavBar` | 导航栏 | H5页面导航栏 |
+| `BottomNavBar` | 底部导航栏 | 应用底部主导航 |
+| `Tabs` | 选项卡 | 内容切换 |
+| `NavigationMenu` | 导航菜单 | 顶部导航菜单 |
+| `Sidebar` | 侧边栏 | 侧边导航 |
+| `Drawer` | 抽屉 | 侧滑抽屉 |
+| `Steps` | 步骤条 | 步骤指示 |
+| `Pagination` | 分页 | 页码导航 |
+| `Breadcrumb` | 面包屑 | 路径导航 |
+| `Anchor` | 锚点 | 页面锚点导航 |
+| `Segmented` | 分段控制 | 分段选择 |
+| `FAB` | 悬浮按钮 | 浮动操作按钮 |
+
+**数据展示**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `List` | 列表 | 列表展示 |
+| `Card` | 卡片 | 卡片容器 |
+| `Cell` | 单元格 | 列表单元组件 |
+| `Table` | 表格 | 数据表格 |
+| `Image` | 图片 | 图片展示 |
+| `ImageViewer` | 图片预览 | 图片预览查看 |
+| `Avatar` | 头像 | 用户头像 |
+| `Collapse` | 折叠面板 | 内容折叠 |
+| `Progress` | 进度条 | 进度展示 |
+| `Empty` | 空状态 | 空数据提示 |
+| `Skeleton` | 骨架屏 | 加载占位 |
+| `Timeline` | 时间轴 | 时间线展示 |
+| `Tree` | 树 | 树形结构 |
+| `Calendar` | 日历 | 日历展示 |
+| `Watermark` | 水印 | 页面水印 |
+
+**反馈**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `SwipeCell` | 滑动单元格 | 滑动操作单元格 |
+| `ActionSheet` | 动作面板 | 底部动作面板 |
+| `Toast` | 轻提示 | 消息提示 |
+| `Dialog` | 对话框 | 模态对话框 |
+| `Tooltip` | 文字提示 | 文字提示 |
+| `ContextMenu` | 上下文菜单 | 上下文菜单 |
+| `Loading` | 加载 | 加载状态 |
+| `Message` | 消息提醒 | 全局消息提示 |
+| `NoticeBar` | 公告栏 | 滚动公告提醒 |
+| `Notification` | 通知 | 全局通知 |
+| `Snackbar` | 消息条 | 底部消息 |
+| `Popup` | 弹出层 | 弹出内容 |
+| `Popover` | 气泡 | 气泡提示 |
+| `Result` | 结果 | 操作结果反馈 |
+| `Tour` | 引导 | 功能引导 |
+
+**布局**
+
+| 组件 | 中文名 | 用途 |
+| --- | --- | --- |
+| `Grid` | 栅格 | 栅格布局 |
+| `Swiper` | 轮播 | 内容轮播 |
+| `SearchBar` | 搜索栏 | 搜索输入 |
+| `Refresh` | 下拉刷新 | 下拉刷新展示（演示页） |
+| `BottomSheet` | 底部抽屉 | 底部弹出 |
+| `BackTop` | 回到顶部 | 返回顶部 |
+
+</details>
+<!-- component-index:end -->
+
+上表由 `scripts/gen_component_index.py` 从 `sample/.../config/ComponentConfig.kt`
+生成；表过期时 CI 会失败。
+
 ## 快速接入
 
 ### 1. 发布版依赖（推荐）
@@ -135,7 +260,6 @@ Kotlin/JS 部分链接错误，不在组件本身。详见
 ## 工程说明
 
 - 组件层位于：`gearui-kit/src/commonMain/kotlin/com/gearui/components`
-- 当前组件目录规模：`50+`（以源码为准）
 - Sample 工程：`sample/`
 
 ## 组件收敛策略
@@ -170,7 +294,7 @@ Kotlin/JS 部分链接错误，不在组件本身。详见
 # 鸿蒙走并行构建配置（尚未构建通过 —— 见 sample/ohosApp/README.md）
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# 架构护栏 —— 共 17 条，全部可本地运行
+# 架构护栏 —— 共 18 条，全部可本地运行
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

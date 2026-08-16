@@ -83,3 +83,6 @@ jobs:
 
       - name: English comment guard
         run: ./scripts/ci/check_english_comments.sh
+
+      - name: README component index guard
+        run: ./scripts/ci/check_readme_component_index.sh

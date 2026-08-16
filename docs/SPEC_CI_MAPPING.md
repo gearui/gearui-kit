@@ -315,6 +315,28 @@ SPEC 映射：
 - 不检查字符串字面量：面向用户的中文属于 i18n 包，由 `check_i18n_default_text.sh` 管。
   但注释里引用这类字面量（比如用法示例）同样会 fail——示例请写英文。
 
+19. README 组件索引护栏（P2，硬门禁）
+SPEC 映射：
+- 6.2 文档与示例
+
+实现：
+- 生成器：`scripts/gen_component_index.py`
+- 检查：`scripts/ci/check_readme_component_index.sh`（= 生成器 `--check`）
+- CI：`.github/workflows/guardrails.yml`
+
+策略：
+- README 里的组件数量与分类列表**不允许手写**。真源是 sample 的注册表
+  `sample/.../config/ComponentConfig.kt`——那是 sample 首页实际渲染的数据，
+  每次构建都会被用到，不会悄悄过期。
+- 生成器把注册表渲染到两份 README 的 `<!-- component-index:begin/end -->` 标记之间；
+  `--check` 模式重新渲染并与文件比对，有差异即 fail。手改生成块、或加了组件没重新
+  生成，两个方向都会被抓到（已做反向验证）。
+- 注册表里有 4 条不是组件、只是运行时验证页（`icon-render` / `runtime-insets` /
+  `navigator-kuikly-spike` / `navigator-v1-demo`），生成器显式排除，否则数字虚高。
+- 背景：手写的「50+（以源码为准）」在首个版本发布时就已经对不上了。
+
+---
+
 ---
 
 ## 下一批（建议 4 周内完成）

@@ -10,6 +10,7 @@ package com.gearui.components.icon
  */
 object Icons {
     const val account_circle = "account_circle"
+    const val account_circle_fill = "account_circle_fill"
     const val add = "add"
     const val alternate_email = "alternate_email"
     const val attach_file = "attach_file"
@@ -31,6 +32,7 @@ object Icons {
     const val chevron_right = "chevron_right"
     const val close = "close"
     const val contacts = "contacts"
+    const val contacts_fill = "contacts_fill"
     const val content_copy = "content_copy"
     const val delete = "delete"
     const val done = "done"
@@ -44,6 +46,7 @@ object Icons {
     const val flag = "flag"
     const val forward = "forward"
     const val forum = "forum"
+    const val forum_fill = "forum_fill"
     const val group = "group"
     const val groups = "groups"
     const val history = "history"

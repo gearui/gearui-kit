@@ -39,6 +39,13 @@ data class BottomNavItem(
     val label: String,
     val icon: String,
     val selectedIcon: String? = null,
+    /**
+     * Interior fill layer for the two-tone selected treatment: when set, the selected
+     * tab stacks this asset tinted with the active color UNDER the outline icon tinted
+     * with the regular foreground — dark outline, brand-colored inside (and the label
+     * goes foreground too). When null, selection falls back to a plain active-color tint.
+     */
+    val selectedFillIcon: String? = null,
     val badgeCount: Int = 0,
     val showBadgeDot: Boolean = false,
     val disabled: Boolean = false
@@ -112,8 +119,10 @@ fun BottomNavBar(
             ) {
                 items.forEach { item ->
                     val isSelected = selected == item.id
+                    val twoTone = isSelected && item.selectedFillIcon != null
                     val contentColor = when {
                         item.disabled -> colors.mutedForeground
+                        twoTone -> colors.foreground
                         isSelected -> selectedColor
                         else -> unselectedColor
                     }
@@ -150,11 +159,20 @@ fun BottomNavBar(
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
-                                Icon(
-                                    name = iconName,
-                                    size = IconSizes.Default.xl,
-                                    tint = contentColor
-                                )
+                                Box {
+                                    if (twoTone) {
+                                        Icon(
+                                            name = item.selectedFillIcon!!,
+                                            size = IconSizes.Default.xl,
+                                            tint = selectedColor
+                                        )
+                                    }
+                                    Icon(
+                                        name = iconName,
+                                        size = IconSizes.Default.xl,
+                                        tint = contentColor
+                                    )
+                                }
                                 when {
                                     item.badgeCount > 0 -> Badge(
                                         type = BadgeType.Message,

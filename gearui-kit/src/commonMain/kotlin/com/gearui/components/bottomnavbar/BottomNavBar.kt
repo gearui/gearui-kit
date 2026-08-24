@@ -26,6 +26,8 @@ import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
+import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -112,9 +114,18 @@ fun BottomNavBar(
             ) {
                 items.forEach { item ->
                     val isSelected = selected == item.id
-                    val contentColor = when {
+                    // Selected tab = filled pill in the brand primary with the paired
+                    // foreground inside (yellow pill + black glyph for a yellow brand,
+                    // blue pill + white glyph for a blue one); the label stays in the
+                    // regular foreground so it reads on the bar surface.
+                    val iconColor = when {
                         item.disabled -> colors.mutedForeground
-                        isSelected -> selectedColor
+                        isSelected -> colors.primaryForeground
+                        else -> unselectedColor
+                    }
+                    val labelColor = when {
+                        item.disabled -> colors.mutedForeground
+                        isSelected -> colors.foreground
                         else -> unselectedColor
                     }
                     val iconName = if (isSelected) item.selectedIcon ?: item.icon else item.icon
@@ -133,7 +144,10 @@ fun BottomNavBar(
                                     Modifier
                                 }
                             )
-                            .padding(top = 2.dp, bottom = 2.dp),
+                            // No top padding: the icon slot already reserves badge headroom, and
+                            // the pill adds 4dp of its own height — the label gets clipped at the
+                            // default bar height otherwise.
+                            .padding(bottom = 2.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -150,11 +164,24 @@ fun BottomNavBar(
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
-                                Icon(
-                                    name = iconName,
-                                    size = IconSizes.Default.xl,
-                                    tint = contentColor
-                                )
+                                // Constant modifier chain: clip + background are always present
+                                // (transparent when unselected) — conditionally adding/removing
+                                // them leaves a stale background view behind on Kuikly when the
+                                // selection moves to another tab. Padding is constant too, so the
+                                // measured slot never changes between states.
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(999.dp))
+                                        .background(if (isSelected) selectedColor else Color.Transparent)
+                                        .padding(horizontal = 10.dp, vertical = 2.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        name = iconName,
+                                        size = IconSizes.Default.xl,
+                                        tint = iconColor
+                                    )
+                                }
                                 when {
                                     item.badgeCount > 0 -> Badge(
                                         type = BadgeType.Message,
@@ -190,7 +217,7 @@ fun BottomNavBar(
                         Text(
                             text = item.label,
                             style = Typography.BodySmall,
-                            color = contentColor,
+                            color = labelColor,
                             maxLines = 1
                         )
                     }

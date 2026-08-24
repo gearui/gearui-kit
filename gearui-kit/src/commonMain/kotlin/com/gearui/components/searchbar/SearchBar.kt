@@ -226,19 +226,29 @@ fun SearchBar(
             }
         }
 
-        // Cancel button
+        // Cancel button — a small filled pill in the brand primary, not bare text:
+        // primary text alone can be near-invisible for low-contrast brand colors
+        // (e.g. yellow on white), while primary-surface + primaryForeground always pairs.
         if (showCancel) {
             Spacer(modifier = Modifier.width(Spacing.sm))
-            Text(
-                text = I18n.strings.common.cancel,
-                style = Typography.BodyMedium,
-                color = if (enabled) colors.primary else colors.mutedForeground,
-                modifier = Modifier.clickable(enabled = enabled) {
-                    focusManager.clearFocus(force = true)
-                    keyboardController?.hide()
-                    onCancel?.invoke()
-                }
-            )
+            Box(
+                modifier = Modifier
+                    .clip(shapes.full)
+                    .background(if (enabled) colors.primary else colors.muted)
+                    .clickable(enabled = enabled) {
+                        focusManager.clearFocus(force = true)
+                        keyboardController?.hide()
+                        onCancel?.invoke()
+                    }
+                    .padding(horizontal = Spacing.md, vertical = Spacing.xs),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = I18n.strings.common.cancel,
+                    style = Typography.BodyMedium,
+                    color = if (enabled) colors.primaryForeground else colors.mutedForeground
+                )
+            }
         }
     }
 }

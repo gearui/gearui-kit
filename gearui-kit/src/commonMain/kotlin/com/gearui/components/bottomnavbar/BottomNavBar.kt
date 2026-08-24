@@ -26,6 +26,8 @@ import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
+import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -142,10 +144,22 @@ fun BottomNavBar(
                                     Modifier
                                 }
                             )
-                            .padding(top = 2.dp, bottom = 2.dp),
+                            .padding(bottom = 2.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        // Selected-tab indicator: a soft rounded rectangle in the active color
+                        // behind icon + label (M3-style, small radius). clip/background stay in
+                        // the modifier chain permanently (transparent when unselected) because
+                        // conditionally removing them leaves a stale background view behind on
+                        // Kuikly when selection moves to another tab.
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(if (isSelected) selectedColor else Color.Transparent)
+                                .padding(start = 6.dp, end = 6.dp, bottom = 3.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                         // Combined icon + badge layout (a custom Layout):
                         // - the layout size is **constant** (it does not change as the badge appears or disappears), identical for every tab
                         // - the icon is **centred** in the layout (half a badge width is reserved on each side, and the badge fills the right half)
@@ -211,6 +225,7 @@ fun BottomNavBar(
                             color = contentColor,
                             maxLines = 1
                         )
+                        }
                     }
                 }
             }

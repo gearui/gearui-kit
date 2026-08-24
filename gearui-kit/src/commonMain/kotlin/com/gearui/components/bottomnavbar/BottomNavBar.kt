@@ -54,6 +54,22 @@ data class BottomNavItem(
 )
 
 /**
+ * How the selected tab is emphasised. Brand-configurable: light brand colors
+ * (e.g. yellow) can carry a filled indicator; saturated dark ones (e.g. red)
+ * read better as a plain icon swap + tint.
+ */
+enum class BottomNavSelectionStyle {
+    /** No indicator. Selected tab swaps to [BottomNavItem.selectedIcon] (or keeps
+     *  the outline icon) tinted with the active color. The classic treatment. */
+    TINT,
+
+    /** Capsule indicator in the active color behind icon + label; content renders
+     *  in the regular foreground, with [BottomNavItem.selectedFillIcon] layered
+     *  under the outline for the two-tone icon. */
+    CAPSULE,
+}
+
+/**
  * Bottom navigation bar with optional show/hide animation.
  *
  * @param visible When `true` (default), the bar renders normally. When `false`, the
@@ -75,6 +91,7 @@ fun BottomNavBar(
     backgroundColor: Color? = null,
     activeColor: Color? = null,
     inactiveColor: Color? = null,
+    selectionStyle: BottomNavSelectionStyle = BottomNavSelectionStyle.TINT,
     visible: Boolean = true
 ) {
     val colors = Theme.colors
@@ -121,14 +138,17 @@ fun BottomNavBar(
             ) {
                 items.forEach { item ->
                     val isSelected = selected == item.id
-                    val twoTone = isSelected && item.selectedFillIcon != null
+                    val capsule = selectionStyle == BottomNavSelectionStyle.CAPSULE
+                    val twoTone = isSelected && capsule && item.selectedFillIcon != null
                     val contentColor = when {
                         item.disabled -> colors.mutedForeground
                         twoTone -> colors.foreground
                         isSelected -> selectedColor
                         else -> unselectedColor
                     }
-                    val iconName = if (isSelected) item.selectedIcon ?: item.icon else item.icon
+                    // CAPSULE keeps the outline glyph on top (the fill layer sits under it);
+                    // TINT swaps to the selectedIcon (typically the filled variant).
+                    val iconName = if (isSelected && !capsule) item.selectedIcon ?: item.icon else item.icon
 
                     Column(
                         modifier = Modifier
@@ -165,8 +185,8 @@ fun BottomNavBar(
                             content = {
                                 Column(
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(10.dp))
-                                        .background(if (isSelected) selectedColor else Color.Transparent)
+                                        .clip(RoundedCornerShape(999.dp))
+                                        .background(if (isSelected && capsule) selectedColor else Color.Transparent)
                                         .padding(start = 8.dp, end = 8.dp, top = pillPadTop, bottom = 2.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {

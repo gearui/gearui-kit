@@ -26,8 +26,6 @@ import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -114,18 +112,9 @@ fun BottomNavBar(
             ) {
                 items.forEach { item ->
                     val isSelected = selected == item.id
-                    // Selected tab = filled pill in the brand primary with the paired
-                    // foreground inside (yellow pill + black glyph for a yellow brand,
-                    // blue pill + white glyph for a blue one); the label stays in the
-                    // regular foreground so it reads on the bar surface.
-                    val iconColor = when {
+                    val contentColor = when {
                         item.disabled -> colors.mutedForeground
-                        isSelected -> colors.primaryForeground
-                        else -> unselectedColor
-                    }
-                    val labelColor = when {
-                        item.disabled -> colors.mutedForeground
-                        isSelected -> colors.primaryForeground
+                        isSelected -> selectedColor
                         else -> unselectedColor
                     }
                     val iconName = if (isSelected) item.selectedIcon ?: item.icon else item.icon
@@ -144,10 +133,7 @@ fun BottomNavBar(
                                     Modifier
                                 }
                             )
-                            // No top padding: the icon slot already reserves badge headroom, and
-                            // the pill adds 4dp of its own height — the label gets clipped at the
-                            // default bar height otherwise.
-                            .padding(bottom = 2.dp),
+                            .padding(top = 2.dp, bottom = 2.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -162,23 +148,12 @@ fun BottomNavBar(
                         //   badge centre = (27 + 12, 20 - 12) = (39, 8) = the icon's top-right corner -> floats visually
                         val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
-                        // Selection pill wraps the icon AND the label together. The
-                        // clip/background modifiers are permanent (transparent when
-                        // unselected): conditionally removing them leaves a stale
-                        // background view behind on Kuikly when selection moves.
-                        Column(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(999.dp))
-                                .background(if (isSelected) selectedColor else Color.Transparent)
-                                .padding(start = 6.dp, end = 6.dp, bottom = 3.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
                                 Icon(
                                     name = iconName,
                                     size = IconSizes.Default.xl,
-                                    tint = iconColor
+                                    tint = contentColor
                                 )
                                 when {
                                     item.badgeCount > 0 -> Badge(
@@ -215,10 +190,9 @@ fun BottomNavBar(
                         Text(
                             text = item.label,
                             style = Typography.BodySmall,
-                            color = labelColor,
+                            color = contentColor,
                             maxLines = 1
                         )
-                        }
                     }
                 }
             }

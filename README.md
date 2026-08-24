@@ -247,13 +247,13 @@ private fun MainPageContent() {
 | Android | ✅ | ✅ | ✅ |
 | iOS | ✅ | ✅ | ✅ |
 | Web (H5) | ✅ | ✅ 75 of 76 demos | ✅ |
-| HarmonyOS | ⚠️ scaffolding | ⚠️ scaffolding | — |
+| HarmonyOS | ⚠️ builds, unrun | ⚠️ builds, unrun | — |
 
 Web runs through KuiklyUI's web renderer; the one demo that fails is `Table`,
 on a Kotlin/JS partial-linkage error in the sample's own demo file rather than
 in the component. See [sample/jsApp/README.md](./sample/jsApp/README.md).
 
-HarmonyOS is unbuilt scaffolding. It cannot be a target of the normal build:
+HarmonyOS builds but has never been run. The HAP is produced end to end; installing it needs an emulator image and a signed package, both behind a Huawei developer account. It cannot be a target of the normal build:
 the KuiklyUI artifacts carrying `ohosArm64` are published against Kotlin
 `2.0.21-KBA-010`, so ohos uses a parallel build configuration selected with
 `-c settings.ohos.gradle.kts`. See

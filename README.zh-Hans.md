@@ -246,13 +246,13 @@ private fun MainPageContent() {
 | Android | ✅ | ✅ | ✅ |
 | iOS | ✅ | ✅ | ✅ |
 | Web (H5) | ✅ | ✅ 76 个演示页中 75 个 | ✅ |
-| 鸿蒙 | ⚠️ 仅脚手架 | ⚠️ 仅脚手架 | — |
+| 鸿蒙 | ⚠️ 能构建未运行 | ⚠️ 能构建未运行 | — |
 
 Web 走 KuiklyUI 的 web 渲染器；唯一失败的 `Table` 是 sample 自身演示文件的
 Kotlin/JS 部分链接错误，不在组件本身。详见
 [sample/jsApp/README.md](./sample/jsApp/README.md)。
 
-鸿蒙目前是**未经构建的脚手架**。它无法作为常规构建的一个 target：带 `ohosArm64`
+鸿蒙**能构建，但从未运行过**：HAP 已全链路产出，装上去还需要模拟器镜像和已签名的包，两者都要华为开发者账号。它无法作为常规构建的一个 target：带 `ohosArm64`
 的 KuiklyUI 产物是基于 Kotlin `2.0.21-KBA-010` 发布的，因此鸿蒙使用一套并行构建配置，
 通过 `-c settings.ohos.gradle.kts` 显式驱动。哪些已验证、哪些没有，见
 [sample/ohosApp/README.md](./sample/ohosApp/README.md)。

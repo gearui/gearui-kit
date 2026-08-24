@@ -6,10 +6,9 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "@kuikly-open/render": "file:../../core-render-ohos",
+    "@kuikly-open/render": "^2.25.0",
     "libkuikly_entry.so": "file:./src/main/cpp/types/kuikly_entry",
     "@tencent/libpag": "4.4.25",
-    "bugly": "0.5.1",
     "@kuiklybase/knoi": "0.0.4"
   }
 }

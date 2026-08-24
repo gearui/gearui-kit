@@ -9,30 +9,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.1.21-2.0.1"
 }
 
-// The About row used to hardcode "1.0.0" and had already drifted from the
-// published version by the first release. Generate it from the same property
-// the POM is built from so it cannot drift again.
-val generateSampleBuildInfo by tasks.registering {
-    val version = providers.gradleProperty("POM_VERSION").orElse("dev")
-    val outputDir = layout.buildDirectory.dir("generated/sampleBuildInfo")
-    inputs.property("version", version)
-    outputs.dir(outputDir)
-    doLast {
-        val file = outputDir.get().asFile.resolve("com/gearui/sample/SampleBuildInfo.kt")
-        file.parentFile.mkdirs()
-        file.writeText(
-            """
-            package com.gearui.sample
-
-            /** Generated from POM_VERSION by :sample:generateSampleBuildInfo. Do not edit. */
-            object SampleBuildInfo {
-                const val VERSION: String = "${version.get()}"
-            }
-
-            """.trimIndent()
-        )
-    }
-}
+apply(from = rootProject.file("gradle/sample-build-info.gradle.kts"))
 
 kotlin {
     androidTarget {
@@ -77,7 +54,7 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-            kotlin.srcDir(generateSampleBuildInfo)
+            kotlin.srcDir(tasks.named("generateSampleBuildInfo"))
             dependencies {
                 // GearUI Component Library
                 implementation(project(":gearui-kit"))

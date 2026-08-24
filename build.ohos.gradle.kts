@@ -7,6 +7,9 @@ plugins {
     kotlin("plugin.compose") version "2.0.21-KBA-010" apply false
     id("com.android.library") version "7.4.2" apply false
     id("org.jetbrains.compose") version "1.7.3" apply false
+    // KSP is versioned against the Kotlin compiler, so this is the pairing for
+    // 2.0.21 rather than the 2.1.21-2.0.1 the normal build uses.
+    id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
 }
 
 allprojects {

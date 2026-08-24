@@ -12,6 +12,10 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+// Same generator the normal build uses; shared so the two build files cannot
+// drift (the sample's sources reference SampleBuildInfo unconditionally).
+apply(from = rootProject.file("gradle/sample-build-info.gradle.kts"))
+
 kotlin {
     // The host loads this as libshared.so — see EntryAbilityStage.ets, which
     // calls setup("libshared.so"). Renaming the binary means renaming it there
@@ -39,6 +43,9 @@ kotlin {
     sourceSets {
         all {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+        commonMain {
+            kotlin.srcDir(tasks.named("generateSampleBuildInfo"))
         }
         commonMain.dependencies {
             implementation(project(":gearui-kit"))

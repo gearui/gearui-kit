@@ -13,7 +13,8 @@
           "strictMode": {
             "useNormalizedOHMUrl": true
           }
-        }
+        },
+        "targetSdkVersion": "6.1.1(24)"
       }
     ],
     "buildModeSet": [
@@ -37,10 +38,6 @@
           ]
         }
       ]
-    },
-    {
-      "name": "render",
-      "srcPath": "../core-render-ohos",
     }
   ]
 }

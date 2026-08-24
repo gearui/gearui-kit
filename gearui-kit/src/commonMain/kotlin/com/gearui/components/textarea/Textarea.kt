@@ -21,6 +21,7 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
+import com.tencent.kuikly.compose.ui.unit.Dp
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.fieldBorderColor
@@ -280,6 +281,7 @@ private fun TextareaInputArea(
     autosize: Boolean,
     focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
+    verticalPadding: Dp = Spacing.sm,
     modifier: Modifier = Modifier,
 ) {
     val colors = Theme.colors
@@ -331,7 +333,7 @@ private fun TextareaInputArea(
                         Modifier
                             .clip(Theme.shapes.lg)
                             .background(colors.muted)
-                            .padding(horizontal = 10.dp, vertical = Spacing.sm)
+                            .padding(horizontal = 10.dp, vertical = verticalPadding)
                     }
                 )
         ) {
@@ -426,6 +428,12 @@ fun AutoResizeTextarea(
     autoFocus: Boolean = false,
     focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
+    /**
+     * Vertical padding inside the field. A single line is `2 * verticalPadding + 24dp`,
+     * so this is how a caller matches the field's collapsed height to the controls
+     * beside it (4dp -> 32dp, the default 8dp -> 40dp).
+     */
+    verticalPadding: Dp = Spacing.sm,
 ) {
     val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
 
@@ -450,6 +458,7 @@ fun AutoResizeTextarea(
         autosize = true,
         focusRequester = inputFocusRequester,
         onFocusChanged = onFocusChanged,
+        verticalPadding = verticalPadding,
         modifier = modifier,
     )
 }

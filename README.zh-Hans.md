@@ -8,7 +8,7 @@
 
 - 坐标：`com.gearui:gearui-kit:1.0.0-beta1`
 - 2026-08-15 起可从 Maven Central 获取（首个公开版本）
-- 支持平台：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）
+- 支持平台：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）、鸿蒙（ohosArm64，独立构建）
 - 官网：[https://gearui.com](https://gearui.com)
 - License：BSD 3-Clause License
 
@@ -246,16 +246,24 @@ private fun MainPageContent() {
 | Android | ✅ | ✅ | ✅ |
 | iOS | ✅ | ✅ | ✅ |
 | Web (H5) | ✅ | ✅ 76 个演示页中 75 个 | ✅ |
-| 鸿蒙 | ⚠️ 能构建未运行 | ⚠️ 能构建未运行 | — |
+| 鸿蒙 | ✅ | ✅ 可构建 | — |
 
 Web 走 KuiklyUI 的 web 渲染器；唯一失败的 `Table` 是 sample 自身演示文件的
 Kotlin/JS 部分链接错误，不在组件本身。详见
 [sample/jsApp/README.md](./sample/jsApp/README.md)。
 
-鸿蒙**能构建，但从未运行过**：HAP 已全链路产出，装上去还需要模拟器镜像和已签名的包，两者都要华为开发者账号。它无法作为常规构建的一个 target：带 `ohosArm64`
-的 KuiklyUI 产物是基于 Kotlin `2.0.21-KBA-010` 发布的，因此鸿蒙使用一套并行构建配置，
-通过 `-c settings.ohos.gradle.kts` 显式驱动。哪些已验证、哪些没有，见
-[sample/ohosApp/README.md](./sample/ohosApp/README.md)。
+鸿蒙已支持，且全链路可构建——Kotlin/Native → CMake NAPI 胶水 → ArkTS → 一个包含
+`libshared.so` 与 `libkuikly_entry.so` 的可安装 HAP。它无法作为常规构建的一个 target：
+带 `ohosArm64` 的 KuiklyUI 产物是基于 Kotlin `2.0.21-KBA-010` 发布的，因此鸿蒙使用一套
+并行构建配置，通过 `-c settings.ohos.gradle.kts` 显式驱动：
+
+```bash
+./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
+```
+
+HAP **尚未在真机或模拟器上启动过**，因此鸿蒙上关于 UI 的一切都未经验证——安装还需要模拟器
+镜像和已签名的包，两者都要华为开发者账号。构建步骤与确切的剩余项见
+[sample/ohosApp/README.zh-Hans.md](./sample/ohosApp/README.zh-Hans.md)。
 
 ## 工程说明
 

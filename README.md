@@ -8,7 +8,7 @@ A Kotlin Multiplatform UI component library built on Kuikly.
 
 - Coordinates: `com.gearui:gearui-kit:1.0.0-beta1`
 - Available on Maven Central since 2026-08-15 (first public release)
-- Targets: Android, iOS (arm64 / simulator arm64 / x64), JS (browser)
+- Targets: Android, iOS (arm64 / simulator arm64 / x64), JS (browser), HarmonyOS (ohosArm64, separate build)
 - Website: [https://gearui.com](https://gearui.com)
 - License: BSD 3-Clause License
 
@@ -247,18 +247,28 @@ private fun MainPageContent() {
 | Android | ✅ | ✅ | ✅ |
 | iOS | ✅ | ✅ | ✅ |
 | Web (H5) | ✅ | ✅ 75 of 76 demos | ✅ |
-| HarmonyOS | ⚠️ builds, unrun | ⚠️ builds, unrun | — |
+| HarmonyOS | ✅ | ✅ builds | — |
 
 Web runs through KuiklyUI's web renderer; the one demo that fails is `Table`,
 on a Kotlin/JS partial-linkage error in the sample's own demo file rather than
 in the component. See [sample/jsApp/README.md](./sample/jsApp/README.md).
 
-HarmonyOS builds but has never been run. The HAP is produced end to end; installing it needs an emulator image and a signed package, both behind a Huawei developer account. It cannot be a target of the normal build:
-the KuiklyUI artifacts carrying `ohosArm64` are published against Kotlin
-`2.0.21-KBA-010`, so ohos uses a parallel build configuration selected with
-`-c settings.ohos.gradle.kts`. See
-[sample/ohosApp/README.md](./sample/ohosApp/README.md) for what is and is not
-verified.
+HarmonyOS is supported and builds end to end — Kotlin/Native → CMake NAPI glue
+→ ArkTS → an installable HAP carrying both `libshared.so` and
+`libkuikly_entry.so`. It cannot be a target of the normal build: the KuiklyUI
+artifacts carrying `ohosArm64` are published against Kotlin `2.0.21-KBA-010`, so
+ohos uses a parallel build configuration selected with
+`-c settings.ohos.gradle.kts`:
+
+```bash
+./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
+```
+
+The HAP has **not been launched on a device or emulator yet**, so nothing about
+the UI is verified there — installing needs an emulator image and a signed
+package, both behind a Huawei developer account. See
+[sample/ohosApp/README.md](./sample/ohosApp/README.md) for the build steps and
+exactly what remains.
 
 ## Project Notes
 

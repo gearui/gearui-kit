@@ -233,7 +233,8 @@ fun SearchBar(
             Spacer(modifier = Modifier.width(Spacing.sm))
             Box(
                 modifier = Modifier
-                    .clip(shapes.full)
+                    // Same radius as the field it sits next to, not a capsule.
+                    .clip(FieldDefaults.shape)
                     .background(if (enabled) colors.primary else colors.muted)
                     .clickable(enabled = enabled) {
                         focusManager.clearFocus(force = true)

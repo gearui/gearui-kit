@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+<path d="M3 3h8v8H3z M5 5v4h4V5z" fill-rule="evenodd"/>
+<path d="M3 13h8v8H3z M5 15v4h4V15z" fill-rule="evenodd"/>
+<path d="M13 3h8v8H13z M15 5v4h4V5z" fill-rule="evenodd"/>
+<rect x="13" y="13" width="2" height="2"/>
+<rect x="17" y="13" width="2" height="2"/>
+<rect x="21" y="13" width="2" height="2"/>
+<rect x="15" y="15" width="2" height="2"/>
+<rect x="19" y="15" width="2" height="2"/>
+<rect x="13" y="17" width="2" height="2"/>
+<rect x="17" y="17" width="2" height="2"/>
+<rect x="21" y="17" width="2" height="2"/>
+<rect x="15" y="19" width="2" height="2"/>
+<rect x="19" y="19" width="2" height="2"/>
+<rect x="13" y="21" width="2" height="2"/>
+<rect x="17" y="21" width="2" height="2"/>
+<rect x="21" y="21" width="2" height="2"/>
+</svg>

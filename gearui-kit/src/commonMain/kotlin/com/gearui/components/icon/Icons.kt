@@ -75,6 +75,7 @@ object Icons {
     const val person_remove = "person_remove"
     const val person = "person"
     const val photo_camera = "photo_camera"
+    const val qr_code = "qr_code"
     const val play_arrow = "play_arrow"
     const val radio_button_checked = "radio_button_checked"
     const val radio_button_unchecked = "radio_button_unchecked"

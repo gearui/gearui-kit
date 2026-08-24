@@ -125,7 +125,7 @@ fun BottomNavBar(
                     }
                     val labelColor = when {
                         item.disabled -> colors.mutedForeground
-                        isSelected -> colors.foreground
+                        isSelected -> colors.primaryForeground
                         else -> unselectedColor
                     }
                     val iconName = if (isSelected) item.selectedIcon ?: item.icon else item.icon
@@ -162,26 +162,24 @@ fun BottomNavBar(
                         //   badge centre = (27 + 12, 20 - 12) = (39, 8) = the icon's top-right corner -> floats visually
                         val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
+                        // Selection pill wraps the icon AND the label together. The
+                        // clip/background modifiers are permanent (transparent when
+                        // unselected): conditionally removing them leaves a stale
+                        // background view behind on Kuikly when selection moves.
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(999.dp))
+                                .background(if (isSelected) selectedColor else Color.Transparent)
+                                .padding(start = 6.dp, end = 6.dp, bottom = 3.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
-                                // Constant modifier chain: clip + background are always present
-                                // (transparent when unselected) — conditionally adding/removing
-                                // them leaves a stale background view behind on Kuikly when the
-                                // selection moves to another tab. Padding is constant too, so the
-                                // measured slot never changes between states.
-                                Box(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(999.dp))
-                                        .background(if (isSelected) selectedColor else Color.Transparent)
-                                        .padding(horizontal = 10.dp, vertical = 2.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        name = iconName,
-                                        size = IconSizes.Default.xl,
-                                        tint = iconColor
-                                    )
-                                }
+                                Icon(
+                                    name = iconName,
+                                    size = IconSizes.Default.xl,
+                                    tint = iconColor
+                                )
                                 when {
                                     item.badgeCount > 0 -> Badge(
                                         type = BadgeType.Message,
@@ -220,6 +218,7 @@ fun BottomNavBar(
                             color = labelColor,
                             maxLines = 1
                         )
+                        }
                     }
                 }
             }

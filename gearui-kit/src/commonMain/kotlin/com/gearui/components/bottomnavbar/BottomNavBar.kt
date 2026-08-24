@@ -143,48 +143,53 @@ fun BottomNavBar(
                                 } else {
                                     Modifier
                                 }
-                            )
-                            .padding(bottom = 2.dp),
+                            ),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        // Selected-tab indicator: a soft rounded rectangle in the active color
-                        // behind icon + label (M3-style, small radius). clip/background stay in
-                        // the modifier chain permanently (transparent when unselected) because
-                        // conditionally removing them leaves a stale background view behind on
-                        // Kuikly when selection moves to another tab.
-                        Column(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(if (isSelected) selectedColor else Color.Transparent)
-                                .padding(start = 6.dp, end = 6.dp, bottom = 3.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                        // Combined icon + badge layout (a custom Layout):
-                        // - the layout size is **constant** (it does not change as the badge appears or disappears), identical for every tab
-                        // - the icon is **centred** in the layout (half a badge width is reserved on each side, and the badge fills the right half)
-                        // - the badge centre sits at the icon's top-right corner, entirely inside the bounds (working around Kuikly clipping)
+                        // Combined pill + badge layout (a custom Layout):
+                        // - child 0 is the "pill": icon + label wrapped tightly by the selection
+                        //   indicator (10dp rounded rect in the active color). The indicator must
+                        //   NOT include the badge headroom above the icon — it hugs the content.
+                        // - child 1 is the optional badge, floated at the icon's top-right corner
+                        //   inside the reserved headroom (kept in-bounds: Kuikly clips overflow).
+                        // - the layout size is constant per tab regardless of badge presence.
                         //
-                        // The maths: layout = (iconW + badgeMaxW, iconH + badgeMaxH/2)
-                        //   the "99+" case: (24 + 30, 24 + 8) = (54, 32)
-                        //   icon centre = (27, 20) = the geometric centre of the layout -> visually centred within the tab
-                        //   badge centre = (27 + 12, 20 - 12) = (39, 8) = the icon's top-right corner -> floats visually
+                        // The clip/background modifiers on the pill stay in the chain permanently
+                        // (transparent when unselected): conditionally removing them leaves a
+                        // stale background view behind on Kuikly when selection moves.
                         val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
                         val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
+                        val pillPadTop = 2.dp
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
-                                Box {
-                                    if (twoTone) {
+                                Column(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .background(if (isSelected) selectedColor else Color.Transparent)
+                                        .padding(start = 8.dp, end = 8.dp, top = pillPadTop, bottom = 2.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Box {
+                                        if (twoTone) {
+                                            Icon(
+                                                name = item.selectedFillIcon!!,
+                                                size = IconSizes.Default.xl,
+                                                tint = selectedColor
+                                            )
+                                        }
                                         Icon(
-                                            name = item.selectedFillIcon!!,
+                                            name = iconName,
                                             size = IconSizes.Default.xl,
-                                            tint = selectedColor
+                                            tint = contentColor
                                         )
                                     }
-                                    Icon(
-                                        name = iconName,
-                                        size = IconSizes.Default.xl,
-                                        tint = contentColor
+                                    Spacer(modifier = Modifier.height(BorderWidth.thick))
+                                    Text(
+                                        text = item.label,
+                                        style = Typography.BodySmall,
+                                        color = contentColor,
+                                        maxLines = 1
                                     )
                                 }
                                 when {
@@ -197,34 +202,32 @@ fun BottomNavBar(
                                 }
                             }
                         ) { measurables, constraints ->
-                            val iconP = measurables[0].measure(constraints)
-                            val badgeP = measurables.getOrNull(1)
-                                ?.measure(com.tencent.kuikly.compose.ui.unit.Constraints())
                             val reservedW = reservedBadgeW.roundToPx()
                             val reservedH = reservedBadgeH.roundToPx()
-                            val totalW = iconP.width + reservedW           // = 54
-                            val totalH = iconP.height + reservedH / 2      // = 32
+                            // The indicator follows the tab cell's width (minus the badge
+                            // headroom margin on each side) instead of hugging the label,
+                            // so every tab shows the same generous block.
+                            val pillW = (constraints.maxWidth - reservedW).coerceAtLeast(0)
+                            val pillP = measurables[0].measure(
+                                constraints.copy(minWidth = pillW, maxWidth = pillW)
+                            )
+                            val badgeP = measurables.getOrNull(1)
+                                ?.measure(com.tencent.kuikly.compose.ui.unit.Constraints())
+                            val totalW = constraints.maxWidth
+                            val totalH = pillP.height + reservedH / 2
                             layout(totalW, totalH) {
-                                // Icon centred horizontally: reservedW/2 on the left and reservedW/2 on the right
-                                // Icon has reservedH/2 above and sits flush with the bottom
-                                val iconX = reservedW / 2
-                                val iconY = reservedH / 2
-                                iconP.place(iconX, iconY)
+                                val pillX = reservedW / 2
+                                val pillY = reservedH / 2
+                                pillP.place(pillX, pillY)
+                                // Badge centre = the ICON's top-right corner. The icon (24dp) is
+                                // horizontally centred in the pill; its top sits pillPadTop below
+                                // the pill's top edge.
+                                val iconHalf = (IconSizes.Default.xl / 2).roundToPx()
                                 badgeP?.place(
-                                    iconX + iconP.width - badgeP.width / 2,
-                                    iconY - badgeP.height / 2
+                                    pillX + pillP.width / 2 + iconHalf - badgeP.width / 2,
+                                    pillY + pillPadTop.roundToPx() - badgeP.height / 2
                                 )
                             }
-                        }
-
-                        Spacer(modifier = Modifier.height(BorderWidth.thick))
-
-                        Text(
-                            text = item.label,
-                            style = Typography.BodySmall,
-                            color = contentColor,
-                            maxLines = 1
-                        )
                         }
                     }
                 }

@@ -22,6 +22,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.tencent.kuikly.compose.ui.unit.Dp
+import com.tencent.kuikly.compose.ui.unit.TextUnit
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.fieldBorderColor
@@ -282,6 +283,7 @@ private fun TextareaInputArea(
     focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
     verticalPadding: Dp = Spacing.sm,
+    lineHeight: TextUnit = 24.sp,
     modifier: Modifier = Modifier,
 ) {
     val colors = Theme.colors
@@ -339,7 +341,6 @@ private fun TextareaInputArea(
         ) {
             Column {
                 val fontSize = 16.sp
-                val lineHeight = 24.sp
 
                 BasicTextField(
                     value = value,
@@ -434,6 +435,13 @@ fun AutoResizeTextarea(
      * beside it (4dp -> 32dp, the default 8dp -> 40dp).
      */
     verticalPadding: Dp = Spacing.sm,
+    /**
+     * Line box height. Kuikly has no `LineHeightStyle`, so whatever exceeds the font's
+     * natural line is added *below* the baseline — a collapsed single line then sits
+     * visibly high in the field. Callers that need a tight, vertically centred single
+     * line pass a value close to the natural line height (~1.25 * font size).
+     */
+    lineHeight: TextUnit = 24.sp,
 ) {
     val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
 
@@ -459,6 +467,7 @@ fun AutoResizeTextarea(
         focusRequester = inputFocusRequester,
         onFocusChanged = onFocusChanged,
         verticalPadding = verticalPadding,
+        lineHeight = lineHeight,
         modifier = modifier,
     )
 }

@@ -341,6 +341,19 @@ private fun TextareaInputArea(
         ) {
             Column {
                 val fontSize = 16.sp
+                // 占位符必须与正文用同一套字号/行高：Typography.BodyMedium 是 14sp/22sp，
+                // 与正文行盒不同高，空态和有内容态就会差几 dp——输入第一个字符时输入框跳一下。
+                val inputTextStyle = TextStyle(
+                    fontSize = fontSize,
+                    lineHeight = lineHeight,
+                    color = if (enabled) colors.foreground else colors.mutedForeground,
+                )
+                // 同一套度量，换成 kit Text 需要的 token 类型。
+                val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
+                    fontSize = fontSize,
+                    lineHeight = lineHeight,
+                    fontWeight = com.tencent.kuikly.compose.ui.text.font.FontWeight.Normal,
+                )
 
                 BasicTextField(
                     value = value,
@@ -359,11 +372,7 @@ private fun TextareaInputArea(
                         ),
                     enabled = enabled,
                     readOnly = readOnly,
-                    textStyle = TextStyle(
-                        fontSize = fontSize,
-                        lineHeight = lineHeight,
-                        color = if (enabled) colors.foreground else colors.mutedForeground
-                    ),
+                    textStyle = inputTextStyle,
                     cursorBrush = SolidColor(colors.primary),
                     singleLine = false,
                     minLines = minLines,
@@ -373,8 +382,8 @@ private fun TextareaInputArea(
                             if (value.isEmpty() && placeholder.isNotEmpty()) {
                                 Text(
                                     text = placeholder,
-                                    style = Typography.BodyMedium,
-                                    color = if (readOnly) colors.mutedForeground else colors.mutedForeground
+                                    style = placeholderTextStyle,
+                                    color = colors.mutedForeground,
                                 )
                             }
                             innerTextField()

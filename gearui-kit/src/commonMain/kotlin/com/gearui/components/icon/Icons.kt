@@ -9,6 +9,7 @@ package com.gearui.components.icon
  * - `Icons.svg(Icons.home)` -> assets://icons/home.svg
  */
 object Icons {
+    const val account_balance_wallet = "account_balance_wallet"
     const val account_circle = "account_circle"
     const val account_circle_fill = "account_circle_fill"
     const val add = "add"
@@ -59,6 +60,7 @@ object Icons {
     const val keyboard_arrow_up = "keyboard_arrow_up"
     const val link_off = "link_off"
     const val link = "link"
+    const val lock = "lock"
     const val mail = "mail"
     const val menu = "menu"
     const val mic_off = "mic_off"
@@ -82,6 +84,7 @@ object Icons {
     const val play_arrow = "play_arrow"
     const val radio_button_checked = "radio_button_checked"
     const val radio_button_unchecked = "radio_button_unchecked"
+    const val redeem = "redeem"
     const val refresh = "refresh"
     const val remove = "remove"
     const val report = "report"
@@ -106,6 +109,7 @@ object Icons {
     const val translate = "translate"
     const val tune = "tune"
     const val update = "update"
+    const val verified_user = "verified_user"
     const val videocam_off = "videocam_off"
     const val videocam = "videocam"
     const val warning = "warning"

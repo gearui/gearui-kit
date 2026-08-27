@@ -50,6 +50,7 @@ object Icons {
     const val forum_fill = "forum_fill"
     const val group = "group"
     const val groups = "groups"
+    const val help = "help"
     const val history = "history"
     const val home = "home"
     const val hourglass_empty = "hourglass_empty"

@@ -121,24 +121,33 @@ private fun OverlayItemLayout(
                     // down event reach the layer below first, where the native scroll
                     // view takes it.
                     .pointerInput(item.id) {
+                        // 🔴 tap 判定必须在**这同一个**手势循环里做。这层为了不让底下的
+                        // LazyColumn 滚动，把所有指针事件都 consume 掉——后挂的 .clickable
+                        // 等的是未消费的 down，永远等不到，点遮罩关闭（outsideClick）就
+                        // 整个失效：sheet/picker 全都点空白关不掉（iOS 的手势语义是
+                        // sheet 点遮罩即关，alert 才不关）。
+                        val dragThreshold = 10f
                         awaitEachGesture {
                             val down = awaitFirstDown(requireUnconsumed = false)
                             down.consume()
+                            var totalDrag = 0f
                             while (true) {
                                 val event = awaitPointerEvent()
-                                event.changes.forEach { it.consume() }
-                                if (event.changes.all { !it.pressed }) break
+                                event.changes.forEach {
+                                    totalDrag += kotlin.math.abs(it.positionChange().x) +
+                                        kotlin.math.abs(it.positionChange().y)
+                                    it.consume()
+                                }
+                                if (event.changes.all { !it.pressed }) {
+                                    // 抬指且没拖动 = tap；按 policy 决定是否关闭。
+                                    if (totalDrag <= dragThreshold && policy.outsideClick) {
+                                        controller.dismiss(item.id)
+                                    }
+                                    break
+                                }
                             }
                         }
                     }
-                    // Click handling; policy.outsideClick decides whether it dismisses.
-                    .clickable(
-                        onClick = {
-                            if (policy.outsideClick) {
-                                controller.dismiss(item.id)
-                            }
-                        }
-                    )
             )
         } else if (policy.outsideClick || policy.scroll) {
             // Transparent touch layer for click and drag dismissal.
@@ -231,9 +240,14 @@ private fun OverlayItemLayout(
             } else {
                 Modifier
                     .fillMaxSize()
-                    // Intercept clicks so they do not reach the backdrop.
+                    // 🔴 这层铺满全屏、压在 backdrop 之上——backdrop 的 outsideClick
+                    // 永远收不到事件。所以「点空白关闭」必须由**这里**执行，而不是
+                    // 只做无脑拦截：sheet/picker 点内容之外即关（iOS 手势语义），
+                    // 真正的面板内容（surface）自己消费点击，不会冒泡到这。
                     .clickable(onClick = {
-                        // Intentionally empty: interception is the point.
+                        if (policy.outsideClick) {
+                            controller.dismiss(item.id)
+                        }
                     })
             }
             Box(fullscreenModifier) {

@@ -170,6 +170,15 @@ fun Input(
                 .clip(shape)
                 .background(backgroundColor)
                 .then(borderModifier)
+        } else if (maxLines > 1) {
+            // 多行（textarea）：固定单行高会把内容裁掉，高度交给外部 modifier
+            // （页面用 .height(N) 指定），这里只保证不低于单行。
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = tokens.height)
+                .clip(shape)
+                .background(backgroundColor)
+                .then(borderModifier)
         } else {
             Modifier
                 .fillMaxWidth()
@@ -201,9 +210,11 @@ fun Input(
                     }
                 }
         ) {
+          Column(modifier = Modifier.fillMaxSize()) {
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
+                    .fillMaxWidth()
                     .padding(
                         horizontal = tokens.paddingHorizontal,
                         vertical = if (cardStyle) 12.dp else 0.dp
@@ -368,8 +379,8 @@ fun Input(
                     suffix()
                 }
 
-                // Character counter
-                if (showCounter && maxLength != null) {
+                // Character counter — 单行：行内右侧
+                if (showCounter && maxLength != null && maxLines == 1) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${value.length}/$maxLength",
@@ -378,6 +389,27 @@ fun Input(
                     )
                 }
             }
+            // 多行（textarea）：计数器沉到框内**右下角**（对标微信签名编辑）。
+            // 留在行内右侧会和第一行文字挤在一起，视觉上像后缀而不是计数。
+            if (showCounter && maxLength != null && maxLines > 1) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = tokens.paddingHorizontal,
+                            end = tokens.paddingHorizontal,
+                            bottom = 8.dp
+                        ),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        text = "${value.length}/$maxLength",
+                        style = Typography.BodySmall,
+                        color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
+                    )
+                }
+            }
+          }
         }
     }
 

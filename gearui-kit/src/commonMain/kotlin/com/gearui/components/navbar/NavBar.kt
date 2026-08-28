@@ -51,6 +51,10 @@ fun NavBar(
     titleWidget: (@Composable () -> Unit)? = null,
     belowTitleWidget: (@Composable () -> Unit)? = null,
     rightWidget: (@Composable () -> Unit)? = null,
+    /** 左侧自定义槽（如「取消」文字按钮）。与 [rightWidget] 对称；非空时替代默认返回键与 leftItems。 */
+    leftWidget: (@Composable () -> Unit)? = null,
+    /** [leftWidget] 的槽宽；null = 默认 56dp（纯图标宽度）。放文字按钮要显式传大值。 */
+    leftWidgetWidth: Dp? = null,
     /**
      * Slot width for [rightWidget]. `null` (the default) uses [actionSlotWidth] (56dp, matching an icon-only button).
      * If rightWidget holds a text button such as "Done" or "Create (N)", pass a larger value explicitly
@@ -93,7 +97,10 @@ fun NavBar(
                 val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
                 val rightCount = rightItems.size
                 // Padding beside the title: the larger of the two action areas, so the centred title is never covered
-                val leftSlotWidth = (leftCount * actionSlotWidth.value).dp
+                val leftSlotWidth = when {
+                    leftWidget != null -> leftWidgetWidth ?: actionSlotWidth
+                    else -> (leftCount * actionSlotWidth.value).dp
+                }
                 val rightSlotWidth = when {
                     rightWidget != null -> rightWidgetWidth ?: actionSlotWidth
                     else -> (rightCount * actionSlotWidth.value).dp
@@ -117,7 +124,17 @@ fun NavBar(
                         )
                     }
                 }
-                Row(
+                if (leftWidget != null) {
+                    Box(
+                        modifier = Modifier
+                            .width(leftWidgetWidth ?: actionSlotWidth)
+                            .fillMaxHeight()
+                            .align(Alignment.CenterStart),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        leftWidget()
+                    }
+                } else Row(
                     modifier = Modifier
                         .width((leftCount * actionSlotWidth.value).dp)
                         .fillMaxHeight()

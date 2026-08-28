@@ -61,7 +61,9 @@ fun SearchBar(
     onCancel: (() -> Unit)? = null,
     onSearch: ((String) -> Unit)? = null,
     shape: SearchBarShape = SearchBarShape.ROUNDED,
-    alignment: SearchBarAlignment = SearchBarAlignment.LEFT
+    alignment: SearchBarAlignment = SearchBarAlignment.LEFT,
+    /** 进入页面即聚焦并弹键盘（搜索页的正确姿势——用户就是来打字的）。 */
+    autoFocus: Boolean = false
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
@@ -75,6 +77,15 @@ fun SearchBar(
     LaunchedEffect(focusRequestTick, enabled) {
         if (focusRequestTick > 0 && enabled) {
             focusRequester.requestFocus()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (autoFocus && enabled) {
+            // 等 textarea 完成组合再请求焦点（与 MessagePage 语音→文字同款时序坑）。
+            kotlinx.coroutines.delay(80)
+            focusRequester.requestFocus()
+            keyboardController?.show()
         }
     }
 

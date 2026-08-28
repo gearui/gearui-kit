@@ -77,7 +77,7 @@ MAP = {
  'person_add': ('user-plus','regular'),
  'person_remove': ('user-minus','regular'),
  'photo_camera': ('camera','regular'),
- 'play_arrow': ('play','regular'),
+ 'play_arrow': ('play','fill'),
  'qr_code': ('qr-code','regular'),
  'radio_button_checked': ('radio-button','fill'),
  'radio_button_unchecked': ('circle','regular'),

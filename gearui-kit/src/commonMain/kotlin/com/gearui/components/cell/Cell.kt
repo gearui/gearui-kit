@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.list.CellDefaults
 import com.gearui.foundation.primitives.Text
@@ -32,6 +33,8 @@ fun Cell(
     description: String? = null,
     arrow: Boolean = false,
     enabled: Boolean = true,
+    /** 标题颜色覆盖（如破坏性操作行用 destructive 红）；null = 常规前景色。 */
+    titleColor: Color? = null,
     compact: Boolean = false,
     onClick: (() -> Unit)? = null,
     leading: (@Composable () -> Unit)? = null,
@@ -81,7 +84,7 @@ fun Cell(
                 // 对标 UIKit 表格行：body 17pt Regular。BodyLarge(16) 配全黑前景显得比
                 // 系统设置更「重」，17 Regular 是 iOS 用户眼里的默认行标题。
                 style = CellTextStyles.Title,
-                color = if (enabled) colors.foreground else colors.mutedForeground
+                color = titleColor ?: if (enabled) colors.foreground else colors.mutedForeground
             )
 
             if (description != null) {

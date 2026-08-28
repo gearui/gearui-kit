@@ -151,8 +151,8 @@ object ActionSheet {
     }
 
     /**
-     * ActionSheet host.
-     * Must be placed at the root of the page.
+     * ActionSheet host。由 [com.gearui.App] 全局挂载**一次**，页面不要再挂：
+     * 多个 Host 会把同一份单例状态 show 成多个叠加的 overlay。
      */
     @Composable
     fun Host() {

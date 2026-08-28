@@ -101,6 +101,17 @@ fun App(
                                 OverlayRoot {
                                     content()
                                     ToastHost()
+                                    // 🔴 命令式 ActionSheet 的**唯一**宿主。
+                                    //
+                                    // ActionSheet 是全局单例状态；宿主若靠各页面自己挂
+                                    // （旧约定「Must be placed at the root of the page」），
+                                    // 后果有两类，都在生产复现过：
+                                    // 1. 从没挂 Host 的页面调 showList → 当页什么都不出，
+                                    //    返回到挂了 Host 的页面时弹层突然冒出来；
+                                    // 2. 多个存活页面各挂一份 Host → 同一份状态被 show 成
+                                    //    多个 overlay 叠在栈里。
+                                    // 全局只此一份，弹层永远在最上层、同一时刻只有一个。
+                                    com.gearui.components.actionsheet.ActionSheet.Host()
                                 }
                             }
                         }

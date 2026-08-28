@@ -60,7 +60,9 @@ fun NavBar(
     showBottomDivider: Boolean = true
 ) {
     val colors = Theme.colors
-    val bgColor = backgroundColor ?: colors.surface
+    // 默认跟页面背景同色：surface 在暗色主题下（#121212）比 background（#0A0A0A）亮一档，
+    // 顶部会出现一条明显的色带，和状态栏区域接不上。亮色下两者同为白，无感。
+    val bgColor = backgroundColor ?: colors.background
     val textColor = titleColor ?: colors.foreground
 
     // Safe area insets

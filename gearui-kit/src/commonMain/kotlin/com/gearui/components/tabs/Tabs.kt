@@ -150,16 +150,18 @@ private fun TabCell(
             .border(BorderWidth.thin, if (selected) colors.border else Color.Transparent, shapes.md)
     }
 
-    Column(
+    // 标签在整格内**垂直居中**，下划线叠加在底边（Material TabRow / UIKit 的做法）。
+    // 原来用 Column + SpaceBetween，文字被顶到上缘、指示条占掉下缘——标题不居中，
+    // 而且视觉上像被指示条「挤」了一格。
+    Box(
         modifier = containerModifier
             .fillMaxWidth()
             .height(tabHeight)
             .clickable(enabled = !item.disabled) {
                 if (!selected) onSelect(item.id)
             }
-            .padding(horizontal = Spacing.sm, vertical = Spacing.sm),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .padding(horizontal = Spacing.sm),
+        contentAlignment = Alignment.Center
     ) {
         val contentColor = when {
             item.disabled -> colors.mutedForeground
@@ -187,12 +189,13 @@ private fun TabCell(
             )
         }
 
-        if (outlineType == TabsOutlineType.UNDERLINE) {
+        if (outlineType == TabsOutlineType.UNDERLINE && selected && showIndicator) {
             Box(
                 modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .height(BorderWidth.thick)
                     .width(20.dp)
-                    .background(if (selected && showIndicator) colors.primary else Color.Transparent)
+                    .background(colors.primary)
             )
         }
     }

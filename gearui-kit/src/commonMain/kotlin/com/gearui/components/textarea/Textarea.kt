@@ -341,14 +341,14 @@ private fun TextareaInputArea(
         ) {
             Column {
                 val fontSize = 16.sp
-                // 占位符必须与正文用同一套字号/行高：Typography.BodyMedium 是 14sp/22sp，
-                // 与正文行盒不同高，空态和有内容态就会差几 dp——输入第一个字符时输入框跳一下。
+                // The placeholder must use the SAME size/line-height as the body text: Typography.BodyMedium is
+                // 14sp/22sp, a different line box, so empty and filled states would differ by a few dp and the field would jump on the first character.
                 val inputTextStyle = TextStyle(
                     fontSize = fontSize,
                     lineHeight = lineHeight,
                     color = if (enabled) colors.foreground else colors.mutedForeground,
                 )
-                // 同一套度量，换成 kit Text 需要的 token 类型。
+                // The same metrics, converted to the token types the kit Text needs.
                 val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
                     fontSize = fontSize,
                     lineHeight = lineHeight,

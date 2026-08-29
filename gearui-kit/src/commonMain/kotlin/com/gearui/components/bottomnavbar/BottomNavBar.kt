@@ -26,12 +26,12 @@ import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
@@ -178,16 +178,16 @@ fun BottomNavBar(
                         // The clip/background modifiers on the pill stay in the chain permanently
                         // (transparent when unselected): conditionally removing them leaves a
                         // stale background view behind on Kuikly when selection moves.
-                        val reservedBadgeW = 30.dp  // "99+" 在 BadgeSize.Small 下的最大宽度
-                        val reservedBadgeH = 16.dp  //  BadgeSize.Small 高度
+                        val reservedBadgeW = 30.dp  // widest case ("99+") at BadgeSize.Small
+                        val reservedBadgeH = 16.dp  // BadgeSize.Small height
                         val pillPadTop = 2.dp
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
                                 Column(
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(999.dp))
+                                        .clip(Theme.shapes.full)
                                         .background(if (isSelected && capsule) selectedColor else Color.Transparent)
-                                        .padding(start = 8.dp, end = 8.dp, top = pillPadTop, bottom = 2.dp),
+                                        .padding(start = Spacing.sm, end = Spacing.sm, top = pillPadTop, bottom = 2.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Box {

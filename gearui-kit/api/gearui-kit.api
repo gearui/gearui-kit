@@ -225,32 +225,42 @@ public final class com/gearui/components/backtop/BackTopTheme : java/lang/Enum {
 }
 
 public final class com/gearui/components/bottomnavbar/BottomNavBarKt {
-	public static final fun BottomNavBar-alI_tMM (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun BottomNavBar-h8JutnM (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;ZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/bottomnavbar/BottomNavItem {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZ)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZ)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()I
-	public final fun component6 ()Z
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
 	public final fun component7 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZ)Lcom/gearui/components/bottomnavbar/BottomNavItem;
-	public static synthetic fun copy$default (Lcom/gearui/components/bottomnavbar/BottomNavItem;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZILjava/lang/Object;)Lcom/gearui/components/bottomnavbar/BottomNavItem;
+	public final fun component8 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZ)Lcom/gearui/components/bottomnavbar/BottomNavItem;
+	public static synthetic fun copy$default (Lcom/gearui/components/bottomnavbar/BottomNavItem;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZILjava/lang/Object;)Lcom/gearui/components/bottomnavbar/BottomNavItem;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBadgeCount ()I
 	public final fun getDisabled ()Z
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
+	public final fun getSelectedFillIcon ()Ljava/lang/String;
 	public final fun getSelectedIcon ()Ljava/lang/String;
 	public final fun getShowBadgeDot ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/bottomnavbar/BottomNavSelectionStyle : java/lang/Enum {
+	public static final field CAPSULE Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
+	public static final field TINT Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
+	public static fun values ()[Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
 }
 
 public final class com/gearui/components/bottomsheet/BottomSheet {
@@ -424,7 +434,7 @@ public final class com/gearui/components/cascader/CascaderOption {
 }
 
 public final class com/gearui/components/cell/CellKt {
-	public static final fun Cell (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Cell-L01suY8 (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZZLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/checkbox/CheckboxKt {
@@ -696,7 +706,9 @@ public abstract interface class com/gearui/components/grid/GridScope {
 public final class com/gearui/components/icon/Icons {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/components/icon/Icons;
+	public static final field account_balance_wallet Ljava/lang/String;
 	public static final field account_circle Ljava/lang/String;
+	public static final field account_circle_fill Ljava/lang/String;
 	public static final field add Ljava/lang/String;
 	public static final field alternate_email Ljava/lang/String;
 	public static final field arrow_back Ljava/lang/String;
@@ -718,6 +730,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field chevron_right Ljava/lang/String;
 	public static final field close Ljava/lang/String;
 	public static final field contacts Ljava/lang/String;
+	public static final field contacts_fill Ljava/lang/String;
 	public static final field content_copy Ljava/lang/String;
 	public static final field delete Ljava/lang/String;
 	public static final field done Ljava/lang/String;
@@ -731,9 +744,11 @@ public final class com/gearui/components/icon/Icons {
 	public static final field file_upload Ljava/lang/String;
 	public static final field flag Ljava/lang/String;
 	public static final field forum Ljava/lang/String;
+	public static final field forum_fill Ljava/lang/String;
 	public static final field forward Ljava/lang/String;
 	public static final field group Ljava/lang/String;
 	public static final field groups Ljava/lang/String;
+	public static final field help Ljava/lang/String;
 	public static final field history Ljava/lang/String;
 	public static final field home Ljava/lang/String;
 	public static final field hourglass_empty Ljava/lang/String;
@@ -745,6 +760,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field launch Ljava/lang/String;
 	public static final field link Ljava/lang/String;
 	public static final field link_off Ljava/lang/String;
+	public static final field lock Ljava/lang/String;
 	public static final field logout Ljava/lang/String;
 	public static final field mail Ljava/lang/String;
 	public static final field menu Ljava/lang/String;
@@ -766,8 +782,10 @@ public final class com/gearui/components/icon/Icons {
 	public static final field person_remove Ljava/lang/String;
 	public static final field photo_camera Ljava/lang/String;
 	public static final field play_arrow Ljava/lang/String;
+	public static final field qr_code Ljava/lang/String;
 	public static final field radio_button_checked Ljava/lang/String;
 	public static final field radio_button_unchecked Ljava/lang/String;
+	public static final field redeem Ljava/lang/String;
 	public static final field refresh Ljava/lang/String;
 	public static final field remove Ljava/lang/String;
 	public static final field reply Ljava/lang/String;
@@ -793,6 +811,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field tune Ljava/lang/String;
 	public static final field update Ljava/lang/String;
 	public static final field upload Ljava/lang/String;
+	public static final field verified_user Ljava/lang/String;
 	public static final field videocam Ljava/lang/String;
 	public static final field videocam_off Ljava/lang/String;
 	public static final field warning Ljava/lang/String;
@@ -940,7 +959,7 @@ public final class com/gearui/components/navbar/NavBarItem {
 }
 
 public final class com/gearui/components/navbar/NavBarKt {
-	public static final fun NavBar-LpaGMxo (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZFLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/unit/Dp;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun NavBar-3ZZ6EIs (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZFLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/unit/Dp;Lcom/tencent/kuikly/compose/ui/unit/Dp;ZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/navigationmenu/NavigationMenuItem {
@@ -1237,7 +1256,7 @@ public final class com/gearui/components/searchbar/SearchBarAlignment : java/lan
 }
 
 public final class com/gearui/components/searchbar/SearchBarKt {
-	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;Landroidx/compose/runtime/Composer;II)V
+	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLandroidx/compose/runtime/Composer;III)V
 	public static final fun SearchBarWithAction (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
 }
 
@@ -1744,7 +1763,7 @@ public final class com/gearui/components/tag/TagVariant : java/lang/Enum {
 }
 
 public final class com/gearui/components/textarea/TextareaKt {
-	public static final fun AutoResizeTextarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AutoResizeTextarea-RVxHZJo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;FJLandroidx/compose/runtime/Composer;III)V
 	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 

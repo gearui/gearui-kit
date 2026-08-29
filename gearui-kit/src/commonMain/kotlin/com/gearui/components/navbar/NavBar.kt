@@ -51,9 +51,9 @@ fun NavBar(
     titleWidget: (@Composable () -> Unit)? = null,
     belowTitleWidget: (@Composable () -> Unit)? = null,
     rightWidget: (@Composable () -> Unit)? = null,
-    /** 左侧自定义槽（如「取消」文字按钮）。与 [rightWidget] 对称；非空时替代默认返回键与 leftItems。 */
+    /** Custom leading slot (a "Cancel" text button, say). Symmetric with [rightWidget]; when set it replaces the default back key and leftItems. */
     leftWidget: (@Composable () -> Unit)? = null,
-    /** [leftWidget] 的槽宽；null = 默认 56dp（纯图标宽度）。放文字按钮要显式传大值。 */
+    /** Slot width for [leftWidget]; null = the 56dp icon-only default. Text buttons need an explicit larger value. */
     leftWidgetWidth: Dp? = null,
     /**
      * Slot width for [rightWidget]. `null` (the default) uses [actionSlotWidth] (56dp, matching an icon-only button).
@@ -64,8 +64,8 @@ fun NavBar(
     showBottomDivider: Boolean = true
 ) {
     val colors = Theme.colors
-    // 默认跟页面背景同色：surface 在暗色主题下（#121212）比 background（#0A0A0A）亮一档，
-    // 顶部会出现一条明显的色带，和状态栏区域接不上。亮色下两者同为白，无感。
+    // Defaults to the page background: in dark themes surface (#121212) is one step lighter than
+    // background (#0A0A0A), which paints a visible band across the top that does not meet the status bar. In light themes both are white, invisible.
     val bgColor = backgroundColor ?: colors.background
     val textColor = titleColor ?: colors.foreground
 

@@ -151,8 +151,8 @@ object ActionSheet {
     }
 
     /**
-     * ActionSheet host。由 [com.gearui.App] 全局挂载**一次**，页面不要再挂：
-     * 多个 Host 会把同一份单例状态 show 成多个叠加的 overlay。
+     * ActionSheet host. Mounted globally ONCE by [com.gearui.App]; pages must not mount another:
+     * several hosts show the one singleton state as multiple stacked overlays.
      */
     @Composable
     fun Host() {

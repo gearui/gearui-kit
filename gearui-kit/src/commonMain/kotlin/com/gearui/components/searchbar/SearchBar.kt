@@ -62,7 +62,7 @@ fun SearchBar(
     onSearch: ((String) -> Unit)? = null,
     shape: SearchBarShape = SearchBarShape.ROUNDED,
     alignment: SearchBarAlignment = SearchBarAlignment.LEFT,
-    /** 进入页面即聚焦并弹键盘（搜索页的正确姿势——用户就是来打字的）。 */
+    /** Focus and raise the keyboard on entry (the right behaviour for a search page — the user came to type). */
     autoFocus: Boolean = false
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
@@ -82,7 +82,7 @@ fun SearchBar(
 
     LaunchedEffect(Unit) {
         if (autoFocus && enabled) {
-            // 等 textarea 完成组合再请求焦点（与 MessagePage 语音→文字同款时序坑）。
+            // Wait for the textarea to finish composition before requesting focus (same timing trap as MessagePage voice-to-text).
             kotlinx.coroutines.delay(80)
             focusRequester.requestFocus()
             keyboardController?.show()

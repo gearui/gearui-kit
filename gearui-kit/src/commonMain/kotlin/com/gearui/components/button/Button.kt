@@ -118,8 +118,8 @@ fun Button(
                     name = icon,
                     size = iconSize,
                     tint = contentColor,
-                    // 图标资产只有 PNG。preferSvg 会先请求不存在的 .svg，而 Kuikly 的
-                    // 加载失败回调不一定触发 png 回退——按钮图标就整个不显示。
+                    // Icon assets exist only as PNG. preferSvg would request the missing .svg first, and
+                    // Kuikly's load-failure callback does not reliably fall back to the png — the button icon simply never shows.
                     preferSvg = false
                 )
             }

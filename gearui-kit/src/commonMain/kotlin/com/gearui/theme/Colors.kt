@@ -83,9 +83,9 @@ object Themes {
             popover = Color(0xFFFFFFFF),
             popoverForeground = Color(0xFF09090B),
             muted = Color(0xFFF4F4F5),
-            // 对标 iOS secondaryLabel（rgba(60,60,67,0.6) 摊平到白底 ≈ #8A8A8E）。
-            // 原值 0xFF52525B（zinc-600）深一档，次级文字和主文字拉不开层次，
-            // 整屏看着「太黑」。
+            // Matches iOS secondaryLabel (rgba(60,60,67,0.6) flattened onto white ≈ #8A8A8E).
+            // The old 0xFF52525B (zinc-600) was a step darker; secondary text did not
+            // separate from primary text and whole screens read as "too black".
             mutedForeground = Color(0xFF8A8A8E),
 
             primary = Color(0xFF18181B),

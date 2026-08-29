@@ -33,7 +33,7 @@ fun Cell(
     description: String? = null,
     arrow: Boolean = false,
     enabled: Boolean = true,
-    /** 标题颜色覆盖（如破坏性操作行用 destructive 红）；null = 常规前景色。 */
+    /** Title colour override (destructive red for dangerous rows, say); null = the regular foreground. */
     titleColor: Color? = null,
     compact: Boolean = false,
     onClick: (() -> Unit)? = null,
@@ -61,8 +61,8 @@ fun Cell(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Leading icon。两行 cell 里图标与**标题行**对齐（盒高 = 标题行高，内部居中），
-        // 不对整行居中——那会让图标悬在标题和描述之间，和单行 cell 的图标错位。
+        // Leading icon. In a two-line cell the icon aligns with the TITLE line (box height = title line
+        // height, centred inside) — not the whole row, which would leave it hovering between title and
         if (leading != null) {
             if (description != null) {
                 Box(
@@ -81,8 +81,8 @@ fun Cell(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                // 对标 UIKit 表格行：body 17pt Regular。BodyLarge(16) 配全黑前景显得比
-                // 系统设置更「重」，17 Regular 是 iOS 用户眼里的默认行标题。
+                // Matches a UIKit table row: body 17pt Regular. BodyLarge(16) with full-black foreground reads
+                // heavier than the system Settings app; 17 Regular is what iOS users see as the default row title.
                 style = CellTextStyles.Title,
                 color = titleColor ?: if (enabled) colors.foreground else colors.mutedForeground
             )
@@ -103,7 +103,7 @@ fun Cell(
             Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = note,
-                // UIKit 右侧 value 与标题同字号（17），只用次级颜色区分。
+                // UIKit puts the trailing value at the same size as the title (17), separated only by the secondary colour.
                 style = CellTextStyles.Title,
                 color = colors.mutedForeground
             )
@@ -128,9 +128,9 @@ fun Cell(
 }
 
 /**
- * Cell 的文字规格，对标 UIKit inset-grouped 表格：
- * 行标题/右侧值 = body 17pt Regular；描述 = footnote 13pt。
- * （kit 的 Typography 走 4 的倍数刻度，没有 17；这里按 UIKit 钉死，不迁就刻度。）
+ * Text metrics for Cell, matching a UIKit inset-grouped table:
+ * row title / trailing value = body 17pt Regular; description = footnote 13pt.
+ * (The kit's Typography walks a multiple-of-4 scale with no 17; pinned to UIKit here, not snapped to the scale.)
  */
 private object CellTextStyles {
     val Title = TextStyle(17.sp, 24.sp, FontWeight.Normal)

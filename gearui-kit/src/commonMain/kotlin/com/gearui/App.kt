@@ -101,16 +101,16 @@ fun App(
                                 OverlayRoot {
                                     content()
                                     ToastHost()
-                                    // 🔴 命令式 ActionSheet 的**唯一**宿主。
+                                    // 🔴 The ONE host for the imperative ActionSheet.
                                     //
-                                    // ActionSheet 是全局单例状态；宿主若靠各页面自己挂
-                                    // （旧约定「Must be placed at the root of the page」），
-                                    // 后果有两类，都在生产复现过：
-                                    // 1. 从没挂 Host 的页面调 showList → 当页什么都不出，
-                                    //    返回到挂了 Host 的页面时弹层突然冒出来；
-                                    // 2. 多个存活页面各挂一份 Host → 同一份状态被 show 成
-                                    //    多个 overlay 叠在栈里。
-                                    // 全局只此一份，弹层永远在最上层、同一时刻只有一个。
+                                    // ActionSheet is global singleton state. When hosting was left to each page
+                                    // (the old contract said "Must be placed at the root of the page"), two
+                                    // failure modes followed, both reproduced in production:
+                                    // 1. showList called from a page without a Host -> nothing appears there,
+                                    //    then the sheet pops up out of nowhere on returning to a page that has one;
+                                    // 2. several live pages each mounting a Host -> the one state gets shown as
+                                    //    multiple stacked overlays.
+                                    // Exactly one host, so the sheet is always topmost and always single.
                                     com.gearui.components.actionsheet.ActionSheet.Host()
                                 }
                             }

@@ -150,9 +150,9 @@ private fun TabCell(
             .border(BorderWidth.thin, if (selected) colors.border else Color.Transparent, shapes.md)
     }
 
-    // 标签在整格内**垂直居中**，下划线叠加在底边（Material TabRow / UIKit 的做法）。
-    // 原来用 Column + SpaceBetween，文字被顶到上缘、指示条占掉下缘——标题不居中，
-    // 而且视觉上像被指示条「挤」了一格。
+    // The label is centred VERTICALLY in the cell with the underline overlaid on the bottom edge
+    // (what Material TabRow and UIKit do). The old Column + SpaceBetween pushed the text to the top
+    // edge and gave the indicator its own row — titles sat off-centre and looked squeezed by the bar.
     Box(
         modifier = containerModifier
             .fillMaxWidth()

@@ -121,11 +121,11 @@ private fun OverlayItemLayout(
                     // down event reach the layer below first, where the native scroll
                     // view takes it.
                     .pointerInput(item.id) {
-                        // 🔴 tap 判定必须在**这同一个**手势循环里做。这层为了不让底下的
-                        // LazyColumn 滚动，把所有指针事件都 consume 掉——后挂的 .clickable
-                        // 等的是未消费的 down，永远等不到，点遮罩关闭（outsideClick）就
-                        // 整个失效：sheet/picker 全都点空白关不掉（iOS 的手势语义是
-                        // sheet 点遮罩即关，alert 才不关）。
+                        // 🔴 Tap detection must happen inside THIS gesture loop. To keep the LazyColumn underneath
+                        // from scrolling, this layer consumes every pointer event — a .clickable attached afterwards
+                        // waits for an unconsumed down that never arrives, and tap-outside dismissal (outsideClick)
+                        // dies wholesale: sheets and pickers stop closing on scrim taps (iOS gesture semantics:
+                        // sheets close on a scrim tap, only alerts do not).
                         val dragThreshold = 10f
                         awaitEachGesture {
                             val down = awaitFirstDown(requireUnconsumed = false)
@@ -139,7 +139,7 @@ private fun OverlayItemLayout(
                                     it.consume()
                                 }
                                 if (event.changes.all { !it.pressed }) {
-                                    // 抬指且没拖动 = tap；按 policy 决定是否关闭。
+                                    // Finger up without a drag = tap; the policy decides whether to dismiss.
                                     if (totalDrag <= dragThreshold && policy.outsideClick) {
                                         controller.dismiss(item.id)
                                     }
@@ -240,10 +240,10 @@ private fun OverlayItemLayout(
             } else {
                 Modifier
                     .fillMaxSize()
-                    // 🔴 这层铺满全屏、压在 backdrop 之上——backdrop 的 outsideClick
-                    // 永远收不到事件。所以「点空白关闭」必须由**这里**执行，而不是
-                    // 只做无脑拦截：sheet/picker 点内容之外即关（iOS 手势语义），
-                    // 真正的面板内容（surface）自己消费点击，不会冒泡到这。
+                    // 🔴 This layer fills the screen above the backdrop, so the backdrop's outsideClick never
+                    // receives an event. Tap-outside dismissal therefore has to be executed HERE rather than
+                    // blindly intercepting: sheets and pickers close on any tap outside the content (iOS gesture
+                    // semantics), while the real panel content (the surface) consumes its own clicks and nothing bubbles here.
                     .clickable(onClick = {
                         if (policy.outsideClick) {
                             controller.dismiss(item.id)

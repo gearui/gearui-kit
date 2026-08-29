@@ -171,8 +171,8 @@ fun Input(
                 .background(backgroundColor)
                 .then(borderModifier)
         } else if (maxLines > 1) {
-            // 多行（textarea）：固定单行高会把内容裁掉，高度交给外部 modifier
-            // （页面用 .height(N) 指定），这里只保证不低于单行。
+            // Multiline (textarea): a fixed single-line height would clip the content, so height belongs
+            // to the external modifier (pages pass .height(N)); this only guarantees the single-line minimum.
             Modifier
                 .fillMaxWidth()
                 .heightIn(min = tokens.height)
@@ -379,7 +379,7 @@ fun Input(
                     suffix()
                 }
 
-                // Character counter — 单行：行内右侧
+                // Character counter — single line: inline on the right
                 if (showCounter && maxLength != null && maxLines == 1) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
@@ -389,8 +389,8 @@ fun Input(
                     )
                 }
             }
-            // 多行（textarea）：计数器沉到框内**右下角**（对标微信签名编辑）。
-            // 留在行内右侧会和第一行文字挤在一起，视觉上像后缀而不是计数。
+            // Multiline (textarea): the counter sinks to the box's BOTTOM-RIGHT corner (like WeChat's
+            // signature editor). Inline-right would crowd the first line of text and read as a suffix, not a count.
             if (showCounter && maxLength != null && maxLines > 1) {
                 Row(
                     modifier = Modifier

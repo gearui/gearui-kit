@@ -146,3 +146,23 @@ object Themes {
         )
     )
 }
+
+/**
+ * PAGE background for grouped list screens (settings / profile style
+ * inset-grouped tables).
+ *
+ * The iOS sense of depth comes from a systemGroupedBackground (#F2F2F7) page
+ * under white cell cards. With light-theme background/surface/card all white,
+ * cards and page melt into one sheet with nothing left but hairlines. Dark
+ * themes already keep a step between background (#0A0A0A) and surface
+ * (#121212), so they stay on background.
+ *
+ * Decided by background brightness rather than an explicit mode flag, so
+ * custom brand themes land on the correct side automatically.
+ */
+val Colors.groupedBackground: Color
+    get() = if (background.red + background.green + background.blue < 1.5f) {
+        background
+    } else {
+        Color(0xFFF2F2F7)
+    }

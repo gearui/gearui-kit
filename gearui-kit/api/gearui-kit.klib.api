@@ -4582,6 +4582,8 @@ final val com.gearui.theme/com_gearui_theme_ThemeSpec$stableprop // com.gearui.t
 final val com.gearui.theme/com_gearui_theme_Themes$stableprop // com.gearui.theme/com_gearui_theme_Themes$stableprop|#static{}com_gearui_theme_Themes$stableprop[0]
 final val com.gearui.theme/com_gearui_theme_Typographies$stableprop // com.gearui.theme/com_gearui_theme_Typographies$stableprop|#static{}com_gearui_theme_Typographies$stableprop[0]
 final val com.gearui.theme/com_gearui_theme_Typography$stableprop // com.gearui.theme/com_gearui_theme_Typography$stableprop|#static{}com_gearui_theme_Typography$stableprop[0]
+final val com.gearui.theme/groupedBackground // com.gearui.theme/groupedBackground|@com.gearui.theme.Colors{}groupedBackground[0]
+    final fun (com.gearui.theme/Colors).<get-groupedBackground>(): com.tencent.kuikly.compose.ui.graphics/Color // com.gearui.theme/groupedBackground.<get-groupedBackground>|<get-groupedBackground>@com.gearui.theme.Colors(){}[0]
 final val com.gearui.unit/dp // com.gearui.unit/dp|@kotlin.Double{}dp[0]
     final fun (kotlin/Double).<get-dp>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.unit/dp.<get-dp>|<get-dp>@kotlin.Double(){}[0]
 final val com.gearui.unit/dp // com.gearui.unit/dp|@kotlin.Float{}dp[0]

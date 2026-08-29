@@ -3892,6 +3892,10 @@ public final class com/gearui/theme/Colors {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/theme/ColorsKt {
+	public static final fun getGroupedBackground (Lcom/gearui/theme/Colors;)J
+}
+
 public final class com/gearui/theme/Shapes {
 	public static final field $stable I
 	public fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;)V

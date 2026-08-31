@@ -6,9 +6,10 @@ A Kotlin Multiplatform UI component library built on Kuikly.
 
 ## Release Information
 
-- Coordinates: `com.gearui:gearui-kit:1.0.0-beta1`
-- Available on Maven Central since 2026-08-15 (first public release)
-- Targets: Android, iOS (arm64 / simulator arm64 / x64), JS (browser), HarmonyOS (ohosArm64, separate build)
+- Coordinates: `com.gearui:gearui-kit:1.0.0-beta2`
+- Available on Maven Central; `1.0.0-beta1` was the first public release (2026-08-15)
+- Published artifacts: Android, iOS (arm64 / simulator arm64 / x64), JS (browser)
+- Also builds for HarmonyOS (`ohosArm64`) through a separate configuration; not published to Maven Central
 - Website: [https://gearui.com](https://gearui.com)
 - License: BSD 3-Clause License
 
@@ -169,7 +170,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta1")
+            implementation("com.gearui:gearui-kit:1.0.0-beta2")
         }
     }
 }
@@ -194,7 +195,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta1")
+            implementation("com.gearui:gearui-kit:1.0.0-beta2")
         }
     }
 }

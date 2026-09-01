@@ -287,12 +287,14 @@ private fun OverlayItemLayout(
  * Position calculation.
  * Supports 12 placements plus Center and Fullscreen.
  *
+ * Internal (not private) so the algorithm can be unit tested.
+ *
  * Fixes:
  * 1. Boundary clamping accounts for the anchor, so the overlay never covers it.
  * 2. Positions are recalculated correctly after an automatic flip.
  * 3. Sensible handling when the overlay is larger than the space available.
  */
-private fun computeOffset(
+internal fun computeOffset(
     anchor: Rect?,
     popupSize: IntSize,
     screenSize: IntSize,
@@ -353,14 +355,13 @@ private fun computeOffset(
             // Requested below: check whether it needs to flip above.
             if (options.autoFlip && spaceBelow < popupSize.height && spaceAbove > spaceBelow) true else false
         }
-        else -> false // 左右方向不适用
+        else -> false // left/right placements do not use the vertical axis
     }
 
     val actuallyLeft = when {
         isLeftPlacement -> {
             // Does not fit on the left; flip if there is more room on the right.
             val shouldFlip = options.autoFlip && spaceLeft < popupSize.width && spaceRight > spaceLeft
-            println("[GearUI] LeftPlacement: spaceLeft=$spaceLeft, popupWidth=${popupSize.width}, spaceRight=$spaceRight, shouldFlip=$shouldFlip")
             !shouldFlip
         }
         isRightPlacement -> {
@@ -497,13 +498,12 @@ private fun computeOffset(
 
         constrainedX = if (actuallyLeft) {
             // Left: the popup's right edge meets the anchor's left edge.
-            // x = anchor.left - popupSize.width - offsetX
             // If there is not enough room, let it overflow off-screen rather than cover the anchor.
-            x // 不做约束，直接用计算好的位置（可能是负数，超出屏幕左边）
+            x // keep the computed position as-is (may be negative, i.e. off the left edge)
         } else {
             // Right: the popup's left edge meets the anchor's right edge.
             // If there is not enough room, let it overflow off-screen rather than cover the anchor.
-            x // 不做约束
+            x // keep the computed position as-is
         }
     } else {
         // Centre or fullscreen: clamp normally.

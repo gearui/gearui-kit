@@ -135,20 +135,12 @@ fun Calendar(
             year = displayMonth.year,
             month = displayMonth.month,
             onPreviousMonth = {
-                val newMonth = if (displayMonth.month == 1) {
-                    CalendarDate(displayMonth.year - 1, 12, 1)
-                } else {
-                    CalendarDate(displayMonth.year, displayMonth.month - 1, 1)
-                }
+                val newMonth = CalendarMath.previousMonth(displayMonth)
                 displayMonth = newMonth
                 onMonthChange?.invoke(newMonth)
             },
             onNextMonth = {
-                val newMonth = if (displayMonth.month == 12) {
-                    CalendarDate(displayMonth.year + 1, 1, 1)
-                } else {
-                    CalendarDate(displayMonth.year, displayMonth.month + 1, 1)
-                }
+                val newMonth = CalendarMath.nextMonth(displayMonth)
                 displayMonth = newMonth
                 onMonthChange?.invoke(newMonth)
             }
@@ -306,9 +298,8 @@ private fun CalendarGrid(
     val colors = Theme.colors
     val today = CalendarDate.today()
 
-    val daysInMonth = getDaysInMonth(year, month)
-    val firstDayOfMonth = getFirstDayOfWeek(year, month)
-    val adjustedFirstDay = (firstDayOfMonth - firstDayOfWeek + 7) % 7
+    val daysInMonth = CalendarMath.daysInMonth(year, month)
+    val adjustedFirstDay = CalendarMath.leadingBlanks(year, month, firstDayOfWeek)
 
     Column(
         verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -332,7 +323,7 @@ private fun CalendarGrid(
                             val currentDay = dayCounter
                             val currentDate = CalendarDate(year, month, currentDay)
 
-                            val selectType = getDateSelectType(
+                            val selectType = CalendarMath.selectType(
                                 date = currentDate,
                                 type = type,
                                 selectedDate = selectedDate,
@@ -441,71 +432,4 @@ private fun CalendarCell(
             color = textColor
         )
     }
-}
-
-private fun getDateSelectType(
-    date: CalendarDate,
-    type: CalendarType,
-    selectedDate: CalendarDate?,
-    selectedDates: List<CalendarDate>,
-    rangeStart: CalendarDate?,
-    rangeEnd: CalendarDate?,
-    minDate: CalendarDate?,
-    maxDate: CalendarDate?
-): DateSelectType {
-    if (minDate != null && date < minDate) return DateSelectType.Disabled
-    if (maxDate != null && date > maxDate) return DateSelectType.Disabled
-
-    return when (type) {
-        CalendarType.Single -> {
-            if (selectedDate != null && date == selectedDate) {
-                DateSelectType.Selected
-            } else {
-                DateSelectType.Empty
-            }
-        }
-        CalendarType.Multiple -> {
-            if (selectedDates.contains(date)) {
-                DateSelectType.Selected
-            } else {
-                DateSelectType.Empty
-            }
-        }
-        CalendarType.Range -> {
-            when {
-                rangeStart != null && rangeEnd != null -> {
-                    when {
-                        date == rangeStart -> DateSelectType.Start
-                        date == rangeEnd -> DateSelectType.End
-                        date > rangeStart && date < rangeEnd -> DateSelectType.Centre
-                        else -> DateSelectType.Empty
-                    }
-                }
-                rangeStart != null && date == rangeStart -> DateSelectType.Start
-                else -> DateSelectType.Empty
-            }
-        }
-    }
-}
-
-private fun getDaysInMonth(year: Int, month: Int): Int {
-    return when (month) {
-        1, 3, 5, 7, 8, 10, 12 -> 31
-        4, 6, 9, 11 -> 30
-        2 -> if (isLeapYear(year)) 29 else 28
-        else -> 30
-    }
-}
-
-private fun isLeapYear(year: Int): Boolean {
-    return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
-}
-
-private fun getFirstDayOfWeek(year: Int, month: Int): Int {
-    val m = if (month < 3) month + 12 else month
-    val y = if (month < 3) year - 1 else year
-    val k = y % 100
-    val j = y / 100
-    val h = (1 + (13 * (m + 1)) / 5 + k + k / 4 + j / 4 - 2 * j) % 7
-    return (h + 6) % 7
 }

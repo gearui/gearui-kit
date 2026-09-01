@@ -23,8 +23,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
-import kotlin.math.abs
-import kotlin.math.roundToInt
 import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 
@@ -82,8 +80,7 @@ fun Slider(
     val displayValue = if (isDragging) dragValue else value
 
     // Normalised value (0-1)
-    val normalizedValue = ((displayValue - valueRange.start) / (valueRange.endInclusive - valueRange.start))
-        .coerceIn(0f, 1f)
+    val normalizedValue = SliderMath.normalize(displayValue, valueRange)
 
     // Track parameters
     val trackHeight = if (style == SliderStyle.CAPSULE) 24.dp else 4.dp
@@ -104,34 +101,7 @@ fun Slider(
         val adjustedX = (positionX - thumbPx).coerceIn(0f, effectiveWidth)
         val ratio = adjustedX / effectiveWidth
 
-        var newValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * ratio
-
-        // With a step, snap to the nearest step value
-        if (steps > 0) {
-            val stepSize = (valueRange.endInclusive - valueRange.start) / (steps + 1)
-            newValue = (newValue / stepSize).roundToInt() * stepSize
-        }
-
-        return newValue.coerceIn(valueRange)
-    }
-
-    fun snapValue(v: Float): Float {
-        var newValue = v
-        if (steps > 0) {
-            val stepSize = (valueRange.endInclusive - valueRange.start) / (steps + 1)
-            newValue = (newValue / stepSize).roundToInt() * stepSize
-        }
-        return newValue.coerceIn(valueRange)
-    }
-
-    // Formatted display value
-    fun formatValue(v: Float): String {
-        return if (v == v.roundToInt().toFloat()) {
-            v.roundToInt().toString()
-        } else {
-            val rounded = (v * 10).roundToInt() / 10.0
-            rounded.toString()
-        }
+        return SliderMath.valueAt(ratio, valueRange, steps)
     }
 
     Column(modifier = modifier) {
@@ -209,7 +179,7 @@ fun Slider(
                     // Current value, shown above the thumb
                     if (showThumbValue) {
                         Text(
-                            text = formatValue(displayValue),
+                            text = SliderMath.format(displayValue),
                             style = Typography.BodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
@@ -242,7 +212,7 @@ fun Slider(
                                                 onChangeStart?.invoke(value)
                                             },
                                             onDragEnd = {
-                                                val endValue = snapValue(dragValue)
+                                                val endValue = SliderMath.snap(dragValue, valueRange, steps)
                                                 if (endValue != dragValue) {
                                                     dragValue = endValue
                                                     onValueChange(endValue)
@@ -295,7 +265,7 @@ fun Slider(
                 for (i in 0..stepCount) {
                     val stepValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * i / stepCount
                     Text(
-                        text = formatValue(stepValue),
+                        text = SliderMath.format(stepValue),
                         style = Typography.BodySmall,
                         color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )
@@ -455,10 +425,8 @@ fun RangeSlider(
     val displayEnd = if (draggingThumb == 1) dragEndValue else values.endInclusive
 
     // Normalised values
-    val startNormalized = ((displayStart - valueRange.start) / (valueRange.endInclusive - valueRange.start))
-        .coerceIn(0f, 1f)
-    val endNormalized = ((displayEnd - valueRange.start) / (valueRange.endInclusive - valueRange.start))
-        .coerceIn(0f, 1f)
+    val startNormalized = SliderMath.normalize(displayStart, valueRange)
+    val endNormalized = SliderMath.normalize(displayEnd, valueRange)
 
     val thumbSize = 20.dp
     val thumbRadius = thumbSize / 2
@@ -478,33 +446,7 @@ fun RangeSlider(
         val adjustedX = (positionX - thumbPx).coerceIn(0f, effectiveWidth)
         val ratio = adjustedX / effectiveWidth
 
-        var newValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * ratio
-
-        if (steps > 0) {
-            val stepSize = (valueRange.endInclusive - valueRange.start) / (steps + 1)
-            newValue = (newValue / stepSize).roundToInt() * stepSize
-        }
-
-        return newValue.coerceIn(valueRange)
-    }
-
-    // Formatted display value
-    fun formatValue(v: Float): String {
-        return if (v == v.roundToInt().toFloat()) {
-            v.roundToInt().toString()
-        } else {
-            val rounded = (v * 10).roundToInt() / 10.0
-            rounded.toString()
-        }
-    }
-
-    fun snapValue(v: Float): Float {
-        var newValue = v
-        if (steps > 0) {
-            val stepSize = (valueRange.endInclusive - valueRange.start) / (steps + 1)
-            newValue = (newValue / stepSize).roundToInt() * stepSize
-        }
-        return newValue.coerceIn(valueRange)
+        return SliderMath.valueAt(ratio, valueRange, steps)
     }
 
     Column(modifier = modifier) {
@@ -538,17 +480,17 @@ fun RangeSlider(
                                 detectTapGestures { offset ->
                                     val tappedValue = calculateValue(offset.x)
                                     val moveStart =
-                                        abs(tappedValue - displayStart) <= abs(tappedValue - displayEnd)
+                                        SliderMath.nearestThumb(tappedValue, displayStart, displayEnd) == 0
 
                                     if (moveStart) {
-                                        val newStart = snapValue(tappedValue).coerceAtMost(displayEnd)
+                                        val newStart = SliderMath.snap(tappedValue, valueRange, steps).coerceAtMost(displayEnd)
                                         dragStartValue = newStart
                                         val range = newStart..displayEnd
                                         onChangeStart?.invoke(range)
                                         onValuesChange(range)
                                         onChangeEnd?.invoke(range)
                                     } else {
-                                        val newEnd = snapValue(tappedValue).coerceAtLeast(displayStart)
+                                        val newEnd = SliderMath.snap(tappedValue, valueRange, steps).coerceAtLeast(displayStart)
                                         dragEndValue = newEnd
                                         val range = displayStart..newEnd
                                         onChangeStart?.invoke(range)
@@ -607,7 +549,7 @@ fun RangeSlider(
                 ) {
                     if (showThumbValue) {
                         Text(
-                            text = formatValue(displayStart),
+                            text = SliderMath.format(displayStart),
                             style = Typography.BodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
@@ -634,7 +576,7 @@ fun RangeSlider(
                                                 onChangeStart?.invoke(values.start..values.endInclusive)
                                             },
                                             onDragEnd = {
-                                                val snappedStart = snapValue(dragStartValue).coerceAtMost(dragEndValue)
+                                                val snappedStart = SliderMath.snap(dragStartValue, valueRange, steps).coerceAtMost(dragEndValue)
                                                 if (snappedStart != dragStartValue) {
                                                     dragStartValue = snappedStart
                                                     onValuesChange(snappedStart..dragEndValue)
@@ -678,7 +620,7 @@ fun RangeSlider(
                 ) {
                     if (showThumbValue) {
                         Text(
-                            text = formatValue(displayEnd),
+                            text = SliderMath.format(displayEnd),
                             style = Typography.BodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
@@ -705,7 +647,7 @@ fun RangeSlider(
                                                 onChangeStart?.invoke(values.start..values.endInclusive)
                                             },
                                             onDragEnd = {
-                                                val snappedEnd = snapValue(dragEndValue).coerceAtLeast(dragStartValue)
+                                                val snappedEnd = SliderMath.snap(dragEndValue, valueRange, steps).coerceAtLeast(dragStartValue)
                                                 if (snappedEnd != dragEndValue) {
                                                     dragEndValue = snappedEnd
                                                     onValuesChange(dragStartValue..snappedEnd)
@@ -760,7 +702,7 @@ fun RangeSlider(
                 for (i in 0..stepCount) {
                     val stepValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * i / stepCount
                     Text(
-                        text = formatValue(stepValue),
+                        text = SliderMath.format(stepValue),
                         style = Typography.BodySmall,
                         color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )

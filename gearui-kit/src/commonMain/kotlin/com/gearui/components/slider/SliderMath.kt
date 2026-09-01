@@ -22,14 +22,15 @@ internal object SliderMath {
     /**
      * Snaps a value onto the step grid and clamps it into the range.
      * `steps` is the number of intermediate stops, so the grid has steps + 2
-     * values including both range endpoints.
+     * values including both range endpoints. The grid origin is the range
+     * start, not zero: legal stops are start + i * stepSize.
      */
     fun snap(value: Float, range: ClosedFloatingPointRange<Float>, steps: Int): Float {
-        var snapped = value
-        if (steps > 0) {
-            val stepSize = (range.endInclusive - range.start) / (steps + 1)
-            snapped = (snapped / stepSize).roundToInt() * stepSize
-        }
+        val span = range.endInclusive - range.start
+        if (span <= 0f) return range.start
+        if (steps <= 0) return value.coerceIn(range)
+        val stepSize = span / (steps + 1)
+        val snapped = range.start + ((value - range.start) / stepSize).roundToInt() * stepSize
         return snapped.coerceIn(range)
     }
 

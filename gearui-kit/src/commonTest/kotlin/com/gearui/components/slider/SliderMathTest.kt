@@ -49,6 +49,39 @@ class SliderMathTest {
     }
 
     @Test
+    fun snapUsesRangeStartAsGridOrigin() {
+        // steps = 2 splits 1..10 into the 1/4/7/10 grid, not 1/3/6/9/10.
+        assertEquals(1f, SliderMath.snap(1f, 1f..10f, steps = 2))
+        assertEquals(1f, SliderMath.snap(2f, 1f..10f, steps = 2))
+        assertEquals(4f, SliderMath.snap(3f, 1f..10f, steps = 2))
+        assertEquals(7f, SliderMath.snap(6f, 1f..10f, steps = 2))
+        assertEquals(10f, SliderMath.snap(9f, 1f..10f, steps = 2))
+        assertEquals(10f, SliderMath.snap(10f, 1f..10f, steps = 2))
+    }
+
+    @Test
+    fun snapHandlesNegativeRanges() {
+        // steps = 4 splits -10..0 into the -10/-8/-6/-4/-2/0 grid.
+        assertEquals(-4f, SliderMath.snap(-3.1f, -10f..0f, steps = 4))
+        assertEquals(-2f, SliderMath.snap(-2f, -10f..0f, steps = 4))
+        assertEquals(0f, SliderMath.snap(-0.4f, -10f..0f, steps = 4))
+    }
+
+    @Test
+    fun snapOnZeroSpanRangeWithStepsReturnsStart() {
+        // Degenerate range with steps must not divide by zero.
+        assertEquals(10f, SliderMath.snap(5f, 10f..10f, steps = 3))
+    }
+
+    @Test
+    fun valueAtHonoursNonZeroStart() {
+        // 0.5 of 1..10 is 5.5; nearest grid stop on 1/4/7/10 is 7.
+        assertEquals(7f, SliderMath.valueAt(0.5f, 1f..10f, steps = 2))
+        assertEquals(1f, SliderMath.valueAt(0f, 1f..10f, steps = 2))
+        assertEquals(10f, SliderMath.valueAt(1f, 1f..10f, steps = 2))
+    }
+
+    @Test
     fun valueAtMapsRatioToSnappedValue() {
         assertEquals(0f, SliderMath.valueAt(0f, range, steps = 0))
         assertEquals(50f, SliderMath.valueAt(0.5f, range, steps = 0))

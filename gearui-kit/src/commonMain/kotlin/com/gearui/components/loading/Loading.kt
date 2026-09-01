@@ -5,16 +5,15 @@ import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.Canvas
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
+import com.gearui.foundation.primitives.LoadingIndicator
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.StrokeCap
-import com.tencent.kuikly.compose.ui.graphics.drawscope.Stroke
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.geometry.Offset
-import com.tencent.kuikly.compose.ui.geometry.Size
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
 import kotlin.math.PI
@@ -66,7 +65,7 @@ fun Loading(
         // Icon
         when (icon) {
             LoadingIcon.CIRCLE -> {
-                CircularLoadingIndicator(
+                LoadingIndicator(
                     size = indicatorSize,
                     color = indicatorColor,
                     strokeWidth = strokeWidth,
@@ -137,54 +136,6 @@ fun Loading(
                 content()
             }
         }
-    }
-}
-
-/**
- * CircularLoadingIndicator - spinning circular indicator
- */
-@Composable
-private fun CircularLoadingIndicator(
-    size: Dp,
-    color: Color,
-    strokeWidth: Dp = 3.dp,
-    duration: Int = 1000
-) {
-    val infiniteTransition = rememberInfiniteTransition()
-
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(
-                durationMillis = duration,
-                easing = LinearEasing
-            ),
-            repeatMode = RepeatMode.Restart
-        )
-    )
-
-    Canvas(modifier = Modifier.size(size)) {
-        val sweepAngle = 270f
-        val startAngle = rotation - 90f
-        val stroke = strokeWidth.toPx()
-
-        // Inset the drawing area by the stroke width so it is not clipped
-        val arcSize = this.size.width - stroke
-        val topLeft = Offset(stroke / 2, stroke / 2)
-
-        drawArc(
-            color = color,
-            startAngle = startAngle,
-            sweepAngle = sweepAngle,
-            useCenter = false,
-            topLeft = topLeft,
-            size = Size(arcSize, arcSize),
-            style = Stroke(
-                width = stroke,
-                cap = StrokeCap.Round
-            )
-        )
     }
 }
 

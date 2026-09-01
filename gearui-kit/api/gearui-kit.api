@@ -2484,6 +2484,10 @@ public abstract interface class com/gearui/foundation/primitives/ListScope {
 	public abstract fun section (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;)V
 }
 
+public final class com/gearui/foundation/primitives/LoadingIndicatorKt {
+	public static final fun LoadingIndicator-nufF65w (FJLcom/tencent/kuikly/compose/ui/Modifier;FILandroidx/compose/runtime/Composer;II)V
+}
+
 public final class com/gearui/foundation/primitives/ScrollViewKt {
 	public static final fun ScrollView (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/foundation/scroll/ScrollState;Lcom/gearui/foundation/scroll/ScrollTokens;Lcom/gearui/foundation/scroll/ScrollPhysics;Lcom/tencent/kuikly/compose/ui/Alignment$Horizontal;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }

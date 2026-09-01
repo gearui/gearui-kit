@@ -15,7 +15,7 @@ import com.tencent.kuikly.compose.ui.graphics.drawscope.Stroke
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.material3.Text
+import com.gearui.foundation.typography.Typography
 import kotlin.math.roundToInt
 import com.gearui.foundation.layout.Spacing
 
@@ -44,7 +44,6 @@ fun LinearProgress(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val normalizedProgress = progress.coerceIn(0f, 1f)
@@ -96,7 +95,7 @@ fun LinearProgress(
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
-                        style = typography.bodySmall,
+                        style = Typography.BodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -124,7 +123,7 @@ fun LinearProgress(
                 if (showLabel) {
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
-                        style = typography.bodySmall,
+                        style = Typography.BodySmall,
                         color = if (animatedProgress > 0.5f) progressForeground else colors.foreground
                     )
                 }
@@ -147,7 +146,6 @@ fun CircularProgress(
     animated: Boolean = true
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
 
     val normalizedProgress = progress.coerceIn(0f, 1f)
 
@@ -193,7 +191,7 @@ fun CircularProgress(
         if (showLabel) {
             Text(
                 text = "${(normalizedProgress * 100).roundToInt()}%",
-                style = typography.bodySmall,
+                style = Typography.BodySmall,
                 color = colors.foreground
             )
         }

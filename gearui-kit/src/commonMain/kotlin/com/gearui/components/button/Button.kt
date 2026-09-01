@@ -7,8 +7,8 @@ import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.material3.CircularProgressIndicator
 import com.gearui.foundation.primitives.Icon as FoundationIcon
+import com.gearui.foundation.primitives.LoadingIndicator
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -155,8 +155,8 @@ fun Button(
         ) {
             // Loading
             if (loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(loadingSize),
+                LoadingIndicator(
+                    size = loadingSize,
                     color = contentColor,
                     strokeWidth = 2.dp
                 )

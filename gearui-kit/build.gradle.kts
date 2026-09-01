@@ -45,7 +45,6 @@ kotlin {
             api("com.tencent.kuikly-open:compose:2.25.0-2.1.21")
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.ui)
         }
 

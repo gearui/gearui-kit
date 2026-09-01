@@ -27,10 +27,10 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * filled button, scrim). Replaces the Material3 CircularProgressIndicator
  * that components used to borrow.
  *
- * @param size indicator diameter
+ * @param size indicator diameter; values <= 0 render nothing
  * @param color arc colour
- * @param strokeWidth arc stroke width
- * @param duration one full rotation in milliseconds
+ * @param strokeWidth arc stroke width; clamped into 0..size
+ * @param duration one full rotation in milliseconds; values <= 0 fall back to 1000
  */
 @Composable
 fun LoadingIndicator(
@@ -40,6 +40,12 @@ fun LoadingIndicator(
     strokeWidth: Dp = 3.dp,
     duration: Int = 1000
 ) {
+    // Normalise caller-supplied parameters here so degenerate values cannot
+    // produce a broken animation or a negative drawing area.
+    if (size <= 0.dp) return
+    val safeStrokeWidth = strokeWidth.coerceIn(0.dp, size)
+    val safeDuration = if (duration <= 0) 1000 else duration
+
     val infiniteTransition = rememberInfiniteTransition()
 
     val rotation by infiniteTransition.animateFloat(
@@ -47,7 +53,7 @@ fun LoadingIndicator(
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = duration,
+                durationMillis = safeDuration,
                 easing = LinearEasing
             ),
             repeatMode = RepeatMode.Restart
@@ -57,7 +63,7 @@ fun LoadingIndicator(
     Canvas(modifier = modifier.size(size)) {
         val sweepAngle = 270f
         val startAngle = rotation - 90f
-        val stroke = strokeWidth.toPx()
+        val stroke = safeStrokeWidth.toPx()
 
         // Inset the drawing area by the stroke width so it is not clipped
         val arcSize = this.size.width - stroke

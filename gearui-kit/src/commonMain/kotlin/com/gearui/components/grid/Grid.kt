@@ -3,6 +3,8 @@ package com.gearui.components.grid
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.layout.onSizeChanged
+import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
@@ -85,15 +87,27 @@ fun ResponsiveGrid(
     verticalSpacing: Dp = 8.dp,
     content: @Composable GridScope.() -> Unit
 ) {
-    // Simplified: a fixed 3 columns
-    // TODO: measure the container width to compute the column count
-    Grid(
-        columns = 3,
-        modifier = modifier,
-        horizontalSpacing = horizontalSpacing,
-        verticalSpacing = verticalSpacing,
-        content = content
+    val density = LocalDensity.current
+
+    // The width is only known after the first layout; until then a single
+    // column is drawn for one frame.
+    var containerWidthPx by remember { mutableStateOf(0) }
+    val columns = GridMath.columnCount(
+        containerWidthPx = containerWidthPx,
+        minColumnWidthPx = with(density) { minColumnWidth.roundToPx() },
+        spacingPx = with(density) { horizontalSpacing.roundToPx() }
     )
+
+    Box(
+        modifier = modifier.onSizeChanged { containerWidthPx = it.width }
+    ) {
+        Grid(
+            columns = columns,
+            horizontalSpacing = horizontalSpacing,
+            verticalSpacing = verticalSpacing,
+            content = content
+        )
+    }
 }
 
 /**

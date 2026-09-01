@@ -7,14 +7,16 @@ import com.tencent.kuikly.compose.ui.Modifier
 import androidx.compose.runtime.remember
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.tencent.kuikly.compose.foundation.layout.size
+import com.gearui.components.icon.Icons
 import com.gearui.foundation.interaction.MutableInteractionSource
 import com.gearui.foundation.interaction.createMutableInteractionSource
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Surface
 import com.gearui.foundation.primitives.SurfaceColorTokens
 import com.gearui.foundation.primitives.SurfaceTokens
 import com.gearui.foundation.list.CellDefaults
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.primitives.*
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
@@ -114,8 +116,11 @@ internal fun Cell(
                 // Chevron indicator (showArrow)
                 if (showArrow) {
                     HorizontalSpacer(Spacing.sm)
-                    // TODO: use Icon + Icons.ChevronRight
-                    Box(modifier = Modifier.size(16.dp))
+                    Icon(
+                        name = Icons.chevron_right,
+                        size = IconSizes.Default.md,
+                        tint = colors.foreground
+                    )
                 }
             }
         }

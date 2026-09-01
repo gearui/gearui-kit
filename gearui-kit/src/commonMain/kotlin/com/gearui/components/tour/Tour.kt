@@ -73,7 +73,7 @@ fun Tour(
     val isVisible = state.isActive && currentStep != null
 
     LaunchedEffect(isVisible, state.currentIndex) {
-        if (isVisible && currentStep != null) {
+        if (isVisible) {
             // Dismiss the previous one first
             overlayId?.let { controller.dismiss(it) }
 

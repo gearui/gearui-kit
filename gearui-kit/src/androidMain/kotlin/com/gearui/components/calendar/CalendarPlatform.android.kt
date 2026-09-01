@@ -1,13 +1,14 @@
 package com.gearui.components.calendar
 
-import java.util.Calendar
+import java.util.GregorianCalendar
 
 internal actual fun currentCalendarDate(): CalendarDate {
-    // java.util.Calendar keeps minSdk 21 working; java.time needs API 26.
-    val now = Calendar.getInstance()
+    // Calendar.getInstance() can return a locale-specific calendar
+    // (e.g. Buddhist for th_TH); the kit's grid math is strictly Gregorian.
+    val now = GregorianCalendar()
     return CalendarDate(
-        year = now.get(Calendar.YEAR),
-        month = now.get(Calendar.MONTH) + 1,
-        day = now.get(Calendar.DAY_OF_MONTH)
+        year = now.get(GregorianCalendar.YEAR),
+        month = now.get(GregorianCalendar.MONTH) + 1,
+        day = now.get(GregorianCalendar.DAY_OF_MONTH)
     )
 }

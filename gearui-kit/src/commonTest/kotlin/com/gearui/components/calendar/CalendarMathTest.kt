@@ -12,6 +12,15 @@ import kotlin.test.assertTrue
 class CalendarMathTest {
 
     @Test
+    fun todayIsAValidGregorianDate() {
+        // Exact value depends on the wall clock; sanity-check the shape.
+        val today = CalendarDate.today()
+        assertTrue(today.year in 2020..2100)
+        assertTrue(today.month in 1..12)
+        assertTrue(today.day in 1..CalendarMath.daysInMonth(today.year, today.month))
+    }
+
+    @Test
     fun leapYearFollowsTheGregorianRule() {
         assertTrue(CalendarMath.isLeapYear(2024))
         assertTrue(CalendarMath.isLeapYear(2000))

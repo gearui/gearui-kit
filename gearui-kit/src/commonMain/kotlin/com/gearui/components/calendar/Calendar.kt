@@ -56,7 +56,7 @@ data class CalendarDate(
 
     companion object {
         fun today(): CalendarDate {
-            return CalendarDate(2024, 1, 15)
+            return currentCalendarDate()
         }
     }
 }

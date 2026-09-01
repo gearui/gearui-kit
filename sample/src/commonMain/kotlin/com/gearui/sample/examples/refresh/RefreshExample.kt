@@ -40,7 +40,7 @@ fun RefreshExample(
             Button(
                 text = "模拟刷新完成",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 block = true,
                 onClick = { Toast.show("刷新完成（演示）") }
             )

@@ -119,10 +119,10 @@ fun ButtonExample(
             }
         }
 
-        // Ghost buttons
+        // Text buttons on a dark surface
         ExampleSection(
-            title = "幽灵按钮",
-            description = "透明背景的按钮，用于深色背景"
+            title = "深色背景叠加",
+            description = "文字按钮叠加在深色背景上"
         ) {
             Box(
                 modifier = Modifier
@@ -134,22 +134,22 @@ fun ButtonExample(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Button(
-                        text = "幽灵按钮",
+                        text = "文字按钮",
                         onClick = { Toast.show("点击了按钮") },
                         theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.GHOST
+                        type = ButtonType.TEXT
                     )
                     Button(
-                        text = "幽灵按钮",
+                        text = "文字按钮",
                         onClick = { Toast.show("点击了按钮") },
                         theme = ButtonTheme.DANGER,
-                        type = ButtonType.GHOST
+                        type = ButtonType.TEXT
                     )
                     Button(
-                        text = "幽灵按钮",
+                        text = "文字按钮",
                         onClick = { Toast.show("点击了按钮") },
                         theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.GHOST
+                        type = ButtonType.TEXT
                     )
                 }
             }

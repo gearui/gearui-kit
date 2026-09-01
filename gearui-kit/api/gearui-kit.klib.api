@@ -116,7 +116,6 @@ final enum class com.gearui.components.button/ButtonTheme : kotlin/Enum<com.gear
 
 final enum class com.gearui.components.button/ButtonType : kotlin/Enum<com.gearui.components.button/ButtonType> { // com.gearui.components.button/ButtonType|null[0]
     enum entry FILL // com.gearui.components.button/ButtonType.FILL|null[0]
-    enum entry GHOST // com.gearui.components.button/ButtonType.GHOST|null[0]
     enum entry OUTLINE // com.gearui.components.button/ButtonType.OUTLINE|null[0]
     enum entry TEXT // com.gearui.components.button/ButtonType.TEXT|null[0]
 

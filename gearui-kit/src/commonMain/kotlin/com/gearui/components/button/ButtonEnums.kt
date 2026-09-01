@@ -28,10 +28,7 @@ enum class ButtonType {
     OUTLINE,
 
     /** text button */
-    TEXT,
-
-    /** ghost button (transparent background) */
-    GHOST
+    TEXT
 }
 
 /**

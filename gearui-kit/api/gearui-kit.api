@@ -350,7 +350,6 @@ public final class com/gearui/components/button/ButtonTheme : java/lang/Enum {
 
 public final class com/gearui/components/button/ButtonType : java/lang/Enum {
 	public static final field FILL Lcom/gearui/components/button/ButtonType;
-	public static final field GHOST Lcom/gearui/components/button/ButtonType;
 	public static final field OUTLINE Lcom/gearui/components/button/ButtonType;
 	public static final field TEXT Lcom/gearui/components/button/ButtonType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;

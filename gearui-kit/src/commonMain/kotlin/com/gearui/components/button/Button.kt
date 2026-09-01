@@ -26,7 +26,7 @@ import com.gearui.foundation.border.BorderWidth
  * Button - fully Theme-driven
  *
  * Supports:
- * - 4 types: fill, outline, text, ghost
+ * - 3 types: fill, outline, text
  * - 6 colour themes: primary, danger, warning, success, default, light
  * - 4 sizes: large, medium, small, extraSmall
  * - 5 shapes: rectangle, round, square, circle, filled
@@ -140,7 +140,6 @@ fun Button(
                     .background(Color.Transparent)
                     .border(BorderWidth.thin, borderColor, buttonShape)
                 ButtonType.TEXT -> Modifier.background(Color.Transparent)
-                ButtonType.GHOST -> Modifier.background(Color.Transparent)
             }
         )
         .clickable(enabled = isEnabled) { onClick() }
@@ -282,21 +281,6 @@ private fun getButtonColors(
             }
         }
         ButtonType.TEXT -> {
-            if (disabled) {
-                Triple(
-                    Color.Transparent,
-                    colors.mutedForeground,
-                    Color.Transparent
-                )
-            } else {
-                Triple(
-                    Color.Transparent,
-                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
-                    Color.Transparent
-                )
-            }
-        }
-        ButtonType.GHOST -> {
             if (disabled) {
                 Triple(
                     Color.Transparent,

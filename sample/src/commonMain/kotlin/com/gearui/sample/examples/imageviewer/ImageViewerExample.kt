@@ -61,7 +61,7 @@ fun ImageViewerExample(
             Button(
                 text = "基础图片预览",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { basicViewerState.show(0) }
@@ -72,7 +72,7 @@ fun ImageViewerExample(
             Button(
                 text = "带操作图片预览",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { actionViewerState.show(0) }
@@ -83,7 +83,7 @@ fun ImageViewerExample(
             Button(
                 text = "长按图片",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { longPressViewerState.show(0) }
@@ -94,7 +94,7 @@ fun ImageViewerExample(
             Button(
                 text = "图片超宽情况",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { ultraWidthViewerState.show(0) }
@@ -105,7 +105,7 @@ fun ImageViewerExample(
             Button(
                 text = "图片超高情况",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { ultraHeightViewerState.show(0) }
@@ -116,7 +116,7 @@ fun ImageViewerExample(
             Button(
                 text = "带图片标题",
                 theme = ButtonTheme.PRIMARY,
-                type = ButtonType.GHOST,
+                type = ButtonType.TEXT,
                 size = ButtonSize.LARGE,
                 block = true,
                 onClick = { labelViewerState.show(0) }

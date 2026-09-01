@@ -3,6 +3,7 @@ package com.gearui.components.grid
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
@@ -89,8 +90,8 @@ fun ResponsiveGrid(
 ) {
     val density = LocalDensity.current
 
-    // The width is only known after the first layout; until then a single
-    // column is drawn for one frame.
+    // The width is only known after the first layout. Stay invisible until
+    // it is measured so the grid never flashes with a wrong column count.
     var containerWidthPx by remember { mutableStateOf(0) }
     val columns = GridMath.columnCount(
         containerWidthPx = containerWidthPx,
@@ -99,7 +100,9 @@ fun ResponsiveGrid(
     )
 
     Box(
-        modifier = modifier.onSizeChanged { containerWidthPx = it.width }
+        modifier = modifier
+            .onSizeChanged { containerWidthPx = it.width }
+            .alpha(if (containerWidthPx > 0) 1f else 0f)
     ) {
         Grid(
             columns = columns,

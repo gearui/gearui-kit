@@ -75,7 +75,7 @@ fun NavBar(
         edge = SafeAreaEdge.Top,
         consume = runtimeFlags.navBarConsumesTopSafeArea,
     )
-    val actionSlotWidth = 56.dp
+    val actionSlotWidth = NavBarDefaults.actionSlotWidth
 
     Column(
         modifier = modifier
@@ -320,6 +320,47 @@ private fun NavBarIconButton(
                 color = iconColor
             )
         }
+    }
+}
+
+/**
+ * NavBar geometry that callers must be able to reuse.
+ *
+ * A page that needs something other than a plain icon on the right — a menu
+ * anchor, a badge — used to hand-roll a Box with its own padding. Two pages
+ * doing that never agree, and the difference shows up as top icons that are
+ * slightly different sizes and unevenly spaced. Anything sitting in the action
+ * row should use [NavBarActionSlot] so it lands on the same grid as
+ * [NavBarItem].
+ */
+object NavBarDefaults {
+    /** Width of one action slot; matches an icon-only button. */
+    val actionSlotWidth = 56.dp
+
+    /** Icon size inside an action slot. */
+    val actionIconSize = IconSizes.Default.xl
+}
+
+/**
+ * One action slot in the NavBar, with arbitrary content.
+ *
+ * Same width, height and centring as an icon [NavBarItem], so a menu anchor
+ * lines up with the icons beside it.
+ */
+@Composable
+fun NavBarActionSlot(
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .width(NavBarDefaults.actionSlotWidth)
+            .fillMaxHeight()
+            .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier),
+        contentAlignment = Alignment.Center,
+    ) {
+        content()
     }
 }
 

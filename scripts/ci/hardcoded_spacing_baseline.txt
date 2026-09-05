@@ -14,7 +14,7 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/cell/Cell.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/checkbox/Checkbox.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/collapse/Collapse.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/contextmenu/ContextMenu.kt	5
-gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/Dialog.kt	2
+gearui-kit/src/commonMain/kotlin/com/gearui/components/dialog/Dialog.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/drawer/Drawer.kt	9
 gearui-kit/src/commonMain/kotlin/com/gearui/components/empty/EmptyState.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/form/Form.kt	1

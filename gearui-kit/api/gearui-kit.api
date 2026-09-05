@@ -940,6 +940,13 @@ public final class com/gearui/components/loading/LoadingSize : java/lang/Enum {
 	public static fun values ()[Lcom/gearui/components/loading/LoadingSize;
 }
 
+public final class com/gearui/components/navbar/NavBarDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/components/navbar/NavBarDefaults;
+	public final fun getActionIconSize-UdJoRJA ()F
+	public final fun getActionSlotWidth-UdJoRJA ()F
+}
+
 public final class com/gearui/components/navbar/NavBarItem {
 	public static final field $stable I
 	public synthetic fun <init> (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -959,6 +966,7 @@ public final class com/gearui/components/navbar/NavBarItem {
 
 public final class com/gearui/components/navbar/NavBarKt {
 	public static final fun NavBar-3ZZ6EIs (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/Color;ZFLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/unit/Dp;Lcom/tencent/kuikly/compose/ui/unit/Dp;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun NavBarActionSlot (Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/navigationmenu/NavigationMenuItem {

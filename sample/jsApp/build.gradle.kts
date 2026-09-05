@@ -4,7 +4,7 @@ plugins {
     kotlin("multiplatform")
 }
 
-val kuiklyVersion = "2.25.0-2.1.21"
+val kuiklyVersion = "2.27.0-2.1.21"
 
 kotlin {
     js(IR) {

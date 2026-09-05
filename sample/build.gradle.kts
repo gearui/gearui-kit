@@ -60,8 +60,8 @@ kotlin {
                 implementation(project(":gearui-kit"))
 
                 // KuiklyUI Core（用于 @Page 注解和 ComposeContainer）
-                implementation("com.tencent.kuikly-open:core:2.25.0-2.1.21")
-                implementation("com.tencent.kuikly-open:core-annotations:2.25.0-2.1.21")
+                implementation("com.tencent.kuikly-open:core:2.27.0-2.1.21")
+                implementation("com.tencent.kuikly-open:core-annotations:2.27.0-2.1.21")
 
                 // Compose runtime
                 implementation(compose.runtime)
@@ -73,7 +73,7 @@ kotlin {
 
         androidMain.dependencies {
             // KuiklyUI Android 渲染支持
-            implementation("com.tencent.kuikly-open:core-render-android:2.25.0-2.1.21")
+            implementation("com.tencent.kuikly-open:core-render-android:2.27.0-2.1.21")
             implementation("androidx.appcompat:appcompat:1.6.1")
         }
 
@@ -126,11 +126,11 @@ android {
 
 // KSP 配置
 dependencies {
-    add("kspJs", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
-    add("kspAndroid", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
-    add("kspIosX64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
-    add("kspIosArm64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
-    add("kspIosSimulatorArm64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.1.21")
+    add("kspJs", "com.tencent.kuikly-open:core-ksp:2.27.0-2.1.21")
+    add("kspAndroid", "com.tencent.kuikly-open:core-ksp:2.27.0-2.1.21")
+    add("kspIosX64", "com.tencent.kuikly-open:core-ksp:2.27.0-2.1.21")
+    add("kspIosArm64", "com.tencent.kuikly-open:core-ksp:2.27.0-2.1.21")
+    add("kspIosSimulatorArm64", "com.tencent.kuikly-open:core-ksp:2.27.0-2.1.21")
 }
 
 val syncSharedAssetsToPodResources by tasks.registering(Copy::class) {

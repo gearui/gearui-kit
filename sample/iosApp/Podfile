@@ -1,5 +1,5 @@
 platform :ios, '14.0'
-ENV['KUIKLY_VERSION'] = '2.25.0'
+ENV['KUIKLY_VERSION'] = '2.27.0'
 
 target 'iosApp' do
   use_frameworks!
@@ -8,7 +8,7 @@ target 'iosApp' do
   pod 'gearui_sample', :path => '../'
 
   # KuiklyUI iOS 渲染引擎
-  pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => '2.25.0'
+  pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => '2.27.0'
 
   # 图片加载（可选）
   pod 'SDWebImage', '~> 5.20.1'

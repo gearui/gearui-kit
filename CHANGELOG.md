@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- KuiklyUI upgraded from 2.25.0 to 2.27.0 on every channel: the Kotlin
+  artifacts (`2.27.0-2.1.21`), the ohos artifacts (`2.27.0-2.0.21-ohos`),
+  the web renderer, the iOS pod and the ohpm `@kuikly-open/render` package.
+  The toolchain is unchanged (Kotlin 2.1.21, Compose 1.7.3, KSP 2.1.21-2.0.1),
+  so this is a dependency bump, not a migration. Verified: Android, iOS
+  simulator, Web bundle, ohos link, apiCheck, and privchat-ui compiling
+  against the result.
 - Dropped the Compose Material dependency. Loading states use the new GearUI
   `LoadingIndicator` primitive, and `Radio`/`Progress` labels use the
   foundation `Text` with typography tokens instead of Material3 widgets.
@@ -22,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The ohos build gained the `currentCalendarDate()` actual it was missing
+  (POSIX `localtime_r`; HarmonyOS has no Foundation). The calendar fix added
+  an expect to commonMain with actuals for Android/iOS/JS only, which broke
+  the parallel ohos configuration and nothing else.
 - `CalendarDate.today()` returns the actual device date instead of a
   hardcoded constant, and the platform clock is pinned to the Gregorian
   calendar on Android, iOS and JS so locale calendars (e.g. Thai Buddhist)

@@ -13,7 +13,7 @@
 
 它无法作为常规构建的一个 target。带 `ohosArm64` 的 KuiklyUI 产物是基于
 **Kotlin 2.0.21-KBA-010**（腾讯发行版）发布的，而主构建跑的是标准 Kotlin 2.1.21——
-并且本项目使用的 `compose:2.25.0-2.1.21` **根本没有 `ohosArm64` 变体**。
+并且本项目使用的 `compose:2.27.0-2.1.21` **根本没有 `ohosArm64` 变体**。
 KuiklyUI 自己用「按 Kotlin 版本维护并行构建文件」解决这个问题，本仓库照此办理：
 
 ```
@@ -101,7 +101,7 @@ fake-IP。如果改不了，用 `./fetch-deps.sh`：它通过 DoH 解析 CDN 真
 - `bundleName` → `com.gearui.kit.sample`，vendor 与应用名同步。
 - 默认页 `router` → `MainDemo`。模板的 `router` 页属于 KuiklyUI 自己的 demo；
   GearUI sample 只注册一个 Kuikly 页面 `@Page("MainDemo")`，76 个组件演示在 Compose 内部跳转。
-- `@kuikly-open/render` 改为从 **ohpm registry** 取（`^2.25.0`），不再指向此处不存在的
+- `@kuikly-open/render` 改为从 **ohpm registry** 取（`^2.27.0`），不再指向此处不存在的
   `file:../../core-render-ohos` 同级 checkout。`build-profile.json5` 里的 `render` 模块一并去掉。
 - **删掉了 `entry/hvigorfile.ts` 里的 CDN 下载。** 模板在 `libshared.so` 缺失时会从腾讯 CDN
   拉一个预编译的 so。那对他们的 demo 是对的，在这里很危险：下载的是**他们 demo 的二进制**，

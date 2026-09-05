@@ -1,5 +1,7 @@
-// gearui-kit for HarmonyOS. Same sources as the normal build — commonMain only,
-// no expect/actual — compiled against the ohos-flavoured Kuikly artifacts.
+// gearui-kit for HarmonyOS. Same sources as the normal build, compiled against
+// the ohos-flavoured Kuikly artifacts. The one expect/actual in the library
+// (calendar's wall clock) has its ohos actual under src/ohosArm64Main; a new
+// expect without an ohosArm64 actual breaks only this build, so add both.
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.compose")
@@ -30,7 +32,7 @@ kotlin {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
         }
         commonMain.dependencies {
-            api("com.tencent.kuikly-open:compose:2.25.0-2.0.21-ohos")
+            api("com.tencent.kuikly-open:compose:2.27.0-2.0.21-ohos")
         }
     }
 }

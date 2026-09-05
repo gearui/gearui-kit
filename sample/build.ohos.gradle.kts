@@ -49,8 +49,8 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(project(":gearui-kit"))
-            implementation("com.tencent.kuikly-open:core:2.25.0-2.0.21-ohos")
-            implementation("com.tencent.kuikly-open:core-annotations:2.25.0-2.0.21-ohos")
+            implementation("com.tencent.kuikly-open:core:2.27.0-2.0.21-ohos")
+            implementation("com.tencent.kuikly-open:core-annotations:2.27.0-2.0.21-ohos")
         }
     }
 }
@@ -59,7 +59,7 @@ dependencies {
     // Generates the ohos page entry from @Page. core-ksp has an
     // OhOsTargetEntryBuilder, so unlike the JS target this is a first-class
     // path rather than something that happens to work.
-    add("kspOhosArm64", "com.tencent.kuikly-open:core-ksp:2.25.0-2.0.21-ohos")
+    add("kspOhosArm64", "com.tencent.kuikly-open:core-ksp:2.27.0-2.0.21-ohos")
 }
 
 ksp {

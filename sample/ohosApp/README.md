@@ -17,7 +17,7 @@ adapted from the KuiklyUI repository's `ohosApp`.
 It cannot be a target of the normal build. The KuiklyUI artifacts carrying
 `ohosArm64` are published against **Kotlin 2.0.21-KBA-010** (a Tencent
 distribution) while the main build runs stock Kotlin 2.1.21 — and the
-`compose:2.25.0-2.1.21` this project uses has **no `ohosArm64` variant at all**.
+`compose:2.27.0-2.1.21` this project uses has **no `ohosArm64` variant at all**.
 KuiklyUI solves this with parallel build files per Kotlin version; this
 repository mirrors that:
 
@@ -116,7 +116,7 @@ versions.
   KuiklyUI's own demo; the GearUI sample registers one Kuikly page,
   `@Page("MainDemo")`, and navigates between its 76 component demos inside
   Compose.
-- `@kuikly-open/render` now comes from the **ohpm registry** (`^2.25.0`) rather
+- `@kuikly-open/render` now comes from the **ohpm registry** (`^2.27.0`) rather
   than a `file:../../core-render-ohos` sibling checkout that does not exist
   here. The `render` module entry in `build-profile.json5` went with it.
 - **Removed the CDN download in `entry/hvigorfile.ts`.** The template fetches a

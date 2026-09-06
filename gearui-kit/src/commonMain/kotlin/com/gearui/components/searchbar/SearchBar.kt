@@ -13,6 +13,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.tencent.kuikly.compose.foundation.text.KeyboardActions
 import com.tencent.kuikly.compose.foundation.text.KeyboardOptions
+import com.tencent.kuikly.compose.ui.text.input.KeyboardCapitalization
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -195,6 +196,7 @@ fun SearchBar(
                         ),
                         cursorBrush = SolidColor(colors.primary),
                         keyboardOptions = KeyboardOptions(
+                            capitalization = KeyboardCapitalization.None,
                             imeAction = if (onSearch != null) ImeAction.Search else ImeAction.Default
                         ),
                         keyboardActions = KeyboardActions(

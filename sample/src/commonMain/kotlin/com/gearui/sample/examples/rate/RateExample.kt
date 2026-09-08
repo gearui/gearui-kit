@@ -12,7 +12,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -57,7 +56,7 @@ fun RateExample(
 
                 Text(
                     text = "当前评分: ${rating1.toInt()} 星",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -77,7 +76,7 @@ fun RateExample(
 
                 Text(
                     text = "当前评分: $rating2 星",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -115,7 +114,7 @@ fun RateExample(
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = "3 颗星",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Rate(
@@ -127,7 +126,7 @@ fun RateExample(
 
                 Text(
                     text = "10 颗星",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Rate(
@@ -152,7 +151,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "小号",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -170,7 +169,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "中号",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -188,7 +187,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "大号",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -214,7 +213,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "商品评分:",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     RateDisplay(
@@ -229,7 +228,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "服务评分:",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     RateDisplay(
@@ -244,7 +243,7 @@ fun RateExample(
                 ) {
                     Text(
                         text = "物流评分:",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     RateDisplay(
@@ -263,27 +262,27 @@ fun RateExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 支持整星和半星评分",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 可自定义星星数量",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持显示描述文字",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持只读展示模式",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 可配置星星大小和间距",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

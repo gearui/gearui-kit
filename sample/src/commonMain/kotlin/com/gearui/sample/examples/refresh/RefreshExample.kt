@@ -6,7 +6,6 @@ import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -34,7 +33,7 @@ fun RefreshExample(
         ) {
             Text(
                 text = "预期行为：下拉触发刷新、展示刷新中状态、完成后回弹并更新列表数据。",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
             Button(

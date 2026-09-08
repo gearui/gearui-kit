@@ -27,7 +27,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
@@ -206,7 +205,7 @@ fun FormExample(
                 ) {
                     Text(
                         text = "水平排布",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = if (isHorizontal) colors.primary else colors.foreground
                     )
                 }
@@ -223,7 +222,7 @@ fun FormExample(
                 ) {
                     Text(
                         text = "竖直排布",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = if (!isHorizontal) colors.primary else colors.foreground
                     )
                 }
@@ -314,7 +313,7 @@ fun FormExample(
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text(
                                     text = label,
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = if (!formDisabled) colors.foreground else colors.mutedForeground
                                 )
                             }
@@ -361,7 +360,7 @@ fun FormExample(
                     ) {
                         Text(
                             text = place.ifEmpty { "请选择籍贯" },
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = if (place.isNotEmpty()) {
                                 if (!formDisabled) colors.foreground else colors.mutedForeground
                             } else {
@@ -502,14 +501,14 @@ private fun FormItem(
             ) {
                 Text(
                     text = label,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 if (required) {
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
                         text = "*",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.destructive
                     )
                 }
@@ -526,7 +525,7 @@ private fun FormItem(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = help,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -536,7 +535,7 @@ private fun FormItem(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = error,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.destructive
                     )
                 }
@@ -553,14 +552,14 @@ private fun FormItem(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = label,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 if (required) {
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
                         text = "*",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.destructive
                     )
                 }
@@ -576,7 +575,7 @@ private fun FormItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = help,
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -586,7 +585,7 @@ private fun FormItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = error,
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.destructive
                 )
             }
@@ -640,7 +639,7 @@ private fun PlacePickerDialog(
         ) {
             Text(
                 text = "选择籍贯",
-                style = Typography.TitleMedium,
+                style = Theme.typography.titleMedium,
                 color = colors.foreground
             )
 
@@ -658,7 +657,7 @@ private fun PlacePickerDialog(
                 ) {
                     Text(
                         text = option,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = if (isSelected) colors.primary else colors.foreground
                     )
                 }

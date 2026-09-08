@@ -25,7 +25,6 @@ import com.gearui.components.image.ImageShape
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
 import com.gearui.i18n.I18n
@@ -186,7 +185,7 @@ fun ImageViewer(
                             Spacer(modifier = Modifier.height(Spacing.lg))
                             Text(
                                 text = I18n.strings.media.imageIndexFormat.formatArgs("index" to (page + 1)),
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = Color.White.copy(alpha = 0.7f)
                             )
                         }
@@ -237,7 +236,7 @@ fun ImageViewer(
                     if (label.isNotEmpty()) {
                         Text(
                             text = label,
-                            style = Typography.TitleSmall,
+                            style = Theme.typography.titleSmall,
                             color = Color.White,
                             maxLines = 1
                         )
@@ -248,7 +247,7 @@ fun ImageViewer(
                 if (showIndex && images.size > 1) {
                     Text(
                         text = "${state.currentIndex + 1} / ${images.size}",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = Color.White.copy(alpha = 0.8f)
                     )
                 }
@@ -376,7 +375,7 @@ fun ImageViewerTrigger(
                         } else {
                             Text(
                                 text = "${index + 1}",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -391,7 +390,7 @@ fun ImageViewerTrigger(
                             ) {
                                 Text(
                                     text = "+${images.size - maxDisplay}",
-                                    style = Typography.TitleSmall,
+                                    style = Theme.typography.titleSmall,
                                     color = Color.White
                                 )
                             }

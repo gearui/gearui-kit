@@ -17,7 +17,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -162,7 +161,7 @@ internal fun BottomSheetSurface(
                         if (title != null) {
                             Text(
                                 text = title,
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         }
@@ -171,7 +170,7 @@ internal fun BottomSheetSurface(
                             Spacer(modifier = Modifier.height(Spacing.xs))
                             Text(
                                 text = description,
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }
@@ -203,7 +202,7 @@ internal fun BottomSheetSurface(
                 ) {
                     Text(
                         text = cancelText,
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                 }
@@ -297,7 +296,7 @@ private fun BottomSheetItemRow(
 
                 Text(
                     text = item.label,
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = textColor
                 )
             }

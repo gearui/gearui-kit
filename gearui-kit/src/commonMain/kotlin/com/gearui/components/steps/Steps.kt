@@ -14,7 +14,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -157,7 +156,7 @@ private fun HorizontalSteps(
                     // Title
                     Text(
                         text = item.title,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = when (stepStatus) {
                             StepStatus.FINISH -> colors.success
                             StepStatus.PROCESS -> colors.primary
@@ -171,7 +170,7 @@ private fun HorizontalSteps(
                         Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = desc,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -249,7 +248,7 @@ private fun VerticalSteps(
                 ) {
                     Text(
                         text = item.title,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = when (stepStatus) {
                             StepStatus.FINISH -> colors.success
                             StepStatus.PROCESS -> colors.primary
@@ -262,7 +261,7 @@ private fun VerticalSteps(
                         Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = desc,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -328,13 +327,13 @@ private fun StepIcon(
                     item.icon?.let { icon ->
                         Text(
                             text = icon,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = contentColor
                         )
                     } ?: run {
                         Text(
                             text = (index + 1).toString(),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = contentColor
                         )
                     }

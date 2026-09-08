@@ -28,7 +28,6 @@ import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlin.math.abs
 import com.gearui.i18n.I18n
@@ -68,7 +67,6 @@ fun SearchBar(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -181,7 +179,7 @@ fun SearchBar(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.mutedForeground
                         )
                     }
@@ -190,8 +188,8 @@ fun SearchBar(
                         value = value,
                         onValueChange = onValueChange,
                         textStyle = TextStyle(
-                            fontSize = Typography.BodyMedium.fontSize,
-                            fontWeight = Typography.BodyMedium.fontWeight,
+                            fontSize = Theme.typography.bodyMedium.fontSize,
+                            fontWeight = Theme.typography.bodyMedium.fontWeight,
                             color = if (enabled) colors.foreground else colors.mutedForeground
                         ),
                         cursorBrush = SolidColor(colors.primary),
@@ -259,7 +257,7 @@ fun SearchBar(
             ) {
                 Text(
                     text = I18n.strings.common.cancel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (enabled) colors.primaryForeground else colors.mutedForeground
                 )
             }
@@ -303,7 +301,6 @@ fun SearchBarWithAction(
     enabled: Boolean = true
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Row(
@@ -329,7 +326,7 @@ fun SearchBarWithAction(
         ) {
             Text(
                 text = actionText,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.primaryForeground else colors.mutedForeground
             )
         }

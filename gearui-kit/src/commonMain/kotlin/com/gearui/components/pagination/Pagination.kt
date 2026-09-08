@@ -3,7 +3,6 @@ package com.gearui.components.pagination
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -80,7 +79,7 @@ fun Pagination(
                     ) {
                         Text(
                             text = item.value.toString(),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = if (selected) colors.primaryForeground else colors.foreground
                         )
                     }
@@ -89,7 +88,7 @@ fun Pagination(
                 PaginationItem.Ellipsis -> {
                     Text(
                         text = "...",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = Theme.colors.mutedForeground
                     )
                 }
@@ -125,7 +124,7 @@ private fun PaginationButton(
     ) {
         Text(
             text = label,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = if (enabled) colors.foreground else colors.mutedForeground,
             maxLines = 1,
             softWrap = false

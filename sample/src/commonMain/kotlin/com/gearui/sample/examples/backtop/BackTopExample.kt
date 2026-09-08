@@ -16,7 +16,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -70,7 +69,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -113,7 +112,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -156,7 +155,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -200,7 +199,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -243,7 +242,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -286,7 +285,7 @@ fun BackTopExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -301,12 +300,12 @@ fun BackTopExample(
                         ) {
                             Text(
                                 text = "回到",
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = colors.primary
                             )
                             Text(
                                 text = "顶部",
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = colors.primary
                             )
                         }
@@ -323,17 +322,17 @@ fun BackTopExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "style: 样式类型",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "  - CIRCLE: 圆形 (48dp)",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "  - HALF_CIRCLE: 半圆形 (贴边)",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -341,17 +340,17 @@ fun BackTopExample(
 
                 Text(
                     text = "theme: 主题颜色",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "  - LIGHT: 亮色 (白底黑字)",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "  - DARK: 暗色 (黑底白字)",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -359,7 +358,7 @@ fun BackTopExample(
 
                 Text(
                     text = "showText: 是否显示文字 (默认 false)",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
@@ -367,7 +366,7 @@ fun BackTopExample(
 
                 Text(
                     text = "offset: 位置偏移 (right, bottom)",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
             }

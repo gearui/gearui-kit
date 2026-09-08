@@ -79,7 +79,6 @@ import com.gearui.sample.examples.refresh.RefreshExample
 import com.gearui.sample.examples.upload.UploadExample
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -212,13 +211,13 @@ private fun PlaceholderExample(
     ) {
         Text(
             text = "该组件示例页面即将推出",
-            style = Typography.BodyLarge,
+            style = Theme.typography.bodyLarge,
             color = colors.mutedForeground
         )
 
         Text(
             text = "组件 ID: ${component.id}",
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground
         )
     }

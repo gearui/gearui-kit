@@ -34,7 +34,6 @@ import com.tencent.kuikly.compose.ui.text.style.TextAlign
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
@@ -227,13 +226,13 @@ fun Input(
                         if (required) {
                             Text(
                                 text = "*",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.destructive
                             )
                         }
                         Text(
                             text = label,
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = if (!enabled) colors.mutedForeground else colors.foreground
                         )
                     }
@@ -272,8 +271,8 @@ fun Input(
                             }
                         },
                         textStyle = TextStyle(
-                            fontSize = Typography.BodyMedium.fontSize,
-                            fontWeight = Typography.BodyMedium.fontWeight,
+                            fontSize = Theme.typography.bodyMedium.fontSize,
+                            fontWeight = Theme.typography.bodyMedium.fontWeight,
                             color = if (!enabled) colors.mutedForeground else colors.foreground,
                             textAlign = textAlign
                         ),
@@ -321,7 +320,7 @@ fun Input(
                                 if (value.isEmpty() && placeholder.isNotEmpty()) {
                                     Text(
                                         text = placeholder,
-                                        style = Typography.BodyMedium,
+                                        style = Theme.typography.bodyMedium,
                                         color = colors.mutedForeground
                                     )
                                 }
@@ -384,7 +383,7 @@ fun Input(
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${value.length}/$maxLength",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
                     )
                 }
@@ -404,7 +403,7 @@ fun Input(
                 ) {
                     Text(
                         text = "${value.length}/$maxLength",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
                     )
                 }
@@ -421,13 +420,13 @@ fun Input(
                 if (required) {
                     Text(
                         text = "*",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.destructive
                     )
                 }
                 Text(
                     text = label,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (!enabled) colors.mutedForeground else colors.foreground
                 )
             }
@@ -440,7 +439,7 @@ fun Input(
         if (bottomText != null) {
             Text(
                 text = bottomText,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = if (hasError) colors.destructive else colors.mutedForeground,
                 modifier = Modifier.padding(top = Spacing.xs)
             )

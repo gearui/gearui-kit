@@ -20,7 +20,6 @@ import com.gearui.components.tree.Tree
 import com.gearui.components.tree.TreeNode
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -158,7 +157,7 @@ fun TreeSelect(
         ) {
             Text(
                 text = selectedNode?.title ?: placeholder,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (selectedNode != null) colors.foreground else colors.mutedForeground
             )
 
@@ -279,7 +278,7 @@ fun TreeSelectMultiple(
             Text(
                 text = if (selectedKeys.isEmpty()) placeholder
                 else I18n.strings.field.selectedCountFormat.formatArgs("count" to selectedKeys.size),
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (selectedKeys.isNotEmpty()) colors.foreground else colors.mutedForeground
             )
 

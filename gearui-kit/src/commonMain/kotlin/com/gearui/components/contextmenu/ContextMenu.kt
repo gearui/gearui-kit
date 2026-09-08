@@ -12,7 +12,6 @@ import com.gearui.components.popover.PopoverTheme
 import com.gearui.components.popover.rememberPopoverState
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -164,7 +163,7 @@ fun ContextMenu(
                             }
                             Text(
                                 text = item.label,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = itemColor,
                             )
                         }

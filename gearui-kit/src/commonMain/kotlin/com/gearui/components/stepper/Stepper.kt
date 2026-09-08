@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.border.BorderWidth
 
 /**
@@ -42,7 +41,6 @@ fun Stepper(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val canDecrease = enabled && value > min
@@ -55,9 +53,9 @@ fun Stepper(
     }
 
     val textStyle = when (size) {
-        StepperSize.SMALL -> Typography.BodySmall
-        StepperSize.MEDIUM -> Typography.BodyMedium
-        StepperSize.LARGE -> Typography.BodyLarge
+        StepperSize.SMALL -> Theme.typography.bodySmall
+        StepperSize.MEDIUM -> Theme.typography.bodyMedium
+        StepperSize.LARGE -> Theme.typography.bodyLarge
     }
 
     Row(
@@ -175,7 +173,7 @@ fun StepperWithLabel(
     ) {
         Text(
             text = label,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = if (enabled) colors.foreground else colors.mutedForeground,
             modifier = Modifier.weight(1f)
         )

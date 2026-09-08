@@ -17,7 +17,6 @@ import com.gearui.components.button.Button
 import com.gearui.components.checkbox.Checkbox
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
@@ -72,7 +71,6 @@ fun Transfer(
     itemHeight: Dp = 40.dp
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     var leftChecked by remember { mutableStateOf<Set<String>>(emptySet()) }
@@ -162,7 +160,6 @@ private fun TransferList(
     modifier: Modifier = Modifier
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val allCheckable = items.filter { !it.disabled }
@@ -202,14 +199,14 @@ private fun TransferList(
                     )
                     Text(
                         text = title,
-                        style = Typography.TitleSmall,
+                        style = Theme.typography.titleSmall,
                         color = colors.foreground
                     )
                 }
 
                 Text(
                     text = "${checkedKeys.size}/${items.size}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -256,7 +253,7 @@ private fun TransferList(
                         Text(
                             text = if (searchValue.isNotEmpty()) I18n.strings.common.noSearchResult
                             else I18n.strings.common.noData,
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.mutedForeground
                         )
                     }
@@ -274,7 +271,6 @@ private fun TransferListItem(
     height: Dp
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Row(
@@ -296,7 +292,7 @@ private fun TransferListItem(
 
         Text(
             text = item.label,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = if (item.disabled) colors.mutedForeground else colors.foreground,
             modifier = Modifier.weight(1f)
         )

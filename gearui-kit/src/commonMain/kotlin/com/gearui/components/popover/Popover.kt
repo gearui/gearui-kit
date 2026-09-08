@@ -17,7 +17,6 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -470,7 +469,7 @@ fun Tooltip(
         content = {
             Text(
                 text = text,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = LocalPopoverTextColor.current
             )
         },
@@ -536,7 +535,7 @@ fun PopoverMenu(
 
                         Text(
                             text = item.label,
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = when {
                                 item.disabled -> colors.mutedForeground
                                 item.danger -> colors.destructive

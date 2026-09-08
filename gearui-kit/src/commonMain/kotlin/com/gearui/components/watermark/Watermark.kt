@@ -8,7 +8,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.TextStyle
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -28,7 +27,7 @@ fun Watermark(
     offsetY: Dp = 20.dp,
     rows: Int = 5,
     columns: Int = 3,
-    textStyle: TextStyle = Typography.BodyMedium
+    textStyle: TextStyle = Theme.typography.bodyMedium
 ) {
     val colors = Theme.colors
     val normalizedAlpha = alpha.coerceIn(0f, 1f)

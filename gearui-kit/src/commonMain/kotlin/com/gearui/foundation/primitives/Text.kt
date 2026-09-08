@@ -31,7 +31,7 @@ fun Text(
     modifier: Modifier = Modifier,
 
     /** text style token (semantic) */
-    style: TextStyle = Typography.BodyMedium,
+    style: TextStyle = Theme.typography.bodyMedium,
 
     /** text colour - set explicitly */
     color: Color? = null,

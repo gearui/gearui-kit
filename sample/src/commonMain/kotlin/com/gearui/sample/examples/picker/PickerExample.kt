@@ -10,7 +10,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -148,27 +147,27 @@ fun PickerExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. Picker.Single: 单列选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. Picker.Multi: 多列独立选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. Picker.Linked: 多列联动选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 从底部弹出，支持滚动选择",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持自定义标题、取消、确定文案",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

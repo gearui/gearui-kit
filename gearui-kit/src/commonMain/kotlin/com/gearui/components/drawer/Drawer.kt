@@ -17,7 +17,6 @@ import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -324,7 +323,7 @@ private fun DrawerContent(
             ) {
                 Text(
                     text = title,
-                    style = Typography.TitleLarge,
+                    style = Theme.typography.titleLarge,
                     color = colors.foreground
                 )
             }
@@ -423,7 +422,7 @@ private fun DrawerListItem(
                 // Title
                 Text(
                     text = item.title,
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.foreground
                 )
             }
@@ -478,7 +477,7 @@ fun DrawerWithHeader(
                 ) {
                     Text(
                         text = title,
-                        style = Typography.TitleLarge,
+                        style = Theme.typography.titleLarge,
                         color = colors.foreground
                     )
                 }

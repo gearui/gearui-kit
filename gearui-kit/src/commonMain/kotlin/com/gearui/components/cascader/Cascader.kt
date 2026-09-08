@@ -21,7 +21,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -167,7 +166,7 @@ fun Cascader(
         ) {
             Text(
                 text = displayText,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = when {
                     !enabled -> colors.mutedForeground
                     selectedPath.isNotEmpty() -> colors.foreground
@@ -254,7 +253,7 @@ private fun CascaderDropdown(
                         ) {
                             Text(
                                 text = option.label,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = when {
                                     option.disabled -> colors.mutedForeground
                                     isLeafSelected -> colors.primary

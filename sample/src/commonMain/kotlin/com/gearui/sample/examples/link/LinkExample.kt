@@ -5,7 +5,6 @@ import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -85,7 +84,7 @@ private fun LinkItem(
             if (prefixIcon != null) {
                 Icon(name = prefixIcon, size = 14.dp, tint = color)
             }
-            Text(text = text, style = Typography.BodySmall, color = color)
+            Text(text = text, style = Theme.typography.bodySmall, color = color)
             if (suffixIcon != null) {
                 Icon(name = suffixIcon, size = 14.dp, tint = color)
             }

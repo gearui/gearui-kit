@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayOptions
@@ -247,7 +246,7 @@ internal fun SnackbarContent(
         // Message text
         Text(
             text = message,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = textColor,
             modifier = Modifier.weight(1f)
         )
@@ -256,7 +255,7 @@ internal fun SnackbarContent(
         if (action != null && onActionClick != null) {
             Text(
                 text = action,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.primary,
                 modifier = Modifier.clickable(onClick = {
                     onActionClick()

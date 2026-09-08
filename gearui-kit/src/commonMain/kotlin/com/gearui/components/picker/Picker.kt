@@ -13,7 +13,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Brush
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.components.bottomsheet.BottomSheet
 import kotlinx.coroutines.delay
@@ -334,7 +333,7 @@ private fun PickerHeader(
         // Cancel button
         Text(
             text = I18n.strings.common.cancel,
-            style = Typography.BodyLarge,
+            style = Theme.typography.bodyLarge,
             color = colors.mutedForeground,
             modifier = Modifier.clickable { onCancel() }
         )
@@ -347,7 +346,7 @@ private fun PickerHeader(
             if (title != null) {
                 Text(
                     text = title,
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
             }
@@ -356,7 +355,7 @@ private fun PickerHeader(
         // Confirm button
         Text(
             text = I18n.strings.common.ok,
-            style = Typography.BodyLarge,
+            style = Theme.typography.bodyLarge,
             color = colors.primary,
             modifier = Modifier.clickable { onConfirm() }
         )
@@ -455,7 +454,7 @@ private fun WheelPickerColumn(
                 if (item.isNotEmpty()) {
                     Text(
                         text = item,
-                        style = if (distanceFromCenter == 0) Typography.TitleSmall else Typography.BodyMedium,
+                        style = if (distanceFromCenter == 0) Theme.typography.titleSmall else Theme.typography.bodyMedium,
                         color = colors.foreground.copy(alpha = alpha)
                     )
                 }

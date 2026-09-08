@@ -1,7 +1,6 @@
 package com.gearui.foundation.primitives
 
 import androidx.compose.runtime.Composable
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.text.KeyboardActions
@@ -44,8 +43,8 @@ fun BasicTextField(
     cursorBrush: Brush? = null,
     decorationBox: (@Composable (innerTextField: @Composable () -> Unit) -> Unit)? = null,
     textStyle: TextStyle = TextStyle(
-        fontSize = Typography.BodyMedium.fontSize,
-        fontWeight = Typography.BodyMedium.fontWeight
+        fontSize = Theme.typography.bodyMedium.fontSize,
+        fontWeight = Theme.typography.bodyMedium.fontWeight
     ),
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
@@ -93,7 +92,7 @@ fun BasicTextField(
                 if (value.isEmpty() && placeholder.isNotEmpty()) {
                     Text(
                         text = placeholder,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }

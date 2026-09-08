@@ -3,7 +3,6 @@ package com.gearui.sample.examples.watermark
 import androidx.compose.runtime.Composable
 import com.gearui.components.watermark.Watermark
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -129,13 +128,13 @@ private fun CenterText(text: String) {
     ) {
         Text(
             text = text,
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Watermark 覆盖在内容层上方",
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground
         )
     }

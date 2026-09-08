@@ -19,7 +19,6 @@ import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.border.BorderWidth
@@ -133,19 +132,19 @@ fun BackTop(
                         ) {
                             Text(
                                 text = icon,
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = contentColor
                             )
                             Text(
                                 text = text,
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = contentColor
                             )
                         }
                     } else {
                         Text(
                             text = icon,
-                            style = Typography.HeadlineSmall,
+                            style = Theme.typography.headlineSmall,
                             color = contentColor
                         )
                     }
@@ -181,19 +180,19 @@ fun BackTop(
                         ) {
                             Text(
                                 text = icon,
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = contentColor
                             )
                             Text(
                                 text = text,
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = contentColor
                             )
                         }
                     } else {
                         Text(
                             text = icon,
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = contentColor
                         )
                     }

@@ -3,7 +3,6 @@ package com.gearui.components.bottomnavbar
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
 import com.gearui.runtime.LocalRuntimeFlags
@@ -207,7 +206,7 @@ fun BottomNavBar(
                                     Spacer(modifier = Modifier.height(BorderWidth.thick))
                                     Text(
                                         text = item.label,
-                                        style = Typography.BodySmall,
+                                        style = Theme.typography.bodySmall,
                                         color = contentColor,
                                         maxLines = 1
                                     )

@@ -20,7 +20,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
@@ -147,7 +146,7 @@ fun GearImage(
         ) {
             Text(
                 text = placeholderText,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }
@@ -181,7 +180,7 @@ fun ImageWithState(
                 ) {
                     Text(
                         text = I18n.strings.common.loading,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -205,7 +204,7 @@ fun ImageWithState(
                         Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = loadState.message,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -272,7 +271,7 @@ fun Avatar(
         ) {
             Text(
                 text = fallbackText.take(2).uppercase(),
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.primaryForeground
             )
         }
@@ -354,14 +353,14 @@ fun ImagePlaceholder(
             } else {
                 Text(
                     text = icon,
-                    style = Typography.HeadlineLarge,
+                    style = Theme.typography.headlineLarge,
                     color = colors.mutedForeground
                 )
             }
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = text,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }

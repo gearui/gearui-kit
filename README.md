@@ -310,7 +310,7 @@ that enforces it.
 # HarmonyOS uses a parallel build configuration (unbuilt — see sample/ohosApp/README.md)
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# Architecture guardrails — 18 checks, all runnable locally
+# Architecture guardrails — 19 checks, all runnable locally
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

@@ -21,7 +21,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.swipecell.SwipeCellDefaults
 import com.gearui.foundation.swipecell.SwipeCellTokens
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -428,7 +427,7 @@ private fun SwipeCellActionButton(
             ) {
                 Text(
                     text = action.icon,
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = foregroundColor,
                     maxLines = 1
                 )
@@ -436,7 +435,7 @@ private fun SwipeCellActionButton(
                     Spacer(modifier = Modifier.height(tokens.iconSpacing))
                     Text(
                         text = action.label,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = foregroundColor,
                         maxLines = 1
                     )
@@ -451,14 +450,14 @@ private fun SwipeCellActionButton(
             ) {
                 Text(
                     text = action.icon,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = foregroundColor,
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.width(tokens.iconSpacing))
                 Text(
                     text = action.label,
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = foregroundColor,
                     maxLines = 1
                 )
@@ -467,7 +466,7 @@ private fun SwipeCellActionButton(
             // Icon only
             Text(
                 text = action.icon,
-                style = Typography.TitleMedium,
+                style = Theme.typography.titleMedium,
                 color = foregroundColor,
                 maxLines = 1
             )
@@ -475,7 +474,7 @@ private fun SwipeCellActionButton(
             // Label only
             Text(
                 text = action.label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = foregroundColor,
                 maxLines = 1,
                 modifier = Modifier.padding(horizontal = tokens.actionPaddingHorizontal)

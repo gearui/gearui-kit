@@ -14,7 +14,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
@@ -129,7 +128,7 @@ fun RadioButtonWithLabel(
         Text(
             text = label,
             color = if (enabled) colors.foreground else colors.mutedForeground,
-            style = Typography.BodyLarge
+            style = Theme.typography.bodyLarge
         )
     }
 }

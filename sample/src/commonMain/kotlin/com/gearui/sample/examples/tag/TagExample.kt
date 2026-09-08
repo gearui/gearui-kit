@@ -8,7 +8,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -50,7 +49,7 @@ fun TagExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "浅色标签",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -64,17 +63,17 @@ fun TagExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "大尺寸",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.primary
                 )
                 Text(
                     text = "中尺寸",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primary
                 )
                 Text(
                     text = "小尺寸",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.primary
                 )
             }
@@ -96,7 +95,7 @@ private fun SimpleTag(
     ) {
         Text(
             text = text,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = textColor
         )
     }

@@ -19,7 +19,6 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
@@ -186,7 +185,7 @@ internal fun NotificationContent(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = Typography.TitleMedium,
+                style = Theme.typography.titleMedium,
                 color = colors.foreground
             )
 
@@ -194,7 +193,7 @@ internal fun NotificationContent(
                 Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = message,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -203,7 +202,7 @@ internal fun NotificationContent(
                 Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
                     text = action,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primary,
                     modifier = Modifier.clickable(onClick = {
                         onAction()

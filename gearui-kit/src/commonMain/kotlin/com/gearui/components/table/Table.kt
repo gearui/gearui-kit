@@ -16,7 +16,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.checkbox.Checkbox
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
@@ -213,7 +212,7 @@ private fun <T> NormalTable(
             ) {
                 Text(
                     text = column.title,
-                    style = Typography.TitleSmall,
+                    style = Theme.typography.titleSmall,
                     color = colors.mutedForeground
                 )
             }
@@ -239,7 +238,7 @@ private fun <T> NormalTable(
         ) {
             Text(
                 text = emptyText,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }
@@ -449,7 +448,7 @@ private fun <T> ColumnContent(
         ) {
             Text(
                 text = column.title,
-                style = Typography.TitleSmall,
+                style = Theme.typography.titleSmall,
                 color = colors.mutedForeground
             )
         }
@@ -472,7 +471,7 @@ private fun <T> ColumnContent(
                 if (showEmptyText) {
                     Text(
                         text = emptyText,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }
@@ -544,7 +543,7 @@ fun SimpleTable(
             render = { row, _ ->
                 Text(
                     text = row.getOrNull(index) ?: "",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
             }

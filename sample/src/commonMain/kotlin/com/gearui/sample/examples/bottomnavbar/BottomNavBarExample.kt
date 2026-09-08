@@ -9,7 +9,6 @@ import com.gearui.components.bottomnavbar.BottomNavBar
 import com.gearui.components.bottomnavbar.BottomNavItem
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -67,7 +66,7 @@ fun BottomNavBarExample(
 
                 Text(
                     text = "Selected tab: $selectedId",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }

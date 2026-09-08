@@ -8,7 +8,6 @@ import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -144,7 +143,7 @@ private fun NoticeBarItem(
         }
         Text(
             text = content,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.foreground,
             modifier = Modifier.weight(1f)
         )

@@ -7,7 +7,6 @@ import com.gearui.components.contextmenu.ContextMenu
 import com.gearui.components.contextmenu.ContextMenuItem
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -56,7 +55,7 @@ fun ContextMenuExample(
 
             Text(
                 text = "Actions: Copy / Share / Delete",
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }

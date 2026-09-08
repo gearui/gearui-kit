@@ -2,7 +2,6 @@ package com.gearui.sample.examples.runtime
 
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.sample.config.ComponentInfo
@@ -29,55 +28,55 @@ fun InsetsDebugExample(
         ) {
             Text(
                 text = "Kuikly safeAreaInsets",
-                style = Typography.TitleSmall,
+                style = Theme.typography.titleSmall,
                 color = colors.foreground
             )
             Text(
                 text = "top=${rawInsets.top}, bottom=${rawInsets.bottom}, left=${rawInsets.left}, right=${rawInsets.right}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
 
             Text(
                 text = "Gear Runtime safeArea",
-                style = Typography.TitleSmall,
+                style = Theme.typography.titleSmall,
                 color = colors.foreground
             )
             Text(
                 text = "top=${runtimeEnvironment.safeArea.top}, bottom=${runtimeEnvironment.safeArea.bottom}, " +
                     "left=${runtimeEnvironment.safeArea.left}, right=${runtimeEnvironment.safeArea.right}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
 
             Text(
                 text = "Runtime flags",
-                style = Typography.TitleSmall,
+                style = Theme.typography.titleSmall,
                 color = colors.foreground
             )
             Text(
                 text = "unifiedSafeAreaPipeline=${runtimeFlags.unifiedSafeAreaPipeline}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
             Text(
                 text = "navBarConsumesTopSafeArea=${runtimeFlags.navBarConsumesTopSafeArea}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
             Text(
                 text = "bottomNavBarConsumesBottomSafeArea=${runtimeFlags.bottomNavBarConsumesBottomSafeArea}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
             Text(
                 text = "drawerConsumesVerticalSafeArea=${runtimeFlags.drawerConsumesVerticalSafeArea}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
             Text(
                 text = "actionSheetConsumesBottomSafeArea=${runtimeFlags.actionSheetConsumesBottomSafeArea}",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }

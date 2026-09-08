@@ -271,6 +271,22 @@ Rules:
 - Components should use semantic typography roles.
 - Component-specific typography may be exposed through component tokens.
 - Avoid component-local font sizes unless defining tokens.
+- Read the scale through `Theme.typography.*`, never through the static
+  `Typography.*` object. Enforced by
+  `scripts/ci/check_component_static_typography.sh`.
+
+Two representations of the scale exist and mean different things:
+
+| | What it is | Who names it |
+|---|---|---|
+| `foundation.typography.Typography` | the default values, written down once | `Typographies.Default` only |
+| `theme.Typography` / `Theme.typography` | the themeable axis a brand replaces | all component code |
+
+They carry the same `TextStyle` type, so the second is a drop-in for the first.
+Until they were unified, `theme.Typography` held Kuikly's `TextStyle` while
+components consumed the foundation one; no component could read a field off the
+themed scale, and typography was the one axis a brand could not replace. A
+`Text` with no explicit `style` now resolves its default through the theme.
 
 ## 8. Motion Scale
 

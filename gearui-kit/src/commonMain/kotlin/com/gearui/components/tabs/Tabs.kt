@@ -5,7 +5,6 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.GearLazyRow
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -134,9 +133,9 @@ private fun TabCell(
     val colors = Theme.colors
     val shapes = Theme.shapes
     val textStyle = when (size) {
-        TabsSize.SMALL -> Typography.BodySmall
-        TabsSize.MEDIUM -> Typography.BodyMedium
-        TabsSize.LARGE -> Typography.TitleSmall
+        TabsSize.SMALL -> Theme.typography.bodySmall
+        TabsSize.MEDIUM -> Theme.typography.bodyMedium
+        TabsSize.LARGE -> Theme.typography.titleSmall
     }
 
     val containerModifier = when (outlineType) {

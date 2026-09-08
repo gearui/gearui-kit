@@ -3,7 +3,6 @@ package com.gearui.sample.examples.pagination
 import androidx.compose.runtime.*
 import com.gearui.components.pagination.Pagination
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -30,7 +29,7 @@ fun PaginationExample(
             )
             Text(
                 text = "Current page: $pageA",
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }
@@ -47,7 +46,7 @@ fun PaginationExample(
             )
             Text(
                 text = "Current page: $pageB",
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }

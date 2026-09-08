@@ -6,7 +6,6 @@ import com.gearui.components.navigationmenu.NavigationMenu
 import com.gearui.components.navigationmenu.NavigationMenuSection
 import com.gearui.components.navigationmenu.NavigationMenuItem
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -92,12 +91,12 @@ fun NavigationMenuExample(
                 ) {
                     Text(
                         text = "Selected Section: $selectedSection",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Text(
                         text = "Selected Item: $selectedItem",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }

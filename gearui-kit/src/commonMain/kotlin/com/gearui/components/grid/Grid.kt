@@ -32,7 +32,6 @@ fun Grid(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val scope = GridScopeImpl()

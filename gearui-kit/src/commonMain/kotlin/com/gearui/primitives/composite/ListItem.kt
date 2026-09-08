@@ -3,7 +3,6 @@ package com.gearui.primitives.composite
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -63,7 +62,7 @@ fun ListItem(
         title = {
             Text(
                 text = title,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.foreground
             )
         },
@@ -71,7 +70,7 @@ fun ListItem(
             {
                 Text(
                     text = it,
-                    style = Typography.Caption,
+                    style = Theme.typography.caption,
                     color = colors.mutedForeground
                 )
             }
@@ -80,7 +79,7 @@ fun ListItem(
             {
                 Text(
                     text = it,
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }

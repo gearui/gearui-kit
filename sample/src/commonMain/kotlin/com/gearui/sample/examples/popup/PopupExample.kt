@@ -15,7 +15,6 @@ import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonType
 import com.gearui.components.popup.Popup
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -93,7 +92,7 @@ fun PopupExample(
                 ) {
                     Text(
                         text = "顶部弹出内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -130,7 +129,7 @@ fun PopupExample(
                 ) {
                     Text(
                         text = "左侧弹出内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -166,7 +165,7 @@ fun PopupExample(
                 ) {
                     Text(
                         text = "居中弹出内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -203,7 +202,7 @@ fun PopupExample(
                 ) {
                     Text(
                         text = "底部弹出内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -240,7 +239,7 @@ fun PopupExample(
                 ) {
                     Text(
                         text = "右侧弹出内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -283,18 +282,18 @@ fun PopupExample(
                     ) {
                         Text(
                             text = "取消",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.mutedForeground,
                             modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
                         )
                         Text(
                             text = "标题文字",
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "确定",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.primary,
                             modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
                         )
@@ -344,13 +343,13 @@ fun PopupExample(
                     ) {
                         Text(
                             text = "取消",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.mutedForeground,
                             modifier = Modifier.clickable { showBottomWithOp = false }
                         )
                         Text(
                             text = "确定",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.primary,
                             modifier = Modifier.clickable { showBottomWithOp = false }
                         )
@@ -398,13 +397,13 @@ fun PopupExample(
                     ) {
                         Text(
                             text = "标题文字",
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = colors.foreground,
                             modifier = Modifier.align(Alignment.Center)
                         )
                         Text(
                             text = "✕",
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
@@ -454,7 +453,7 @@ fun PopupExample(
                     ) {
                         Text(
                             text = "✕",
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
@@ -505,7 +504,7 @@ fun PopupExample(
                     ) {
                         Text(
                             text = "标题文字",
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = colors.foreground
                         )
                     }
@@ -549,7 +548,7 @@ fun PopupExample(
                     // Close button
                     Text(
                         text = "✕",
-                        style = Typography.TitleMedium,
+                        style = Theme.typography.titleMedium,
                         color = colors.mutedForeground,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -594,7 +593,7 @@ fun PopupExample(
                     // Close button
                     Text(
                         text = "✕",
-                        style = Typography.TitleLarge,
+                        style = Theme.typography.titleLarge,
                         color = colors.primaryForeground,
                         modifier = Modifier.clickable { showCenterWithUnderClose = false }
                     )

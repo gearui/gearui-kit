@@ -19,7 +19,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -45,7 +44,7 @@ fun SkeletonExample(
                 // Rectangle
                 Text(
                     text = "矩形骨架",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Skeleton(
@@ -58,7 +57,7 @@ fun SkeletonExample(
                 // Circle
                 Text(
                     text = "圆形骨架",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -79,7 +78,7 @@ fun SkeletonExample(
                 // Text
                 Text(
                     text = "文本骨架",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 Skeleton(
@@ -101,7 +100,7 @@ fun SkeletonExample(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "脉冲动画 (PULSE)",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Skeleton(
@@ -116,7 +115,7 @@ fun SkeletonExample(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "波浪动画 (WAVE)",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Skeleton(
@@ -131,7 +130,7 @@ fun SkeletonExample(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = "无动画 (NONE)",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Skeleton(
@@ -189,7 +188,7 @@ fun SkeletonExample(
                     SkeletonAvatar(size = 40.dp)
                     Text(
                         text = "小",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -200,7 +199,7 @@ fun SkeletonExample(
                     SkeletonAvatar(size = 56.dp)
                     Text(
                         text = "中",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -211,7 +210,7 @@ fun SkeletonExample(
                     SkeletonAvatar(size = 72.dp)
                     Text(
                         text = "大",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -227,7 +226,7 @@ fun SkeletonExample(
                     )
                     Text(
                         text = "图片",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -299,22 +298,22 @@ fun SkeletonExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 支持三种形状: 矩形、圆形、文本",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持三种动画: 脉冲、波浪、无动画",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 提供预设模板: 列表项、卡片、文章、网格",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 可自定义尺寸和圆角",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

@@ -10,7 +10,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
 import com.gearui.primitives.BadgeTheme
@@ -63,7 +62,7 @@ fun BadgeExample(
                 ) {
                     Text(
                         text = "消息",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                 }
@@ -107,7 +106,7 @@ fun BadgeExample(
                 ) {
                     Text(
                         text = "消息",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                 }
@@ -159,7 +158,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "数字$messageCount",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -179,7 +178,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "显示0",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -199,7 +198,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "隐藏0",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -266,7 +265,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "大圆角",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -286,7 +285,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "小圆角",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -420,7 +419,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Large",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -440,7 +439,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Small",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -458,7 +457,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "RedPoint",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -490,7 +489,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Error",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -509,7 +508,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Primary",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -528,7 +527,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Success",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -547,7 +546,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Warning",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -566,7 +565,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "Neutral",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -599,7 +598,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "50",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -619,7 +618,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "99",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -639,7 +638,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "99+",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -661,7 +660,7 @@ fun BadgeExample(
                     }
                     Text(
                         text = "8888",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -724,7 +723,7 @@ fun BadgeExample(
                     )
                     Text(
                         text = "$messageCount",
-                        style = Typography.TitleMedium,
+                        style = Theme.typography.titleMedium,
                         color = colors.foreground
                     )
                     Button(
@@ -756,7 +755,7 @@ private fun IconBox() {
     ) {
         Text(
             text = "🔔",
-            style = Typography.BodySmall
+            style = Theme.typography.bodySmall
         )
     }
 }
@@ -776,7 +775,7 @@ private fun LargeIconBox(showShopIcon: Boolean = false) {
     ) {
         Text(
             text = if (showShopIcon) "🛒" else "🔔",
-            style = Typography.TitleMedium
+            style = Theme.typography.titleMedium
         )
     }
 }
@@ -796,7 +795,7 @@ private fun AvatarBox(size: Int) {
     ) {
         Text(
             text = "👤",
-            style = if (size >= 48) Typography.TitleLarge else Typography.TitleMedium
+            style = if (size >= 48) Theme.typography.titleLarge else Theme.typography.titleMedium
         )
     }
 }

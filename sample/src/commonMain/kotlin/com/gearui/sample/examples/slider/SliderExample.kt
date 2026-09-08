@@ -11,7 +11,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlin.math.roundToInt
@@ -93,17 +92,17 @@ fun SliderExample(
                 ) {
                     Text(
                         text = "0",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Text(
                         text = "40 - 60",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Text(
                         text = "100",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -140,7 +139,7 @@ fun SliderExample(
                     listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
                         Text(
                             text = tick.toString(),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -171,7 +170,7 @@ fun SliderExample(
                     listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
                         Text(
                             text = tick.toString(),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -212,17 +211,17 @@ fun SliderExample(
                 ) {
                     Text(
                         text = "0",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                     Text(
                         text = "20 - 60",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Text(
                         text = "100",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }
@@ -260,7 +259,7 @@ fun SliderExample(
                     listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
                         Text(
                             text = tick.toString(),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -323,12 +322,12 @@ fun SliderExample(
                     ) {
                         Text(
                             text = "音量",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "${volumeValue.roundToInt()}%",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -353,12 +352,12 @@ fun SliderExample(
                     ) {
                         Text(
                             text = "亮度",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "${brightnessValue.roundToInt()}%",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -383,12 +382,12 @@ fun SliderExample(
                     ) {
                         Text(
                             text = "价格筛选",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "¥${priceValue.roundToInt()}",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.destructive
                         )
                     }
@@ -413,12 +412,12 @@ fun SliderExample(
                     ) {
                         Text(
                             text = "空调温度",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "${temperatureValue.roundToInt()}°C",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.primary
                         )
                     }

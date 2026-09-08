@@ -11,7 +11,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -55,7 +54,7 @@ fun SearchBarExample(
                 if (basicSearchValue.isNotEmpty()) {
                     Text(
                         text = "输入内容: $basicSearchValue",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -108,7 +107,7 @@ fun SearchBarExample(
                 if (searchResult.isNotEmpty()) {
                     Text(
                         text = searchResult,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -134,7 +133,7 @@ fun SearchBarExample(
                 if (searchResult.isNotEmpty() && actionSearchValue.isNotEmpty()) {
                     Text(
                         text = searchResult,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.primary
                     )
                 }
@@ -162,27 +161,27 @@ fun SearchBarExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 支持圆角和直角两种形状",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 输入内容时显示清除按钮",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 可选显示取消按钮",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. SearchBarWithAction 提供搜索按钮",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持禁用状态",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

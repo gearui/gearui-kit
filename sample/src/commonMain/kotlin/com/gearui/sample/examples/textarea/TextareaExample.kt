@@ -280,7 +280,7 @@ private fun SectionTitle(title: String) {
 
     com.gearui.foundation.primitives.Text(
         text = title,
-        style = com.gearui.foundation.typography.Typography.BodySmall,
+        style = Theme.typography.bodySmall,
         color = colors.mutedForeground,
         modifier = Modifier.padding(bottom = 8.dp)
     )

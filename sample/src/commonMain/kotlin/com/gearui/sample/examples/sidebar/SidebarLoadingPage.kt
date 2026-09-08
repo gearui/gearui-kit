@@ -10,7 +10,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.loading.Loading
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
@@ -100,7 +99,7 @@ fun SidebarLoadingPage(onBack: () -> Unit) {
                     Loading()
                     Text(
                         text = "加载中...",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }

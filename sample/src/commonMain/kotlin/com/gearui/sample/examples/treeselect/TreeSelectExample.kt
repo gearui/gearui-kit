@@ -14,7 +14,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -155,7 +154,7 @@ fun TreeSelectExample(
                 if (basicSelectedKey != null) {
                     Text(
                         text = "已选择: $basicSelectedKey",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.success
                     )
                 }
@@ -178,7 +177,7 @@ fun TreeSelectExample(
                 if (multiSelectedKeys.isNotEmpty()) {
                     Text(
                         text = "已选择 ${multiSelectedKeys.size} 项: ${multiSelectedKeys.joinToString(", ")}",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.success
                     )
                 }
@@ -228,7 +227,7 @@ fun TreeSelectExample(
                 if (thirdSelectedKey != null) {
                     Text(
                         text = "已选择: $thirdSelectedKey",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.success
                     )
                 }

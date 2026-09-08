@@ -21,7 +21,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.IntSize
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
@@ -118,7 +117,7 @@ fun Slider(
             if (leftLabel != null) {
                 Text(
                     text = leftLabel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
@@ -179,7 +178,7 @@ fun Slider(
                     if (showThumbValue) {
                         Text(
                             text = SliderMath.format(displayValue),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
@@ -245,7 +244,7 @@ fun Slider(
             if (rightLabel != null) {
                 Text(
                     text = rightLabel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
@@ -265,7 +264,7 @@ fun Slider(
                     val stepValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * i / stepCount
                     Text(
                         text = SliderMath.format(stepValue),
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )
                 }
@@ -462,7 +461,7 @@ fun RangeSlider(
             if (leftLabel != null) {
                 Text(
                     text = leftLabel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
@@ -549,7 +548,7 @@ fun RangeSlider(
                     if (showThumbValue) {
                         Text(
                             text = SliderMath.format(displayStart),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
@@ -620,7 +619,7 @@ fun RangeSlider(
                     if (showThumbValue) {
                         Text(
                             text = SliderMath.format(displayEnd),
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = if (enabled) colors.foreground else colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
@@ -682,7 +681,7 @@ fun RangeSlider(
             if (rightLabel != null) {
                 Text(
                     text = rightLabel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (enabled) colors.foreground else colors.mutedForeground
                 )
             }
@@ -702,7 +701,7 @@ fun RangeSlider(
                     val stepValue = valueRange.start + (valueRange.endInclusive - valueRange.start) * i / stepCount
                     Text(
                         text = SliderMath.format(stepValue),
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (enabled) colors.mutedForeground else colors.mutedForeground
                     )
                 }

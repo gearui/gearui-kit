@@ -11,7 +11,6 @@ import com.gearui.components.checkbox.Checkbox
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -66,7 +65,6 @@ fun Tree(
     onNodeClick: ((TreeNode) -> Unit)? = null
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     var internalExpanded by remember { mutableStateOf(expandedKeys) }
@@ -254,7 +252,6 @@ private fun TreeNodeView(
     allNodes: List<TreeNode>
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val isExpanded = node.key in expanded
@@ -319,7 +316,7 @@ private fun TreeNodeView(
             node.icon?.let { icon ->
                 Text(
                     text = icon,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (node.disabled) colors.mutedForeground else colors.mutedForeground
                 )
             }
@@ -327,7 +324,7 @@ private fun TreeNodeView(
             // Title
             Text(
                 text = node.title,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (node.disabled) colors.mutedForeground else colors.foreground
             )
         }

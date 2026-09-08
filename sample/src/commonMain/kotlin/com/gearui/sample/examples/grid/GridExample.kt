@@ -12,7 +12,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -53,7 +52,7 @@ fun GridExample(
                         ) {
                             Text(
                                 text = "项目 ${index + 1}",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -84,7 +83,7 @@ fun GridExample(
                         ) {
                             Text(
                                 text = "${index + 1}",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.primary
                             )
                         }
@@ -122,14 +121,14 @@ fun GridExample(
                             ) {
                                 Text(
                                     text = name.first().toString(),
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = colors.primaryForeground
                                 )
                             }
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = name,
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }
@@ -160,7 +159,7 @@ fun GridExample(
                         ) {
                             Text(
                                 text = "间距 ${index + 1}",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.success
                             )
                         }
@@ -191,7 +190,7 @@ fun GridExample(
                         ) {
                             Text(
                                 text = "响应 ${index + 1}",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.warning
                             )
                         }
@@ -208,22 +207,22 @@ fun GridExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. columns: 设置固定列数",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. horizontalSpacing/verticalSpacing: 自定义间距",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. ResponsiveGrid: 根据宽度自动调整列数",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. item { } 方法添加子项，自动排列",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

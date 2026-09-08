@@ -11,7 +11,6 @@ import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.navigation.NavOptions
 import com.gearui.navigation.Navigator
 import com.gearui.navigation.PopDecision
@@ -112,10 +111,10 @@ private fun MainScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(text = component.nameZh, style = Typography.TitleMedium, color = colors.foreground)
+        Text(text = component.nameZh, style = Theme.typography.titleMedium, color = colors.foreground)
         Text(
             text = "栈底 main。push detail 后向右滑动可返回；点系统 BACK 也回退；栈底再按 BACK 应让出 native（exit demo）。",
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground,
         )
 
@@ -166,10 +165,10 @@ private fun MainScreen(
 
         SectionTitle("onEntryRemoved 日志（exactly-once）")
         if (removedLog.isEmpty()) {
-            Text("(empty)", style = Typography.BodySmall, color = colors.mutedForeground)
+            Text("(empty)", style = Theme.typography.bodySmall, color = colors.mutedForeground)
         } else {
             removedLog.forEach { line ->
-                Text(text = line, style = Typography.BodySmall, color = colors.mutedForeground)
+                Text(text = line, style = Theme.typography.bodySmall, color = colors.mutedForeground)
             }
         }
 
@@ -193,10 +192,10 @@ private fun DetailScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(text = title, style = Typography.TitleMedium, color = colors.foreground)
+        Text(text = title, style = Theme.typography.titleMedium, color = colors.foreground)
         Text(
             text = "向右滑动 / 系统 BACK 应触发出场动画并返回上一层；按钮可程序化触发等价操作。",
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground,
         )
 
@@ -237,7 +236,7 @@ private fun DetailScreen(
                 .background(Color(0xFFF3F4F6)),
             contentAlignment = Alignment.Center,
         ) {
-            Text("（占位内容；可滚动 / 复杂 LazyColumn 放在这里都行）", style = Typography.BodySmall, color = colors.mutedForeground)
+            Text("（占位内容；可滚动 / 复杂 LazyColumn 放在这里都行）", style = Theme.typography.bodySmall, color = colors.mutedForeground)
         }
     }
 }
@@ -255,10 +254,10 @@ private fun DirtyEditorScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Dirty Editor", style = Typography.TitleMedium, color = colors.foreground)
+        Text("Dirty Editor", style = Theme.typography.titleMedium, color = colors.foreground)
         Text(
             text = "本页 onPopRequest 永远返回 Pending：系统 BACK / 边缘滑 / 「尝试 pop」按钮触发后 Navigator 把本次返回视为 consumed，但不真 pop，业务自己挂 confirm UI。",
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -273,7 +272,7 @@ private fun DirtyEditorScreen(
                 .padding(12.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Pending 状态下可调 forcePop() 真正返回（跳过 onPopRequest）。", style = Typography.BodySmall, color = colors.mutedForeground)
+                Text("Pending 状态下可调 forcePop() 真正返回（跳过 onPopRequest）。", style = Theme.typography.bodySmall, color = colors.mutedForeground)
                 Button(text = "放弃并返回 (forcePop)", size = ButtonSize.SMALL, onClick = onConfirmDiscard)
             }
         }
@@ -283,5 +282,5 @@ private fun DirtyEditorScreen(
 @Composable
 private fun SectionTitle(label: String) {
     Spacer(modifier = Modifier.height(8.dp))
-    Text(text = label, style = Typography.BodyMedium, color = Theme.colors.foreground)
+    Text(text = label, style = Theme.typography.bodyMedium, color = Theme.colors.foreground)
 }

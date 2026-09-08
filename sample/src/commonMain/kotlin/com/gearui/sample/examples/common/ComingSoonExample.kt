@@ -2,7 +2,6 @@ package com.gearui.sample.examples.common
 
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -28,7 +27,7 @@ fun ComingSoonExample(
         ) {
             Text(
                 text = "当前状态：可展示入口，后续完善交互与视觉细节。",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }

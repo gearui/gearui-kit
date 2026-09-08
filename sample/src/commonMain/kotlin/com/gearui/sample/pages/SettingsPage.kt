@@ -14,7 +14,6 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.radio.RadioButton
 import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
 import com.gearui.sample.SampleBuildInfo
 import com.gearui.sample.i18n.DefaultSampleLanguageOptions
@@ -196,7 +195,7 @@ private fun SettingsCardSection(
         // Group title
         Text(
             text = title,
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground
         )
 
@@ -241,12 +240,12 @@ private fun RadioCardItem(
         ) {
             Text(
                 text = title,
-                style = Typography.BodyLarge,
+                style = Theme.typography.bodyLarge,
                 color = colors.foreground
             )
             Text(
                 text = description,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }
@@ -288,7 +287,7 @@ private fun RadioCardItemCompact(
     ) {
         Text(
             text = title,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = colors.foreground
         )
         RadioButton(
@@ -315,12 +314,12 @@ private fun SettingsInfoRow(
     ) {
         Text(
             text = title,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = colors.foreground
         )
         Text(
             text = value,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground
         )
     }

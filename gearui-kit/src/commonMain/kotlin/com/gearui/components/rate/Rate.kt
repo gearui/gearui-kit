@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
@@ -173,7 +172,7 @@ fun Rate(
                             fullActive || halfActive -> icon.orEmpty()
                             else -> emptyIcon.orEmpty()
                         },
-                        style = Typography.TitleLarge,
+                        style = Theme.typography.titleLarge,
                         color = when {
                             fullActive || halfActive -> colors.warning
                             else -> colors.mutedForeground
@@ -193,7 +192,7 @@ fun Rate(
 
             Text(
                 text = displayText,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }
@@ -229,7 +228,7 @@ fun RateWithDescription(
         if (value > 0 && value <= descriptions.size) {
             Text(
                 text = descriptions[value.toInt() - 1],
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.primary
             )
         }

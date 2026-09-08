@@ -11,7 +11,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -47,7 +46,7 @@ fun DatePickerExample(
 
                 Text(
                     text = "已选择: ${dateValue.ifEmpty { "未选择" }}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -85,7 +84,7 @@ fun DatePickerExample(
 
                 Text(
                     text = "已选择: ${timeValue.ifEmpty { "未选择" }}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -125,7 +124,7 @@ fun DatePickerExample(
 
                 Text(
                     text = "已选择: ${if (dateValue.isNotEmpty() || timeValue.isNotEmpty()) "$dateValue $timeValue" else "未选择"}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -191,27 +190,27 @@ fun DatePickerExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. DatePickerInput: 日期选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. TimePickerInput: 时间选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. DateTimePickerInput: 日期时间组合选择器",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. label: 可选的标签文字",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. enabled: 控制是否可交互",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

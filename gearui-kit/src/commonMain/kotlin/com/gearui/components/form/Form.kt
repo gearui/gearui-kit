@@ -9,7 +9,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.StringPacks
@@ -192,7 +191,6 @@ fun Form(
     content: @Composable FormScope.() -> Unit
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val scope = remember(formState, labelWidth) {
@@ -248,7 +246,6 @@ private class FormScopeImpl(
         content: @Composable () -> Unit
     ) {
         val colors = Theme.colors
-        val typography = Theme.typography
         val shapes = Theme.shapes
 
         Column(
@@ -268,14 +265,14 @@ private class FormScopeImpl(
                     if (required) {
                         Text(
                             text = "*",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.destructive
                         )
                         Spacer(modifier = Modifier.width(Spacing.xs))
                     }
                     Text(
                         text = label,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -293,7 +290,7 @@ private class FormScopeImpl(
                         Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(
                             text = it,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -342,7 +339,6 @@ fun FormField(
     content: @Composable (value: String, onValueChange: (String) -> Unit) -> Unit
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Column(modifier = modifier) {
@@ -358,7 +354,7 @@ fun FormField(
             Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
                 text = error,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.destructive
             )
         }

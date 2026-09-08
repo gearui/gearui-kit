@@ -17,7 +17,6 @@ import com.gearui.components.treeselect.TreeSelect
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -83,7 +82,7 @@ fun FieldFamilyComparePage() {
     ) {
         Text(
             text = "Field family — geometry cross-check",
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground,
             modifier = Modifier.padding(
                 start = Spacing.lg,
@@ -103,7 +102,7 @@ fun FieldFamilyComparePage() {
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                         Icon(name = Icons.keyboard_arrow_down, size = 24.dp)
                         Icon(name = Icons.search, size = 24.dp)
-                        Text(text = "\uD83D\uDCC5", style = Typography.BodyLarge, color = colors.foreground)
+                        Text(text = "\uD83D\uDCC5", style = Theme.typography.bodyLarge, color = colors.foreground)
                     }
                 }
             }
@@ -204,7 +203,7 @@ fun FieldFamilyComparePage() {
 private fun Section(title: String, content: @Composable () -> Unit) {
     val colors = Theme.colors
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
-        Text(text = title, style = Typography.BodySmall, color = colors.mutedForeground)
+        Text(text = title, style = Theme.typography.bodySmall, color = colors.mutedForeground)
         content()
     }
 }

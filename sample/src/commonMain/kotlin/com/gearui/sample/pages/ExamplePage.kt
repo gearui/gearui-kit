@@ -12,7 +12,6 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.theme.Theme
 
@@ -99,14 +98,14 @@ fun ExampleSection(
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
                     text = title,
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
 
                 if (description.isNotEmpty()) {
                     Text(
                         text = description,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }

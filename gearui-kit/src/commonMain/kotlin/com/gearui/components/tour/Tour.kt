@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -159,13 +158,13 @@ private fun TourContent(
             ) {
                 Text(
                     text = step.title,
-                    style = Typography.TitleLarge,
+                    style = Theme.typography.titleLarge,
                     color = colors.foreground
                 )
 
                 Text(
                     text = "${currentIndex + 1} / $totalSteps",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -173,7 +172,7 @@ private fun TourContent(
             // Description
             Text(
                 text = step.description,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
 

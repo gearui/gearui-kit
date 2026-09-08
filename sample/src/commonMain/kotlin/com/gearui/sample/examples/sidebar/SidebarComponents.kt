@@ -14,7 +14,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
 import com.gearui.primitives.DividerFull
@@ -183,7 +182,7 @@ private fun SidebarItem(
         ) {
             Text(
                 text = item.label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = textColor
             )
 
@@ -252,7 +251,7 @@ private fun SidebarItemWithIcon(
             Box {
                 Text(
                     text = item.icon ?: "",
-                    style = Typography.TitleLarge
+                    style = Theme.typography.titleLarge
                 )
                 if (item.showDot) {
                     Box(modifier = Modifier.align(Alignment.TopEnd)) {
@@ -267,7 +266,7 @@ private fun SidebarItemWithIcon(
 
             Text(
                 text = item.label,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = textColor
             )
         }
@@ -300,7 +299,7 @@ fun ContentSection(index: Int) {
         // Title
         Text(
             text = "标题$index",
-            style = Typography.TitleSmall,
+            style = Theme.typography.titleSmall,
             color = colors.foreground,
             modifier = Modifier.padding(
                 start = Spacing.lg,
@@ -341,14 +340,14 @@ fun ContentListItem() {
         ) {
             Text(
                 text = "📷",
-                style = Typography.TitleMedium
+                style = Theme.typography.titleMedium
             )
         }
 
         // Title
         Text(
             text = "标题",
-            style = Typography.BodyLarge,
+            style = Theme.typography.bodyLarge,
             color = colors.foreground
         )
     }
@@ -369,7 +368,7 @@ fun PageGridContent(index: Int) {
     ) {
         Text(
             text = "标题 $index",
-            style = Typography.TitleSmall,
+            style = Theme.typography.titleSmall,
             color = colors.foreground,
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
@@ -420,13 +419,13 @@ private fun GridItem(
         ) {
             Text(
                 text = "📷",
-                style = Typography.TitleMedium
+                style = Theme.typography.titleMedium
             )
         }
 
         Text(
             text = title,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.foreground,
             maxLines = 1
         )

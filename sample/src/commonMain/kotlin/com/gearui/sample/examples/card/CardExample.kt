@@ -12,7 +12,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -41,8 +40,8 @@ fun CardExample(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(text = "卡片标题", style = Typography.TitleMedium, color = colors.foreground)
-                    Text(text = "这是卡片的内容区域，可以放置任意内容", style = Typography.BodyMedium, color = colors.mutedForeground)
+                    Text(text = "卡片标题", style = Theme.typography.titleMedium, color = colors.foreground)
+                    Text(text = "这是卡片的内容区域，可以放置任意内容", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
                 }
             }
         }
@@ -65,8 +64,8 @@ fun CardExample(
                         modifier = Modifier.padding(CardDefaults.Default.padding),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "图文卡片", style = Typography.TitleMedium, color = colors.foreground)
-                        Text(text = "带有封面图的卡片样式", style = Typography.BodyMedium, color = colors.mutedForeground)
+                        Text(text = "图文卡片", style = Theme.typography.titleMedium, color = colors.foreground)
+                        Text(text = "带有封面图的卡片样式", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
                     }
                 }
             }
@@ -87,15 +86,15 @@ fun CardExample(
                         modifier = Modifier.padding(CardDefaults.Default.padding),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(text = "操作卡片", style = Typography.TitleMedium, color = colors.foreground)
-                        Text(text = "卡片内容描述", style = Typography.BodyMedium, color = colors.mutedForeground)
+                        Text(text = "操作卡片", style = Theme.typography.titleMedium, color = colors.foreground)
+                        Text(text = "卡片内容描述", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = CardDefaults.Default.padding, vertical = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End)
                     ) {
-                        Text(text = "[取消]", style = Typography.BodyMedium, color = colors.mutedForeground)
-                        Text(text = "[确定]", style = Typography.BodyMedium, color = colors.primary)
+                        Text(text = "[取消]", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
+                        Text(text = "[确定]", style = Theme.typography.bodyMedium, color = colors.primary)
                     }
                 }
             }

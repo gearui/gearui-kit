@@ -15,7 +15,6 @@ import com.gearui.components.button.ButtonTheme
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.i18n.I18n
@@ -111,7 +110,7 @@ fun CalendarPopup(
             ) {
                 Text(
                     text = title,
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
 

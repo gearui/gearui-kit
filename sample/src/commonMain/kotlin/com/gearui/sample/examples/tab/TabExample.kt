@@ -12,7 +12,6 @@ import com.gearui.components.tabs.Tab
 import com.gearui.components.tabs.TabsOutlineType
 import com.gearui.components.tabs.TabsSize
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -92,7 +91,7 @@ fun TabsExample(
                         "tab-1" -> "内容区 2"
                         else -> "内容区 3"
                     },
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
             }

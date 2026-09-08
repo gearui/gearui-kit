@@ -1,22 +1,30 @@
 package com.gearui.theme
 
 import androidx.compose.runtime.Immutable
-import com.tencent.kuikly.compose.ui.text.TextStyle
-import com.tencent.kuikly.compose.ui.text.font.FontWeight
-import com.tencent.kuikly.compose.ui.unit.sp
+import com.gearui.foundation.typography.TextStyle
+import com.gearui.foundation.typography.Typography as TypographyScale
 
 /**
- * GearUI Framework semantic type scale
+ * GearUI semantic type scale — the themeable typography axis.
  *
- * Reference: internal type specification
+ * This is the type [Theme.typography] resolves to, and the type a brand
+ * replaces when it wants different type without forking components.
  *
- * ⚠️ Rule:
- * Component code uses ONLY these semantic text styles.
- * No `fontSize = xx.sp` and no hardcoded values.
+ * It carries [com.gearui.foundation.typography.TextStyle], the same token type
+ * the `Text` primitive accepts. Previously it carried Kuikly's `TextStyle`
+ * instead, which meant the themed scale and the static scale were structurally
+ * incompatible — nothing in the library could read a field off it, and every
+ * component reached past the theme to the static
+ * [com.gearui.foundation.typography.Typography] object. Unifying the two types
+ * is what makes the axis actually replaceable.
  *
  * Usage:
- * val typography = Theme.typography
- * Text(text, style = Typography.BodyMedium)
+ * ```kotlin
+ * Text(text, style = Theme.typography.bodyMedium)
+ * ```
+ *
+ * ⚠️ Component code uses ONLY these semantic styles.
+ * No `fontSize = xx.sp` and no hardcoded values.
  */
 @Immutable
 data class Typography(
@@ -111,139 +119,41 @@ data class Typography(
 object Typographies {
 
     /**
-     * Default Typography
+     * Default Typography.
      *
-     * Sizes, line heights and weights fully aligned
+     * Delegates to [com.gearui.foundation.typography.Typography], which stays the
+     * single place the sizes, line heights and weights are written down. The
+     * numbers used to be duplicated here, and the two copies were free to drift.
      */
     val Default = Typography(
+        displayLarge = TypographyScale.DisplayLarge,
+        displayMedium = TypographyScale.DisplayMedium,
 
-        // Display (oversized headings)
-        displayLarge = TextStyle(
-            fontSize = 64.sp,
-            lineHeight = 72.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        displayMedium = TextStyle(
-            fontSize = 48.sp,
-            lineHeight = 56.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
+        headlineLarge = TypographyScale.HeadlineLarge,
+        headlineMedium = TypographyScale.HeadlineMedium,
+        headlineSmall = TypographyScale.HeadlineSmall,
 
-        // Headline (large headings)
-        headlineLarge = TextStyle(
-            fontSize = 36.sp,
-            lineHeight = 44.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        headlineMedium = TextStyle(
-            fontSize = 28.sp,
-            lineHeight = 36.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        headlineSmall = TextStyle(
-            fontSize = 24.sp,
-            lineHeight = 32.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
+        titleExtraLarge = TypographyScale.TitleExtraLarge,
+        titleLarge = TypographyScale.TitleLarge,
+        titleMedium = TypographyScale.TitleMedium,
+        titleSmall = TypographyScale.TitleSmall,
 
-        // Title (headings)
-        titleExtraLarge = TextStyle(
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        titleLarge = TextStyle(
-            fontSize = 18.sp,
-            lineHeight = 26.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        titleMedium = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        titleSmall = TextStyle(
-            fontSize = 14.sp,
-            lineHeight = 22.sp,
-            fontWeight = FontWeight.Normal
-        ),
+        bodyExtraLarge = TypographyScale.BodyExtraLarge,
+        bodyLarge = TypographyScale.BodyLarge,
+        bodyMedium = TypographyScale.BodyMedium,
+        bodySmall = TypographyScale.BodySmall,
+        bodyExtraSmall = TypographyScale.BodyExtraSmall,
 
-        // Body (body copy)
-        bodyExtraLarge = TextStyle(
-            fontSize = 18.sp,
-            lineHeight = 26.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        bodyLarge = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        bodyMedium = TextStyle(
-            fontSize = 14.sp,
-            lineHeight = 22.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        bodySmall = TextStyle(
-            fontSize = 12.sp,
-            lineHeight = 20.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        bodyExtraSmall = TextStyle(
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            fontWeight = FontWeight.Normal
-        ),
+        markLarge = TypographyScale.MarkLarge,
+        markMedium = TypographyScale.MarkMedium,
+        markSmall = TypographyScale.MarkSmall,
+        markExtraSmall = TypographyScale.MarkExtraSmall,
 
-        // Mark (emphasis)
-        markLarge = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        markMedium = TextStyle(
-            fontSize = 14.sp,
-            lineHeight = 22.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        markSmall = TextStyle(
-            fontSize = 12.sp,
-            lineHeight = 20.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
-        markExtraSmall = TextStyle(
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            fontWeight = FontWeight.SemiBold
-        ),
+        linkLarge = TypographyScale.LinkLarge,
+        linkMedium = TypographyScale.LinkMedium,
+        linkSmall = TypographyScale.LinkSmall,
 
-        // Link
-        linkLarge = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        linkMedium = TextStyle(
-            fontSize = 14.sp,
-            lineHeight = 22.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        linkSmall = TextStyle(
-            fontSize = 12.sp,
-            lineHeight = 20.sp,
-            fontWeight = FontWeight.Normal
-        ),
-
-        // Caption / Label
-        caption = TextStyle(
-            fontSize = 12.sp,
-            lineHeight = 18.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        label = TextStyle(
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            fontWeight = FontWeight.Medium
-        ),
+        caption = TypographyScale.Caption,
+        label = TypographyScale.Label,
     )
 }

@@ -19,7 +19,6 @@ import com.gearui.overlay.OverlayDefaults
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import com.gearui.foundation.typography.Typography
 
 /**
  * Loading - loading indicator
@@ -107,9 +106,9 @@ fun Loading(
             Text(
                 text = text,
                 style = when (size) {
-                    LoadingSize.SMALL -> Typography.BodySmall
-                    LoadingSize.MEDIUM -> Typography.BodyMedium
-                    LoadingSize.LARGE -> Typography.BodyLarge
+                    LoadingSize.SMALL -> Theme.typography.bodySmall
+                    LoadingSize.MEDIUM -> Theme.typography.bodyMedium
+                    LoadingSize.LARGE -> Theme.typography.bodyLarge
                 },
                 color = colors.mutedForeground
             )

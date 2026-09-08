@@ -18,7 +18,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -52,7 +51,7 @@ fun AnchorExample(
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = "当前选中: ${anchorState.activeKey ?: "无"}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -123,17 +122,17 @@ fun AnchorExample(
                 ) {
                     Text(
                         text = "内容区域",
-                        style = Typography.TitleMedium,
+                        style = Theme.typography.titleMedium,
                         color = colors.foreground
                     )
                     Text(
                         text = "当前显示: ${items.find { it.key == activeKey }?.title ?: ""}",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                     Text(
                         text = "点击左侧锚点可以切换内容",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -222,7 +221,7 @@ fun AnchorExample(
 
                 Text(
                     text = "当前选中: ${anchorState.activeKey ?: "无"}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -242,27 +241,27 @@ fun AnchorExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. Anchor: 基础锚点导航组件",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. AnchorAffix: 固定定位的锚点导航",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. rememberAnchorState: 管理选中状态",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持动态添加和移除锚点项",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持顶部偏移量设置",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

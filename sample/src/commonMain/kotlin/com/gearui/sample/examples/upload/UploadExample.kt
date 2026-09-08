@@ -11,7 +11,6 @@ import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -148,8 +147,8 @@ private fun UploadList(files: List<UploadFileDemo>) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(name = Icons.image, size = 16.dp, tint = colors.mutedForeground)
-                Text(text = file.name, style = Typography.BodySmall, color = colors.foreground, modifier = Modifier.weight(1f))
-                Text(text = statusText, style = Typography.BodySmall, color = statusColor)
+                Text(text = file.name, style = Theme.typography.bodySmall, color = colors.foreground, modifier = Modifier.weight(1f))
+                Text(text = statusText, style = Theme.typography.bodySmall, color = statusColor)
             }
         }
     }

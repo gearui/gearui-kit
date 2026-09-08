@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -221,7 +220,7 @@ private fun ToastSurface(toast: ToastData) {
             // Text
             Text(
                 text = toast.message,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = textColor
             )
         }
@@ -336,7 +335,7 @@ fun LocalToast(
             Text(
                 text = message,
                 color = textColor,
-                style = Typography.BodyMedium
+                style = Theme.typography.bodyMedium
             )
         }
     }

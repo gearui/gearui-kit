@@ -9,7 +9,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
@@ -72,7 +71,7 @@ fun SectionHeader(
             ) {
                 Text(
                     text = title,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
@@ -80,7 +79,7 @@ fun SectionHeader(
                     Spacer(Modifier.height(BorderWidth.thick))
                     Text(
                         text = subtitle,
-                        style = Typography.Caption,
+                        style = Theme.typography.caption,
                         color = colors.mutedForeground
                     )
                 }
@@ -98,7 +97,7 @@ fun SectionHeader(
                     Box(modifier = Modifier.padding(start = Spacing.sm)) {
                         Text(
                             text = trailingText,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.primary
                         )
                     }

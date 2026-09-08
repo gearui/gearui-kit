@@ -13,7 +13,6 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.navbar.NavBarItem
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -169,7 +168,7 @@ fun NavbarExample(
                         ) {
                             Text(
                                 text = "🔍 搜索",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -204,7 +203,7 @@ fun NavbarExample(
                         ) {
                             Text(
                                 text = "LOGO",
-                                style = Typography.Label,
+                                style = Theme.typography.label,
                                 color = colors.primaryForeground
                             )
                         }
@@ -300,7 +299,7 @@ fun NavbarExample(
                         ) {
                             Text(
                                 text = "大标题文字",
-                                style = Typography.HeadlineSmall,
+                                style = Theme.typography.headlineSmall,
                                 color = colors.foreground
                             )
                         }

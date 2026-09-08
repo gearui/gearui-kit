@@ -20,7 +20,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -78,7 +77,7 @@ fun PopoverExample(
                     content = {
                         Text(
                             text = "这是带箭头的气泡",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = LocalPopoverTextColor.current
                         )
                     }
@@ -97,7 +96,7 @@ fun PopoverExample(
                     content = {
                         Text(
                             text = "这是不带箭头的气泡",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = LocalPopoverTextColor.current
                         )
                     }
@@ -133,7 +132,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "深色主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -155,7 +154,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "浅色主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -178,7 +177,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "品牌色主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -206,7 +205,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "成功主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -228,7 +227,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "警告主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -250,7 +249,7 @@ fun PopoverExample(
                             content = {
                                 Text(
                                     text = "错误主题",
-                                    style = Typography.BodySmall,
+                                    style = Theme.typography.bodySmall,
                                     color = LocalPopoverTextColor.current
                                 )
                             }
@@ -284,7 +283,7 @@ fun PopoverExample(
                     content = {
                         Text(
                             text = "顶部弹出的气泡",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = LocalPopoverTextColor.current
                         )
                     }
@@ -307,7 +306,7 @@ fun PopoverExample(
                         content = {
                             Text(
                                 text = "左侧气泡",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = LocalPopoverTextColor.current
                             )
                         }
@@ -325,7 +324,7 @@ fun PopoverExample(
                         content = {
                             Text(
                                 text = "右侧气泡",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = LocalPopoverTextColor.current
                             )
                         }
@@ -345,7 +344,7 @@ fun PopoverExample(
                     content = {
                         Text(
                             text = "底部弹出的气泡",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = LocalPopoverTextColor.current
                         )
                     }
@@ -375,12 +374,12 @@ fun PopoverExample(
                     ) {
                         Text(
                             text = "自定义气泡内容",
-                            style = Typography.TitleSmall,
+                            style = Theme.typography.titleSmall,
                             color = colors.foreground
                         )
                         Text(
                             text = "这里可以放置任意自定义内容，包括图片、按钮、列表等各种组件。",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                         Row(
@@ -454,7 +453,7 @@ fun PopoverExample(
                 if (menuResult.isNotEmpty()) {
                     Text(
                         text = "操作结果: $menuResult",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -469,12 +468,12 @@ fun PopoverExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "主题支持:",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "DARK / LIGHT / BRAND / SUCCESS / WARNING / ERROR",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -482,12 +481,12 @@ fun PopoverExample(
 
                 Text(
                     text = "位置支持 (12种):",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "TOP_LEFT / TOP / TOP_RIGHT\nRIGHT_TOP / RIGHT / RIGHT_BOTTOM\nBOTTOM_RIGHT / BOTTOM / BOTTOM_LEFT\nLEFT_BOTTOM / LEFT / LEFT_TOP",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -495,12 +494,12 @@ fun PopoverExample(
 
                 Text(
                     text = "组件类型:",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "Popover - 基础气泡\nTooltip - 文本提示\nPopoverMenu - 菜单气泡",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }

@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.avatar.AvatarSizeTokens
 import com.gearui.theme.Theme
 
@@ -80,7 +79,7 @@ fun Avatar(
                 text != null -> {
                     Text(
                         text = text.take(2).uppercase(),
-                        style = Typography.BodyMedium.copy(fontSize = (size.value * 0.4).sp),
+                        style = Theme.typography.bodyMedium.copy(fontSize = (size.value * 0.4).sp),
                         color = resolvedContent
                     )
                 }

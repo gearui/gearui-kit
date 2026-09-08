@@ -15,7 +15,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -55,7 +54,7 @@ fun BreadcrumbExample(
                 if (clickedItem.isNotEmpty()) {
                     Text(
                         text = "点击了: $clickedItem",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -177,27 +176,27 @@ fun BreadcrumbExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 显示当前页面在系统层级结构中的位置",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持自定义分隔符",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持图标和文字组合",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 最后一项表示当前页面，不可点击",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持折叠模式处理长路径",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -250,7 +249,7 @@ private fun Breadcrumb(
                 if (item.icon != null) {
                     Text(
                         text = item.icon,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = when {
                             item.disabled -> colors.mutedForeground
                             isLast -> colors.foreground
@@ -263,7 +262,7 @@ private fun Breadcrumb(
                 // Text
                 Text(
                     text = item.label,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = when {
                         item.disabled -> colors.mutedForeground
                         isLast -> colors.foreground
@@ -276,7 +275,7 @@ private fun Breadcrumb(
             if (!isLast) {
                 Text(
                     text = " $separator ",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -310,7 +309,7 @@ private fun BreadcrumbCollapsed(
             val firstItem = items.first()
             Text(
                 text = firstItem.label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.primary,
                 modifier = Modifier
                     .clip(RoundedCornerShape(4.dp))
@@ -320,14 +319,14 @@ private fun BreadcrumbCollapsed(
 
             Text(
                 text = " / ",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
 
             // Collapsed ellipsis
             Text(
                 text = "...",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.primary,
                 modifier = Modifier
                     .clip(RoundedCornerShape(4.dp))
@@ -337,7 +336,7 @@ private fun BreadcrumbCollapsed(
 
             Text(
                 text = " / ",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
 
@@ -345,7 +344,7 @@ private fun BreadcrumbCollapsed(
             val lastItem = items.last()
             Text(
                 text = lastItem.label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.foreground,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
             )

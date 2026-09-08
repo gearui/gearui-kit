@@ -8,7 +8,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
 
@@ -37,8 +36,8 @@ fun ListExample(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "列表项 ${index + 1}", style = Typography.BodyMedium, color = colors.foreground)
-                        Text(text = "›", style = Typography.BodyLarge, color = colors.mutedForeground)
+                        Text(text = "列表项 ${index + 1}", style = Theme.typography.bodyMedium, color = colors.foreground)
+                        Text(text = "›", style = Theme.typography.bodyLarge, color = colors.mutedForeground)
                     }
                     if (index < 2) DividerFull()
                 }
@@ -54,7 +53,7 @@ fun ListExample(
                 listOf("📧 消息", "⚙️ 设置", "👤 个人信息").forEach { item ->
                     Text(
                         text = item,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground,
                         modifier = Modifier.padding(vertical = 12.dp)
                     )
@@ -70,8 +69,8 @@ fun ListExample(
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(text = "标题文本", style = Typography.BodyLarge, color = colors.foreground)
-                    Text(text = "这是描述信息，可以显示更多详细内容", style = Typography.BodySmall, color = colors.mutedForeground)
+                    Text(text = "标题文本", style = Theme.typography.bodyLarge, color = colors.foreground)
+                    Text(text = "这是描述信息，可以显示更多详细内容", style = Theme.typography.bodySmall, color = colors.mutedForeground)
                 }
             }
         }

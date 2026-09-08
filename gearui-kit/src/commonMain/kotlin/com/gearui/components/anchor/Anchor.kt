@@ -8,7 +8,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -102,7 +101,7 @@ private fun AnchorLink(
 
         Text(
             text = item.title,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = if (isActive) colors.primary else colors.mutedForeground
         )
     }

@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
@@ -119,7 +118,7 @@ fun NavBar(
                     } else if (title.isNotEmpty()) {
                         Text(
                             text = title,
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = textColor
                         )
                     }
@@ -237,7 +236,7 @@ fun NavBar(
                     } else if (title.isNotEmpty()) {
                         Text(
                             text = title,
-                            style = Typography.TitleMedium,
+                            style = Theme.typography.titleMedium,
                             color = textColor
                         )
                     }
@@ -316,7 +315,7 @@ private fun NavBarIconButton(
         } else {
             Text(
                 text = icon,
-                style = Typography.TitleLarge,
+                style = Theme.typography.titleLarge,
                 color = iconColor
             )
         }

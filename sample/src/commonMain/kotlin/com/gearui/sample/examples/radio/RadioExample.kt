@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.radio.*
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -126,7 +125,7 @@ fun RadioExample(
                 ) {
                     Text(
                         text = "大尺寸",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                     RadioButton(
@@ -142,7 +141,7 @@ fun RadioExample(
                 ) {
                     Text(
                         text = "中尺寸",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                     RadioButton(
@@ -158,7 +157,7 @@ fun RadioExample(
                 ) {
                     Text(
                         text = "小尺寸",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                     RadioButton(
@@ -195,7 +194,7 @@ fun RadioExample(
                 ) {
                     Text(
                         text = "单选框在左侧",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                     RadioButton(
@@ -313,12 +312,12 @@ private fun RadioCardItem(
         ) {
             Text(
                 text = title,
-                style = Typography.BodyLarge,
+                style = Theme.typography.bodyLarge,
                 color = colors.foreground
             )
             Text(
                 text = description,
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
         }
@@ -357,7 +356,7 @@ private fun RadioCardItemCompact(
     ) {
         Text(
             text = title,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = colors.foreground
         )
         RadioButton(

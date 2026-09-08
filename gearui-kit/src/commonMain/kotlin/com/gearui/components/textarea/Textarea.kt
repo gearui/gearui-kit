@@ -19,7 +19,6 @@ import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.TextUnit
@@ -243,7 +242,7 @@ private fun LabelRow(
 
         Text(
             text = label,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = if (enabled) colors.foreground else colors.mutedForeground
         )
 
@@ -251,7 +250,7 @@ private fun LabelRow(
             Spacer(modifier = Modifier.width(Spacing.xs))
             Text(
                 text = "*",
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.destructive
             )
         }
@@ -402,7 +401,7 @@ private fun TextareaInputArea(
                         if (additionInfo != null) {
                             Text(
                                 text = additionInfo,
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         } else {
@@ -412,7 +411,7 @@ private fun TextareaInputArea(
                         if (indicator && maxLength != null) {
                             Text(
                                 text = "${value.length}/$maxLength",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }

@@ -20,7 +20,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 
@@ -182,7 +181,7 @@ fun CalendarExample(
                     if (blockCalendarDate != null) {
                         Text(
                             text = "已选择: ${blockCalendarDate!!.year}年${blockCalendarDate!!.month}月${blockCalendarDate!!.day}日",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.primary
                         )
                     }

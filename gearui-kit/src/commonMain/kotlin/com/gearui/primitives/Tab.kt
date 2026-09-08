@@ -13,7 +13,6 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.tab.TabSizeTokens
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
@@ -45,7 +44,6 @@ fun Tab(
 ) {
     // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
-    val typography = Theme.typography
 
     val content: @Composable () -> Unit = {
         Column(
@@ -73,7 +71,7 @@ fun Tab(
 
                 Text(
                     text = text,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = if (selected) colors.foreground else colors.mutedForeground
                 )
             }

@@ -20,7 +20,6 @@ import com.gearui.components.icon.Icons
 import com.gearui.components.searchbar.SearchBar
 import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.i18n.SampleI18n
 import com.gearui.sample.i18n.SampleStrings
 import com.gearui.sample.config.ComponentCategory
@@ -140,7 +139,7 @@ fun HomePage(
                             ) {
                                 Text(
                                     text = strings.noResults,
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.mutedForeground
                                 )
                             }
@@ -242,13 +241,13 @@ fun HomePage(
             ) {
                 Text(
                     text = getCategoryDisplayName(category, strings),
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
                 Text(
                     text = "$count${strings.componentCountSuffix}",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -306,7 +305,7 @@ fun HomePage(
                     // Component name
                     Text(
                         text = name,
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
 
@@ -315,7 +314,7 @@ fun HomePage(
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = description,
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -325,7 +324,7 @@ fun HomePage(
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "ID: ${component.id}",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -334,7 +333,7 @@ fun HomePage(
             // Chevron
             Text(
                 text = "›",
-                style = Typography.TitleLarge,
+                style = Theme.typography.titleLarge,
                 color = colors.mutedForeground
             )
         }

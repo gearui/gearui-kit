@@ -18,7 +18,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -97,7 +96,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground,
                                 maxLines = 1
                             )
@@ -109,7 +108,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -120,7 +119,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -131,7 +130,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title4"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -156,7 +155,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground,
                                 maxLines = 1
                             )
@@ -169,7 +168,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -181,7 +180,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -196,7 +195,7 @@ fun TableExample(
                             ) {
                                 Text(
                                     text = "修改",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.primary,
                                     modifier = Modifier.clickable {
                                         Toast.show("修改第 ${index + 1} 行")
@@ -204,7 +203,7 @@ fun TableExample(
                                 )
                                 Text(
                                     text = "通过",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.primary,
                                     modifier = Modifier.clickable {
                                         Toast.show("通过第 ${index + 1} 行")
@@ -232,7 +231,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground,
                                 maxLines = 1
                             )
@@ -244,7 +243,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -255,7 +254,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -269,14 +268,14 @@ fun TableExample(
                             ) {
                                 Text(
                                     text = "📤",
-                                    style = Typography.BodyLarge,
+                                    style = Theme.typography.bodyLarge,
                                     modifier = Modifier.clickable {
                                         Toast.show("上传第 ${index + 1} 行")
                                     }
                                 )
                                 Text(
                                     text = "🗑️",
-                                    style = Typography.BodyLarge,
+                                    style = Theme.typography.bodyLarge,
                                     modifier = Modifier.clickable {
                                         Toast.show("删除第 ${index + 1} 行")
                                     }
@@ -298,7 +297,7 @@ fun TableExample(
                 if (selectionState.selectedItems.isNotEmpty()) {
                     Text(
                         text = "已选择 ${selectionState.selectedItems.size} 项",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.primary
                     )
                 }
@@ -312,7 +311,7 @@ fun TableExample(
                             render = { item, _ ->
                                 Text(
                                     text = item["title1"] ?: "",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.foreground
                                 )
                             }
@@ -323,7 +322,7 @@ fun TableExample(
                             render = { item, _ ->
                                 Text(
                                     text = item["title2"] ?: "",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.foreground
                                 )
                             }
@@ -334,7 +333,7 @@ fun TableExample(
                             render = { item, _ ->
                                 Text(
                                     text = item["title3"] ?: "",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.foreground
                                 )
                             }
@@ -345,7 +344,7 @@ fun TableExample(
                             render = { item, _ ->
                                 Text(
                                     text = item["title4"] ?: "",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.foreground
                                 )
                             }
@@ -394,7 +393,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.id,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -406,7 +405,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.name,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -418,7 +417,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.category,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -431,7 +430,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.price,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.destructive
                             )
                         }
@@ -444,7 +443,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.stock,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -457,7 +456,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.sales,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -473,7 +472,7 @@ fun TableExample(
                             ) {
                                 Text(
                                     text = "编辑",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.primary,
                                     modifier = Modifier.clickable {
                                         Toast.show("编辑 ${item.name}")
@@ -481,7 +480,7 @@ fun TableExample(
                                 )
                                 Text(
                                     text = "删除",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.destructive,
                                     modifier = Modifier.clickable {
                                         Toast.show("删除 ${item.name}")
@@ -510,7 +509,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -522,7 +521,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -534,7 +533,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -560,7 +559,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground,
                                 maxLines = 1
                             )
@@ -572,7 +571,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -583,7 +582,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -594,7 +593,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title4"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -619,7 +618,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground,
                                 maxLines = 1
                             )
@@ -631,7 +630,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -642,7 +641,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -653,7 +652,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title4"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -679,7 +678,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -691,7 +690,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -703,7 +702,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -715,7 +714,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title4"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -739,7 +738,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title1"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -750,7 +749,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title2"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -761,7 +760,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title3"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -772,7 +771,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item["title4"] ?: "",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -831,7 +830,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.id,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -842,7 +841,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.product,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.foreground
                             )
                         }
@@ -854,7 +853,7 @@ fun TableExample(
                         render = { item, _ ->
                             Text(
                                 text = item.amount,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.destructive
                             )
                         }

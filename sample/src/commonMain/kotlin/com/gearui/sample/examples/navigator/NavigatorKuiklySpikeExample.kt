@@ -8,7 +8,6 @@ import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.gestures.SwipeBackConfig
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -111,12 +110,12 @@ private fun SaveableStateSpikeSection() {
             ) {
                 Text(
                     text = "Active key: $activeKey",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "rememberSaveable count: $count",
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
                 Button(
@@ -135,8 +134,8 @@ private fun SaveableStateSpikeSection() {
         } else {
             "Check: switching A/B without removeState should retain each entry count."
         }
-        Text(text = status, style = Typography.BodySmall, color = colors.mutedForeground)
-        Text(text = log, style = Typography.BodySmall, color = colors.mutedForeground)
+        Text(text = status, style = Theme.typography.bodySmall, color = colors.mutedForeground)
+        Text(text = log, style = Theme.typography.bodySmall, color = colors.mutedForeground)
     }
 }
 
@@ -190,7 +189,7 @@ private fun MountTimingSpikeSection() {
             )
         }
 
-        Text(text = "eventTrace=$eventTrace", style = Typography.BodyMedium, color = colors.foreground)
+        Text(text = "eventTrace=$eventTrace", style = Theme.typography.bodyMedium, color = colors.foreground)
 
         Box(
             modifier = Modifier
@@ -254,8 +253,8 @@ private fun MountTimingSpikeSection() {
             )
         }
 
-        Text(text = "previousMounted=$previousMounted, dragX=${offsetX.value.toInt()}", style = Typography.BodySmall, color = colors.mutedForeground)
-        Text(text = log, style = Typography.BodySmall, color = colors.mutedForeground)
+        Text(text = "previousMounted=$previousMounted, dragX=${offsetX.value.toInt()}", style = Theme.typography.bodySmall, color = colors.mutedForeground)
+        Text(text = log, style = Theme.typography.bodySmall, color = colors.mutedForeground)
     }
 }
 
@@ -325,9 +324,9 @@ private fun PreviousLayerCard(mode: String) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "Previous layer mounted", style = Typography.TitleMedium, color = Color(0xFF174A2A))
-        Text(text = mode, style = Typography.BodyMedium, color = Color(0xFF174A2A))
-        Text(text = "This stands in for the examples list / chat list.", style = Typography.BodySmall, color = Color(0xFF38684A))
+        Text(text = "Previous layer mounted", style = Theme.typography.titleMedium, color = Color(0xFF174A2A))
+        Text(text = mode, style = Theme.typography.bodyMedium, color = Color(0xFF174A2A))
+        Text(text = "This stands in for the examples list / chat list.", style = Theme.typography.bodySmall, color = Color(0xFF38684A))
     }
 }
 
@@ -344,11 +343,11 @@ private fun CurrentLayerCard(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(text = "Current layer", style = Typography.TitleMedium, color = Color(0xFF111827))
-        Text(text = mode, style = Typography.BodyMedium, color = Color(0xFF374151))
-        Text(text = "translationX=${offset.toInt()} px", style = Typography.BodySmall, color = Color(0xFF6B7280))
+        Text(text = "Current layer", style = Theme.typography.titleMedium, color = Color(0xFF111827))
+        Text(text = mode, style = Theme.typography.bodyMedium, color = Color(0xFF374151))
+        Text(text = "translationX=${offset.toInt()} px", style = Theme.typography.bodySmall, color = Color(0xFF6B7280))
         Spacer(modifier = Modifier.height(60.dp))
-        Text(text = "Swipe from the left side of this card.", style = Typography.BodySmall, color = Color(0xFF6B7280))
+        Text(text = "Swipe from the left side of this card.", style = Theme.typography.bodySmall, color = Color(0xFF6B7280))
     }
 }
 
@@ -413,10 +412,10 @@ private fun BackHandlerLifoSpikeSection() {
         }
         Text(
             text = "innerEnabled=$innerEnabled, outerEnabled=$outerEnabled, innerCount=$innerCount, outerCount=$outerCount",
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = colors.foreground
         )
-        Text(text = log, style = Typography.BodySmall, color = colors.mutedForeground)
+        Text(text = log, style = Theme.typography.bodySmall, color = colors.mutedForeground)
     }
 }
 
@@ -468,9 +467,9 @@ private fun OneShotBackHandlerSection() {
         }
         Text(
             text = "armed=$armed, fireCount=$fireCount",
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = colors.foreground
         )
-        Text(text = log, style = Typography.BodySmall, color = colors.mutedForeground)
+        Text(text = log, style = Theme.typography.bodySmall, color = colors.mutedForeground)
     }
 }

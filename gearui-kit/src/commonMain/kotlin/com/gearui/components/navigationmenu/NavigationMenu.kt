@@ -11,7 +11,6 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -114,13 +113,13 @@ fun NavigationMenu(
                         ) {
                             Text(
                                 text = item.title,
-                                style = Typography.TitleSmall,
+                                style = Theme.typography.titleSmall,
                                 color = if (item.disabled) colors.mutedForeground else colors.foreground
                             )
                             if (item.description.isNotEmpty()) {
                                 Text(
                                     text = item.description,
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.mutedForeground
                                 )
                             }
@@ -171,7 +170,7 @@ fun NavigationMenu(
                 ) {
                     Text(
                         text = section.label,
-                        style = Typography.TitleSmall,
+                        style = Theme.typography.titleSmall,
                         color = textColor
                     )
                     if (hasPopup) {

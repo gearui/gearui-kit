@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
@@ -67,7 +66,7 @@ fun EmptyState(
         // Primary message
         Text(
             text = message,
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground
         )
 
@@ -76,7 +75,7 @@ fun EmptyState(
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = description,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }
@@ -96,7 +95,7 @@ fun EmptyState(
             ) {
                 Text(
                     text = actionText,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primaryForeground
                 )
             }
@@ -125,7 +124,6 @@ fun EmptyStatePreset(
     }
 
     val colors = Theme.colors
-    val typography = Theme.typography
 
     EmptyState(
         message = message,

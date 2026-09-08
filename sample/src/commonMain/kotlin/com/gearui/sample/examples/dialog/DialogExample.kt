@@ -14,7 +14,6 @@ import com.gearui.components.dialog.DialogAction
 import com.gearui.components.dialog.DialogActionRole
 import com.gearui.components.dialog.DialogContent
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -60,7 +59,7 @@ fun DialogExample(
                 if (resultText.isNotEmpty()) {
                     Text(
                         text = resultText,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -175,7 +174,7 @@ fun DialogExample(
                         ) {
                             Text(
                                 text = "这里可以放置任意自定义内容",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                             Row(
@@ -189,7 +188,7 @@ fun DialogExample(
                                     ) {
                                         Text(
                                             text = "项目${index + 1}",
-                                            style = Typography.BodySmall,
+                                            style = Theme.typography.bodySmall,
                                             color = colors.foreground
                                         )
                                     }
@@ -216,22 +215,22 @@ fun DialogExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. ConfirmDialog: 带确认/取消的对话框",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. AlertDialog: 单按钮警告对话框",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. Dialog.Host: 自定义内容对话框",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 模态遮罩，点击外部可关闭",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

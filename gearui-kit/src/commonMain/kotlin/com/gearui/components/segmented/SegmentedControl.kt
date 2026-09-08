@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.border.BorderWidth
 
 /**
@@ -38,7 +37,6 @@ fun <T> SegmentedControl(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Row(
@@ -68,7 +66,7 @@ fun <T> SegmentedControl(
             ) {
                 Text(
                     text = labelProvider(option),
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = when {
                         !enabled -> colors.mutedForeground
                         isSelected -> colors.foreground
@@ -92,7 +90,6 @@ fun <T> IconSegmentedControl(
     enabled: Boolean = true
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     Row(
@@ -131,7 +128,7 @@ fun <T> IconSegmentedControl(
 
                     Text(
                         text = option.label,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = when {
                             !enabled -> colors.mutedForeground
                             isSelected -> colors.foreground

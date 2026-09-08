@@ -18,7 +18,6 @@ import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
@@ -178,10 +177,10 @@ fun Button(
                 Text(
                     text = text,
                     style = when (size) {
-                        ButtonSize.LARGE -> Typography.BodyLarge
-                        ButtonSize.MEDIUM -> Typography.BodyMedium
-                        ButtonSize.SMALL -> Typography.BodySmall
-                        ButtonSize.EXTRA_SMALL -> Typography.BodySmall
+                        ButtonSize.LARGE -> Theme.typography.bodyLarge
+                        ButtonSize.MEDIUM -> Theme.typography.bodyMedium
+                        ButtonSize.SMALL -> Theme.typography.bodySmall
+                        ButtonSize.EXTRA_SMALL -> Theme.typography.bodySmall
                     },
                     color = contentColor
                 )

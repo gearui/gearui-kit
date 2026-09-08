@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -158,7 +157,7 @@ private fun TimelineItemView(
                 item.icon?.let { icon ->
                     Text(
                         text = icon,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.primaryForeground
                     )
                 }
@@ -186,7 +185,7 @@ private fun TimelineItemView(
             ) {
                 Text(
                     text = item.content,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
@@ -194,7 +193,7 @@ private fun TimelineItemView(
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = timestamp,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -211,7 +210,7 @@ private fun TimelineItemView(
             ) {
                 Text(
                     text = item.content,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
@@ -219,7 +218,7 @@ private fun TimelineItemView(
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = timestamp,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }

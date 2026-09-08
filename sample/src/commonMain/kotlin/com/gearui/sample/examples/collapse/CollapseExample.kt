@@ -11,7 +11,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -73,7 +72,7 @@ fun CollapseExample(
                         headerBuilder = { _ ->
                             Text(
                                 text = "标题 $index",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         },
@@ -81,7 +80,7 @@ fun CollapseExample(
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -107,7 +106,7 @@ fun CollapseExample(
                         headerBuilder = { _ ->
                             Text(
                                 text = "标题 $index",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         },
@@ -118,7 +117,7 @@ fun CollapseExample(
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -140,14 +139,14 @@ fun CollapseExample(
                         headerBuilder = { _ ->
                             Text(
                                 text = "标题 $index",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         },
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -175,7 +174,7 @@ fun CollapseExample(
                         headerBuilder = { _ ->
                             Text(
                                 text = "标题 $index",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         },
@@ -183,7 +182,7 @@ fun CollapseExample(
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -209,7 +208,7 @@ fun CollapseExample(
                         headerBuilder = { _ ->
                             Text(
                                 text = "标题 $index",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.foreground
                             )
                         },
@@ -217,7 +216,7 @@ fun CollapseExample(
                         body = {
                             Text(
                                 text = SAMPLE_CONTENT,
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }

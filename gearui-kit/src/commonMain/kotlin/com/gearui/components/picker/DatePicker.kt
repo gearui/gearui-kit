@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.components.dialog.Dialog
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -59,7 +58,7 @@ fun DatePickerInput(
         if (label != null) {
             Text(
                 text = label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = Spacing.sm)
             )
@@ -84,7 +83,7 @@ fun DatePickerInput(
         ) {
             Text(
                 text = value.ifEmpty { placeholder },
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (value.isNotEmpty()) {
                     if (enabled) colors.foreground else colors.mutedForeground
                 } else {
@@ -150,7 +149,7 @@ private fun DatePickerDialogContent(
     ) {
         Text(
             text = I18n.strings.dateTime.selectDateTitle,
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground,
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
@@ -213,7 +212,7 @@ private fun DatePickerDialogContent(
             ) {
                 Text(
                     text = I18n.strings.common.cancel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -229,7 +228,7 @@ private fun DatePickerDialogContent(
             ) {
                 Text(
                     text = I18n.strings.common.ok,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primaryForeground
                 )
             }
@@ -265,7 +264,7 @@ fun TimePickerInput(
         if (label != null) {
             Text(
                 text = label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = Spacing.sm)
             )
@@ -289,7 +288,7 @@ fun TimePickerInput(
         ) {
             Text(
                 text = value.ifEmpty { placeholder },
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (value.isNotEmpty()) {
                     if (enabled) colors.foreground else colors.mutedForeground
                 } else {
@@ -346,7 +345,7 @@ private fun TimePickerDialogContent(
     ) {
         Text(
             text = I18n.strings.dateTime.selectTimeTitle,
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground,
             modifier = Modifier.padding(bottom = Spacing.lg)
         )
@@ -397,7 +396,7 @@ private fun TimePickerDialogContent(
             ) {
                 Text(
                     text = I18n.strings.common.cancel,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }
@@ -413,7 +412,7 @@ private fun TimePickerDialogContent(
             ) {
                 Text(
                     text = I18n.strings.common.ok,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primaryForeground
                 )
             }
@@ -507,7 +506,7 @@ private fun IntPickerColumn(
                 ) {
                     Text(
                         text = displayText,
-                        style = if (isSelected) Typography.TitleSmall else Typography.BodyMedium,
+                        style = if (isSelected) Theme.typography.titleSmall else Theme.typography.bodyMedium,
                         color = if (isSelected) colors.foreground else colors.mutedForeground
                     )
                 }
@@ -533,7 +532,7 @@ fun DateTimePickerInput(
         if (label != null) {
             Text(
                 text = label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) Theme.colors.foreground else Theme.colors.mutedForeground,
                 modifier = Modifier.padding(bottom = Spacing.sm)
             )

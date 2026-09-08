@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.graphics.drawscope.Stroke
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import kotlin.math.roundToInt
 import com.gearui.foundation.layout.Spacing
 
@@ -95,7 +94,7 @@ fun LinearProgress(
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -123,7 +122,7 @@ fun LinearProgress(
                 if (showLabel) {
                     Text(
                         text = "${(normalizedProgress * 100).roundToInt()}%",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (animatedProgress > 0.5f) progressForeground else colors.foreground
                     )
                 }
@@ -191,7 +190,7 @@ fun CircularProgress(
         if (showLabel) {
             Text(
                 text = "${(normalizedProgress * 100).roundToInt()}%",
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.foreground
             )
         }

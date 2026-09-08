@@ -18,7 +18,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -368,7 +367,7 @@ private fun SwiperIndicator(
                 ) {
                     Text(
                         text = "${currentIndex + 1}/$itemCount",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = if (isOuter) colors.primaryForeground else colors.primaryForeground
                     )
                 }

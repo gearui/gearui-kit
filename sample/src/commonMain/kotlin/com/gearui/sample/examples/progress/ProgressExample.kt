@@ -16,7 +16,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
 
@@ -92,7 +91,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "主色",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -109,7 +108,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "成功",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -126,7 +125,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "警告",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -143,7 +142,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "危险",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -167,7 +166,7 @@ fun ProgressExample(
             ) {
                 Text(
                     text = "右侧显示百分比",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 LinearProgress(
@@ -181,7 +180,7 @@ fun ProgressExample(
 
                 Text(
                     text = "内部显示百分比",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
                 LinearProgress(
@@ -209,7 +208,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "4dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -227,7 +226,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "8dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -245,7 +244,7 @@ fun ProgressExample(
                 ) {
                     Text(
                         text = "16dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
                         modifier = Modifier.width(40.dp)
                     )
@@ -317,7 +316,7 @@ fun ProgressExample(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "小",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -333,7 +332,7 @@ fun ProgressExample(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "中",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -349,7 +348,7 @@ fun ProgressExample(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "大",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -430,12 +429,12 @@ fun ProgressExample(
                     ) {
                         Text(
                             text = "文件上传中...",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.foreground
                         )
                         Text(
                             text = "2.5MB / 5MB",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -455,12 +454,12 @@ fun ProgressExample(
                     ) {
                         Text(
                             text = "存储空间",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.foreground
                         )
                         Text(
                             text = "85GB / 100GB",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.warning
                         )
                     }
@@ -487,12 +486,12 @@ fun ProgressExample(
                     Column {
                         Text(
                             text = "今日任务",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                         Text(
                             text = "已完成 8/10 项任务",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -508,27 +507,27 @@ fun ProgressExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. LinearProgress: 线性进度条",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. CircularProgress: 环形进度条",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. ProgressStatus: PRIMARY/SUCCESS/WARNING/DANGER",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. showLabel: 显示百分比标签",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. animated: 开启动画过渡效果",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

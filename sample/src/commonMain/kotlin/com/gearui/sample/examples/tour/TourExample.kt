@@ -19,7 +19,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -152,7 +151,7 @@ fun TourExample(
                 if (basicTourCompleted) {
                     Text(
                         text = "✓ 引导已完成",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.success
                     )
                 }
@@ -184,7 +183,7 @@ fun TourExample(
                 if (multiStepTourCompleted) {
                     Text(
                         text = "✓ 详细引导已完成",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.success
                     )
                 }
@@ -216,7 +215,7 @@ fun TourExample(
                 if (skipTourSkipped) {
                     Text(
                         text = "⚠ 用户跳过了引导",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.warning
                     )
                 }
@@ -268,7 +267,7 @@ fun TourExample(
                             ) {
                                 Text(
                                     text = "🔍 搜索...",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.mutedForeground
                                 )
                             }
@@ -285,7 +284,7 @@ fun TourExample(
                             ) {
                                 Text(
                                     text = "⚙",
-                                    style = Typography.BodyMedium,
+                                    style = Theme.typography.bodyMedium,
                                     color = colors.mutedForeground
                                 )
                             }
@@ -302,7 +301,7 @@ fun TourExample(
                         ) {
                             Text(
                                 text = "内容区域",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -321,7 +320,7 @@ fun TourExample(
                             ) {
                                 Text(
                                     text = "+",
-                                    style = Typography.TitleLarge,
+                                    style = Theme.typography.titleLarge,
                                     color = colors.primaryForeground
                                 )
                             }

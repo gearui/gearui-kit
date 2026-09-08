@@ -13,7 +13,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -208,12 +207,12 @@ fun TimelineExample(
                         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 text = "任务完成",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.success
                             )
                             Text(
                                 text = "所有测试用例通过",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }
@@ -222,12 +221,12 @@ fun TimelineExample(
                         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 text = "代码审查中",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.primary
                             )
                             Text(
                                 text = "等待团队成员审核",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }
@@ -236,12 +235,12 @@ fun TimelineExample(
                         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 text = "待处理",
-                                style = Typography.TitleMedium,
+                                style = Theme.typography.titleMedium,
                                 color = colors.warning
                             )
                             Text(
                                 text = "需要进一步优化",
-                                style = Typography.BodySmall,
+                                style = Theme.typography.bodySmall,
                                 color = colors.mutedForeground
                             )
                         }
@@ -295,22 +294,22 @@ fun TimelineExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 支持三种模式: LEFT, RIGHT, ALTERNATE",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. 支持五种颜色: DEFAULT, PRIMARY, SUCCESS, WARNING, ERROR",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. 支持倒序显示 (reverse)",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. TimelineCustom 支持完全自定义内容",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

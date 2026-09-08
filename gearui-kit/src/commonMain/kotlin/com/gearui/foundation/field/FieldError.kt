@@ -3,7 +3,6 @@ package com.gearui.foundation.field
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Modifier
@@ -64,7 +63,7 @@ fun FieldErrorText(error: String?) {
     if (error == null) return
     Text(
         text = error,
-        style = Typography.BodySmall,
+        style = Theme.typography.bodySmall,
         color = Theme.colors.destructive,
         modifier = Modifier.padding(top = Spacing.xs),
     )

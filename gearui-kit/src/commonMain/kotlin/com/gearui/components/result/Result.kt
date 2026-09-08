@@ -12,7 +12,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
@@ -68,7 +67,6 @@ fun Result(
     extraContent: (@Composable () -> Unit)? = null
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
     val shapes = Theme.shapes
 
     val (defaultIconName, iconColor) = getStatusIconAndColor(status, colors)
@@ -91,7 +89,7 @@ fun Result(
         } else {
             Text(
                 text = "404",
-                style = Typography.HeadlineLarge,
+                style = Theme.typography.headlineLarge,
                 color = iconColor
             )
         }
@@ -101,7 +99,7 @@ fun Result(
         // Title
         Text(
             text = title,
-            style = Typography.HeadlineMedium,
+            style = Theme.typography.headlineMedium,
             color = colors.foreground
         )
 
@@ -110,7 +108,7 @@ fun Result(
             Spacer(modifier = Modifier.height(Spacing.md))
             Text(
                 text = desc,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }

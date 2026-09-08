@@ -21,7 +21,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -57,7 +56,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "裁剪",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -77,7 +76,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "拉伸",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -114,7 +113,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "适应高",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -140,7 +139,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "适应宽",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -177,7 +176,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "方形",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -195,7 +194,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "圆角方形",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -214,7 +213,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "圆形",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -245,7 +244,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "加载默认提示",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -258,7 +257,7 @@ fun ImageExample(
                     ) {
                         Text(
                             text = "...",
-                            style = Typography.TitleLarge,
+                            style = Theme.typography.titleLarge,
                             color = colors.mutedForeground
                         )
                     }
@@ -270,7 +269,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "加载自定义提示",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -308,7 +307,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "失败默认提示",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -327,7 +326,7 @@ fun ImageExample(
                 ) {
                     Text(
                         text = "失败自定义提示",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -340,7 +339,7 @@ fun ImageExample(
                     ) {
                         Text(
                             text = "加载失败",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
                     }
@@ -370,7 +369,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "32dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -386,7 +385,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "48dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -402,7 +401,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "64dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -418,7 +417,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "80dp",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -449,7 +448,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "方形",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -469,7 +468,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "圆角",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -488,7 +487,7 @@ fun ImageExample(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "圆形",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }

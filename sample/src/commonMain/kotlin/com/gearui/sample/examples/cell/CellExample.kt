@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import com.gearui.components.cell.Cell
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -57,7 +56,7 @@ fun CellExample(
                     leading = {
                         Text(
                             text = "A",
-                            style = Typography.BodyLarge,
+                            style = Theme.typography.bodyLarge,
                             color = colors.primary
                         )
                     }
@@ -67,7 +66,7 @@ fun CellExample(
                     trailing = {
                         Text(
                             text = "ON",
-                            style = Typography.BodySmall,
+                            style = Theme.typography.bodySmall,
                             color = colors.success
                         )
                     }

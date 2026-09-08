@@ -17,7 +17,6 @@ import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -169,7 +168,7 @@ fun InputExample(
                     suffix = {
                         Text(
                             text = "👤",
-                            style = Typography.BodyLarge,
+                            style = Theme.typography.bodyLarge,
                             modifier = Modifier.clickable { Toast.show("点击图标") }
                         )
                     }
@@ -192,7 +191,7 @@ fun InputExample(
                     prefix = {
                         Text(
                             text = "📱",
-                            style = Typography.BodyMedium
+                            style = Theme.typography.bodyMedium
                         )
                     }
                 )
@@ -205,7 +204,7 @@ fun InputExample(
                     prefix = {
                         Text(
                             text = "🔍",
-                            style = Typography.BodyMedium
+                            style = Theme.typography.bodyMedium
                         )
                     }
                 )
@@ -230,7 +229,7 @@ fun InputExample(
                     suffix = {
                         Text(
                             text = if (showPassword) "👁" else "👁‍🗨",
-                            style = Typography.BodyLarge,
+                            style = Theme.typography.bodyLarge,
                             modifier = Modifier.clickable { showPassword = !showPassword }
                         )
                     }
@@ -265,7 +264,7 @@ fun InputExample(
                             ) {
                                 Text(
                                     text = "ABCD",
-                                    style = Typography.TitleSmall,
+                                    style = Theme.typography.titleSmall,
                                     color = colors.primary
                                 )
                             }
@@ -294,7 +293,7 @@ fun InputExample(
                             )
                             Text(
                                 text = if (countdown > 0) "重发(${countdown}秒)" else "发送验证码",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = if (countdown > 0) colors.mutedForeground else colors.primary,
                                 modifier = Modifier.clickable(enabled = countdown == 0) {
                                     Toast.show("发送验证码")
@@ -315,7 +314,7 @@ fun InputExample(
                     suffix = {
                         Text(
                             text = "元",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                     }
@@ -332,7 +331,7 @@ fun InputExample(
                     suffix = {
                         Text(
                             text = "个",
-                            style = Typography.BodyMedium,
+                            style = Theme.typography.bodyMedium,
                             color = colors.foreground
                         )
                     }
@@ -442,7 +441,7 @@ fun InputExample(
                 suffix = {
                     Text(
                         text = "⚠️",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
                     )
                 }
@@ -481,7 +480,7 @@ fun InputExample(
             ) {
                 Text(
                     text = "标签文字",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 var value by remember { mutableStateOf("") }
@@ -493,7 +492,7 @@ fun InputExample(
                     suffix = {
                         Text(
                             text = "⚠️",
-                            style = Typography.BodyLarge,
+                            style = Theme.typography.bodyLarge,
                             modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
                         )
                     }

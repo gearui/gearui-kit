@@ -17,7 +17,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -335,7 +334,7 @@ fun SwipeCellExample(
                         ) {
                             Text(
                                 text = "列表已清空",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
@@ -352,7 +351,7 @@ fun SwipeCellExample(
             ) {
                 Text(
                     text = actionResult,
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.primary
                 )
             }
@@ -366,12 +365,12 @@ fun SwipeCellExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "手感优化:",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "• 弹性动画 (Spring Animation)\n• 阻尼感滑动\n• 快速滑动判断\n• 组内互斥关闭",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -379,12 +378,12 @@ fun SwipeCellExample(
 
                 Text(
                     text = "滑动方向:",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "左滑 (rightActions) / 右滑 (leftActions)",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
 
@@ -392,12 +391,12 @@ fun SwipeCellExample(
 
                 Text(
                     text = "操作按钮主题:",
-                    style = Typography.Label,
+                    style = Theme.typography.label,
                     color = colors.foreground
                 )
                 Text(
                     text = "PRIMARY / DANGER / WARNING / SUCCESS",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }

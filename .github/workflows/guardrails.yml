@@ -69,6 +69,9 @@ jobs:
       - name: Hardcoded spacing guard (components)
         run: ./scripts/ci/check_component_hardcoded_spacing.sh
 
+      - name: Static typography guard (type scale)
+        run: ./scripts/ci/check_component_static_typography.sh
+
       - name: Legacy Float token pool guard
         run: ./scripts/ci/check_legacy_token_pool.sh
 

@@ -20,7 +20,6 @@ import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
@@ -131,7 +130,7 @@ fun <T> Select(
         if (label != null) {
             Text(
                 text = label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = Spacing.sm)
             )
@@ -167,7 +166,7 @@ fun <T> Select(
         ) {
             Text(
                 text = selectedOption?.label ?: placeholder,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (selectedOption != null) {
                     if (enabled) colors.foreground else colors.mutedForeground
                 } else {
@@ -259,7 +258,7 @@ private fun <T> SelectOptionItem(
     ) {
         Text(
             text = option.label,
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = when {
                 option.disabled -> colors.mutedForeground
                 else -> colors.foreground
@@ -358,7 +357,7 @@ fun <T> MultiSelect(
         if (label != null) {
             Text(
                 text = label,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
                 modifier = Modifier.padding(bottom = Spacing.sm)
             )
@@ -390,7 +389,7 @@ fun <T> MultiSelect(
             Text(
                 text = if (values.isEmpty()) placeholder
                     else I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size),
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = if (values.isNotEmpty()) {
                     if (enabled) colors.foreground else colors.mutedForeground
                 } else {
@@ -483,7 +482,7 @@ private fun <T> MultiSelectDropdownContent(
                 ) {
                     Text(
                         text = option.label,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = when {
                             option.disabled -> colors.mutedForeground
                             isSelected -> colors.primary

@@ -26,7 +26,6 @@ import com.gearui.components.searchbar.SearchBar
 import com.gearui.components.switch.Switch
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -60,7 +59,7 @@ fun IconExample(
         ) {
             Text(
                 text = "筛选 Icon 可参考：https://fonts.google.com/icons",
-                style = Typography.BodySmall,
+                style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )
 
@@ -77,7 +76,7 @@ fun IconExample(
             ) {
                 Text(
                     text = "icon数量: ${filteredIcons.size}",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
 
@@ -87,7 +86,7 @@ fun IconExample(
                 ) {
                     Text(
                         text = "显示边框",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                     Switch(
@@ -106,7 +105,7 @@ fun IconExample(
                 ) {
                     Text(
                         text = "暂无匹配图标",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }
@@ -184,7 +183,7 @@ private fun IconCell(
 
         Text(
             text = iconName,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = colors.mutedForeground
         )
     }

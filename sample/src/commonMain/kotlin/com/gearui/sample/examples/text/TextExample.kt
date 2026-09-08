@@ -8,7 +8,6 @@ import com.tencent.kuikly.compose.ui.text.style.TextDecoration
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -40,7 +39,7 @@ fun TextExample(
         ) {
             Text(
                 text = exampleText,
-                style = Typography.BodyMedium,
+                style = Theme.typography.bodyMedium,
                 color = colors.foreground
             )
         }
@@ -57,7 +56,7 @@ fun TextExample(
             ) {
                 Text(
                     text = exampleText,
-                    style = Typography.HeadlineLarge,
+                    style = Theme.typography.headlineLarge,
                     color = colors.primary
                 )
             }
@@ -71,42 +70,42 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = "Headline Large 大标题",
-                    style = Typography.HeadlineLarge,
+                    style = Theme.typography.headlineLarge,
                     color = colors.foreground
                 )
                 Text(
                     text = "Headline Medium 中标题",
-                    style = Typography.HeadlineMedium,
+                    style = Theme.typography.headlineMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "Title Large 大标题",
-                    style = Typography.TitleLarge,
+                    style = Theme.typography.titleLarge,
                     color = colors.foreground
                 )
                 Text(
                     text = "Title Medium 中等标题",
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "Title Small 小标题",
-                    style = Typography.TitleSmall,
+                    style = Theme.typography.titleSmall,
                     color = colors.foreground
                 )
                 Text(
                     text = "Body Large 大正文",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.foreground
                 )
                 Text(
                     text = "Body Medium 中正文",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 Text(
                     text = "Body Small 小正文",
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.foreground
                 )
             }
@@ -120,22 +119,22 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "主要文字 textPrimary",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.foreground
                 )
                 Text(
                     text = "次要文字 textSecondary",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "占位文字 textPlaceholder",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "禁用文字 textDisabled",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.mutedForeground
                 )
                 // Inverted text
@@ -146,7 +145,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "反色文字 textAnti",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.primaryForeground
                     )
                 }
@@ -161,22 +160,22 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "品牌色文字 Primary",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.primary
                 )
                 Text(
                     text = "成功文字 Success",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.success
                 )
                 Text(
                     text = "警告文字 Warning",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.warning
                 )
                 Text(
                     text = "危险文字 Danger/Error",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     color = colors.destructive
                 )
             }
@@ -195,7 +194,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "品牌色背景",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.primary
                     )
                 }
@@ -206,7 +205,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "成功背景",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.success
                     )
                 }
@@ -217,7 +216,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "警告背景",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.warning
                     )
                 }
@@ -228,7 +227,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "危险背景",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.destructive
                     )
                 }
@@ -243,14 +242,14 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "这是一段很长的文字，用于测试文字截断效果，当文字超出容器宽度时会显示省略号",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = "这是一段很长的文字，用于测试文字截断效果，当文字超出容器宽度时会显示省略号。这里设置最多显示两行。",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -271,7 +270,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "中华人民共和国 China",
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                 }
@@ -282,7 +281,7 @@ fun TextExample(
                 ) {
                     Text(
                         text = "腾讯科技 Tencent fgjpqy",
-                        style = Typography.TitleMedium,
+                        style = Theme.typography.titleMedium,
                         color = colors.foreground
                     )
                 }
@@ -297,16 +296,16 @@ fun TextExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "主要文本（默认）",
-                    style = Typography.BodyLarge
+                    style = Theme.typography.bodyLarge
                 )
                 Text(
                     text = "次要文本 secondary=true",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     secondary = true
                 )
                 Text(
                     text = "三级文本 tertiary=true",
-                    style = Typography.BodyLarge,
+                    style = Theme.typography.bodyLarge,
                     tertiary = true
                 )
             }

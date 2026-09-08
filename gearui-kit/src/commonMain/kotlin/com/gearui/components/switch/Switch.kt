@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
@@ -134,7 +133,7 @@ fun Switch(
                     // Text type: on/off wording
                     Text(
                         text = if (checked) openText else closeText,
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = thumbContentColor,
                         maxLines = 1
                     )
@@ -177,7 +176,6 @@ fun SwitchWithLabel(
     size: SwitchSize = SwitchSize.MEDIUM
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
 
     // Not clickable while loading
     val switchEnabled = enabled && type != SwitchType.LOADING
@@ -196,7 +194,7 @@ fun SwitchWithLabel(
     ) {
         Text(
             text = label,
-            style = Typography.BodyLarge,
+            style = Theme.typography.bodyLarge,
             color = if (enabled) colors.foreground else colors.mutedForeground
         )
 

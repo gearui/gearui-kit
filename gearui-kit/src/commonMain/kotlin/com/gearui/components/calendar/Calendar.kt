@@ -16,7 +16,6 @@ import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
@@ -126,7 +125,7 @@ fun Calendar(
         if (showTitle && title != null) {
             Text(
                 text = title,
-                style = Typography.TitleMedium,
+                style = Theme.typography.titleMedium,
                 color = colors.foreground
             )
         }
@@ -227,7 +226,7 @@ private fun CalendarHeader(
         Text(
             text = I18n.strings.dateTime.calendarYearMonthFormat
                 .formatArgs("year" to year, "month" to month),
-            style = Typography.TitleMedium,
+            style = Theme.typography.titleMedium,
             color = colors.foreground
         )
 
@@ -272,7 +271,7 @@ private fun CalendarWeekHeader(
             ) {
                 Text(
                     text = day,
-                    style = Typography.BodySmall,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -428,7 +427,7 @@ private fun CalendarCell(
     ) {
         Text(
             text = day.toString(),
-            style = Typography.BodyMedium,
+            style = Theme.typography.bodyMedium,
             color = textColor
         )
     }

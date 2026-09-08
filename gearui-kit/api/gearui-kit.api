@@ -2407,38 +2407,6 @@ public final class com/gearui/foundation/layout/Radius {
 	public final fun getXl-UdJoRJA ()F
 }
 
-public final class com/gearui/foundation/layout/SectionTokens {
-	public static final field $stable I
-	public synthetic fun <init> (FFFJLcom/gearui/foundation/typography/TextStyle;JFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-UdJoRJA ()F
-	public final fun component2-UdJoRJA ()F
-	public final fun component3-UdJoRJA ()F
-	public final fun component4-cs37B9Y ()J
-	public final fun component5 ()Lcom/gearui/foundation/typography/TextStyle;
-	public final fun component6-cs37B9Y ()J
-	public final fun component7-UdJoRJA ()F
-	public final fun copy-hLmFF8M (FFFJLcom/gearui/foundation/typography/TextStyle;JF)Lcom/gearui/foundation/layout/SectionTokens;
-	public static synthetic fun copy-hLmFF8M$default (Lcom/gearui/foundation/layout/SectionTokens;FFFJLcom/gearui/foundation/typography/TextStyle;JFILjava/lang/Object;)Lcom/gearui/foundation/layout/SectionTokens;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBackgroundColor-cs37B9Y ()J
-	public final fun getHeight-UdJoRJA ()F
-	public final fun getPaddingHorizontal-UdJoRJA ()F
-	public final fun getPaddingVertical-UdJoRJA ()F
-	public final fun getTextColor-cs37B9Y ()J
-	public final fun getTextStyle ()Lcom/gearui/foundation/typography/TextStyle;
-	public final fun getTrailingSpacing-UdJoRJA ()F
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/gearui/foundation/layout/Sections {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/layout/Sections;
-	public final fun getCompact ()Lcom/gearui/foundation/layout/SectionTokens;
-	public final fun getDefault ()Lcom/gearui/foundation/layout/SectionTokens;
-	public final fun getLarge ()Lcom/gearui/foundation/layout/SectionTokens;
-}
-
 public final class com/gearui/foundation/layout/Spacing {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/layout/Spacing;
@@ -4072,56 +4040,56 @@ public final class com/gearui/theme/Typographies {
 
 public final class com/gearui/theme/Typography {
 	public static final field $stable I
-	public fun <init> (Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;)V
-	public final fun component1 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component10 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component11 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component12 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component13 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component14 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component15 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component16 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component17 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component18 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component19 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component2 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component20 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component21 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component22 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component23 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component3 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component4 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component5 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component6 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component7 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component8 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun component9 ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun copy (Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;)Lcom/gearui/theme/Typography;
-	public static synthetic fun copy$default (Lcom/gearui/theme/Typography;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;Lcom/tencent/kuikly/compose/ui/text/TextStyle;ILjava/lang/Object;)Lcom/gearui/theme/Typography;
+	public fun <init> (Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;)V
+	public final fun component1 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component10 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component11 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component12 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component13 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component14 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component15 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component16 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component17 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component18 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component19 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component2 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component20 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component21 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component22 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component23 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component3 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component4 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component5 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component6 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component7 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component8 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component9 ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun copy (Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;)Lcom/gearui/theme/Typography;
+	public static synthetic fun copy$default (Lcom/gearui/theme/Typography;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;Lcom/gearui/foundation/typography/TextStyle;ILjava/lang/Object;)Lcom/gearui/theme/Typography;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBodyExtraLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getBodyExtraSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getBodyLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getBodyMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getBodySmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getCaption ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getDisplayLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getDisplayMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getHeadlineLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getHeadlineMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getHeadlineSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getLabel ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getLinkLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getLinkMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getLinkSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getMarkExtraSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getMarkLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getMarkMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getMarkSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getTitleExtraLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getTitleLarge ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getTitleMedium ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
-	public final fun getTitleSmall ()Lcom/tencent/kuikly/compose/ui/text/TextStyle;
+	public final fun getBodyExtraLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getBodyExtraSmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getBodyLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getBodyMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getBodySmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getCaption ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getDisplayLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getDisplayMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getHeadlineLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getHeadlineMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getHeadlineSmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getLabel ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getLinkLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getLinkMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getLinkSmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getMarkExtraSmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getMarkLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getMarkMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getMarkSmall ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getTitleExtraLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getTitleLarge ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getTitleMedium ()Lcom/gearui/foundation/typography/TextStyle;
+	public final fun getTitleSmall ()Lcom/gearui/foundation/typography/TextStyle;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

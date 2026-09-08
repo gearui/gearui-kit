@@ -184,7 +184,7 @@ fun DialogContent(
             if (title != null) {
                 com.gearui.foundation.primitives.Text(
                     text = title,
-                    style = com.gearui.foundation.typography.Typography.TitleSmall,
+                    style = Theme.typography.titleSmall,
                     color = colors.foreground,
                     textAlign = TextAlign.Center,
                 )
@@ -197,9 +197,9 @@ fun DialogContent(
                     // The only text in the card carries it, so it reads as content
                     // rather than as a footnote under a missing heading.
                     style = if (messageIsPrimary) {
-                        com.gearui.foundation.typography.Typography.BodyMedium
+                        Theme.typography.bodyMedium
                     } else {
-                        com.gearui.foundation.typography.Typography.BodySmall
+                        Theme.typography.bodySmall
                     },
                     color = if (messageIsPrimary) colors.foreground else colors.mutedForeground,
                     textAlign = TextAlign.Center,
@@ -277,8 +277,8 @@ private fun DialogActionCell(action: DialogAction, modifier: Modifier) {
     }
     val style = when (action.role) {
         DialogActionRole.PRIMARY, DialogActionRole.CANCEL ->
-            com.gearui.foundation.typography.Typography.MarkMedium
-        else -> com.gearui.foundation.typography.Typography.BodyMedium
+            Theme.typography.markMedium
+        else -> Theme.typography.bodyMedium
     }
 
     Box(

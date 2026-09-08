@@ -14,7 +14,6 @@ import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 
 /**
@@ -62,7 +61,7 @@ fun BottomSheetExample(
                 if (selectedAction.isNotEmpty()) {
                     Text(
                         text = "选择了: $selectedAction",
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -131,7 +130,7 @@ fun BottomSheetExample(
                         icon = {
                             Text(
                                 text = "W",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.success
                             )
                         }
@@ -141,7 +140,7 @@ fun BottomSheetExample(
                         icon = {
                             Text(
                                 text = "M",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.success
                             )
                         }
@@ -151,7 +150,7 @@ fun BottomSheetExample(
                         icon = {
                             Text(
                                 text = "B",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.destructive
                             )
                         }
@@ -161,7 +160,7 @@ fun BottomSheetExample(
                         icon = {
                             Text(
                                 text = "L",
-                                style = Typography.BodyMedium,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.primary
                             )
                         }
@@ -322,42 +321,42 @@ fun BottomSheetExample(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "1. 基于 Overlay 系统，全局弹出",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "2. BottomSheetState: 管理显示/隐藏状态",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "3. BottomSheetItem: 定义选项数据",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "4. 支持标题和描述",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "5. 支持图标",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "6. 支持危险操作高亮",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "7. 支持禁用状态",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
                 Text(
                     text = "8. 点击遮罩层关闭",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
             }

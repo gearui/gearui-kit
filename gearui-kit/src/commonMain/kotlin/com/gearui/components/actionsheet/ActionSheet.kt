@@ -20,7 +20,6 @@ import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -302,7 +301,7 @@ private fun ActionSheetSurface(
                 ) {
                     Text(
                         text = description,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }
@@ -362,7 +361,7 @@ private fun ActionSheetSurface(
                 ) {
                     Text(
                         text = cancelText,
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = colors.foreground
                     )
                 }
@@ -464,7 +463,7 @@ private fun ActionSheetListItem(
             if (item.icon != null) {
                 Text(
                     text = item.icon,
-                    style = Typography.TitleMedium,
+                    style = Theme.typography.titleMedium,
                     color = if (item.disabled) colors.mutedForeground else colors.foreground
                 )
                 Spacer(modifier = Modifier.width(Spacing.sm))
@@ -480,7 +479,7 @@ private fun ActionSheetListItem(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = item.label,
-                        style = Typography.BodyLarge,
+                        style = Theme.typography.bodyLarge,
                         color = textColor
                     )
 
@@ -495,7 +494,7 @@ private fun ActionSheetListItem(
                         ) {
                             Text(
                                 text = item.badge,
-                                style = Typography.BodyExtraSmall,
+                                style = Theme.typography.bodyExtraSmall,
                                 color = colors.destructiveForeground
                             )
                         }
@@ -518,7 +517,7 @@ private fun ActionSheetListItem(
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = item.description,
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.mutedForeground
                     )
                 }
@@ -667,7 +666,7 @@ private fun ActionSheetGridItem(
                 ) {
                     Text(
                         text = item.icon,
-                        style = Typography.HeadlineSmall,
+                        style = Theme.typography.headlineSmall,
                         color = if (item.disabled) colors.mutedForeground else colors.foreground
                     )
                 }
@@ -685,7 +684,7 @@ private fun ActionSheetGridItem(
                 ) {
                     Text(
                         text = item.badge,
-                        style = Typography.BodyExtraSmall,
+                        style = Theme.typography.bodyExtraSmall,
                         color = colors.primaryForeground
                     )
                 }
@@ -709,7 +708,7 @@ private fun ActionSheetGridItem(
         // Label
         Text(
             text = item.label,
-            style = Typography.BodySmall,
+            style = Theme.typography.bodySmall,
             color = textColor
         )
     }

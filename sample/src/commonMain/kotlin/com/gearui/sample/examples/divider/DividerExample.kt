@@ -6,7 +6,6 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
 import com.gearui.primitives.Divider
 import com.gearui.primitives.DividerFull
 import com.gearui.primitives.DividerInset
@@ -41,13 +40,13 @@ fun DividerExample(
             ) {
                 Text(
                     text = "上方内容",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 DividerFull()
                 Text(
                     text = "下方内容",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
             }
@@ -64,19 +63,19 @@ fun DividerExample(
             ) {
                 Text(
                     text = "列表项 1",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 DividerInset()
                 Text(
                     text = "列表项 2",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
                 DividerInset()
                 Text(
                     text = "列表项 3",
-                    style = Typography.BodyMedium,
+                    style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
             }
@@ -98,7 +97,7 @@ fun DividerExample(
                 ) {
                     Text(
                         text = "章节 1 内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }
@@ -111,7 +110,7 @@ fun DividerExample(
                 ) {
                     Text(
                         text = "章节 2 内容",
-                        style = Typography.BodyMedium,
+                        style = Theme.typography.bodyMedium,
                         color = colors.foreground
                     )
                 }

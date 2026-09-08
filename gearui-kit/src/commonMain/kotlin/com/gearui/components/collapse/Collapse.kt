@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.draw.rotate
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
@@ -171,7 +170,7 @@ private fun CollapsePanelItem(
                 panel.expandIconTextBuilder?.let { builder ->
                     Text(
                         text = builder(panel.isExpanded),
-                        style = Typography.BodySmall,
+                        style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
@@ -237,7 +236,7 @@ fun CollapseItem(
         ) {
             Text(
                 text = title,
-                style = Typography.TitleMedium,
+                style = Theme.typography.titleMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground
             )
 

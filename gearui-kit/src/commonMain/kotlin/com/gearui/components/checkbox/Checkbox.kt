@@ -15,7 +15,6 @@ import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
-import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
@@ -129,7 +128,6 @@ fun CheckboxWithLabel(
     size: CheckboxSize = CheckboxSize.MEDIUM
 ) {
     val colors = Theme.colors
-    val typography = Theme.typography
 
     Row(
         modifier = modifier
@@ -151,7 +149,7 @@ fun CheckboxWithLabel(
         Text(
             text = label,
             color = if (enabled) colors.foreground else colors.mutedForeground,
-            style = Typography.BodyLarge
+            style = Theme.typography.bodyLarge
         )
     }
 }

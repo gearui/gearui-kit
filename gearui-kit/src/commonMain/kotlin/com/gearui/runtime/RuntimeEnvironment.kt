@@ -5,6 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.gearui.foundation.material.MaterialPolicy
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -50,7 +51,14 @@ data class RuntimeFlags(
     val bottomNavBarConsumesBottomSafeArea: Boolean = true,
     val drawerConsumesVerticalSafeArea: Boolean = true,
     val actionSheetConsumesBottomSafeArea: Boolean = true,
-    val bottomSheetConsumesBottomSafeArea: Boolean = true
+    val bottomSheetConsumesBottomSafeArea: Boolean = true,
+    /**
+     * Whether frosted-glass surfaces blur. Auto blurs only where the platform
+     * renders it on the GPU; see
+     * [com.gearui.foundation.material.isMaterialBlurEnabled] for what each
+     * platform does and why.
+     */
+    val materialPolicy: MaterialPolicy = MaterialPolicy.Auto,
 )
 
 val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }

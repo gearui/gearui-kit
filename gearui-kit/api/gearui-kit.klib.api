@@ -776,6 +776,18 @@ final enum class com.gearui.foundation.keyboard/KeyboardDismissMode : kotlin/Enu
     final fun values(): kotlin/Array<com.gearui.foundation.keyboard/KeyboardDismissMode> // com.gearui.foundation.keyboard/KeyboardDismissMode.values|values#static(){}[0]
 }
 
+final enum class com.gearui.foundation.material/MaterialPolicy : kotlin/Enum<com.gearui.foundation.material/MaterialPolicy> { // com.gearui.foundation.material/MaterialPolicy|null[0]
+    enum entry Always // com.gearui.foundation.material/MaterialPolicy.Always|null[0]
+    enum entry Auto // com.gearui.foundation.material/MaterialPolicy.Auto|null[0]
+    enum entry Never // com.gearui.foundation.material/MaterialPolicy.Never|null[0]
+
+    final val entries // com.gearui.foundation.material/MaterialPolicy.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.foundation.material/MaterialPolicy> // com.gearui.foundation.material/MaterialPolicy.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.foundation.material/MaterialPolicy // com.gearui.foundation.material/MaterialPolicy.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.foundation.material/MaterialPolicy> // com.gearui.foundation.material/MaterialPolicy.values|values#static(){}[0]
+}
+
 final enum class com.gearui.navigation/NavPresentation : kotlin/Enum<com.gearui.navigation/NavPresentation> { // com.gearui.navigation/NavPresentation|null[0]
     enum entry Modal // com.gearui.navigation/NavPresentation.Modal|null[0]
     enum entry Overlay // com.gearui.navigation/NavPresentation.Overlay|null[0]
@@ -2056,6 +2068,22 @@ final class com.gearui.foundation.list/CellTokens { // com.gearui.foundation.lis
     final fun toString(): kotlin/String // com.gearui.foundation.list/CellTokens.toString|toString(){}[0]
 }
 
+final class com.gearui.foundation.material/Material { // com.gearui.foundation.material/Material|null[0]
+    constructor <init>(kotlin/Float, kotlin/Float) // com.gearui.foundation.material/Material.<init>|<init>(kotlin.Float;kotlin.Float){}[0]
+
+    final val blurRadius // com.gearui.foundation.material/Material.blurRadius|{}blurRadius[0]
+        final fun <get-blurRadius>(): kotlin/Float // com.gearui.foundation.material/Material.blurRadius.<get-blurRadius>|<get-blurRadius>(){}[0]
+    final val tintAlpha // com.gearui.foundation.material/Material.tintAlpha|{}tintAlpha[0]
+        final fun <get-tintAlpha>(): kotlin/Float // com.gearui.foundation.material/Material.tintAlpha.<get-tintAlpha>|<get-tintAlpha>(){}[0]
+
+    final fun component1(): kotlin/Float // com.gearui.foundation.material/Material.component1|component1(){}[0]
+    final fun component2(): kotlin/Float // com.gearui.foundation.material/Material.component2|component2(){}[0]
+    final fun copy(kotlin/Float = ..., kotlin/Float = ...): com.gearui.foundation.material/Material // com.gearui.foundation.material/Material.copy|copy(kotlin.Float;kotlin.Float){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.material/Material.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.foundation.material/Material.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.foundation.material/Material.toString|toString(){}[0]
+}
+
 final class com.gearui.foundation.motion/Motion { // com.gearui.foundation.motion/Motion|null[0]
     constructor <init>(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...) // com.gearui.foundation.motion/Motion.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
 
@@ -3164,7 +3192,7 @@ final class com.gearui.runtime/RuntimeEnvironment { // com.gearui.runtime/Runtim
 }
 
 final class com.gearui.runtime/RuntimeFlags { // com.gearui.runtime/RuntimeFlags|null[0]
-    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.gearui.runtime/RuntimeFlags.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., com.gearui.foundation.material/MaterialPolicy = ...) // com.gearui.runtime/RuntimeFlags.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;com.gearui.foundation.material.MaterialPolicy){}[0]
 
     final val actionSheetConsumesBottomSafeArea // com.gearui.runtime/RuntimeFlags.actionSheetConsumesBottomSafeArea|{}actionSheetConsumesBottomSafeArea[0]
         final fun <get-actionSheetConsumesBottomSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.actionSheetConsumesBottomSafeArea.<get-actionSheetConsumesBottomSafeArea>|<get-actionSheetConsumesBottomSafeArea>(){}[0]
@@ -3174,6 +3202,8 @@ final class com.gearui.runtime/RuntimeFlags { // com.gearui.runtime/RuntimeFlags
         final fun <get-bottomSheetConsumesBottomSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.bottomSheetConsumesBottomSafeArea.<get-bottomSheetConsumesBottomSafeArea>|<get-bottomSheetConsumesBottomSafeArea>(){}[0]
     final val drawerConsumesVerticalSafeArea // com.gearui.runtime/RuntimeFlags.drawerConsumesVerticalSafeArea|{}drawerConsumesVerticalSafeArea[0]
         final fun <get-drawerConsumesVerticalSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.drawerConsumesVerticalSafeArea.<get-drawerConsumesVerticalSafeArea>|<get-drawerConsumesVerticalSafeArea>(){}[0]
+    final val materialPolicy // com.gearui.runtime/RuntimeFlags.materialPolicy|{}materialPolicy[0]
+        final fun <get-materialPolicy>(): com.gearui.foundation.material/MaterialPolicy // com.gearui.runtime/RuntimeFlags.materialPolicy.<get-materialPolicy>|<get-materialPolicy>(){}[0]
     final val navBarConsumesTopSafeArea // com.gearui.runtime/RuntimeFlags.navBarConsumesTopSafeArea|{}navBarConsumesTopSafeArea[0]
         final fun <get-navBarConsumesTopSafeArea>(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.navBarConsumesTopSafeArea.<get-navBarConsumesTopSafeArea>|<get-navBarConsumesTopSafeArea>(){}[0]
     final val unifiedSafeAreaPipeline // com.gearui.runtime/RuntimeFlags.unifiedSafeAreaPipeline|{}unifiedSafeAreaPipeline[0]
@@ -3185,7 +3215,8 @@ final class com.gearui.runtime/RuntimeFlags { // com.gearui.runtime/RuntimeFlags
     final fun component4(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component4|component4(){}[0]
     final fun component5(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component5|component5(){}[0]
     final fun component6(): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.component6|component6(){}[0]
-    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.gearui.runtime/RuntimeFlags // com.gearui.runtime/RuntimeFlags.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun component7(): com.gearui.foundation.material/MaterialPolicy // com.gearui.runtime/RuntimeFlags.component7|component7(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., com.gearui.foundation.material/MaterialPolicy = ...): com.gearui.runtime/RuntimeFlags // com.gearui.runtime/RuntimeFlags.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;com.gearui.foundation.material.MaterialPolicy){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.runtime/RuntimeFlags.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.runtime/RuntimeFlags.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.runtime/RuntimeFlags.toString|toString(){}[0]
@@ -4007,6 +4038,15 @@ final object com.gearui.foundation.list/CellDefaults { // com.gearui.foundation.
         final fun <get-Default>(): com.gearui.foundation.list/CellTokens // com.gearui.foundation.list/CellDefaults.Default.<get-Default>|<get-Default>(){}[0]
 }
 
+final object com.gearui.foundation.material/Materials { // com.gearui.foundation.material/Materials|null[0]
+    final val Chrome // com.gearui.foundation.material/Materials.Chrome|{}Chrome[0]
+        final fun <get-Chrome>(): com.gearui.foundation.material/Material // com.gearui.foundation.material/Materials.Chrome.<get-Chrome>|<get-Chrome>(){}[0]
+    final val Popover // com.gearui.foundation.material/Materials.Popover|{}Popover[0]
+        final fun <get-Popover>(): com.gearui.foundation.material/Material // com.gearui.foundation.material/Materials.Popover.<get-Popover>|<get-Popover>(){}[0]
+    final val Sheet // com.gearui.foundation.material/Materials.Sheet|{}Sheet[0]
+        final fun <get-Sheet>(): com.gearui.foundation.material/Material // com.gearui.foundation.material/Materials.Sheet.<get-Sheet>|<get-Sheet>(){}[0]
+}
+
 final object com.gearui.foundation.motion/MotionTokens { // com.gearui.foundation.motion/MotionTokens|null[0]
     final const val emphasized // com.gearui.foundation.motion/MotionTokens.emphasized|{}emphasized[0]
         final fun <get-emphasized>(): kotlin/Int // com.gearui.foundation.motion/MotionTokens.emphasized.<get-emphasized>|<get-emphasized>(){}[0]
@@ -4523,6 +4563,8 @@ final val com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$sta
 final val com.gearui.foundation.list/com_gearui_foundation_list_CardTokens$stableprop // com.gearui.foundation.list/com_gearui_foundation_list_CardTokens$stableprop|#static{}com_gearui_foundation_list_CardTokens$stableprop[0]
 final val com.gearui.foundation.list/com_gearui_foundation_list_CellDefaults$stableprop // com.gearui.foundation.list/com_gearui_foundation_list_CellDefaults$stableprop|#static{}com_gearui_foundation_list_CellDefaults$stableprop[0]
 final val com.gearui.foundation.list/com_gearui_foundation_list_CellTokens$stableprop // com.gearui.foundation.list/com_gearui_foundation_list_CellTokens$stableprop|#static{}com_gearui_foundation_list_CellTokens$stableprop[0]
+final val com.gearui.foundation.material/com_gearui_foundation_material_Material$stableprop // com.gearui.foundation.material/com_gearui_foundation_material_Material$stableprop|#static{}com_gearui_foundation_material_Material$stableprop[0]
+final val com.gearui.foundation.material/com_gearui_foundation_material_Materials$stableprop // com.gearui.foundation.material/com_gearui_foundation_material_Materials$stableprop|#static{}com_gearui_foundation_material_Materials$stableprop[0]
 final val com.gearui.foundation.motion/com_gearui_foundation_motion_Motion$stableprop // com.gearui.foundation.motion/com_gearui_foundation_motion_Motion$stableprop|#static{}com_gearui_foundation_motion_Motion$stableprop[0]
 final val com.gearui.foundation.motion/com_gearui_foundation_motion_MotionTokens$stableprop // com.gearui.foundation.motion/com_gearui_foundation_motion_MotionTokens$stableprop|#static{}com_gearui_foundation_motion_MotionTokens$stableprop[0]
 final val com.gearui.foundation.motion/com_gearui_foundation_motion_Motions$stableprop // com.gearui.foundation.motion/com_gearui_foundation_motion_Motions$stableprop|#static{}com_gearui_foundation_motion_Motions$stableprop[0]
@@ -4945,6 +4987,10 @@ final fun com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$sta
 final fun com.gearui.foundation.list/com_gearui_foundation_list_CardTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.list/com_gearui_foundation_list_CardTokens$stableprop_getter|com_gearui_foundation_list_CardTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.list/com_gearui_foundation_list_CellDefaults$stableprop_getter(): kotlin/Int // com.gearui.foundation.list/com_gearui_foundation_list_CellDefaults$stableprop_getter|com_gearui_foundation_list_CellDefaults$stableprop_getter(){}[0]
 final fun com.gearui.foundation.list/com_gearui_foundation_list_CellTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.list/com_gearui_foundation_list_CellTokens$stableprop_getter|com_gearui_foundation_list_CellTokens$stableprop_getter(){}[0]
+final fun com.gearui.foundation.material/MaterialSurface(com.gearui.foundation.material/Material, com.tencent.kuikly.compose.ui/Modifier?, com.tencent.kuikly.compose.ui.graphics/Shape?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.foundation.material/MaterialSurface|MaterialSurface(com.gearui.foundation.material.Material;com.tencent.kuikly.compose.ui.Modifier?;com.tencent.kuikly.compose.ui.graphics.Shape?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun com.gearui.foundation.material/com_gearui_foundation_material_Material$stableprop_getter(): kotlin/Int // com.gearui.foundation.material/com_gearui_foundation_material_Material$stableprop_getter|com_gearui_foundation_material_Material$stableprop_getter(){}[0]
+final fun com.gearui.foundation.material/com_gearui_foundation_material_Materials$stableprop_getter(): kotlin/Int // com.gearui.foundation.material/com_gearui_foundation_material_Materials$stableprop_getter|com_gearui_foundation_material_Materials$stableprop_getter(){}[0]
+final fun com.gearui.foundation.material/isMaterialBlurEnabled(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/Boolean // com.gearui.foundation.material/isMaterialBlurEnabled|isMaterialBlurEnabled(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.foundation.motion/com_gearui_foundation_motion_Motion$stableprop_getter(): kotlin/Int // com.gearui.foundation.motion/com_gearui_foundation_motion_Motion$stableprop_getter|com_gearui_foundation_motion_Motion$stableprop_getter(){}[0]
 final fun com.gearui.foundation.motion/com_gearui_foundation_motion_MotionTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.motion/com_gearui_foundation_motion_MotionTokens$stableprop_getter|com_gearui_foundation_motion_MotionTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.motion/com_gearui_foundation_motion_Motions$stableprop_getter(): kotlin/Int // com.gearui.foundation.motion/com_gearui_foundation_motion_Motions$stableprop_getter|com_gearui_foundation_motion_Motions$stableprop_getter(){}[0]

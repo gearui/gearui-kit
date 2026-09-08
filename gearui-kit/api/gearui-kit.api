@@ -2451,6 +2451,45 @@ public final class com/gearui/foundation/list/CellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/material/Material {
+	public static final field $stable I
+	public fun <init> (FF)V
+	public final fun component1 ()F
+	public final fun component2 ()F
+	public final fun copy (FF)Lcom/gearui/foundation/material/Material;
+	public static synthetic fun copy$default (Lcom/gearui/foundation/material/Material;FFILjava/lang/Object;)Lcom/gearui/foundation/material/Material;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBlurRadius ()F
+	public final fun getTintAlpha ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/material/MaterialPolicy : java/lang/Enum {
+	public static final field Always Lcom/gearui/foundation/material/MaterialPolicy;
+	public static final field Auto Lcom/gearui/foundation/material/MaterialPolicy;
+	public static final field Never Lcom/gearui/foundation/material/MaterialPolicy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/material/MaterialPolicy;
+	public static fun values ()[Lcom/gearui/foundation/material/MaterialPolicy;
+}
+
+public final class com/gearui/foundation/material/MaterialSupportKt {
+	public static final fun isMaterialBlurEnabled (Landroidx/compose/runtime/Composer;I)Z
+}
+
+public final class com/gearui/foundation/material/MaterialSurfaceKt {
+	public static final fun MaterialSurface (Lcom/gearui/foundation/material/Material;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/foundation/material/Materials {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/material/Materials;
+	public final fun getChrome ()Lcom/gearui/foundation/material/Material;
+	public final fun getPopover ()Lcom/gearui/foundation/material/Material;
+	public final fun getSheet ()Lcom/gearui/foundation/material/Material;
+}
+
 public final class com/gearui/foundation/motion/Motion {
 	public static final field $stable I
 	public fun <init> ()V
@@ -3819,21 +3858,23 @@ public final class com/gearui/runtime/RuntimeEnvironmentKt {
 public final class com/gearui/runtime/RuntimeFlags {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (ZZZZZZ)V
-	public synthetic fun <init> (ZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZZZZZLcom/gearui/foundation/material/MaterialPolicy;)V
+	public synthetic fun <init> (ZZZZZZLcom/gearui/foundation/material/MaterialPolicy;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Z
 	public final fun component4 ()Z
 	public final fun component5 ()Z
 	public final fun component6 ()Z
-	public final fun copy (ZZZZZZ)Lcom/gearui/runtime/RuntimeFlags;
-	public static synthetic fun copy$default (Lcom/gearui/runtime/RuntimeFlags;ZZZZZZILjava/lang/Object;)Lcom/gearui/runtime/RuntimeFlags;
+	public final fun component7 ()Lcom/gearui/foundation/material/MaterialPolicy;
+	public final fun copy (ZZZZZZLcom/gearui/foundation/material/MaterialPolicy;)Lcom/gearui/runtime/RuntimeFlags;
+	public static synthetic fun copy$default (Lcom/gearui/runtime/RuntimeFlags;ZZZZZZLcom/gearui/foundation/material/MaterialPolicy;ILjava/lang/Object;)Lcom/gearui/runtime/RuntimeFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActionSheetConsumesBottomSafeArea ()Z
 	public final fun getBottomNavBarConsumesBottomSafeArea ()Z
 	public final fun getBottomSheetConsumesBottomSafeArea ()Z
 	public final fun getDrawerConsumesVerticalSafeArea ()Z
+	public final fun getMaterialPolicy ()Lcom/gearui/foundation/material/MaterialPolicy;
 	public final fun getNavBarConsumesTopSafeArea ()Z
 	public final fun getUnifiedSafeAreaPipeline ()Z
 	public fun hashCode ()I

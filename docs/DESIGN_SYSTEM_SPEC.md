@@ -426,6 +426,81 @@ out never moves between dialogs.
 
 **Width.** `270-320dp`. Wider reads as a card rather than an alert.
 
+## 11.2 Materials (Frosted Glass)
+
+GearUI's one borrowed *physical* effect. A material is a translucent surface
+that blurs its backdrop: a Gaussian blur with a surface tint over it, and
+nothing else. Not Liquid Glass — no refraction, no lensing, no specular edge.
+See §0.1.
+
+Three steps, named for the surface rather than for a thickness:
+
+| material | radius | tint | for |
+|---|---|---|---|
+| `Materials.Chrome` | 12.5 | 0.72 | bars over scrolling content — NavBar, BottomNavBar |
+| `Materials.Sheet` | 12.5 | 0.82 | modal surfaces — ActionSheet, BottomSheet |
+| `Materials.Popover` | 10 | 0.78 | anchored transient surfaces — Popover, Dropdown, Tooltip |
+
+12.5 is the ceiling because `BlurAttr.blurRadius` clamps there on every
+platform. Materials carry no colour: the tint is `Theme.colors.surface`, so
+they follow the brand and dark mode without a second copy of either.
+
+### Degradation
+
+**When the blur does not run, the translucency goes with it.** The fallback is
+`Theme.colors.surface` at full opacity — never the same tint without the blur.
+
+A tint is calibrated against a blurred, low-frequency backdrop. Over raw
+content it stops being a material and becomes a wash, and whether the text on
+it is legible depends on the user's data. "Keep it slightly glassy so it still
+looks nice" is the version of this fallback that ships unreadable screens.
+
+`MaterialPolicy.Auto` decides per platform, and each branch is a property of
+KuiklyUI's renderer rather than a preference:
+
+| platform | blur | why |
+|---|---|---|
+| iOS / macOS | yes | `KRBlurView` is a `UIVisualEffectView`, composited by the system |
+| Android 31+ | yes | `KRBlurView` selects `RenderEffectBlur`, a GPU effect |
+| Android < 31 | **no** | it falls back to `RenderScriptBlur`, which captures the decor view into a bitmap and blurs it on the CPU every frame the backdrop changes. `minSdk` is 21, so this is not a rare device |
+| HarmonyOS | yes | `KRBlurView.ets` is a system effect |
+| Web | **no** | policy, not performance — see below |
+| anything else | no | an unknown renderer degrades to a flat surface, which is always legible |
+
+Web is excluded because CSS `backdrop-filter` **fails open**. A browser without
+support ignores the declaration silently, leaving the tint behind as a plain
+wash, and nothing reaches Kotlin to say it did not take — GearUI cannot detect
+the failure and correct it. A host that knows its browsers opts in with
+`MaterialPolicy.Always`.
+
+### Implementation note
+
+The blur is a KuiklyUI **core** `BlurView` mounted through
+`MakeKuiklyComposeNode`, not a modifier: the compose layer has no
+`Modifier.blur`, and `RenderNodeLayer` carries a `renderEffect` field with a
+`// todo` where it would be applied. `BlurView` is a leaf and cannot host
+children, so it sits as a sibling behind the content rather than as its parent.
+
+### Verified
+
+Measured on a real device (Android 16, API 36, RenderEffect backend) through
+the `Material Probe` sample page, over a backdrop that is half solid block and
+half fine stripes — fine stripes alone prove nothing, because a 12.5pt Gaussian
+averages them to a flat tone and a *failed* blur produces a flat tone too.
+
+- blur on: surface luminance 80.6 → 66.1 → 51.0 left to right, a monotonic
+  gradient tracking the backdrop, mid-band stdev 2.42
+- forced flat: 18.0 / 18.0 / 18.0, stdev 0.00 — opaque, zero backdrop leakage
+
+iOS, HarmonyOS and web follow from the renderer sources cited above and have
+not been run.
+
+### Not yet adopted
+
+No component renders a material yet; `MaterialSurface` is exercised only by the
+probe page. NavBar, BottomNavBar, ActionSheet and BottomSheet are the intended
+first adopters, and each is a visible change that belongs in its own commit.
+
 ## 12. Component Family Rollout Order
 
 Design changes should land by component family, not by isolated files:

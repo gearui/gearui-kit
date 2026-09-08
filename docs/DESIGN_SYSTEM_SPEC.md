@@ -307,6 +307,40 @@ The runtime layer owns global interaction behavior:
 
 Components should expose intent and callbacks. They should not duplicate global tap/scroll keyboard-dismiss logic unless a platform limitation requires a documented local workaround.
 
+## 11.1 Component Anatomy: Modal Alerts
+
+The token scales say what values exist; they do not say where things go. That
+gap is how the dialog family drifted into a desktop layout — left-aligned text
+with one filled button in the bottom-right corner — while every individual
+token in it was legal. Anatomy rules are the missing half, written per family
+as each is revisited.
+
+Applies to `Dialog`, `ConfirmDialog`, `AlertDialog`.
+
+**Structure.** Title, optional message, optional content, then actions. Nothing
+is placed beside the actions and no action is placed inline with the text.
+
+**Alignment.** Title and message are centred, and centred per line: a wrapped
+message must not leave a ragged left edge. This is why `Text` carries
+`textAlign` rather than relying on the parent's `horizontalAlignment`.
+
+**Title.** Expected, not optional-by-default. The title is the question being
+asked; the message supports it. A message-only dialog is permitted but must
+promote the message to primary styling (`foreground`, `BodyMedium`) and drop
+the top padding one step, or it reads as a dialog whose title failed to load.
+
+**Actions.** Full-width rows under a hairline, one per row, `44dp` each,
+separated by hairlines. Exactly two short actions may sit side by side, split
+by a vertical hairline. No filled buttons: emphasis comes from weight and
+tint, not from a filled rectangle competing with the page behind the scrim.
+
+**Roles, not colours.** Callers declare intent — `NORMAL`, `PRIMARY`,
+`DESTRUCTIVE`, `CANCEL` — and the component maps it to tint and weight.
+`CANCEL` is always rendered last regardless of the order passed in, so backing
+out never moves between dialogs.
+
+**Width.** `270-320dp`. Wider reads as a card rather than an alert.
+
 ## 12. Component Family Rollout Order
 
 Design changes should land by component family, not by isolated files:

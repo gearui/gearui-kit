@@ -161,12 +161,25 @@ fun DialogContent(
 ) {
     val colors = Theme.colors
 
+    // Prefer giving a dialog a title: it is the question being asked, and the
+    // interaction reference this kit follows (Apple/UIKit, DESIGN_SYSTEM_SPEC
+    // §0.1) treats the title as the required part and the message as optional
+    // support. A message-only dialog is still allowed, so it has to look
+    // deliberate rather than like a dialog whose title failed to load — which
+    // is what happens if the message keeps its supporting styling and the
+    // layout keeps the empty title's space above it.
+    val messageIsPrimary = title == null
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Spacing.xl)
-                .padding(top = Spacing.xl, bottom = if (actions.isEmpty()) Spacing.xl else Spacing.lg),
+                .padding(
+                    // Without a title there is nothing to give the extra room to.
+                    top = if (messageIsPrimary) Spacing.lg else Spacing.xl,
+                    bottom = if (actions.isEmpty()) Spacing.xl else Spacing.lg,
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (title != null) {
@@ -182,8 +195,14 @@ fun DialogContent(
                 if (title != null) Spacer(modifier = Modifier.height(Spacing.xs))
                 com.gearui.foundation.primitives.Text(
                     text = message,
-                    style = com.gearui.foundation.typography.Typography.BodySmall,
-                    color = colors.mutedForeground,
+                    // The only text in the card carries it, so it reads as content
+                    // rather than as a footnote under a missing heading.
+                    style = if (messageIsPrimary) {
+                        com.gearui.foundation.typography.Typography.BodyMedium
+                    } else {
+                        com.gearui.foundation.typography.Typography.BodySmall
+                    },
+                    color = if (messageIsPrimary) colors.foreground else colors.mutedForeground,
                     textAlign = TextAlign.Center,
                 )
             }

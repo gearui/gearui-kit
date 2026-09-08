@@ -234,26 +234,71 @@ Rules:
 
 ## 6. Spacing Scale
 
-Recommended public spacing scale:
+The shipped scale, an 8pt grid with a half step:
 
-- `0`
-- `2`
-- `4`
-- `6`
-- `8`
-- `12`
-- `16`
-- `20`
-- `24`
-- `32`
-- `40`
-- `48`
+| token | value | |
+|---|---|---|
+| `none` | 0 | |
+| `xs` | 4 | 0.5x |
+| `sm` | 8 | 1x, the base unit |
+| `md` | 12 | 1.5x — most used |
+| `lg` | 16 | 2x |
+| `xl` | 24 | 3x |
+| `xxl` | 32 | 4x |
+| `xxxl` | 40 | 5x |
+| `huge` | 48 | 6x |
+| `massive` | 64 | 8x |
 
 Rules:
 
 - Component padding and gap values should be defined in component tokens.
 - Page-level layout spacing may use semantic layout tokens.
 - Direct `padding(12.dp)` and `Spacer(width = 8.dp)` inside components should be treated as audit findings unless the component is itself defining a token.
+
+### 6.1 Spacing vs Geometry — what the theme may move
+
+Spacing and geometry are different axes that happen to share a unit, and the
+scale holds convenient round numbers, so geometry drifts into it. The rule:
+
+**Spacing** is blank space between things — `padding`, `Arrangement.spacedBy`,
+`Spacer` extents, a filled gap band. It describes *density*. A brand that wants
+a denser or airier product is asking to move exactly these, and nothing else.
+
+**Geometry** is how big a thing is — a status dot's diameter, an icon tile, a
+tap target, a stroke width, a row height. Making a product airier must not
+inflate its red dots. Geometry lives in the component's own `*Tokens` object
+(`ActionSheetTokens`, `FieldSizeTokens`, `AvatarSizeTokens`, `IconSizes`,
+`BorderWidth`) and stays static.
+
+Measured across the component layer: of 329 `Spacing.*` references, 325 are
+genuine spacing and 4 were geometry borrowing the scale — an 8dp dot written as
+`Spacing.sm`, a 48dp icon tile as `Spacing.huge`. Those four now sit in
+`ActionSheetTokens`.
+
+### 6.2 Why `Spacing` is not yet a theme axis
+
+Density qualifies as a brand axis on the reasoning above, so `Spacing` should
+eventually resolve through `Theme.spacing` the way colour, typography, shapes,
+elevation and motion do. It does not yet, and the blocker is not spacing.
+
+A second, static token layer sits in `foundation/`: top-level objects
+(`FieldSizeTokens`, `SwipeCellDefaults`, `CardDefaults`, `TabSizeTokens`,
+`TagSizeTokens`, `AvatarSizeTokens`, `CellDefaults`) that read `Spacing` at
+class-initialisation time. `Theme.spacing` would be a `@Composable` getter,
+which these objects cannot call, so they would silently keep the default
+spacing while the rest of the library followed the brand — worse than not
+theming it at all.
+
+That layer has a second problem, already visible: it drifts. `BadgeSizeTokens`
+describes a badge scale no component reads — the `Badge` primitive hardcodes
+20/16/10/8dp of its own, and the two no longer agree. `SectionTokens` and
+`DividerTokens` had rotted the same way with zero consumers and have been
+deleted. `CardDefaults.Flat` and `.Compact` are `copy()` calls that change
+nothing.
+
+Order of work: resolve the static token layer through the theme first, then
+`Theme.spacing` follows mechanically. Doing it in the other order ships an axis
+that is only two-thirds connected.
 
 ## 7. Typography Scale
 

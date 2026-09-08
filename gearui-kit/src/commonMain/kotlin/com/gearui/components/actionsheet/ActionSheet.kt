@@ -1,5 +1,6 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.foundation.sheet.ActionSheetDefaults
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -428,6 +429,7 @@ private fun ActionSheetListItem(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    val sheetTokens = ActionSheetDefaults.Default
     var isPressed by remember { mutableStateOf(false) }
 
     val textColor = when {
@@ -505,7 +507,7 @@ private fun ActionSheetListItem(
                         Spacer(modifier = Modifier.width(Spacing.xs))
                         Box(
                             modifier = Modifier
-                                .size(Spacing.sm)
+                                .size(sheetTokens.redDot)
                                 .clip(CircleShape)
                                 .background(colors.destructive)
                         )
@@ -640,6 +642,7 @@ private fun ActionSheetGridItem(
     val textColor = if (item.disabled) colors.mutedForeground else colors.foreground
 
     val shapes = Theme.shapes
+    val sheetTokens = ActionSheetDefaults.Default
 
     Column(
         modifier = modifier
@@ -659,7 +662,7 @@ private fun ActionSheetGridItem(
             if (item.icon != null) {
                 Box(
                     modifier = Modifier
-                        .size(Spacing.huge)
+                        .size(sheetTokens.gridIconTile)
                         .clip(shapes.lg)
                         .background(colors.muted),
                     contentAlignment = Alignment.Center
@@ -695,8 +698,8 @@ private fun ActionSheetGridItem(
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .offset(x = 2.dp, y = (-2).dp)
-                        .size(Spacing.sm)
+                        .offset(x = sheetTokens.redDotOverhang, y = -sheetTokens.redDotOverhang)
+                        .size(sheetTokens.redDot)
                         .clip(CircleShape)
                         .background(colors.destructive)
                 )

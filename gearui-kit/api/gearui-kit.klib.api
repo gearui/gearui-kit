@@ -2009,25 +2009,6 @@ final class com.gearui.foundation.field/FieldTokens { // com.gearui.foundation.f
     final fun toString(): kotlin/String // com.gearui.foundation.field/FieldTokens.toString|toString(){}[0]
 }
 
-final class com.gearui.foundation.layout/DividerTokens { // com.gearui.foundation.layout/DividerTokens|null[0]
-    constructor <init>(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp) // com.gearui.foundation.layout/DividerTokens.<init>|<init>(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
-
-    final val insetEnd // com.gearui.foundation.layout/DividerTokens.insetEnd|{}insetEnd[0]
-        final fun <get-insetEnd>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.insetEnd.<get-insetEnd>|<get-insetEnd>(){}[0]
-    final val insetStart // com.gearui.foundation.layout/DividerTokens.insetStart|{}insetStart[0]
-        final fun <get-insetStart>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.insetStart.<get-insetStart>|<get-insetStart>(){}[0]
-    final val thickness // com.gearui.foundation.layout/DividerTokens.thickness|{}thickness[0]
-        final fun <get-thickness>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.thickness.<get-thickness>|<get-thickness>(){}[0]
-
-    final fun component1(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.component1|component1(){}[0]
-    final fun component2(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.component2|component2(){}[0]
-    final fun component3(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/DividerTokens.component3|component3(){}[0]
-    final fun copy(com.tencent.kuikly.compose.ui.unit/Dp = ..., com.tencent.kuikly.compose.ui.unit/Dp = ..., com.tencent.kuikly.compose.ui.unit/Dp = ...): com.gearui.foundation.layout/DividerTokens // com.gearui.foundation.layout/DividerTokens.copy|copy(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.layout/DividerTokens.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.gearui.foundation.layout/DividerTokens.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.gearui.foundation.layout/DividerTokens.toString|toString(){}[0]
-}
-
 final class com.gearui.foundation.list/CardTokens { // com.gearui.foundation.list/CardTokens|null[0]
     constructor <init>(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, kotlin/Float) // com.gearui.foundation.list/CardTokens.<init>|<init>(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;kotlin.Float){}[0]
 
@@ -2235,6 +2216,25 @@ final class com.gearui.foundation.scroll/ScrollTokens { // com.gearui.foundation
         final val None // com.gearui.foundation.scroll/ScrollTokens.Companion.None|{}None[0]
             final fun <get-None>(): com.gearui.foundation.scroll/ScrollTokens // com.gearui.foundation.scroll/ScrollTokens.Companion.None.<get-None>|<get-None>(){}[0]
     }
+}
+
+final class com.gearui.foundation.sheet/ActionSheetTokens { // com.gearui.foundation.sheet/ActionSheetTokens|null[0]
+    constructor <init>(com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp, com.tencent.kuikly.compose.ui.unit/Dp) // com.gearui.foundation.sheet/ActionSheetTokens.<init>|<init>(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
+
+    final val gridIconTile // com.gearui.foundation.sheet/ActionSheetTokens.gridIconTile|{}gridIconTile[0]
+        final fun <get-gridIconTile>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.gridIconTile.<get-gridIconTile>|<get-gridIconTile>(){}[0]
+    final val redDot // com.gearui.foundation.sheet/ActionSheetTokens.redDot|{}redDot[0]
+        final fun <get-redDot>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.redDot.<get-redDot>|<get-redDot>(){}[0]
+    final val redDotOverhang // com.gearui.foundation.sheet/ActionSheetTokens.redDotOverhang|{}redDotOverhang[0]
+        final fun <get-redDotOverhang>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.redDotOverhang.<get-redDotOverhang>|<get-redDotOverhang>(){}[0]
+
+    final fun component1(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.component1|component1(){}[0]
+    final fun component2(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.component2|component2(){}[0]
+    final fun component3(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.sheet/ActionSheetTokens.component3|component3(){}[0]
+    final fun copy(com.tencent.kuikly.compose.ui.unit/Dp = ..., com.tencent.kuikly.compose.ui.unit/Dp = ..., com.tencent.kuikly.compose.ui.unit/Dp = ...): com.gearui.foundation.sheet/ActionSheetTokens // com.gearui.foundation.sheet/ActionSheetTokens.copy|copy(com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp;com.tencent.kuikly.compose.ui.unit.Dp){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.sheet/ActionSheetTokens.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.gearui.foundation.sheet/ActionSheetTokens.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.gearui.foundation.sheet/ActionSheetTokens.toString|toString(){}[0]
 }
 
 final class com.gearui.foundation.swipecell/SwipeCellTokens { // com.gearui.foundation.swipecell/SwipeCellTokens|null[0]
@@ -3951,15 +3951,6 @@ final object com.gearui.foundation.interaction/InteractionTransition { // com.ge
     final fun onPressStart(com.gearui.foundation.interaction/MutableInteractionSource) // com.gearui.foundation.interaction/InteractionTransition.onPressStart|onPressStart(com.gearui.foundation.interaction.MutableInteractionSource){}[0]
 }
 
-final object com.gearui.foundation.layout/Dividers { // com.gearui.foundation.layout/Dividers|null[0]
-    final val Full // com.gearui.foundation.layout/Dividers.Full|{}Full[0]
-        final fun <get-Full>(): com.gearui.foundation.layout/DividerTokens // com.gearui.foundation.layout/Dividers.Full.<get-Full>|<get-Full>(){}[0]
-    final val Inset // com.gearui.foundation.layout/Dividers.Inset|{}Inset[0]
-        final fun <get-Inset>(): com.gearui.foundation.layout/DividerTokens // com.gearui.foundation.layout/Dividers.Inset.<get-Inset>|<get-Inset>(){}[0]
-    final val Section // com.gearui.foundation.layout/Dividers.Section|{}Section[0]
-        final fun <get-Section>(): com.gearui.foundation.layout/DividerTokens // com.gearui.foundation.layout/Dividers.Section.<get-Section>|<get-Section>(){}[0]
-}
-
 final object com.gearui.foundation.layout/Radius { // com.gearui.foundation.layout/Radius|null[0]
     final val circle // com.gearui.foundation.layout/Radius.circle|{}circle[0]
         final fun <get-circle>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.foundation.layout/Radius.circle.<get-circle>|<get-circle>(){}[0]
@@ -4032,6 +4023,11 @@ final object com.gearui.foundation.motion/MotionTokens { // com.gearui.foundatio
 final object com.gearui.foundation.motion/Motions { // com.gearui.foundation.motion/Motions|null[0]
     final val Default // com.gearui.foundation.motion/Motions.Default|{}Default[0]
         final fun <get-Default>(): com.gearui.foundation.motion/Motion // com.gearui.foundation.motion/Motions.Default.<get-Default>|<get-Default>(){}[0]
+}
+
+final object com.gearui.foundation.sheet/ActionSheetDefaults { // com.gearui.foundation.sheet/ActionSheetDefaults|null[0]
+    final val Default // com.gearui.foundation.sheet/ActionSheetDefaults.Default|{}Default[0]
+        final fun <get-Default>(): com.gearui.foundation.sheet/ActionSheetTokens // com.gearui.foundation.sheet/ActionSheetDefaults.Default.<get-Default>|<get-Default>(){}[0]
 }
 
 final object com.gearui.foundation.swipecell/SwipeCellDefaults { // com.gearui.foundation.swipecell/SwipeCellDefaults|null[0]
@@ -4521,8 +4517,6 @@ final val com.gearui.foundation.interaction/isInteractive // com.gearui.foundati
     final fun (com.gearui.foundation.interaction/InteractionState).<get-isInteractive>(): kotlin/Boolean // com.gearui.foundation.interaction/isInteractive.<get-isInteractive>|<get-isInteractive>@com.gearui.foundation.interaction.InteractionState(){}[0]
 final val com.gearui.foundation.interaction/needsDisabledStyle // com.gearui.foundation.interaction/needsDisabledStyle|@com.gearui.foundation.interaction.InteractionState{}needsDisabledStyle[0]
     final fun (com.gearui.foundation.interaction/InteractionState).<get-needsDisabledStyle>(): kotlin/Boolean // com.gearui.foundation.interaction/needsDisabledStyle.<get-needsDisabledStyle>|<get-needsDisabledStyle>@com.gearui.foundation.interaction.InteractionState(){}[0]
-final val com.gearui.foundation.layout/com_gearui_foundation_layout_DividerTokens$stableprop // com.gearui.foundation.layout/com_gearui_foundation_layout_DividerTokens$stableprop|#static{}com_gearui_foundation_layout_DividerTokens$stableprop[0]
-final val com.gearui.foundation.layout/com_gearui_foundation_layout_Dividers$stableprop // com.gearui.foundation.layout/com_gearui_foundation_layout_Dividers$stableprop|#static{}com_gearui_foundation_layout_Dividers$stableprop[0]
 final val com.gearui.foundation.layout/com_gearui_foundation_layout_Radius$stableprop // com.gearui.foundation.layout/com_gearui_foundation_layout_Radius$stableprop|#static{}com_gearui_foundation_layout_Radius$stableprop[0]
 final val com.gearui.foundation.layout/com_gearui_foundation_layout_Spacing$stableprop // com.gearui.foundation.layout/com_gearui_foundation_layout_Spacing$stableprop|#static{}com_gearui_foundation_layout_Spacing$stableprop[0]
 final val com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$stableprop // com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$stableprop|#static{}com_gearui_foundation_list_CardDefaults$stableprop[0]
@@ -4544,6 +4538,8 @@ final val com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollPhysic
 final val com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollPhysics_Platform$stableprop // com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollPhysics_Platform$stableprop|#static{}com_gearui_foundation_scroll_ScrollPhysics_Platform$stableprop[0]
 final val com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollState$stableprop // com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollState$stableprop|#static{}com_gearui_foundation_scroll_ScrollState$stableprop[0]
 final val com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollTokens$stableprop // com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollTokens$stableprop|#static{}com_gearui_foundation_scroll_ScrollTokens$stableprop[0]
+final val com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetDefaults$stableprop // com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetDefaults$stableprop|#static{}com_gearui_foundation_sheet_ActionSheetDefaults$stableprop[0]
+final val com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetTokens$stableprop // com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetTokens$stableprop|#static{}com_gearui_foundation_sheet_ActionSheetTokens$stableprop[0]
 final val com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop // com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop|#static{}com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop[0]
 final val com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellTokens$stableprop // com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellTokens$stableprop|#static{}com_gearui_foundation_swipecell_SwipeCellTokens$stableprop[0]
 final val com.gearui.foundation.tab/com_gearui_foundation_tab_TabSizeTokens$stableprop // com.gearui.foundation.tab/com_gearui_foundation_tab_TabSizeTokens$stableprop|#static{}com_gearui_foundation_tab_TabSizeTokens$stableprop[0]
@@ -4943,8 +4939,6 @@ final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_In
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Pressed$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionState_Pressed$stableprop_getter|com_gearui_foundation_interaction_InteractionState_Pressed$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionTransition$stableprop_getter(): kotlin/Int // com.gearui.foundation.interaction/com_gearui_foundation_interaction_InteractionTransition$stableprop_getter|com_gearui_foundation_interaction_InteractionTransition$stableprop_getter(){}[0]
 final fun com.gearui.foundation.interaction/createMutableInteractionSource(com.gearui.foundation.interaction/InteractionState = ...): com.gearui.foundation.interaction/MutableInteractionSource // com.gearui.foundation.interaction/createMutableInteractionSource|createMutableInteractionSource(com.gearui.foundation.interaction.InteractionState){}[0]
-final fun com.gearui.foundation.layout/com_gearui_foundation_layout_DividerTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.layout/com_gearui_foundation_layout_DividerTokens$stableprop_getter|com_gearui_foundation_layout_DividerTokens$stableprop_getter(){}[0]
-final fun com.gearui.foundation.layout/com_gearui_foundation_layout_Dividers$stableprop_getter(): kotlin/Int // com.gearui.foundation.layout/com_gearui_foundation_layout_Dividers$stableprop_getter|com_gearui_foundation_layout_Dividers$stableprop_getter(){}[0]
 final fun com.gearui.foundation.layout/com_gearui_foundation_layout_Radius$stableprop_getter(): kotlin/Int // com.gearui.foundation.layout/com_gearui_foundation_layout_Radius$stableprop_getter|com_gearui_foundation_layout_Radius$stableprop_getter(){}[0]
 final fun com.gearui.foundation.layout/com_gearui_foundation_layout_Spacing$stableprop_getter(): kotlin/Int // com.gearui.foundation.layout/com_gearui_foundation_layout_Spacing$stableprop_getter|com_gearui_foundation_layout_Spacing$stableprop_getter(){}[0]
 final fun com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$stableprop_getter(): kotlin/Int // com.gearui.foundation.list/com_gearui_foundation_list_CardDefaults$stableprop_getter|com_gearui_foundation_list_CardDefaults$stableprop_getter(){}[0]
@@ -4978,6 +4972,8 @@ final fun com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollState$
 final fun com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.scroll/com_gearui_foundation_scroll_ScrollTokens$stableprop_getter|com_gearui_foundation_scroll_ScrollTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.scroll/rememberListState(androidx.compose.runtime/Composer?, kotlin/Int): com.gearui.foundation.scroll/ListState // com.gearui.foundation.scroll/rememberListState|rememberListState(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.gearui.foundation.scroll/rememberScrollState(androidx.compose.runtime/Composer?, kotlin/Int): com.gearui.foundation.scroll/ScrollState // com.gearui.foundation.scroll/rememberScrollState|rememberScrollState(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetDefaults$stableprop_getter(): kotlin/Int // com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetDefaults$stableprop_getter|com_gearui_foundation_sheet_ActionSheetDefaults$stableprop_getter(){}[0]
+final fun com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.sheet/com_gearui_foundation_sheet_ActionSheetTokens$stableprop_getter|com_gearui_foundation_sheet_ActionSheetTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop_getter(): kotlin/Int // com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop_getter|com_gearui_foundation_swipecell_SwipeCellDefaults$stableprop_getter(){}[0]
 final fun com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.swipecell/com_gearui_foundation_swipecell_SwipeCellTokens$stableprop_getter|com_gearui_foundation_swipecell_SwipeCellTokens$stableprop_getter(){}[0]
 final fun com.gearui.foundation.tab/com_gearui_foundation_tab_TabSizeTokens$stableprop_getter(): kotlin/Int // com.gearui.foundation.tab/com_gearui_foundation_tab_TabSizeTokens$stableprop_getter|com_gearui_foundation_tab_TabSizeTokens$stableprop_getter(){}[0]

@@ -481,6 +481,26 @@ The blur is a KuiklyUI **core** `BlurView` mounted through
 `// todo` where it would be applied. `BlurView` is a leaf and cannot host
 children, so it sits as a sibling behind the content rather than as its parent.
 
+### Shipping state: off
+
+**`materialPolicy` defaults to `Never`, so 1.0 is an iOS 26 baseline without
+frosted glass.** This is not a missing capability — KuiklyUI blurs on all four
+renderers — but the renderers do not agree on what a blur *is*, and two of the
+disagreements are disqualifying for a kit whose reference is iOS:
+
+- the same `blurRadius` is scaled by ≈40× on Android, ×5 on web, ×1 on
+  HarmonyOS, and turned into a 0–1 animator fraction on iOS
+- iOS is hardcoded to `UIBlurEffectStyleLight`, so a dark theme gets a *light*
+  frosted panel on the one platform GearUI is matching
+
+`docs/UPSTREAM_KUIKLYUI_BLUR.md` records all four findings with source
+citations and proposes the upstream fixes. Turning glass on afterwards is one
+default.
+
+`MaterialPolicy.Auto` and `Always` are implemented and verified; the sample's
+Material Probe page forces them on, which is how the cross-renderer
+calibration stays visible.
+
 ### Verified
 
 Measured on a real device (Android 16, API 36, RenderEffect backend) through
@@ -497,9 +517,9 @@ not been run.
 
 ### Not yet adopted
 
-No component renders a material yet; `MaterialSurface` is exercised only by the
-probe page. NavBar, BottomNavBar, ActionSheet and BottomSheet are the intended
-first adopters, and each is a visible change that belongs in its own commit.
+No component renders a material, and none should while the default is off.
+NavBar, BottomNavBar, ActionSheet and BottomSheet are the intended first
+adopters once upstream lands, and each is a visible change of its own.
 
 ## 12. Component Family Rollout Order
 

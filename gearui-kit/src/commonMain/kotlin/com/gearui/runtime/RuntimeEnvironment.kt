@@ -53,12 +53,21 @@ data class RuntimeFlags(
     val actionSheetConsumesBottomSafeArea: Boolean = true,
     val bottomSheetConsumesBottomSafeArea: Boolean = true,
     /**
-     * Whether frosted-glass surfaces blur. Auto blurs only where the platform
-     * renders it on the GPU; see
-     * [com.gearui.foundation.material.isMaterialBlurEnabled] for what each
-     * platform does and why.
+     * Whether frosted-glass surfaces blur.
+     *
+     * **Defaults to [MaterialPolicy.Never] on purpose.** GearUI ships its iOS 26
+     * baseline without frosted glass until KuiklyUI's blur is comparable across
+     * renderers. It is not a missing capability — all four renderers blur — but
+     * the same `blurRadius` means four different things, and on iOS the effect
+     * is locked to a light material. `docs/UPSTREAM_KUIKLYUI_BLUR.md` has the
+     * findings and the proposed upstream fixes.
+     *
+     * [MaterialPolicy.Auto] and [MaterialPolicy.Always] work today and are how
+     * the sample's Material Probe page is exercised; a host that has looked at
+     * its own platforms can turn them on. Flipping this default back is the
+     * single change needed once upstream lands.
      */
-    val materialPolicy: MaterialPolicy = MaterialPolicy.Auto,
+    val materialPolicy: MaterialPolicy = MaterialPolicy.Never,
 )
 
 val LocalRuntimeEnvironment = staticCompositionLocalOf { RuntimeEnvironment() }

@@ -29,10 +29,15 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /**
  * Frosted-glass probe.
  *
- * Two things are worth seeing here rather than reading: whether this device
- * blurs at all, and what the fallback looks like when it does not. The stripes
- * behind each surface exist so an un-blurred material is obvious — over a flat
- * background a failed blur and a working one look identical.
+ * GearUI ships with `MaterialPolicy.Never`, so the flat surface is what real
+ * screens get today — see `docs/UPSTREAM_KUIKLYUI_BLUR.md`. This page forces
+ * the blur on anyway, because the reason it is off is a cross-renderer
+ * calibration problem, and that is only visible by looking at the same
+ * material on several devices.
+ *
+ * The backdrop is deliberately hostile: fine stripes alone prove nothing,
+ * since a strong blur averages them to a flat tone and a *failed* blur
+ * produces a flat tone too.
  */
 @Composable
 fun MaterialExample(
@@ -46,41 +51,44 @@ fun MaterialExample(
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
             title = "Capability",
-            description = "Auto blurs only where the renderer does it on the GPU."
+            description = "GearUI ships with the blur off. This page forces it on to compare renderers."
         ) {
             Text(
-                text = if (blurred) "Blur: ON" else "Blur: OFF — surfaces render flat",
+                text = "Shipping policy: ${LocalRuntimeFlags.current.materialPolicy}" +
+                    if (blurred) " — blurring" else " — flat surfaces",
                 style = Theme.typography.titleSmall,
-                color = if (blurred) colors.success else colors.mutedForeground,
+                color = colors.foreground,
             )
             Text(
-                text = "platform=${configuration.platform} osVersion=${configuration.osVersion} " +
-                    "policy=${LocalRuntimeFlags.current.materialPolicy}",
+                text = "platform=${configuration.platform} osVersion=${configuration.osVersion}",
                 style = Theme.typography.bodySmall,
                 color = colors.mutedForeground,
             )
         }
 
         ExampleSection(
-            title = "Materials",
-            description = "Chrome for bars, Sheet for modals, Popover for anchored surfaces."
-        ) {
-            MaterialSample("Chrome", Materials.Chrome)
-            MaterialSample("Sheet", Materials.Sheet)
-            MaterialSample("Popover", Materials.Popover)
-        }
-
-        ExampleSection(
-            title = "Degradation",
-            description = "The same material with the policy forced off. This is what every " +
-                "platform without a GPU blur shows: opaque, not a tint without a blur."
+            title = "Materials, blur forced on",
+            description = "Chrome for bars, Sheet for modals, Popover for anchored surfaces. " +
+                "Compare these across platforms: the same radius is scaled differently by " +
+                "every renderer, which is why the default is off."
         ) {
             CompositionLocalProvider(
                 LocalRuntimeFlags provides LocalRuntimeFlags.current
-                    .copy(materialPolicy = MaterialPolicy.Never)
+                    .copy(materialPolicy = MaterialPolicy.Always)
             ) {
-                MaterialSample("Chrome (forced flat)", Materials.Chrome)
+                MaterialSample("Chrome", Materials.Chrome)
+                MaterialSample("Sheet", Materials.Sheet)
+                MaterialSample("Popover", Materials.Popover)
             }
+        }
+
+        ExampleSection(
+            title = "What ships today",
+            description = "The same material under the shipping policy: opaque, not a tint " +
+                "without a blur. A tint is calibrated against a blurred backdrop; over raw " +
+                "content its contrast depends on the user's data."
+        ) {
+            MaterialSample("Chrome (as shipped)", Materials.Chrome)
         }
     }
 }

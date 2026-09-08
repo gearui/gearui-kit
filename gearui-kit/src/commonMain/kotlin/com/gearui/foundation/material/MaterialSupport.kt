@@ -8,7 +8,12 @@ import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
  * Whether frosted glass is used, and who decides.
  */
 enum class MaterialPolicy {
-    /** Blur where the platform renders it on the GPU; a flat surface everywhere else. See [isMaterialBlurEnabled]. */
+    /**
+     * Blur where the platform renders it on the GPU; a flat surface everywhere
+     * else. See [isMaterialBlurEnabled].
+     *
+     * Not the default — see [com.gearui.runtime.RuntimeFlags.materialPolicy].
+     */
     Auto,
 
     /** Always blur. For demos and for hosts that have measured their own devices. */

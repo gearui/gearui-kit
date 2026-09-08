@@ -41,7 +41,6 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
@@ -112,7 +111,7 @@ fun ContextMenu(
                         // with widthIn keeping very short or very long content in check, so short text does not bloat out to max.
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
-                        .shadow(Elevation.raised, OverlayDefaults.panelShape)
+                        .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
                         .clip(OverlayDefaults.panelShape)
                         .background(colors.surface)
                         .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)

@@ -28,7 +28,6 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
@@ -204,7 +203,7 @@ private fun <T> SelectDropdownContent(
     val widthDp = with(density) { anchorWidth.toDp() }
     val panelShape = OverlayDefaults.panelShape
     val panelShadow =
-        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
+        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Theme.elevation.raised else Theme.elevation.floating
     val itemHeight = 44.dp
     val verticalPadding = Spacing.sm
     val rowSpacing = 4.dp
@@ -440,7 +439,7 @@ private fun <T> MultiSelectDropdownContent(
     val widthDp = with(density) { anchorWidth.toDp() }
     val panelShape = OverlayDefaults.panelShape
     val panelShadow =
-        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Elevation.raised else Elevation.floating
+        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Theme.elevation.raised else Theme.elevation.floating
     val itemHeight = 44.dp
     val verticalPadding = Spacing.sm
     val rowSpacing = 4.dp

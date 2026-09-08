@@ -34,7 +34,6 @@ import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
 
@@ -92,7 +91,7 @@ fun NavigationMenu(
                     modifier = Modifier
                         .widthIn(min = 280.dp, max = 380.dp)
                         .clip(shapes.lg)
-                        .shadow(Elevation.raised, shapes.lg)
+                        .shadow(Theme.elevation.raised, shapes.lg)
                         .background(colors.surface)
                         .border(BorderWidth.thin, colors.border, shapes.lg)
                         .padding(Spacing.sm),

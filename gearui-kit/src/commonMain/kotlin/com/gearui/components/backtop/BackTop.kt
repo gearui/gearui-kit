@@ -22,7 +22,6 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
 
@@ -119,7 +118,7 @@ fun BackTop(
                 Box(
                     modifier = Modifier
                         .offset(x = -offset.first, y = -offset.second)
-                        .shadow(Elevation.raised, CircleShape)
+                        .shadow(Theme.elevation.raised, CircleShape)
                         .size(circleSize)
                         .clip(CircleShape)
                         .background(backgroundColor)
@@ -166,7 +165,7 @@ fun BackTop(
                 Box(
                     modifier = Modifier
                         .offset(x = 0.dp, y = -offset.second)
-                        .shadow(Elevation.raised, halfCircleShape)
+                        .shadow(Theme.elevation.raised, halfCircleShape)
                         .width(halfCircleWidth)
                         .height(halfCircleHeight)
                         .clip(halfCircleShape)
@@ -240,7 +239,7 @@ fun BackTopCustom(
         Box(
             modifier = Modifier
                 .offset(x = -offset.first, y = -offset.second)
-                .shadow(Elevation.raised, Theme.shapes.lg)
+                .shadow(Theme.elevation.raised, Theme.shapes.lg)
                 .clip(Theme.shapes.lg)
                 .background(backgroundColor)
                 .border(BorderWidth.thin, borderColor, Theme.shapes.lg)

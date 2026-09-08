@@ -23,7 +23,6 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 
 /**
@@ -193,7 +192,7 @@ fun Slider(
                         modifier = Modifier
                             .size(thumbSize)
                             .shadow(
-                                elevation = if (enabled) Elevation.raised else Elevation.none,
+                                elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none,
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
@@ -561,7 +560,7 @@ fun RangeSlider(
                     Box(
                         modifier = Modifier
                             .size(thumbSize)
-                            .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
+                            .shadow(elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
                             .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)
@@ -632,7 +631,7 @@ fun RangeSlider(
                     Box(
                         modifier = Modifier
                             .size(thumbSize)
-                            .shadow(elevation = if (enabled) Elevation.raised else Elevation.none, shape = CircleShape)
+                            .shadow(elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none, shape = CircleShape)
                             .clip(CircleShape)
                             .background(if (enabled) colors.surface else colors.muted)
                             .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)

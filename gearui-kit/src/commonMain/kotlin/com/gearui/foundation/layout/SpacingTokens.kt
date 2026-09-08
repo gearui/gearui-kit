@@ -1,5 +1,6 @@
 package com.gearui.foundation.layout
 
+import com.gearui.theme.Theme
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
@@ -23,7 +24,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * - ❌ never write Spacer(12.dp) / padding(8.dp)
  */
 object Spacing {
-    /** 0dp - no gap. Named for symmetry with Shapes.none and Elevation.none. */
+    /** 0dp - no gap. Named for symmetry with Shapes.none and Theme.elevation.none. */
     val none: Dp = 0.dp
 
     /** 4dp - smallest gap (xs) */

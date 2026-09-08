@@ -19,7 +19,6 @@ import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
@@ -144,7 +143,7 @@ private fun TourContent(
     Box(
         modifier = Modifier
             .width(400.dp)
-            .shadow(Elevation.modal, OverlayDefaults.modalShape)
+            .shadow(Theme.elevation.modal, OverlayDefaults.modalShape)
             .clip(OverlayDefaults.modalShape)
             .background(colors.surface)
             .padding(Spacing.xl)

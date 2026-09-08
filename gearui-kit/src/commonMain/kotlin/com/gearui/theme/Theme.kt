@@ -1,5 +1,9 @@
 package com.gearui.theme
 
+import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.elevation.Elevations
+import com.gearui.foundation.motion.Motion
+import com.gearui.foundation.motion.Motions
 import androidx.compose.runtime.*
 
 /* --------------------------------------------------------- */
@@ -23,6 +27,8 @@ enum class ThemeMode {
 val LocalThemeColors = staticCompositionLocalOf { Themes.Light.colors }
 val LocalThemeTypography = staticCompositionLocalOf { Typographies.Default }
 val LocalThemeShapes = staticCompositionLocalOf { ShapesDefault.Default }
+val LocalThemeElevation = staticCompositionLocalOf { Elevations.Default }
+val LocalThemeMotion = staticCompositionLocalOf { Motions.Default }
 
 /** System dark mode state, supplied by the platform layer */
 val LocalSystemDarkMode = staticCompositionLocalOf { false }
@@ -77,6 +83,8 @@ fun Theme(
     theme: ThemeSpec? = null,
     typography: Typography = Typographies.Default,
     shapes: Shapes = ShapesDefault.Default,
+    elevation: Elevation = Elevations.Default,
+    motion: Motion = Motions.Default,
     content: @Composable () -> Unit
 ) {
     // Resolve the final theme
@@ -86,6 +94,8 @@ fun Theme(
         LocalThemeColors provides resolved.colors,
         LocalThemeTypography provides typography,
         LocalThemeShapes provides shapes,
+        LocalThemeElevation provides elevation,
+        LocalThemeMotion provides motion,
         content = content
     )
 }
@@ -121,4 +131,12 @@ object Theme {
     /** current shape scale */
     val shapes: Shapes
         @Composable get() = LocalThemeShapes.current
+
+    /** current elevation scale */
+    val elevation: Elevation
+        @Composable get() = LocalThemeElevation.current
+
+    /** current motion scale */
+    val motion: Motion
+        @Composable get() = LocalThemeMotion.current
 }

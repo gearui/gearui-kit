@@ -22,7 +22,6 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
@@ -223,7 +222,7 @@ internal fun SnackbarContent(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Elevation.raised, OverlayDefaults.panelShape)
+            .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
             .padding(horizontal = Spacing.lg, vertical = Spacing.md),

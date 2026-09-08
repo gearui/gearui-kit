@@ -30,16 +30,25 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * collide (`Spacing.xs` is also 4dp), but they are different semantic axes;
  * retuning the spacing scale would drag every shadow along with it.
  */
-object Elevation {
+/**
+ * The four-step scale. A data class rather than an object so a brand can
+ * supply its own through the theme; read it as `Theme.elevation`.
+ */
+data class Elevation(
     /** 0dp - flat (default / disabled) */
-    val none: Dp = 0.dp
+    val none: Dp = 0.dp,
 
     /** 4dp - attached controls and light overlays */
-    val raised: Dp = 4.dp
+    val raised: Dp = 4.dp,
 
     /** 6dp - floating panels */
-    val floating: Dp = 6.dp
+    val floating: Dp = 6.dp,
 
     /** 8dp - modal layers */
-    val modal: Dp = 8.dp
+    val modal: Dp = 8.dp,
+)
+
+/** Built-in elevation scales. */
+object Elevations {
+    val Default = Elevation()
 }

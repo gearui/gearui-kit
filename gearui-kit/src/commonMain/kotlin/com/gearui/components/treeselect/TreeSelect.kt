@@ -28,7 +28,6 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
@@ -109,7 +108,7 @@ fun TreeSelect(
                 modifier = Modifier
                     .width(widthDp)
                     .height(dropdownHeight)
-                    .shadow(Elevation.floating, OverlayDefaults.panelShape)
+                    .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
                     .background(colors.surface, OverlayDefaults.panelShape)
                     .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
                     .padding(Spacing.sm)
@@ -313,7 +312,7 @@ private fun TreeSelectMultipleContent(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(Elevation.floating, OverlayDefaults.panelShape)
+            .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
             .background(colors.surface, OverlayDefaults.panelShape)
             .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
             .padding(Spacing.sm)

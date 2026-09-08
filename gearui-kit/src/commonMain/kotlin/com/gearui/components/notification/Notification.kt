@@ -20,7 +20,6 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.foundation.typography.Typography
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
@@ -160,7 +159,7 @@ internal fun NotificationContent(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(Elevation.floating, OverlayDefaults.panelShape)
+            .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(colors.surface)
             // Whole-card click, attached when onClick != null. The action and close

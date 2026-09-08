@@ -11,6 +11,14 @@ import com.gearui.overlay.OverlayRoot
 import com.gearui.runtime.RuntimeFlags
 import com.gearui.runtime.ProvideRuntimeEnvironment
 import com.gearui.theme.ProvideSystemDarkMode
+import com.gearui.foundation.elevation.Elevation
+import com.gearui.foundation.elevation.Elevations
+import com.gearui.foundation.motion.Motion
+import com.gearui.foundation.motion.Motions
+import com.gearui.theme.Typography
+import com.gearui.theme.Typographies
+import com.gearui.theme.Shapes
+import com.gearui.theme.ShapesDefault
 import com.gearui.theme.Theme
 import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
@@ -80,6 +88,18 @@ fun App(
     themeMode: ThemeMode = ThemeMode.Light,
     isSystemDark: Boolean = false,
     theme: ThemeSpec? = null,
+    /**
+     * The remaining token axes. `theme` carries colour; these carry the rest,
+     * so a brand can restyle without forking components.
+     *
+     * They were previously reachable only by calling [com.gearui.theme.Theme]
+     * directly, which no application does — App is the documented entry point.
+     * That made "tokens are replaceable" true of colour alone.
+     */
+    typography: Typography = Typographies.Default,
+    shapes: Shapes = ShapesDefault.Default,
+    elevation: Elevation = Elevations.Default,
+    motion: Motion = Motions.Default,
     languageTag: String = "en-US",
     fallbackLanguageTag: String = "en-US",
     stringsOverrides: Map<String, StringsPatch> = emptyMap(),
@@ -90,7 +110,14 @@ fun App(
     I18nRoot(languageTag = languageTag, fallbackLanguageTag = fallbackLanguageTag) {
         I18nProvider(overrides = stringsOverrides) {
             ProvideSystemDarkMode(isSystemDark = isSystemDark) {
-                Theme(mode = themeMode, theme = theme) {
+                Theme(
+                    mode = themeMode,
+                    theme = theme,
+                    typography = typography,
+                    shapes = shapes,
+                    elevation = elevation,
+                    motion = motion,
+                ) {
                     ProvideRuntimeEnvironment(flags = runtimeFlags) {
                         Box(
                             modifier = Modifier

@@ -28,7 +28,6 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
@@ -207,7 +206,7 @@ private fun CascaderDropdown(
         modifier = Modifier
             .width(width)
             .height(height)
-            .shadow(Elevation.floating, OverlayDefaults.panelShape)
+            .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
             .background(colors.surface, OverlayDefaults.panelShape)
             .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
     ) {

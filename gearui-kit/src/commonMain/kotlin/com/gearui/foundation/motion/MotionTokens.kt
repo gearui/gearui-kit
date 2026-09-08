@@ -18,6 +18,27 @@ package com.gearui.foundation.motion
  * Overlay entrance/exit animations are owned by Runtime, which selects
  * `slow` or `emphasized` by default.
  */
+data class Motion(
+    val instant: Int = 0,
+    val fast: Int = 100,
+    val normal: Int = 150,
+    val slow: Int = 200,
+    val emphasized: Int = 250,
+)
+
+/** Built-in motion scales. */
+object Motions {
+    val Default = Motion()
+}
+
+/**
+ * Kept as the previous spelling so existing references keep working.
+ *
+ * Prefer `Theme.motion`: this object cannot follow a brand's theme, and at
+ * the time the scale was made themeable nothing in the library referenced it
+ * — the durations were all still written inline.
+ */
+@Deprecated("Use Theme.motion", ReplaceWith("Theme.motion"))
 object MotionTokens {
     const val instant: Int = 0
     const val fast: Int = 100

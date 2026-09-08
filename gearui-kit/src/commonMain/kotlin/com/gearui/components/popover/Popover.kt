@@ -25,7 +25,6 @@ import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
 
@@ -335,7 +334,7 @@ private fun PopoverBody(
 
     Box(
         modifier = Modifier
-            .shadow(Elevation.raised, OverlayDefaults.panelShape)
+            .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(backgroundColor)
             .border(BorderWidth.thin, borderColor, OverlayDefaults.panelShape)

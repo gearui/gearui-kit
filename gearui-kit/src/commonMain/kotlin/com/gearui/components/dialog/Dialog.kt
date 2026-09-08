@@ -19,7 +19,6 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.elevation.Elevation
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.primitives.ScrollView
 
@@ -118,7 +117,7 @@ internal fun DialogSurface(
             // without bound because one child wants to.
             .wrapContentHeight()
             .heightIn(max = 560.dp)
-            .shadow(Elevation.modal, OverlayDefaults.modalShape)
+            .shadow(Theme.elevation.modal, OverlayDefaults.modalShape)
             .background(colors.surface, OverlayDefaults.modalShape)
             .border(BorderWidth.thin, colors.border, OverlayDefaults.modalShape)
     ) {

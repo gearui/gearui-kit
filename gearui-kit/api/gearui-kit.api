@@ -1,5 +1,5 @@
 public final class com/gearui/AppKt {
-	public static final fun App (Lcom/gearui/theme/ThemeMode;ZLcom/gearui/theme/ThemeSpec;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/gearui/runtime/RuntimeFlags;Lcom/gearui/foundation/keyboard/KeyboardDismissMode;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun App (Lcom/gearui/theme/ThemeMode;ZLcom/gearui/theme/ThemeSpec;Lcom/gearui/theme/Typography;Lcom/gearui/theme/Shapes;Lcom/gearui/foundation/elevation/Elevation;Lcom/gearui/foundation/motion/Motion;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/gearui/runtime/RuntimeFlags;Lcom/gearui/foundation/keyboard/KeyboardDismissMode;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/ColorTokens {
@@ -2224,11 +2224,27 @@ public final class com/gearui/foundation/border/BorderWidth {
 
 public final class com/gearui/foundation/elevation/Elevation {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/elevation/Elevation;
+	public synthetic fun <init> (FFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-UdJoRJA ()F
+	public final fun component2-UdJoRJA ()F
+	public final fun component3-UdJoRJA ()F
+	public final fun component4-UdJoRJA ()F
+	public final fun copy-KlVn7e8 (FFFF)Lcom/gearui/foundation/elevation/Elevation;
+	public static synthetic fun copy-KlVn7e8$default (Lcom/gearui/foundation/elevation/Elevation;FFFFILjava/lang/Object;)Lcom/gearui/foundation/elevation/Elevation;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFloating-UdJoRJA ()F
 	public final fun getModal-UdJoRJA ()F
 	public final fun getNone-UdJoRJA ()F
 	public final fun getRaised-UdJoRJA ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/elevation/Elevations {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/elevation/Elevations;
+	public final fun getDefault ()Lcom/gearui/foundation/elevation/Elevation;
 }
 
 public final class com/gearui/foundation/field/FieldDefaults {
@@ -2491,6 +2507,28 @@ public final class com/gearui/foundation/list/CellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/motion/Motion {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (IIIII)V
+	public synthetic fun <init> (IIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun component5 ()I
+	public final fun copy (IIIII)Lcom/gearui/foundation/motion/Motion;
+	public static synthetic fun copy$default (Lcom/gearui/foundation/motion/Motion;IIIIIILjava/lang/Object;)Lcom/gearui/foundation/motion/Motion;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmphasized ()I
+	public final fun getFast ()I
+	public final fun getInstant ()I
+	public final fun getNormal ()I
+	public final fun getSlow ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/foundation/motion/MotionTokens {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/motion/MotionTokens;
@@ -2499,6 +2537,12 @@ public final class com/gearui/foundation/motion/MotionTokens {
 	public static final field instant I
 	public static final field normal I
 	public static final field slow I
+}
+
+public final class com/gearui/foundation/motion/Motions {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/motion/Motions;
+	public final fun getDefault ()Lcom/gearui/foundation/motion/Motion;
 }
 
 public final class com/gearui/foundation/primitives/BasicTextFieldKt {
@@ -3974,15 +4018,19 @@ public final class com/gearui/theme/Theme {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/theme/Theme;
 	public final fun getColors (Landroidx/compose/runtime/Composer;I)Lcom/gearui/theme/Colors;
+	public final fun getElevation (Landroidx/compose/runtime/Composer;I)Lcom/gearui/foundation/elevation/Elevation;
+	public final fun getMotion (Landroidx/compose/runtime/Composer;I)Lcom/gearui/foundation/motion/Motion;
 	public final fun getShapes (Landroidx/compose/runtime/Composer;I)Lcom/gearui/theme/Shapes;
 	public final fun getTypography (Landroidx/compose/runtime/Composer;I)Lcom/gearui/theme/Typography;
 }
 
 public final class com/gearui/theme/ThemeKt {
 	public static final fun ProvideSystemDarkMode (ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
-	public static final fun Theme (Lcom/gearui/theme/ThemeMode;Lcom/gearui/theme/ThemeSpec;Lcom/gearui/theme/Typography;Lcom/gearui/theme/Shapes;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Theme (Lcom/gearui/theme/ThemeMode;Lcom/gearui/theme/ThemeSpec;Lcom/gearui/theme/Typography;Lcom/gearui/theme/Shapes;Lcom/gearui/foundation/elevation/Elevation;Lcom/gearui/foundation/motion/Motion;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun getLocalSystemDarkMode ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getLocalThemeColors ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalThemeElevation ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalThemeMotion ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getLocalThemeShapes ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getLocalThemeTypography ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun resolveDarkMode (Lcom/gearui/theme/ThemeMode;Landroidx/compose/runtime/Composer;I)Z

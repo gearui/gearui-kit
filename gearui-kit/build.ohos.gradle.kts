@@ -8,6 +8,9 @@ plugins {
     id("org.jetbrains.compose")
 }
 
+// Version comes from gradle.properties; see the note there.
+val kuiklyVersion = "${providers.gradleProperty("KUIKLY_VERSION").get()}-${providers.gradleProperty("KUIKLY_KOTLIN_OHOS").get()}"
+
 kotlin {
     ohosArm64()
 
@@ -32,7 +35,7 @@ kotlin {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
         }
         commonMain.dependencies {
-            api("com.tencent.kuikly-open:compose:2.27.0-2.0.21-ohos")
+            api("com.tencent.kuikly-open:compose:$kuiklyVersion")
         }
     }
 }

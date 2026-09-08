@@ -1,5 +1,15 @@
 platform :ios, '14.0'
-ENV['KUIKLY_VERSION'] = '2.27.0'
+# KuiklyUI version is owned by gearui-kit, not restated here.
+# gradle.properties is the single source of truth; see the note in that file.
+def kuikly_version(properties_path)
+  raise "gearui-kit gradle.properties not found: #{properties_path}" unless File.exist?(properties_path)
+  v = File.read(properties_path)[/^KUIKLY_VERSION=(.+)$/, 1]
+  raise "KUIKLY_VERSION missing from #{properties_path}" if v.nil?
+  v.strip
+end
+KUIKLY_VERSION = kuikly_version(File.expand_path('../../gradle.properties', __dir__))
+ENV['KUIKLY_VERSION'] = KUIKLY_VERSION
+
 
 target 'iosApp' do
   use_frameworks!
@@ -8,7 +18,7 @@ target 'iosApp' do
   pod 'gearui_sample', :path => '../'
 
   # KuiklyUI iOS 渲染引擎
-  pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => '2.27.0'
+  pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => KUIKLY_VERSION
 
   # 图片加载（可选）
   pod 'SDWebImage', '~> 5.20.1'

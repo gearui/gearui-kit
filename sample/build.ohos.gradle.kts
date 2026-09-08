@@ -16,6 +16,9 @@ plugins {
 // drift (the sample's sources reference SampleBuildInfo unconditionally).
 apply(from = rootProject.file("gradle/sample-build-info.gradle.kts"))
 
+// Version comes from gradle.properties; see the note there.
+val kuiklyVersion = "${providers.gradleProperty("KUIKLY_VERSION").get()}-${providers.gradleProperty("KUIKLY_KOTLIN_OHOS").get()}"
+
 kotlin {
     // The host loads this as libshared.so — see EntryAbilityStage.ets, which
     // calls setup("libshared.so"). Renaming the binary means renaming it there
@@ -49,8 +52,8 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(project(":gearui-kit"))
-            implementation("com.tencent.kuikly-open:core:2.27.0-2.0.21-ohos")
-            implementation("com.tencent.kuikly-open:core-annotations:2.27.0-2.0.21-ohos")
+            implementation("com.tencent.kuikly-open:core:$kuiklyVersion")
+            implementation("com.tencent.kuikly-open:core-annotations:$kuiklyVersion")
         }
     }
 }
@@ -59,7 +62,7 @@ dependencies {
     // Generates the ohos page entry from @Page. core-ksp has an
     // OhOsTargetEntryBuilder, so unlike the JS target this is a first-class
     // path rather than something that happens to work.
-    add("kspOhosArm64", "com.tencent.kuikly-open:core-ksp:2.27.0-2.0.21-ohos")
+    add("kspOhosArm64", "com.tencent.kuikly-open:core-ksp:$kuiklyVersion")
 }
 
 ksp {

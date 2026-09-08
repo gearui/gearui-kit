@@ -8,6 +8,9 @@ plugins {
     id("com.vanniktech.maven.publish")
 }
 
+// Version comes from gradle.properties; see the note there.
+val kuiklyVersion = "${providers.gradleProperty("KUIKLY_VERSION").get()}-${providers.gradleProperty("KUIKLY_KOTLIN").get()}"
+
 kotlin {
     androidTarget {
         compilations.all {
@@ -42,7 +45,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // GearUI-KuiklyUI depends ONLY on KuiklyUI Runtime
-            api("com.tencent.kuikly-open:compose:2.27.0-2.1.21")
+            api("com.tencent.kuikly-open:compose:$kuiklyVersion")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)

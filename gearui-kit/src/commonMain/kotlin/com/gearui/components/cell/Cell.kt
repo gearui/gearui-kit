@@ -65,8 +65,11 @@ fun Cell(
         // height, centred inside) — not the whole row, which would leave it hovering between title and
         if (leading != null) {
             if (description != null) {
+                // heightIn, not height: 24dp is the *title line* an icon should centre on, but a
+                // leading slot taller than that (a 40dp avatar in a name + username row) must keep
+                // its own height. A fixed height squashed it to 40x24 — a visibly stretched avatar.
                 Box(
-                    modifier = Modifier.align(Alignment.Top).height(24.dp),
+                    modifier = Modifier.align(Alignment.Top).heightIn(min = 24.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     leading()

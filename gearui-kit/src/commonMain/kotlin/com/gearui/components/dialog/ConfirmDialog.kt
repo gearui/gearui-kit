@@ -1,24 +1,14 @@
 package com.gearui.components.dialog
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonTheme
-import com.gearui.components.button.ButtonSize
-import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
-import com.gearui.theme.Theme
+import androidx.compose.runtime.Composable
 import com.gearui.i18n.I18n
-import com.gearui.foundation.layout.Spacing
 
 /**
  * ConfirmDialog - confirmation dialog
  *
- * The standard dialog with confirm and cancel buttons
+ * Title, message, and two actions drawn as a platform alert. Use
+ * [destructive] when confirming means losing something: deleting a friend,
+ * leaving a group, revoking a message.
  */
 @Composable
 fun ConfirmDialog(
@@ -30,10 +20,11 @@ fun ConfirmDialog(
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
     onDismiss: () -> Unit = onCancel,
-    dismissOnOutside: Boolean = false
+    dismissOnOutside: Boolean = false,
+    destructive: Boolean = false,
+    /** false while an action is in flight: both rows grey out and stop responding. */
+    enabled: Boolean = true,
 ) {
-    val colors = Theme.colors
-
     Dialog.Host(
         visible = visible,
         dismissOnOutside = dismissOnOutside,
@@ -42,29 +33,20 @@ fun ConfirmDialog(
         DialogContent(
             title = title,
             message = message,
-            actions = {
-                // Cancel button - text style
-                Box(
-                    modifier = Modifier
-                        .clickable { onCancel() }
-                        .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = cancelText,
-                        style = Typography.BodyMedium,
-                        color = colors.mutedForeground
-                    )
-                }
-                Spacer(modifier = Modifier.width(Spacing.sm))
-                // Confirm button
-                Button(
+            actions = listOf(
+                DialogAction(
                     text = confirmText,
+                    role = if (destructive) DialogActionRole.DESTRUCTIVE else DialogActionRole.PRIMARY,
+                    enabled = enabled,
                     onClick = onConfirm,
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.SMALL
-                )
-            }
+                ),
+                DialogAction(
+                    text = cancelText,
+                    role = DialogActionRole.CANCEL,
+                    enabled = enabled,
+                    onClick = onCancel,
+                ),
+            ),
         )
     }
 }
@@ -72,7 +54,7 @@ fun ConfirmDialog(
 /**
  * AlertDialog - alert dialog
  *
- * A single-button message dialog
+ * A single-button message dialog.
  */
 @Composable
 fun AlertDialog(
@@ -92,14 +74,13 @@ fun AlertDialog(
         DialogContent(
             title = title,
             message = message,
-            actions = {
-                Button(
+            actions = listOf(
+                DialogAction(
                     text = buttonText,
+                    role = DialogActionRole.PRIMARY,
                     onClick = onConfirm,
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.SMALL
-                )
-            }
+                ),
+            ),
         )
     }
 }

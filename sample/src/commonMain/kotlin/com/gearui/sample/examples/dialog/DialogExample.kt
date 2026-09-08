@@ -10,6 +10,8 @@ import com.gearui.components.button.ButtonTheme
 import com.gearui.components.dialog.AlertDialog
 import com.gearui.components.dialog.ConfirmDialog
 import com.gearui.components.dialog.Dialog
+import com.gearui.components.dialog.DialogAction
+import com.gearui.components.dialog.DialogActionRole
 import com.gearui.components.dialog.DialogContent
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.Typography
@@ -145,7 +147,8 @@ fun DialogExample(
                     resultText = "已删除"
                     showDangerDialog = false
                 },
-                onCancel = { showDangerDialog = false }
+                onCancel = { showDangerDialog = false },
+                destructive = true,
             )
         }
 
@@ -194,13 +197,13 @@ fun DialogExample(
                             }
                         }
                     },
-                    actions = {
-                        Button(
+                    actions = listOf(
+                        DialogAction(
                             text = "关闭",
+                            role = DialogActionRole.PRIMARY,
                             onClick = { showCustomDialog = false },
-                            size = ButtonSize.SMALL
-                        )
-                    }
+                        ),
+                    ),
                 )
             }
         }

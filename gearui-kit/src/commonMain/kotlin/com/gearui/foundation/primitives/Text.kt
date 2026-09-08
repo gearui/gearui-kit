@@ -6,6 +6,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.ColorProducer
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
+import com.tencent.kuikly.compose.ui.text.style.TextAlign
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.TextUnit
 import com.tencent.kuikly.compose.ui.unit.sp
@@ -54,7 +55,16 @@ fun Text(
     fontSize: TextUnit? = null,
 
     /** font weight - backwards-compatible parameter, takes precedence over style.fontWeight */
-    fontWeight: FontWeight? = null
+    fontWeight: FontWeight? = null,
+
+    /**
+     * Horizontal alignment of each line within the text block.
+     *
+     * Distinct from centring the composable itself: a centred Text whose
+     * alignment is Start still renders a ragged left edge once the string
+     * wraps, which is visible in dialogs and empty states.
+     */
+    textAlign: TextAlign? = null
 ) {
     // ⭐ Framework Rule #1: this is always the first line
     val themeColors = Theme.colors
@@ -75,7 +85,9 @@ fun Text(
         fontSize = finalFontSize,
         lineHeight = style.lineHeight,
         fontWeight = finalFontWeight,
-        color = finalColor
+        color = finalColor,
+        // Kuikly's TextStyle takes a non-null TextAlign; Start is its own default.
+        textAlign = textAlign ?: TextAlign.Start
     )
 
     BasicText(

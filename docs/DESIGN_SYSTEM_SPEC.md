@@ -10,16 +10,40 @@ These decisions must be resolved before Phase 2 audit expansion and before compo
 
 ### 0.1 Visual Identity - Decided
 
-GearUI Kit defines its own mobile-first design system: the **GearUI Design Language**.
+GearUI adopts **iOS 26 as its default visual and interaction reference**, with the
+adjustments a cross-platform kit needs, while retaining its own component
+architecture, public API, runtime contracts, and cross-platform implementation.
+It does not reproduce Apple-specific system materials or Liquid Glass
+refraction. Brand appearance remains customizable through replaceable design
+tokens.
 
-Existing influences are treated as implementation history and design references, not as final visual identity:
+There is **one design language**, not a style engine. Tokens exist for
+brand skinning and detail tuning — colour, typography, radius, motion,
+elevation, sizing. They are not a mechanism for switching GearUI into
+Material, TDesign, or any other language, and GearUI does not ship two
+anatomies per component. Anatomy is decided once, in §11.x, and applies on
+every platform.
+
+Why iOS 26 and not a house style: a general-purpose kit has to pick a visual
+baseline, and inventing one from nothing costs design time this project does
+not have while producing something users have no prior model for. iOS 26's
+flat form is well specified, familiar to the target market, and already the
+convention most apps here follow on both platforms.
+
+Why not Liquid Glass: it is not a blur. It is real-time refraction with
+specular response to the content behind it, implemented as an iOS system
+material. Cross-platform reproduction is not feasible, and an approximation
+would look wrong beside the real thing. GearUI supports **cross-platform
+frosted glass** as a material of its own (§11.2) and stops there.
+
+Remaining influences, as design references rather than identity:
 
 - **TDesign** contributes component architecture, coverage, and documentation discipline.
-- **Apple / UIKit** contributes mobile interaction quality, native-like hierarchy, safe-area awareness, keyboard behavior, and restrained motion.
 - **shadcn** contributes semantic token clarity, especially surface, foreground, muted, border, input, and ring role naming.
 - **KuiklyUI** defines the runtime implementation boundary across Kotlin KMP targets.
 
-The final output must look and behave like **GearUI**, not like a clone of TDesign, shadcn, or UIKit. GearUI may reuse existing component capabilities and color assets, but all public presentation must be normalized through GearUI tokens, GearUI component tokens, and GearUI runtime contracts.
+All public presentation is normalized through GearUI tokens, GearUI component
+tokens, and GearUI runtime contracts.
 
 ### 0.2 Core `Colors` Footprint - Direction Decided
 

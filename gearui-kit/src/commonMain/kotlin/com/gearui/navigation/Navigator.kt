@@ -73,14 +73,14 @@ import kotlinx.coroutines.launch
  * takes priority (Phase 0 spike finding). 96dp also works well on iOS.
  */
 @Composable
-fun Navigator(
-    initialRoute: String,
+fun <R : NavRoute> Navigator(
+    initialRoute: R,
     modifier: Modifier = Modifier,
     swipeBackEnabled: Boolean = true,
     handleBack: Boolean = true,
-    onEntryRemoved: ((NavEntry) -> Unit)? = null,
-    controller: NavigatorController? = null,
-    content: @Composable EntryScope.(NavEntry) -> Unit,
+    onEntryRemoved: ((NavEntry<R>) -> Unit)? = null,
+    controller: NavigatorController<R>? = null,
+    content: @Composable EntryScope<R>.(NavEntry<R>) -> Unit,
 ) {
     val saveableHolder = rememberSaveableStateHolder()
     val removedRef = rememberUpdatedState(onEntryRemoved)
@@ -89,8 +89,9 @@ fun Navigator(
     // Use the controller when one is passed in (typically from
     // [rememberNavigatorController]); otherwise remember one internally so older
     // callers keep working (the sample, and existing Phase 2 call sites).
-    val state: NavigatorState = remember(controller, initialRoute) {
-        (controller as? NavigatorState)
+    @Suppress("UNCHECKED_CAST")
+    val state: NavigatorState<R> = remember(controller, initialRoute) {
+        (controller as? NavigatorState<R>)
             ?: NavigatorState(initialRoute = initialRoute)
     }
 
@@ -279,8 +280,8 @@ fun Navigator(
 internal enum class NavLayerRole { Front, Below, Moving }
 
 /** One visible layer to render. */
-internal data class NavLayer(
-    val entry: NavEntry,
+internal data class NavLayer<R : NavRoute>(
+    val entry: NavEntry<R>,
     val role: NavLayerRole,
     val zIndex: Float,
     /** Whether the moving entry is an Overlay/Modal, which decides if the layer below stays still. */
@@ -323,11 +324,11 @@ private const val SCRIM_MAX_ALPHA = 0.15f
  * @param initialRoute route at the bottom of the stack; must match the `initialRoute` passed to [Navigator] in the same composition
  */
 @Composable
-fun rememberNavigatorController(initialRoute: String): NavigatorController =
+fun <R : NavRoute> rememberNavigatorController(initialRoute: R): NavigatorController<R> =
     remember(initialRoute) { NavigatorState(initialRoute = initialRoute) }
 
 @Stable
-internal class NavigatorState(initialRoute: String) : NavigatorController, RememberObserver {
+internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorController<R>, RememberObserver {
 
     // Retained entry state is cancelled per entry in `notifyRemoved`, but that
     // only covers entries leaving a stack that stays. When the Navigator itself
@@ -341,19 +342,19 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
 
 
     private val _entries = mutableStateListOf(
-        NavEntry(route = initialRoute, key = generateKey(initialRoute, 0)),
+        NavEntry<R>(route = initialRoute, key = generateKey(initialRoute.routeName, 0)),
     )
 
     // These three callbacks only exist in composable scope, so a controller
     // created ahead of time is attached later. push/pop still work before
     // attaching, but saveable state and onEntryRemoved will not fire.
     private var removeSaveableState: ((String) -> Unit)? = null
-    private var onEntryRemovedRef: ((NavEntry) -> Unit)? = null
+    private var onEntryRemovedRef: ((NavEntry<R>) -> Unit)? = null
     private var animScope: CoroutineScope? = null
 
     internal fun attach(
         saveable: (String) -> Unit,
-        onEntryRemovedRef: (NavEntry) -> Unit,
+        onEntryRemovedRef: (NavEntry<R>) -> Unit,
         animScope: CoroutineScope,
     ) {
         this.removeSaveableState = saveable
@@ -374,7 +375,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     private var keyCounter: Int = 1
 
     /** PopDecision.Pending: push and pop are blocked until the caller confirms the top entry. */
-    private var pendingEntry: NavEntry? by mutableStateOf(null)
+    private var pendingEntry: NavEntry<R>? by mutableStateOf(null)
 
     /**
      * The entry currently transitioning out. **Key invariant: it stays in
@@ -383,7 +384,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
      * alone on cancel. Null in the steady state; non-null during a pop animation
      * or an in-progress swipe.
      */
-    private var _moving: NavEntry? by mutableStateOf(null)
+    private var _moving: NavEntry<R>? by mutableStateOf(null)
 
     /** Swipe mode: while true the fraction is snapped by [updateSwipeByPixels]; while false it is animation-driven. */
     private var _swipeMode: Boolean by mutableStateOf(false)
@@ -394,7 +395,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     /** Viewport width in pixels, injected by [Navigator]'s BoxWithConstraints. */
     private var viewportWidth: Float = 0f
 
-    val movingEntry: NavEntry? get() = _moving
+    val movingEntry: NavEntry<R>? get() = _moving
     val transitionFraction: Float get() = _fractionAnim.value
 
     /**
@@ -405,7 +406,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
      * and below is `entries[size-2]`, so their keys always differ and no key can
      * repeat within a frame. That is what removed the v1 stable-slot crash.
      */
-    fun visibleLayers(): List<NavLayer> {
+    fun visibleLayers(): List<NavLayer<R>> {
         val moving = _moving
         if (moving == null) {
             return listOf(NavLayer(_entries.last(), NavLayerRole.Front, zIndex = 0f, movingIsOverlay = false))
@@ -421,10 +422,10 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
         }
     }
 
-    override val current: NavEntry
+    override val current: NavEntry<R>
         get() = _entries.last()
 
-    override val previous: NavEntry?
+    override val previous: NavEntry<R>?
         get() = _entries.getOrNull(_entries.size - 2)
 
     override val canPop: Boolean
@@ -446,11 +447,11 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     private val isMidFlight: Boolean
         get() = _moving != null || pendingEntry != null
 
-    override fun push(route: String, key: String?, options: NavOptions) {
+    override fun push(route: R, key: String?) {
         if (isMidFlight) return
-        val newKey = key ?: generateKey(route, keyCounter++)
+        val newKey = key ?: generateKey(route.routeName, keyCounter++)
         dismissOverlaysForRouteChange()
-        _entries.add(NavEntry(route = route, key = newKey, options = options))
+        _entries.add(NavEntry<R>(route = route, key = newKey))
     }
 
     override fun pop(): Boolean = requestPop(PopReason.Programmatic)
@@ -466,9 +467,9 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
         return true
     }
 
-    override fun popTo(route: String): Boolean {
+    override fun popTo(routeName: String): Boolean {
         if (isMidFlight) return false
-        val idx = _entries.indexOfLast { it.route == route }
+        val idx = _entries.indexOfLast { it.route.routeName == routeName }
         if (idx < 0 || idx == _entries.size - 1) return false
         // Intermediate entries are dropped immediately without animation; only
         // the top one animates out. The top is not removed here — that happens
@@ -481,22 +482,22 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
         return true
     }
 
-    override fun replace(route: String, key: String?, options: NavOptions) {
+    override fun replace(route: R, key: String?) {
         if (isMidFlight) return
         if (_entries.isEmpty()) return
         val old = _entries.removeAt(_entries.size - 1)
         notifyRemoved(old)
-        val newKey = key ?: generateKey(route, keyCounter++)
-        _entries.add(NavEntry(route = route, key = newKey, options = options))
+        val newKey = key ?: generateKey(route.routeName, keyCounter++)
+        _entries.add(NavEntry(route = route, key = newKey))
     }
 
-    override fun resetTo(route: String) {
+    override fun resetTo(route: R) {
         dismissOverlaysForRouteChange()
         if (isMidFlight) return
         val snapshot = _entries.toList()
         _entries.clear()
         snapshot.forEach { notifyRemoved(it) }
-        _entries.add(NavEntry(route = route, key = generateKey(route, keyCounter++)))
+        _entries.add(NavEntry(route = route, key = generateKey(route.routeName, keyCounter++)))
     }
 
     /**
@@ -535,7 +536,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
      * Removal and notification happen only when the animation completes, so the
      * survivor goes Below -> Front at the same call site without remounting.
      */
-    private fun startCommitPopAnim(outgoing: NavEntry) {
+    private fun startCommitPopAnim(outgoing: NavEntry<R>) {
         _swipeMode = false
         _moving = outgoing
         val scope = animScope
@@ -559,7 +560,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     }
 
     /** Animation complete: remove the outgoing entry, notify, and clear _moving — all three in one recomposition. */
-    private fun removeMoving(outgoing: NavEntry) {
+    private fun removeMoving(outgoing: NavEntry<R>) {
         if (_entries.lastOrNull()?.key == outgoing.key) {
             _entries.removeAt(_entries.size - 1)
         }
@@ -679,7 +680,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
         OverlayManager.notifyRouteChange()
     }
 
-    private fun notifyRemoved(entry: NavEntry) {
+    private fun notifyRemoved(entry: NavEntry<R>) {
         if (removedKeys.add(entry.key)) {
             onEntryRemovedRef?.invoke(entry)
             removeSaveableState?.invoke(entry.key)
@@ -696,13 +697,13 @@ private const val ANIM_POP_MS: Int = 220
 private const val ANIM_SWIPE_COMMIT_MS: Int = 160
 
 @Stable
-private class EntryScopeImpl(
-    override val entry: NavEntry,
-    override val controller: NavigatorController,
+private class EntryScopeImpl<R : NavRoute>(
+    override val entry: NavEntry<R>,
+    override val controller: NavigatorController<R>,
     override val isTop: Boolean,
     override val isForeground: Boolean,
     private val retained: RetainedEntry,
-) : EntryScope {
+) : EntryScope<R> {
     override val entryCoroutineScope: CoroutineScope get() = retained.coroutineScope
     override fun <T : Any> retain(key: String, factory: () -> T): T = retained.retain(key, factory)
 }

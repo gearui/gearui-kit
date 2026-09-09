@@ -19,12 +19,32 @@ import androidx.compose.runtime.Stable
  * @property key unique identity; pushing the same route twice needs distinct keys or their SaveableState will be shared
  * @property options behaviour switches: swipeBack, transition, presentation, pop interception
  */
+/**
+ * What Navigator needs from an application's route type.
+ *
+ * [routeName] identifies the destination; the payload is whatever else the
+ * implementing type carries. A sealed interface of data classes is the intended
+ * shape, and then a route *is* its arguments.
+ *
+ * This replaces a bridge every consumer had to build: Navigator used to take a
+ * `String` and hand it back, so the application kept its own
+ * `entry.key -> payload` map, maintained exactly-once cleanup for it through
+ * `onEntryRemoved`, and looked payloads up with a lookup that could miss —
+ * `?: error("no payload for ...")`. There is nothing left to miss.
+ */
 @Stable
-data class NavEntry(
-    val route: String,
+interface NavRoute {
+    val routeName: String
+    val options: NavOptions get() = NavOptions.Default
+}
+
+@Stable
+data class NavEntry<out R : NavRoute>(
+    val route: R,
     val key: String,
-    val options: NavOptions = NavOptions.Default,
-)
+) {
+    val options: NavOptions get() = route.options
+}
 
 /**
  * Per-entry behaviour switches. Defaults match an ordinary page: swipe back allowed, push animation, Push presentation.
@@ -39,7 +59,7 @@ data class NavOptions(
      * already consumed and Navigator keeps **no** continuation; after showing a
      * confirmation the caller calls [NavigatorController.forcePop] to continue, or [NavigatorController.pop] to cancel.
      */
-    val onPopRequest: ((PopRequest) -> PopDecision)? = null,
+    val onPopRequest: ((PopRequest<*>) -> PopDecision)? = null,
 ) {
     companion object {
         val Default = NavOptions()
@@ -63,8 +83,8 @@ enum class NavPresentation {
 
 /** Context carried with a pop request. */
 @Stable
-data class PopRequest(
-    val entry: NavEntry,
+data class PopRequest<out R : NavRoute>(
+    val entry: NavEntry<R>,
     val reason: PopReason,
 )
 
@@ -97,13 +117,14 @@ enum class PopDecision { Allow, Deny, Pending }
  * rendered by this layer, and during a transition Navigator renders both current and previous.
  */
 @Stable
-interface NavigatorController {
-    val current: NavEntry
-    val previous: NavEntry?
+interface NavigatorController<R : NavRoute> {
+    val current: NavEntry<R>
+    val previous: NavEntry<R>?
     val canPop: Boolean
     val isTransitioning: Boolean
 
-    fun push(route: String, key: String? = null, options: NavOptions = NavOptions.Default)
+    /** Options come from the route itself; there is no separate channel for them. */
+    fun push(route: R, key: String? = null)
 
     /** Fires [NavOptions.onPopRequest] and pops, refuses or suspends accordingly. Returns false at the bottom of the stack. */
     fun pop(): Boolean
@@ -111,13 +132,13 @@ interface NavigatorController {
     /** Skips [NavOptions.onPopRequest], for continuing after the caller has confirmed a dirty state. Returns false at the bottom of the stack. */
     fun forcePop(): Boolean
 
-    /** Pops to the nearest entry matching [route]. Returns false if already on top or no match exists. */
-    fun popTo(route: String): Boolean
+    /** Pops to the nearest entry whose [NavRoute.routeName] matches. Returns false if already on top or no match exists. */
+    fun popTo(routeName: String): Boolean
 
-    fun replace(route: String, key: String? = null, options: NavOptions = NavOptions.Default)
+    fun replace(route: R, key: String? = null)
 
-    /** Clears the stack down to [route]. Every removed entry fires onEntryRemoved. */
-    fun resetTo(route: String)
+    /** Clears the stack down to [route]. Every removed entry is disposed. */
+    fun resetTo(route: R)
 }
 
 /**
@@ -128,9 +149,9 @@ interface NavigatorController {
  * - [isForeground] is top with no transition in flight; callers can pause polling or animation on it
  */
 @Stable
-interface EntryScope {
-    val entry: NavEntry
-    val controller: NavigatorController
+interface EntryScope<R : NavRoute> {
+    val entry: NavEntry<R>
+    val controller: NavigatorController<R>
     val isTop: Boolean
     val isForeground: Boolean
 

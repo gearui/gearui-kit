@@ -12,6 +12,7 @@ import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
 import com.gearui.foundation.primitives.Text
 import com.gearui.navigation.NavOptions
+import com.gearui.navigation.NavRoute
 import com.gearui.navigation.Navigator
 import com.gearui.navigation.PopDecision
 import com.gearui.sample.config.ComponentInfo
@@ -44,6 +45,37 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * This page deliberately does **not** use the sample's outer SwipeBackHost - Navigator already
  * carries swipeBack, and nesting the two conflicts. MainDemo routes the `navigator-v1-demo` id through a bypass branch.
  */
+
+/**
+ * The demo's route type. A sealed interface of objects and data classes is the
+ * shape Navigator expects: `entry.route` is already this type, so the `when`
+ * below is exhaustive and a route with no branch is a compile error.
+ *
+ * Per-route behaviour lives on the route — [DemoRoute.DirtyEditor] carries its
+ * own pop interception rather than having it passed alongside at every push.
+ */
+private sealed interface DemoRoute : NavRoute {
+    data object Main : DemoRoute {
+        override val routeName: String = "main"
+    }
+
+    data object Detail : DemoRoute {
+        override val routeName: String = "detail"
+    }
+
+    data object Detail2 : DemoRoute {
+        override val routeName: String = "detail2"
+    }
+
+    data object DirtyEditor : DemoRoute {
+        override val routeName: String = "dirty_editor"
+        override val options: NavOptions = NavOptions(
+            // A dirty-state interception: return Pending and show your own confirmation.
+            onPopRequest = { PopDecision.Pending },
+        )
+    }
+}
+
 @Composable
 fun NavigatorV1DemoExample(
     component: ComponentInfo,
@@ -51,8 +83,12 @@ fun NavigatorV1DemoExample(
 ) {
     val removedLog = remember { mutableStateListOf<String>() }
 
-    Navigator(
-        initialRoute = "main",
+    // Explicit type argument: `initialRoute` alone infers R as `DemoRoute.Main`,
+    // the singleton's own type, and then no other route fits. Passing a
+    // NavigatorController pins R instead, which is why call sites that keep one
+    // do not need this.
+    Navigator<DemoRoute>(
+        initialRoute = DemoRoute.Main,
         swipeBackEnabled = true,
         handleBack = true,
         onEntryRemoved = { entry ->
@@ -61,36 +97,34 @@ fun NavigatorV1DemoExample(
         },
     ) { entry ->
         when (entry.route) {
-            "main" -> MainScreen(
+            DemoRoute.Main -> MainScreen(
                 component = component,
                 onExitDemo = onBack,
                 removedLog = removedLog,
-                push = { route, options -> controller.push(route, options = options) },
-                resetTo = { controller.resetTo("main") },
+                push = { route -> controller.push(route) },
+                resetTo = { controller.resetTo(DemoRoute.Main) },
             )
 
-            "detail" -> DetailScreen(
+            DemoRoute.Detail -> DetailScreen(
                 title = "Detail · key=${entry.key}",
-                pushNext = { controller.push("detail") },
+                pushNext = { controller.push(DemoRoute.Detail) },
                 pop = { controller.pop() },
-                replaceMe = { controller.replace("detail2") },
-                popToMain = { controller.popTo("main") },
+                replaceMe = { controller.replace(DemoRoute.Detail2) },
+                popToMain = { controller.popTo(DemoRoute.Main.routeName) },
             )
 
-            "detail2" -> DetailScreen(
+            DemoRoute.Detail2 -> DetailScreen(
                 title = "Detail 2 · key=${entry.key}",
-                pushNext = { controller.push("detail") },
+                pushNext = { controller.push(DemoRoute.Detail) },
                 pop = { controller.pop() },
                 replaceMe = null,
-                popToMain = { controller.popTo("main") },
+                popToMain = { controller.popTo(DemoRoute.Main.routeName) },
             )
 
-            "dirty_editor" -> DirtyEditorScreen(
+            DemoRoute.DirtyEditor -> DirtyEditorScreen(
                 onTryBack = { controller.pop() },
                 onConfirmDiscard = { controller.forcePop() },
             )
-
-            else -> Text("unknown route: ${entry.route}", color = Theme.colors.foreground)
         }
     }
 }
@@ -100,7 +134,7 @@ private fun MainScreen(
     component: ComponentInfo,
     onExitDemo: () -> Unit,
     removedLog: List<String>,
-    push: (route: String, options: NavOptions) -> Unit,
+    push: (route: DemoRoute) -> Unit,
     resetTo: () -> Unit,
 ) {
     val colors = Theme.colors
@@ -121,10 +155,10 @@ private fun MainScreen(
         SectionTitle("基本跳转")
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(text = "push detail", size = ButtonSize.SMALL, onClick = {
-                push("detail", NavOptions.Default)
+                push(DemoRoute.Detail)
             })
             Button(text = "push detail2 (replace 入口)", size = ButtonSize.SMALL, onClick = {
-                push("detail", NavOptions.Default)
+                push(DemoRoute.Detail)
             })
         }
 
@@ -133,15 +167,7 @@ private fun MainScreen(
             text = "push dirty_editor",
             size = ButtonSize.SMALL,
             onClick = {
-                push(
-                    "dirty_editor",
-                    NavOptions(
-                        onPopRequest = { _ ->
-                            // Demonstrates a dirty-state interception: return Pending and show your own confirmation UI
-                            PopDecision.Pending
-                        },
-                    ),
-                )
+                push(DemoRoute.DirtyEditor)
             },
         )
 

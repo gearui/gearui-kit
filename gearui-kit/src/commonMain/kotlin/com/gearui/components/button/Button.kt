@@ -117,9 +117,6 @@ fun Button(
                     name = icon,
                     size = iconSize,
                     tint = contentColor,
-                    // Icon assets exist only as PNG. preferSvg would request the missing .svg first, and
-                    // Kuikly's load-failure callback does not reliably fall back to the png — the button icon simply never shows.
-                    preferSvg = false
                 )
             }
         }

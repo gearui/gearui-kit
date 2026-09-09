@@ -6,7 +6,6 @@ package com.gearui.components.icon
  * Usage:
  * - `Icons.home` -> icon name
  * - `Icons.png(Icons.home)` -> assets://icons/home.png
- * - `Icons.svg(Icons.home)` -> assets://icons/home.svg
  */
 object Icons {
     const val account_balance_wallet = "account_balance_wallet"
@@ -241,7 +240,17 @@ object Icons {
         logout,
     )
 
+    /**
+     * Asset URL for an icon.
+     *
+     * PNG only. There used to be an SVG path behind `Icon(preferSvg = true)`
+     * and it never worked: Kuikly hands the URL to the platform image loader,
+     * and neither Android's `BitmapFactory` nor iOS's
+     * `UIImage imageWithContentsOfFile:` decodes SVG. Only the web renderer
+     * does. The failure was invisible because the primitive fell back to PNG
+     * on error — and the shipped SVGs were Material Symbols while the PNGs are
+     * Phosphor, so making SVG work would have silently swapped the artwork for
+     * a different icon set.
+     */
     fun png(name: String): String = "assets://icons/$name.png"
-
-    fun svg(name: String): String = "assets://icons/$name.svg"
 }

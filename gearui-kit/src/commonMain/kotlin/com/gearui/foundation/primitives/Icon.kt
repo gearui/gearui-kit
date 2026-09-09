@@ -59,7 +59,6 @@ fun Icon(
  *
  * Usage:
  * - Icon(Icons.home)
- * - Icon(Icons.arrow_back, preferSvg = true)
  */
 @Composable
 fun Icon(
@@ -67,21 +66,9 @@ fun Icon(
     modifier: Modifier = Modifier,
     size: Dp = IconSizes.Default.lg,
     tint: Color? = null,
-    preferSvg: Boolean = false
 ) {
-    var model by remember(name, preferSvg) {
-        mutableStateOf(if (preferSvg) Icons.svg(name) else Icons.png(name))
-    }
-    val painter = rememberAsyncImagePainter(
-        model = model,
-        onError = {
-            if (preferSvg && model == Icons.svg(name)) {
-                model = Icons.png(name)
-            }
-        }
-    )
     Image(
-        painter = painter,
+        painter = rememberAsyncImagePainter(model = Icons.png(name)),
         contentDescription = "",
         modifier = modifier.size(size),
         colorFilter = tint?.let { ColorFilter.tint(it) }

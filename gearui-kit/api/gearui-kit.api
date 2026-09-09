@@ -852,7 +852,6 @@ public final class com/gearui/components/icon/Icons {
 	public static final field warning Ljava/lang/String;
 	public final fun getAll ()Ljava/util/List;
 	public final fun png (Ljava/lang/String;)Ljava/lang/String;
-	public final fun svg (Ljava/lang/String;)Ljava/lang/String;
 }
 
 public final class com/gearui/components/image/ImageFit : java/lang/Enum {
@@ -2510,7 +2509,7 @@ public final class com/gearui/foundation/primitives/GearLazyColumnKt {
 
 public final class com/gearui/foundation/primitives/IconKt {
 	public static final fun Icon-I0RZKcA (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Lcom/tencent/kuikly/compose/ui/Modifier;FLcom/tencent/kuikly/compose/ui/graphics/Color;Landroidx/compose/runtime/Composer;II)V
-	public static final fun Icon-UmPyo1g (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;FLcom/tencent/kuikly/compose/ui/graphics/Color;ZLandroidx/compose/runtime/Composer;II)V
+	public static final fun Icon-I0RZKcA (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;FLcom/tencent/kuikly/compose/ui/graphics/Color;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/foundation/primitives/ListKt {

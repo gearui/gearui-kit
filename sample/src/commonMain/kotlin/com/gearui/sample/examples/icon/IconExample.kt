@@ -54,11 +54,34 @@ fun IconExample(
         onBack = onBack
     ) {
         ExampleSection(
+            title = "应用自带图标",
+            description = "GearUI 内置的是精选集。应用把 PNG 放进自己的 " +
+                "assets/icons/ 就能用同一个 API 渲染 —— 图标名不必在 Icons 里。"
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Supplied by sample/src/commonMain/assets/icons/app_folder.png,
+                // not by the library. Android merges library and app assets into
+                // one tree; iOS looks in the bundle and then falls through to the
+                // host adapter. So this is the extension point, and it needs no
+                // API of its own.
+                Icon(name = "app_folder", size = 24.dp, tint = colors.foreground)
+                Text(
+                    text = "app_folder（来自 sample 自己的 assets）",
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
+                )
+            }
+        }
+
+        ExampleSection(
             title = "Icon 示例",
             description = "按名称搜索并浏览内置图标"
         ) {
             Text(
-                text = "筛选 Icon 可参考：https://fonts.google.com/icons",
+                text = "筛选 Icon 可参考：https://phosphoricons.com",
                 style = Theme.typography.bodySmall,
                 color = colors.mutedForeground
             )

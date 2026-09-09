@@ -536,6 +536,66 @@ No component renders a material, and none should while the default is off.
 NavBar, BottomNavBar, ActionSheet and BottomSheet are the intended first
 adopters once upstream lands, and each is a visible change of its own.
 
+## 11.3 Component Anatomy: Action Sheets
+
+An action sheet is **two cards, not one**. The options are one card; cancel is
+another; the backdrop shows between them. Cancel is not the last option, and on
+a platform sheet what says so is the gap.
+
+GearUI shipped this as a single clipped surface with the gap painted
+`colors.muted` — a card pretending to be two. Measured on device in dark mode,
+that gap sat 10 luminance levels *above* the surface it was cut into, so it
+read as a highlight inside the sheet rather than as a break between two of
+them. The gap is now unpainted; the scrim shows through it, at the same value
+as the scrim above the sheet.
+
+The improvement is not symmetric across themes, and the reason matters:
+
+| theme | surface | gap before | gap after | contrast before → after |
+|---|---|---|---|---|
+| light | `#FFFFFF` (255) | `muted` (244) | scrim (115) | 11 → **140** |
+| dark | `#121212` (18) | `muted` (28) | scrim (8) | 10 → 10 |
+
+In light mode the fix is decisive. In dark mode the magnitude is unchanged and
+only the *direction* is corrected — the gap now recedes instead of standing
+proud, consistent with the scrim above the card. It stays subtle because a
+near-black surface on a near-black scrim has almost no range to work with.
+
+**That is the cost of §11.2's decision**, stated plainly: iOS separates stacked
+dark surfaces with materials, not with flat fills, and GearUI ships without
+materials until the upstream blur is comparable. Dark-mode sheet separation is
+the first place that shows. It is a known, bounded consequence — not something
+to compensate for by inventing a heavier border, which would then be wrong once
+materials arrive.
+
+### Measured geometry
+
+From a device capture (1440×3200 @ 4x), so these are what ships, not what the
+source says:
+
+| | value | note |
+|---|---|---|
+| top corner radius | 12dp | `OverlayDefaults.sheetShape` |
+| horizontal inset | **0 — full bleed** | iOS insets its sheets 8pt; see below |
+| option row height | 49.5dp | iOS action sheet rows are 57pt |
+| cancel row height | 56dp | |
+| card gap | 8dp (`Spacing.sm`) | unpainted |
+| bottom inset | painted by whichever card is last | so no scrim shows at the home indicator |
+
+Two deliberate departures from iOS, recorded rather than silently carried:
+
+**Full bleed, not inset.** iOS floats its sheets with a side margin so both
+cards are rounded on all four corners. GearUI anchors to the edges, which is
+also what the platform sheets these apps sit beside do. Insetting would be the
+more faithful anatomy and remains open; it is a visible change to every sheet
+in three shipping apps, so it belongs in its own commit rather than folded into
+a defect fix.
+
+**49.5dp rows against iOS's 57pt.** Tighter, closer to the 48dp that hybrid
+sheets settled on. Left alone because changing it moves every sheet and there
+is no evidence the current height reads as cramped — unlike the cancel gap,
+which had a measurable defect behind it.
+
 ## 12. Component Family Rollout Order
 
 Design changes should land by component family, not by isolated files:

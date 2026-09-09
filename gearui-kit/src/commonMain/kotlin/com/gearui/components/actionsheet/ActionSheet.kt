@@ -281,6 +281,12 @@ private fun ActionSheetSurface(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
+        // Two cards, not one. The cancel action is not a fifth option, and on a
+        // platform sheet what says so is the backdrop showing between them.
+        // This used to be a single clipped surface with the gap painted
+        // colors.muted: 8dp of a colour 10 luminance levels off the surface it
+        // sat on, which in dark mode read as a hairline, not as a break.
+        Column(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -334,16 +340,26 @@ private fun ActionSheetSurface(
                 }
             }
 
+            // Without a cancel card this card owns the bottom inset.
+            if (!showCancel) {
+                Spacer(modifier = Modifier.height(bottomInset))
+            }
+        }
+
             // Cancel button
             if (showCancel) {
-                // Gap
-                Box(
+                // The gap is left unpainted on purpose: the scrim shows
+                // through it, which is what separates the two cards. Tapping
+                // it reaches the scrim and dismisses, as it should.
+                Spacer(modifier = Modifier.height(Spacing.sm))
+
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(Spacing.sm)
-                        .background(colors.muted)
-                )
-
+                        .clip(OverlayDefaults.sheetShape)
+                        .background(colors.surface)
+                        .clickable { /* 阻止点击穿透 */ }
+                ) {
                 // Cancel button, with press feedback
                 var cancelPressed by remember { mutableStateOf(false) }
                 Box(
@@ -366,10 +382,12 @@ private fun ActionSheetSurface(
                         color = colors.foreground
                     )
                 }
-            }
 
-            // Bottom safe area
-            Spacer(modifier = Modifier.height(bottomInset))
+                    // The bottom inset is painted by whichever card is last, so
+                    // no scrim shows at the home indicator.
+                    Spacer(modifier = Modifier.height(bottomInset))
+                }
+            }
         }
     }
 }

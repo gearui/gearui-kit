@@ -110,7 +110,7 @@ fun NavigatorV1DemoExample(
                 pushNext = { controller.push(DemoRoute.Detail) },
                 pop = { controller.pop() },
                 replaceMe = { controller.replace(DemoRoute.Detail2) },
-                popToMain = { controller.popTo(DemoRoute.Main.routeName) },
+                popToMain = { controller.popTo(DemoRoute.Main) },
             )
 
             DemoRoute.Detail2 -> DetailScreen(
@@ -118,7 +118,7 @@ fun NavigatorV1DemoExample(
                 pushNext = { controller.push(DemoRoute.Detail) },
                 pop = { controller.pop() },
                 replaceMe = null,
-                popToMain = { controller.popTo(DemoRoute.Main.routeName) },
+                popToMain = { controller.popTo(DemoRoute.Main) },
             )
 
             DemoRoute.DirtyEditor -> DirtyEditorScreen(

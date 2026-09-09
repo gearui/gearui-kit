@@ -7,7 +7,11 @@ import androidx.compose.runtime.Stable
  * Public API types for Navigator v1.
  *
  * Design choices (see `gearui-kit/docs/NAVIGATOR_SWIPE_BACK_DESIGN.md`):
- * - Typed params are **not** exposed; callers bridge them with an outer state holder plus [Navigator.onEntryRemoved]
+ * - Routes are typed: Navigator is generic over [NavRoute] and an entry carries its route. Callers no
+ *   longer bridge payloads through an outer state holder.
+ * - Entry identity is Navigator's: keys are generated, never supplied. A caller-supplied key could
+ *   repeat, and the exactly-once removal guard is keyed on it — a repeat would silently skip
+ *   `onEntryRemoved`, saveable-state cleanup and retained-state disposal for the second entry.
  * - SaveableStateHolder is **not** exposed; Navigator manages it internally by [NavEntry.key]
  * - Back handling reuses Kuikly `BackHandler` and its topmost-only semantics, so Navigator must dispose its own handler at the bottom of the stack
  */
@@ -59,7 +63,7 @@ data class NavOptions(
      * already consumed and Navigator keeps **no** continuation; after showing a
      * confirmation the caller calls [NavigatorController.forcePop] to continue, or [NavigatorController.pop] to cancel.
      */
-    val onPopRequest: ((PopRequest<*>) -> PopDecision)? = null,
+    val onPopRequest: ((PopReason) -> PopDecision)? = null,
 ) {
     companion object {
         val Default = NavOptions()
@@ -80,13 +84,6 @@ enum class NavPresentation {
     /** A fullscreen modal such as a task or form sheet. The previous layer does not move with it and edge swipe does not apply. */
     Modal,
 }
-
-/** Context carried with a pop request. */
-@Stable
-data class PopRequest<out R : NavRoute>(
-    val entry: NavEntry<R>,
-    val reason: PopReason,
-)
 
 /** What initiated the pop. */
 enum class PopReason {
@@ -117,14 +114,14 @@ enum class PopDecision { Allow, Deny, Pending }
  * rendered by this layer, and during a transition Navigator renders both current and previous.
  */
 @Stable
-interface NavigatorController<R : NavRoute> {
+sealed interface NavigatorController<R : NavRoute> {
     val current: NavEntry<R>
     val previous: NavEntry<R>?
     val canPop: Boolean
     val isTransitioning: Boolean
 
     /** Options come from the route itself; there is no separate channel for them. */
-    fun push(route: R, key: String? = null)
+    fun push(route: R)
 
     /** Fires [NavOptions.onPopRequest] and pops, refuses or suspends accordingly. Returns false at the bottom of the stack. */
     fun pop(): Boolean
@@ -132,10 +129,16 @@ interface NavigatorController<R : NavRoute> {
     /** Skips [NavOptions.onPopRequest], for continuing after the caller has confirmed a dirty state. Returns false at the bottom of the stack. */
     fun forcePop(): Boolean
 
-    /** Pops to the nearest entry whose [NavRoute.routeName] matches. Returns false if already on top or no match exists. */
-    fun popTo(routeName: String): Boolean
+    /**
+     * Pops to the nearest entry whose [NavRoute.routeName] matches [route].
+     *
+     * Matches on the name rather than on equality, so a route carrying a
+     * payload still finds its page. Returns false if already on top or no match
+     * exists.
+     */
+    fun popTo(route: R): Boolean
 
-    fun replace(route: R, key: String? = null)
+    fun replace(route: R)
 
     /** Clears the stack down to [route]. Every removed entry is disposed. */
     fun resetTo(route: R)

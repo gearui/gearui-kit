@@ -46,9 +46,14 @@ import kotlinx.coroutines.launch
  *    and **only while `canPop = true`** — at the bottom of the stack it must
  *    dispose and hand BACK back to native.
  * 3. A BackHandler registered above Navigator by Dialog / Sheet / ActionSheet
- *    automatically becomes `list.last()` and takes the event first.
- * 4. Typed params are **not** exposed. Callers keep an outer state holder and
- *    clear it in [onEntryRemoved], when the entry is actually gone.
+ *    automatically becomes `list.last()` and takes the event first. OverlayHost
+ *    registers one while an overlay wants BACK, which is what makes that true.
+ * 4. Routes are typed: Navigator is generic over [NavRoute] and an entry carries
+ *    its route, so `entry.route` needs no lookup and a `when` over a sealed
+ *    route type is exhaustive.
+ * 5. Entry keys are generated, never supplied. The exactly-once removal guard is
+ *    keyed on them, so a caller-supplied duplicate would silently skip
+ *    [onEntryRemoved], saveable-state cleanup and retained-state disposal.
  *
  * Commit 2 added the transition layer. A pop renders two layers at once —
  * current (already the old previous) and a snapshot of the outgoing screen —
@@ -72,6 +77,13 @@ import kotlinx.coroutines.launch
  * fixes it at 96dp to clear the leftmost ~24dp where Android's own back gesture
  * takes priority (Phase 0 spike finding). 96dp also works well on iOS.
  */
+/**
+ * Navigator owning its own stack, rooted at [initialRoute].
+ *
+ * Use this when nothing outside the composition needs to navigate. If it does,
+ * hold a [rememberNavigatorController] and use the other overload — passing
+ * both a route and a controller would mean two sources for the same thing.
+ */
 @Composable
 fun <R : NavRoute> Navigator(
     initialRoute: R,
@@ -79,21 +91,45 @@ fun <R : NavRoute> Navigator(
     swipeBackEnabled: Boolean = true,
     handleBack: Boolean = true,
     onEntryRemoved: ((NavEntry<R>) -> Unit)? = null,
-    controller: NavigatorController<R>? = null,
+    content: @Composable EntryScope<R>.(NavEntry<R>) -> Unit,
+) {
+    val controller = rememberNavigatorController(initialRoute)
+    Navigator(
+        controller = controller,
+        modifier = modifier,
+        swipeBackEnabled = swipeBackEnabled,
+        handleBack = handleBack,
+        onEntryRemoved = onEntryRemoved,
+        content = content,
+    )
+}
+
+/**
+ * Navigator driven by a [controller] the caller holds.
+ *
+ * The controller carries the initial route, so there is no second place to
+ * declare it. [NavigatorController] is sealed: it used to be an open interface
+ * that Navigator then narrowed with `as?`, so an outside implementation was
+ * accepted by the signature, silently replaced by an internal one, and the
+ * caller drove a controller nothing rendered — navigation that failed without
+ * an error.
+ */
+@Composable
+fun <R : NavRoute> Navigator(
+    controller: NavigatorController<R>,
+    modifier: Modifier = Modifier,
+    swipeBackEnabled: Boolean = true,
+    handleBack: Boolean = true,
+    onEntryRemoved: ((NavEntry<R>) -> Unit)? = null,
     content: @Composable EntryScope<R>.(NavEntry<R>) -> Unit,
 ) {
     val saveableHolder = rememberSaveableStateHolder()
     val removedRef = rememberUpdatedState(onEntryRemoved)
     val animScope = rememberCoroutineScope()
 
-    // Use the controller when one is passed in (typically from
-    // [rememberNavigatorController]); otherwise remember one internally so older
-    // callers keep working (the sample, and existing Phase 2 call sites).
-    @Suppress("UNCHECKED_CAST")
-    val state: NavigatorState<R> = remember(controller, initialRoute) {
-        (controller as? NavigatorState<R>)
-            ?: NavigatorState(initialRoute = initialRoute)
-    }
+    // Total, not a narrowing: NavigatorState is the only implementation the
+    // sealed interface permits.
+    val state: NavigatorState<R> = controller as NavigatorState<R>
 
     // Inject the Composable-scoped saveable holder, animation scope and
     // onEntryRemoved into the state, and detach on leaving composition — without
@@ -309,11 +345,11 @@ private const val SCRIM_MAX_ALPHA = 0.15f
  *
  * Usage:
  * ```kotlin
- * val nav = rememberNavigatorController("shell")
+ * val nav = rememberNavigatorController(AppRoute.Shell)
  *
  * LaunchedEffect(Unit) {
  *     forcedLogoutEvents.collect {
- *         nav.resetTo("shell")
+ *         nav.resetTo(AppRoute.Shell)
  *         legacyPageStack.clear()
  *     }
  * }
@@ -360,6 +396,18 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         this.removeSaveableState = saveable
         this.onEntryRemovedRef = onEntryRemovedRef
         this.animScope = animScope
+    }
+
+    /**
+     * Test hooks. The stack machine is worth testing without a composition —
+     * key uniqueness, exactly-once removal and the pop-interception branches
+     * are what a refactor breaks quietly — and both of these are otherwise
+     * private.
+     */
+    internal val entriesForTest: List<NavEntry<R>> get() = _entries
+
+    internal fun attachForTest(onEntryRemoved: (NavEntry<R>) -> Unit) {
+        this.onEntryRemovedRef = onEntryRemoved
     }
 
     internal fun detach() {
@@ -447,9 +495,9 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     private val isMidFlight: Boolean
         get() = _moving != null || pendingEntry != null
 
-    override fun push(route: R, key: String?) {
+    override fun push(route: R) {
         if (isMidFlight) return
-        val newKey = key ?: generateKey(route.routeName, keyCounter++)
+        val newKey = generateKey(route.routeName, keyCounter++)
         dismissOverlaysForRouteChange()
         _entries.add(NavEntry<R>(route = route, key = newKey))
     }
@@ -467,9 +515,9 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         return true
     }
 
-    override fun popTo(routeName: String): Boolean {
+    override fun popTo(route: R): Boolean {
         if (isMidFlight) return false
-        val idx = _entries.indexOfLast { it.route.routeName == routeName }
+        val idx = _entries.indexOfLast { it.route.routeName == route.routeName }
         if (idx < 0 || idx == _entries.size - 1) return false
         // Intermediate entries are dropped immediately without animation; only
         // the top one animates out. The top is not removed here — that happens
@@ -482,12 +530,12 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         return true
     }
 
-    override fun replace(route: R, key: String?) {
+    override fun replace(route: R) {
         if (isMidFlight) return
         if (_entries.isEmpty()) return
         val old = _entries.removeAt(_entries.size - 1)
         notifyRemoved(old)
-        val newKey = key ?: generateKey(route.routeName, keyCounter++)
+        val newKey = generateKey(route.routeName, keyCounter++)
         _entries.add(NavEntry(route = route, key = newKey))
     }
 
@@ -513,7 +561,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         if (pendingEntry != null) return false
         if (_moving != null) return false
         val top = _entries.last()
-        val decision = top.options.onPopRequest?.invoke(PopRequest(top, reason)) ?: PopDecision.Allow
+        val decision = top.options.onPopRequest?.invoke(reason) ?: PopDecision.Allow
         return when (decision) {
             PopDecision.Allow -> {
                 startCommitPopAnim(top)

@@ -951,24 +951,6 @@ abstract interface <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/En
     abstract fun <#A1: kotlin/Any> retain(kotlin/String = ..., kotlin/Function0<#A1>): #A1 // com.gearui.navigation/EntryScope.retain|retain(kotlin.String;kotlin.Function0<0:0>){0§<kotlin.Any>}[0]
 }
 
-abstract interface <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/NavigatorController { // com.gearui.navigation/NavigatorController|null[0]
-    abstract val canPop // com.gearui.navigation/NavigatorController.canPop|{}canPop[0]
-        abstract fun <get-canPop>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.canPop.<get-canPop>|<get-canPop>(){}[0]
-    abstract val current // com.gearui.navigation/NavigatorController.current|{}current[0]
-        abstract fun <get-current>(): com.gearui.navigation/NavEntry<#A> // com.gearui.navigation/NavigatorController.current.<get-current>|<get-current>(){}[0]
-    abstract val isTransitioning // com.gearui.navigation/NavigatorController.isTransitioning|{}isTransitioning[0]
-        abstract fun <get-isTransitioning>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.isTransitioning.<get-isTransitioning>|<get-isTransitioning>(){}[0]
-    abstract val previous // com.gearui.navigation/NavigatorController.previous|{}previous[0]
-        abstract fun <get-previous>(): com.gearui.navigation/NavEntry<#A>? // com.gearui.navigation/NavigatorController.previous.<get-previous>|<get-previous>(){}[0]
-
-    abstract fun forcePop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.forcePop|forcePop(){}[0]
-    abstract fun pop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.pop|pop(){}[0]
-    abstract fun popTo(kotlin/String): kotlin/Boolean // com.gearui.navigation/NavigatorController.popTo|popTo(kotlin.String){}[0]
-    abstract fun push(#A, kotlin/String? = ...) // com.gearui.navigation/NavigatorController.push|push(1:0;kotlin.String?){}[0]
-    abstract fun replace(#A, kotlin/String? = ...) // com.gearui.navigation/NavigatorController.replace|replace(1:0;kotlin.String?){}[0]
-    abstract fun resetTo(#A) // com.gearui.navigation/NavigatorController.resetTo|resetTo(1:0){}[0]
-}
-
 abstract interface com.gearui.components.form/FormScope { // com.gearui.components.form/FormScope|null[0]
     abstract val formState // com.gearui.components.form/FormScope.formState|{}formState[0]
         abstract fun <get-formState>(): com.gearui.components.form/FormState // com.gearui.components.form/FormScope.formState.<get-formState>|<get-formState>(){}[0]
@@ -1013,6 +995,24 @@ abstract interface com.gearui.navigation/NavRoute { // com.gearui.navigation/Nav
 
 abstract interface com.gearui.system/StatusBarController { // com.gearui.system/StatusBarController|null[0]
     abstract fun setStatusBarColor(com.tencent.kuikly.compose.ui.graphics/Color, kotlin/Boolean) // com.gearui.system/StatusBarController.setStatusBarColor|setStatusBarColor(com.tencent.kuikly.compose.ui.graphics.Color;kotlin.Boolean){}[0]
+}
+
+sealed interface <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/NavigatorController { // com.gearui.navigation/NavigatorController|null[0]
+    abstract val canPop // com.gearui.navigation/NavigatorController.canPop|{}canPop[0]
+        abstract fun <get-canPop>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.canPop.<get-canPop>|<get-canPop>(){}[0]
+    abstract val current // com.gearui.navigation/NavigatorController.current|{}current[0]
+        abstract fun <get-current>(): com.gearui.navigation/NavEntry<#A> // com.gearui.navigation/NavigatorController.current.<get-current>|<get-current>(){}[0]
+    abstract val isTransitioning // com.gearui.navigation/NavigatorController.isTransitioning|{}isTransitioning[0]
+        abstract fun <get-isTransitioning>(): kotlin/Boolean // com.gearui.navigation/NavigatorController.isTransitioning.<get-isTransitioning>|<get-isTransitioning>(){}[0]
+    abstract val previous // com.gearui.navigation/NavigatorController.previous|{}previous[0]
+        abstract fun <get-previous>(): com.gearui.navigation/NavEntry<#A>? // com.gearui.navigation/NavigatorController.previous.<get-previous>|<get-previous>(){}[0]
+
+    abstract fun forcePop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.forcePop|forcePop(){}[0]
+    abstract fun pop(): kotlin/Boolean // com.gearui.navigation/NavigatorController.pop|pop(){}[0]
+    abstract fun popTo(#A): kotlin/Boolean // com.gearui.navigation/NavigatorController.popTo|popTo(1:0){}[0]
+    abstract fun push(#A) // com.gearui.navigation/NavigatorController.push|push(1:0){}[0]
+    abstract fun replace(#A) // com.gearui.navigation/NavigatorController.replace|replace(1:0){}[0]
+    abstract fun resetTo(#A) // com.gearui.navigation/NavigatorController.resetTo|resetTo(1:0){}[0]
 }
 
 abstract class com.gearui/View : com.tencent.kuikly.compose/ComposeContainer { // com.gearui/View|null[0]
@@ -1129,22 +1129,6 @@ final class <#A: out com.gearui.navigation/NavRoute> com.gearui.navigation/NavEn
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/NavEntry.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.navigation/NavEntry.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.navigation/NavEntry.toString|toString(){}[0]
-}
-
-final class <#A: out com.gearui.navigation/NavRoute> com.gearui.navigation/PopRequest { // com.gearui.navigation/PopRequest|null[0]
-    constructor <init>(com.gearui.navigation/NavEntry<#A>, com.gearui.navigation/PopReason) // com.gearui.navigation/PopRequest.<init>|<init>(com.gearui.navigation.NavEntry<1:0>;com.gearui.navigation.PopReason){}[0]
-
-    final val entry // com.gearui.navigation/PopRequest.entry|{}entry[0]
-        final fun <get-entry>(): com.gearui.navigation/NavEntry<#A> // com.gearui.navigation/PopRequest.entry.<get-entry>|<get-entry>(){}[0]
-    final val reason // com.gearui.navigation/PopRequest.reason|{}reason[0]
-        final fun <get-reason>(): com.gearui.navigation/PopReason // com.gearui.navigation/PopRequest.reason.<get-reason>|<get-reason>(){}[0]
-
-    final fun component1(): com.gearui.navigation/NavEntry<#A> // com.gearui.navigation/PopRequest.component1|component1(){}[0]
-    final fun component2(): com.gearui.navigation/PopReason // com.gearui.navigation/PopRequest.component2|component2(){}[0]
-    final fun copy(com.gearui.navigation/NavEntry<#A> = ..., com.gearui.navigation/PopReason = ...): com.gearui.navigation/PopRequest<#A> // com.gearui.navigation/PopRequest.copy|copy(com.gearui.navigation.NavEntry<1:0>;com.gearui.navigation.PopReason){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/PopRequest.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // com.gearui.navigation/PopRequest.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // com.gearui.navigation/PopRequest.toString|toString(){}[0]
 }
 
 final class com.gearui.components.actionsheet/ActionSheetItem { // com.gearui.components.actionsheet/ActionSheetItem|null[0]
@@ -3006,10 +2990,10 @@ final class com.gearui.i18n/ThemeStringsPatch { // com.gearui.i18n/ThemeStringsP
 }
 
 final class com.gearui.navigation/NavOptions { // com.gearui.navigation/NavOptions|null[0]
-    constructor <init>(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopRequest<*>, com.gearui.navigation/PopDecision>? = ...) // com.gearui.navigation/NavOptions.<init>|<init>(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopRequest<*>,com.gearui.navigation.PopDecision>?){}[0]
+    constructor <init>(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopReason, com.gearui.navigation/PopDecision>? = ...) // com.gearui.navigation/NavOptions.<init>|<init>(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopReason,com.gearui.navigation.PopDecision>?){}[0]
 
     final val onPopRequest // com.gearui.navigation/NavOptions.onPopRequest|{}onPopRequest[0]
-        final fun <get-onPopRequest>(): kotlin/Function1<com.gearui.navigation/PopRequest<*>, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.onPopRequest.<get-onPopRequest>|<get-onPopRequest>(){}[0]
+        final fun <get-onPopRequest>(): kotlin/Function1<com.gearui.navigation/PopReason, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.onPopRequest.<get-onPopRequest>|<get-onPopRequest>(){}[0]
     final val presentation // com.gearui.navigation/NavOptions.presentation|{}presentation[0]
         final fun <get-presentation>(): com.gearui.navigation/NavPresentation // com.gearui.navigation/NavOptions.presentation.<get-presentation>|<get-presentation>(){}[0]
     final val swipeBackEnabled // com.gearui.navigation/NavOptions.swipeBackEnabled|{}swipeBackEnabled[0]
@@ -3020,8 +3004,8 @@ final class com.gearui.navigation/NavOptions { // com.gearui.navigation/NavOptio
     final fun component1(): kotlin/Boolean // com.gearui.navigation/NavOptions.component1|component1(){}[0]
     final fun component2(): com.gearui.navigation/NavTransition // com.gearui.navigation/NavOptions.component2|component2(){}[0]
     final fun component3(): com.gearui.navigation/NavPresentation // com.gearui.navigation/NavOptions.component3|component3(){}[0]
-    final fun component4(): kotlin/Function1<com.gearui.navigation/PopRequest<*>, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.component4|component4(){}[0]
-    final fun copy(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopRequest<*>, com.gearui.navigation/PopDecision>? = ...): com.gearui.navigation/NavOptions // com.gearui.navigation/NavOptions.copy|copy(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopRequest<*>,com.gearui.navigation.PopDecision>?){}[0]
+    final fun component4(): kotlin/Function1<com.gearui.navigation/PopReason, com.gearui.navigation/PopDecision>? // com.gearui.navigation/NavOptions.component4|component4(){}[0]
+    final fun copy(kotlin/Boolean = ..., com.gearui.navigation/NavTransition = ..., com.gearui.navigation/NavPresentation = ..., kotlin/Function1<com.gearui.navigation/PopReason, com.gearui.navigation/PopDecision>? = ...): com.gearui.navigation/NavOptions // com.gearui.navigation/NavOptions.copy|copy(kotlin.Boolean;com.gearui.navigation.NavTransition;com.gearui.navigation.NavPresentation;kotlin.Function1<com.gearui.navigation.PopReason,com.gearui.navigation.PopDecision>?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.navigation/NavOptions.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.navigation/NavOptions.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.navigation/NavOptions.toString|toString(){}[0]
@@ -4590,7 +4574,6 @@ final val com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop // com
 final val com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop // com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop|#static{}com_gearui_navigation_NavLayer$stableprop[0]
 final val com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop // com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop|#static{}com_gearui_navigation_NavOptions$stableprop[0]
 final val com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop // com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop|#static{}com_gearui_navigation_NavigatorState$stableprop[0]
-final val com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop // com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop|#static{}com_gearui_navigation_PopRequest$stableprop[0]
 final val com.gearui.navigation/com_gearui_navigation_RetainedEntry$stableprop // com.gearui.navigation/com_gearui_navigation_RetainedEntry$stableprop|#static{}com_gearui_navigation_RetainedEntry$stableprop[0]
 final val com.gearui.navigation/com_gearui_navigation_RetainedEntryStore$stableprop // com.gearui.navigation/com_gearui_navigation_RetainedEntryStore$stableprop|#static{}com_gearui_navigation_RetainedEntryStore$stableprop[0]
 final val com.gearui.overlay/LocalOverlayController // com.gearui.overlay/LocalOverlayController|{}LocalOverlayController[0]
@@ -4676,7 +4659,8 @@ final fun (com.gearui.i18n/Strings).com.gearui.i18n/merge(com.gearui.i18n/String
 final fun (com.gearui.i18n/ThemeStrings).com.gearui.i18n/merge(com.gearui.i18n/ThemeStringsPatch?): com.gearui.i18n/ThemeStrings // com.gearui.i18n/merge|merge@com.gearui.i18n.ThemeStrings(com.gearui.i18n.ThemeStringsPatch?){}[0]
 final fun (com.tencent.kuikly.compose.ui/Modifier).com.gearui.gestures/swipeBack(kotlin/Boolean = ..., com.gearui.gestures/SwipeBackConfig = ..., kotlin/Function0<kotlin/Unit>? = ..., kotlin/Function2<kotlin/Float, kotlin/Float, kotlin/Unit>? = ..., kotlin/Function0<kotlin/Unit>? = ..., kotlin/Function0<kotlin/Unit>): com.tencent.kuikly.compose.ui/Modifier // com.gearui.gestures/swipeBack|swipeBack@com.tencent.kuikly.compose.ui.Modifier(kotlin.Boolean;com.gearui.gestures.SwipeBackConfig;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<kotlin.Float,kotlin.Float,kotlin.Unit>?;kotlin.Function0<kotlin.Unit>?;kotlin.Function0<kotlin.Unit>){}[0]
 final fun (kotlin/String).com.gearui.i18n/formatArgs(kotlin/Array<out kotlin/Pair<kotlin/String, kotlin/Any?>>...): kotlin/String // com.gearui.i18n/formatArgs|formatArgs@kotlin.String(kotlin.Array<out|kotlin.Pair<kotlin.String,kotlin.Any?>>...){}[0]
-final fun <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/Navigator(#A, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Boolean, kotlin/Function1<com.gearui.navigation/NavEntry<#A>, kotlin/Unit>?, com.gearui.navigation/NavigatorController<#A>?, kotlin/Function4<com.gearui.navigation/EntryScope<#A>, com.gearui.navigation/NavEntry<#A>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.navigation/Navigator|Navigator(0:0;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Boolean;kotlin.Function1<com.gearui.navigation.NavEntry<0:0>,kotlin.Unit>?;com.gearui.navigation.NavigatorController<0:0>?;kotlin.Function4<com.gearui.navigation.EntryScope<0:0>,com.gearui.navigation.NavEntry<0:0>,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<com.gearui.navigation.NavRoute>}[0]
+final fun <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/Navigator(#A, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Boolean, kotlin/Function1<com.gearui.navigation/NavEntry<#A>, kotlin/Unit>?, kotlin/Function4<com.gearui.navigation/EntryScope<#A>, com.gearui.navigation/NavEntry<#A>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.navigation/Navigator|Navigator(0:0;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Boolean;kotlin.Function1<com.gearui.navigation.NavEntry<0:0>,kotlin.Unit>?;kotlin.Function4<com.gearui.navigation.EntryScope<0:0>,com.gearui.navigation.NavEntry<0:0>,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<com.gearui.navigation.NavRoute>}[0]
+final fun <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/Navigator(com.gearui.navigation/NavigatorController<#A>, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Boolean, kotlin/Function1<com.gearui.navigation/NavEntry<#A>, kotlin/Unit>?, kotlin/Function4<com.gearui.navigation/EntryScope<#A>, com.gearui.navigation/NavEntry<#A>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.navigation/Navigator|Navigator(com.gearui.navigation.NavigatorController<0:0>;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Boolean;kotlin.Function1<com.gearui.navigation.NavEntry<0:0>,kotlin.Unit>?;kotlin.Function4<com.gearui.navigation.EntryScope<0:0>,com.gearui.navigation.NavEntry<0:0>,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<com.gearui.navigation.NavRoute>}[0]
 final fun <#A: com.gearui.navigation/NavRoute> com.gearui.navigation/rememberNavigatorController(#A, androidx.compose.runtime/Composer?, kotlin/Int): com.gearui.navigation/NavigatorController<#A> // com.gearui.navigation/rememberNavigatorController|rememberNavigatorController(0:0;androidx.compose.runtime.Composer?;kotlin.Int){0§<com.gearui.navigation.NavRoute>}[0]
 final fun <#A: kotlin/Any?> com.gearui.components.radio/RadioCardGroup(kotlin.collections/List<#A>, #A?, kotlin/Function1<#A, kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Function1<#A, kotlin/String>?, kotlin/Function1<#A, kotlin/String>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.radio/RadioCardGroup|RadioCardGroup(kotlin.collections.List<0:0>;0:0?;kotlin.Function1<0:0,kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Function1<0:0,kotlin.String>?;kotlin.Function1<0:0,kotlin.String>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<kotlin.Any?>}[0]
 final fun <#A: kotlin/Any?> com.gearui.components.radio/RadioGroup(kotlin.collections/List<#A>, #A?, kotlin/Function1<#A, kotlin/Unit>, com.tencent.kuikly.compose.ui/Modifier?, kotlin/Boolean, kotlin/Function1<#A, kotlin/String>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.gearui.components.radio/RadioGroup|RadioGroup(kotlin.collections.List<0:0>;0:0?;kotlin.Function1<0:0,kotlin.Unit>;com.tencent.kuikly.compose.ui.Modifier?;kotlin.Boolean;kotlin.Function1<0:0,kotlin.String>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<kotlin.Any?>}[0]
@@ -5006,7 +4990,6 @@ final fun com.gearui.navigation/com_gearui_navigation_NavEntry$stableprop_getter
 final fun com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavLayer$stableprop_getter|com_gearui_navigation_NavLayer$stableprop_getter(){}[0]
 final fun com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavOptions$stableprop_getter|com_gearui_navigation_NavOptions$stableprop_getter(){}[0]
 final fun com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_NavigatorState$stableprop_getter|com_gearui_navigation_NavigatorState$stableprop_getter(){}[0]
-final fun com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_PopRequest$stableprop_getter|com_gearui_navigation_PopRequest$stableprop_getter(){}[0]
 final fun com.gearui.navigation/com_gearui_navigation_RetainedEntry$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_RetainedEntry$stableprop_getter|com_gearui_navigation_RetainedEntry$stableprop_getter(){}[0]
 final fun com.gearui.navigation/com_gearui_navigation_RetainedEntryStore$stableprop_getter(): kotlin/Int // com.gearui.navigation/com_gearui_navigation_RetainedEntryStore$stableprop_getter|com_gearui_navigation_RetainedEntryStore$stableprop_getter(){}[0]
 final fun com.gearui.overlay/OverlayHost(com.gearui.overlay/OverlayController, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // com.gearui.overlay/OverlayHost|OverlayHost(com.gearui.overlay.OverlayController;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]

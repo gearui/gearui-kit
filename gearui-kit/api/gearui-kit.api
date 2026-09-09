@@ -3487,16 +3487,15 @@ public abstract interface class com/gearui/navigation/NavigatorController {
 	public abstract fun getPrevious ()Lcom/gearui/navigation/NavEntry;
 	public abstract fun isTransitioning ()Z
 	public abstract fun pop ()Z
-	public abstract fun popTo (Ljava/lang/String;)Z
-	public abstract fun push (Lcom/gearui/navigation/NavRoute;Ljava/lang/String;)V
-	public static synthetic fun push$default (Lcom/gearui/navigation/NavigatorController;Lcom/gearui/navigation/NavRoute;Ljava/lang/String;ILjava/lang/Object;)V
-	public abstract fun replace (Lcom/gearui/navigation/NavRoute;Ljava/lang/String;)V
-	public static synthetic fun replace$default (Lcom/gearui/navigation/NavigatorController;Lcom/gearui/navigation/NavRoute;Ljava/lang/String;ILjava/lang/Object;)V
+	public abstract fun popTo (Lcom/gearui/navigation/NavRoute;)Z
+	public abstract fun push (Lcom/gearui/navigation/NavRoute;)V
+	public abstract fun replace (Lcom/gearui/navigation/NavRoute;)V
 	public abstract fun resetTo (Lcom/gearui/navigation/NavRoute;)V
 }
 
 public final class com/gearui/navigation/NavigatorKt {
-	public static final fun Navigator (Lcom/gearui/navigation/NavRoute;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLkotlin/jvm/functions/Function1;Lcom/gearui/navigation/NavigatorController;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Navigator (Lcom/gearui/navigation/NavRoute;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Navigator (Lcom/gearui/navigation/NavigatorController;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
 	public static final fun rememberNavigatorController (Lcom/gearui/navigation/NavRoute;Landroidx/compose/runtime/Composer;I)Lcom/gearui/navigation/NavigatorController;
 }
 
@@ -3516,20 +3515,6 @@ public final class com/gearui/navigation/PopReason : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/navigation/PopReason;
 	public static fun values ()[Lcom/gearui/navigation/PopReason;
-}
-
-public final class com/gearui/navigation/PopRequest {
-	public static final field $stable I
-	public fun <init> (Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;)V
-	public final fun component1 ()Lcom/gearui/navigation/NavEntry;
-	public final fun component2 ()Lcom/gearui/navigation/PopReason;
-	public final fun copy (Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;)Lcom/gearui/navigation/PopRequest;
-	public static synthetic fun copy$default (Lcom/gearui/navigation/PopRequest;Lcom/gearui/navigation/NavEntry;Lcom/gearui/navigation/PopReason;ILjava/lang/Object;)Lcom/gearui/navigation/PopRequest;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEntry ()Lcom/gearui/navigation/NavEntry;
-	public final fun getReason ()Lcom/gearui/navigation/PopReason;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/gearui/navigation/TabHostKt {

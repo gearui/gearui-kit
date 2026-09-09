@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.sidebar
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -338,9 +341,9 @@ fun ContentListItem() {
                 .background(colors.muted),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "📷",
-                style = Theme.typography.titleMedium
+            Icon(
+                name = Icons.camera,
+                size = IconSizes.Default.md
             )
         }
 
@@ -417,9 +420,9 @@ private fun GridItem(
                 .background(colors.muted),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "📷",
-                style = Theme.typography.titleMedium
+            Icon(
+                name = Icons.camera,
+                size = IconSizes.Default.md
             )
         }
 

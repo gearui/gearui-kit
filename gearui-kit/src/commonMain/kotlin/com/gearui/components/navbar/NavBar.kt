@@ -306,19 +306,17 @@ private fun NavBarIconButton(
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (icon in Icons.all) {
-            Icon(
-                name = icon,
-                size = IconSizes.Default.xl,
-                tint = iconColor
-            )
-        } else {
-            Text(
-                text = icon,
-                style = Theme.typography.titleLarge,
-                color = iconColor
-            )
-        }
+        // One rendering path, not two. This used to fall back to
+        // `Text(text = icon)` when the name was not in `Icons.all`, which made
+        // the same parameter mean two different things and invited exactly what
+        // `check_emoji_as_icon` forbids — the sample passed "⋯" eight times.
+        // It also hid typos: `icon = "chat_circl"` drew the literal string in
+        // the nav bar rather than failing visibly.
+        Icon(
+            name = icon,
+            size = IconSizes.Default.xl,
+            tint = iconColor
+        )
     }
 }
 

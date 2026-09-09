@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.badge
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -753,9 +756,9 @@ private fun IconBox() {
             .background(colors.muted),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "🔔",
-            style = Theme.typography.bodySmall
+        Icon(
+            name = Icons.bell,
+            size = IconSizes.Default.sm
         )
     }
 }
@@ -773,9 +776,9 @@ private fun LargeIconBox(showShopIcon: Boolean = false) {
             .background(colors.muted),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = if (showShopIcon) "🛒" else "🔔",
-            style = Theme.typography.titleMedium
+        Icon(
+            name = if (showShopIcon) Icons.bookmark_simple else Icons.bell,
+            size = IconSizes.Default.md
         )
     }
 }
@@ -793,9 +796,9 @@ private fun AvatarBox(size: Int) {
             .background(colors.primary.copy(alpha = 0.2f)),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "👤",
-            style = if (size >= 48) Theme.typography.titleLarge else Theme.typography.titleMedium
+        Icon(
+            name = Icons.user,
+            size = if (size >= 48) IconSizes.Default.xl else IconSizes.Default.md
         )
     }
 }

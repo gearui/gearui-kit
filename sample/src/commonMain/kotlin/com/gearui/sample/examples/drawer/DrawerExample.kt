@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.drawer
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -36,7 +37,12 @@ fun DrawerExample(
     }
 
     // Menu items with icons
-    val icons = listOf("🏠", "👤", "⚙️", "📱", "💬", "🔔", "📊", "📁", "🔍", "❤️", "⭐", "📝", "🎵", "📷", "🎮")
+    val icons = listOf(
+        Icons.house, Icons.user, Icons.gear, Icons.phone, Icons.chat_circle,
+        Icons.bell, Icons.clock, Icons.copy, Icons.magnifying_glass,
+        Icons.heart, Icons.star, Icons.pencil_simple, Icons.image, Icons.camera,
+        Icons.play_fill,
+    )
     val iconMenuItems = List(15) { index ->
         DrawerItem(
             title = "菜单${index + 1}",

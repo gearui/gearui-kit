@@ -1,5 +1,10 @@
 package com.gearui.sample.examples.navbar
 
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.Spacer
+import com.tencent.kuikly.compose.foundation.layout.width
 import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -75,7 +80,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "⋯",
+                            icon = Icons.dots_three,
                             onClick = { Toast.show("更多") }
                         )
                     )
@@ -127,11 +132,11 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "⌂",
+                            icon = Icons.house,
                             onClick = { Toast.show("主页") }
                         ),
                         NavBarItem(
-                            icon = "⋯",
+                            icon = Icons.dots_three,
                             onClick = { Toast.show("更多") }
                         )
                     )
@@ -167,11 +172,19 @@ fun NavbarExample(
                                 .padding(horizontal = 12.dp),
                             contentAlignment = Alignment.CenterStart
                         ) {
-                            Text(
-                                text = "🔍 搜索",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.mutedForeground
-                            )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    name = Icons.magnifying_glass,
+                                    size = IconSizes.Default.md,
+                                    tint = colors.mutedForeground
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = "搜索",
+                                    style = Theme.typography.bodyMedium,
+                                    color = colors.mutedForeground
+                                )
+                            }
                         }
                     }
                 )
@@ -234,7 +247,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "⋯",
+                            icon = Icons.dots_three,
                             onClick = { Toast.show("更多") }
                         )
                     )
@@ -261,7 +274,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "⋯",
+                            icon = Icons.dots_three,
                             onClick = { Toast.show("更多") }
                         )
                     )
@@ -288,7 +301,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "⋯",
+                            icon = Icons.dots_three,
                             onClick = { Toast.show("更多") }
                         )
                     ),
@@ -332,7 +345,7 @@ fun NavbarExample(
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(
                             NavBarItem(
-                                icon = "⋯",
+                                icon = Icons.dots_three,
                                 iconColor = colors.primaryForeground,
                                 onClick = { Toast.show("更多") }
                             )
@@ -354,7 +367,7 @@ fun NavbarExample(
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(
                             NavBarItem(
-                                icon = "⋯",
+                                icon = Icons.dots_three,
                                 iconColor = colors.primaryForeground,
                                 onClick = { Toast.show("更多") }
                             )
@@ -376,7 +389,7 @@ fun NavbarExample(
                         onBackClick = { Toast.show("返回") },
                         rightItems = listOf(
                             NavBarItem(
-                                icon = "⋯",
+                                icon = Icons.dots_three,
                                 onClick = { Toast.show("更多") }
                             )
                         )

@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.tour
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -282,10 +285,10 @@ fun TourExample(
                                     .background(colors.surface),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = "⚙",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.mutedForeground
+                                Icon(
+                                    name = Icons.gear,
+                                    size = IconSizes.Default.sm,
+                                    tint = colors.mutedForeground,
                                 )
                             }
                         }

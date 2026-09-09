@@ -1,5 +1,8 @@
 package com.gearui.components.backtop
 
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.primitives.Icon
+import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.animation.AnimatedVisibility
 import com.tencent.kuikly.compose.animation.fadeIn
 import com.tencent.kuikly.compose.animation.fadeOut
@@ -78,7 +81,13 @@ fun BackTop(
     style: BackTopStyle = BackTopStyle.CIRCLE,
     theme: BackTopTheme = BackTopTheme.LIGHT,
     showText: Boolean = false,
-    icon: String = "↑",
+    /**
+     * An `Icons.*` key, not a glyph. The default used to be the literal "↑",
+     * drawn through `Text()` — so it ignored the icon scale, rendered from
+     * whichever font the platform picked, and made this the third component
+     * (after ActionSheet and NavBar) whose icon parameter meant "text".
+     */
+    icon: String = Icons.caret_up,
     text: String = I18n.strings.common.backToTop,
     offset: Pair<Dp, Dp> = 16.dp to 16.dp // (right, bottom)
 ) {
@@ -130,10 +139,10 @@ fun BackTop(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                text = icon,
-                                style = Theme.typography.bodySmall,
-                                color = contentColor
+                            Icon(
+                                name = icon,
+                                size = IconSizes.Default.md,
+                                tint = contentColor
                             )
                             Text(
                                 text = text,
@@ -142,10 +151,10 @@ fun BackTop(
                             )
                         }
                     } else {
-                        Text(
-                            text = icon,
-                            style = Theme.typography.headlineSmall,
-                            color = contentColor
+                        Icon(
+                            name = icon,
+                            size = IconSizes.Default.xl,
+                            tint = contentColor
                         )
                     }
                 }
@@ -178,10 +187,10 @@ fun BackTop(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                text = icon,
-                                style = Theme.typography.bodyExtraSmall,
-                                color = contentColor
+                            Icon(
+                                name = icon,
+                                size = IconSizes.Default.sm,
+                                tint = contentColor
                             )
                             Text(
                                 text = text,
@@ -190,10 +199,10 @@ fun BackTop(
                             )
                         }
                     } else {
-                        Text(
-                            text = icon,
-                            style = Theme.typography.bodyMedium,
-                            color = contentColor
+                        Icon(
+                            name = icon,
+                            size = IconSizes.Default.md,
+                            tint = contentColor
                         )
                     }
                 }

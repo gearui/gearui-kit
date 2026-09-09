@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.table
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -266,16 +269,18 @@ fun TableExample(
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
-                                Text(
-                                    text = "📤",
-                                    style = Theme.typography.bodyLarge,
+                                Icon(
+                                    name = Icons.upload_simple,
+                                    size = IconSizes.Default.md,
+                                    tint = Theme.colors.foreground,
                                     modifier = Modifier.clickable {
                                         Toast.show("上传第 ${index + 1} 行")
                                     }
                                 )
-                                Text(
-                                    text = "🗑️",
-                                    style = Theme.typography.bodyLarge,
+                                Icon(
+                                    name = Icons.trash,
+                                    size = IconSizes.Default.md,
+                                    tint = Theme.colors.foreground,
                                     modifier = Modifier.clickable {
                                         Toast.show("删除第 ${index + 1} 行")
                                     }

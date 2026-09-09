@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.input
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -166,9 +169,10 @@ fun InputExample(
                     label = "标签文字",
                     placeholder = "请输入文字",
                     suffix = {
-                        Text(
-                            text = "👤",
-                            style = Theme.typography.bodyLarge,
+                        Icon(
+                            name = Icons.user,
+                            size = IconSizes.Default.md,
+                            tint = Theme.colors.foreground,
                             modifier = Modifier.clickable { Toast.show("点击图标") }
                         )
                     }
@@ -189,9 +193,10 @@ fun InputExample(
                     label = "标签文字",
                     placeholder = "请输入文字",
                     prefix = {
-                        Text(
-                            text = "📱",
-                            style = Theme.typography.bodyMedium
+                        Icon(
+                            name = Icons.phone,
+                            size = IconSizes.Default.sm,
+                            tint = Theme.colors.foreground,
                         )
                     }
                 )
@@ -202,9 +207,10 @@ fun InputExample(
                     onValueChange = { value2 = it },
                     placeholder = "请输入文字",
                     prefix = {
-                        Text(
-                            text = "🔍",
-                            style = Theme.typography.bodyMedium
+                        Icon(
+                            name = Icons.magnifying_glass,
+                            size = IconSizes.Default.sm,
+                            tint = Theme.colors.foreground,
                         )
                     }
                 )
@@ -227,9 +233,9 @@ fun InputExample(
                     placeholder = "请输入密码",
                     isPassword = !showPassword,
                     suffix = {
-                        Text(
-                            text = if (showPassword) "👁" else "👁‍🗨",
-                            style = Theme.typography.bodyLarge,
+                        Icon(
+                            name = if (showPassword) Icons.eye else Icons.eye_slash,
+                            size = IconSizes.Default.md,
                             modifier = Modifier.clickable { showPassword = !showPassword }
                         )
                     }
@@ -439,9 +445,10 @@ fun InputExample(
                 placeholder = "请输入文字",
                 labelPosition = "top",
                 suffix = {
-                    Text(
-                        text = "⚠️",
-                        style = Theme.typography.bodyLarge,
+                    Icon(
+                        name = Icons.warning,
+                        size = IconSizes.Default.md,
+                        tint = Theme.colors.foreground,
                         modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
                     )
                 }
@@ -490,9 +497,10 @@ fun InputExample(
                     placeholder = "请输入文字",
                     cardStyle = true,
                     suffix = {
-                        Text(
-                            text = "⚠️",
-                            style = Theme.typography.bodyLarge,
+                        Icon(
+                            name = Icons.warning,
+                            size = IconSizes.Default.md,
+                            tint = Theme.colors.foreground,
                             modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
                         )
                     }

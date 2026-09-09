@@ -62,6 +62,8 @@ object Icons {
     const val dots_three_vertical = "dots_three_vertical"
     const val download_simple = "download_simple"
     const val envelope_simple = "envelope_simple"
+    const val eye = "eye"
+    const val eye_slash = "eye_slash"
     const val faders = "faders"
     const val flag = "flag"
     const val gear = "gear"
@@ -159,6 +161,8 @@ object Icons {
         dots_three_vertical,
         download_simple,
         envelope_simple,
+        eye,
+        eye_slash,
         faders,
         flag,
         gear,

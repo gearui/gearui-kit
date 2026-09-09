@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.popup
 
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -401,10 +404,10 @@ fun PopupExample(
                             color = colors.foreground,
                             modifier = Modifier.align(Alignment.Center)
                         )
-                        Text(
-                            text = "✕",
-                            style = Theme.typography.titleMedium,
-                            color = colors.mutedForeground,
+                        Icon(
+                            name = Icons.x,
+                            size = IconSizes.Default.md,
+                            tint = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .clickable { showBottomWithTitleAndClose = false }
@@ -451,10 +454,10 @@ fun PopupExample(
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 12.dp)
                     ) {
-                        Text(
-                            text = "✕",
-                            style = Theme.typography.titleMedium,
-                            color = colors.mutedForeground,
+                        Icon(
+                            name = Icons.x,
+                            size = IconSizes.Default.md,
+                            tint = colors.mutedForeground,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .clickable { showBottomWithClose = false }
@@ -546,10 +549,10 @@ fun PopupExample(
                         .background(colors.surface)
                 ) {
                     // Close button
-                    Text(
-                        text = "✕",
-                        style = Theme.typography.titleMedium,
-                        color = colors.mutedForeground,
+                    Icon(
+                        name = Icons.x,
+                        size = IconSizes.Default.md,
+                        tint = colors.mutedForeground,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(12.dp)
@@ -591,10 +594,10 @@ fun PopupExample(
                             .background(colors.surface)
                     )
                     // Close button
-                    Text(
-                        text = "✕",
-                        style = Theme.typography.titleLarge,
-                        color = colors.primaryForeground,
+                    Icon(
+                        name = Icons.x,
+                        size = IconSizes.Default.lg,
+                        tint = colors.primaryForeground,
                         modifier = Modifier.clickable { showCenterWithUnderClose = false }
                     )
                 }

@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.sidebar
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -37,8 +38,13 @@ fun SidebarUnselectedColorPage(onBack: () -> Unit) {
     var scrollLock by remember { mutableStateOf(false) }
 
     // Icon list
-    val icons = listOf("🏠", "📂", "🛒", "📋", "👤", "⚙️", "❓", "ℹ️", "🔔", "❤️",
-        "⭐", "📌", "🎯", "💡", "🔧", "📊", "📈", "🗂️", "📁", "🔍")
+    val icons = listOf(
+        Icons.house, Icons.users, Icons.bookmark_simple, Icons.list,
+        Icons.user, Icons.gear, Icons.question, Icons.info, Icons.bell, Icons.heart,
+        Icons.star, Icons.flag, Icons.check_square, Icons.warning_circle,
+        Icons.faders, Icons.calendar_blank, Icons.upload_simple, Icons.copy,
+        Icons.paperclip, Icons.magnifying_glass,
+    )
 
     // Data version (used to trigger updates)
     var dataVersion by remember { mutableStateOf(0) }

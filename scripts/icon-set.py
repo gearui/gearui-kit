@@ -16,6 +16,10 @@ states with it, which is only:
   bookmark-simple / bookmark-simple-fill   privchat-ui's Pin and Unpin
   play-fill                           a solid triangle is the play affordance
 
+`eye` / `eye-slash` are here because a password field's show/hide toggle is a
+standard affordance with no icon behind it — the sample was demonstrating it
+with 👁 and 👁‍🗨.
+
 Adding an icon means adding a line here and rerunning gen_icons.py. Adding one
 *for an application* means dropping a PNG into that app's own assets/icons/,
 which needs nothing from this file — see DESIGN_SYSTEM_SPEC 11.4.
@@ -60,6 +64,8 @@ ICONS = [
     ('dots-three-vertical', 'regular'),
     ('download-simple', 'regular'),
     ('envelope-simple', 'regular'),
+    ('eye', 'regular'),
+    ('eye-slash', 'regular'),
     ('faders', 'regular'),
     ('flag', 'regular'),
     ('gear', 'regular'),

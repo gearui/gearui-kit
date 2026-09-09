@@ -70,6 +70,7 @@ object ComponentConfig {
         ComponentInfo("runtime-insets", "运行时安全区调试", "Runtime Insets", ComponentCategory.NAVIGATION, "/components/runtime-insets", "运行时安全区数据快照", "Runtime safe-area snapshot"),
         ComponentInfo("navigator-kuikly-spike", "Navigator Kuikly 验证", "Navigator Spike", ComponentCategory.NAVIGATION, "/components/navigator-kuikly-spike", "Navigator Phase 0 运行时能力验证", "Navigator Phase 0 runtime spike"),
         ComponentInfo("runtime-material", "毛玻璃能力验证", "Material Probe", ComponentCategory.NAVIGATION, "/components/runtime-material", "毛玻璃与降级行为验证", "Frosted glass and degradation probe"),
+        ComponentInfo("runtime-tabhost", "TabHost 保活验证", "TabHost Probe", ComponentCategory.NAVIGATION, "/components/runtime-tabhost", "保活与重建的帧率对照", "Keep-alive vs rebuild frame cost"),
         ComponentInfo("navigator-v1-demo", "Navigator v1 演示", "Navigator v1 Demo", ComponentCategory.NAVIGATION, "/components/navigator-v1-demo", "Navigator v1 栈式跳转 + 边缘滑动返回", "Navigator v1 stack + edge swipe pop"),
 
         // Data display

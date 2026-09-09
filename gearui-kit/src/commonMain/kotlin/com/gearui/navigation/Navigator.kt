@@ -2,6 +2,7 @@ package com.gearui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.RememberObserver
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -238,6 +239,7 @@ fun Navigator(
                                 controller = state,
                                 isTop = layer.role != NavLayerRole.Below,
                                 isForeground = layer.role == NavLayerRole.Front,
+                                retained = state.retainedOf(layer.entry.key),
                             )
                             scope.content(layer.entry)
                         }
@@ -324,7 +326,18 @@ fun rememberNavigatorController(initialRoute: String): NavigatorController =
     remember(initialRoute) { NavigatorState(initialRoute = initialRoute) }
 
 @Stable
-internal class NavigatorState(initialRoute: String) : NavigatorController {
+internal class NavigatorState(initialRoute: String) : NavigatorController, RememberObserver {
+
+    // Retained entry state is cancelled per entry in `notifyRemoved`, but that
+    // only covers entries leaving a stack that stays. When the Navigator itself
+    // leaves composition — a logout dropping the whole shell — no entry is
+    // "removed", the remembered state is simply discarded, and without this the
+    // coroutines started in `entryCoroutineScope` would outlive the session
+    // they belong to.
+    override fun onRemembered() = Unit
+    override fun onForgotten() = retainedStore.disposeAll()
+    override fun onAbandoned() = retainedStore.disposeAll()
+
 
     private val _entries = mutableStateListOf(
         NavEntry(route = initialRoute, key = generateKey(initialRoute, 0)),
@@ -637,10 +650,23 @@ internal class NavigatorState(initialRoute: String) : NavigatorController {
         }
     }
 
+    /**
+     * Per-entry retained state. Lives on the state rather than in the
+     * composition so it survives the entry going off screen.
+     */
+    private val retainedStore = RetainedEntryStore()
+
+    internal fun retainedOf(key: String): RetainedEntry = retainedStore.of(key)
+
     private fun notifyRemoved(entry: NavEntry) {
         if (removedKeys.add(entry.key)) {
             onEntryRemovedRef?.invoke(entry)
             removeSaveableState?.invoke(entry.key)
+            // Same exactly-once guard as the saveable state, for the same
+            // reason: an entry can be reported gone from more than one path
+            // (pop, swipe-commit, reset) and its coroutines must be cancelled
+            // once, not once per path.
+            retainedStore.dispose(entry.key)
         }
     }
 }
@@ -654,7 +680,11 @@ private class EntryScopeImpl(
     override val controller: NavigatorController,
     override val isTop: Boolean,
     override val isForeground: Boolean,
-) : EntryScope
+    private val retained: RetainedEntry,
+) : EntryScope {
+    override val entryCoroutineScope: CoroutineScope get() = retained.coroutineScope
+    override fun <T : Any> retain(key: String, factory: () -> T): T = retained.retain(key, factory)
+}
 
 /**
  * Generates the internal unique key. Callers pushing the same route repeatedly may pass their own stable key; otherwise `route#counter` is used.

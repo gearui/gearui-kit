@@ -3410,8 +3410,11 @@ public final class com/gearui/i18n/ThemeStringsPatch {
 public abstract interface class com/gearui/navigation/EntryScope {
 	public abstract fun getController ()Lcom/gearui/navigation/NavigatorController;
 	public abstract fun getEntry ()Lcom/gearui/navigation/NavEntry;
+	public abstract fun getEntryCoroutineScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun isForeground ()Z
 	public abstract fun isTop ()Z
+	public abstract fun retain (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public static synthetic fun retain$default (Lcom/gearui/navigation/EntryScope;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class com/gearui/navigation/NavEntry {
@@ -3524,6 +3527,10 @@ public final class com/gearui/navigation/PopRequest {
 	public final fun getReason ()Lcom/gearui/navigation/PopReason;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/navigation/TabHostKt {
+	public static final fun TabHost (IILcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/overlay/OverlayController {

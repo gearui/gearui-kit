@@ -34,6 +34,7 @@ NON_COMPONENT_IDS = {
     "navigator-kuikly-spike",  # Phase 0 runtime spike
     "navigator-v1-demo",       # Navigator demo page, Navigator is not a widget
     "runtime-material",        # frosted-glass capability probe
+    "runtime-tabhost",         # keep-alive vs rebuild frame probe
 }
 
 CATEGORY_ORDER = ["BASIC", "FORM", "NAVIGATION", "DATA_DISPLAY", "FEEDBACK", "LAYOUT"]

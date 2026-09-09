@@ -71,6 +71,7 @@ import com.gearui.sample.examples.dropdownmenu.DropdownMenuExample
 import com.gearui.sample.examples.fab.FabExample
 import com.gearui.sample.examples.runtime.InsetsDebugExample
 import com.gearui.sample.examples.runtime.MaterialExample
+import com.gearui.sample.examples.runtime.TabHostExample
 import com.gearui.sample.examples.navigator.NavigatorKuiklySpikeExample
 import com.gearui.sample.examples.navigator.NavigatorV1DemoExample
 import com.gearui.sample.examples.link.LinkExample
@@ -144,6 +145,7 @@ object NavigationManager {
             "fab" -> FabExample(component, onBack)
             "runtime-insets" -> InsetsDebugExample(component, onBack)
             "runtime-material" -> MaterialExample(component, onBack)
+            "runtime-tabhost" -> TabHostExample(component, onBack)
             "navigator-kuikly-spike" -> NavigatorKuiklySpikeExample(component, onBack)
             "navigator-v1-demo" -> NavigatorV1DemoExample(component, onBack)
 

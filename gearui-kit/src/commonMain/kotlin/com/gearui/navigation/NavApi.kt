@@ -1,5 +1,6 @@
 package com.gearui.navigation
 
+import kotlinx.coroutines.CoroutineScope
 import androidx.compose.runtime.Stable
 
 /**
@@ -132,4 +133,30 @@ interface EntryScope {
     val controller: NavigatorController
     val isTop: Boolean
     val isForeground: Boolean
+
+    /**
+     * A scope that lives as long as this entry is on the stack, cancelled when
+     * it leaves.
+     *
+     * Unlike `rememberCoroutineScope()` this survives the entry going off
+     * screen — being the layer below during a transition, or hidden inside a
+     * [TabHost] — so work started here does not restart every time the page
+     * becomes visible again.
+     */
+    val entryCoroutineScope: CoroutineScope
+
+    /**
+     * Creates [factory] the first time and returns that same instance for as
+     * long as the entry is on the stack. Destroyed with the entry; if the
+     * object is [AutoCloseable] it is closed.
+     *
+     * This is the screen-scoped equivalent of a ViewModel, and the point of it
+     * is where the state *does not* go: without it the only scope outliving a
+     * recomposition is the application root, so page state ends up there.
+     *
+     * [key] separates several retained objects of the same type within one
+     * entry. It does not need to be unique across entries — each entry has its
+     * own store.
+     */
+    fun <T : Any> retain(key: String = "", factory: () -> T): T
 }

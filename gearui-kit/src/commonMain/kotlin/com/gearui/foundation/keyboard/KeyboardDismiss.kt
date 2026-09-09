@@ -46,16 +46,22 @@ internal fun KeyboardDismissContainer(
             }
 
             awaitEachGesture {
-                // 🔴 这个容器铺满整个 App，判定必须放在 Final 传递里。
+                // 🔴 This container covers the whole app, so the decision has
+                // to be made on the Final pass.
                 //
-                // 原来是 `awaitFirstDown(requireUnconsumed = false)` + 默认的 Main 传递：
-                // 子节点消费与否完全不看，于是**点在输入框上也会收起键盘**——输入框刚拿到
-                // 焦点、键盘弹起，手指一抬这里就 clearFocus + hide，看起来就是"点输入框把
-                // 键盘关了"。长按同理：只要位移没超阈值，抬手就被当成一次点击，系统的
-                // 粘贴菜单刚要出来就被这里掐掉。
+                // It used to be `awaitFirstDown(requireUnconsumed = false)` on
+                // the default Main pass, which ignores whether a child consumed
+                // the event — so **tapping a text field also dismissed the
+                // keyboard**. The field took focus, the keyboard came up, and
+                // on lift this ran clearFocus + hide: it looked like tapping an
+                // input closed the keyboard. Long press had the same problem:
+                // any lift under the drag threshold counted as a tap, so the
+                // system paste menu was cut off as it appeared.
                 //
-                // Initial 只用来开始跟踪手势（不判定、不消费），Final 在所有子节点处理完
-                // 之后才轮到，这时 change.isConsumed 才是可信的。
+                // Initial is used only to start tracking the gesture — it
+                // decides nothing and consumes nothing. Final runs after every
+                // child has had the event, which is the only point where
+                // change.isConsumed can be trusted.
                 awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
 
                 var totalDrag = 0f
@@ -66,8 +72,10 @@ internal fun KeyboardDismissContainer(
                     val change = event.changes.firstOrNull() ?: break
 
                     if (!change.pressed) {
-                        // 被子节点消费掉的抬手 = 点在了可交互控件上（输入框、按钮、链接、
-                        // 长按菜单），不是"点空白处"，不收键盘。
+                        // A lift consumed by a child means the tap landed on
+                        // something interactive — a field, a button, a link, a
+                        // long-press menu — not on empty space, so the keyboard
+                        // stays.
                         if (!didDismissForScroll &&
                             !change.isConsumed &&
                             totalDrag <= dragThreshold &&
@@ -80,8 +88,9 @@ internal fun KeyboardDismissContainer(
 
                     val delta = change.positionChange()
                     totalDrag += abs(delta.x) + abs(delta.y)
-                    // 滑动不看消费：列表滚动本来就会被 LazyColumn 消费掉，
-                    // 而"一滚就收键盘"正是想要的行为。
+                    // A drag ignores consumption: a list scroll is consumed by
+                    // LazyColumn by definition, and "scrolling dismisses the
+                    // keyboard" is exactly the behaviour wanted.
                     if (!didDismissForScroll && totalDrag > dragThreshold && mode.dismissOnScroll) {
                         dismiss()
                         didDismissForScroll = true

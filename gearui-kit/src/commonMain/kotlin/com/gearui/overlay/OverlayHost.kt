@@ -52,12 +52,17 @@ fun OverlayHost(
         }
     }
 
-    // 🔴 键盘是系统画的，盖在 App 之上——所以任何要交互的 overlay 弹出前必须先收键盘，
-    // 否则长按消息弹出的菜单、底部弹窗、选择器都躲在键盘下面，用户看不见也点不到。
+    // 🔴 The keyboard is drawn by the system, above the app — so any overlay
+    // meant to be interacted with has to dismiss it first, or the long-press
+    // menu, the bottom sheet and the picker all sit underneath it, invisible
+    // and untappable.
     //
-    // 放在 host 而不是各组件里：新加的 overlay 组件自动继承这个行为，不用每个都记得写。
-    // 只报信、不接管焦点的（Toast / Snackbar / 通知横幅）把 dismissKeyboardOnShow 关掉——
-    // 为了告诉用户"已复制"而把他正在打字的键盘收了，比横幅压住键盘更糟。
+    // Here in the host rather than in each component, so a new overlay
+    // component inherits the behaviour instead of having to remember it. The
+    // ones that only report and never take focus — Toast, Snackbar, the
+    // notification banner — turn dismissKeyboardOnShow off: closing someone's
+    // keyboard mid-sentence to tell them "copied" is worse than a banner
+    // sitting over it.
     // BACK dismisses the overlay, not the page under it.
     //
     // `OverlayDismissPolicy.backPress` has always defaulted to true and every
@@ -85,8 +90,9 @@ fun OverlayHost(
         .any { it.options.dismissKeyboardOnShow && it.id !in handledIds }
     LaunchedEffect(pendingKeyboardDismiss) {
         if (!pendingKeyboardDismiss) return@LaunchedEffect
-        // 只对每个 overlay 收一次：留在栈里的 overlay 不该在每次重组时反复压键盘，
-        // 那会让它自己内部的输入框永远弹不出键盘。
+        // Once per overlay: one that stays on the stack must not re-dismiss
+        // the keyboard on every recomposition, or a text field inside it can
+        // never raise one.
         controller.items.forEach { handledIds.add(it.id) }
         runCatching { focusManager.clearFocus(force = true) }
         keyboardController?.hide()

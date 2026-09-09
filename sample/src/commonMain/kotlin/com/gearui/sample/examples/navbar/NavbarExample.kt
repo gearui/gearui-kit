@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.navbar
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -100,7 +101,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     leftItems = listOf(
                         NavBarItem(
-                            icon = "✕",
+                            icon = Icons.close,
                             onClick = { Toast.show("关闭") }
                         )
                     )
@@ -401,7 +402,7 @@ fun NavbarExample(
                     useDefaultBack = false,
                     rightItems = listOf(
                         NavBarItem(
-                            icon = "☰",
+                            icon = Icons.menu,
                             onClick = { Toast.show("菜单") }
                         )
                     )

@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.image
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -506,7 +507,7 @@ fun ImageExample(
             ) {
                 ImagePlaceholder(
                     text = "暂无图片",
-                    icon = "🖼",
+                    icon = Icons.image,
                     modifier = Modifier
                         .weight(1f)
                         .height(100.dp)

@@ -596,6 +596,42 @@ sheets settled on. Left alone because changing it moves every sheet and there
 is no evidence the current height reads as cramped — unlike the cancel gap,
 which had a measurable defect behind it.
 
+## 11.4 Icons Are Not Glyphs
+
+`icon: String` across the component families means **an `Icons.*` key**, never a
+character to draw. The type is `String` because that is what the `Icons`
+constants are (`const val chat = "chat"`), which makes the two indistinguishable
+to the compiler — so the rule has to be carried by review and CI.
+
+`check_emoji_as_icon.sh` states the reasons and is a hard gate. It had two
+holes, both closed:
+
+**The sample was out of scope.** The library could not contain an emoji, but
+the sample — the kit's own reference usage — passed one in seventeen files, 60
+sites. GearUI was demonstrating what it forbids. The guard now covers
+`sample/src` as well, checking *icon position only*: an emoji inside content
+(`"苹果 🍎"` is demo data) is fine, `icon = "📱"` is not.
+
+**ActionSheet rendered its icon with `Text()`.** So the field only ever worked
+if you passed a glyph — `icon = Icons.chat` printed the word "chat". The
+component had no path to the `Icon` primitive at all, which means it did not
+merely permit emoji, it required them. Both render sites now go through
+`Icon(name = ...)`, so the glyph follows the theme tint and draws the same
+picture on every platform.
+
+That second one is worth remembering as a method note: the code compiled, the
+guard passed, and the defect was only visible on a device. A string-typed icon
+field cannot be type-checked, so a family that takes one is not verified until
+someone has looked at it rendering.
+
+### Known gap in the icon set
+
+The set has 109 icons and no `folder` or `description`. A file tree is exactly
+where that shows, so `TreeExample` leaves those nodes without an icon rather
+than substituting one that means something else. Icons are generated from
+Phosphor via `scripts/phosphor-mapping.py`; adding these two is a mapping entry
+plus the generated PNG/SVG pair.
+
 ## 12. Component Family Rollout Order
 
 Design changes should land by component family, not by isolated files:

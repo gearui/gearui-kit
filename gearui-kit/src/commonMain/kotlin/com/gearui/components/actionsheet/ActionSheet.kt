@@ -15,6 +15,8 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -70,7 +72,16 @@ data class ActionSheetItem(
     val label: String,
     /** Item description */
     val description: String? = null,
-    /** Icon; may be an emoji */
+    /**
+     * Icon name — an `Icons.*` key, not a glyph.
+     *
+     * This used to render through `Text()`, which meant the field only worked
+     * if you passed an emoji: anything else printed its own name. The type is
+     * `String` because that is what `Icons.*` constants are, and the rendering
+     * now goes through the [com.gearui.foundation.primitives.Icon] primitive
+     * like every other family, so it follows the theme tint and draws the same
+     * picture on every platform.
+     */
     val icon: String? = null,
     /** Badge text */
     val badge: String? = null,
@@ -481,10 +492,10 @@ private fun ActionSheetListItem(
         ) {
             // Icon
             if (item.icon != null) {
-                Text(
-                    text = item.icon,
-                    style = Theme.typography.titleMedium,
-                    color = if (item.disabled) colors.mutedForeground else colors.foreground
+                Icon(
+                    name = item.icon,
+                    size = IconSizes.Default.lg,
+                    tint = if (item.disabled) colors.mutedForeground else colors.foreground,
                 )
                 Spacer(modifier = Modifier.width(Spacing.sm))
             }
@@ -685,10 +696,10 @@ private fun ActionSheetGridItem(
                         .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = item.icon,
-                        style = Theme.typography.headlineSmall,
-                        color = if (item.disabled) colors.mutedForeground else colors.foreground
+                    Icon(
+                        name = item.icon,
+                        size = IconSizes.Display.sm,
+                        tint = if (item.disabled) colors.mutedForeground else colors.foreground,
                     )
                 }
             }

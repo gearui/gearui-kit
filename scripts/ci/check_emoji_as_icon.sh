@@ -18,9 +18,21 @@ set -euo pipefail
 # the family looked half-working rather than obviously broken.
 #
 # Baseline is 0 — hard gate.
+#
+# The sample is in scope too, and used not to be. That gap cost 60 sites: the
+# library could not draw an emoji, while `icon: String` let a caller pass one,
+# and the sample — which is the kit's own reference usage — passed emoji in
+# seventeen files. GearUI was demonstrating the thing it forbids.
+#
+# The two scopes are checked differently on purpose. Inside the library, no
+# emoji in any string literal. Inside the sample, only *icon position* is
+# policed: a demo may legitimately put an emoji in content ("苹果 🍎" is data,
+# not an affordance), but `icon = "📱"` is an affordance and is exactly what
+# this rule is about.
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SRC_DIR="$ROOT_DIR/gearui-kit/src/commonMain/kotlin/com/gearui"
+SAMPLE_DIR="$ROOT_DIR/sample/src"
 
 command -v perl >/dev/null 2>&1 || { echo "perl is required by $0"; exit 1; }
 
@@ -38,6 +50,18 @@ find "$SRC_DIR" -name '*.kt' -print0 \
     } continue {
       close ARGV if eof;
     ' > "$tmp_hits" || true
+
+# Sample: icon position only.
+find "$SAMPLE_DIR" -name '*.kt' -print0 \
+  | xargs -0 perl -CSD -ne '
+      next if m{^\s*(\*|//|/\*)};
+      s{//.*$}{};
+      if (m{\bicon\s*=\s*"[^"]*[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}]}) {
+        print "$ARGV:$.\n";
+      }
+    } continue {
+      close ARGV if eof;
+    ' >> "$tmp_hits" || true
 
 if [[ -s "$tmp_hits" ]]; then
   echo "Emoji used as a UI affordance:"

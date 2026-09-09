@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.swipecell
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -217,14 +218,14 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "编辑",
-                            icon = "✏️",
+                            icon = Icons.edit,
                             iconPosition = SwipeCellIconPosition.LEFT,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "删除",
-                            icon = "🗑️",
+                            icon = Icons.delete,
                             iconPosition = SwipeCellIconPosition.LEFT,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }
@@ -243,13 +244,13 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "",
-                            icon = "✏️",
+                            icon = Icons.edit,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "",
-                            icon = "🗑️",
+                            icon = Icons.delete,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }
                         )
@@ -267,14 +268,14 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "编辑",
-                            icon = "✏️",
+                            icon = Icons.edit,
                             iconPosition = SwipeCellIconPosition.TOP,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "删除",
-                            icon = "🗑️",
+                            icon = Icons.delete,
                             iconPosition = SwipeCellIconPosition.TOP,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }

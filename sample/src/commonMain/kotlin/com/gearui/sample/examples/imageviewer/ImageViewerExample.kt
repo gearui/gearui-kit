@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.imageviewer
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.components.actionsheet.ActionSheet
@@ -39,8 +40,8 @@ fun ImageViewerExample(
 
     val actionSheetItems = remember {
         listOf(
-            ActionSheetItem(label = "保存图片", icon = "💾"),
-            ActionSheetItem(label = "删除图片", icon = "🗑️")
+            ActionSheetItem(label = "保存图片", icon = Icons.download),
+            ActionSheetItem(label = "删除图片", icon = Icons.delete)
         )
     }
 

@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.tree
 
+import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -19,6 +20,12 @@ import com.gearui.theme.Theme
 
 /**
  * Tree component examples
+ */
+/*
+ * Folder and file nodes carry no icon: the 109-icon set has no `folder` or
+ * `description` equivalent, and a Tree demo is exactly where that shows. The
+ * gap is left visible rather than papered over with an icon that means
+ * something else. Image nodes use the real Icons.image.
  */
 @Composable
 fun TreeExample(
@@ -64,17 +71,15 @@ fun TreeExample(
         TreeNode(
             key = "folder-1",
             title = "文档",
-            icon = "📁",
             children = listOf(
-                TreeNode(key = "file-1", title = "README.md", icon = "📄"),
-                TreeNode(key = "file-2", title = "LICENSE", icon = "📄"),
+                TreeNode(key = "file-1", title = "README.md"),
+                TreeNode(key = "file-2", title = "LICENSE"),
                 TreeNode(
                     key = "folder-2",
                     title = "src",
-                    icon = "📁",
                     children = listOf(
-                        TreeNode(key = "file-3", title = "index.kt", icon = "📄"),
-                        TreeNode(key = "file-4", title = "utils.kt", icon = "📄")
+                        TreeNode(key = "file-3", title = "index.kt"),
+                        TreeNode(key = "file-4", title = "utils.kt")
                     )
                 )
             )
@@ -82,10 +87,9 @@ fun TreeExample(
         TreeNode(
             key = "folder-3",
             title = "图片",
-            icon = "📁",
             children = listOf(
-                TreeNode(key = "img-1", title = "logo.png", icon = "🖼️"),
-                TreeNode(key = "img-2", title = "banner.jpg", icon = "🖼️")
+                TreeNode(key = "img-1", title = "logo.png", icon = Icons.image),
+                TreeNode(key = "img-2", title = "banner.jpg", icon = Icons.image)
             )
         )
     )

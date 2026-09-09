@@ -3481,13 +3481,17 @@ public final class com/gearui/navigation/NavTransition : java/lang/Enum {
 }
 
 public abstract interface class com/gearui/navigation/NavigatorController {
+	public abstract fun cancelPendingPop ()V
+	public abstract fun confirmPendingPop ()Z
 	public abstract fun forcePop ()Z
 	public abstract fun getCanPop ()Z
 	public abstract fun getCurrent ()Lcom/gearui/navigation/NavEntry;
+	public abstract fun getPendingPop ()Lcom/gearui/navigation/NavEntry;
 	public abstract fun getPrevious ()Lcom/gearui/navigation/NavEntry;
 	public abstract fun isTransitioning ()Z
 	public abstract fun pop ()Z
 	public abstract fun popTo (Lcom/gearui/navigation/NavRoute;)Z
+	public abstract fun popTo (Lkotlin/jvm/functions/Function1;)Z
 	public abstract fun push (Lcom/gearui/navigation/NavRoute;)V
 	public abstract fun replace (Lcom/gearui/navigation/NavRoute;)V
 	public abstract fun resetTo (Lcom/gearui/navigation/NavRoute;)V

@@ -117,8 +117,22 @@ enum class PopDecision { Allow, Deny, Pending }
 sealed interface NavigatorController<R : NavRoute> {
     val current: NavEntry<R>
     val previous: NavEntry<R>?
+
+    /** Whether a pop can *start* right now: there is somewhere to go, and no transition or confirmation is in flight. */
     val canPop: Boolean
+
     val isTransitioning: Boolean
+
+    /**
+     * The entry whose pop is waiting on the caller, set by a [PopDecision.Pending]
+     * interception, or null.
+     *
+     * While it is set the stack is frozen: no push, pop, replace or popTo. The
+     * caller must end it with [confirmPendingPop] or [cancelPendingPop] — there
+     * used to be no cancel at all, so choosing "keep editing" locked navigation
+     * for the rest of the session.
+     */
+    val pendingPop: NavEntry<R>?
 
     /** Options come from the route itself; there is no separate channel for them. */
     fun push(route: R)
@@ -126,8 +140,24 @@ sealed interface NavigatorController<R : NavRoute> {
     /** Fires [NavOptions.onPopRequest] and pops, refuses or suspends accordingly. Returns false at the bottom of the stack. */
     fun pop(): Boolean
 
-    /** Skips [NavOptions.onPopRequest], for continuing after the caller has confirmed a dirty state. Returns false at the bottom of the stack. */
+    /** Skips [NavOptions.onPopRequest] and pops the top. Returns false at the bottom of the stack. */
     fun forcePop(): Boolean
+
+    /**
+     * Completes the pop [pendingPop] is waiting on.
+     *
+     * Bound to the recorded entry: if the stack moved on, a late confirmation
+     * returns false rather than popping whatever is on top now. Returns false
+     * when nothing is pending.
+     */
+    fun confirmPendingPop(): Boolean
+
+    /**
+     * Abandons the pending pop. The page stays and the stack unfreezes.
+     *
+     * This is what "the user chose to keep editing" calls.
+     */
+    fun cancelPendingPop()
 
     /**
      * Pops to the nearest entry whose [NavRoute.routeName] matches [route].
@@ -138,9 +168,25 @@ sealed interface NavigatorController<R : NavRoute> {
      */
     fun popTo(route: R): Boolean
 
+    /**
+     * Pops to the nearest entry whose route satisfies [predicate].
+     *
+     * For when the name is not enough — `popTo(Article("A"))` matches an
+     * `Article("B")`, because it matches on the name and ignores the payload.
+     * Rather than asking a caller to build a throwaway payload just to be
+     * ignored, this takes the condition directly.
+     */
+    fun popTo(predicate: (R) -> Boolean): Boolean
+
     fun replace(route: R)
 
-    /** Clears the stack down to [route]. Every removed entry is disposed. */
+    /**
+     * Clears the stack down to [route]. Every removed entry is disposed.
+     *
+     * **Interrupts rather than defers.** A transition in flight is abandoned and
+     * a pending confirmation is dropped. This is the path a forced logout takes,
+     * and it must not be refusable by a dirty form that happens to be open.
+     */
     fun resetTo(route: R)
 }
 

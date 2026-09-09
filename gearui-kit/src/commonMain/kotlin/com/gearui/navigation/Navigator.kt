@@ -147,9 +147,13 @@ fun <R : NavRoute> Navigator(
     // Critical: the BackHandler is registered **only while canPop is true**.
     // Kuikly reports consumed = backPressCallbackList.isNotEmpty() back to native
     // before any callback runs, so a BackHandler still registered at the bottom
-    // of the stack means native never sees BACK at all. BACK is also ignored
-    // while an exit animation is running, so it cannot start a second pop.
-    if (handleBack && state.canPop) {
+    // of the stack means native never sees BACK at all. Registered on
+    // hasBackStack rather than canPop: canPop is also false mid-transition and
+    // while a confirmation is pending, and unregistering then handed BACK to the
+    // host in exactly the moments the app most needs to keep it. requestPop is
+    // already guarded, so a BACK arriving in those moments is swallowed rather
+    // than starting a second pop.
+    if (handleBack && state.hasBackStack) {
         BackHandler {
             state.requestPop(PopReason.BackButton)
         }
@@ -476,8 +480,23 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     override val previous: NavEntry<R>?
         get() = _entries.getOrNull(_entries.size - 2)
 
+    /**
+     * Whether Navigator owns BACK: there is a page underneath to go back to.
+     *
+     * Deliberately not [canPop]. The BackHandler used to register on canPop,
+     * which is also false while a transition or a confirmation is in flight — so
+     * during either, Kuikly saw an empty callback list, reported the event
+     * unconsumed, and BACK fell through to the host. Owning BACK and being able
+     * to start a pop are different questions and cannot share a Boolean.
+     */
+    internal val hasBackStack: Boolean
+        get() = _entries.size > 1
+
     override val canPop: Boolean
-        get() = _entries.size > 1 && pendingEntry == null && _moving == null
+        get() = hasBackStack && pendingEntry == null && _moving == null
+
+    override val pendingPop: NavEntry<R>?
+        get() = pendingEntry
 
     override val isTransitioning: Boolean
         get() = _moving != null
@@ -505,9 +524,10 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     override fun pop(): Boolean = requestPop(PopReason.Programmatic)
 
     override fun forcePop(): Boolean {
-        // Deliberately skips onPopRequest: this is the only way out of Pending
-        // once the caller has confirmed, so pendingEntry != null is an
-        // **expected** state for forcePop and is allowed through.
+        // Skips onPopRequest, and is allowed through a pending confirmation:
+        // this is the blunt "leave regardless" for callers that have no pending
+        // state to reason about. Use confirmPendingPop when there is one — it
+        // checks that the page it is popping is still the page that asked.
         if (_entries.size <= 1) return false
         if (_moving != null) return false
         pendingEntry = null
@@ -515,9 +535,26 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         return true
     }
 
-    override fun popTo(route: R): Boolean {
+    override fun confirmPendingPop(): Boolean {
+        val pending = pendingEntry ?: return false
+        pendingEntry = null
+        if (_moving != null) return false
+        // Identity check: a confirmation arriving after the stack moved on must
+        // not pop whatever happens to be on top now.
+        if (_entries.lastOrNull()?.key != pending.key) return false
+        startCommitPopAnim(pending)
+        return true
+    }
+
+    override fun cancelPendingPop() {
+        pendingEntry = null
+    }
+
+    override fun popTo(route: R): Boolean = popTo { it.routeName == route.routeName }
+
+    override fun popTo(predicate: (R) -> Boolean): Boolean {
         if (isMidFlight) return false
-        val idx = _entries.indexOfLast { it.route.routeName == route.routeName }
+        val idx = _entries.indexOfLast { predicate(it.route) }
         if (idx < 0 || idx == _entries.size - 1) return false
         // Intermediate entries are dropped immediately without animation; only
         // the top one animates out. The top is not removed here — that happens
@@ -541,7 +578,13 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
 
     override fun resetTo(route: R) {
         dismissOverlaysForRouteChange()
-        if (isMidFlight) return
+        // Interrupts rather than defers. This is the forced-logout path; a dirty
+        // form holding a pending confirmation, or an exit animation still
+        // running, must not be able to refuse it. Abandoning _moving is safe:
+        // removeMoving is keyed on the outgoing entry and notifyRemoved is
+        // exactly-once, so the animation's late finally finds nothing to do.
+        pendingEntry = null
+        _moving = null
         val snapshot = _entries.toList()
         _entries.clear()
         snapshot.forEach { notifyRemoved(it) }

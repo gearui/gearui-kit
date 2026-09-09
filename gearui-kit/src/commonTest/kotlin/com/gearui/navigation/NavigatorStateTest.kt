@@ -6,6 +6,7 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -82,8 +83,14 @@ class NavigatorStateTest {
         val route = s.current.route
         assertTrue(route is TestRoute.Article)
         assertEquals("42", route.id, "the payload survives the round trip through the stack")
-        assertEquals(TestRoute.Guarded.options, TestRoute.Guarded.options)
         assertEquals(NavOptions.Default, s.current.options, "an Article declares no options")
+
+        s.push(TestRoute.Guarded)
+        assertEquals(
+            TestRoute.Guarded.options,
+            s.current.options,
+            "the entry exposes the route's own options, not a default",
+        )
     }
 
     @Test
@@ -162,18 +169,17 @@ class NavigatorStateTest {
         s.push(TestRoute.Dirty)
         val depth = s.entriesForTest.size
 
-        // Returns false, like Deny. BACK is unaffected by that — the handler
-        // being registered is what tells Kuikly the event was consumed, and it
-        // ignores the return — but a programmatic caller cannot tell "refused"
-        // from "a confirmation is now showing" through the public API. Pinned
-        // as current behaviour; worth resolving before the API freezes.
-        assertFalse(s.pop(), "Pending currently reports false, the same as Deny")
+        // Returns false, like Deny. A programmatic caller still cannot tell
+        // "refused" from "a confirmation is showing" from the return alone —
+        // pendingPop is how it tells them apart.
+        assertFalse(s.pop(), "Pending reports false, the same as Deny")
         assertEquals(depth, s.entriesForTest.size, "Pending must not pop by itself")
         assertEquals(TestRoute.Dirty, s.current.route)
+        assertEquals(s.current.key, s.pendingPop?.key, "the entry that asked is recorded")
 
-        // The continuation is forcePop, which skips the interceptor.
-        assertTrue(s.forcePop())
+        assertTrue(s.confirmPendingPop())
         assertEquals(depth - 1, s.entriesForTest.size)
+        assertNull(s.pendingPop)
     }
 
     @Test
@@ -201,5 +207,86 @@ class NavigatorStateTest {
         s.onForgotten()
 
         assertFalse(scope.isActive, "a dropped Navigator must not leave coroutines running")
+    }
+
+    @Test
+    fun cancellingAPendingPopUnfreezesTheStack() {
+        val s = state()
+        s.push(TestRoute.Dirty)
+        s.pop()
+        assertNotNull(s.pendingPop)
+
+        // "Keep editing". Before there was a cancel at all, the only way out was
+        // forcePop — so choosing to stay locked navigation for good.
+        s.cancelPendingPop()
+
+        assertNull(s.pendingPop)
+        assertTrue(s.canPop, "the stack is usable again")
+        s.push(TestRoute.Detail)
+        assertEquals(TestRoute.Detail, s.current.route, "push works after a cancel")
+        assertTrue(s.popTo(TestRoute.Home), "popTo works after a cancel")
+    }
+
+    @Test
+    fun navigatorKeepsOwningBackWhileAConfirmationIsPending() {
+        val s = state()
+        s.push(TestRoute.Dirty)
+        s.pop()
+
+        // canPop is false — no new pop may start — but there is still a page
+        // underneath, so BACK must not fall through to the host. The
+        // BackHandler registers on hasBackStack for exactly this.
+        assertFalse(s.canPop)
+        assertTrue(s.hasBackStack)
+
+        // A second BACK is swallowed rather than doing anything.
+        assertFalse(s.pop())
+        assertEquals(TestRoute.Dirty, s.current.route)
+    }
+
+    @Test
+    fun aLateConfirmationDoesNotPopSomeOtherPage() {
+        val s = state()
+        s.push(TestRoute.Dirty)
+        s.pop()
+        val asked = s.pendingPop
+        assertNotNull(asked)
+
+        // The stack moves on underneath the confirmation — a reset, say.
+        s.resetTo(TestRoute.Home)
+        assertEquals(1, s.entriesForTest.size)
+
+        assertFalse(s.confirmPendingPop(), "the page that asked is gone; confirm must not pop the new top")
+        assertEquals(TestRoute.Home, s.current.route)
+    }
+
+    @Test
+    fun resetToInterruptsAPendingConfirmationInsteadOfBeingRefusedByIt() {
+        val s = state()
+        s.push(TestRoute.Dirty)
+        s.pop()
+        assertNotNull(s.pendingPop, "the stack is frozen")
+
+        // A forced logout must not be refusable by a dirty form. This used to
+        // return early on isMidFlight and silently do nothing.
+        s.resetTo(TestRoute.Home)
+
+        assertEquals(1, s.entriesForTest.size)
+        assertEquals(TestRoute.Home, s.current.route)
+        assertNull(s.pendingPop)
+        assertTrue(s.canPop.not(), "at the bottom again")
+    }
+
+    @Test
+    fun popToPredicateMatchesOnThePayloadWhenTheNameIsNotEnough() {
+        val s = state()
+        s.push(TestRoute.Article(id = "a"))
+        s.push(TestRoute.Article(id = "b"))
+        s.push(TestRoute.Detail)
+
+        // popTo(route) would match "a" or "b" indifferently; the predicate is
+        // there for when that is not good enough.
+        assertTrue(s.popTo { it is TestRoute.Article && it.id == "a" })
+        assertEquals("a", (s.current.route as TestRoute.Article).id)
     }
 }

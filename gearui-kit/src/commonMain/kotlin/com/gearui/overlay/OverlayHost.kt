@@ -1,5 +1,6 @@
 package com.gearui.overlay
 
+import com.tencent.kuikly.compose.BackHandler
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -57,6 +58,26 @@ fun OverlayHost(
     // 放在 host 而不是各组件里：新加的 overlay 组件自动继承这个行为，不用每个都记得写。
     // 只报信、不接管焦点的（Toast / Snackbar / 通知横幅）把 dismissKeyboardOnShow 关掉——
     // 为了告诉用户"已复制"而把他正在打字的键盘收了，比横幅压住键盘更糟。
+    // BACK dismisses the overlay, not the page under it.
+    //
+    // `OverlayDismissPolicy.backPress` has always defaulted to true and every
+    // preset — Dropdown, Sheet, Modal — sets it, `dispatchEvent` handles the
+    // event correctly, and `OverlayManager.notifyBackPress()` exists. Nothing
+    // ever called it, so with a dialog or sheet open BACK reached Navigator and
+    // popped the page instead, leaving the overlay over the screen behind.
+    //
+    // Registered **only while something wants it**, for the reason Navigator
+    // documents: Kuikly decides `consumed` from `backPressCallbackList
+    // .isNotEmpty()` before invoking anything, so a handler left registered with
+    // nothing to dismiss swallows BACK entirely. Being composed above Navigator
+    // makes this `list.last()`, which is what gets invoked.
+    val backDismissible = controller.items.any { it.options.dismissPolicy.backPress }
+    if (backDismissible) {
+        BackHandler {
+            OverlayManager.notifyBackPress()
+        }
+    }
+
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val handledIds = remember(controller) { mutableSetOf<Long>() }

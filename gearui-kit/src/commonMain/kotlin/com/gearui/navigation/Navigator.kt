@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
+import com.gearui.overlay.OverlayManager
 import com.gearui.gestures.SwipeBackConfig
 import com.gearui.gestures.swipeBack
 import com.tencent.kuikly.compose.BackHandler
@@ -448,6 +449,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     override fun push(route: String, key: String?, options: NavOptions) {
         if (isMidFlight) return
         val newKey = key ?: generateKey(route, keyCounter++)
+        dismissOverlaysForRouteChange()
         _entries.add(NavEntry(route = route, key = newKey, options = options))
     }
 
@@ -489,6 +491,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     }
 
     override fun resetTo(route: String) {
+        dismissOverlaysForRouteChange()
         if (isMidFlight) return
         val snapshot = _entries.toList()
         _entries.clear()
@@ -505,6 +508,7 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
      */
     internal fun requestPop(reason: PopReason): Boolean {
         if (_entries.size <= 1) return false
+        dismissOverlaysForRouteChange()
         if (pendingEntry != null) return false
         if (_moving != null) return false
         val top = _entries.last()
@@ -657,6 +661,23 @@ internal class NavigatorState(initialRoute: String) : NavigatorController, Remem
     private val retainedStore = RetainedEntryStore()
 
     internal fun retainedOf(key: String): RetainedEntry = retainedStore.of(key)
+
+    /**
+     * An overlay belongs to the screen that opened it, so navigating away takes
+     * it with them.
+     *
+     * `OverlayDismissPolicy.routeChange` has always defaulted to true and
+     * `dispatchEvent` handles it, but `OverlayManager.notifyRouteChange()` had
+     * no callers — so a programmatic navigation (a logout `resetTo`, a push
+     * notification routing away) left a sheet or dialog floating over whatever
+     * screen came next, still holding a callback into the one that is gone.
+     *
+     * Only route *changes* fire this. A swipe-back that is cancelled never
+     * reaches here, because it never reaches a mutation.
+     */
+    private fun dismissOverlaysForRouteChange() {
+        OverlayManager.notifyRouteChange()
+    }
 
     private fun notifyRemoved(entry: NavEntry) {
         if (removedKeys.add(entry.key)) {

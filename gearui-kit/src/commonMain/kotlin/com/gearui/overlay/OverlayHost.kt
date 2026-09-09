@@ -17,6 +17,8 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
+import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
+import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.unit.*
 import com.tencent.kuikly.compose.ui.zIndex
 import com.gearui.runtime.LocalRuntimeEnvironment
@@ -47,6 +49,26 @@ fun OverlayHost(
         onDispose {
             OverlayManager.unbind()
         }
+    }
+
+    // 🔴 键盘是系统画的，盖在 App 之上——所以任何要交互的 overlay 弹出前必须先收键盘，
+    // 否则长按消息弹出的菜单、底部弹窗、选择器都躲在键盘下面，用户看不见也点不到。
+    //
+    // 放在 host 而不是各组件里：新加的 overlay 组件自动继承这个行为，不用每个都记得写。
+    // 只报信、不接管焦点的（Toast / Snackbar / 通知横幅）把 dismissKeyboardOnShow 关掉——
+    // 为了告诉用户"已复制"而把他正在打字的键盘收了，比横幅压住键盘更糟。
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val handledIds = remember(controller) { mutableSetOf<Long>() }
+    val pendingKeyboardDismiss = controller.items
+        .any { it.options.dismissKeyboardOnShow && it.id !in handledIds }
+    LaunchedEffect(pendingKeyboardDismiss) {
+        if (!pendingKeyboardDismiss) return@LaunchedEffect
+        // 只对每个 overlay 收一次：留在栈里的 overlay 不该在每次重组时反复压键盘，
+        // 那会让它自己内部的输入框永远弹不出键盘。
+        controller.items.forEach { handledIds.add(it.id) }
+        runCatching { focusManager.clearFocus(force = true) }
+        keyboardController?.hide()
     }
 
     Box(Modifier.fillMaxSize()) {

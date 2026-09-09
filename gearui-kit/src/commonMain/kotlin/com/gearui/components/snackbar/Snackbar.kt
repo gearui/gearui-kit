@@ -348,6 +348,8 @@ class SnackbarController internal constructor(
                 // Snackbar is non-blocking feedback: outside the banner, the
                 // underlying page should keep receiving taps and scrolls.
                 passThroughOutside = true,
+                // 只报信、不接管焦点：不能因为要显示它就把用户正在打的键盘收掉。
+                dismissKeyboardOnShow = false,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )
         ) {

@@ -86,6 +86,16 @@ fun ContextMenu(
     var pressedIndex by remember { mutableStateOf<Int?>(null) }
 
     val bounds = triggerBounds
+    // 🔴 重新锚定 ≠ 用户关掉了菜单。
+    //
+    // 下面的 DisposableEffect 以 bounds 为 key：锚点位置一变就 dispose 旧 overlay、
+    // 用新位置再 show 一个。但 dispose 里的 overlay.dismiss() 会回调 onDismiss，
+    // 而 onDismiss 里是 state.hide()——于是菜单被自己的重新锚定关掉，再也不出来。
+    //
+    // 触发场景很常见：弹出 overlay 前先收系统键盘（OverlayHost 的
+    // dismissKeyboardOnShow），键盘一收列表就重排，锚点跟着动。
+    // 这个 flag 把「因为要换位置而 dispose」和「真的被关掉」区分开。
+    val reanchoring = remember { mutableStateOf(false) }
     if (state.isVisible && bounds != null) {
         DisposableEffect(bounds, placement) {
             val overlayId = overlay.show(
@@ -101,7 +111,7 @@ fun ContextMenu(
                     )
                 ),
                 onDismiss = {
-                    state.hide()
+                    if (!reanchoring.value) state.hide()
                 }
             ) {
                 Column(
@@ -173,7 +183,9 @@ fun ContextMenu(
 
             onDispose {
                 pressedIndex = null
+                reanchoring.value = true
                 overlay.dismiss(overlayId)
+                reanchoring.value = false
             }
         }
     }

@@ -29,6 +29,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Showing an overlay now dismisses the soft keyboard first. The keyboard is
+  drawn by the system on top of the app, so a menu, sheet or picker opened
+  while typing came up underneath it, out of sight and out of reach. The new
+  `OverlayOptions.dismissKeyboardOnShow` is on by default and handled in
+  `OverlayHost`, so a new overlay component inherits it. Toast, Snackbar and
+  the notification banner opt out: they only report something and never take
+  focus, and closing someone's keyboard to say "Copied" is worse than the
+  banner overlapping it.
+- `ContextMenu` no longer closes itself when its anchor moves. It shows the
+  overlay from a `DisposableEffect` keyed on the trigger bounds, and the
+  `onDispose` dismissal ran the caller's `onDismiss`, which hides the menu, so
+  any layout change that moved the anchor closed the menu for good. Re-anchoring
+  is now told apart from a real dismissal. Hiding the keyboard before an overlay
+  opens makes this reliably reproducible.
+
 - Tapping or long-pressing a focused text field no longer dismisses the
   keyboard. The app-wide keyboard-dismiss container judged the gesture in the
   Main pass with `requireUnconsumed = false`, so it never saw whether a child

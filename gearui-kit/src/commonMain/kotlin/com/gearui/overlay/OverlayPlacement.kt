@@ -168,5 +168,20 @@ data class OverlayOptions(
      * whole screen for as long as it is shown - the user could not scroll the list or press back. Set to true and that layer
      * is not laid: the banner stays tappable while scrolls and taps elsewhere reach the page below (WeChat-style in-app banner).
      */
-    val passThroughOutside: Boolean = false
+    val passThroughOutside: Boolean = false,
+
+    /**
+     * Whether showing this overlay dismisses the soft keyboard first.
+     *
+     * On by default: an overlay is drawn by the app, the keyboard is drawn by the system on top of
+     * it, so a menu or sheet opened while typing comes up underneath the keyboard and the user
+     * cannot see or reach it. Anything the user is meant to interact with must clear the keyboard
+     * out of the way first.
+     *
+     * Turn it off for surfaces that only report something and never take focus - Toast, Snackbar,
+     * the notification banner. Closing someone's keyboard to tell them "Copied" is worse than the
+     * banner overlapping it. Also turn it off for an overlay that focuses a field of its own on
+     * open, so the hide does not race that focus request.
+     */
+    val dismissKeyboardOnShow: Boolean = true
 )

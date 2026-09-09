@@ -336,6 +336,8 @@ class NotificationController internal constructor(
                 modal = false,
                 // A notification is non-blocking: everything outside the banner stays tappable and scrollable, and the whole screen is never frozen.
                 passThroughOutside = true,
+                // 只报信、不接管焦点：不能因为要显示它就把用户正在打的键盘收掉。
+                dismissKeyboardOnShow = false,
                 dismissPolicy = OverlayDismissPolicy.toast(duration)
             )
         ) {

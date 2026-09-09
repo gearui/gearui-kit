@@ -143,7 +143,7 @@ fun NavBar(
                 ) {
                     if (useDefaultBack) {
                         NavBarIconButton(
-                            icon = Icons.chevron_left,
+                            icon = Icons.caret_left,
                             iconColor = textColor,
                             onClick = onBackClick,
                             modifier = Modifier
@@ -207,7 +207,7 @@ fun NavBar(
                 // Left button area
                 if (useDefaultBack) {
                     NavBarIconButton(
-                        icon = Icons.chevron_left,
+                        icon = Icons.caret_left,
                         iconColor = textColor,
                         onClick = onBackClick,
                         modifier = Modifier

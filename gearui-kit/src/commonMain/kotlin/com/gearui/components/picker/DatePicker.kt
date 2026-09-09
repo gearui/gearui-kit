@@ -92,7 +92,7 @@ fun DatePickerInput(
             )
 
             Icon(
-                name = Icons.event,
+                name = Icons.calendar_blank,
                 size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )
@@ -297,7 +297,7 @@ fun TimePickerInput(
             )
 
             Icon(
-                name = Icons.schedule,
+                name = Icons.clock,
                 size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )

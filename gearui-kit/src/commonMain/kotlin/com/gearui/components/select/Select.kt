@@ -175,7 +175,7 @@ fun <T> Select(
             )
 
             Icon(
-                name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
+                name = if (expanded) Icons.caret_up else Icons.caret_down,
                 size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )
@@ -398,7 +398,7 @@ fun <T> MultiSelect(
             )
 
             Icon(
-                name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
+                name = if (expanded) Icons.caret_up else Icons.caret_down,
                 size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )

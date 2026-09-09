@@ -164,7 +164,7 @@ fun SearchBar(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        name = Icons.search,
+                        name = Icons.magnifying_glass,
                         size = FieldDefaults.trailingIconSize,
                         tint = colors.mutedForeground
                     )
@@ -228,7 +228,7 @@ fun SearchBar(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            name = Icons.close,
+                            name = Icons.x,
                             size = IconSizes.Default.xs,
                             tint = colors.mutedForeground
                         )

@@ -217,7 +217,7 @@ fun ImageViewer(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        name = Icons.close,
+                        name = Icons.x,
                         size = IconSizes.Default.lg,
                         tint = Color.White
                     )
@@ -266,7 +266,7 @@ fun ImageViewer(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        name = Icons.delete,
+                        name = Icons.trash,
                         size = IconSizes.Default.lg,
                         tint = Color.White
                     )

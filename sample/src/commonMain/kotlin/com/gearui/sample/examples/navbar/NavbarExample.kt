@@ -101,7 +101,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     leftItems = listOf(
                         NavBarItem(
-                            icon = Icons.close,
+                            icon = Icons.x,
                             onClick = { Toast.show("关闭") }
                         )
                     )
@@ -402,7 +402,7 @@ fun NavbarExample(
                     useDefaultBack = false,
                     rightItems = listOf(
                         NavBarItem(
-                            icon = Icons.menu,
+                            icon = Icons.list,
                             onClick = { Toast.show("菜单") }
                         )
                     )

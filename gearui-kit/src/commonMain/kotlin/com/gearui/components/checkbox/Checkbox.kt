@@ -90,7 +90,7 @@ fun Checkbox(
         when {
             indeterminate -> {
                 Icon(
-                    name = Icons.remove,
+                    name = Icons.minus,
                     size = checkSize,
                     tint = checkColor
                 )

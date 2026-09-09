@@ -317,7 +317,7 @@ private fun StepIcon(
 
                 StepStatus.ERROR -> {
                     Icon(
-                        name = Icons.close,
+                        name = Icons.x,
                         size = IconSizes.Default.sm,
                         tint = contentColor
                     )

@@ -86,7 +86,7 @@ fun HomePage(
                     showBottomDivider = false,
                     rightItems = listOf(
                         NavBarItem(
-                            icon = Icons.settings,
+                            icon = Icons.gear,
                             onClick = onSettingsClick
                         )
                     )

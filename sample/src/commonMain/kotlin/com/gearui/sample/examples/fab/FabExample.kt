@@ -31,14 +31,14 @@ fun FabExample(
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Button(
                     text = "",
-                    icon = Icons.add,
+                    icon = Icons.plus,
                     shape = ButtonShape.CIRCLE,
                     size = ButtonSize.LARGE,
                     onClick = { Toast.show("点击纯图标 FAB") }
                 )
                 Button(
                     text = "Floating",
-                    icon = Icons.add,
+                    icon = Icons.plus,
                     shape = ButtonShape.FILLED,
                     size = ButtonSize.LARGE,
                     onClick = { Toast.show("点击图文 FAB") }
@@ -49,24 +49,24 @@ fun FabExample(
         ExampleSection(title = "组件状态", description = "主题、形状、尺寸") {
             Text(text = "Fab Theme", style = Theme.typography.bodySmall, color = colors.mutedForeground)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, theme = ButtonTheme.PRIMARY, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, theme = ButtonTheme.DEFAULT, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, theme = ButtonTheme.LIGHT, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, theme = ButtonTheme.DANGER, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, theme = ButtonTheme.PRIMARY, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, theme = ButtonTheme.DEFAULT, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, theme = ButtonTheme.LIGHT, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, theme = ButtonTheme.DANGER, modifier = Modifier.weight(1f), onClick = {})
             }
 
             Text(text = "Fab Shape", style = Theme.typography.bodySmall, color = colors.mutedForeground)
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.SQUARE, onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.SQUARE, onClick = {})
             }
 
             Text(text = "Fab Size", style = Theme.typography.bodySmall, color = colors.mutedForeground)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, size = ButtonSize.LARGE, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, size = ButtonSize.MEDIUM, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, size = ButtonSize.SMALL, modifier = Modifier.weight(1f), onClick = {})
-                Button(text = "", icon = Icons.add, shape = ButtonShape.CIRCLE, size = ButtonSize.EXTRA_SMALL, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, size = ButtonSize.LARGE, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, size = ButtonSize.MEDIUM, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, size = ButtonSize.SMALL, modifier = Modifier.weight(1f), onClick = {})
+                Button(text = "", icon = Icons.plus, shape = ButtonShape.CIRCLE, size = ButtonSize.EXTRA_SMALL, modifier = Modifier.weight(1f), onClick = {})
             }
         }
 

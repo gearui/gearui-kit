@@ -40,8 +40,8 @@ fun ImageViewerExample(
 
     val actionSheetItems = remember {
         listOf(
-            ActionSheetItem(label = "保存图片", icon = Icons.download),
-            ActionSheetItem(label = "删除图片", icon = Icons.delete)
+            ActionSheetItem(label = "保存图片", icon = Icons.download_simple),
+            ActionSheetItem(label = "删除图片", icon = Icons.trash)
         )
     }
 

@@ -58,7 +58,7 @@ fun Icon(
  * Icon by icon name.
  *
  * Usage:
- * - Icon(Icons.home)
+ * - Icon(Icons.house)
  */
 @Composable
 fun Icon(

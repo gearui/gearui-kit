@@ -217,7 +217,7 @@ private fun CalendarHeader(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                name = Icons.chevron_left,
+                name = Icons.caret_left,
                 size = IconSizes.Default.lg,
                 tint = colors.foreground
             )
@@ -239,7 +239,7 @@ private fun CalendarHeader(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                name = Icons.chevron_right,
+                name = Icons.caret_right,
                 size = IconSizes.Default.lg,
                 tint = colors.foreground
             )

@@ -123,7 +123,7 @@ fun CalendarPopup(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        name = Icons.close,
+                        name = Icons.x,
                         size = IconSizes.Default.md,
                         tint = colors.mutedForeground
                     )

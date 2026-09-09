@@ -89,7 +89,7 @@ fun Rate(
                 ) {
                     repeat(count) {
                         Icon(
-                            name = Icons.star_border,
+                            name = Icons.star,
                             size = size,
                             tint = colors.mutedForeground
                         )
@@ -111,7 +111,7 @@ fun Rate(
                     ) {
                         repeat(count) {
                             Icon(
-                                name = Icons.star_rate,
+                                name = Icons.star_fill,
                                 size = size,
                                 tint = colors.warning
                             )

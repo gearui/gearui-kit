@@ -175,7 +175,7 @@ fun Cascader(
             )
 
             Icon(
-                name = if (expanded) Icons.keyboard_arrow_up else Icons.keyboard_arrow_down,
+                name = if (expanded) Icons.caret_up else Icons.caret_down,
                 size = FieldDefaults.trailingIconSize,
                 tint = colors.mutedForeground
             )
@@ -264,7 +264,7 @@ private fun CascaderDropdown(
 
                             if (option.children.isNotEmpty()) {
                                 Icon(
-                                    name = Icons.chevron_right,
+                                    name = Icons.caret_right,
                                     size = FieldDefaults.trailingIconSize,
                                     tint = if (isSelected) colors.foreground else colors.mutedForeground
                                 )

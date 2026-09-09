@@ -365,7 +365,7 @@ fun Input(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            name = Icons.close,
+                            name = Icons.x,
                             size = IconSizes.Default.xs,
                             tint = colors.mutedForeground
                         )

@@ -152,7 +152,7 @@ internal fun NotificationContent(
         NotificationType.INFO -> Icons.info to colors.primary
         NotificationType.SUCCESS -> Icons.check to colors.success
         NotificationType.WARNING -> Icons.warning to colors.warning
-        NotificationType.ERROR -> Icons.close to colors.destructive
+        NotificationType.ERROR -> Icons.x to colors.destructive
     }
 
     Row(
@@ -215,7 +215,7 @@ internal fun NotificationContent(
         // Close button
         if (closable) {
             Icon(
-                name = Icons.close,
+                name = Icons.x,
                 size = IconSizes.Default.lg,
                 tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)

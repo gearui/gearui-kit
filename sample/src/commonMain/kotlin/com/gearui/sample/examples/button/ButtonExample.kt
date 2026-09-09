@@ -99,7 +99,7 @@ fun ButtonExample(
                     text = "填充按钮",
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
-                    icon = Icons.call
+                    icon = Icons.phone
                 )
                 // Icon-only square button
                 Button(
@@ -107,7 +107,7 @@ fun ButtonExample(
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
                     shape = ButtonShape.SQUARE,
-                    icon = Icons.call
+                    icon = Icons.phone
                 )
                 // Loading button
                 Button(
@@ -197,7 +197,7 @@ fun ButtonExample(
                     onClick = { Toast.show("点击了按钮") },
                     theme = ButtonTheme.PRIMARY,
                     block = true,
-                    icon = Icons.send
+                    icon = Icons.paper_plane_tilt
                 )
             }
         }
@@ -317,7 +317,7 @@ fun ButtonExample(
                     onClick = { Toast.show("Square") },
                     theme = ButtonTheme.PRIMARY,
                     shape = ButtonShape.SQUARE,
-                    icon = Icons.star
+                    icon = Icons.star_fill
                 )
                 // Rounded
                 Button(
@@ -332,7 +332,7 @@ fun ButtonExample(
                     onClick = { Toast.show("Circle") },
                     theme = ButtonTheme.PRIMARY,
                     shape = ButtonShape.CIRCLE,
-                    icon = Icons.star
+                    icon = Icons.star_fill
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))

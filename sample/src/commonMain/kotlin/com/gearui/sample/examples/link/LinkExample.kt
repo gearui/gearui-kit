@@ -40,7 +40,7 @@ fun LinkExample(
             }
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 LinkItem("前置图标链接", color = colors.primary, prefixIcon = Icons.link) { Toast.show("点击前置图标链接") }
-                LinkItem("后置图标链接", color = colors.primary, suffixIcon = Icons.open_in_new) { Toast.show("点击后置图标链接") }
+                LinkItem("后置图标链接", color = colors.primary, suffixIcon = Icons.arrow_square_out) { Toast.show("点击后置图标链接") }
             }
         }
 

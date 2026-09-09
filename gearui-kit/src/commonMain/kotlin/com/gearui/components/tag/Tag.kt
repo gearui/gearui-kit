@@ -166,7 +166,7 @@ fun Tag(
                         )
                 ) {
                     Icon(
-                        name = Icons.close,
+                        name = Icons.x,
                         size = tokens.iconSize,
                         tint = finalTextColor
                     )

@@ -141,7 +141,7 @@ fun Switch(
                 SwitchType.ICON -> {
                     // Icon type: tick/cross
                     Icon(
-                        name = if (checked) Icons.check else Icons.close,
+                        name = if (checked) Icons.check else Icons.x,
                         size = IconSizes.Default.xs,
                         tint = thumbContentColor
                     )
@@ -149,7 +149,7 @@ fun Switch(
                 SwitchType.LOADING -> {
                     // Loading type: the indicator
                     Icon(
-                        name = Icons.autorenew,
+                        name = Icons.arrows_clockwise,
                         size = IconSizes.Default.xs,
                         tint = thumbContentColor
                     )

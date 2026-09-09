@@ -290,7 +290,7 @@ private fun TreeNodeView(
             // Expand/collapse icon
             if (hasChildren) {
                 Icon(
-                    name = if (isExpanded) Icons.keyboard_arrow_down else Icons.chevron_right,
+                    name = if (isExpanded) Icons.caret_down else Icons.caret_right,
                     size = IconSizes.Default.md,
                     tint = if (node.disabled) colors.mutedForeground else colors.mutedForeground,
                     modifier = Modifier.width(16.dp)

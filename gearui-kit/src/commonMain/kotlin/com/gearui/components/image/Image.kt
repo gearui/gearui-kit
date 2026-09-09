@@ -197,7 +197,7 @@ fun ImageWithState(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
-                            name = Icons.close,
+                            name = Icons.x,
                             size = IconSizes.Default.lg,
                             tint = colors.destructive
                         )

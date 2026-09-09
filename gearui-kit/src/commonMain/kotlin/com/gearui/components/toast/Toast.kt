@@ -205,7 +205,7 @@ private fun ToastSurface(toast: ToastData) {
                 ToastType.INFO -> null
                 ToastType.SUCCESS -> Icons.check
                 ToastType.WARNING -> Icons.warning
-                ToastType.ERROR -> Icons.close
+                ToastType.ERROR -> Icons.x
             }
 
             if (iconName != null) {

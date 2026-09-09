@@ -44,7 +44,7 @@ fun NoticeBarExample(
                 NoticeBarItem(
                     content = "这是一条普通的通知信息",
                     prefixIcon = Icons.info,
-                    suffixIcon = Icons.close,
+                    suffixIcon = Icons.x,
                     onSuffixClick = {
                         closeableVisible = false
                         Toast.show("已关闭公告")
@@ -61,13 +61,13 @@ fun NoticeBarExample(
             NoticeBarItem(
                 content = "这是一条普通的通知信息",
                 prefixIcon = Icons.info,
-                suffixIcon = Icons.chevron_right,
+                suffixIcon = Icons.caret_right,
                 onSuffixClick = { Toast.show("点击了入口") }
             )
             NoticeBarItem(
                 content = "这是一条自定义样式的通知信息",
-                prefixIcon = Icons.notifications,
-                suffixIcon = Icons.chevron_right,
+                prefixIcon = Icons.bell,
+                suffixIcon = Icons.caret_right,
                 backgroundColor = colors.surface,
                 borderColor = colors.border
             )
@@ -77,7 +77,7 @@ fun NoticeBarExample(
             NoticeBarItem(content = "这是一条普通的通知信息", prefixIcon = Icons.info, tone = NoticeTone.INFO)
             NoticeBarItem(content = "这是一条成功的通知信息", prefixIcon = Icons.check, tone = NoticeTone.SUCCESS)
             NoticeBarItem(content = "这是一条警示的通知信息", prefixIcon = Icons.warning, tone = NoticeTone.WARNING)
-            NoticeBarItem(content = "这是一条错误的通知信息", prefixIcon = Icons.error, tone = NoticeTone.ERROR)
+            NoticeBarItem(content = "这是一条错误的通知信息", prefixIcon = Icons.warning_circle, tone = NoticeTone.ERROR)
         }
 
         ExampleSection(title = "组件样式", description = "卡片顶部公告栏") {
@@ -92,7 +92,7 @@ fun NoticeBarExample(
                 NoticeBarItem(
                     content = "这是一条普通的通知信息",
                     prefixIcon = Icons.info,
-                    suffixIcon = Icons.chevron_right
+                    suffixIcon = Icons.caret_right
                 )
                 Spacer(
                     modifier = Modifier

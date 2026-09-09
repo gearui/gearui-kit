@@ -117,7 +117,7 @@ internal fun Cell(
                 if (showArrow) {
                     HorizontalSpacer(Spacing.sm)
                     Icon(
-                        name = Icons.chevron_right,
+                        name = Icons.caret_right,
                         size = IconSizes.Default.md,
                         tint = colors.foreground
                     )

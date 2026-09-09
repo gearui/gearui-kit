@@ -45,19 +45,19 @@ fun BottomNavBarExample(
                         BottomNavItem(
                             id = "messages",
                             label = "Messages",
-                            icon = Icons.forum,
+                            icon = Icons.chats,
                             badgeCount = 12
                         ),
                         BottomNavItem(
                             id = "contacts",
                             label = "Contacts",
-                            icon = Icons.contacts,
+                            icon = Icons.address_book,
                             showBadgeDot = true
                         ),
                         BottomNavItem(
                             id = "me",
                             label = "Me",
-                            icon = Icons.account_circle
+                            icon = Icons.user_circle
                         )
                     ),
                     selectedId = selectedId,
@@ -80,9 +80,9 @@ fun BottomNavBarExample(
 
             BottomNavBar(
                 items = listOf(
-                    BottomNavItem(id = "five", label = "Few", icon = Icons.forum, badgeCount = 5),
-                    BottomNavItem(id = "ninetynine", label = "Edge", icon = Icons.notifications, badgeCount = 99),
-                    BottomNavItem(id = "overflow", label = "Overflow", icon = Icons.mail, badgeCount = 120)
+                    BottomNavItem(id = "five", label = "Few", icon = Icons.chats, badgeCount = 5),
+                    BottomNavItem(id = "ninetynine", label = "Edge", icon = Icons.bell, badgeCount = 99),
+                    BottomNavItem(id = "overflow", label = "Overflow", icon = Icons.envelope_simple, badgeCount = 120)
                 ),
                 selectedId = selectedId,
                 onSelect = { selectedId = it }
@@ -97,9 +97,9 @@ fun BottomNavBarExample(
 
             BottomNavBar(
                 items = listOf(
-                    BottomNavItem(id = "feed", label = "Feed", icon = Icons.home),
-                    BottomNavItem(id = "discover", label = "Discover", icon = Icons.search, disabled = true),
-                    BottomNavItem(id = "profile", label = "Profile", icon = Icons.person)
+                    BottomNavItem(id = "feed", label = "Feed", icon = Icons.house),
+                    BottomNavItem(id = "discover", label = "Discover", icon = Icons.magnifying_glass, disabled = true),
+                    BottomNavItem(id = "profile", label = "Profile", icon = Icons.user)
                 ),
                 selectedId = selectedId,
                 onSelect = { selectedId = it }

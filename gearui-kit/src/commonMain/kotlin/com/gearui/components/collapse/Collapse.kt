@@ -176,7 +176,7 @@ private fun CollapsePanelItem(
                 }
 
                 Icon(
-                    name = Icons.keyboard_arrow_down,
+                    name = Icons.caret_down,
                     size = IconSizes.Default.md,
                     tint = colors.mutedForeground,
                     modifier = Modifier.rotate(rotation)
@@ -241,7 +241,7 @@ fun CollapseItem(
             )
 
             Icon(
-                name = Icons.keyboard_arrow_down,
+                name = Icons.caret_down,
                 size = IconSizes.Default.md,
                 tint = if (enabled) colors.mutedForeground else colors.mutedForeground,
                 modifier = Modifier.rotate(rotation)

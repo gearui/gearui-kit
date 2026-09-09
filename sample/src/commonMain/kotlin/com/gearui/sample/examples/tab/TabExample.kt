@@ -54,15 +54,15 @@ fun TabsExample(
             )
             TabsDemoItemsRow(
                 items = listOf(
-                    Tab("icon-1", "选项1", icon = Icons.home),
-                    Tab("icon-2", "选项2", icon = Icons.menu),
-                    Tab("icon-3", "选项3", icon = Icons.person)
+                    Tab("icon-1", "选项1", icon = Icons.house),
+                    Tab("icon-2", "选项2", icon = Icons.list),
+                    Tab("icon-3", "选项3", icon = Icons.user)
                 )
             )
             TabsDemoItemsRow(
                 items = listOf(
                     Tab("badge-1", "选项"),
-                    Tab("badge-2", "选项(8)", icon = Icons.notifications),
+                    Tab("badge-2", "选项(8)", icon = Icons.bell),
                     Tab("badge-3", "选项", icon = Icons.info)
                 )
             )

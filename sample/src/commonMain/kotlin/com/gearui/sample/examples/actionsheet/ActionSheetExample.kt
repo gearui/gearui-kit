@@ -260,10 +260,10 @@ fun ActionSheetExample(
             ActionSheetContent(
                 visible = true,
                 items = listOf(
-                    ActionSheetItem(label = "选项一", icon = Icons.settings),
-                    ActionSheetItem(label = "选项二", icon = Icons.settings),
-                    ActionSheetItem(label = "选项三", icon = Icons.settings),
-                    ActionSheetItem(label = "选项四", icon = Icons.settings)
+                    ActionSheetItem(label = "选项一", icon = Icons.gear),
+                    ActionSheetItem(label = "选项二", icon = Icons.gear),
+                    ActionSheetItem(label = "选项三", icon = Icons.gear),
+                    ActionSheetItem(label = "选项四", icon = Icons.gear)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -318,14 +318,14 @@ fun ActionSheetExample(
                 visible = true,
                 theme = ActionSheetTheme.GRID,
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share),
-                    ActionSheetItem(label = "QQ", icon = Icons.forum),
-                    ActionSheetItem(label = "企业微信", icon = Icons.groups),
-                    ActionSheetItem(label = "收藏", icon = Icons.star_border),
-                    ActionSheetItem(label = "刷新", icon = Icons.refresh),
-                    ActionSheetItem(label = "下载", icon = Icons.download),
-                    ActionSheetItem(label = "复制", icon = Icons.content_copy)
+                    ActionSheetItem(label = "微信", icon = Icons.chat_circle),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "QQ", icon = Icons.chats),
+                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "收藏", icon = Icons.star),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.download_simple),
+                    ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -343,14 +343,14 @@ fun ActionSheetExample(
                 theme = ActionSheetTheme.GRID,
                 description = "动作面板描述文字",
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share),
-                    ActionSheetItem(label = "QQ", icon = Icons.forum),
-                    ActionSheetItem(label = "企业微信", icon = Icons.groups),
-                    ActionSheetItem(label = "收藏", icon = Icons.star_border),
-                    ActionSheetItem(label = "刷新", icon = Icons.refresh),
-                    ActionSheetItem(label = "下载", icon = Icons.download),
-                    ActionSheetItem(label = "复制", icon = Icons.content_copy)
+                    ActionSheetItem(label = "微信", icon = Icons.chat_circle),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "QQ", icon = Icons.chats),
+                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "收藏", icon = Icons.star),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.download_simple),
+                    ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -367,14 +367,14 @@ fun ActionSheetExample(
                 visible = true,
                 theme = ActionSheetTheme.GRID,
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat, badge = "NEW"),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share),
-                    ActionSheetItem(label = "QQ", icon = Icons.forum),
-                    ActionSheetItem(label = "企业微信", icon = Icons.groups),
-                    ActionSheetItem(label = "收藏", icon = Icons.star_border, showRedPoint = true),
-                    ActionSheetItem(label = "刷新", icon = Icons.refresh),
-                    ActionSheetItem(label = "下载", icon = Icons.download, badge = "8"),
-                    ActionSheetItem(label = "复制", icon = Icons.content_copy)
+                    ActionSheetItem(label = "微信", icon = Icons.chat_circle, badge = "NEW"),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "QQ", icon = Icons.chats),
+                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "收藏", icon = Icons.star, showRedPoint = true),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.download_simple, badge = "8"),
+                    ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -409,10 +409,10 @@ fun ActionSheetExample(
             ActionSheetContent(
                 visible = true,
                 items = listOf(
-                    ActionSheetItem(label = "默认选项", icon = Icons.settings),
-                    ActionSheetItem(label = "自定义选项", icon = Icons.settings, textColor = colors.primary),
-                    ActionSheetItem(label = "失效选项", icon = Icons.settings, disabled = true),
-                    ActionSheetItem(label = "警告选项", icon = Icons.settings, textColor = colors.destructive)
+                    ActionSheetItem(label = "默认选项", icon = Icons.gear),
+                    ActionSheetItem(label = "自定义选项", icon = Icons.gear, textColor = colors.primary),
+                    ActionSheetItem(label = "失效选项", icon = Icons.gear, disabled = true),
+                    ActionSheetItem(label = "警告选项", icon = Icons.gear, textColor = colors.destructive)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -450,10 +450,10 @@ fun ActionSheetExample(
                 description = "动作面板描述文字",
                 align = ActionSheetAlign.CENTER,
                 items = listOf(
-                    ActionSheetItem(label = "选项一", icon = Icons.settings),
-                    ActionSheetItem(label = "选项二", icon = Icons.settings),
-                    ActionSheetItem(label = "选项三", icon = Icons.settings),
-                    ActionSheetItem(label = "选项四", icon = Icons.settings)
+                    ActionSheetItem(label = "选项一", icon = Icons.gear),
+                    ActionSheetItem(label = "选项二", icon = Icons.gear),
+                    ActionSheetItem(label = "选项三", icon = Icons.gear),
+                    ActionSheetItem(label = "选项四", icon = Icons.gear)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")
@@ -492,10 +492,10 @@ fun ActionSheetExample(
                 description = "动作面板描述文字",
                 align = ActionSheetAlign.LEFT,
                 items = listOf(
-                    ActionSheetItem(label = "选项一", icon = Icons.settings),
-                    ActionSheetItem(label = "选项二", icon = Icons.settings),
-                    ActionSheetItem(label = "选项三", icon = Icons.settings),
-                    ActionSheetItem(label = "选项四", icon = Icons.settings)
+                    ActionSheetItem(label = "选项一", icon = Icons.gear),
+                    ActionSheetItem(label = "选项二", icon = Icons.gear),
+                    ActionSheetItem(label = "选项三", icon = Icons.gear),
+                    ActionSheetItem(label = "选项四", icon = Icons.gear)
                 ),
                 onSelected = { item, _ ->
                     Toast.show("选中了：${item.label}")

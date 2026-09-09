@@ -135,11 +135,11 @@ fun Result(
 private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<String?, Color> {
     return when (status) {
         ResultStatus.SUCCESS -> Icons.check to colors.success
-        ResultStatus.ERROR -> Icons.close to colors.destructive
+        ResultStatus.ERROR -> Icons.x to colors.destructive
         ResultStatus.WARNING -> Icons.warning to colors.warning
         ResultStatus.INFO -> Icons.info to colors.primary
         ResultStatus.QUESTION -> Icons.info to colors.primary
-        ResultStatus.FORBIDDEN -> Icons.no_photography to colors.destructive
+        ResultStatus.FORBIDDEN -> Icons.camera_slash to colors.destructive
         ResultStatus.NOT_FOUND -> null to colors.mutedForeground
     }
 }
@@ -253,7 +253,7 @@ fun LoadingResult(
     modifier: Modifier = Modifier,
     title: String = I18n.strings.feedback.processingTitle,
     description: String? = I18n.strings.feedback.processingDescription,
-    icon: String = Icons.hourglass_empty
+    icon: String = Icons.hourglass
 ) {
     Result(
         status = ResultStatus.INFO,

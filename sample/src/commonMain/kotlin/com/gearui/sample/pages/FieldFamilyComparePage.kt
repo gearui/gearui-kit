@@ -100,8 +100,8 @@ fun FieldFamilyComparePage() {
             item {
                 Section("Icon probe — chevron / search / calendar") {
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
-                        Icon(name = Icons.keyboard_arrow_down, size = 24.dp)
-                        Icon(name = Icons.search, size = 24.dp)
+                        Icon(name = Icons.caret_down, size = 24.dp)
+                        Icon(name = Icons.magnifying_glass, size = 24.dp)
                         Text(text = "\uD83D\uDCC5", style = Theme.typography.bodyLarge, color = colors.foreground)
                     }
                 }

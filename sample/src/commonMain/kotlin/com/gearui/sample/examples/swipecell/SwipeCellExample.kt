@@ -218,14 +218,14 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "编辑",
-                            icon = Icons.edit,
+                            icon = Icons.pencil_simple,
                             iconPosition = SwipeCellIconPosition.LEFT,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "删除",
-                            icon = Icons.delete,
+                            icon = Icons.trash,
                             iconPosition = SwipeCellIconPosition.LEFT,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }
@@ -244,13 +244,13 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "",
-                            icon = Icons.edit,
+                            icon = Icons.pencil_simple,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "",
-                            icon = Icons.delete,
+                            icon = Icons.trash,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }
                         )
@@ -268,14 +268,14 @@ fun SwipeCellExample(
                     rightActions = listOf(
                         SwipeCellAction(
                             label = "编辑",
-                            icon = Icons.edit,
+                            icon = Icons.pencil_simple,
                             iconPosition = SwipeCellIconPosition.TOP,
                             theme = SwipeCellActionTheme.WARNING,
                             onClick = { actionResult = "点击了编辑" }
                         ),
                         SwipeCellAction(
                             label = "删除",
-                            icon = Icons.delete,
+                            icon = Icons.trash,
                             iconPosition = SwipeCellIconPosition.TOP,
                             theme = SwipeCellActionTheme.DANGER,
                             onClick = { actionResult = "点击了删除" }

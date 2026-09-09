@@ -48,7 +48,7 @@ import com.gearui.foundation.typography.IconSizes
  * Context menu action model.
  *
  * @param label action text
- * @param icon optional leading icon (gearui [Icon] name, e.g. `Icons.groups`)
+ * @param icon optional leading icon (gearui [Icon] name, e.g. `Icons.users_three`)
  * @param disabled whether action is disabled
  * @param danger whether action uses danger semantic color
  * @param onClick action callback

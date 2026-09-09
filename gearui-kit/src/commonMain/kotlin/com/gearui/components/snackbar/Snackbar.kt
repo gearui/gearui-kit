@@ -234,7 +234,7 @@ internal fun SnackbarContent(
                 SnackbarType.INFO -> Icons.info
                 SnackbarType.SUCCESS -> Icons.check
                 SnackbarType.WARNING -> Icons.warning
-                SnackbarType.ERROR -> Icons.close
+                SnackbarType.ERROR -> Icons.x
             }
             Icon(
                 name = iconName,
@@ -267,7 +267,7 @@ internal fun SnackbarContent(
         // Close button
         if (showCloseButton) {
             Icon(
-                name = Icons.close,
+                name = Icons.x,
                 size = IconSizes.Default.md,
                 tint = colors.mutedForeground,
                 modifier = Modifier.clickable(onClick = onDismiss)

@@ -44,7 +44,7 @@ fun EmptyExample(
                 message = "描述文字",
                 icon = {
                     Icon(
-                        name = Icons.hourglass_empty,
+                        name = Icons.hourglass,
                         size = 36.dp,
                         tint = colors.mutedForeground
                     )

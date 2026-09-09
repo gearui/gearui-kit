@@ -122,7 +122,7 @@ fun Cell(
         if (arrow) {
             Spacer(modifier = Modifier.width(Spacing.sm))
             Icon(
-                name = Icons.chevron_right,
+                name = Icons.caret_right,
                 size = IconSizes.Default.md,
                 tint = colors.mutedForeground
             )

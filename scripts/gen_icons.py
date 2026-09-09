@@ -11,6 +11,10 @@ no SVG, one PNG had no constant naming it, nine constants were missing from
 Phosphor, so the two halves of the set were different icon libraries. Anything
 generated is reproducible; anything hand-copied drifts.
 
+Names are Phosphor's own. GearUI used to draw Phosphor artwork under Material
+Symbols names, so `Icons.home` fetched `house` and `Icons.close` fetched `x` —
+the set was described in a vocabulary it did not use.
+
 Format
 ------
 PNG only, and deliberately so. Kuikly hands an asset URL to the platform image
@@ -41,14 +45,19 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "gearui-kit/src/commonMain/assets/icons")
-MAPPING = os.path.join(ROOT, "scripts/phosphor-mapping.py")
+ICON_SET = os.path.join(ROOT, "scripts/icon-set.py")
 
 
-def load_mapping():
-    """material name -> (phosphor name, weight), read from the mapping module."""
-    src = open(MAPPING, encoding="utf-8").read()
-    pairs = re.findall(r"'([a-z_0-9]+)':\s*\('([a-z0-9-]+)','(regular|fill)'\)", src)
-    return {name: (ph, weight) for name, ph, weight in pairs}
+def load_icon_set():
+    """(phosphor name, weight) pairs, read from the icon-set module."""
+    src = open(ICON_SET, encoding="utf-8").read()
+    return re.findall(r"\('([a-z0-9-]+)', '(regular|fill)'\)", src)
+
+
+def constant_name(phosphor_name, weight):
+    """Phosphor's own naming: dashes become underscores, fill keeps its suffix."""
+    base = phosphor_name.replace("-", "_")
+    return f"{base}_fill" if weight == "fill" else base
 
 
 def phosphor_path(base, phosphor_name, weight):
@@ -64,10 +73,11 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    mapping = load_mapping()
+    icons = load_icon_set()
     missing, written, total = [], 0, 0
 
-    for name, (phosphor_name, weight) in sorted(mapping.items()):
+    for phosphor_name, weight in sorted(icons):
+        name = constant_name(phosphor_name, weight)
         src = phosphor_path(args.phosphor, phosphor_name, weight)
         if not os.path.exists(src):
             missing.append((name, phosphor_name, weight))

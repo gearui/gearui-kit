@@ -275,30 +275,45 @@ genuine spacing and 4 were geometry borrowing the scale — an 8dp dot written a
 `Spacing.sm`, a 48dp icon tile as `Spacing.huge`. Those four now sit in
 `ActionSheetTokens`.
 
-### 6.2 Why `Spacing` is not yet a theme axis
+### 6.2 `Spacing` is structure, not a theme axis
 
-Density qualifies as a brand axis on the reasoning above, so `Spacing` should
-eventually resolve through `Theme.spacing` the way colour, typography, shapes,
-elevation and motion do. It does not yet, and the blocker is not spacing.
+**Decided: `Spacing` stays a static scale. There is no `Theme.spacing`.**
 
-A second, static token layer sits in `foundation/`: top-level objects
-(`FieldSizeTokens`, `SwipeCellDefaults`, `CardDefaults`, `TabSizeTokens`,
-`TagSizeTokens`, `AvatarSizeTokens`, `CellDefaults`) that read `Spacing` at
-class-initialisation time. `Theme.spacing` would be a `@Composable` getter,
-which these objects cannot call, so they would silently keep the default
-spacing while the rest of the library followed the brand — worse than not
-theming it at all.
+This reverses an earlier reading in this document, which had density down as a
+brand axis blocked only by plumbing. The plumbing was real — a second static
+token layer in `foundation/` (`FieldSizeTokens`, `SwipeCellDefaults`,
+`CardDefaults`, `TabSizeTokens`, `TagSizeTokens`) reads `Spacing` at
+class-initialisation and could never call a `@Composable` getter. But that is
+an argument about cost, and three arguments about correctness outrank it:
 
-That layer has a second problem, already visible: it drifts. `BadgeSizeTokens`
-describes a badge scale no component reads — the `Badge` primitive hardcodes
-20/16/10/8dp of its own, and the two no longer agree. `SectionTokens` and
-`DividerTokens` had rotted the same way with zero consumers and have been
-deleted. `CardDefaults.Flat` and `.Compact` are `copy()` calls that change
-nothing.
+**Metrics are the language.** §0.1 commits GearUI to *one* design language with
+iOS 26 as its reference. Under that reference the spacing scale is not a
+parameter of the language, it is part of it — Apple ships no density switch.
+Material Design does, and offering one is a step back toward being a style
+engine, which §0.1 rules out.
 
-Order of work: resolve the static token layer through the theme first, then
-`Theme.spacing` follows mechanically. Doing it in the other order ships an axis
-that is only two-thirds connected.
+**Nothing asks for it.** GearUI's real consumers are privchat-ui and
+privchat-app, across three brands that differ in colour and product name. Not
+one wants different metrics. A themeable spacing axis today would be built
+against an imagined requirement.
+
+**We have the receipts on what that produces.** This section used to cite
+`BadgeSizeTokens` as evidence that the static layer drifts. It has since been
+deleted, along with `SectionTokens`, `DividerTokens`, and `CardDefaults.Flat`
+and `.Compact` (both `copy()` calls that changed nothing while their KDoc
+claimed otherwise). Every one was a token surface built ahead of a consumer,
+which then rotted quietly because nothing exercised it. `Theme.spacing` with no
+brand asking for it is the same bet.
+
+With spacing settled as structure, the static bags baking it in are no longer a
+defect — they are tokens made of tokens, which is what they should be. What
+they must not do is bake a *theme* axis: colour, typography, shapes, elevation
+and motion all resolve through `Theme` and none may be captured at class-init.
+
+**What would reopen this:** a real consumer that needs different metrics from
+the same components — not a hypothetical brand, a shipping one. At that point
+the conversion is mechanical and the cost is the 21 `Spacing` references inside
+the five bags above, not the 325 call sites.
 
 ## 7. Typography Scale
 

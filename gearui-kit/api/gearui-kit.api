@@ -2185,34 +2185,6 @@ public final class com/gearui/foundation/avatar/AvatarTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/gearui/foundation/badge/BadgeSizeTokens {
-	public static final field $stable I
-	public static final field INSTANCE Lcom/gearui/foundation/badge/BadgeSizeTokens;
-	public final fun getDot ()Lcom/gearui/foundation/badge/BadgeTokens;
-	public final fun getLarge ()Lcom/gearui/foundation/badge/BadgeTokens;
-	public final fun getSmall ()Lcom/gearui/foundation/badge/BadgeTokens;
-}
-
-public final class com/gearui/foundation/badge/BadgeTokens {
-	public static final field $stable I
-	public synthetic fun <init> (FFILcom/tencent/kuikly/compose/ui/text/font/FontWeight;FLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-UdJoRJA ()F
-	public final fun component2-UdJoRJA ()F
-	public final fun component3 ()I
-	public final fun component4 ()Lcom/tencent/kuikly/compose/ui/text/font/FontWeight;
-	public final fun component5-UdJoRJA ()F
-	public final fun copy-033JFp8 (FFILcom/tencent/kuikly/compose/ui/text/font/FontWeight;F)Lcom/gearui/foundation/badge/BadgeTokens;
-	public static synthetic fun copy-033JFp8$default (Lcom/gearui/foundation/badge/BadgeTokens;FFILcom/tencent/kuikly/compose/ui/text/font/FontWeight;FILjava/lang/Object;)Lcom/gearui/foundation/badge/BadgeTokens;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getFontSizeSp ()I
-	public final fun getFontWeight ()Lcom/tencent/kuikly/compose/ui/text/font/FontWeight;
-	public final fun getHorizontalPadding-UdJoRJA ()F
-	public final fun getMinSize-UdJoRJA ()F
-	public final fun getRadius-UdJoRJA ()F
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class com/gearui/foundation/border/BorderWidth {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/border/BorderWidth;
@@ -2401,9 +2373,7 @@ public final class com/gearui/foundation/layout/Spacing {
 public final class com/gearui/foundation/list/CardDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/list/CardDefaults;
-	public final fun getCompact ()Lcom/gearui/foundation/list/CardTokens;
 	public final fun getDefault ()Lcom/gearui/foundation/list/CardTokens;
-	public final fun getFlat ()Lcom/gearui/foundation/list/CardTokens;
 }
 
 public final class com/gearui/foundation/list/CardTokens {

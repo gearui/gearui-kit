@@ -33,19 +33,4 @@ object CardDefaults {
         elevation = 0f
     )
 
-    /**
-     * Flat card (no shadow)
-     * For layouts that already separate layers with background colour
-     */
-    val Flat = Default.copy(
-        elevation = 0f
-    )
-
-    /**
-     * Compact card
-     * Less padding, denser information
-     */
-    val Compact = Default.copy(
-        padding = Spacing.md
-    )
 }

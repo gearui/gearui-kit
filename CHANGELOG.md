@@ -12,19 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `ButtonType.GHOST`. It behaved identically to `ButtonType.TEXT`;
   use `ButtonType.TEXT` instead. This is a source-breaking change.
 
-### Fixed
-
-- Tapping or long-pressing a focused text field no longer dismisses the
-  keyboard. The app-wide keyboard-dismiss container judged the gesture in the
-  Main pass with `requireUnconsumed = false`, so it never saw whether a child
-  had handled the touch and treated every tap — including one on the field that
-  owns the focus — as a tap outside. A long press was swallowed the same way,
-  which took the system paste menu with it. The gesture now starts tracking in
-  the Initial pass and decides in the Final pass, where consumption by children
-  is visible. Scroll-to-dismiss is unchanged and still ignores consumption,
-  since a list scroll is consumed by the list and should still hide the
-  keyboard.
-
 ### Changed
 
 - KuiklyUI upgraded from 2.25.0 to 2.27.0 on every channel: the Kotlin
@@ -41,6 +28,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   invisible placeholder.
 
 ### Fixed
+
+- Tapping or long-pressing a focused text field no longer dismisses the
+  keyboard. The app-wide keyboard-dismiss container judged the gesture in the
+  Main pass with `requireUnconsumed = false`, so it never saw whether a child
+  had handled the touch and treated every tap — including one on the field that
+  owns the focus — as a tap outside. A long press was swallowed the same way,
+  which took the system paste menu with it. The gesture now starts tracking in
+  the Initial pass and decides in the Final pass, where consumption by children
+  is visible. Scroll-to-dismiss is unchanged and still ignores consumption,
+  since a list scroll is consumed by the list and should still hide the
+  keyboard.
 
 - The ohos build gained the `currentCalendarDate()` actual it was missing
   (POSIX `localtime_r`; HarmonyOS has no Foundation). The calendar fix added

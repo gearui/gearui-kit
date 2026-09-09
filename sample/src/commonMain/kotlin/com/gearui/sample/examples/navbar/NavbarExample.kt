@@ -64,6 +64,24 @@ fun NavbarExample(
 
         // With a trailing action button
         ExampleSection(
+            title = "超长标题",
+            description = "标题必须单行省略，不能在固定高度的导航栏里换行"
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
+            ) {
+                NavBar(
+                    title = "这是一个非常非常长的页面标题用来验证截断行为",
+                    useDefaultBack = true,
+                    onBackClick = { Toast.show("返回") }
+                )
+            }
+        }
+
+        ExampleSection(
             title = "带右侧操作按钮",
             description = "支持右侧添加图标按钮"
         ) {

@@ -697,6 +697,45 @@ name — `X`+`X_fill` where the base was regular, `X`+`X_border` where the base
 was fill, plus `X_filled`. All inherited from Material Symbols and all gone;
 the rule is now `X` regular, `X_fill` fill.
 
+## 11.5 Component Anatomy: Navigation Bars
+
+A fixed-height strip with a centred title and symmetric action slots. Measured
+on device (1440×3200 @ 3.5x):
+
+| | value | iOS 26 | |
+|---|---|---|---|
+| bar height | 48dp | 44pt | kept — see below |
+| title | `titleMedium`, 16sp semibold | 17pt semibold | kept |
+| action slot | 56dp wide, full height | 44pt minimum | exceeds the minimum |
+| bottom hairline | `BorderWidth.thin` | hairline | |
+| safe area | consumed by PageScaffold, not the bar | | §11 |
+
+**The title stays centred**, and this was checked rather than assumed: with a
+back button alone, with one trailing action, and with two, the title's centre
+sits within 0.7dp of the bar's. Fixed-width slots on both sides are what buys
+that, which is also why `leftWidgetWidth` and `rightWidgetWidth` exist — a text
+button such as "Cancel" needs its slot widened explicitly or the centring is
+computed against the wrong number.
+
+**48dp against iOS's 44pt is kept deliberately.** 44 is a tap-target minimum
+that iOS then reuses as the bar height; GearUI's 56×48 slot already clears it,
+so matching the number would move every page in three shipping apps to satisfy
+a constraint that is already satisfied. The same reasoning applies to 16sp
+against 17pt. Both are recorded so that they are choices rather than drift.
+
+### Titles truncate, they do not wrap
+
+`maxLines = 1, overflow = Ellipsis` on the title, because a nav bar is a
+fixed-height strip.
+
+It did neither until now. GearUI's `Text` primitive defaults to
+`maxLines = Int.MAX_VALUE` and `TextOverflow.Clip` — right for body copy,
+wrong for chrome — and the nav bar title passed neither. Verified on device: a
+long page title rendered as two clipped lines and pushed the bar ~4dp past its
+neighbours. A group chat's name is exactly the input that produces it, so this
+was reachable in privchat rather than theoretical. The sample now carries a
+long-title case so it stays reachable.
+
 ## 12. Component Family Rollout Order
 
 Design changes should land by component family, not by isolated files:

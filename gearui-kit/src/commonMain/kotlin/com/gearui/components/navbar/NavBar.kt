@@ -15,6 +15,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.runtime.SafeAreaEdge
@@ -119,7 +120,16 @@ fun NavBar(
                         Text(
                             text = title,
                             style = Theme.typography.titleMedium,
-                            color = textColor
+                            color = textColor,
+                            // A nav bar is a fixed-height strip, so its title
+                            // cannot be allowed to wrap. Without this a long
+                            // page name — a group chat's, say — rendered as two
+                            // clipped lines and pushed the bar 4dp taller than
+                            // its neighbours. `Text` defaults to unlimited
+                            // lines and Clip, which is right for body copy and
+                            // wrong for chrome.
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }
@@ -237,7 +247,16 @@ fun NavBar(
                         Text(
                             text = title,
                             style = Theme.typography.titleMedium,
-                            color = textColor
+                            color = textColor,
+                            // A nav bar is a fixed-height strip, so its title
+                            // cannot be allowed to wrap. Without this a long
+                            // page name — a group chat's, say — rendered as two
+                            // clipped lines and pushed the bar 4dp taller than
+                            // its neighbours. `Text` defaults to unlimited
+                            // lines and Clip, which is right for body copy and
+                            // wrong for chrome.
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }

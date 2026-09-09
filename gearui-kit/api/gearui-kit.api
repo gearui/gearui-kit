@@ -749,6 +749,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field arrow_forward Ljava/lang/String;
 	public static final field attach_file Ljava/lang/String;
 	public static final field autorenew Ljava/lang/String;
+	public static final field block Ljava/lang/String;
 	public static final field bookmark Ljava/lang/String;
 	public static final field bookmark_border Ljava/lang/String;
 	public static final field call Ljava/lang/String;

@@ -624,13 +624,41 @@ guard passed, and the defect was only visible on a device. A string-typed icon
 field cannot be type-checked, so a family that takes one is not verified until
 someone has looked at it rendering.
 
-### Known gap in the icon set
+### The icon set
 
-The set has 109 icons and no `folder` or `description`. A file tree is exactly
-where that shows, so `TreeExample` leaves those nodes without an icon rather
-than substituting one that means something else. Icons are generated from
-Phosphor via `scripts/phosphor-mapping.py`; adding these two is a mapping entry
-plus the generated PNG/SVG pair.
+110 icons, generated from [Phosphor](https://phosphoricons.com) via
+`scripts/phosphor-mapping.py`, shipped as **96×96 PNG** plus SVG in
+`gearui-kit/src/commonMain/assets/icons/`.
+
+**96px is sized for inline icons and runs out at display sizes.** The largest
+inline step is `IconSizes.Default.xl` = 24dp, which needs 84px at 3.5x and 72px
+at 3x — comfortably inside 96. But `IconSizes.Display` goes to 40dp, which
+needs 140px at 3.5x, so those call sites upscale ~1.5x. `Icon(preferSvg = ...)`
+defaults to `false`, and exactly one call site in the codebase passes `true`,
+so display-size icons currently draw an upscaled bitmap. `Result` and
+`EmptyState` are the components this affects most, since a large icon is most
+of what they are.
+
+**Every icon ships, used or not.** The assets are bundled wholesale into the
+APK, the iOS pod resources and the JS bundle; there is no tree-shaking. 43 of
+the 110 are not referenced by the library, the sample, privchat-ui or
+privchat-app — 344KB of 848KB. Pruning needs a build step that reads the
+reachable `Icons.*` set, which is only sound if applications are also scanned,
+so it is a real feature rather than a cleanup.
+
+**One registry, three lists.** The constants, `Icons.all` and the PNG assets
+must agree, and `check_icon_registry.sh` enforces it. They had all drifted from
+one silent failure in generation: nine constants were missing from `Icons.all`
+so the gallery reported 100 of 109 and those nine were unbrowsable; `block.png`
+shipped with no constant naming it; and eight icons got a PNG but no SVG, which
+went unnoticed precisely because the PNG path is the default. The SVG half is a
+warning rather than a gate — regenerating needs the Phosphor source — but those
+eight can never be crisp above ~28dp.
+
+**Known gap.** No `folder` or `description`. A file tree is where that shows,
+so `TreeExample` leaves those nodes without an icon rather than substituting
+one that means something else. Adding them is a mapping entry plus a generated
+PNG/SVG pair.
 
 ## 12. Component Family Rollout Order
 

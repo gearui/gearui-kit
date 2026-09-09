@@ -118,8 +118,27 @@ object Icons {
     const val download = "download"
     const val launch = "launch"
     const val logout = "logout"
+    const val block = "block"
 
+    /**
+     * Every icon name, for the gallery and for tooling.
+     *
+     * This drifted from the constants once already: nine constants were
+     * missing here, so the gallery reported 100 icons against 109 that
+     * existed and those nine were unbrowsable. `check_icon_registry.sh`
+     * now holds constants, this list and the shipped assets to one set.
+     */
     val all = listOf(
+        account_balance_wallet,
+        account_circle_fill,
+        contacts_fill,
+        forum_fill,
+        help,
+        lock,
+        qr_code,
+        redeem,
+        verified_user,
+        block,
         account_circle,
         add,
         alternate_email,

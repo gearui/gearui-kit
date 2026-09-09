@@ -3532,6 +3532,8 @@ final object com.gearui.components.icon/Icons { // com.gearui.components.icon/Ic
         final fun <get-attach_file>(): kotlin/String // com.gearui.components.icon/Icons.attach_file.<get-attach_file>|<get-attach_file>(){}[0]
     final const val autorenew // com.gearui.components.icon/Icons.autorenew|{}autorenew[0]
         final fun <get-autorenew>(): kotlin/String // com.gearui.components.icon/Icons.autorenew.<get-autorenew>|<get-autorenew>(){}[0]
+    final const val block // com.gearui.components.icon/Icons.block|{}block[0]
+        final fun <get-block>(): kotlin/String // com.gearui.components.icon/Icons.block.<get-block>|<get-block>(){}[0]
     final const val bookmark // com.gearui.components.icon/Icons.bookmark|{}bookmark[0]
         final fun <get-bookmark>(): kotlin/String // com.gearui.components.icon/Icons.bookmark.<get-bookmark>|<get-bookmark>(){}[0]
     final const val bookmark_border // com.gearui.components.icon/Icons.bookmark_border|{}bookmark_border[0]

@@ -5,7 +5,6 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.extension.MakeKuiklyComposeNode
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.Box
-import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
@@ -65,22 +64,29 @@ fun MaterialSurface(
     val blurred = isMaterialBlurEnabled()
 
     Box(modifier = modifier.clip(shape)) {
+        // matchParentSize, never fillMaxSize. A fillMaxSize child *participates*
+        // in the Box's own measurement, so the Box stops wrapping its content and
+        // expands to the largest size its constraints allow. Every surface routed
+        // through here then grows to fill its parent — a bottom bar became the
+        // whole screen, with its row of tabs at the top of it and the page
+        // content squeezed out. matchParentSize takes the parent's size without
+        // voting on it, which is what a backdrop layer wants.
         if (blurred) {
             MakeKuiklyComposeNode<BlurView>(
                 factory = { BlurView() },
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.matchParentSize(),
                 viewInit = { getViewAttr().blurRadius(material.blurRadius) },
                 viewUpdate = { it.getViewAttr().blurRadius(material.blurRadius) },
             )
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .matchParentSize()
                     .background(colors.surface.copy(alpha = material.tintAlpha))
             )
         } else {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .matchParentSize()
                     .background(opaque)
             )
         }

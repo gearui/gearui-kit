@@ -121,6 +121,75 @@ fun BottomSheet(
 }
 
 /**
+ * BottomSheet with arbitrary content instead of an option list.
+ *
+ * Same presentation, scrim, drag-to-dismiss and safe-area handling as the
+ * item-list overload; the caller owns what goes inside. Use this when the body
+ * is not a list of tappable labels — a paginated roster, a form, a chart.
+ *
+ * The body is responsible for its own height and scrolling: the sheet does not
+ * clamp it, because a LazyColumn inside a height-clamped parent stops scrolling.
+ *
+ * @param visible whether it is shown
+ * @param onDismiss dismissal callback
+ * @param title title
+ * @param description description
+ * @param showCancel whether to show a cancel button
+ * @param cancelText cancel button label
+ * @param closeOnClickOutside whether tapping outside dismisses
+ * @param content sheet body
+ */
+@Composable
+fun BottomSheet(
+    visible: Boolean,
+    onDismiss: () -> Unit,
+    title: String? = null,
+    description: String? = null,
+    showCancel: Boolean = true,
+    cancelText: String = I18n.strings.common.cancel,
+    closeOnClickOutside: Boolean = true,
+    content: @Composable () -> Unit,
+) {
+    val controller = LocalOverlayController.current
+    var overlayId by remember { mutableStateOf<Long?>(null) }
+
+    LaunchedEffect(visible) {
+        if (visible) {
+            overlayId = controller.show(
+                anchorBounds = null,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.Fullscreen,
+                    modal = true,
+                    maskColor = OverlayDefaults.scrimColor,
+                    dismissPolicy = OverlayDismissPolicy.Sheet.copy(
+                        outsideClick = closeOnClickOutside
+                    )
+                ),
+                onDismiss = onDismiss
+            ) {
+                BottomSheetSurface(
+                    title = title,
+                    description = description,
+                    showCancel = showCancel,
+                    cancelText = cancelText,
+                    onDismiss = onDismiss,
+                    body = content,
+                )
+            }
+        } else {
+            overlayId?.let { controller.dismiss(it) }
+            overlayId = null
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            overlayId?.let { controller.dismiss(it) }
+        }
+    }
+}
+
+/**
  * BottomSheetSurface - the shared visual container for BottomSheet
  */
 @Composable
@@ -133,6 +202,41 @@ internal fun BottomSheetSurface(
     maxListHeight: Dp = 400.dp,
     onDismiss: () -> Unit,
     onItemClick: (BottomSheetItem, Int) -> Unit
+) {
+    BottomSheetSurface(
+        title = title,
+        description = description,
+        showCancel = showCancel,
+        cancelText = cancelText,
+        onDismiss = onDismiss,
+    ) {
+        BottomSheetItemList(
+            items = items,
+            maxHeight = maxListHeight,
+            onDismiss = onDismiss,
+            onItemClick = onItemClick,
+        )
+    }
+}
+
+/**
+ * BottomSheetSurface - the same chrome (grabber, header, cancel, safe area) around
+ * arbitrary content.
+ *
+ * The item-list sheet is one body among several. A read-receipt list, a member
+ * picker or a form needs the identical container but not a `List<BottomSheetItem>`,
+ * and rebuilding the chrome per caller is how sheets drift apart: different corner
+ * radius, a missing grabber, or the last row sitting on the home indicator because
+ * the caller hardcoded 16dp instead of reading the real inset.
+ */
+@Composable
+internal fun BottomSheetSurface(
+    title: String? = null,
+    description: String? = null,
+    showCancel: Boolean = true,
+    cancelText: String = I18n.strings.common.cancel,
+    onDismiss: () -> Unit,
+    body: @Composable () -> Unit,
 ) {
     val colors = Theme.colors
     val runtimeFlags = LocalRuntimeFlags.current
@@ -216,13 +320,7 @@ internal fun BottomSheetSurface(
                 }
                 }
 
-                // Option list, scrollable
-                BottomSheetItemList(
-                    items = items,
-                    maxHeight = maxListHeight,
-                    onDismiss = onDismiss,
-                    onItemClick = onItemClick
-                )
+                body()
             }
             }
 

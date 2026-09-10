@@ -291,6 +291,7 @@ public final class com/gearui/components/bottomsheet/BottomSheetItem {
 }
 
 public final class com/gearui/components/bottomsheet/BottomSheetKt {
+	public static final fun BottomSheet (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun BottomSheet-_baEEi4 (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLjava/lang/String;ZFLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 

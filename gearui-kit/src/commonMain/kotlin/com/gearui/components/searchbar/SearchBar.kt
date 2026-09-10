@@ -29,6 +29,10 @@ import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.keyboard.keyboardDismissExempt
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.gearui.theme.Theme
 import kotlin.math.abs
 import com.gearui.i18n.I18n
@@ -51,6 +55,41 @@ import com.gearui.foundation.typography.IconSizes
  * - cancel button
  * - placeholder
  */
+/**
+ * When the Cancel button is shown.
+ *
+ * [WhileEditing] is the default because it is the platform behaviour GearUI
+ * takes as its reference: Cancel arrives when the field takes focus and leaves
+ * when it gives it up. A permanently visible Cancel is a control that does
+ * nothing most of the time; a permanently absent one leaves no way out of a
+ * search but the back gesture.
+ */
+internal fun cancelVisible(
+    mode: SearchBarCancel,
+    legacyShowCancel: Boolean,
+    focused: Boolean,
+): Boolean {
+    // The deprecated flag wins when set: a caller that asked for a Cancel button
+    // keeps it, rather than having it start appearing and disappearing.
+    if (legacyShowCancel) return true
+    return when (mode) {
+        SearchBarCancel.Never -> false
+        SearchBarCancel.Always -> true
+        SearchBarCancel.WhileEditing -> focused
+    }
+}
+
+enum class SearchBarCancel {
+    /** Never. For a search field embedded in a page that has its own way back. */
+    Never,
+
+    /** While the field has focus. The platform behaviour, and the default. */
+    WhileEditing,
+
+    /** Always. For a dedicated search page where Cancel is the way out. */
+    Always,
+}
+
 @Composable
 fun SearchBar(
     value: String,
@@ -58,7 +97,16 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.searchPlaceholder,
     enabled: Boolean = true,
+    /**
+     * Superseded by [cancel]; prefer `SearchBarCancel.Always` / `Never`.
+     *
+     * Kept, and kept winning when true, so a caller that asked for a Cancel
+     * button keeps exactly what it had rather than having the button start
+     * appearing and disappearing under it.
+     */
     showCancel: Boolean = false,
+    /** See [SearchBarCancel]. Ignored when the deprecated [showCancel] is true. */
+    cancel: SearchBarCancel = SearchBarCancel.WhileEditing,
     onCancel: (() -> Unit)? = null,
     onSearch: ((String) -> Unit)? = null,
     shape: SearchBarShape = SearchBarShape.ROUNDED,
@@ -72,6 +120,7 @@ fun SearchBar(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
+    var isFocused by remember { mutableStateOf(false) }
     var focusRequestTick by remember { mutableStateOf(0) }
 
     LaunchedEffect(focusRequestTick, enabled) {
@@ -211,8 +260,13 @@ fun SearchBar(
                             }
                         ),
                         singleLine = true,
+                        // onFocusChanged sits on a chain that does not itself
+                        // depend on focus. Input.kt records why that distinction
+                        // matters: a chain rebuilt *because* focus changed
+                        // recreates the underlying EditText.
                         modifier = Modifier.keyboardDismissExempt()
                             .fillMaxWidth()
+                            .onFocusChanged { isFocused = it.isFocused }
                             .focusRequester(focusRequester)
                     )
                 }
@@ -241,7 +295,12 @@ fun SearchBar(
         // Cancel button — a small filled pill in the brand primary, not bare text:
         // primary text alone can be near-invisible for low-contrast brand colors
         // (e.g. yellow on white), while primary-surface + primaryForeground always pairs.
-        if (showCancel) {
+        //
+        // Visibility is decided by cancelVisible(), which is a function so the
+        // rule can be tested — this used to be a bare `showCancel` the caller had
+        // to manage, so the platform's "arrives with focus" behaviour was
+        // something every host reimplemented or, more often, went without.
+        if (cancelVisible(cancel, showCancel, isFocused)) {
             Spacer(modifier = Modifier.width(Spacing.sm))
             Box(
                 modifier = Modifier

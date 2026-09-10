@@ -607,6 +607,9 @@ which had a measurable defect behind it.
 
 ## 11.3.1 Component Anatomy: Sheets
 
+The parity pass that produced this section, including what it deliberately did
+not change, is `IOS26_PARITY_AUDIT.md`.
+
 Applies to `BottomSheet`. **Not** to `ActionSheet`: a platform action sheet is a
 menu with a Cancel card and is not draggable, and giving it a grabber would
 promise a gesture it does not have.

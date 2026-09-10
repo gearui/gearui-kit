@@ -26,6 +26,7 @@ import com.gearui.sample.config.ComponentCategory
 import com.gearui.sample.config.ComponentConfig
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.config.localizedDescription
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.theme.Theme
 
 /**
@@ -146,19 +147,16 @@ fun HomePage(
                         }
                     } else {
                         item(key = "search_result_card") {
-                            ListCard {
-                                filteredComponents.forEachIndexed { index, component ->
-                                    ComponentListItem(
-                                        component = component,
-                                        isEnglish = isEnglish,
-                                        onClick = {
-                                            focusManager.clearFocus()
-                                            onComponentClick(component)
-                                        },
-                                        searchQuery = searchQuery,
-                                        showDivider = index < filteredComponents.lastIndex
-                                    )
-                                }
+                            CellGroup(items = filteredComponents) { component ->
+                                ComponentListItem(
+                                    component = component,
+                                    isEnglish = isEnglish,
+                                    onClick = {
+                                        focusManager.clearFocus()
+                                        onComponentClick(component)
+                                    },
+                                    searchQuery = searchQuery,
+                                )
                             }
                         }
                     }
@@ -168,27 +166,31 @@ fun HomePage(
                         val components = ComponentConfig.getByCategory(category)
 
                         if (components.isNotEmpty()) {
-                            item(key = "category_${category.name}") {
-                                CategoryHeader(
-                                    category = category,
-                                    count = components.size,
-                                    strings = strings
-                                )
-                            }
-
                             item(key = "category_card_${category.name}") {
-                                ListCard {
-                                    components.forEachIndexed { index, component ->
-                                        ComponentListItem(
-                                            component = component,
-                                            isEnglish = isEnglish,
-                                            onClick = {
-                                                focusManager.clearFocus()
-                                                onComponentClick(component)
-                                            },
-                                            showDivider = index < components.lastIndex
+                                // CellGroup owns the header alignment, the
+                                // separator inset and "no separator after the
+                                // last row". This page used to place the header
+                                // itself, flush against the card edge, one
+                                // padding step left of the rows it labelled.
+                                CellGroup(
+                                    items = components,
+                                    title = getCategoryDisplayName(category, strings),
+                                    titleTrailing = {
+                                        Text(
+                                            text = "${components.size}${strings.componentCountSuffix}",
+                                            style = Theme.typography.bodySmall,
+                                            color = Theme.colors.mutedForeground,
                                         )
-                                    }
+                                    },
+                                ) { component ->
+                                    ComponentListItem(
+                                        component = component,
+                                        isEnglish = isEnglish,
+                                        onClick = {
+                                            focusManager.clearFocus()
+                                            onComponentClick(component)
+                                        },
+                                    )
                                 }
                             }
                         }
@@ -221,55 +223,7 @@ fun HomePage(
     /**
      * Category header
      */
-    @Composable
-    private fun CategoryHeader(
-        category: ComponentCategory,
-        count: Int,
-        strings: SampleStrings
-    ) {
-        val colors = Theme.colors
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, bottom = 8.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = getCategoryDisplayName(category, strings),
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
-                )
-
-                Text(
-                    text = "$count${strings.componentCountSuffix}",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun ListCard(
-        content: @Composable ColumnScope.() -> Unit
-    ) {
-        val colors = Theme.colors
-        val shapes = Theme.shapes
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(shapes.lg)
-                .background(colors.surface)
-                .border(1.dp, colors.border, shapes.lg)
-        ) {
-            content()
-        }
-    }
 
     /**
      * Component list row
@@ -280,7 +234,6 @@ fun HomePage(
         isEnglish: Boolean = false,
         onClick: () -> Unit,
         searchQuery: String = "",
-        showDivider: Boolean = false
     ) {
         val colors = Theme.colors
         val name = component.nameEn
@@ -338,13 +291,5 @@ fun HomePage(
             )
         }
 
-        if (showDivider) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(colors.border)
-            )
-        }
     }
 }

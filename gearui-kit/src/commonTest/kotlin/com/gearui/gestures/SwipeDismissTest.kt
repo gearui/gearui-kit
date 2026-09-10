@@ -1,6 +1,7 @@
 package com.gearui.gestures
 
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -56,5 +57,15 @@ class SwipeDismissTest {
     @Test
     fun shortTravelBelowTheFlingVelocityDoesNotDismiss() {
         assertFalse(commit(drag = 50f, velocity = 900f))
+    }
+
+    @Test
+    fun directionDecidesWhichWayCountsAsAway() {
+        // A left drawer leaves toward x=0, so its travel is negative in screen
+        // terms and positive in "distance away from rest". Getting this backwards
+        // makes the drawer dismissible only by dragging it further open.
+        assertEquals(-1f, signOf(DismissDirection.Left))
+        assertEquals(1f, signOf(DismissDirection.Right))
+        assertEquals(1f, signOf(DismissDirection.Down))
     }
 }

@@ -2,6 +2,7 @@ package com.gearui.gestures
 
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
+import com.tencent.kuikly.compose.foundation.gestures.awaitHorizontalTouchSlopOrCancellation
 import com.tencent.kuikly.compose.foundation.gestures.awaitVerticalTouchSlopOrCancellation
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.input.pointer.PointerInputChange
@@ -11,7 +12,19 @@ import com.tencent.kuikly.compose.ui.input.pointer.util.VelocityTracker
 import kotlin.math.abs
 
 /**
- * Drag-down-to-dismiss configuration.
+ * Which way a surface is dragged to dismiss it.
+ *
+ * The direction is where the surface *leaves*, which is the edge it is anchored
+ * to: a bottom sheet leaves downward, a right-hand drawer leaves to the right.
+ */
+enum class DismissDirection {
+    Down,
+    Left,
+    Right,
+}
+
+/**
+ * Drag-to-dismiss configuration.
  *
  * @param commitDistanceDp past this the drag counts as a dismissal
  * @param minFlingDistanceDp a fast enough flick commits over a shorter distance
@@ -70,44 +83,53 @@ internal fun shouldCommitDismiss(
  *   [SwipeDismissConfig.commitDistanceDp] and clamped to `[0, 1]`
  */
 fun Modifier.swipeDismiss(
+    direction: DismissDirection = DismissDirection.Down,
     enabled: Boolean = true,
     config: SwipeDismissConfig = SwipeDismissConfig(),
     onStart: (() -> Unit)? = null,
-    onProgress: ((progress: Float, dragY: Float) -> Unit)? = null,
+    onProgress: ((progress: Float, drag: Float) -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
     onCommit: () -> Unit,
 ): Modifier {
     if (!enabled) return this
-    return this.pointerInput(enabled, config) {
+    return this.pointerInput(enabled, config, direction) {
         val commitPx = config.commitDistanceDp * density
         val minFlingPx = config.minFlingDistanceDp * density
         val flingVelocityPxPerSec = config.flingVelocityDpPerSec * density
+        val vertical = direction == DismissDirection.Down
 
         awaitEachGesture {
             val down = awaitFirstDown(requireUnconsumed = false)
-            val startX = down.position.x
-            var totalDy = 0f
-            var totalDx = 0f
+            val start = down.position
+            var along = 0f
+            var across = 0f
             var recognized = false
             val velocityTracker = VelocityTracker()
             velocityTracker.addPosition(down.uptimeMillis, down.position)
 
+            val onSlop: (PointerInputChange, Float) -> Unit = { change, overSlop ->
+                along += signOf(direction) * overSlop
+                across = if (vertical) change.position.x - start.x else change.position.y - start.y
+                // Only in the direction the surface leaves, and only when the
+                // intent along that axis dominates the drift across it.
+                if (along > 0f && abs(along) > abs(across) * config.directionRatio) {
+                    change.consume()
+                    recognized = true
+                }
+            }
+
             val slopChange: PointerInputChange? =
-                awaitVerticalTouchSlopOrCancellation(down.id) { change, overSlop ->
-                    totalDy += overSlop
-                    totalDx = change.position.x - startX
-                    // Downward only, and only when the vertical intent dominates.
-                    if (totalDy > 0f && abs(totalDy) > abs(totalDx) * config.directionRatio) {
-                        change.consume()
-                        recognized = true
-                    }
+                if (vertical) {
+                    awaitVerticalTouchSlopOrCancellation(down.id, onSlop)
+                } else {
+                    awaitHorizontalTouchSlopOrCancellation(down.id, onSlop)
                 }
 
             if (!recognized || slopChange == null) return@awaitEachGesture
 
             onStart?.invoke()
 
-            var dragY = totalDy
+            var drag = along
             velocityTracker.addPosition(slopChange.uptimeMillis, slopChange.position)
 
             val pointer = slopChange.id
@@ -116,21 +138,22 @@ fun Modifier.swipeDismiss(
                 val change = event.changes.firstOrNull { it.id == pointer } ?: break
                 if (!change.pressed) break
 
-                dragY += change.positionChange().y
-                // Dragging back up past the start does not lift the sheet above
+                val delta = change.positionChange()
+                drag += signOf(direction) * (if (vertical) delta.y else delta.x)
+                // Dragging back past the start does not pull the surface beyond
                 // its resting place; it just returns to it.
-                if (dragY < 0f) dragY = 0f
+                if (drag < 0f) drag = 0f
 
                 velocityTracker.addPosition(change.uptimeMillis, change.position)
                 change.consume()
 
-                onProgress?.invoke((dragY / commitPx).coerceIn(0f, 1f), dragY)
+                onProgress?.invoke((drag / commitPx).coerceIn(0f, 1f), drag)
             }
 
-            val vy = velocityTracker.calculateVelocity().y
+            val v = velocityTracker.calculateVelocity()
             val commit = shouldCommitDismiss(
-                dragPx = dragY,
-                velocityPxPerSec = vy,
+                dragPx = drag,
+                velocityPxPerSec = signOf(direction) * (if (vertical) v.y else v.x),
                 commitPx = commitPx,
                 minFlingPx = minFlingPx,
                 flingVelocityPxPerSec = flingVelocityPxPerSec,
@@ -139,3 +162,7 @@ fun Modifier.swipeDismiss(
         }
     }
 }
+
+/** +1 when the surface leaves toward growing coordinates, -1 when it leaves toward zero. */
+internal fun signOf(direction: DismissDirection): Float =
+    if (direction == DismissDirection.Left) -1f else 1f

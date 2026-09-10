@@ -23,6 +23,12 @@ import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.runtime.LocalRuntimeFlags
+import com.gearui.gestures.DismissDirection
+import com.gearui.gestures.swipeDismiss
+import com.tencent.kuikly.compose.animation.core.Animatable
+import com.tencent.kuikly.compose.animation.core.spring
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
@@ -36,6 +42,10 @@ enum class DrawerPlacement {
     LEFT,
     RIGHT
 }
+
+/** Which way the panel travels as it is dragged away: left is toward zero. */
+private fun signOfPlacement(placement: DrawerPlacement): Float =
+    if (placement == DrawerPlacement.LEFT) -1f else 1f
 
 /**
  * DrawerItem - one drawer list item
@@ -232,13 +242,35 @@ private fun DrawerOverlayContent(
                 DrawerPlacement.RIGHT -> width.value * (1f - slideProgress)
             }
 
+            // Drag the panel back toward its own edge to close it.
+            //
+            // Unlike a bottom sheet, this can attach to the whole panel: a drawer
+            // body scrolls vertically, so a horizontal drag is never competing
+            // with a scroll. (A customContent that scrolls horizontally would be;
+            // that is a caller's problem to know about.)
+            val dragX = remember { Animatable(0f) }
+            val dragScope = rememberCoroutineScope()
+
             Box(
                 modifier = modifier
                     .fillMaxHeight()
                     .width(width)
                     .graphicsLayer {
-                        translationX = offsetX * density
+                        translationX = offsetX * density + dragX.value
                     }
+                    .swipeDismiss(
+                        direction = when (placement) {
+                            DrawerPlacement.LEFT -> DismissDirection.Left
+                            DrawerPlacement.RIGHT -> DismissDirection.Right
+                        },
+                        onProgress = { _, drag ->
+                            dragScope.launch {
+                                dragX.snapTo(signOfPlacement(placement) * drag)
+                            }
+                        },
+                        onCancel = { dragScope.launch { dragX.animateTo(0f, spring()) } },
+                        onCommit = onDismiss,
+                    )
                     .background(effectiveBackgroundColor)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },

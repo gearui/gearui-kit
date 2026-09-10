@@ -31,14 +31,14 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**72 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**73 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（7） | `Button`、`Icon`、`Link`、`Text`、`Tag`、`Badge`、`Divider` |
 | 表单（17） | `Input`、`Checkbox`、`Radio`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
 | 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
-| 数据展示（15） | `List`、`Card`、`Cell`、`Table`、`Image`、`ImageViewer`、`Avatar`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
+| 数据展示（16） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（6） | `Grid`、`Swiper`、`SearchBar`、`Refresh`、`BottomSheet`、`BackTop` |
 
@@ -103,6 +103,7 @@
 | `List` | 列表 | 列表展示 |
 | `Card` | 卡片 | 卡片容器 |
 | `Cell` | 单元格 | 列表单元组件 |
+| `CellGroup` | 单元格组 | 成组的列表行 |
 | `Table` | 表格 | 数据表格 |
 | `Image` | 图片 | 图片展示 |
 | `ImageViewer` | 图片预览 | 图片预览查看 |

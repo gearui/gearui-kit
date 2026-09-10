@@ -77,6 +77,7 @@ object ComponentConfig {
         ComponentInfo("list", "列表", "List", ComponentCategory.DATA_DISPLAY, "/components/list", "列表展示", "List display"),
         ComponentInfo("card", "卡片", "Card", ComponentCategory.DATA_DISPLAY, "/components/card", "卡片容器", "Card container"),
         ComponentInfo("cell", "单元格", "Cell", ComponentCategory.DATA_DISPLAY, "/components/cell", "列表单元组件", "List cell component"),
+        ComponentInfo("cellgroup", "单元格组", "CellGroup", ComponentCategory.DATA_DISPLAY, "/components/cellgroup", "成组的列表行", "Grouped list rows"),
         ComponentInfo("table", "表格", "Table", ComponentCategory.DATA_DISPLAY, "/components/table", "数据表格", "Data table"),
         ComponentInfo("image", "图片", "Image", ComponentCategory.DATA_DISPLAY, "/components/image", "图片展示", "Image display"),
         ComponentInfo("imageviewer", "图片预览", "ImageViewer", ComponentCategory.DATA_DISPLAY, "/components/imageviewer", "图片预览查看", "Image preview"),

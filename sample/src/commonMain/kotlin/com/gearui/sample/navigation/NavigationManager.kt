@@ -29,6 +29,7 @@ import com.gearui.sample.examples.tab.TabsExample
 import com.gearui.sample.examples.navigationmenu.NavigationMenuExample
 import com.gearui.sample.examples.sidebar.SidebarExample
 import com.gearui.sample.examples.cell.CellExample
+import com.gearui.sample.examples.cellgroup.CellGroupExample
 import com.gearui.sample.examples.drawer.DrawerExample
 import com.gearui.sample.examples.steps.StepsExample
 import com.gearui.sample.examples.breadcrumb.BreadcrumbExample
@@ -153,6 +154,7 @@ object NavigationManager {
             "list" -> ListExample(component, onBack)
             "card" -> CardExample(component, onBack)
             "cell" -> CellExample(component, onBack)
+            "cellgroup" -> CellGroupExample(component, onBack)
             "table" -> TableExample(component, onBack)
             "image" -> ImageExample(component, onBack)
             "imageviewer" -> ImageViewerExample(component, onBack)

@@ -32,14 +32,14 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**72 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**73 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (7) | `Button`, `Icon`, `Link`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (17) | `Input`, `Checkbox`, `Radio`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
 | Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
-| Data display (15) | `List`, `Card`, `Cell`, `Table`, `Image`, `ImageViewer`, `Avatar`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
+| Data display (16) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Message`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (6) | `Grid`, `Swiper`, `SearchBar`, `Refresh`, `BottomSheet`, `BackTop` |
 
@@ -104,6 +104,7 @@ component follows both without any per-screen wiring.
 | `List` | List display |
 | `Card` | Card container |
 | `Cell` | List cell component |
+| `CellGroup` | Grouped list rows |
 | `Table` | Data table |
 | `Image` | Image display |
 | `ImageViewer` | Image preview |

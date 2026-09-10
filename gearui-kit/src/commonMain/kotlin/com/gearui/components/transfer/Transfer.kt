@@ -18,6 +18,7 @@ import com.gearui.components.checkbox.Checkbox
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.gearui.foundation.primitives.Text
 
+import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
@@ -216,7 +217,7 @@ private fun TransferList(
                 BasicTextField(
                     value = searchValue,
                     onValueChange = onSearchChange,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.keyboardDismissExempt().fillMaxWidth()
                 )
             }
         }

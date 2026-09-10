@@ -18,6 +18,7 @@ import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
+import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.tencent.kuikly.compose.ui.unit.Dp
@@ -361,7 +362,7 @@ private fun TextareaInputArea(
                             onValueChange(newValue)
                         }
                     },
-                    modifier = Modifier
+                    modifier = Modifier.keyboardDismissExempt()
                         .fillMaxWidth()
                         .focusRequester(inputFocusRequester)
                         .then(

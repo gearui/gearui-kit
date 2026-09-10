@@ -28,6 +28,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
 import kotlin.math.abs
 import com.gearui.i18n.I18n
@@ -210,7 +211,7 @@ fun SearchBar(
                             }
                         ),
                         singleLine = true,
-                        modifier = Modifier
+                        modifier = Modifier.keyboardDismissExempt()
                             .fillMaxWidth()
                             .focusRequester(focusRequester)
                     )

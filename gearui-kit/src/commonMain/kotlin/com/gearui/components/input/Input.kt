@@ -33,6 +33,7 @@ import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
+import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
@@ -302,7 +303,7 @@ fun Input(
                         readOnly = readOnly,
                         enabled = enabled,
                         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-                        modifier = Modifier
+                        modifier = Modifier.keyboardDismissExempt()
                             .fillMaxWidth()
                             .focusRequester(inputFocusRequester)
                             .onFocusChanged { focusState ->

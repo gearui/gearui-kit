@@ -29,6 +29,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Tapping a button no longer leaves the keyboard up. The dismiss container had
+  been judging whether a child consumed the lift, which is true of anything
+  interactive, so a login button counted as "inside the input". An input region
+  now declares itself through the new `Modifier.keyboardDismissExempt`, which
+  claims the gesture on the Initial pass; everything else dismisses. GearUI's
+  text inputs carry it, and a composite composer can mark its whole bar so its
+  send button does not close the keyboard mid-conversation.
+
 - Showing an overlay now dismisses the soft keyboard first. The keyboard is
   drawn by the system on top of the app, so a menu, sheet or picker opened
   while typing came up underneath it, out of sight and out of reach. The new

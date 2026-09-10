@@ -2,7 +2,7 @@
 
 [English](./README.md) | [简体中文](./README.zh-Hans.md)
 
-A Kotlin Multiplatform UI component library built on Kuikly.
+Build beautiful, iOS-inspired UI across iOS, Android, Web, and HarmonyOS with GearUI Kit, a Kotlin Multiplatform (KMP) UI framework.
 
 ## Release Information
 

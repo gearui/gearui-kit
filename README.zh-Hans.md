@@ -2,7 +2,7 @@
 
 [English](./README.md) | [简体中文](./README.zh-Hans.md)
 
-基于 Kuikly 构建的 Kotlin Multiplatform UI 组件库。
+使用 Kotlin Multiplatform（KMP）UI 框架 GearUI Kit，为 iOS、Android、Web 和 HarmonyOS 打造精美的 iOS 风格界面。
 
 ## 发布信息
 

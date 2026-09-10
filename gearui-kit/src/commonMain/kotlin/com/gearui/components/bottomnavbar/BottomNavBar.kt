@@ -6,6 +6,8 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeType
 import com.gearui.runtime.LocalRuntimeFlags
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.animation.AnimatedVisibility
 import com.tencent.kuikly.compose.animation.fadeIn
@@ -116,10 +118,16 @@ fun BottomNavBar(
         exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
         modifier = modifier
     ) {
+        // Chrome material, same as NavBar: a bar pinned over scrolling content.
+        // Its default is already colors.surface, so the fallback matches what it
+        // painted before and the shipping policy (Never) changes nothing.
+        MaterialSurface(
+            material = Materials.Chrome,
+            modifier = Modifier.fillMaxWidth(),
+            fallback = barBackground,
+        ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(barBackground)
+            modifier = Modifier.fillMaxWidth()
         ) {
             if (showTopDivider) {
                 Box(
@@ -255,6 +263,7 @@ fun BottomNavBar(
             if (safeAreaBottom > 0.dp) {
                 Spacer(modifier = Modifier.height(safeAreaBottom))
             }
+        }
         }
     }
 }

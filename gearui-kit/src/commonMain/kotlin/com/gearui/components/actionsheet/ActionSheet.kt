@@ -24,6 +24,8 @@ import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.runtime.LocalRuntimeFlags
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
@@ -298,11 +300,17 @@ private fun ActionSheetSurface(
         // colors.muted: 8dp of a colour 10 luminance levels off the surface it
         // sat on, which in dark mode read as a hairline, not as a break.
         Column(modifier = Modifier.fillMaxWidth()) {
+        // Sheet material: a modal surface that owns the screen. The shape goes on
+        // the material so the blur is clipped too — clip only the content and the
+        // blur squares off the sheet's rounded corners.
+        MaterialSurface(
+            material = Materials.Sheet,
+            modifier = Modifier.fillMaxWidth(),
+            shape = OverlayDefaults.sheetShape,
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(OverlayDefaults.sheetShape)
-                .background(colors.surface)
                 .clickable { /* 阻止点击穿透 */ }
         ) {
             // Description
@@ -355,6 +363,7 @@ private fun ActionSheetSurface(
             if (!showCancel) {
                 Spacer(modifier = Modifier.height(bottomInset))
             }
+        }
         }
 
             // Cancel button

@@ -510,7 +510,16 @@ disagreements are disqualifying for a kit whose reference is iOS:
 
 `docs/UPSTREAM_KUIKLYUI_BLUR.md` records all four findings with source
 citations and proposes the upstream fixes. Turning glass on afterwards is one
-default.
+default — and that is now true rather than aspirational. Every surface named in
+the table above renders through `MaterialSurface`; until they did, the policy
+reached nothing but the sample's probe page and flipping it changed no pixel.
+
+The fallback colour is per-surface, not always `surface`. NavBar deliberately
+paints `background`: in a dark theme `surface` (#121212) is one step lighter
+than `background` (#0A0A0A) and draws a visible band across the top that does
+not meet the status bar. The *tint* over a running blur stays `surface`
+everywhere, because a blurred backdrop is low-frequency enough for one tint to
+work — which is exactly why the opaque fallback needs its own answer.
 
 `MaterialPolicy.Auto` and `Always` are implemented and verified; the sample's
 Material Probe page forces them on, which is how the cross-renderer

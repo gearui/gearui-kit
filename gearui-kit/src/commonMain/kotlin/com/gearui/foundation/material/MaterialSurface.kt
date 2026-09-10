@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.graphics.RectangleShape
 import com.tencent.kuikly.core.views.BlurView
@@ -16,8 +17,8 @@ import com.tencent.kuikly.core.views.BlurView
  * A surface that blurs what is behind it, or a flat one where it cannot.
  *
  * Degradation is the whole design, so it is stated once here: **when the blur
- * does not run, the translucency goes with it.** The fallback is
- * `Theme.colors.surface` at full opacity, not the same tint without the blur.
+ * does not run, the translucency goes with it.** The fallback is an opaque
+ * colour, not the same tint without the blur.
  *
  * A tint is calibrated against blurred, low-frequency backdrop. Over raw
  * content it stops being a material and becomes a wash: body text sits on top
@@ -34,6 +35,18 @@ import com.tencent.kuikly.core.views.BlurView
  * `BlurView` is a leaf view and cannot host children.
  *
  * @param material which surface this is; see [Materials].
+ * @param fallback the opaque colour to paint when the blur does not run.
+ *
+ *   Defaults to `Theme.colors.surface`, which is right for sheets and popovers.
+ *   It is a parameter because it is **not** right for every surface: NavBar
+ *   deliberately paints `colors.background`, since in a dark theme `surface`
+ *   (#121212) is one step lighter than `background` (#0A0A0A) and draws a
+ *   visible band across the top that does not meet the status bar. That was a
+ *   fixed bug; a material whose fallback ignored it would put it back.
+ *
+ *   The *tint* over a running blur stays `Theme.colors.surface` for every
+ *   material (§11.2) — a blurred backdrop is low-frequency enough that one tint
+ *   works, which is the whole reason the fallback needs its own answer.
  * @param shape clipped shape. Clip the blur, not just the content, or the blur
  *   squares off the corners of a rounded sheet.
  */
@@ -42,9 +55,13 @@ fun MaterialSurface(
     material: Material,
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
+    // After `shape` so existing positional calls keep binding to the same
+    // parameters; inserting it before would have silently re-aimed them.
+    fallback: Color? = null,
     content: @Composable () -> Unit,
 ) {
     val colors = Theme.colors
+    val opaque = fallback ?: colors.surface
     val blurred = isMaterialBlurEnabled()
 
     Box(modifier = modifier.clip(shape)) {
@@ -64,7 +81,7 @@ fun MaterialSurface(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.surface)
+                    .background(opaque)
             )
         }
         content()

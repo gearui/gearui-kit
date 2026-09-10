@@ -13,6 +13,8 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.runtime.LocalRuntimeFlags
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
@@ -77,10 +79,18 @@ fun NavBar(
     )
     val actionSlotWidth = NavBarDefaults.actionSlotWidth
 
+    // Chrome material: a bar pinned over scrolling content. With the shipping
+    // policy (Never) this paints exactly [bgColor] and nothing changes; when a
+    // host turns blur on, the bar becomes translucent over what scrolls beneath.
+    // The fallback is [bgColor] rather than surface on purpose — see the comment
+    // on bgColor above, and MaterialSurface's `fallback` parameter.
+    MaterialSurface(
+        material = Materials.Chrome,
+        modifier = modifier.fillMaxWidth(),
+        fallback = bgColor,
+    ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(bgColor)
+        modifier = Modifier.fillMaxWidth()
     ) {
         // Top safe area filler
         if (safeAreaTop > 0.dp) {
@@ -300,6 +310,7 @@ fun NavBar(
             )
         }
     }
+}
 }
 
 /**

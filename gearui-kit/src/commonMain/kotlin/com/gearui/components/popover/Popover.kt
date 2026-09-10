@@ -21,6 +21,8 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
@@ -331,11 +333,19 @@ private fun PopoverBody(
 ) {
     val shapes = Theme.shapes
 
+    // Popover material: a transient surface anchored to a trigger.
+    //
+    // The chain has to be split: the shadow belongs outside the clip, the fill
+    // is what the material replaces, and the border is drawn over it. Keeping
+    // them in one chain is what stopped this surface from being a material.
+    Box(modifier = Modifier.shadow(Theme.elevation.raised, OverlayDefaults.panelShape)) {
+    MaterialSurface(
+        material = Materials.Popover,
+        shape = OverlayDefaults.panelShape,
+        fallback = backgroundColor,
+    ) {
     Box(
         modifier = Modifier
-            .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
-            .clip(OverlayDefaults.panelShape)
-            .background(backgroundColor)
             .border(BorderWidth.thin, borderColor, OverlayDefaults.panelShape)
             .padding(horizontal = Spacing.lg, vertical = Spacing.md)
     ) {
@@ -344,6 +354,8 @@ private fun PopoverBody(
         ) {
             content()
         }
+    }
+    }
     }
 }
 

@@ -62,10 +62,12 @@ data class RuntimeFlags(
      * is locked to a light material. `docs/UPSTREAM_KUIKLYUI_BLUR.md` has the
      * findings and the proposed upstream fixes.
      *
-     * [MaterialPolicy.Auto] and [MaterialPolicy.Always] work today and are how
-     * the sample's Material Probe page is exercised; a host that has looked at
-     * its own platforms can turn them on. Flipping this default back is the
-     * single change needed once upstream lands.
+     * [MaterialPolicy.Auto] and [MaterialPolicy.Always] work today; a host that
+     * has looked at its own platforms can turn them on. Flipping this default is
+     * the single change needed once upstream lands — which became true only when
+     * the seven surfaces in §11.2 were actually routed through `MaterialSurface`.
+     * Before that the policy reached nothing but the sample's probe page, so
+     * flipping it changed no pixel in any app.
      */
     val materialPolicy: MaterialPolicy = MaterialPolicy.Never,
 )

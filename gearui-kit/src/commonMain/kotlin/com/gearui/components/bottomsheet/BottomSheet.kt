@@ -16,6 +16,8 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -143,12 +145,15 @@ internal fun BottomSheetSurface(
                     detectTapGestures { }
                 }
         ) {
-            // Main panel
+            // Main panel. Sheet material: the shape goes on the material so the
+            // blur is clipped with it, not just the content inside it.
+            MaterialSurface(
+                material = Materials.Sheet,
+                modifier = Modifier.fillMaxWidth(),
+                shape = OverlayDefaults.sheetShape,
+            ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(OverlayDefaults.sheetShape)
-                    .background(colors.surface)
+                modifier = Modifier.fillMaxWidth()
             ) {
             // Title area
                 if (title != null || description != null) {
@@ -186,6 +191,7 @@ internal fun BottomSheetSurface(
                     onDismiss = onDismiss,
                     onItemClick = onItemClick
                 )
+            }
             }
 
             // Cancel button

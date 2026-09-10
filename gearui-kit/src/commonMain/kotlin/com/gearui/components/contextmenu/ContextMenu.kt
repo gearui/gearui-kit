@@ -16,6 +16,8 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
@@ -123,8 +125,15 @@ fun ContextMenu(
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
                         .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
-                        .clip(OverlayDefaults.panelShape)
-                        .background(colors.surface)
+                ) {
+                // Popover material, same tier as Popover and Tooltip. Split from the
+                // chain above for the same reason: the shadow stays outside the clip.
+                MaterialSurface(
+                    material = Materials.Popover,
+                    shape = OverlayDefaults.panelShape,
+                ) {
+                Column(
+                    modifier = Modifier
                         .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
                         .padding(Spacing.xs)
                 ) {
@@ -180,6 +189,8 @@ fun ContextMenu(
                             )
                         }
                     }
+                }
+                }
                 }
             }
 

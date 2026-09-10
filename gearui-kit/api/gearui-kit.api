@@ -2180,6 +2180,36 @@ public final class com/gearui/foundation/border/BorderWidth {
 	public final fun getThin-UdJoRJA ()F
 }
 
+public final class com/gearui/foundation/color/ContentStyle {
+	public static final field $stable I
+	public synthetic fun <init> (JJZFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-cs37B9Y ()J
+	public final fun component2-cs37B9Y ()J
+	public final fun component3 ()Z
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun component6 ()F
+	public final fun copy-ihQ5vso (JJZFFF)Lcom/gearui/foundation/color/ContentStyle;
+	public static synthetic fun copy-ihQ5vso$default (Lcom/gearui/foundation/color/ContentStyle;JJZFFFILjava/lang/Object;)Lcom/gearui/foundation/color/ContentStyle;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLink-cs37B9Y ()J
+	public final fun getLinkOnBackground ()F
+	public final fun getLinkOnText ()F
+	public final fun getNeedsEmphasis ()Z
+	public final fun getText-cs37B9Y ()J
+	public final fun getTextOnBackground ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/color/ContentStyleKt {
+	public static final fun contrastRatio-HMauSbA (JJ)F
+	public static final fun getCanonicalLink ()J
+	public static final fun relativeLuminance-YCSsn3k (J)F
+	public static final fun resolveContentStyle-2ohjLAg (JJFF)Lcom/gearui/foundation/color/ContentStyle;
+	public static synthetic fun resolveContentStyle-2ohjLAg$default (JJFFILjava/lang/Object;)Lcom/gearui/foundation/color/ContentStyle;
+}
+
 public final class com/gearui/foundation/elevation/Elevation {
 	public static final field $stable I
 	public synthetic fun <init> (FFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2319,6 +2349,16 @@ public abstract interface class com/gearui/foundation/interaction/MutableInterac
 	public abstract fun updateState (Lcom/gearui/foundation/interaction/InteractionState;)V
 }
 
+public final class com/gearui/foundation/keyboard/KeyboardDismissExemptKt {
+	public static final fun getLocalKeyboardDismissExemptions ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun keyboardDismissExempt (Lcom/tencent/kuikly/compose/ui/Modifier;)Lcom/tencent/kuikly/compose/ui/Modifier;
+}
+
+public final class com/gearui/foundation/keyboard/KeyboardDismissExemptions {
+	public static final field $stable I
+	public fun <init> ()V
+}
+
 public final class com/gearui/foundation/keyboard/KeyboardDismissMode : java/lang/Enum {
 	public static final field None Lcom/gearui/foundation/keyboard/KeyboardDismissMode;
 	public static final field OnScroll Lcom/gearui/foundation/keyboard/KeyboardDismissMode;
@@ -2435,7 +2475,7 @@ public final class com/gearui/foundation/material/MaterialSupportKt {
 }
 
 public final class com/gearui/foundation/material/MaterialSurfaceKt {
-	public static final fun MaterialSurface (Lcom/gearui/foundation/material/Material;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MaterialSurface-OpgAY6E (Lcom/gearui/foundation/material/Material;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/foundation/material/Materials {

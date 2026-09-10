@@ -59,6 +59,8 @@ jobs:
 
       - name: Hardcoded elevation guard (elevation scale)
         run: ./scripts/ci/check_component_hardcoded_elevation.sh
+      - name: Material surfaces guard
+        run: ./scripts/ci/check_material_surfaces.sh
 
       - name: Hardcoded border width guard (stroke scale)
         run: ./scripts/ci/check_component_hardcoded_border.sh

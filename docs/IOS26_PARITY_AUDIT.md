@@ -10,7 +10,7 @@ renderers agree on what a blur is. See `UPSTREAM_KUIKLYUI_BLUR.md`.
 Each finding says what was checked and what the evidence was, so a later reader
 can disagree with the conclusion rather than the premise.
 
-## Closed in this pass
+## Closed
 
 ### Materials reached nothing
 
@@ -35,6 +35,43 @@ Fixed for `BottomSheet` in `bc14c0b`; spec §11.3.1; guarded by
 Cancel card and is not draggable. A grabber there would promise a gesture it
 does not have.
 
+### SearchBar's Cancel button was manual
+
+`showCancel: Boolean = false`; the caller decided. On the reference platform
+Cancel arrives when the field takes focus and leaves when it gives it up.
+
+Now `SearchBarCancel { Never, WhileEditing, Always }`, defaulting to
+`WhileEditing`. `showCancel` is kept and still wins when true, so a host that
+asked for a Cancel button keeps exactly what it had rather than having the
+button start appearing and disappearing under it.
+
+The Kuikly hazard that held this back is avoided rather than risked: the
+`onFocusChanged` sits on a chain that does not itself depend on focus, which is
+the distinction `Input.kt` records — a chain rebuilt *because* focus changed is
+what recreates the EditText.
+
+### List separators had no owner
+
+`DividerInset()` existed and no component used it; `Cell` drew no separator, so
+each caller picked. The sample's own component list showed the cost: its section
+headers sat flush against the card edge, one padding step left of the rows they
+labelled.
+
+`CellGroup` now owns the header alignment, the separator inset, and "no
+separator after the last row" — the one a caller cannot get right without
+counting. Spec §11.3.2. The sample uses it, which is what fixed the header.
+
+### Drawer had no dismiss gesture
+
+Closed with a horizontal `Modifier.swipeDismiss`. The gesture attaches to the
+whole panel, unlike a sheet's: a drawer body scrolls vertically, so a horizontal
+drag is never competing with a scroll.
+
+No grabber, deliberately — a drawer slides in from an edge and the edge is the
+affordance. `check_sheet_grabber.sh` flagged it the first time the gesture
+landed, which was the guard being too broad rather than the component being
+wrong; the rule is now scoped to sheets.
+
 ## Checked and already correct
 
 | Area | Evidence |
@@ -47,49 +84,7 @@ does not have.
 | Swipe-back | `Modifier.swipeBack`, recognise-then-consume, 1:1 tracking. |
 | Tap-outside dismisses the keyboard | `keyboardDismissExempt` claims the gesture inside inputs, rather than treating "was the touch consumed" as a proxy — buttons consume touches too. |
 
-## Open, with reasons
+## Open
 
-### SearchBar's Cancel button is manual
-
-`showCancel: Boolean = false`; the caller decides. On the reference platform the
-Cancel button animates in when the field becomes first responder and out when it
-resigns.
-
-**Not changed here.** Making it focus-driven means a layout change adjacent to a
-focused text field, and this repo has a recorded hazard in exactly that place:
-`Input.kt` documents that on Kuikly a chain rebuilt on focus recreates the
-EditText. The field's own chain would not change, so it is probably safe — and
-"probably safe" is not enough to flip a default in a UI kit without seeing it on
-a device. The sample is JS-only, and the JS renderer is not where this would
-break.
-
-Needs: a device pass on Android and iOS. Then `SearchBarCancel { NEVER,
-WHILE_EDITING, ALWAYS }` defaulting to `WHILE_EDITING`, with `showCancel`
-deprecated rather than removed.
-
-### List separators have no convention
-
-`DividerInset()` exists — 16dp leading inset, the right shape for a row without
-a leading element — and **no component uses it**. `Cell` draws no separator at
-all, so each caller picks: `DividerFull`, `DividerInset`, or nothing.
-
-Two divergences follow. On the reference platform a grouped list insets the
-separator to align with the row's *text*, which for a row with a leading icon or
-avatar is further than 16dp; and the last row in a group has no separator.
-Neither can hold when the caller decides.
-
-**Not changed here.** Making `Cell` draw its own separator would double the
-separators everywhere a caller already adds one, across every list in every host
-app. This needs a `CellGroup` that owns the run of rows — which is the component
-that should have decided this all along — and that is a new component, not a
-detail fix.
-
-### Drawer has no dismiss gesture
-
-An edge-anchored panel that can only be closed by the scrim or the back button.
-Not strictly an iOS 26 question — the reference platform has no drawer, and
-Apple's equivalent is a sheet — so the convention to match is not obvious.
-`Modifier.swipeDismiss` is directional and would need a horizontal variant.
-
-Left open deliberately: the right answer is probably "GearUI's own convention",
-which is a decision rather than a parity fix.
+Nothing from this pass. Blur remains out of scope by decision; see
+`UPSTREAM_KUIKLYUI_BLUR.md`.

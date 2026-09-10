@@ -634,6 +634,32 @@ scroll, which is worse than not having the gesture at all.
 **The pair is the rule.** Wiring the drag without the grabber, or the grabber
 without the drag, are both wrong; `check_sheet_grabber.sh` fails either way.
 
+**Drawers drag too, and have no grabber.** A drawer slides in from an edge and
+the edge is the affordance, which is why neither platform puts a grabber on one.
+Its gesture attaches to the whole panel rather than a header, because a drawer
+body scrolls vertically and a horizontal drag never competes with it.
+
+---
+
+## 11.3.2 Component Anatomy: Grouped Lists
+
+Applies to `CellGroup`.
+
+Three rules, and each is a rule precisely because a row cannot enforce it:
+
+**The header aligns with the row text**, not with the card's edge. A header flush
+against the edge sits one padding step to the left of everything it labels.
+
+**Separators are inset** to where the text begins, so the line reads as dividing
+rows rather than boxing them. The default inset is the row's own horizontal
+padding, which is correct for rows without a leading element; a group of rows
+with icons or avatars passes the larger inset, because the group cannot measure
+its children.
+
+**The last row has no separator.** `Cell` draws none of its own: a row does not
+know whether it is last. `CellGroup` draws one before every row but the first,
+which is the same rule in the form that needs no count.
+
 ---
 
 ## 11.4 Icons Are Not Glyphs

@@ -436,6 +436,10 @@ public final class com/gearui/components/cell/CellKt {
 	public static final fun Cell-L01suY8 (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZZLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
+public final class com/gearui/components/cellgroup/CellGroupKt {
+	public static final fun CellGroup-bTwgcpM (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class com/gearui/components/checkbox/CheckboxKt {
 	public static final fun Checkbox (ZLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLcom/gearui/components/checkbox/CheckboxSize;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CheckboxGroup (Ljava/util/List;Ljava/util/Set;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLandroidx/compose/runtime/Composer;II)V
@@ -1283,8 +1287,17 @@ public final class com/gearui/components/searchbar/SearchBarAlignment : java/lan
 	public static fun values ()[Lcom/gearui/components/searchbar/SearchBarAlignment;
 }
 
+public final class com/gearui/components/searchbar/SearchBarCancel : java/lang/Enum {
+	public static final field Always Lcom/gearui/components/searchbar/SearchBarCancel;
+	public static final field Never Lcom/gearui/components/searchbar/SearchBarCancel;
+	public static final field WhileEditing Lcom/gearui/components/searchbar/SearchBarCancel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/searchbar/SearchBarCancel;
+	public static fun values ()[Lcom/gearui/components/searchbar/SearchBarCancel;
+}
+
 public final class com/gearui/components/searchbar/SearchBarKt {
-	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLcom/gearui/components/searchbar/SearchBarCancel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLandroidx/compose/runtime/Composer;III)V
 	public static final fun SearchBarWithAction (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
 }
 
@@ -2910,6 +2923,15 @@ public final class com/gearui/foundation/typography/Typography {
 	public final fun getTitleSmall ()Lcom/gearui/foundation/typography/TextStyle;
 }
 
+public final class com/gearui/gestures/DismissDirection : java/lang/Enum {
+	public static final field Down Lcom/gearui/gestures/DismissDirection;
+	public static final field Left Lcom/gearui/gestures/DismissDirection;
+	public static final field Right Lcom/gearui/gestures/DismissDirection;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/gestures/DismissDirection;
+	public static fun values ()[Lcom/gearui/gestures/DismissDirection;
+}
+
 public final class com/gearui/gestures/SwipeBackConfig {
 	public static final field $stable I
 	public fun <init> ()V
@@ -2958,8 +2980,8 @@ public final class com/gearui/gestures/SwipeDismissConfig {
 }
 
 public final class com/gearui/gestures/SwipeDismissKt {
-	public static final fun swipeDismiss (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
-	public static synthetic fun swipeDismiss$default (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static final fun swipeDismiss (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static synthetic fun swipeDismiss$default (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
 public final class com/gearui/i18n/CommonStrings {

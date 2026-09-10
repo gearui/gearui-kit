@@ -605,6 +605,34 @@ sheets settled on. Left alone because changing it moves every sheet and there
 is no evidence the current height reads as cramped — unlike the cancel gap,
 which had a measurable defect behind it.
 
+## 11.3.1 Component Anatomy: Sheets
+
+Applies to `BottomSheet`. **Not** to `ActionSheet`: a platform action sheet is a
+menu with a Cancel card and is not draggable, and giving it a grabber would
+promise a gesture it does not have.
+
+**Grabber.** A 36 x 5 capsule, centred at the top, in `border`. It is an
+affordance and not decoration: a sheet that can be dragged away but shows
+nothing to say so has a gesture only its authors know about.
+
+**Drag to dismiss.** Downward drag past 96dp dismisses; a flick past 1000dp/s
+dismisses from 24dp. Released short of either, the sheet springs back. The sheet
+tracks the finger 1:1 while dragging — a sheet that does not move under the
+finger reads as one that cannot be moved, so the tracking is the affordance too.
+
+**Where the gesture attaches.** The grabber and header, never the body. A sheet
+body holds a scrollable list and a downward drag there is a scroll. iOS
+reconciles the two by scroll position — drag down with the list already at the
+top and the sheet moves instead — and Kuikly's compose layer gives a pointer
+modifier no view into a child's scroll offset, so that rule cannot be
+implemented. Guessing it wrong slides the sheet away while the user is trying to
+scroll, which is worse than not having the gesture at all.
+
+**The pair is the rule.** Wiring the drag without the grabber, or the grabber
+without the drag, are both wrong; `check_sheet_grabber.sh` fails either way.
+
+---
+
 ## 11.4 Icons Are Not Glyphs
 
 `icon: String` across the component families means **an `Icons.*` key**, never a

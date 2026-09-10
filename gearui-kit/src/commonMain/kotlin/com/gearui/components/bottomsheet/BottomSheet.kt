@@ -18,6 +18,15 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.primitives.DividerFull
 import com.gearui.foundation.material.MaterialSurface
 import com.gearui.foundation.material.Materials
+import com.gearui.foundation.sheet.SheetGrabber
+import com.gearui.gestures.swipeDismiss
+import com.tencent.kuikly.compose.animation.core.Animatable
+import com.tencent.kuikly.compose.animation.core.spring
+import com.tencent.kuikly.compose.foundation.layout.offset
+import com.tencent.kuikly.compose.ui.unit.IntOffset
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -133,6 +142,13 @@ internal fun BottomSheetSurface(
         minimum = Spacing.lg,
     )
 
+    // Drag-down-to-dismiss. The offset tracks the finger 1:1 and springs back
+    // when the drag is released short of the threshold, which is what makes the
+    // gesture discoverable: a sheet that does not move under the finger reads as
+    // one that cannot be dragged.
+    val dragOffset = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
@@ -140,6 +156,7 @@ internal fun BottomSheetSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .offset { IntOffset(0, dragOffset.value.roundToInt()) }
                 .pointerInput(Unit) {
                     // Stop events reaching the backdrop
                     detectTapGestures { }
@@ -155,6 +172,20 @@ internal fun BottomSheetSurface(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
+                // Grabber + header carry the drag, not the body: the body holds a
+                // scrollable list and a downward drag there is a scroll.
+                // See Modifier.swipeDismiss.
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .swipeDismiss(
+                            onProgress = { _, dragY -> scope.launch { dragOffset.snapTo(dragY) } },
+                            onCancel = { scope.launch { dragOffset.animateTo(0f, spring()) } },
+                            onCommit = onDismiss,
+                        )
+                ) {
+                    SheetGrabber()
+
             // Title area
                 if (title != null || description != null) {
                     Column(
@@ -182,6 +213,7 @@ internal fun BottomSheetSurface(
                     }
 
                     DividerFull()
+                }
                 }
 
                 // Option list, scrollable

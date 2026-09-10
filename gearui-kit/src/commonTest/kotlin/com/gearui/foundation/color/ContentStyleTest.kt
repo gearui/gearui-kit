@@ -5,11 +5,13 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 /**
- * 背景 → 内容色的解析契约。
+ * The background -> content colour contract.
  *
- * 品牌自己决定气泡底色（微信绿 / Telegram 蓝 / 闲鱼黄 / Weey 黄 …），我们**永远不为了
- * 链接去改品牌底色**，只负责在给定底色上选出可读的正文与链接。所以验收必须覆盖各种
- * 底色，而不是只测手头这一两个品牌。
+ * A brand picks its own bubble fill (WeChat green, Telegram blue, Xianyu yellow,
+ * Weey yellow...). GearUI **never changes a brand's fill to suit a link**; it
+ * only picks readable body and link colours for whatever fill it is given. So
+ * the tests have to cover a spread of fills rather than the one or two brands
+ * that happen to be at hand.
  */
 class ContentStyleTest {
 
@@ -28,7 +30,7 @@ class ContentStyleTest {
         "近白" to Color(0xFFFAFAFA),
     )
 
-    /** 正文和链接对背景都必须过普通正文的 4.5:1——这条没有例外，也没有「接近就算」。 */
+    /** Body and link must both clear 4.5:1 against the background. No exceptions, and no "close enough". */
     @Test
     fun bodyAndLinkAreReadableOnEveryBackground() {
         backgrounds.forEach { (name, bg) ->
@@ -39,9 +41,11 @@ class ContentStyleTest {
     }
 
     /**
-     * 色差不够时必须**如实置位**，让上层去加非颜色提示。
+     * When the colours are too close it must **say so**, leaving a layer above
+     * to add a non-colour cue.
      *
-     * 这条挡的是「悄悄选一个看不清的蓝，然后当作没事」——那正是这套解析器要取代的做法。
+     * This is the guard against quietly picking an indistinct blue and treating
+     * it as fine, which is the practice this resolver exists to replace.
      */
     @Test
     fun insufficientSeparationIsReportedRatherThanHidden() {
@@ -53,7 +57,7 @@ class ContentStyleTest {
         }
     }
 
-    /** 判据是实际对比度，不是「浅色模式/深色模式」：浅底一律深字，深底一律浅字。 */
+    /** The test is measured contrast, not light-mode/dark-mode: pale fills get dark text, dark fills get light text. */
     @Test
     fun textFollowsTheBackgroundNotTheThemeMode() {
         val onYellow = resolveContentStyle(Color(0xFFFFD238)).text
@@ -62,7 +66,7 @@ class ContentStyleTest {
         assertTrue(relativeLuminance(onNavy) > 0.8f, "深蓝底应配浅色字")
     }
 
-    /** 同一个底色必须永远解析出同一套颜色——否则同屏会出现两种「同一个东西」。 */
+    /** One fill must always resolve to one set of colours, or the same thing appears twice on screen looking different. */
     @Test
     fun sameBackgroundAlwaysResolvesTheSameWay() {
         backgrounds.values.forEach { bg ->

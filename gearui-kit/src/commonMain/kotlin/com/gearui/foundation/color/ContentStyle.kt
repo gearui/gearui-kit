@@ -7,13 +7,16 @@ import kotlin.math.min
 import kotlin.math.pow
 
 /**
- * 一个背景上应该配什么内容色。
+ * What content colours belong on a given background.
  *
- * @property text 正文色：按**实际对比度**取深或浅，不看颜色名、也不看主题是浅色还是深色。
- *   所以深色主题里的浅黄背景照样是深色字。
- * @property link 链接色。
- * @property needsEmphasis 链接与正文的色差不足以单独承担「这是可点的」这件事。
- *   **这里只做判定，不决定怎么强调**——加不加行内底纹是富文本/交互层的事。
+ * @property text body colour, picked dark or light by **measured contrast** —
+ *   not by the colour's name and not by whether the theme is light or dark. A
+ *   pale yellow background gets dark text even inside a dark theme.
+ * @property link link colour.
+ * @property needsEmphasis the link and the body are too close in colour for
+ *   colour alone to carry "this is tappable". **This reports the fact and does
+ *   not choose the remedy** — whether to add an inline underlay is a matter for
+ *   the rich-text or interaction layer.
  */
 data class ContentStyle(
     val text: Color,
@@ -24,13 +27,13 @@ data class ContentStyle(
     val linkOnText: Float,
 )
 
-/** WCAG 相对亮度。 */
+/** WCAG relative luminance. */
 fun relativeLuminance(c: Color): Float {
     fun ch(v: Float) = if (v <= 0.04045f) v / 12.92f else ((v + 0.055f) / 1.055f).pow(2.4f)
     return 0.2126f * ch(c.red) + 0.7152f * ch(c.green) + 0.0722f * ch(c.blue)
 }
 
-/** WCAG 对比度。 */
+/** WCAG contrast ratio. */
 fun contrastRatio(a: Color, b: Color): Float {
     val la = relativeLuminance(a)
     val lb = relativeLuminance(b)
@@ -70,25 +73,36 @@ private fun fromHsl(h: Float, s: Float, l: Float): Color {
     return Color(hue2rgb(p, q, h + 1f / 3f), hue2rgb(p, q, h), hue2rgb(p, q, h - 1f / 3f), 1f)
 }
 
-/** 统一链接色系的参照点。候选只在它的色相/饱和度上变明度，保证跨背景仍是「同一个蓝」。 */
+/**
+ * The reference point that keeps links one family. Candidates vary only its
+ * lightness, holding hue and saturation, so a link stays recognisably the same
+ * blue across backgrounds.
+ */
 val CanonicalLink: Color = Color(0xFF2563EB)
 
 /**
- * 给定背景，解析出该用什么正文色和链接色。
+ * Resolves the body and link colour for a background.
  *
- * 优先级（顺序是刻意的）：
+ * The priorities, in a deliberate order:
  *
- *  1. **正文可读**——正文对背景 ≥ [minReadable]。
- *  2. **链接可读**——链接对背景 ≥ [minReadable]。这是约束，不是优化目标。
- *  3. **链接可识别**——链接与正文 ≥ [minIdentifiable]。
- *  4. **色系一致**——在满足以上条件的候选里，取明度最接近 [canonical] 的那个。
+ *  1. **Body readable** — body against background >= [minReadable].
+ *  2. **Link readable** — link against background >= [minReadable]. A
+ *     constraint, not something to maximise.
+ *  3. **Link identifiable** — link against body >= [minIdentifiable].
+ *  4. **Family consistent** — among the candidates that satisfy the above, take
+ *     the one closest in lightness to [canonical].
  *
- * 第 4 步是「选择依据」而不是约束：早先的版本在这里最大化「与正文的色差」，结果会挑出
- * 近黑或过艳的颜色——对比度达标了，但看起来不再是同一个链接色。
+ * Step 4 is a tie-break, not a constraint. An earlier version maximised the
+ * difference from the body colour here, which picked near-black or oversaturated
+ * results: the contrast numbers passed while the link stopped looking like the
+ * same link colour.
  *
- * 候选域是 [canonical] 的明度阶梯。若其中没有对背景可读的解（高饱和红、中等亮度灰这类
- * 背景会出现），退回与正文同色的安全前景色，并置 [ContentStyle.needsEmphasis]，由上层
- * 用非颜色提示区分。**注意这是「当前候选色域内无解」，不是「不存在可读的蓝」。**
+ * The candidate space is a lightness ladder over [canonical]. When none of them
+ * is readable against the background — saturated reds and mid-luminance greys do
+ * this — it falls back to the body colour, which is safe by construction, and
+ * sets [ContentStyle.needsEmphasis] so a layer above can distinguish the link
+ * without relying on colour. **That means "no solution in this candidate space",
+ * not "no readable blue exists".**
  */
 fun resolveContentStyle(
     background: Color,
@@ -110,7 +124,8 @@ fun resolveContentStyle(
         if (contrastRatio(cand, background) >= minReadable) {
             val identifiable = contrastRatio(cand, text) >= minIdentifiable
             val score = abs(l - canonicalL)
-            // 可识别的候选整体优先于不可识别的；同一档内再比色系接近度。
+            // Identifiable candidates beat non-identifiable ones outright; within
+            // one tier, closeness to the canonical family decides.
             val better = when {
                 identifiable && !bestIdentifiable -> true
                 identifiable == bestIdentifiable -> score < bestScore

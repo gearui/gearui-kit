@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.overlay.LocalInputBlockedByOverlay
 import com.gearui.overlay.OverlayManager
 import kotlin.math.abs
 
@@ -77,7 +78,9 @@ fun GearLazyColumn(
         contentPadding = contentPadding,
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment,
-        userScrollEnabled = userScrollEnabled,
+        // 🔴 An overlay covering the page freezes this list — a native scroll view
+        // ignores consumed pointer events, so this flag is the only thing that stops it.
+        userScrollEnabled = userScrollEnabled && !LocalInputBlockedByOverlay.current,
         content = content
     )
 }
@@ -127,7 +130,9 @@ fun GearLazyRow(
         contentPadding = contentPadding,
         horizontalArrangement = horizontalArrangement,
         verticalAlignment = verticalAlignment,
-        userScrollEnabled = userScrollEnabled,
+        // 🔴 An overlay covering the page freezes this list — a native scroll view
+        // ignores consumed pointer events, so this flag is the only thing that stops it.
+        userScrollEnabled = userScrollEnabled && !LocalInputBlockedByOverlay.current,
         content = content
     )
 }

@@ -138,6 +138,8 @@ fun BottomSheet(
  * @param showCancel whether to show a cancel button
  * @param cancelText cancel button label
  * @param closeOnClickOutside whether tapping outside dismisses
+ * @param header custom chrome drawn in place of [title]/[description]; it sits in the
+ *   sheet's drag region, so dragging down on it dismisses the sheet just like the grabber
  * @param content sheet body
  */
 @Composable
@@ -149,6 +151,7 @@ fun BottomSheet(
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
     closeOnClickOutside: Boolean = true,
+    header: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     val controller = LocalOverlayController.current
@@ -163,6 +166,7 @@ fun BottomSheet(
     // rememberUpdatedState 给的是稳定 State，surface 在 host 的 composition 里读它。
     val currentTitle by rememberUpdatedState(title)
     val currentDescription by rememberUpdatedState(description)
+    val currentHeader by rememberUpdatedState(header)
 
     LaunchedEffect(visible) {
         if (visible) {
@@ -184,6 +188,7 @@ fun BottomSheet(
                     showCancel = showCancel,
                     cancelText = cancelText,
                     onDismiss = onDismiss,
+                    header = currentHeader,
                     body = content,
                 )
             }
@@ -247,6 +252,7 @@ internal fun BottomSheetSurface(
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
     onDismiss: () -> Unit,
+    header: (@Composable () -> Unit)? = null,
     body: @Composable () -> Unit,
 ) {
     val colors = Theme.colors
@@ -301,8 +307,16 @@ internal fun BottomSheetSurface(
                 ) {
                     SheetGrabber()
 
-            // Title area
-                if (title != null || description != null) {
+                // 🔴 A caller-drawn header belongs in the drag region, not in the body.
+                //
+                // Sheets whose top row is not "centred title + cancel" — a picker with
+                // 「关闭 / 标题 / 多选」, say — drew it themselves inside the body, which
+                // left the grabber as the only thing that could be dragged: a ~20dp
+                // strip. Dragging down from the visible title, which is what people
+                // actually do, did nothing at all.
+                if (header != null) {
+                    header()
+                } else if (title != null || description != null) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()

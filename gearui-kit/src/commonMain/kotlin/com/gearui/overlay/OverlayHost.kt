@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.gestures.detectDragGestures
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
+import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -25,6 +26,26 @@ import com.tencent.kuikly.compose.ui.zIndex
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 import kotlinx.coroutines.delay
+
+/**
+ * True while an overlay is covering the page and the page must not react to touches.
+ *
+ * 🔴 Consuming pointer events is not enough to stop a Kuikly list from scrolling.
+ *
+ * Kuikly renders a lazy list as a **native** scroll view, and a native scroll view
+ * scrolls on the platform's own touch handling — it never asks the Compose pointer
+ * pipeline for permission. Consuming in the Initial pass blocks Compose-level
+ * gestures (clicks, drags wired through pointerInput) and nothing else: with a sheet
+ * open, dragging on the scrim still scrolled the conversation behind it.
+ *
+ * So scrollable containers have to stand down themselves. [com.gearui.foundation.primitives.GearLazyColumn]
+ * and friends read this and turn `userScrollEnabled` off; that is the whole reason
+ * those wrappers exist rather than calling LazyColumn directly.
+ *
+ * Only page content sees `true` — overlay content is composed outside the provider,
+ * so a list inside a sheet keeps scrolling normally.
+ */
+val LocalInputBlockedByOverlay = staticCompositionLocalOf { false }
 
 /**
  * OverlayHost - the render host for overlays.
@@ -98,9 +119,49 @@ fun OverlayHost(
         keyboardController?.hide()
     }
 
+    // 🔴 An overlay freezes everything beneath it. UIKit semantics: presenting a
+    // modal makes the presenter's view non-interactive, full stop.
+    //
+    // Blocking used to be the scrim's job, and the scrim only consumes what reaches
+    // it. A drag that starts on the sheet itself never does — the sheet consumes the
+    // down — so the page's native scroll view underneath went on scrolling while the
+    // user was dragging the sheet. Pulling a sheet down scrolled the conversation
+    // behind it.
+    //
+    // So the page content, not the scrim, is what gets sealed, and in the Initial
+    // pass: that runs parent → child, ahead of anything the page's own scroll views
+    // would do with the gesture.
+    //
+    // passThroughOutside opts out — an in-app notification banner must not freeze
+    // the screen it floats over.
+    val blocksContentBelow = controller.items.any { !it.options.passThroughOutside }
+
     Box(Modifier.fillMaxSize()) {
         // Normal app content
-        content()
+        Box(
+            Modifier
+                .fillMaxSize()
+                .then(
+                    if (!blocksContentBelow) {
+                        Modifier
+                    } else {
+                        Modifier.pointerInput(blocksContentBelow) {
+                            awaitEachGesture {
+                                var event = awaitPointerEvent(PointerEventPass.Initial)
+                                while (true) {
+                                    event.changes.forEach { it.consume() }
+                                    if (event.changes.all { !it.pressed }) break
+                                    event = awaitPointerEvent(PointerEventPass.Initial)
+                                }
+                            }
+                        }
+                    }
+                )
+        ) {
+            CompositionLocalProvider(LocalInputBlockedByOverlay provides blocksContentBelow) {
+                content()
+            }
+        }
 
         // Overlay layer, always on top.
         // Scroll dismissal is triggered by components such as GearLazyColumn via OverlayManager.notifyScroll().

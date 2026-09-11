@@ -79,6 +79,19 @@ internal fun shouldCommitDismiss(
  * the same iOS behaviour and the part users reach for deliberately. Attaching it
  * to a scrollable body is a bug, not a configuration.
  *
+ * ## Inside a lazy list, pass a key
+ *
+ * 🔴 A recycled row keeps the gesture block of the row it used to be.
+ *
+ * `pointerInput` restarts only when its keys change, and the callbacks here close
+ * over whatever the caller captured — which row, which message. A LazyColumn reuses
+ * a row for a different item without any of these keys changing, so the gesture goes
+ * on acting for the previous item: the swipe commits against the wrong one, and the
+ * stale block can swallow the press the row's own long-press handler was waiting for.
+ * Pass the item's stable identity as [key].
+ *
+ * @param key extra `pointerInput` key; the item's identity when this is attached to a
+ *   row in a lazy list
  * @param onProgress `dragY` in pixels, `progress` normalised against
  *   [SwipeDismissConfig.commitDistanceDp] and clamped to `[0, 1]`
  */
@@ -86,13 +99,14 @@ fun Modifier.swipeDismiss(
     direction: DismissDirection = DismissDirection.Down,
     enabled: Boolean = true,
     config: SwipeDismissConfig = SwipeDismissConfig(),
+    key: Any? = null,
     onStart: (() -> Unit)? = null,
     onProgress: ((progress: Float, drag: Float) -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
     onCommit: () -> Unit,
 ): Modifier {
     if (!enabled) return this
-    return this.pointerInput(enabled, config, direction) {
+    return this.pointerInput(enabled, config, direction, key) {
         val commitPx = config.commitDistanceDp * density
         val minFlingPx = config.minFlingDistanceDp * density
         val flingVelocityPxPerSec = config.flingVelocityDpPerSec * density

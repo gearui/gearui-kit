@@ -12,6 +12,9 @@ import com.tencent.kuikly.compose.foundation.lazy.LazyRow
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.geometry.Offset
+import com.tencent.kuikly.compose.ui.layout.boundsInRoot
+import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
@@ -46,34 +49,43 @@ fun GearLazyColumn(
 ) {
     val focusManager = LocalFocusManager.current
 
+    // 手指真实位移超过阈值才算"用户在滚列表"：收焦点、通知弹层关闭。
+    //
+    // 🔴 位移要按**屏幕坐标**算。
+    //
+    // 组件内坐标会被布局重排骗到：收键盘、插入一条回复引用，整个列表平移几百像素，手指
+    // 明明没动也会被判成滑动，于是"按住一条消息"被当成滚动，焦点被收、长按被取消。
+    // 用列表自身的 boundsInRoot 把触点换算回屏幕坐标，重排时两边同步位移，差值为零。
+    //
+    // 也不能改用 state.isScrollInProgress：页面自己的 animateScrollToItem（键盘弹出时滚到
+    // 底部）同样会让它为 true，于是刚点上输入框就被收掉焦点，键盘再也起不来。
+    var listOriginInRoot by remember { mutableStateOf(Offset.Zero) }
+
     LazyColumn(
-        modifier = modifier.pointerInput(Unit) {
-            val dragThreshold = 10f // 拖拽阈值（像素）
+        modifier = modifier
+            .onGloballyPositioned { listOriginInRoot = it.boundsInRoot().topLeft }
+            .pointerInput(Unit) {
+                val dragThreshold = 10f
 
-            awaitEachGesture {
-                val down = awaitFirstDown(requireUnconsumed = false)
-                var totalDrag = 0f
-                var notified = false
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    val startRoot = listOriginInRoot + down.position
+                    var notified = false
 
-                // Keep tracking movement until the finger lifts
-                while (true) {
-                    val event = awaitPointerEvent()
-                    val change = event.changes.firstOrNull() ?: break
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        val change = event.changes.firstOrNull() ?: break
+                        if (!change.pressed) break
 
-                    if (!change.pressed) break // 手指抬起
-
-                    val delta = change.positionChange()
-                    totalDrag += abs(delta.x) + abs(delta.y)
-
-                    // Moved past the threshold: treat it as a drag and notify
-                    if (!notified && totalDrag > dragThreshold) {
-                        OverlayManager.notifyScroll()
-                        focusManager.clearFocus()
-                        notified = true
+                        val moved = (listOriginInRoot + change.position) - startRoot
+                        if (!notified && moved.getDistance() > dragThreshold) {
+                            OverlayManager.notifyScroll()
+                            focusManager.clearFocus()
+                            notified = true
+                        }
                     }
                 }
-            }
-        },
+            },
         state = state,
         contentPadding = contentPadding,
         verticalArrangement = verticalArrangement,

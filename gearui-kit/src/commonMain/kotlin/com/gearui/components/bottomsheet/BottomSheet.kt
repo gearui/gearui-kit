@@ -1,6 +1,7 @@
 package com.gearui.components.bottomsheet
 
 import androidx.compose.runtime.*
+import androidx.compose.runtime.rememberUpdatedState
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -153,6 +154,16 @@ fun BottomSheet(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
+    // 🔴 标题与副标题必须跟着数据变，不能停在 show 的那一刻。
+    //
+    // 下面的 LaunchedEffect 只在 visible 变化时跑一次，闭包捕获的是当时的字符串值。
+    // 而这类弹层的常见形态是"打开时数据还没到"——比如已读名单的副标题要等 RPC 回来
+    // 才知道是几人。捕获值的结果是：列表行出来了（body 是 composable，读的是 state），
+    // 副标题却永远停在「0/0 人已读」。
+    // rememberUpdatedState 给的是稳定 State，surface 在 host 的 composition 里读它。
+    val currentTitle by rememberUpdatedState(title)
+    val currentDescription by rememberUpdatedState(description)
+
     LaunchedEffect(visible) {
         if (visible) {
             overlayId = controller.show(
@@ -168,8 +179,8 @@ fun BottomSheet(
                 onDismiss = onDismiss
             ) {
                 BottomSheetSurface(
-                    title = title,
-                    description = description,
+                    title = currentTitle,
+                    description = currentDescription,
                     showCancel = showCancel,
                     cancelText = cancelText,
                     onDismiss = onDismiss,

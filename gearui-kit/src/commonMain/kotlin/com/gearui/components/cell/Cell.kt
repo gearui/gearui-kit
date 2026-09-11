@@ -38,7 +38,17 @@ fun Cell(
     compact: Boolean = false,
     onClick: (() -> Unit)? = null,
     leading: (@Composable () -> Unit)? = null,
-    trailing: (@Composable () -> Unit)? = null
+    trailing: (@Composable () -> Unit)? = null,
+    /**
+     * 自绘标题，给出时**取代** [title] 的渲染（[title] 仍然要传，作为无障碍与排障时的纯文本）。
+     *
+     * 存在的理由：标题里需要富文本的场景不止一个——搜索结果要把命中的字标色。
+     * 没有这个插槽，调用方只能绕开 Cell 自己拼一行，于是同一个列表里两种行高、
+     * 两种分割线，改一处样式要改两处。
+     */
+    titleContent: (@Composable () -> Unit)? = null,
+    /** 同上，用于副标题（搜索命中在备注/账号名时，副标题要显示并高亮那一段）。 */
+    descriptionContent: (@Composable () -> Unit)? = null,
 ) {
     val colors = Theme.colors
     val tokens = if (compact) CellDefaults.Compact else CellDefaults.Default
@@ -82,15 +92,22 @@ fun Cell(
 
         // Middle content
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                // Matches a UIKit table row: body 17pt Regular. BodyLarge(16) with full-black foreground reads
-                // heavier than the system Settings app; 17 Regular is what iOS users see as the default row title.
-                style = CellTextStyles.Title,
-                color = titleColor ?: if (enabled) colors.foreground else colors.mutedForeground
-            )
+            if (titleContent != null) {
+                titleContent()
+            } else {
+                Text(
+                    text = title,
+                    // Matches a UIKit table row: body 17pt Regular. BodyLarge(16) with full-black foreground reads
+                    // heavier than the system Settings app; 17 Regular is what iOS users see as the default row title.
+                    style = CellTextStyles.Title,
+                    color = titleColor ?: if (enabled) colors.foreground else colors.mutedForeground
+                )
+            }
 
-            if (description != null) {
+            if (descriptionContent != null) {
+                Spacer(modifier = Modifier.height(Spacing.xs))
+                descriptionContent()
+            } else if (description != null) {
                 Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = description,

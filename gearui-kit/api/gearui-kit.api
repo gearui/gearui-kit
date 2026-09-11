@@ -434,7 +434,7 @@ public final class com/gearui/components/cascader/CascaderOption {
 }
 
 public final class com/gearui/components/cell/CellKt {
-	public static final fun Cell-L01suY8 (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZZLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Cell-O_H0dRI (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZZLcom/tencent/kuikly/compose/ui/graphics/Color;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/cellgroup/CellGroupKt {

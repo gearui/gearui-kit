@@ -29,6 +29,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import com.gearui.theme.Theme
+import com.gearui.overlay.LocalOverlayVisible
+import com.tencent.kuikly.compose.animation.core.tween
+import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
@@ -263,12 +266,44 @@ internal fun BottomSheetSurface(
         minimum = Spacing.lg,
     )
 
-    // Drag-down-to-dismiss. The offset tracks the finger 1:1 and springs back
-    // when the drag is released short of the threshold, which is what makes the
-    // gesture discoverable: a sheet that does not move under the finger reads as
-    // one that cannot be dragged.
+    // One offset for both the presentation and the drag: the sheet's distance below its
+    // resting place, in pixels.
+    //
+    // Presenting animates it from "one sheet height down", which is off the bottom edge,
+    // to 0; dismissing animates it back. The drag tracks the finger 1:1 in the same value
+    // and springs back when released short of the threshold — a sheet that does not move
+    // under the finger reads as one that cannot be dragged.
+    //
+    // Sharing the value is what makes a drag that turns into a dismissal continue from
+    // where the finger left off instead of jumping.
     val dragOffset = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
+    // Only the first presentation starts from off-screen; a later height change (the
+    // keyboard, a list growing) must not replay the entrance.
+    var hasEntered by remember { mutableStateOf(false) }
+
+    // 🔴 The sheet animates itself because only it knows how far it has to travel.
+    //
+    // The host fades the scrim and keeps this content mounted for
+    // OverlayDefaults.transitionDurationMillis after dismissal; the motion has to fit in
+    // that budget. Height is measured rather than assumed: sheets here range from a
+    // three-row action list to a picker at 80% of the screen, and sliding either by a
+    // fixed distance would leave it either hanging short or starting off-screen.
+    val presented = LocalOverlayVisible.current
+    var sheetHeightPx by remember { mutableStateOf(0f) }
+    LaunchedEffect(presented, sheetHeightPx) {
+        if (sheetHeightPx <= 0f) return@LaunchedEffect
+        if (presented) {
+            // Start below the edge on the first measured frame, then rise.
+            if (!hasEntered) {
+                dragOffset.snapTo(sheetHeightPx)
+                hasEntered = true
+            }
+            dragOffset.animateTo(0f, tween(OverlayDefaults.transitionDurationMillis))
+        } else {
+            dragOffset.animateTo(sheetHeightPx, tween(OverlayDefaults.transitionDurationMillis))
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -277,6 +312,7 @@ internal fun BottomSheetSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .onSizeChanged { sheetHeightPx = it.height.toFloat() }
                 .offset { IntOffset(0, dragOffset.value.roundToInt()) }
                 .pointerInput(Unit) {
                     // Stop events reaching the backdrop

@@ -122,6 +122,35 @@ data class OverlayDismissPolicy(
 }
 
 /**
+ * How an overlay comes on screen and leaves again.
+ *
+ * 🔴 An overlay that appears instantly reads as a glitch, not as a panel.
+ *
+ * Both platforms animate every layer of this kind, and the movement is what says
+ * where the thing came from — a sheet rises from the bottom edge it is anchored to,
+ * a dialog fades up in place. Without it a bottom sheet and a dropdown are equally
+ * "suddenly there", and a dismissal looks like the UI dropped a frame.
+ */
+enum class OverlayTransition {
+    /** No animation. For anything that must be on screen this frame. */
+    None,
+
+    /** Content and scrim fade together. The default for anchored panels. */
+    Fade,
+
+    /**
+     * The scrim fades; the surface slides itself in from the edge it is anchored to.
+     *
+     * The host does not move the content, because only the surface knows how tall it
+     * is, and a sheet has to travel exactly its own height — see
+     * [com.gearui.components.bottomsheet.BottomSheet]. Content reads
+     * [LocalOverlayVisible] to drive its own motion, and the host keeps it mounted
+     * until the exit animation is over.
+     */
+    SurfaceSlide,
+}
+
+/**
  * Overlay behaviour configuration
  */
 data class OverlayOptions(
@@ -183,5 +212,23 @@ data class OverlayOptions(
      * banner overlapping it. Also turn it off for an overlay that focuses a field of its own on
      * open, so the hide does not race that focus request.
      */
-    val dismissKeyboardOnShow: Boolean = true
-)
+    val dismissKeyboardOnShow: Boolean = true,
+
+    /**
+     * Enter and exit animation; null resolves from [placement] via [resolvedTransition].
+     */
+    val transition: OverlayTransition? = null,
+) {
+    /**
+     * The animation to actually run.
+     *
+     * Resolved from the placement so that existing callers get the right motion without
+     * passing anything: a fullscreen overlay is a sheet or a drawer and slides, everything
+     * else — dropdowns, dialogs, toasts — fades.
+     */
+    val resolvedTransition: OverlayTransition
+        get() = transition ?: when (placement) {
+            OverlayPlacement.Fullscreen -> OverlayTransition.SurfaceSlide
+            else -> OverlayTransition.Fade
+        }
+}

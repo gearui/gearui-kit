@@ -1,5 +1,7 @@
 package com.gearui.overlay
 
+import com.tencent.kuikly.compose.animation.core.Animatable
+import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.BackHandler
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -46,6 +48,17 @@ import kotlinx.coroutines.delay
  * so a list inside a sheet keeps scrolling normally.
  */
 val LocalInputBlockedByOverlay = staticCompositionLocalOf { false }
+
+/**
+ * Whether the overlay containing this content is on its way in or on its way out.
+ *
+ * `true` from the frame the overlay mounts until it is dismissed; `false` for the whole
+ * exit. A surface that animates itself — a sheet sliding up from the bottom edge —
+ * reads this and drives its own motion, because only the surface knows how far it has
+ * to travel. The host keeps it mounted until [OverlayDefaults.transitionDurationMillis]
+ * has passed, which is the budget that motion has to fit in.
+ */
+val LocalOverlayVisible = staticCompositionLocalOf { true }
 
 /**
  * OverlayHost - the render host for overlays.
@@ -97,7 +110,7 @@ fun OverlayHost(
     // .isNotEmpty()` before invoking anything, so a handler left registered with
     // nothing to dismiss swallows BACK entirely. Being composed above Navigator
     // makes this `list.last()`, which is what gets invoked.
-    val backDismissible = controller.items.any { it.options.dismissPolicy.backPress }
+    val backDismissible = controller.items.any { !it.exiting.value && it.options.dismissPolicy.backPress }
     if (backDismissible) {
         BackHandler {
             OverlayManager.notifyBackPress()
@@ -108,7 +121,7 @@ fun OverlayHost(
     val keyboardController = LocalSoftwareKeyboardController.current
     val handledIds = remember(controller) { mutableSetOf<Long>() }
     val pendingKeyboardDismiss = controller.items
-        .any { it.options.dismissKeyboardOnShow && it.id !in handledIds }
+        .any { !it.exiting.value && it.options.dismissKeyboardOnShow && it.id !in handledIds }
     LaunchedEffect(pendingKeyboardDismiss) {
         if (!pendingKeyboardDismiss) return@LaunchedEffect
         // Once per overlay: one that stays on the stack must not re-dismiss
@@ -134,7 +147,9 @@ fun OverlayHost(
     //
     // passThroughOutside opts out — an in-app notification banner must not freeze
     // the screen it floats over.
-    val blocksContentBelow = controller.items.any { !it.options.passThroughOutside }
+    // An overlay on its way out stops blocking the moment it is dismissed: the page must
+    // be usable again as the panel slides away, not a fifth of a second later.
+    val blocksContentBelow = controller.items.any { !it.exiting.value && !it.options.passThroughOutside }
 
     Box(Modifier.fillMaxSize()) {
         // Normal app content
@@ -192,6 +207,26 @@ private fun OverlayItemLayout(
     var popupSize by remember { mutableStateOf(IntSize.Zero) }
     var screenSize by remember { mutableStateOf(IntSize.Zero) }
 
+    // Enter / exit animation. 0 = fully gone, 1 = fully present.
+    //
+    // The same progress drives the scrim for every transition; whether it also moves the
+    // content depends on the transition — a sliding surface animates itself (see
+    // LocalOverlayVisible), because the host cannot know how tall it is.
+    val transition = options.resolvedTransition
+    val visible = !item.exiting.value
+    val progress = remember { Animatable(if (transition == OverlayTransition.None) 1f else 0f) }
+    LaunchedEffect(visible) {
+        val target = if (visible) 1f else 0f
+        if (transition == OverlayTransition.None) {
+            progress.snapTo(target)
+        } else {
+            progress.animateTo(target, tween(OverlayDefaults.transitionDurationMillis))
+        }
+        // Dismissal only started the exit; the item is still mounted so it could animate.
+        // Now that it has, it can go.
+        if (!visible) controller.remove(item.id)
+    }
+
     // Whether the position is settled; popupSize has to be measured first.
     val isPositionReady = popupSize != IntSize.Zero && screenSize != IntSize.Zero
 
@@ -225,6 +260,7 @@ private fun OverlayItemLayout(
             Box(
                 Modifier
                     .fillMaxSize()
+                    .alpha(progress.value)
                     .background(options.maskColor ?: OverlayDefaults.scrimColor)
                     // Consume every pointer change up front so a LazyColumn behind
                     // never sees them. detectDragGestures is not enough — it lets the
@@ -364,6 +400,9 @@ private fun OverlayItemLayout(
                 Box(
                     Modifier
                         .fillMaxSize()
+                        // A sliding surface moves itself; fading it as well would make it
+                        // arrive twice over.
+                        .alpha(if (transition == OverlayTransition.Fade) progress.value else 1f)
                         .padding(
                             start = safeLeft,
                             top = safeTop,
@@ -371,7 +410,9 @@ private fun OverlayItemLayout(
                             bottom = safeBottom
                         )
                 ) {
-                    item.content()
+                    CompositionLocalProvider(LocalOverlayVisible provides visible) {
+                        item.content()
+                    }
                 }
             }
         } else {
@@ -381,13 +422,17 @@ private fun OverlayItemLayout(
                     .offset { offset }
                     .onSizeChanged { popupSize = it }
                     // Fully transparent until the position is settled, then shown.
-                    .alpha(if (isPositionReady) 1f else 0f)
+                    // Two reasons to be invisible, one modifier: not yet positioned, and
+                    // not yet arrived.
+                    .alpha(if (isPositionReady) progress.value else 0f)
                     // Intercept clicks so they do not reach the backdrop.
                     .clickable(onClick = {
                         // Intentionally empty: interception is the point.
                     })
             ) {
-                item.content()
+                CompositionLocalProvider(LocalOverlayVisible provides visible) {
+                    item.content()
+                }
             }
         }
     }

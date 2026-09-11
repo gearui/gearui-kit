@@ -68,6 +68,19 @@ object OverlayDefaults {
      * page. Pure black darkens the background in both themes.
      */
     val scrimColor: Color = Color(0x8C000000)
+
+    /**
+     * How long an overlay takes to arrive, and to leave.
+     *
+     * One number for every layer, because they are seen together: a dialog that fades in
+     * over 150ms on top of a scrim that takes 300ms reads as two separate events. It also
+     * bounds the exit — the host keeps dismissed content mounted exactly this long before
+     * unmounting it, so a surface animating itself has this budget and no more.
+     *
+     * 240ms is the short end of the platform range (iOS sheets are around 300ms). Panels
+     * open in response to a tap and anything slower feels like waiting for the app.
+     */
+    const val transitionDurationMillis: Int = 240
 }
 
 /**

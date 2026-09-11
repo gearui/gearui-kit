@@ -62,11 +62,32 @@ class OverlayController {
 
     /**
      * Dismisses one Overlay
+     *
+     * 🔴 Dismissal starts the exit animation; it does not unmount anything.
+     *
+     * The item stays in the list with [OverlayItem.exiting] set, so the host can animate
+     * it away, and [OverlayHost] calls [remove] once that finishes. Unmounting here
+     * instead would make every exit instant, however carefully the animation is written:
+     * content that is gone from the composition cannot animate.
+     *
+     * `onDismiss` still fires immediately. It is what flips the caller's `visible` flag,
+     * and delaying it would leave the caller believing the overlay is still open for as
+     * long as the animation runs.
      */
     fun dismiss(id: Long) {
         println("[GearUI] Overlay.dismiss id=$id")
-        val item = _items.find { it.id == id }
-        item?.onDismiss?.invoke()
+        val item = _items.find { it.id == id } ?: return
+        if (item.exiting.value) return
+        item.exiting.value = true
+        item.onDismiss?.invoke()
+    }
+
+    /**
+     * Unmounts an Overlay whose exit animation has finished.
+     *
+     * Called by the host, not by components — components call [dismiss].
+     */
+    internal fun remove(id: Long) {
         _items.removeAll { it.id == id }
     }
 
@@ -75,14 +96,16 @@ class OverlayController {
      */
     fun dismissAll() {
         println("[GearUI] Overlay.dismissAll count=${_items.size}")
-        _items.forEach { it.onDismiss?.invoke() }
-        _items.clear()
+        _items.toList().forEach { dismiss(it.id) }
     }
 
     /**
      * Whether any Overlay is showing
+     *
+     * One that is playing its exit animation does not count: it is on its way out and
+     * must not, for instance, keep swallowing the back button.
      */
-    fun hasOverlay(): Boolean = _items.isNotEmpty()
+    fun hasOverlay(): Boolean = _items.any { !it.exiting.value }
 
     /**
      * Dispatches an event; each Overlay dismisses or not according to its DismissPolicy
@@ -94,6 +117,7 @@ class OverlayController {
         println("[GearUI] Overlay.dispatchEvent event=$event, items=${_items.size}")
 
         val itemsToRemove = _items.filter { item ->
+            if (item.exiting.value) return@filter false
             val policy = item.options.dismissPolicy
             val shouldRemove = when (event) {
                 OverlayEvent.OutsideClick -> policy.outsideClick
@@ -108,10 +132,7 @@ class OverlayController {
         }
 
         println("[GearUI] Overlay itemsToRemove=${itemsToRemove.size}")
-        itemsToRemove.forEach { item ->
-            item.onDismiss?.invoke()
-        }
-        _items.removeAll { it in itemsToRemove }
+        itemsToRemove.forEach { dismiss(it.id) }
     }
 
     /**
@@ -120,11 +141,8 @@ class OverlayController {
      * For more flexible dismissal cases
      */
     fun dismissByPolicy(predicate: (OverlayDismissPolicy) -> Boolean) {
-        val itemsToRemove = _items.filter { predicate(it.options.dismissPolicy) }
-        itemsToRemove.forEach { item ->
-            item.onDismiss?.invoke()
-        }
-        _items.removeAll { it in itemsToRemove }
+        _items.filter { !it.exiting.value && predicate(it.options.dismissPolicy) }
+            .forEach { dismiss(it.id) }
     }
 }
 
@@ -136,7 +154,15 @@ internal data class OverlayItem(
     val anchorBounds: Rect?,
     val options: OverlayOptions,
     val content: @Composable () -> Unit,
-    val onDismiss: (() -> Unit)? = null
+    val onDismiss: (() -> Unit)? = null,
+    /**
+     * Set the moment the overlay is dismissed; cleared only by unmounting.
+     *
+     * A MutableState rather than a field of the data class so that marking it does not
+     * replace the item in the list — replacing it would give the content a new identity
+     * and restart it from its enter animation, mid-exit.
+     */
+    val exiting: MutableState<Boolean> = mutableStateOf(false),
 )
 
 /**

@@ -4,8 +4,8 @@ plugins {
     kotlin("plugin.serialization") version "2.1.21" apply false
     kotlin("plugin.compose") version "2.1.21" apply false
     // Android Gradle Plugin
-    id("com.android.library") version "8.7.2" apply false
-    id("com.android.application") version "8.7.2" apply false
+    id("com.android.library") version "8.13.2" apply false
+    id("com.android.application") version "8.13.2" apply false
     id("org.jetbrains.compose") version "1.7.3" apply false
     // Public API surface freeze (SPEC 4.2 / 11.1 §5)
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.17.0"

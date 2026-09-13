@@ -284,6 +284,16 @@ private fun TextareaInputArea(
     onFocusChanged: ((Boolean) -> Unit)? = null,
     verticalPadding: Dp = Spacing.sm,
     lineHeight: TextUnit = 24.sp,
+    /**
+     * Draw a hairline around the **compact** (`bordered = false`) field.
+     *
+     * `bordered = true` is a different thing: it switches the whole field to the
+     * standalone form-control look — surface background and uniform [Spacing.md]
+     * padding, which fixes a single line near 48dp. A field that has to sit flush
+     * with 32dp controls beside it cannot use that, but it may still need an
+     * outline to read as an input rather than as a patch of background.
+     */
+    outlined: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     val colors = Theme.colors
@@ -335,6 +345,17 @@ private fun TextareaInputArea(
                         Modifier
                             .clip(Theme.shapes.lg)
                             .background(colors.muted)
+                            .then(
+                                if (outlined) {
+                                    Modifier.border(
+                                        BorderWidth.thin,
+                                        fieldBorderColor(error = error, enabled = enabled),
+                                        Theme.shapes.lg,
+                                    )
+                                } else {
+                                    Modifier
+                                }
+                            )
                             .padding(horizontal = 10.dp, vertical = verticalPadding)
                     }
                 )
@@ -451,6 +472,18 @@ fun AutoResizeTextarea(
      * line pass a value close to the natural line height (~1.25 * font size).
      */
     lineHeight: TextUnit = 24.sp,
+    /**
+     * Draw a hairline around the field.
+     *
+     * Off by default because this control is usually embedded in a bar that already
+     * frames it. Turn it on where the field sits directly on a surface close in
+     * colour to its own [muted][com.gearui.foundation.color.GearColors.muted]
+     * fill — without an outline the two blend and the input stops looking tappable.
+     *
+     * This keeps the compact metrics; it is not the same as the standalone
+     * `bordered` form-control look, which fixes a single line near 48dp.
+     */
+    outlined: Boolean = false,
 ) {
     val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
 
@@ -477,6 +510,7 @@ fun AutoResizeTextarea(
         onFocusChanged = onFocusChanged,
         verticalPadding = verticalPadding,
         lineHeight = lineHeight,
+        outlined = outlined,
         modifier = modifier,
     )
 }

@@ -37,7 +37,8 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
   by the framework. See [migration notes](docs/MIGRATION_1_0.md).
 - Public theme/text/surface API additions require downstream recompilation; a
   refreshed API baseline does not establish binary compatibility with beta2.
-- Kuikly 2.27.0; align consuming renderers and generated bindings to the same version.
+- Kuikly 2.28.0 (from 2.27.0); align consuming renderers, KSP bindings, iOS Pods and
+  the ohos package to the same version.
 - CI now explicitly runs Android Kotlin tests/lint and browser Kotlin tests, in
   addition to existing generation, guardrail, build and API checks.
 

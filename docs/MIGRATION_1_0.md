@@ -22,7 +22,7 @@
 - Input/Textarea 默认标签在上方；需要旧的横向布局时显式指定。检查窄屏、计数器、校验文案与键盘。
 - Card 可使用 token 驱动的多层装饰，不再以“所有卡片必须无阴影”为规则。
 - 品牌色与圆角方案独立配置；不要通过切换品牌重置整个主题。
-- Kuikly runtime、平台 renderer、KSP 与 iOS Pods 保持 2.27.0 对齐。
+- Kuikly runtime、平台 renderer、KSP 与 iOS Pods 保持 2.28.0 对齐。
 
 当前发布门槛与未验收范围见 [beta3 readiness](BETA3_RELEASE_READINESS.md)。
 

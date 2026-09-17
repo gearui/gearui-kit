@@ -50,7 +50,8 @@ export ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=<GPG_口令>
 ./gradlew :gearui-kit:publishToMavenCentral
 ```
 
-⚠️ 插件 0.30.0 下这条命令会**报 BUILD SUCCESSFUL 但什么都没上传**：它是个
+历史 beta1 记录（插件 0.30.0，不代表当前 0.35.0 的行为已经验证）：当时这条命令
+**报 BUILD SUCCESSFUL 但什么都没上传**：它是个
 lifecycle task（日志 `Skipping task ... as it has no actions`），产物只落到
 `build/publish/staging/<uuid>/`。1.0.0-beta1 是直接把该 bundle POST 到 Portal 发的：
 

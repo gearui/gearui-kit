@@ -21,7 +21,7 @@ target 'iosApp' do
   pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => KUIKLY_VERSION
 
   # 图片加载（可选）
-  pod 'SDWebImage', '~> 5.20.1'
+  pod 'SDWebImage', '5.21.7'
 end
 
 post_install do |installer|

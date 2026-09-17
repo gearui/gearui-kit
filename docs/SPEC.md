@@ -35,6 +35,9 @@ entry point, not a release approval or a claim of completed visual parity.
 
 ## Implementation And Evidence
 
+- [Kuikly 2.28 dependency audit](DEPENDENCY_UPGRADE_2_28.md): dependency selections,
+  compatibility pins and new verification results.
+
 - [Beta3 readiness](BETA3_RELEASE_READINESS.md): current release decision and blockers.
 - [Component matrix](COMPONENT_ACCEPTANCE_MATRIX.md): component-specific gaps.
 - [DTCG evidence](DTCG_ACCEPTANCE.md): token compiler tests and limits.

@@ -8,9 +8,9 @@ plugins {
     id("com.android.application") version "8.13.2" apply false
     id("org.jetbrains.compose") version "1.7.3" apply false
     // Public API surface freeze (SPEC 4.2 / 11.1 §5)
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.17.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.2"
     // Maven Central publish (Sonatype Central Portal + signing)
-    id("com.vanniktech.maven.publish") version "0.30.0" apply false
+    id("com.vanniktech.maven.publish") version "0.35.0" apply false
 }
 
 allprojects {

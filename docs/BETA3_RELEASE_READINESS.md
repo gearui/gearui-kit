@@ -1,5 +1,9 @@
 # beta3 Release Readiness
 
+For the subsequent KuiklyUI 2.28.0 dependency upgrade, see the
+[new dependency audit](DEPENDENCY_UPGRADE_2_28.md). The results below describe the
+earlier candidate and do not certify the upgraded graph.
+
 Audit date: 2026-09-17. Verdict: **candidate preparation is justified; publication
 is not approved yet**. This is a tested working tree based on `2f306a7`, not an
 immutable release commit. Existing changes and new files remain uncommitted.

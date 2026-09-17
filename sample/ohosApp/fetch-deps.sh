@@ -27,9 +27,9 @@ LIBS="$HERE/libs"
 
 PACKAGES=(
   "@kuikly-open/render:2.28.0"
-  "@tencent/libpag:4.4.25"
+  "@tencent/libpag:4.5.2"
   "@kuiklybase/knoi:0.0.4"
-  "@ohos/hypium:1.0.16"
+  "@ohos/hypium:1.0.28"
   "@ohos/hamock:1.0.0"
 )
 
@@ -100,8 +100,8 @@ def local(pkg, ver):
     return os.path.join(libs, pkg.replace('/', '_').replace('@', '_') + f'-{ver}.har')
 
 for path, deps in (
-    ('entry/oh-package.json5', [('@kuikly-open/render', '2.28.0'), ('@tencent/libpag', '4.4.25'), ('@kuiklybase/knoi', '0.0.4')]),
-    ('oh-package.json5', [('@ohos/hypium', '1.0.16'), ('@ohos/hamock', '1.0.0')]),
+    ('entry/oh-package.json5', [('@kuikly-open/render', '2.28.0'), ('@tencent/libpag', '4.5.2'), ('@kuiklybase/knoi', '0.0.4')]),
+    ('oh-package.json5', [('@ohos/hypium', '1.0.28'), ('@ohos/hamock', '1.0.0')]),
 ):
     s = open(path, encoding='utf-8').read()
     for pkg, ver in deps:

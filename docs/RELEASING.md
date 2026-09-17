@@ -56,8 +56,9 @@ are silently missing from the upload rather than failing it.
 ./gradlew :gearui-kit:publishToMavenCentral
 ```
 
-⚠️ With the plugin at 0.30.0 this task reports BUILD SUCCESSFUL **without
-uploading anything**: it is a lifecycle task (`Skipping task ... as it has no
+Historical beta1 note (plugin 0.30.0, not a verified behavior of the current
+0.35.0 plugin): this task reported BUILD SUCCESSFUL **without
+uploading anything**: it was a lifecycle task (`Skipping task ... as it has no
 actions`) and the artifacts only reach `build/publish/staging/<uuid>/`. The
 1.0.0-beta1 release was uploaded by posting that bundle to the Portal directly:
 

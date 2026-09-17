@@ -77,7 +77,7 @@ kotlin {
         androidMain.dependencies {
             // KuiklyUI Android 渲染支持
             implementation("com.tencent.kuikly-open:core-render-android:$kuiklyVersion")
-            implementation("androidx.appcompat:appcompat:1.6.1")
+            implementation("androidx.appcompat:appcompat:1.7.1")
         }
 
         val iosX64Main by getting
@@ -94,7 +94,7 @@ kotlin {
 
 android {
     namespace = "com.gearui.kit.sample"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.gearui.kit.sample"

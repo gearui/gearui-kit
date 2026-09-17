@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.compose")
@@ -56,6 +54,7 @@ kotlin {
         }
 
         androidMain.dependencies {
+            // 1.10.0 common metadata requires Kotlin 2.3.20; Kuikly uses 2.1.21.
             implementation("androidx.annotation:annotation:1.9.1")
         }
 
@@ -73,7 +72,7 @@ kotlin {
 
 android {
     namespace = "com.gearui.kit"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 21
@@ -131,7 +130,7 @@ val hasSigningKey = !providers
 // No explicit pom { } block is needed; redundant configuration would duplicate
 // license / developer entries in the generated POM.
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = false)
+    publishToMavenCentral(automaticRelease = false)
     // Sign only when a GPG key is configured. publishToMavenLocal must work without one.
     if (hasSigningKey) {
         signAllPublications()

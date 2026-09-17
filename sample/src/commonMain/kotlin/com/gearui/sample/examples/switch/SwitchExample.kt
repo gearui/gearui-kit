@@ -138,9 +138,9 @@ fun SwitchExample(
 
         // Component styles
         ExampleSection(title = "组件样式") {
-            // Large, 32
+            // Large track, 28 logical pixels high.
             Cell(
-                title = "大尺寸32",
+                title = "大尺寸28",
                 trailing = {
                     Switch(
                         checked = sizeLarge,
@@ -150,9 +150,9 @@ fun SwitchExample(
                 }
             )
 
-            // Medium, 28
+            // Default track, 24 logical pixels high.
             Cell(
-                title = "中尺寸28",
+                title = "中尺寸24",
                 trailing = {
                     Switch(
                         checked = sizeMedium,
@@ -162,9 +162,9 @@ fun SwitchExample(
                 }
             )
 
-            // Small, 24
+            // Compact track, 20 logical pixels high.
             Cell(
-                title = "小尺寸24",
+                title = "小尺寸20",
                 trailing = {
                     Switch(
                         checked = sizeSmall,

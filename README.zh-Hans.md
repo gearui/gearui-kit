@@ -83,7 +83,7 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
-| `NavBar` | 导航栏 | H5页面导航栏 |
+| `NavBar` | 导航栏 | 通用页面导航栏 |
 | `BottomNavBar` | 底部导航栏 | 应用底部主导航 |
 | `Tabs` | 选项卡 | 内容切换 |
 | `NavigationMenu` | 导航菜单 | 顶部导航菜单 |
@@ -287,7 +287,7 @@ HAP **尚未在真机或模拟器上启动过**，因此鸿蒙上关于 UI 的�
 - 鸿蒙宿主：[sample/ohosApp/README.md](./sample/ohosApp/README.md)
 
 文档以英文为主，`*.zh-Hans.md` 为对应中文版。**代码注释一律英文**——
-执行该约定的检查见 [docs/SPEC_CI_MAPPING.md](./docs/SPEC_CI_MAPPING.md) 第 18 条。
+执行该约定的检查见 [docs/SPEC_CI_MAPPING.md](./docs/SPEC_CI_MAPPING.md) 中的英文注释护栏。
 
 ## 开发命令
 
@@ -304,7 +304,7 @@ HAP **尚未在真机或模拟器上启动过**，因此鸿蒙上关于 UI 的�
 # 鸿蒙走并行构建配置（尚未构建通过 —— 见 sample/ohosApp/README.md）
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# 架构护栏 —— 共 18 条，全部可本地运行
+# 架构护栏 —— 脚本清单以 SPEC_CI_MAPPING 为准，全部可本地运行
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

@@ -6,6 +6,9 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
 import com.gearui.foundation.list.CardDefaults
 import com.gearui.primitives.composite.Card
 import com.gearui.sample.config.ComponentInfo
@@ -23,11 +26,18 @@ fun CardExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
+    var actionResult by remember { mutableStateOf("卡片内容描述") }
+    var showSurfaceLab by remember { mutableStateOf(false) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
+        Button(text = if (showSurfaceLab) "返回卡片示例" else "材质与字体验收", onClick = { showSurfaceLab = !showSurfaceLab })
+        if (showSurfaceLab) {
+            SurfaceLab()
+            return@ExamplePage
+        }
         // Basic card
         ExampleSection(
             title = "基础卡片",
@@ -49,7 +59,7 @@ fun CardExample(
         // Card with a cover
         ExampleSection(
             title = "带封面卡片",
-            description = "顶部显示图片",
+            description = "顶部封面区域与内容分层",
             useCardContainer = false
         ) {
             Card(
@@ -58,8 +68,11 @@ fun CardExample(
             ) {
                 Column(modifier = Modifier.fillMaxWidth().background(colors.surface)) {
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(120.dp).background(colors.muted)
-                    )
+                        modifier = Modifier.fillMaxWidth().height(120.dp).background(colors.muted),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("封面占位", color = colors.mutedForeground)
+                    }
                     Column(
                         modifier = Modifier.padding(CardDefaults.Default.padding),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -87,14 +100,14 @@ fun CardExample(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(text = "操作卡片", style = Theme.typography.titleMedium, color = colors.foreground)
-                        Text(text = "卡片内容描述", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
+                        Text(text = actionResult, style = Theme.typography.bodyMedium, color = colors.mutedForeground)
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = CardDefaults.Default.padding, vertical = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End)
                     ) {
-                        Text(text = "[取消]", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
-                        Text(text = "[确定]", style = Theme.typography.bodyMedium, color = colors.primary)
+                        Button(text = "取消", onClick = { actionResult = "已取消" }, size = ButtonSize.SMALL, theme = ButtonTheme.DEFAULT)
+                        Button(text = "确定", onClick = { actionResult = "已确认" }, size = ButtonSize.SMALL, theme = ButtonTheme.PRIMARY)
                     }
                 }
             }

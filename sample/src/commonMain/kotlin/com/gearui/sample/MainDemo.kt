@@ -30,6 +30,10 @@ import com.gearui.sample.theme.CustomThemes
 import com.gearui.theme.Theme
 import com.gearui.theme.ThemeMode
 import com.gearui.theme.ThemeSpec
+import com.gearui.theme.Themes
+import com.gearui.theme.Shapes
+import com.gearui.theme.ShapesDefault
+import com.gearui.theme.withBrandAccent
 import kotlinx.coroutines.launch
 
 /**
@@ -76,15 +80,26 @@ fun MainDemoContent() {
         ThemeStyle.SYSTEM -> ThemeMode.System to null
     }
 
+    val baseTheme = customTheme ?: if (
+        themeMode == ThemeMode.Dark || (themeMode == ThemeMode.System && isSystemDark)
+    ) Themes.Dark else Themes.Light
+    val brandedTheme = settingsState.brandAccent.color?.let { baseTheme.withBrandAccent(it) } ?: baseTheme
+    val square = ShapesDefault.Default.none
+    val shapes = if (settingsState.squareControls) Shapes(
+        none = square, sm = square, md = square, lg = square,
+        xl = square, full = square, controlLarge = square
+    ) else ShapesDefault.Default
+
     // App as the single entry point (i18n + Theme + Overlay + Toast together)
     App(
         themeMode = themeMode,
         isSystemDark = isSystemDark,
-        theme = customTheme,
+        theme = brandedTheme,
+        shapes = shapes,
         languageTag = settingsState.languageTag,
     ) {
         // Update the status bar colour
-        StatusBarEffect(themeStyle = settingsState.themeStyle)
+        StatusBarEffect()
 
         // The sample's own language pack, relying on the LocalLanguageTag that App already provides
         SampleI18nProvider {
@@ -100,14 +115,13 @@ fun MainDemoContent() {
  * Updates the status bar to match the current theme
  */
 @Composable
-private fun StatusBarEffect(themeStyle: ThemeStyle) {
+private fun StatusBarEffect() {
     val colors = Theme.colors
-    val statusBarColor = if (themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
+    val statusBarColor = colors.surface
 
     // The surface colour is used as the status bar background
     // Dark theme takes light icons, light theme takes dark icons
-    val forceLightIcons = themeStyle == ThemeStyle.DARK_PURPLE
-    val isDarkTheme = if (forceLightIcons) true else {
+    val isDarkTheme = run {
         (statusBarColor.red + statusBarColor.green + statusBarColor.blue) / 3f < 0.5f
     }
 
@@ -130,6 +144,19 @@ expect object StatusBarControllerImpl {
 
 @Composable
 private fun MainDemoContentInner(settingsState: SettingsState) {
+    // Opt-in build fixture for identical native/web screenshots; normal builds stay on Home.
+    if (SampleBuildInfo.SURFACE_ACCEPTANCE.isNotEmpty()) {
+        com.gearui.sample.pages.ExamplePage(
+            com.gearui.sample.config.ComponentConfig.all.first { it.id == "card" },
+            onBack = {},
+        ) {
+            com.gearui.sample.examples.card.SurfaceLab(
+                initialDark = SampleBuildInfo.SURFACE_ACCEPTANCE.startsWith("dark"),
+                initialSquare = SampleBuildInfo.SURFACE_ACCEPTANCE.endsWith("square"),
+            )
+        }
+        return
+    }
     // Navigation state
     var currentPage by remember { mutableStateOf(AppPage.HOME) }
     var currentComponent by remember { mutableStateOf<ComponentInfo?>(null) }

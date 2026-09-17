@@ -4,6 +4,34 @@
 
 Maintainer notes. Users never need this — the README covers integration.
 
+## Candidate Gate (beta3)
+
+Read [current readiness](BETA3_RELEASE_READINESS.md) before publishing. A local
+success on uncommitted sources is not release approval.
+
+1. Review and commit the complete candidate, including token sources, generated
+   code, tests, API baselines, migration notes and resources. Never publish only
+   the tracked portion while required new files remain untracked.
+2. Run all checks in [CI mapping](SPEC_CI_MAPPING.md). Require remote CI on that
+   exact commit. API dump generation is not an API verification step.
+3. Check the supported consumers, full iOS host, Android/Web sample and the
+   critical keyboard/overlay/theme paths. Record untested targets explicitly.
+4. Stage all six Maven modules on macOS and inspect assets, dependency metadata,
+   JS/iOS KLibs and sources. A composite source build does not test Maven consumption.
+5. Review breaking changes and renderer limitations. Obtain release approval,
+   then set the final version/tag and sign/upload that exact candidate.
+
+For isolated, unsigned local packaging only (does not publish remotely):
+
+```bash
+./gradlew :gearui-kit:publishToMavenLocal \
+  -Dmaven.repo.local=/tmp/gearui-beta3-staging \
+  -PPOM_VERSION=1.0.0-beta3 -PsigningInMemoryKey=
+```
+
+This does not verify signing, Central upload or downstream dependency resolution.
+Do not interpret a successful lifecycle task as proof of publication.
+
 ## Release to Maven Central (Central Portal)
 
 Publishing is wired through `com.vanniktech.maven.publish` and Sonatype Central Portal.

@@ -16,4 +16,12 @@ val SampleStringsEnUs = SampleStrings(
     versionLabel = "Version",
     gearUiComponents = "GearUI Components",
     darkPurple = "Dark Purple",
+    brandAccent = "Brand accent",
+    brandDefault = "Default",
+    brandBlue = "Blue",
+    brandGreen = "Green",
+    brandOrange = "Orange",
+    shapeStyle = "Shape",
+    shapeRounded = "Rounded",
+    shapeSquare = "Square",
 )

@@ -27,6 +27,14 @@ data class SampleStrings(
     val versionLabel: String,
     val gearUiComponents: String,
     val darkPurple: String,
+    val brandAccent: String,
+    val brandDefault: String,
+    val brandBlue: String,
+    val brandGreen: String,
+    val brandOrange: String,
+    val shapeStyle: String,
+    val shapeRounded: String,
+    val shapeSquare: String,
 )
 
 @Immutable
@@ -46,6 +54,14 @@ data class SampleStringsPatch(
     val versionLabel: String? = null,
     val gearUiComponents: String? = null,
     val darkPurple: String? = null,
+    val brandAccent: String? = null,
+    val brandDefault: String? = null,
+    val brandBlue: String? = null,
+    val brandGreen: String? = null,
+    val brandOrange: String? = null,
+    val shapeStyle: String? = null,
+    val shapeRounded: String? = null,
+    val shapeSquare: String? = null,
 )
 
 val SampleStringsPatch.isEmpty: Boolean
@@ -53,7 +69,8 @@ val SampleStringsPatch.isEmpty: Boolean
         componentCountSuffix == null && categoryBasic == null && categoryForm == null &&
         categoryNavigation == null && categoryDataDisplay == null && categoryFeedback == null &&
         categoryLayout == null && settingsTitle == null && aboutTitle == null &&
-        versionLabel == null && gearUiComponents == null && darkPurple == null
+        versionLabel == null && gearUiComponents == null && darkPurple == null &&
+        brandAccent == null && brandDefault == null && brandBlue == null && brandGreen == null && brandOrange == null && shapeStyle == null && shapeRounded == null && shapeSquare == null
 
 fun SampleStrings.merge(patch: SampleStringsPatch?): SampleStrings {
     if (patch == null || patch.isEmpty) return this
@@ -73,6 +90,14 @@ fun SampleStrings.merge(patch: SampleStringsPatch?): SampleStrings {
         versionLabel = patch.versionLabel ?: versionLabel,
         gearUiComponents = patch.gearUiComponents ?: gearUiComponents,
         darkPurple = patch.darkPurple ?: darkPurple,
+        brandAccent = patch.brandAccent ?: brandAccent,
+        brandDefault = patch.brandDefault ?: brandDefault,
+        brandBlue = patch.brandBlue ?: brandBlue,
+        brandGreen = patch.brandGreen ?: brandGreen,
+        brandOrange = patch.brandOrange ?: brandOrange,
+        shapeStyle = patch.shapeStyle ?: shapeStyle,
+        shapeRounded = patch.shapeRounded ?: shapeRounded,
+        shapeSquare = patch.shapeSquare ?: shapeSquare,
     )
 }
 

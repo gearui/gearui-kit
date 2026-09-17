@@ -53,6 +53,9 @@ jobs:
       - name: Build Android targets
         run: ./gradlew --no-daemon :gearui-kit:assemble :sample:assembleDebug
 
+      - name: Run Kotlin regression tests and Android lint
+        run: ./gradlew --no-daemon :gearui-kit:testDebugUnitTest :gearui-kit:lintDebug
+
   ios-build:
     name: iOS Build
     runs-on: macos-latest
@@ -100,6 +103,12 @@ jobs:
       # someone happened to try it.
       - name: Build web host
         run: ./gradlew --no-daemon :sample:jsApp:jsBrowserDevelopmentWebpack
+
+      - name: Run browser regression tests
+        run: |
+          export CHROME_BIN="$(command -v google-chrome)"
+          test -n "$CHROME_BIN"
+          ./gradlew --no-daemon :gearui-kit:jsBrowserTest
 
   api-compat-check:
     name: Public API Compatibility (SPEC 4.2)

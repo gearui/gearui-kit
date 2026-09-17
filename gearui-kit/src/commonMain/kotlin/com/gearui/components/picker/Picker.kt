@@ -10,7 +10,9 @@ import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.graphics.Brush
+import com.gearui.foundation.material.MaterialDefaults
+import com.gearui.foundation.material.tintedMask
+import com.gearui.foundation.material.verticalBrush
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
@@ -151,12 +153,9 @@ object Picker {
                             .fillMaxWidth()
                             .height(80.dp)
                             .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        colors.surface,
-                                        colors.surface.copy(alpha = 0f)
-                                    )
-                                )
+                                brush = MaterialDefaults.pickerTopMask
+                                    .tintedMask(Theme.colors.surface)
+                                    .verticalBrush()
                             )
                     )
 
@@ -167,12 +166,9 @@ object Picker {
                             .fillMaxWidth()
                             .height(80.dp)
                             .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        colors.surface.copy(alpha = 0f),
-                                        colors.surface
-                                    )
-                                )
+                                brush = MaterialDefaults.pickerBottomMask
+                                    .tintedMask(Theme.colors.surface)
+                                    .verticalBrush()
                             )
                     )
                 }
@@ -280,12 +276,9 @@ object Picker {
                             .fillMaxWidth()
                             .height(80.dp)
                             .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        colors.surface,
-                                        colors.surface.copy(alpha = 0f)
-                                    )
-                                )
+                                brush = MaterialDefaults.pickerTopMask
+                                    .tintedMask(Theme.colors.surface)
+                                    .verticalBrush()
                             )
                     )
 
@@ -296,12 +289,9 @@ object Picker {
                             .fillMaxWidth()
                             .height(80.dp)
                             .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        colors.surface.copy(alpha = 0f),
-                                        colors.surface
-                                    )
-                                )
+                                brush = MaterialDefaults.pickerBottomMask
+                                    .tintedMask(Theme.colors.surface)
+                                    .verticalBrush()
                             )
                     )
                 }

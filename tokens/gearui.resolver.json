@@ -1,0 +1,19 @@
+{
+  "version": "2025.10",
+  "name": "GearUI default token build",
+  "description": "Merge standard token sources before resolving cross-file aliases. Runtime brand, shape and color-mode selection remain independent.",
+  "sets": {
+    "controls": { "sources": [{ "$ref": "controls.tokens.json" }] },
+    "colors": { "sources": [{ "$ref": "colors.tokens.json" }] },
+    "typography": { "sources": [{ "$ref": "typography.tokens.json" }] },
+    "materials": { "sources": [{ "$ref": "materials.tokens.json" }] },
+    "feedback": { "sources": [{ "$ref": "feedback.tokens.json" }] }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/controls" },
+    { "$ref": "#/sets/colors" },
+    { "$ref": "#/sets/typography" },
+    { "$ref": "#/sets/materials" },
+    { "$ref": "#/sets/feedback" }
+  ]
+}

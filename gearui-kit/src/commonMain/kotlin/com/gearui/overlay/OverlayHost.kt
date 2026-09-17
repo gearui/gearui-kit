@@ -60,6 +60,9 @@ val LocalInputBlockedByOverlay = staticCompositionLocalOf { false }
  */
 val LocalOverlayVisible = staticCompositionLocalOf { true }
 
+/** Actual root geometry for anchored controls; never infer it from device size. */
+internal val LocalOverlayViewportSize = staticCompositionLocalOf { IntSize.Zero }
+
 /**
  * OverlayHost - the render host for overlays.
  *
@@ -151,7 +154,8 @@ fun OverlayHost(
     // be usable again as the panel slides away, not a fifth of a second later.
     val blocksContentBelow = controller.items.any { !it.exiting.value && !it.options.passThroughOutside }
 
-    Box(Modifier.fillMaxSize()) {
+    var hostSize by remember { mutableStateOf(IntSize.Zero) }
+    Box(Modifier.fillMaxSize().onSizeChanged { hostSize = it }) {
         // Normal app content
         Box(
             Modifier
@@ -173,7 +177,10 @@ fun OverlayHost(
                     }
                 )
         ) {
-            CompositionLocalProvider(LocalInputBlockedByOverlay provides blocksContentBelow) {
+            CompositionLocalProvider(
+                LocalInputBlockedByOverlay provides blocksContentBelow,
+                LocalOverlayViewportSize provides hostSize,
+            ) {
                 content()
             }
         }

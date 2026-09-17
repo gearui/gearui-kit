@@ -1,12 +1,21 @@
 package com.gearui.components.tree
 
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
+import com.tencent.kuikly.compose.foundation.lazy.items
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.checkbox.Checkbox
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
@@ -64,72 +73,53 @@ fun Tree(
     onExpandedChange: ((Set<String>) -> Unit)? = null,
     onNodeClick: ((TreeNode) -> Unit)? = null
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
     var internalExpanded by remember { mutableStateOf(expandedKeys) }
     val expanded = if (onExpandedChange != null) expandedKeys else internalExpanded
-
-    // Build the node relationship maps
-    val nodeMap = remember(nodes) { buildNodeMap(nodes) }
-    val parentMap = remember(nodes) { buildParentMap(nodes) }
-
-    Column(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        nodes.forEach { node ->
-            TreeNodeView(
-                node = node,
-                level = 0,
-                checkable = checkable,
-                checkedKeys = checkedKeys,
-                onCheckedChange = { newKeys ->
-                    onCheckedChange?.invoke(newKeys)
-                },
-                onNodeCheckedChange = { targetNode, checked ->
-                    // Parent/child linkage
-                    val newCheckedKeys = handleNodeCheck(
-                        targetNode = targetNode,
-                        checked = checked,
-                        currentCheckedKeys = checkedKeys,
-                        nodeMap = nodeMap,
-                        parentMap = parentMap
-                    )
-                    onCheckedChange?.invoke(newCheckedKeys)
-                },
-                expanded = expanded,
-                onExpandedChange = { key, isExpanded ->
-                    val newExpanded = if (isExpanded) {
-                        expanded + key
-                    } else {
-                        expanded - key
-                    }
-                    if (onExpandedChange != null) {
-                        onExpandedChange(newExpanded)
-                    } else {
-                        internalExpanded = newExpanded
-                    }
-                },
-                onNodeClick = onNodeClick,
-                allNodes = nodes
-            )
-        }
-    }
+    TreeContent(nodes, modifier, checkable, checkedKeys, onCheckedChange, expanded,
+        { if (onExpandedChange != null) onExpandedChange(it) else internalExpanded = it }, onNodeClick)
 }
 
-/**
- * Builds the node map key -> TreeNode
- */
-private fun buildNodeMap(nodes: List<TreeNode>): Map<String, TreeNode> {
-    val map = mutableMapOf<String, TreeNode>()
-    fun traverse(nodes: List<TreeNode>) {
-        nodes.forEach { node ->
-            map[node.key] = node
-            traverse(node.children)
+internal data class VisibleTreeNode(val node: TreeNode, val level: Int)
+
+internal fun visibleTreeNodes(nodes: List<TreeNode>, expanded: Set<String>): List<VisibleTreeNode> = buildList {
+    fun visit(items: List<TreeNode>, level: Int) {
+        items.forEach { node ->
+            add(VisibleTreeNode(node, level))
+            if (node.key in expanded) visit(node.children, level + 1)
         }
     }
-    traverse(nodes)
-    return map
+    visit(nodes, 0)
+}
+
+internal fun treeSelectionAncestors(nodes: List<TreeNode>, selected: Set<String>): Set<String> {
+    val parents = buildParentMap(nodes)
+    return selected.flatMap { getAncestors(it, parents).map { parent -> parent.key } }.toSet()
+}
+
+internal fun updateTreeChecked(nodes: List<TreeNode>, node: TreeNode, checked: Boolean, keys: Set<String>): Set<String> =
+    handleNodeCheck(node, checked, keys, buildParentMap(nodes))
+
+@Composable
+internal fun TreeContent(
+    nodes: List<TreeNode>, modifier: Modifier = Modifier,
+    checkable: Boolean = false, checkedKeys: Set<String> = emptySet(),
+    onCheckedChange: ((Set<String>) -> Unit)? = null,
+    expanded: Set<String>, onExpandedChange: (Set<String>) -> Unit,
+    onNodeClick: ((TreeNode) -> Unit)? = null, selectedKey: String? = null,
+    scrollable: Boolean = false
+) {
+    val rows = remember(nodes, expanded) { visibleTreeNodes(nodes, expanded) }
+    val row: @Composable (VisibleTreeNode) -> Unit = { item ->
+        TreeNodeView(item.node, item.level, checkable, checkedKeys,
+            { node, checked -> onCheckedChange?.invoke(updateTreeChecked(nodes, node, checked, checkedKeys)) },
+            expanded, { key, open -> onExpandedChange(if (open) expanded + key else expanded - key) },
+            onNodeClick, selectedKey == item.node.key)
+    }
+    if (scrollable) {
+        LazyColumn(modifier.fillMaxWidth()) { items(rows, key = { it.node.key }) { row(it) } }
+    } else {
+        Column(modifier.fillMaxWidth()) { rows.forEach { item -> key(item.node.key) { row(item) } } }
+    }
 }
 
 /**
@@ -156,8 +146,10 @@ private fun getAllDescendantKeys(node: TreeNode): Set<String> {
     val keys = mutableSetOf<String>()
     fun traverse(n: TreeNode) {
         n.children.forEach { child ->
-            keys.add(child.key)
-            traverse(child)
+            if (!child.disabled) {
+                keys.add(child.key)
+                traverse(child)
+            }
         }
     }
     traverse(node)
@@ -183,7 +175,7 @@ private fun getAncestors(nodeKey: String, parentMap: Map<String, TreeNode>): Lis
  */
 private fun areAllChildrenChecked(node: TreeNode, checkedKeys: Set<String>): Boolean {
     if (node.children.isEmpty()) return true
-    return node.children.all { child ->
+    return node.children.filterNot { it.disabled }.all { child ->
         child.key in checkedKeys && areAllChildrenChecked(child, checkedKeys)
     }
 }
@@ -205,9 +197,9 @@ private fun handleNodeCheck(
     targetNode: TreeNode,
     checked: Boolean,
     currentCheckedKeys: Set<String>,
-    nodeMap: Map<String, TreeNode>,
     parentMap: Map<String, TreeNode>
 ): Set<String> {
+    if (targetNode.disabled) return currentCheckedKeys
     val newKeys = currentCheckedKeys.toMutableSet()
 
     if (checked) {
@@ -218,6 +210,7 @@ private fun handleNodeCheck(
         // Walk up and update the ancestors
         val ancestors = getAncestors(targetNode.key, parentMap)
         for (ancestor in ancestors) {
+            if (ancestor.disabled) break
             // Check the parent once all of its children are checked
             if (areAllChildrenChecked(ancestor, newKeys)) {
                 newKeys.add(ancestor.key)
@@ -231,6 +224,7 @@ private fun handleNodeCheck(
         // Walk up and update the ancestors (unchecking)
         val ancestors = getAncestors(targetNode.key, parentMap)
         for (ancestor in ancestors) {
+            if (ancestor.disabled) break
             newKeys.remove(ancestor.key)
         }
     }
@@ -240,113 +234,42 @@ private fun handleNodeCheck(
 
 @Composable
 private fun TreeNodeView(
-    node: TreeNode,
-    level: Int,
-    checkable: Boolean,
-    checkedKeys: Set<String>,
-    onCheckedChange: ((Set<String>) -> Unit)?,
-    onNodeCheckedChange: ((TreeNode, Boolean) -> Unit)?,
-    expanded: Set<String>,
-    onExpandedChange: (String, Boolean) -> Unit,
-    onNodeClick: ((TreeNode) -> Unit)?,
-    allNodes: List<TreeNode>
+    node: TreeNode, level: Int, checkable: Boolean, checkedKeys: Set<String>,
+    onNodeCheckedChange: (TreeNode, Boolean) -> Unit,
+    expanded: Set<String>, onExpandedChange: (String, Boolean) -> Unit,
+    onNodeClick: ((TreeNode) -> Unit)?, selected: Boolean
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    val isExpanded = node.key in expanded
     val hasChildren = node.children.isNotEmpty()
+    val isExpanded = node.key in expanded
     val isChecked = node.key in checkedKeys
-
-    // Indeterminate state: some children checked, but not all
-    val isIndeterminate = if (hasChildren) {
-        val hasAnyChecked = hasAnyChildChecked(node, checkedKeys)
-        val allChecked = areAllChildrenChecked(node, checkedKeys)
-        hasAnyChecked && !allChecked && !isChecked
-    } else {
-        false
-    }
-
-    Column {
-        // Node content
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(enabled = !node.disabled) {
-                    if (hasChildren) {
-                        onExpandedChange(node.key, !isExpanded)
-                    }
-                    onNodeClick?.invoke(node)
-                }
-                .padding(
-                    start = (level * 24).dp + 8.dp,
-                    top = Spacing.xs,
-                    bottom = Spacing.xs,
-                    end = Spacing.sm
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
-        ) {
-            // Expand/collapse icon
-            if (hasChildren) {
-                Icon(
-                    name = if (isExpanded) Icons.caret_down else Icons.caret_right,
-                    size = IconSizes.Default.md,
-                    tint = if (node.disabled) colors.mutedForeground else colors.mutedForeground,
-                    modifier = Modifier.width(16.dp)
-                )
-            } else {
-                Spacer(modifier = Modifier.width(Spacing.lg))
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Row(
+        Modifier.fillMaxWidth().heightIn(min = FieldSizeTokens.Medium.height)
+            .background(if (pressed && !node.disabled) colors.muted else Color.Transparent)
+            .clickable(enabled = !node.disabled, interactionSource = interaction, indication = null) {
+                if (hasChildren) onExpandedChange(node.key, !isExpanded)
+                else if (checkable) onNodeCheckedChange(node, !isChecked)
+                onNodeClick?.invoke(node)
             }
-
-            // Checkbox
-            if (checkable) {
-                Checkbox(
-                    checked = isChecked,
-                    indeterminate = isIndeterminate,
-                    onCheckedChange = { checked ->
-                        // Use the linkage-aware callback
-                        onNodeCheckedChange?.invoke(node, checked)
-                    },
-                    enabled = !node.disabled
-                )
-            }
-
-            // Icon
-            node.icon?.let { icon ->
-                Text(
-                    text = icon,
-                    style = Theme.typography.bodyMedium,
-                    color = if (node.disabled) colors.mutedForeground else colors.mutedForeground
-                )
-            }
-
-            // Title
-            Text(
-                text = node.title,
-                style = Theme.typography.bodyMedium,
-                color = if (node.disabled) colors.mutedForeground else colors.foreground
-            )
+            .padding(start = ControlGeometry.selectItemPadding + ControlGeometry.treeIndent * level,
+                end = ControlGeometry.selectItemPadding),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
+    ) {
+        Box(Modifier.size(ControlGeometry.selectIndicatorSlot), contentAlignment = Alignment.Center) {
+            if (hasChildren) Icon(if (isExpanded) Icons.caret_down else Icons.caret_right,
+                size = IconSizes.Default.md, tint = colors.mutedForeground)
         }
-
-        // Children
-        if (isExpanded && hasChildren) {
-            Column {
-                node.children.forEach { child ->
-                    TreeNodeView(
-                        node = child,
-                        level = level + 1,
-                        checkable = checkable,
-                        checkedKeys = checkedKeys,
-                        onCheckedChange = onCheckedChange,
-                        onNodeCheckedChange = onNodeCheckedChange,
-                        expanded = expanded,
-                        onExpandedChange = onExpandedChange,
-                        onNodeClick = onNodeClick,
-                        allNodes = allNodes
-                    )
-                }
-            }
+        if (checkable) Checkbox(checked = isChecked,
+            indeterminate = !isChecked && hasAnyChildChecked(node, checkedKeys),
+            onCheckedChange = { onNodeCheckedChange(node, it) }, enabled = !node.disabled)
+        node.icon?.let { Text(it, style = Theme.typography.bodyMedium, color = colors.mutedForeground) }
+        Text(node.title, modifier = Modifier.weight(1f).alpha(if (node.disabled) FeedbackDefaults.disabledOpacity else 1f), style = Theme.typography.bodyMedium,
+            color = colors.foreground, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        if (!checkable) Box(Modifier.size(ControlGeometry.selectIndicatorSlot), contentAlignment = Alignment.Center) {
+            if (selected) Icon(Icons.check, size = IconSizes.Default.md, tint = if (node.disabled) colors.mutedForeground else colors.primary)
         }
     }
 }

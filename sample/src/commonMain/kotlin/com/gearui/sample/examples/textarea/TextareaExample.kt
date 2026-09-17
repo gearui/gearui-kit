@@ -54,36 +54,11 @@ fun TextareaExample(
         component = component,
         onBack = onBack
     ) {
-        // Raw Kuikly BasicTextField (no gearui-kit wrapper)
-        ExampleSection(
-            title = "原始 BasicTextField（对照组）",
-            description = "直接用 Kuikly BasicTextField，无任何 gearui 包装"
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Theme.colors.border, RoundedCornerShape(8.dp))
-                    .padding(12.dp)
-            ) {
-                KuiklyBasicTextField(
-                    value = rawText,
-                    onValueChange = { rawText = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    textStyle = TextStyle(
-                        fontSize = 16.sp,
-                        color = Theme.colors.foreground
-                    ),
-                    cursorBrush = SolidColor(Theme.colors.primary),
-                    singleLine = false,
-                    minLines = 3,
-                )
-            }
-        }
-
         // Component types
         ExampleSection(
             title = "组件类型",
-            description = ""
+            description = "",
+            useCardContainer = false
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 // Basic multi-line input
@@ -147,7 +122,8 @@ fun TextareaExample(
         // Component states
         ExampleSection(
             title = "组件状态",
-            description = ""
+            description = "",
+            useCardContainer = false
         ) {
             Column {
                 SectionTitle("禁用状态")
@@ -158,7 +134,7 @@ fun TextareaExample(
                     placeholder = "不可编辑文字",
                     minLines = 4,
                     maxLines = 4,
-                    readOnly = true,
+                    enabled = false,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -167,12 +143,13 @@ fun TextareaExample(
         // Component styles
         ExampleSection(
             title = "组件样式",
-            description = ""
+            description = "",
+            useCardContainer = false
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 // Stacked style
                 Column {
-                    SectionTitle("竖排样式")
+                    SectionTitle("横排标签（显式变体）")
                     Textarea(
                         value = verticalText,
                         onValueChange = { verticalText = it },
@@ -182,7 +159,7 @@ fun TextareaExample(
                         maxLines = 4,
                         maxLength = 500,
                         indicator = true,
-                        layout = TextareaLayout.VERTICAL,
+                        layout = TextareaLayout.HORIZONTAL,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -209,7 +186,8 @@ fun TextareaExample(
         // Special styles
         ExampleSection(
             title = "特殊样式",
-            description = ""
+            description = "",
+            useCardContainer = false
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 // Label outside the input
@@ -267,6 +245,34 @@ fun TextareaExample(
                 }
             }
         }
+        // Raw Kuikly BasicTextField (no gearui-kit wrapper)
+        ExampleSection(
+            title = "原始 BasicTextField（对照组）",
+            description = "仅用于输入行为排障，不代表 GearUI 默认样式",
+            useCardContainer = false
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, Theme.colors.border, RoundedCornerShape(8.dp))
+                    .padding(12.dp)
+            ) {
+                KuiklyBasicTextField(
+                    value = rawText,
+                    onValueChange = { rawText = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        color = Theme.colors.foreground
+                    ),
+                    cursorBrush = SolidColor(Theme.colors.primary),
+                    singleLine = false,
+                    minLines = 3,
+                )
+            }
+        }
+
+
     }
 }
 

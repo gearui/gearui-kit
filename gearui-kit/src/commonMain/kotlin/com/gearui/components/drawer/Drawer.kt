@@ -117,6 +117,27 @@ fun Drawer(
         }
     }
 
+    val currentDismiss = rememberUpdatedState(onDismiss)
+    val currentOverlayContent = rememberUpdatedState<@Composable () -> Unit>({
+        DrawerOverlayContent(
+            animationTarget = animationTarget,
+            placement = placement,
+            width = width,
+            showOverlay = showOverlay,
+            closeOnOverlayClick = closeOnOverlayClick,
+            effectiveBackgroundColor = effectiveBackgroundColor,
+            title = title,
+            titleWidget = titleWidget,
+            items = items,
+            footer = footer,
+            bordered = bordered,
+            onItemClick = onItemClick,
+            customContent = content,
+            onDismiss = onDismiss,
+            modifier = modifier
+        )
+    })
+
     // Overlay presentation
     LaunchedEffect(shouldShowOverlay) {
         if (shouldShowOverlay && overlayId == null) {
@@ -130,25 +151,9 @@ fun Drawer(
                         outsideClick = false
                     )
                 ),
-                onDismiss = onDismiss
+                onDismiss = { currentDismiss.value() }
             ) {
-                DrawerOverlayContent(
-                    animationTarget = animationTarget,
-                    placement = placement,
-                    width = width,
-                    showOverlay = showOverlay,
-                    closeOnOverlayClick = closeOnOverlayClick,
-                    effectiveBackgroundColor = effectiveBackgroundColor,
-                    title = title,
-                    titleWidget = titleWidget,
-                    items = items,
-                    footer = footer,
-                    bordered = bordered,
-                    onItemClick = onItemClick,
-                    customContent = content,
-                    onDismiss = onDismiss,
-                    modifier = modifier
-                )
+                currentOverlayContent.value()
             }
             // Start the enter animation once the overlay is on screen
             kotlinx.coroutines.delay(16) // 等待一帧确保 Overlay 已渲染

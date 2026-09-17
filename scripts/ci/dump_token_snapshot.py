@@ -13,6 +13,7 @@ binary-compatibility-validator (const value changes are ABI-breaking),
 so it is intentionally not duplicated here.
 """
 import re
+import json
 import sys
 from pathlib import Path
 
@@ -116,6 +117,23 @@ def main() -> None:
         out.append(f"[preset] Themes.{preset}.colors")
         for field, expr in extract_theme_preset(presets_source, preset):
             out.append(f"  {field} = {expr}")
+        out.append("")
+
+    # Presets may reference generated constants. Snapshot their source values,
+    # not just the unchanged constant names, so generated-value drift is visible.
+    def token_values(node, path="", inherited_type=None):
+        token_type = node.get("$type", inherited_type)
+        if "$value" in node:
+            yield path, {"$type": token_type, "$value": node["$value"]}
+            return
+        for name, child in sorted(node.items()):
+            if not name.startswith("$") and isinstance(child, dict):
+                yield from token_values(child, f"{path}.{name}" if path else name, token_type)
+
+    for source in sorted((ROOT / "tokens").glob("*.tokens.json")):
+        out.append(f"[source] {source.name}")
+        for name, value in token_values(json.loads(source.read_text())):
+            out.append(f"  {name} = {json.dumps(value, sort_keys=True, separators=(',', ':'))}")
         out.append("")
 
     sys.stdout.write("\n".join(out).rstrip() + "\n")

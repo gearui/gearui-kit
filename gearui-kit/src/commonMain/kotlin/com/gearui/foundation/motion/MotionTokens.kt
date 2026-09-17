@@ -31,6 +31,13 @@ object Motions {
     val Default = Motion()
 }
 
+/** Preserve the public Motion constructor while honoring app-level motion speed.
+ * Setting normal to zero suppresses press animation without suppressing state feedback.
+ */
+internal fun Motion.feedbackDuration(reference: Int): Int =
+    (reference.toDouble() * normal.coerceAtLeast(0) / Motions.Default.normal)
+        .coerceAtMost(Int.MAX_VALUE.toDouble()).toInt()
+
 /**
  * Kept as the previous spelling so existing references keep working.
  *

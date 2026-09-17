@@ -291,7 +291,7 @@ public final class com/gearui/components/bottomsheet/BottomSheetItem {
 }
 
 public final class com/gearui/components/bottomsheet/BottomSheetKt {
-	public static final fun BottomSheet (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun BottomSheet (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;ZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun BottomSheet-_baEEi4 (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLjava/lang/String;ZFLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
@@ -1277,6 +1277,7 @@ public final class com/gearui/components/result/ResultStatus : java/lang/Enum {
 }
 
 public final class com/gearui/components/scaffold/PageScaffoldKt {
+	public static final fun PageScaffold-1aA8QqQ (Lcom/tencent/kuikly/compose/ui/Modifier;ZZZLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PageScaffold-H6BCnbY (Lcom/tencent/kuikly/compose/ui/Modifier;ZZZLcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
@@ -1805,7 +1806,7 @@ public final class com/gearui/components/tag/TagVariant : java/lang/Enum {
 }
 
 public final class com/gearui/components/textarea/TextareaKt {
-	public static final fun AutoResizeTextarea-RVxHZJo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;FJLandroidx/compose/runtime/Composer;III)V
+	public static final fun AutoResizeTextarea-cDZVdZA (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;FJZLandroidx/compose/runtime/Composer;III)V
 	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 
@@ -2194,6 +2195,34 @@ public final class com/gearui/foundation/border/BorderWidth {
 	public final fun getThin-UdJoRJA ()F
 }
 
+public final class com/gearui/foundation/button/ButtonColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-cs37B9Y ()J
+	public final fun component2-cs37B9Y ()J
+	public final fun component3-cs37B9Y ()J
+	public final fun component4-cs37B9Y ()J
+	public final fun component5-cs37B9Y ()J
+	public final fun component6-cs37B9Y ()J
+	public final fun component7-cs37B9Y ()J
+	public final fun component8-cs37B9Y ()J
+	public final fun component9-cs37B9Y ()J
+	public final fun copy-8f1ie2I (JJJJJJJJJ)Lcom/gearui/foundation/button/ButtonColors;
+	public static synthetic fun copy-8f1ie2I$default (Lcom/gearui/foundation/button/ButtonColors;JJJJJJJJJILjava/lang/Object;)Lcom/gearui/foundation/button/ButtonColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackground-cs37B9Y ()J
+	public final fun getBackgroundHover-cs37B9Y ()J
+	public final fun getBackgroundPressed-cs37B9Y ()J
+	public final fun getBorder-cs37B9Y ()J
+	public final fun getBorderHover-cs37B9Y ()J
+	public final fun getBorderPressed-cs37B9Y ()J
+	public final fun getFocusRing-cs37B9Y ()J
+	public final fun getForeground-cs37B9Y ()J
+	public final fun getForegroundHover-cs37B9Y ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/foundation/color/ContentStyle {
 	public static final field $stable I
 	public synthetic fun <init> (JJZFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2253,6 +2282,7 @@ public final class com/gearui/foundation/field/FieldDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/field/FieldDefaults;
 	public final fun getCompactShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun getLargeShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getTrailingIconSize-UdJoRJA ()F
 }
@@ -2284,6 +2314,32 @@ public final class com/gearui/foundation/field/FieldTokens {
 	public final fun getPaddingHorizontal-UdJoRJA ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/field/InputColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-cs37B9Y ()J
+	public final fun component2-cs37B9Y ()J
+	public final fun component3-cs37B9Y ()J
+	public final fun component4-cs37B9Y ()J
+	public final fun component5-cs37B9Y ()J
+	public final fun component6-cs37B9Y ()J
+	public final fun copy-9XA3ygs (JJJJJJ)Lcom/gearui/foundation/field/InputColors;
+	public static synthetic fun copy-9XA3ygs$default (Lcom/gearui/foundation/field/InputColors;JJJJJJILjava/lang/Object;)Lcom/gearui/foundation/field/InputColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackground-cs37B9Y ()J
+	public final fun getBorder-cs37B9Y ()J
+	public final fun getBorderHover-cs37B9Y ()J
+	public final fun getFocusRing-cs37B9Y ()J
+	public final fun getForeground-cs37B9Y ()J
+	public final fun getPlaceholder-cs37B9Y ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/interaction/DisabledAppearanceKt {
+	public static final fun disabledAppearance (Lcom/tencent/kuikly/compose/ui/Modifier;Z)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
 public abstract interface class com/gearui/foundation/interaction/InteractionSource {
@@ -2461,6 +2517,21 @@ public final class com/gearui/foundation/list/CellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/material/BorderLineStyle : java/lang/Enum {
+	public static final field Custom Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Dashed Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Dotted Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Double Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Groove Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Inset Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Outset Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Ridge Lcom/gearui/foundation/material/BorderLineStyle;
+	public static final field Solid Lcom/gearui/foundation/material/BorderLineStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/material/BorderLineStyle;
+	public static fun values ()[Lcom/gearui/foundation/material/BorderLineStyle;
+}
+
 public final class com/gearui/foundation/material/Material {
 	public static final field $stable I
 	public fun <init> (FF)V
@@ -2498,6 +2569,88 @@ public final class com/gearui/foundation/material/Materials {
 	public final fun getChrome ()Lcom/gearui/foundation/material/Material;
 	public final fun getPopover ()Lcom/gearui/foundation/material/Material;
 	public final fun getSheet ()Lcom/gearui/foundation/material/Material;
+}
+
+public final class com/gearui/foundation/material/SurfaceBorder {
+	public static final field $stable I
+	public synthetic fun <init> (JFLcom/gearui/foundation/material/SurfaceStroke;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JFLcom/gearui/foundation/material/SurfaceStroke;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-cs37B9Y ()J
+	public final fun component2-UdJoRJA ()F
+	public final fun component3 ()Lcom/gearui/foundation/material/SurfaceStroke;
+	public final fun copy-84fcZBg (JFLcom/gearui/foundation/material/SurfaceStroke;)Lcom/gearui/foundation/material/SurfaceBorder;
+	public static synthetic fun copy-84fcZBg$default (Lcom/gearui/foundation/material/SurfaceBorder;JFLcom/gearui/foundation/material/SurfaceStroke;ILjava/lang/Object;)Lcom/gearui/foundation/material/SurfaceBorder;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor-cs37B9Y ()J
+	public final fun getStyle ()Lcom/gearui/foundation/material/SurfaceStroke;
+	public final fun getWidth-UdJoRJA ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/material/SurfaceDecorationKt {
+	public static final fun DecoratedSurface (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Ljava/util/List;Lcom/gearui/foundation/material/SurfaceBorder;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/foundation/material/SurfaceShadow {
+	public static final field $stable I
+	public synthetic fun <init> (JFFFFZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JFFFFZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-cs37B9Y ()J
+	public final fun component2-UdJoRJA ()F
+	public final fun component3-UdJoRJA ()F
+	public final fun component4-UdJoRJA ()F
+	public final fun component5-UdJoRJA ()F
+	public final fun component6 ()Z
+	public final fun copy-tCcfnb4 (JFFFFZ)Lcom/gearui/foundation/material/SurfaceShadow;
+	public static synthetic fun copy-tCcfnb4$default (Lcom/gearui/foundation/material/SurfaceShadow;JFFFFZILjava/lang/Object;)Lcom/gearui/foundation/material/SurfaceShadow;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBlur-UdJoRJA ()F
+	public final fun getColor-cs37B9Y ()J
+	public final fun getInset ()Z
+	public final fun getOffsetX-UdJoRJA ()F
+	public final fun getOffsetY-UdJoRJA ()F
+	public final fun getSpread-UdJoRJA ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/material/SurfaceShadowStyles {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lcom/gearui/foundation/material/SurfaceShadowStyles;
+	public static synthetic fun copy$default (Lcom/gearui/foundation/material/SurfaceShadowStyles;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/gearui/foundation/material/SurfaceShadowStyles;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getField ()Ljava/util/List;
+	public final fun getOverlay ()Ljava/util/List;
+	public final fun getSurface ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/material/SurfaceStroke {
+	public static final field $stable I
+	public synthetic fun <init> (Lcom/gearui/foundation/material/BorderLineStyle;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/gearui/foundation/material/BorderLineStyle;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/gearui/foundation/material/BorderLineStyle;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3-FVHVYJM ()I
+	public final fun copy-W5CYUbQ (Lcom/gearui/foundation/material/BorderLineStyle;Ljava/util/List;I)Lcom/gearui/foundation/material/SurfaceStroke;
+	public static synthetic fun copy-W5CYUbQ$default (Lcom/gearui/foundation/material/SurfaceStroke;Lcom/gearui/foundation/material/BorderLineStyle;Ljava/util/List;IILjava/lang/Object;)Lcom/gearui/foundation/material/SurfaceStroke;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDashArray ()Ljava/util/List;
+	public final fun getKind ()Lcom/gearui/foundation/material/BorderLineStyle;
+	public final fun getLineCap-FVHVYJM ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/material/SurfaceStylesKt {
+	public static final fun getLocalSurfaceShadowStyles ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun surfaceShadowStyles (Landroidx/compose/runtime/Composer;I)Lcom/gearui/foundation/material/SurfaceShadowStyles;
 }
 
 public final class com/gearui/foundation/motion/Motion {
@@ -2846,6 +2999,11 @@ public final class com/gearui/foundation/tag/TagTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/typography/FontAdapterKt {
+	public static final fun getLocalFontRegistry ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun resolveFontFamily (Lcom/gearui/foundation/typography/TextStyle;Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/text/font/FontFamily;
+}
+
 public final class com/gearui/foundation/typography/IconSizes {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/foundation/typography/IconSizes;
@@ -2882,15 +3040,20 @@ public final class com/gearui/foundation/typography/IconTokens {
 
 public final class com/gearui/foundation/typography/TextStyle {
 	public static final field $stable I
-	public synthetic fun <init> (JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;Ljava/util/List;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;Ljava/util/List;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-Yn2tToY ()J
 	public final fun component2-Yn2tToY ()J
 	public final fun component3 ()Lcom/tencent/kuikly/compose/ui/text/font/FontWeight;
-	public final fun copy-PD9KPiA (JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;)Lcom/gearui/foundation/typography/TextStyle;
-	public static synthetic fun copy-PD9KPiA$default (Lcom/gearui/foundation/typography/TextStyle;JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Lcom/gearui/foundation/typography/TextStyle;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5-Yn2tToY ()J
+	public final fun copy-JuF0X-w (JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;Ljava/util/List;J)Lcom/gearui/foundation/typography/TextStyle;
+	public static synthetic fun copy-JuF0X-w$default (Lcom/gearui/foundation/typography/TextStyle;JJLcom/tencent/kuikly/compose/ui/text/font/FontWeight;Ljava/util/List;JILjava/lang/Object;)Lcom/gearui/foundation/typography/TextStyle;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFontFamily ()Ljava/util/List;
 	public final fun getFontSize-Yn2tToY ()J
 	public final fun getFontWeight ()Lcom/tencent/kuikly/compose/ui/text/font/FontWeight;
+	public final fun getLetterSpacing-Yn2tToY ()J
 	public final fun getLineHeight-Yn2tToY ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2981,8 +3144,8 @@ public final class com/gearui/gestures/SwipeDismissConfig {
 }
 
 public final class com/gearui/gestures/SwipeDismissKt {
-	public static final fun swipeDismiss (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
-	public static synthetic fun swipeDismiss$default (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static final fun swipeDismiss (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Ljava/lang/Object;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static synthetic fun swipeDismiss$default (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/gestures/DismissDirection;ZLcom/gearui/gestures/SwipeDismissConfig;Ljava/lang/Object;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
 public final class com/gearui/i18n/CommonStrings {
@@ -3636,6 +3799,7 @@ public final class com/gearui/overlay/OverlayControllerKt {
 public final class com/gearui/overlay/OverlayDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/overlay/OverlayDefaults;
+	public static final field transitionDurationMillis I
 	public final fun getModalShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getPanelShape (Landroidx/compose/runtime/Composer;I)Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getScrimColor-cs37B9Y ()J
@@ -3691,6 +3855,8 @@ public final class com/gearui/overlay/OverlayEvent : java/lang/Enum {
 
 public final class com/gearui/overlay/OverlayHostKt {
 	public static final fun OverlayHost (Lcom/gearui/overlay/OverlayController;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun getLocalInputBlockedByOverlay ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalOverlayVisible ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
 public final class com/gearui/overlay/OverlayKt {
@@ -3710,14 +3876,15 @@ public final class com/gearui/overlay/OverlayManager {
 
 public final class com/gearui/overlay/OverlayOptions {
 	public static final field $stable I
-	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZLcom/gearui/overlay/OverlayTransition;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZLcom/gearui/overlay/OverlayTransition;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/gearui/overlay/OverlayPlacement;
 	public final fun component10 ()Z
 	public final fun component11 ()Z
 	public final fun component12 ()Z
 	public final fun component13 ()Z
 	public final fun component14 ()Z
+	public final fun component15 ()Lcom/gearui/overlay/OverlayTransition;
 	public final fun component2-UdJoRJA ()F
 	public final fun component3-UdJoRJA ()F
 	public final fun component4 ()Z
@@ -3726,8 +3893,8 @@ public final class com/gearui/overlay/OverlayOptions {
 	public final fun component7 ()Z
 	public final fun component8 ()Lcom/gearui/overlay/OverlayDismissPolicy;
 	public final fun component9 ()Z
-	public final fun copy-mW2ccD8 (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZ)Lcom/gearui/overlay/OverlayOptions;
-	public static synthetic fun copy-mW2ccD8$default (Lcom/gearui/overlay/OverlayOptions;Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZILjava/lang/Object;)Lcom/gearui/overlay/OverlayOptions;
+	public final fun copy-zbbTTGk (Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZLcom/gearui/overlay/OverlayTransition;)Lcom/gearui/overlay/OverlayOptions;
+	public static synthetic fun copy-zbbTTGk$default (Lcom/gearui/overlay/OverlayOptions;Lcom/gearui/overlay/OverlayPlacement;FFZLcom/tencent/kuikly/compose/ui/graphics/Color;FZLcom/gearui/overlay/OverlayDismissPolicy;ZZZZZZLcom/gearui/overlay/OverlayTransition;ILjava/lang/Object;)Lcom/gearui/overlay/OverlayOptions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAutoFlip ()Z
 	public final fun getDismissKeyboardOnShow ()Z
@@ -3738,10 +3905,12 @@ public final class com/gearui/overlay/OverlayOptions {
 	public final fun getOffsetY-UdJoRJA ()F
 	public final fun getPassThroughOutside ()Z
 	public final fun getPlacement ()Lcom/gearui/overlay/OverlayPlacement;
+	public final fun getResolvedTransition ()Lcom/gearui/overlay/OverlayTransition;
 	public final fun getSafeAreaBottom ()Z
 	public final fun getSafeAreaLeft ()Z
 	public final fun getSafeAreaRight ()Z
 	public final fun getSafeAreaTop ()Z
+	public final fun getTransition ()Lcom/gearui/overlay/OverlayTransition;
 	public final fun getZIndex ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -3765,6 +3934,15 @@ public final class com/gearui/overlay/OverlayPlacement : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/overlay/OverlayPlacement;
 	public static fun values ()[Lcom/gearui/overlay/OverlayPlacement;
+}
+
+public final class com/gearui/overlay/OverlayTransition : java/lang/Enum {
+	public static final field Fade Lcom/gearui/overlay/OverlayTransition;
+	public static final field None Lcom/gearui/overlay/OverlayTransition;
+	public static final field SurfaceSlide Lcom/gearui/overlay/OverlayTransition;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/overlay/OverlayTransition;
+	public static fun values ()[Lcom/gearui/overlay/OverlayTransition;
 }
 
 public final class com/gearui/primitives/AvatarKt {
@@ -3974,6 +4152,11 @@ public final class com/gearui/system/StatusBarControllerKt {
 	public static final fun getLocalStatusBarController ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
+public final class com/gearui/theme/BrandAccentKt {
+	public static final fun withBrandAccent-ijWZ4uc (Lcom/gearui/theme/ThemeSpec;JLcom/tencent/kuikly/compose/ui/graphics/Color;)Lcom/gearui/theme/ThemeSpec;
+	public static synthetic fun withBrandAccent-ijWZ4uc$default (Lcom/gearui/theme/ThemeSpec;JLcom/tencent/kuikly/compose/ui/graphics/Color;ILjava/lang/Object;)Lcom/gearui/theme/ThemeSpec;
+}
+
 public final class com/gearui/theme/Colors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -4044,16 +4227,19 @@ public final class com/gearui/theme/ColorsKt {
 
 public final class com/gearui/theme/Shapes {
 	public static final field $stable I
-	public fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;)V
+	public fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;)V
+	public synthetic fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun component2 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun component3 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun component4 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun component5 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun component6 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
-	public final fun copy (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;)Lcom/gearui/theme/Shapes;
-	public static synthetic fun copy$default (Lcom/gearui/theme/Shapes;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;ILjava/lang/Object;)Lcom/gearui/theme/Shapes;
+	public final fun component7 ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
+	public final fun copy (Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;)Lcom/gearui/theme/Shapes;
+	public static synthetic fun copy$default (Lcom/gearui/theme/Shapes;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lcom/tencent/kuikly/compose/ui/graphics/Shape;ILjava/lang/Object;)Lcom/gearui/theme/Shapes;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getControlLarge ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getFull ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getLg ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
 	public final fun getMd ()Lcom/tencent/kuikly/compose/ui/graphics/Shape;
@@ -4103,12 +4289,17 @@ public final class com/gearui/theme/ThemeMode : java/lang/Enum {
 
 public final class com/gearui/theme/ThemeSpec {
 	public static final field $stable I
-	public fun <init> (Lcom/gearui/theme/Colors;)V
+	public fun <init> (Lcom/gearui/theme/Colors;Lcom/gearui/foundation/button/ButtonColors;Lcom/gearui/foundation/field/InputColors;)V
+	public synthetic fun <init> (Lcom/gearui/theme/Colors;Lcom/gearui/foundation/button/ButtonColors;Lcom/gearui/foundation/field/InputColors;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/gearui/theme/Colors;
-	public final fun copy (Lcom/gearui/theme/Colors;)Lcom/gearui/theme/ThemeSpec;
-	public static synthetic fun copy$default (Lcom/gearui/theme/ThemeSpec;Lcom/gearui/theme/Colors;ILjava/lang/Object;)Lcom/gearui/theme/ThemeSpec;
+	public final fun component2 ()Lcom/gearui/foundation/button/ButtonColors;
+	public final fun component3 ()Lcom/gearui/foundation/field/InputColors;
+	public final fun copy (Lcom/gearui/theme/Colors;Lcom/gearui/foundation/button/ButtonColors;Lcom/gearui/foundation/field/InputColors;)Lcom/gearui/theme/ThemeSpec;
+	public static synthetic fun copy$default (Lcom/gearui/theme/ThemeSpec;Lcom/gearui/theme/Colors;Lcom/gearui/foundation/button/ButtonColors;Lcom/gearui/foundation/field/InputColors;ILjava/lang/Object;)Lcom/gearui/theme/ThemeSpec;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getButtonColors ()Lcom/gearui/foundation/button/ButtonColors;
 	public final fun getColors ()Lcom/gearui/theme/Colors;
+	public final fun getInputColors ()Lcom/gearui/foundation/field/InputColors;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

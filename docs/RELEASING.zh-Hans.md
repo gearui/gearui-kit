@@ -4,6 +4,28 @@
 
 维护者用。使用者不需要看这个——接入方式见 README。
 
+## beta3 候选发布门槛
+
+先读 [当前发布检查](BETA3_RELEASE_READINESS.md)。未提交工作区的本地通过不是发布批准。
+
+1. 提交完整候选，包括新增 Token、生成代码、测试、API 基线、迁移说明与资源。
+2. 运行 [CI 对照表](SPEC_CI_MAPPING.md) 全部检查，远端 CI 必须对应同一提交；
+   生成 API dump 不能代替检查。
+3. 验证消费方、iOS 宿主、Android/Web 示例及键盘/弹层/主题关键路径；标明未验平台。
+4. 在 macOS 隔离暂存六个 Maven 模块，检查资源、依赖元数据、JS/iOS KLib 和源码。
+   源码 composite build 通过不能替代 Maven 制品消费验证。
+5. 审核破坏性变更与渲染限制，获得发布批准后再设置版本、打标签、签名上传。
+
+仅本地、不签名、不上传的打包检查：
+
+```bash
+./gradlew :gearui-kit:publishToMavenLocal \
+  -Dmaven.repo.local=/tmp/gearui-beta3-staging \
+  -PPOM_VERSION=1.0.0-beta3 -PsigningInMemoryKey=
+```
+
+这不验证签名、Central 上传或消费方依赖解析。不能仅凭生命周期任务返回成功认定发布成功。
+
 ## 发布到 Maven Central（Central Portal）
 
 发布通过 `com.vanniktech.maven.publish` 接入 Sonatype Central Portal。

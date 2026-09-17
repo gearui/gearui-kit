@@ -1,13 +1,12 @@
 package com.gearui.foundation.field
 
 import androidx.compose.runtime.Composable
-import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.graphics.Shape
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.control.ControlGeometry
 
 /**
  * Field size tokens — shared by every input-like trigger.
@@ -24,10 +23,9 @@ import com.gearui.foundation.typography.IconSizes
  *
  * Geometry below is shared by both.
  *
- * These all used to size themselves independently, and had drifted: most sat
- * at 40dp with a 4dp radius, Input at 40dp with 6dp, and Select at 44dp with
- * 12dp. `Shapes` documents `md` (6dp) as the input radius, so that is the one
- * they converge on.
+ * Geometry is generated from the HeroUI Native reference profile. Regular
+ * controls are 48dp high with 12dp horizontal padding. See
+ * tokens/controls.tokens.json for the single source of values.
  *
  * ### Why there is no focus-state border here
  *
@@ -41,8 +39,8 @@ import com.gearui.foundation.typography.IconSizes
  *  - Border *width* must stay constant across focus and error, otherwise the
  *    field's content box resizes and the layout jumps.
  *
- * Focus is expressed through [com.gearui.foundation.interaction.InteractionState]
- * and background/foreground colour, never by re-deciding the border.
+ * FieldFocusOverlay updates a sibling decoration for touch and keyboard focus.
+ * It never rebuilds the native input modifier chain or changes layout size.
  *
  * The removed pre-1.0 InputTokens did declare `focusBorderWidth = 2f`. Nothing
  * ever read it — which is precisely why it survived long enough to look like a
@@ -60,20 +58,20 @@ data class FieldTokens(
 object FieldSizeTokens {
 
     val Large = FieldTokens(
-        height = 48.dp,
-        paddingHorizontal = Spacing.lg,
+        height = ControlGeometry.controlLarge,
+        paddingHorizontal = ControlGeometry.fieldPaddingLarge,
         borderWidth = BorderWidth.thin,
     )
 
     val Medium = FieldTokens(
-        height = 40.dp,
-        paddingHorizontal = Spacing.md,
+        height = ControlGeometry.controlMedium,
+        paddingHorizontal = ControlGeometry.fieldPaddingMedium,
         borderWidth = BorderWidth.thin,
     )
 
     val Small = FieldTokens(
-        height = 32.dp,
-        paddingHorizontal = Spacing.sm,
+        height = ControlGeometry.controlSmall,
+        paddingHorizontal = ControlGeometry.fieldPaddingSmall,
         borderWidth = BorderWidth.thin,
     )
 }
@@ -91,11 +89,14 @@ object FieldDefaults {
      */
     val trailingIconSize: Dp = IconSizes.Default.md
 
-    /** Default trigger shape for input-like controls (`Shapes.md`, 6dp). */
+    /** Default trigger shape follows the regular control radius. */
     val shape: Shape
-        @Composable get() = Theme.shapes.md
+        @Composable get() = Theme.shapes.lg
 
     /** Compact variants only — keeps small controls from looking over-rounded. */
     val compactShape: Shape
-        @Composable get() = Theme.shapes.sm
+        @Composable get() = Theme.shapes.md
+
+    val largeShape: Shape
+        @Composable get() = Theme.shapes.controlLarge
 }

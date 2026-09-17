@@ -1,40 +1,36 @@
 package com.gearui.components.select
 
 import androidx.compose.runtime.*
-import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
-import com.tencent.kuikly.compose.foundation.lazy.items
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.theme.LocalInputColors
+import com.gearui.overlay.LocalOverlayViewportSize
+import com.gearui.runtime.LocalRuntimeEnvironment
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
-import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.border.BorderWidth
-import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.field.FieldErrorText
-import com.gearui.foundation.typography.IconSizes
 
 /**
  * Select - fully Theme-driven dropdown select
@@ -45,7 +41,8 @@ import com.gearui.foundation.typography.IconSizes
  * - automatic direction (opens upwards when there is no room below)
  * - scrollable options
  * - width follows the trigger
- * - supports the triggerOverlaid joined mode
+ * - item-aligned opening, group labels and selected-item indicators
+ * - the legacy TRIGGER_OVERLAID mode opens separately above/below the trigger
  */
 @Composable
 fun <T> Select(
@@ -61,11 +58,15 @@ fun <T> Select(
 ) {
     val colors = Theme.colors
     val overlay = rememberOverlay()
+    val density = LocalDensity.current
+    val viewport = LocalOverlayViewportSize.current
+    val environment = LocalRuntimeEnvironment.current
+    val optionsState = rememberUpdatedState(options)
+    val enabledState = rememberUpdatedState(enabled)
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
     val selectedOption = options.find { it.value == value }
-    val triggerShape = FieldDefaults.shape
 
     // Wrapped in State so the lambdas can read the current value
     val valueState = rememberUpdatedState(value)
@@ -85,17 +86,33 @@ fun <T> Select(
 
     // Opens the dropdown
     fun openDropdown() {
-        if (anchorBounds == null) return
+        if (anchorBounds == null || viewport.height <= 0 || !enabledState.value || expanded) return
 
         val bounds = anchorBounds!!
         val anchorWidth = bounds.width
+        val rows = selectRows(optionsState.value)
+        val selectedRow = rows.indexOfFirst { it.option?.value == valueState.value }
+        val layout = with(density) {
+            selectPanelLayout(
+                rows.size, selectedRow, FieldSizeTokens.Medium.height.value,
+                bounds.top.toDp().value, bounds.bottom.toDp().value,
+                viewport.height.toDp().value, environment.safeArea.top.value,
+                maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
+                ControlGeometry.selectPanelOffset.value, panelMode == SelectPanelMode.ITEM_ALIGNED,
+                contentPadding = ControlGeometry.selectContentPadding.value,
+            )
+        }
+        if (layout.height <= 0f) return
 
+        // A resolved zero-height anchor avoids the generic dropdown rule that
+        // forbids covering the trigger. Select owns the real trigger lifecycle.
+        val panelTop = with(density) { layout.top.dp.toPx() }
         overlayId = overlay.show(
-            anchorBounds = bounds,
+            anchorBounds = Rect(bounds.left, panelTop, bounds.right, panelTop),
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
-                offsetY = panelMode.offsetY(),
-                autoFlip = true,
+                offsetY = Spacing.none,
+                autoFlip = false,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
             onDismiss = {
@@ -104,14 +121,18 @@ fun <T> Select(
             }
         ) {
             // Read the current value straight from the State object
-            SelectDropdownContent(
-                options = options,
-                selectedValue = valueState.value,
+            SelectPanel(
+                options = optionsState.value,
+                isSelected = { it.value == valueState.value },
                 anchorWidth = anchorWidth,
-                panelMode = panelMode,
+                layout = layout,
+                viewportWidth = viewport.width,
+                enabled = enabledState.value,
                 onOptionClick = { option ->
-                    onValueChangeState.value(option.value)
-                    closeDropdown()
+                    if (expanded && enabledState.value && !option.disabled) {
+                        closeDropdown()
+                        onValueChangeState.value(option.value)
+                    }
                 }
             )
         }
@@ -119,6 +140,10 @@ fun <T> Select(
     }
 
     // Dismiss the Overlay when the component leaves composition
+    LaunchedEffect(enabled, viewport) {
+        if (!enabled || expanded) closeDropdown()
+    }
+
     DisposableEffect(Unit) {
         onDispose {
             overlayId?.let { overlay.dismiss(it) }
@@ -132,7 +157,7 @@ fun <T> Select(
                 text = label,
                 style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = Spacing.sm)
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)
             )
         }
 
@@ -146,124 +171,30 @@ fun <T> Select(
                         anchorBounds = coordinates.boundsInRoot()
                     }
                 }
-                .clip(triggerShape)
-                .border(
-                    width = FieldSizeTokens.Medium.borderWidth,
-                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
-                    shape = triggerShape
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) {
+                .then(fieldTriggerModifier(enabled, error) {
                     if (expanded) {
                         closeDropdown()
                     } else {
                         openDropdown()
                     }
-                }
+                })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = selectedOption?.label ?: placeholder,
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = Theme.typography.bodyMedium,
-                color = if (selectedOption != null) {
-                    if (enabled) colors.foreground else colors.mutedForeground
-                } else {
-                    colors.mutedForeground
-                }
+                color = if (selectedOption != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
-            Icon(
-                name = if (expanded) Icons.caret_up else Icons.caret_down,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+            SelectIndicator(expanded)
         }
 
         FieldErrorText(error)
-    }
-}
-
-/**
- * SelectDropdownContent - dropdown content (scrollable, via LazyColumn)
- */
-@Composable
-private fun <T> SelectDropdownContent(
-    options: List<SelectOption<T>>,
-    selectedValue: T?,
-    anchorWidth: Float,
-    panelMode: SelectPanelMode,
-    onOptionClick: (SelectOption<T>) -> Unit
-) {
-    val colors = Theme.colors
-    val density = LocalDensity.current
-
-    val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = OverlayDefaults.panelShape
-    val panelShadow =
-        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Theme.elevation.raised else Theme.elevation.floating
-    val itemHeight = 44.dp
-    val verticalPadding = Spacing.sm
-    val rowSpacing = 4.dp
-    val totalHeight = (options.size * itemHeight.value + verticalPadding.value * 2f + (options.size - 1).coerceAtLeast(0) * rowSpacing.value).dp
-    val panelHeight = if (totalHeight > 240.dp) 240.dp else totalHeight
-
-    Box(
-        modifier = Modifier
-            .width(widthDp)
-            .height(panelHeight)
-            .shadow(panelShadow, panelShape)
-            .clip(panelShape)
-            .background(colors.surface, panelShape)
-            .border(BorderWidth.thin, colors.border, panelShape)
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
-        ) {
-            items(options) { option ->
-                SelectOptionItem(
-                    option = option,
-                    isSelected = option.value == selectedValue,
-                    onClick = { onOptionClick(option) }
-                )
-            }
-        }
-    }
-}
-
-/**
- * SelectOptionItem - one option row
- */
-@Composable
-private fun <T> SelectOptionItem(
-    option: SelectOption<T>,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    val colors = Theme.colors
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(Theme.shapes.lg)
-            .background(if (isSelected) colors.muted else colors.surface)
-            .clickable(enabled = !option.disabled) { onClick() }
-            .height(44.dp)
-            .padding(horizontal = Spacing.md),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = option.label,
-            style = Theme.typography.bodyMedium,
-            color = when {
-                option.disabled -> colors.mutedForeground
-                else -> colors.foreground
-            }
-        )
     }
 }
 
@@ -295,14 +226,19 @@ fun <T> MultiSelect(
 ) {
     val colors = Theme.colors
     val overlay = rememberOverlay()
+    val density = LocalDensity.current
+    val viewport = LocalOverlayViewportSize.current
+    val environment = LocalRuntimeEnvironment.current
+    val optionsState = rememberUpdatedState(options)
+    val enabledState = rememberUpdatedState(enabled)
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
-    val triggerShape = FieldDefaults.shape
 
     // Wrapped in State so the lambdas can read the current value
     val valuesState = rememberUpdatedState(values)
     val onValuesChangeState = rememberUpdatedState(onValuesChange)
+    val maxSelectionState = rememberUpdatedState(maxSelection)
 
     fun clearDropdownState() {
         overlayId = null
@@ -314,17 +250,33 @@ fun <T> MultiSelect(
     }
 
     fun openDropdown() {
-        if (anchorBounds == null) return
+        if (anchorBounds == null || viewport.height <= 0 || !enabledState.value || expanded) return
 
         val bounds = anchorBounds!!
         val anchorWidth = bounds.width
+        val rows = selectRows(optionsState.value)
+        val selectedRow = rows.indexOfFirst { it.option?.value in valuesState.value }
+        val layout = with(density) {
+            selectPanelLayout(
+                rows.size, selectedRow, FieldSizeTokens.Medium.height.value,
+                bounds.top.toDp().value, bounds.bottom.toDp().value,
+                viewport.height.toDp().value, environment.safeArea.top.value,
+                maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
+                ControlGeometry.selectPanelOffset.value, panelMode == SelectPanelMode.ITEM_ALIGNED,
+                contentPadding = ControlGeometry.selectContentPadding.value,
+            )
+        }
+        if (layout.height <= 0f) return
 
+        // A resolved zero-height anchor avoids the generic dropdown rule that
+        // forbids covering the trigger. Select owns the real trigger lifecycle.
+        val panelTop = with(density) { layout.top.dp.toPx() }
         overlayId = overlay.show(
-            anchorBounds = bounds,
+            anchorBounds = Rect(bounds.left, panelTop, bounds.right, panelTop),
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
-                offsetY = panelMode.offsetY(),
-                autoFlip = true,
+                offsetY = Spacing.none,
+                autoFlip = false,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
             onDismiss = {
@@ -332,19 +284,29 @@ fun <T> MultiSelect(
             }
         ) {
             // Read the current value straight from the State object
-            MultiSelectDropdownContent(
-                options = options,
-                selectedValues = valuesState.value,
+            SelectPanel(
+                options = optionsState.value,
+                isSelected = { it.value in valuesState.value },
                 anchorWidth = anchorWidth,
-                panelMode = panelMode,
-                onSelectionChange = { newValues ->
-                    if (maxSelection == null || newValues.size <= maxSelection) {
-                        onValuesChangeState.value(newValues)
+                layout = layout,
+                viewportWidth = viewport.width,
+                enabled = enabledState.value,
+                multiple = true,
+                onOptionClick = { option ->
+                    val current = valuesState.value
+                    val next = if (option.value in current) current - option.value else current + option.value
+                    val limit = maxSelectionState.value
+                    if (expanded && enabledState.value && !option.disabled && (limit == null || next.size <= limit || next.size < current.size)) {
+                        onValuesChangeState.value(next)
                     }
                 }
             )
         }
         expanded = true
+    }
+
+    LaunchedEffect(enabled, viewport) {
+        if (!enabled || expanded) closeDropdown()
     }
 
     DisposableEffect(Unit) {
@@ -359,7 +321,7 @@ fun <T> MultiSelect(
                 text = label,
                 style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = Spacing.sm)
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)
             )
         }
 
@@ -372,16 +334,9 @@ fun <T> MultiSelect(
                         anchorBounds = coordinates.boundsInRoot()
                     }
                 }
-                .clip(triggerShape)
-                .border(
-                    FieldSizeTokens.Medium.borderWidth,
-                    fieldBorderColor(error = error, enabled = enabled, active = expanded),
-                    triggerShape
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) {
+                .then(fieldTriggerModifier(enabled, error) {
                     if (expanded) closeDropdown() else openDropdown()
-                }
+                })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -389,19 +344,14 @@ fun <T> MultiSelect(
             Text(
                 text = if (values.isEmpty()) placeholder
                     else I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size),
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = Theme.typography.bodyMedium,
-                color = if (values.isNotEmpty()) {
-                    if (enabled) colors.foreground else colors.mutedForeground
-                } else {
-                    colors.mutedForeground
-                }
+                color = if (values.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
-            Icon(
-                name = if (expanded) Icons.caret_up else Icons.caret_down,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+            SelectIndicator(expanded)
         }
 
         FieldErrorText(error)
@@ -412,105 +362,8 @@ fun <T> MultiSelect(
  * Select panel mode
  */
 enum class SelectPanelMode {
+    /** Align the current row with the trigger where viewport bounds allow. */
     ITEM_ALIGNED,
+    /** Legacy name: separate anchored panel, automatically choosing above/below. */
     TRIGGER_OVERLAID
-}
-
-private fun SelectPanelMode.offsetY() = when (this) {
-    SelectPanelMode.ITEM_ALIGNED -> 4.dp
-    SelectPanelMode.TRIGGER_OVERLAID -> 0.dp
-}
-
-/**
- * MultiSelectDropdownContent - multi-select dropdown content
- */
-@Composable
-private fun <T> MultiSelectDropdownContent(
-    options: List<SelectOption<T>>,
-    selectedValues: Set<T>,
-    anchorWidth: Float,
-    panelMode: SelectPanelMode,
-    onSelectionChange: (Set<T>) -> Unit
-) {
-    val colors = Theme.colors
-    val density = LocalDensity.current
-
-    val widthDp = with(density) { anchorWidth.toDp() }
-    val panelShape = OverlayDefaults.panelShape
-    val panelShadow =
-        if (panelMode == SelectPanelMode.TRIGGER_OVERLAID) Theme.elevation.raised else Theme.elevation.floating
-    val itemHeight = 44.dp
-    val verticalPadding = Spacing.sm
-    val rowSpacing = 4.dp
-    val totalHeight = (options.size * itemHeight.value + verticalPadding.value * 2f + (options.size - 1).coerceAtLeast(0) * rowSpacing.value).dp
-    val panelHeight = if (totalHeight > 240.dp) 240.dp else totalHeight
-
-    Box(
-        modifier = Modifier
-            .width(widthDp)
-            .height(panelHeight)
-            .shadow(panelShadow, panelShape)
-            .clip(panelShape)
-            .background(colors.surface, panelShape)
-            .border(BorderWidth.thin, colors.border, panelShape)
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
-        ) {
-            items(options) { option ->
-                val isSelected = option.value in selectedValues
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(Theme.shapes.lg)
-                        .background(if (isSelected) colors.muted else colors.surface)
-                        .clickable(enabled = !option.disabled) {
-                            val newValues = if (isSelected) {
-                                selectedValues - option.value
-                            } else {
-                                selectedValues + option.value
-                            }
-                            onSelectionChange(newValues)
-                        }
-                        .height(44.dp)
-                        .padding(horizontal = Spacing.md),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = option.label,
-                        style = Theme.typography.bodyMedium,
-                        color = when {
-                            option.disabled -> colors.mutedForeground
-                            isSelected -> colors.primary
-                            else -> colors.foreground
-                        }
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clip(Theme.shapes.sm)
-                            .border(BorderWidth.thin,
-                                if (isSelected) colors.primary else colors.border,
-                                Theme.shapes.sm
-                            )
-                            .background(if (isSelected) colors.primary else colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (isSelected) {
-                            Icon(
-                                name = Icons.check,
-                                size = IconSizes.Default.xs,
-                                tint = colors.primaryForeground
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

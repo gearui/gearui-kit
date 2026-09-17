@@ -1,102 +1,50 @@
 package com.gearui.sample.examples.tag
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.components.tag.*
+import com.gearui.components.switch.Switch
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.theme.Theme
 
-/**
- * Tag component examples
- */
+/** Real Tag controls, including re-enabling and close/click rejection. */
 @Composable
-fun TagExample(
-    component: ComponentInfo,
-    onBack: () -> Unit
-) {
-    val colors = Theme.colors
-
-    ExamplePage(
-        component = component,
-        onBack = onBack
-    ) {
-        // Basic tags
-        ExampleSection(
-            title = "基础标签",
-            description = "不同主题的标签样式"
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                SimpleTag(text = "默认", colors.muted, colors.foreground)
-                SimpleTag(text = "主要", colors.primary, colors.primaryForeground)
-                SimpleTag(text = "成功", colors.success, colors.primaryForeground)
-                SimpleTag(text = "警告", colors.warning, colors.primaryForeground)
-                SimpleTag(text = "危险", colors.destructive, colors.primaryForeground)
+fun TagExample(component: ComponentInfo, onBack: () -> Unit) {
+    var disabled by remember { mutableStateOf(false) }
+    var clicks by remember { mutableStateOf(0) }
+    var closes by remember { mutableStateOf(0) }
+    ExamplePage(component = component, onBack = onBack) {
+        listOf(TagVariant.DARK to "实色标签", TagVariant.LIGHT to "柔和标签", TagVariant.OUTLINE to "描边标签")
+            .forEach { (variant, title) ->
+                ExampleSection(title = title, useCardContainer = false) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                        listOf(TagTheme.DEFAULT to "默认", TagTheme.PRIMARY to "主要", TagTheme.SUCCESS to "成功",
+                            TagTheme.WARNING to "警告", TagTheme.DANGER to "危险").forEach { (theme, label) ->
+                            Tag(text = label, theme = theme, variant = variant)
+                        }
+                    }
+                }
+            }
+        ExampleSection(title = "标签尺寸", useCardContainer = false) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                Tag("小尺寸", size = TagSize.SMALL, theme = TagTheme.PRIMARY)
+                Tag("中尺寸", size = TagSize.MEDIUM, theme = TagTheme.PRIMARY)
+                Tag("大尺寸", size = TagSize.LARGE, theme = TagTheme.PRIMARY)
             }
         }
-
-        // Light tags
-        ExampleSection(
-            title = "浅色标签",
-            description = "浅色背景的标签样式"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "浅色标签",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
+        ExampleSection(title = "交互与禁用", useCardContainer = false) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                    Text("禁用")
+                    Switch(checked = disabled, onCheckedChange = { disabled = it })
+                }
+                Tag("点击或关闭", theme = TagTheme.PRIMARY, closable = true, disabled = disabled,
+                    onClick = { clicks++ }, onClose = { closes++ })
+                Text("点击 $clicks 次 · 关闭 $closes 次")
             }
         }
-
-        // Tag sizes
-        ExampleSection(
-            title = "标签尺寸",
-            description = "不同尺寸的标签"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "大尺寸",
-                    style = Theme.typography.bodyLarge,
-                    color = colors.primary
-                )
-                Text(
-                    text = "中尺寸",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.primary
-                )
-                Text(
-                    text = "小尺寸",
-                    style = Theme.typography.bodySmall,
-                    color = colors.primary
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun SimpleTag(
-    text: String,
-    backgroundColor: com.tencent.kuikly.compose.ui.graphics.Color,
-    textColor: com.tencent.kuikly.compose.ui.graphics.Color
-) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(backgroundColor)
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-    ) {
-        Text(
-            text = text,
-            style = Theme.typography.bodySmall,
-            color = textColor
-        )
     }
 }

@@ -1,40 +1,58 @@
-# GearUI Kit Specs
+# GearUI Kit Specification
 
-`docs/` 只保留长期有效、可执行的规范文档。
+Status: current rules for the beta3 candidate. This is the single specification
+entry point, not a release approval or a claim of completed visual parity.
 
-## 必读（对外有效）
+## Document Ownership
 
-1. `GEARUI_SPEC_2026.md`
-2. `SPEC_CI_MAPPING.md`
+| Document | Owns | Does not own |
+| --- | --- | --- |
+| [Design system](DESIGN_SYSTEM_SPEC.md) | Default appearance, component anatomy, state and theme rules | Runtime lifecycle or test results |
+| [Engineering contract](GEARUI_SPEC_2026.md) | Runtime, insets, API, resources, i18n and release gates | Token values or upstream appearance |
+| [Token format and adapter](../tokens/README.md) | DTCG 2025.10 data support, conversion and renderer limits | Component lifecycle or an exhaustive conformance claim |
+| [Reference map](HEROUI_NATIVE_ALIGNMENT.md) | Pinned open-source HeroUI Native source locations | Paid/Web preset promises or completion claims |
+| [CI mapping](SPEC_CI_MAPPING.md) | Exact executable checks and their limits | Repeating design rules |
+| [Migration](MIGRATION_1_0.md) | Consumer source/binary changes | Release approval |
+| [Release procedure](RELEASING.md) | Candidate, artifact and publication workflow | Automatic permission to publish |
 
-说明：
-- `ARCHITECTURE_GUARDRAILS.md` 已并入 `GEARUI_SPEC_2026.md` 第 11 节，仅保留兼容跳转。
+## Precedence And Change Control
 
-## 主题与用色规范
+1. These documents have separate ownership; a rule must have one owner.
+2. Current design identity is HeroUI Native's pinned open-source default.
+   Tamagui, the old iOS-only identity and Phase-0 shadcn migration plans are
+   historical, not competing current defaults.
+3. Numeric defaults come from `tokens/` and generated source. Public signatures
+   come from reviewed API dumps. Do not maintain a second numeric/API schema in prose.
+4. A passing baseline check means the source matches that baseline. Refreshing a
+   baseline does not establish compatibility with a previously published binary.
+5. When a rule and the implementation differ, record a gap; do not silently call
+   the implementation compliant or change the rule to make a check green.
+6. Acceptance records describe a revision, platform and test scope. They cannot
+   override a normative rule or establish a pass for an untested component.
+7. Code comments are English. User-facing text belongs in typed language packs.
+   Public guides can have `.zh-Hans.md` companions; do not claim translations
+   are synchronized when they are not.
 
-1. `GEARUI_TOKEN_SEMANTIC_FREEZE_V2.md`
-2. `GEARUI_COMPONENT_COLOR_ROLE_MATRIX.md`
+## Implementation And Evidence
 
-## 开发模板
+- [Beta3 readiness](BETA3_RELEASE_READINESS.md): current release decision and blockers.
+- [Component matrix](COMPONENT_ACCEPTANCE_MATRIX.md): component-specific gaps.
+- [DTCG evidence](DTCG_ACCEPTANCE.md): token compiler tests and limits.
+- [Surface evidence](SURFACE_RENDERING_ACCEPTANCE.md): focused material/font device checks.
+- [Standardization log](STANDARDIZATION_ACCEPTANCE.md): dated implementation evidence,
+  not the source of current rules or test totals.
+- [Component guides](components/README.md): documented examples and gaps.
 
-1. `COMPONENT_TEMPLATE.md`（kotlin 代码骨架）
-2. `COMPONENT_DOC_TEMPLATE.md`（对外文档结构 — SPEC 6.2）
+## Contributor Route
 
-## 组件文档
+Read the owning rule, change token source before generated code, add regression
+coverage, check the sample and consumer, then update migration/evidence as needed.
+Use [component code](COMPONENT_TEMPLATE.md) and [documentation](COMPONENT_DOC_TEMPLATE.md)
+templates. Resource, keyboard and overlay fixes require runtime verification, not
+only a screenshot. See [CI mapping](SPEC_CI_MAPPING.md) for the actual checks.
 
-1. `components/README.md`（核心 10 组件文档索引与状态）
+## History
 
-## 跨库接入
-
-1. `I18N_INTEGRATION.md`（上层库接入分层 i18n — SPEC 2026 §12）
-
-## 历史文档
-
-迁移批次计划、一次性审计、RC 快照、spike 结论已移入 `_archive/`，仅供追溯，
-**不具规范效力**。见 `_archive/README.md`。
-
-## 清理原则
-
-- 过程性文档（阶段计划、审计快照、一次性修复记录）不放在 `docs/` 主路径。
-- 当规范被 CI 承接时，以 `SPEC_CI_MAPPING.md` 为准。
-- 同一交互语义只保留一个核心组件入口，禁止长期并行维护同义组件。
+The exact pre-consolidation documents are retained in
+[`_archive/pre-beta3/`](./_archive/pre-beta3/README.md). They explain past decisions
+but have no current normative authority. Legacy document paths remain as redirects.

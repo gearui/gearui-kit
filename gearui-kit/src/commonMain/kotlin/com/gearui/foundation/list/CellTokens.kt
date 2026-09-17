@@ -1,14 +1,15 @@
 package com.gearui.foundation.list
 
 import com.gearui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
 
 /**
  * CellTokens - Cell sizing spec
  *
  * Cell = the core interaction unit of the List family
  *
- * Reference: internal component spec cell/td_cell_style.dart
+ * Default padding follows Native ListGroup; compact sizing is a GearUI extension.
  *
  * ⚠️ Note: colours are not defined here; use Theme.colors
  */
@@ -25,10 +26,10 @@ object CellDefaults {
      * Standard cell (the common case)
      */
     val Default = CellTokens(
-        minHeight = 52.dp,
-        paddingHorizontal = 16.dp,
-        paddingVertical = 12.dp,
-        disabledAlpha = 0.5f,
+        minHeight = ControlGeometry.listMinHeight,
+        paddingHorizontal = ControlGeometry.listPadding,
+        paddingVertical = ControlGeometry.listPadding,
+        disabledAlpha = FeedbackDefaults.disabledOpacity,
         showDivider = true
     )
 
@@ -37,7 +38,7 @@ object CellDefaults {
      * 44dp tall = the iOS Compact mode
      */
     val Compact = Default.copy(
-        minHeight = 44.dp,
-        paddingVertical = 8.dp
+        minHeight = ControlGeometry.listCompactMinHeight,
+        paddingVertical = ControlGeometry.listCompactPadding
     )
 }

@@ -13,6 +13,25 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.runtime.LocalRuntimeFlags
 
+/** Retains the original entry point for hosts that use a single page background. */
+@Composable
+fun PageScaffold(
+    modifier: Modifier = Modifier,
+    consumeTopSafeArea: Boolean = true,
+    consumeBottomSafeArea: Boolean = false,
+    edgeToEdge: Boolean = false,
+    backgroundColor: Color? = null,
+    content: @Composable () -> Unit
+) = PageScaffold(
+    modifier = modifier,
+    consumeTopSafeArea = consumeTopSafeArea,
+    consumeBottomSafeArea = consumeBottomSafeArea,
+    edgeToEdge = edgeToEdge,
+    backgroundColor = backgroundColor,
+    topSafeAreaColor = null,
+    content = content,
+)
+
 /**
  * Page root scaffold - the one correct place where safe-area is **consumed**.
  *
@@ -27,6 +46,7 @@ import com.gearui.runtime.LocalRuntimeFlags
  * @param consumeBottomSafeArea leave room for the home indicator at the bottom (default false; the bottom is usually
  *                              consumed by BottomNavBar or an input field, and doing both would double the padding).
  * @param edgeToEdge            fullscreen pages (image preview and the like): ignore the safe area and let the page handle it (top/bottom = 0).
+ * @param topSafeAreaColor      optional header color behind the status bar; null keeps the page background.
  */
 @Composable
 fun PageScaffold(
@@ -35,6 +55,7 @@ fun PageScaffold(
     consumeBottomSafeArea: Boolean = false,
     edgeToEdge: Boolean = false,
     backgroundColor: Color? = null,
+    topSafeAreaColor: Color?,
     content: @Composable () -> Unit
 ) {
     val env = LocalRuntimeEnvironment.current
@@ -47,7 +68,9 @@ fun PageScaffold(
     val base = if (backgroundColor != null) modifier.background(backgroundColor) else modifier
     Column(modifier = base.fillMaxSize()) {
         if (topPad > 0.dp) {
-            Spacer(modifier = Modifier.height(topPad))
+            Spacer(modifier = Modifier.fillMaxWidth().height(topPad).then(
+                if (topSafeAreaColor != null) Modifier.background(topSafeAreaColor) else Modifier
+            ))
         }
         Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
             content()

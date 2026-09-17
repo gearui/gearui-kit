@@ -18,10 +18,13 @@
 
 tasks.register("generateSampleBuildInfo") {
     val version = providers.gradleProperty("POM_VERSION").orElse("dev")
+    val surfaceCase = providers.gradleProperty("surfaceAcceptance").orElse("")
     val outputDir = layout.buildDirectory.dir("generated/sampleBuildInfo")
     inputs.property("version", version)
+    inputs.property("surfaceAcceptance", surfaceCase)
     outputs.dir(outputDir)
     doLast {
+        require(surfaceCase.get() in setOf("", "light-rounded", "dark-rounded", "light-square", "dark-square"))
         val file = outputDir.get().asFile.resolve("com/gearui/sample/SampleBuildInfo.kt")
         file.parentFile.mkdirs()
         file.writeText(
@@ -31,6 +34,7 @@ tasks.register("generateSampleBuildInfo") {
             /** Generated from POM_VERSION by :sample:generateSampleBuildInfo. Do not edit. */
             object SampleBuildInfo {
                 const val VERSION: String = "${version.get()}"
+                const val SURFACE_ACCEPTANCE: String = "${surfaceCase.get()}"
             }
 
             """.trimIndent()

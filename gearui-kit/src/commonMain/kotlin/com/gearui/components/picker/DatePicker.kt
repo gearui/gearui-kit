@@ -15,6 +15,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
+import com.gearui.theme.LocalInputColors
 import com.gearui.components.dialog.Dialog
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -25,6 +26,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.primitives.Icon
 import com.gearui.components.icon.Icons
+import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.field.fieldBorderColor
 import com.gearui.foundation.field.FieldErrorText
 
@@ -60,7 +62,7 @@ fun DatePickerInput(
                 text = label,
                 style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = Spacing.sm)
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)
             )
         }
 
@@ -69,14 +71,7 @@ fun DatePickerInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FieldSizeTokens.Medium.height)
-                .clip(FieldDefaults.shape)
-                .border(
-                    FieldSizeTokens.Medium.borderWidth,
-                    fieldBorderColor(error = error, enabled = enabled),
-                    FieldDefaults.shape,
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) { showPicker = true }
+                .then(fieldTriggerModifier(enabled, error) { showPicker = true })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -84,11 +79,7 @@ fun DatePickerInput(
             Text(
                 text = value.ifEmpty { placeholder },
                 style = Theme.typography.bodyMedium,
-                color = if (value.isNotEmpty()) {
-                    if (enabled) colors.foreground else colors.mutedForeground
-                } else {
-                    colors.mutedForeground
-                }
+                color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
             Icon(
@@ -266,7 +257,7 @@ fun TimePickerInput(
                 text = label,
                 style = Theme.typography.bodyMedium,
                 color = if (enabled) colors.foreground else colors.mutedForeground,
-                modifier = Modifier.padding(bottom = Spacing.sm)
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)
             )
         }
 
@@ -274,14 +265,7 @@ fun TimePickerInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FieldSizeTokens.Medium.height)
-                .clip(FieldDefaults.shape)
-                .border(
-                    FieldSizeTokens.Medium.borderWidth,
-                    fieldBorderColor(error = error, enabled = enabled),
-                    FieldDefaults.shape,
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) { showPicker = true }
+                .then(fieldTriggerModifier(enabled, error) { showPicker = true })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -289,11 +273,7 @@ fun TimePickerInput(
             Text(
                 text = value.ifEmpty { placeholder },
                 style = Theme.typography.bodyMedium,
-                color = if (value.isNotEmpty()) {
-                    if (enabled) colors.foreground else colors.mutedForeground
-                } else {
-                    colors.mutedForeground
-                }
+                color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
             Icon(
@@ -534,7 +514,7 @@ fun DateTimePickerInput(
                 text = label,
                 style = Theme.typography.bodyMedium,
                 color = if (enabled) Theme.colors.foreground else Theme.colors.mutedForeground,
-                modifier = Modifier.padding(bottom = Spacing.sm)
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)
             )
         }
 

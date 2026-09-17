@@ -19,6 +19,8 @@ import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.gearui.foundation.primitives.Text
 
 import com.gearui.foundation.keyboard.keyboardDismissExempt
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
+import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
@@ -69,7 +71,7 @@ fun Transfer(
         I18n.strings.field.transferSourceTitle to I18n.strings.field.transferTargetTitle,
     searchable: Boolean = true,
     height: Dp = 400.dp,
-    itemHeight: Dp = 40.dp
+    itemHeight: Dp = FieldSizeTokens.Medium.height
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -293,6 +295,8 @@ private fun TransferListItem(
 
         Text(
             text = item.label,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             style = Theme.typography.bodyMedium,
             color = if (item.disabled) colors.mutedForeground else colors.foreground,
             modifier = Modifier.weight(1f)

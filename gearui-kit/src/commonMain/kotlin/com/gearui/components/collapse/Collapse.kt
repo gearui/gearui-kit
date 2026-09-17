@@ -4,7 +4,6 @@ import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -12,9 +11,11 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.rotate
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.primitives.DividerFull
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.primitives.Divider
 import com.gearui.theme.Theme
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
@@ -24,6 +25,12 @@ import com.gearui.foundation.typography.IconSizes
 enum class CollapseStyle {
     Block,
     Card
+}
+
+@Composable
+private fun CollapseSeparator(style: CollapseStyle) {
+    val inset = if (style == CollapseStyle.Card) ControlGeometry.accordionPadding else Spacing.none
+    Divider(insetStart = inset, insetEnd = inset)
 }
 
 /**
@@ -52,8 +59,7 @@ fun Collapse(
 
     val containerModifier = if (style == CollapseStyle.Card) {
         modifier
-            .padding(horizontal = Spacing.lg)
-            .clip(shapes.lg)
+            .clip(shapes.xl)
     } else {
         modifier
     }
@@ -61,20 +67,21 @@ fun Collapse(
     Column(
         modifier = containerModifier
             .fillMaxWidth()
-            .background(colors.surface)
+            .then(if (style == CollapseStyle.Card) Modifier.background(colors.surface) else Modifier)
     ) {
         children.forEachIndexed { index, panel ->
             val isLast = index == children.lastIndex
 
             CollapsePanelItem(
                 panel = panel,
+                surface = style == CollapseStyle.Card,
                 onToggle = {
                     expansionCallback?.invoke(index, panel.isExpanded)
                 }
             )
 
-            if (!isLast && !panel.isExpanded) {
-                DividerFull()
+            if (!isLast) {
+                CollapseSeparator(style)
             }
         }
     }
@@ -99,8 +106,7 @@ object Collapse {
 
         val containerModifier = if (style == CollapseStyle.Card) {
             modifier
-                .padding(horizontal = Spacing.lg)
-                .clip(shapes.lg)
+                .clip(shapes.xl)
         } else {
             modifier
         }
@@ -108,7 +114,7 @@ object Collapse {
         Column(
             modifier = containerModifier
                 .fillMaxWidth()
-                .background(colors.surface)
+                .then(if (style == CollapseStyle.Card) Modifier.background(colors.surface) else Modifier)
         ) {
             children.forEachIndexed { index, panel ->
                 val isExpanded = currentOpenValue == panel.value
@@ -116,6 +122,7 @@ object Collapse {
 
                 CollapsePanelItem(
                     panel = panel.copy(isExpanded = isExpanded),
+                    surface = style == CollapseStyle.Card,
                     onToggle = {
                         val wasExpanded = isExpanded
                         currentOpenValue = if (wasExpanded) null else panel.value
@@ -123,8 +130,8 @@ object Collapse {
                     }
                 )
 
-                if (!isLast && !isExpanded) {
-                    DividerFull()
+                if (!isLast) {
+                    CollapseSeparator(style)
                 }
             }
         }
@@ -132,20 +139,17 @@ object Collapse {
 }
 
 /**
- * A single collapse panel - plain show/hide with no animation
+ * A single collapse panel with shared content and indicator feedback.
  */
 @Composable
 private fun CollapsePanelItem(
     panel: CollapsePanel,
+    surface: Boolean,
     onToggle: () -> Unit
 ) {
     val colors = Theme.colors
 
-    // Arrow rotation animation
-    val rotation by animateFloatAsState(
-        targetValue = if (panel.isExpanded) 180f else 0f,
-        animationSpec = tween(durationMillis = 200)
-    )
+    val rotation = collapseRotation(panel.isExpanded)
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -155,8 +159,8 @@ private fun CollapsePanelItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onToggle)
-                .padding(Spacing.lg),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(horizontal = if (surface) ControlGeometry.accordionSurfacePadding else ControlGeometry.accordionPadding, vertical = ControlGeometry.accordionVerticalPadding),
+            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.accordionTriggerGap),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(modifier = Modifier.weight(1f)) {
@@ -178,23 +182,13 @@ private fun CollapsePanelItem(
                 Icon(
                     name = Icons.caret_down,
                     size = IconSizes.Default.md,
-                    tint = colors.mutedForeground,
+                    tint = colors.foreground,
                     modifier = Modifier.rotate(rotation)
                 )
             }
         }
 
-        // Content area - shown when expanded
-        if (panel.isExpanded) {
-            DividerFull()
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Spacing.lg)
-            ) {
-                panel.body()
-            }
-        }
+        CollapseContent(panel.isExpanded, surface, panel.body)
     }
 }
 
@@ -212,15 +206,13 @@ fun CollapseItem(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    val rotation by animateFloatAsState(
-        targetValue = if (expanded) 180f else 0f,
-        animationSpec = tween(durationMillis = 200)
-    )
+    val rotation = collapseRotation(expanded)
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(shapes.sm)
+            .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
+            .clip(shapes.xl)
             .background(colors.surface)
     ) {
         Row(
@@ -230,34 +222,26 @@ fun CollapseItem(
                     enabled = enabled,
                     onClick = { onExpandChange(!expanded) }
                 )
-                .padding(Spacing.lg),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(horizontal = ControlGeometry.accordionSurfacePadding, vertical = ControlGeometry.accordionVerticalPadding),
+            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.accordionTriggerGap),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = title,
+                modifier = Modifier.weight(1f),
                 style = Theme.typography.titleMedium,
-                color = if (enabled) colors.foreground else colors.mutedForeground
+                color = colors.foreground
             )
 
             Icon(
                 name = Icons.caret_down,
                 size = IconSizes.Default.md,
-                tint = if (enabled) colors.mutedForeground else colors.mutedForeground,
+                tint = colors.foreground,
                 modifier = Modifier.rotate(rotation)
             )
         }
 
-        if (expanded) {
-            DividerFull()
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Spacing.lg)
-            ) {
-                content()
-            }
-        }
+        CollapseContent(expanded, surface = true, content = content)
     }
 }
 
@@ -276,6 +260,7 @@ fun CollapseGroup(
         items.forEachIndexed { index, item ->
             CollapseItem(
                 title = item.title,
+                enabled = item.enabled,
                 expanded = if (accordion) expandedIndex == index else item.expanded,
                 onExpandChange = { expanded ->
                     if (accordion) {

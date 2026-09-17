@@ -8,11 +8,12 @@ import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.list.CellDefaults
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
-import com.gearui.unit.dp
 
 /**
  * CellGroup component examples
@@ -67,9 +68,8 @@ fun CellGroupExample(
             CellGroup(
                 items = listOf("消息通知", "声音", "免打扰"),
                 title = "提醒",
-                // 16dp row padding + a 20dp icon + a 12dp gap lands exactly on
-                // where the text starts.
-                separatorInset = 48.dp,
+                // Match the actual prefix size rather than assuming a 20px icon.
+                separatorInset = CellDefaults.Default.paddingHorizontal + IconSizes.Default.md + Spacing.md,
             ) { name ->
                 Cell(
                     title = name,

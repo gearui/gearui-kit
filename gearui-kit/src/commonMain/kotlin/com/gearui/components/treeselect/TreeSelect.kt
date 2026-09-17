@@ -1,11 +1,10 @@
 package com.gearui.components.treeselect
 
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
@@ -15,24 +14,23 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.icon.Icons
-import com.gearui.components.tree.Tree
+import com.gearui.components.select.SelectIndicator
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.components.tree.TreeContent
+import com.gearui.components.tree.treeSelectionAncestors
 import com.gearui.components.tree.TreeNode
-import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.theme.LocalInputColors
 import com.gearui.i18n.formatArgs
 import com.gearui.i18n.I18n
-import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
-import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.border.BorderWidth
-import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.field.FieldErrorText
 
 /**
@@ -45,6 +43,7 @@ import com.gearui.foundation.field.FieldErrorText
  * - single and multiple selection
  * - a real floating layer, leaving the layout untouched
  * - dismisses on scroll (handled centrally by the Overlay Runtime)
+ * - dropdownHeight is a maximum; short trees use their natural content height
  */
 @Composable
 fun TreeSelect(
@@ -57,10 +56,10 @@ fun TreeSelect(
     error: String? = null,
     dropdownHeight: Dp = 300.dp
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
     val overlay = rememberOverlay()
     val density = LocalDensity.current
+    val nodesState = rememberUpdatedState(nodes)
+    val heightState = rememberUpdatedState(dropdownHeight)
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
@@ -93,7 +92,7 @@ fun TreeSelect(
             anchorBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
-                offsetY = 4.dp,
+                offsetY = ControlGeometry.selectPanelOffset,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
@@ -103,28 +102,21 @@ fun TreeSelect(
         ) {
             val widthDp = with(density) { anchorWidth.toDp() }
 
-            Box(
-                modifier = Modifier
-                    .width(widthDp)
-                    .height(dropdownHeight)
-                    .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
-                    .background(colors.surface, OverlayDefaults.panelShape)
-                    .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
-                    .padding(Spacing.sm)
-            ) {
-                Tree(
-                    nodes = nodes,
-                    onNodeClick = { node ->
-                        if (node.children.isEmpty()) {
-                            onSelectState.value(node.key)
-                            closeDropdown()
-                        }
+            TreeSelectContent(
+                nodes = nodesState.value, selectedKey = selectedKeyState.value,
+                width = widthDp, height = heightState.value,
+                onNodeClick = { node ->
+                    if (node.children.isEmpty()) {
+                        onSelectState.value(node.key)
+                        closeDropdown()
                     }
-                )
-            }
+                }
+            )
         }
         expanded = true
     }
+
+    LaunchedEffect(enabled) { if (!enabled) closeDropdown() }
 
     DisposableEffect(Unit) {
         onDispose {
@@ -141,31 +133,23 @@ fun TreeSelect(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(FieldDefaults.shape)
-                .border(
-                    width = FieldSizeTokens.Medium.borderWidth,
-                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
-                    shape = FieldDefaults.shape
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) {
+                .then(fieldTriggerModifier(enabled, error) {
                     if (expanded) closeDropdown() else openDropdown()
-                }
+                })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = selectedNode?.title ?: placeholder,
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = Theme.typography.bodyMedium,
-                color = if (selectedNode != null) colors.foreground else colors.mutedForeground
+                color = if (selectedNode != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
-            Icon(
-                name = if (expanded) Icons.caret_up else Icons.caret_down,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+            SelectIndicator(expanded)
         }
 
         FieldErrorText(error)
@@ -186,17 +170,17 @@ fun TreeSelectMultiple(
     error: String? = null,
     dropdownHeight: Dp = 300.dp
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
     val overlay = rememberOverlay()
     val density = LocalDensity.current
+    val nodesState = rememberUpdatedState(nodes)
+    val heightState = rememberUpdatedState(dropdownHeight)
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // Internal state, for live updates inside the Overlay
-    var internalSelectedKeys by remember(selectedKeys) { mutableStateOf(selectedKeys) }
+    val selectedKeysState = rememberUpdatedState(selectedKeys)
+    val onSelectedChangeState = rememberUpdatedState(onSelectedChange)
 
     fun clearDropdownState() {
         overlayId = null
@@ -213,38 +197,34 @@ fun TreeSelectMultiple(
         val bounds = anchorBounds!!
         val anchorWidth = bounds.width
 
-        // Sync the internal state
-        internalSelectedKeys = selectedKeys
 
         overlayId = overlay.show(
             anchorBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
-                offsetY = 4.dp,
+                offsetY = ControlGeometry.selectPanelOffset,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
             onDismiss = {
-                // Sync the outer state on dismiss
-                onSelectedChange(internalSelectedKeys)
                 clearDropdownState()
             }
         ) {
             val widthDp = with(density) { anchorWidth.toDp() }
 
-            TreeSelectMultipleContent(
-                nodes = nodes,
-                selectedKeys = internalSelectedKeys,
-                onSelectedChange = { newKeys ->
-                    internalSelectedKeys = newKeys
-                    onSelectedChange(newKeys)
-                },
+            TreeSelectContent(
+                nodes = nodesState.value,
+                selectedKeys = selectedKeysState.value,
+                multiple = true,
+                onSelectedChange = { onSelectedChangeState.value(it) },
                 width = widthDp,
-                height = dropdownHeight
+                height = heightState.value
             )
         }
         expanded = true
     }
+
+    LaunchedEffect(enabled) { if (!enabled) closeDropdown() }
 
     DisposableEffect(Unit) {
         onDispose {
@@ -261,16 +241,9 @@ fun TreeSelectMultiple(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(FieldDefaults.shape)
-                .border(
-                    width = FieldSizeTokens.Medium.borderWidth,
-                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
-                    shape = FieldDefaults.shape
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) {
+                .then(fieldTriggerModifier(enabled, error) {
                     if (expanded) closeDropdown() else openDropdown()
-                }
+                })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -278,50 +251,43 @@ fun TreeSelectMultiple(
             Text(
                 text = if (selectedKeys.isEmpty()) placeholder
                 else I18n.strings.field.selectedCountFormat.formatArgs("count" to selectedKeys.size),
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = Theme.typography.bodyMedium,
-                color = if (selectedKeys.isNotEmpty()) colors.foreground else colors.mutedForeground
+                color = if (selectedKeys.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
             )
 
-            Icon(
-                name = if (expanded) Icons.caret_up else Icons.caret_down,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+            SelectIndicator(expanded)
         }
 
         FieldErrorText(error)
     }
 }
 
-/**
- * Multi-select tree content - keeps its state inside the Overlay
- */
+/** Shared selection surface; expanded nodes become individually keyed lazy rows. */
 @Composable
-private fun TreeSelectMultipleContent(
-    nodes: List<TreeNode>,
-    selectedKeys: Set<String>,
-    onSelectedChange: (Set<String>) -> Unit,
-    width: Dp,
-    height: Dp
+private fun TreeSelectContent(
+    nodes: List<TreeNode>, width: Dp, height: Dp,
+    selectedKey: String? = null, selectedKeys: Set<String> = emptySet(),
+    multiple: Boolean = false, onSelectedChange: ((Set<String>) -> Unit)? = null,
+    onNodeClick: ((TreeNode) -> Unit)? = null
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    Box(
-        modifier = Modifier
-            .width(width)
-            .height(height)
-            .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
-            .background(colors.surface, OverlayDefaults.panelShape)
-            .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
-            .padding(Spacing.sm)
-    ) {
-        Tree(
-            nodes = nodes,
-            checkable = true,
-            checkedKeys = selectedKeys,
-            onCheckedChange = onSelectedChange
-        )
+    val shape = Theme.shapes.xl
+    var expandedKeys by remember {
+        mutableStateOf(treeSelectionAncestors(nodes, selectedKeys + listOfNotNull(selectedKey)))
+    }
+    Box(Modifier.width(width).heightIn(max = height)
+        .shadow(Theme.elevation.floating, shape).clip(shape)
+        .background(colors.popover).padding(ControlGeometry.selectContentPadding)) {
+        if (nodes.isEmpty()) {
+            Text(I18n.strings.common.noData, modifier = Modifier.padding(Spacing.sm),
+                style = Theme.typography.bodyMedium, color = colors.mutedForeground)
+        } else TreeContent(nodes = nodes, checkable = multiple, checkedKeys = selectedKeys,
+            onCheckedChange = onSelectedChange, expanded = expandedKeys,
+            onExpandedChange = { expandedKeys = it }, onNodeClick = onNodeClick,
+            selectedKey = selectedKey, scrollable = true)
     }
 }
 

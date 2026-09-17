@@ -39,7 +39,7 @@ if [[ -s "$tmp_hits" ]]; then
   echo "      raised   thumbs, back-to-top, popover, context menu, snackbar"
   echo "      floating dropdown panels, notification"
   echo "      modal    dialog, tour"
-  echo "      Cards, cells and inputs stay flat; only overlays get elevation."
+  echo "      Use named legacy elevation roles or token-driven shared surface decoration."
   exit 1
 fi
 

@@ -50,7 +50,7 @@ fun fieldBorderColor(
     return when {
         error != null -> colors.destructive
         active && enabled -> colors.primary
-        else -> colors.border
+        else -> colors.input
     }
 }
 

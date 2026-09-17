@@ -1,0 +1,425 @@
+{
+  "$description": "HeroUI Native control dimensions under the explicit GearUI mapping 1rem = 16 logical px, spacing = 4 logical px. Extra-small is a GearUI extension.",
+  "geometry": {
+    "$type": "dimension",
+    "selectContentPadding": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "selectItemPadding": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "selectIndicatorSlot": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "selectPanelOffset": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "controlExtraSmall": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "controlSmall": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "controlMedium": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "controlLarge": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    },
+    "buttonPaddingExtraSmall": {
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      }
+    },
+    "buttonPaddingSmall": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "buttonPaddingMedium": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "buttonPaddingLarge": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "fieldPaddingSmall": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "fieldPaddingMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "fieldPaddingLarge": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "radiusNone": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "radiusSmall": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "radiusMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "radiusDefault": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "radiusLarge": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "radiusOverlay": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "radiusFull": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    },
+    "textareaPaddingVertical": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "buttonGapExtraSmall": {
+      "$description": "Resolved v5 Button gap for the configured size; independent from padding and radius semantics.",
+      "$value": {
+        "value": 5,
+        "unit": "px"
+      }
+    },
+    "buttonGapSmall": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "buttonGapMedium": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "buttonGapLarge": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "selectionSmall": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "selectionMedium": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "selectionLarge": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "selectionTouchTarget": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "radioThumb": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "switchWidth": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "switchHeight": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "switchThumbWidth": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "switchThumbHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "switchInset": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "checkboxIndicatorTravel": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "searchClearSize": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "sliderTrackHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "sliderThumbWidth": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "sliderThumbHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "sliderThumbInset": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "sliderCapsuleHeight": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "sliderCapsuleInset": {
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      }
+    },
+    "accordionPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "accordionSurfacePadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "accordionVerticalPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "accordionTriggerGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "listPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "listItemGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "listMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 52,
+        "unit": "px"
+      }
+    },
+    "listCompactMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "listCompactPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "cardPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "fieldLabelGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "textareaMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 128,
+        "unit": "px"
+      }
+    },
+    "tagHeightSmall": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "tagHeightMedium": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "tagHeightLarge": {
+      "$value": {
+        "value": 36,
+        "unit": "px"
+      }
+    },
+    "tagPaddingSmall": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "tagPaddingMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "tagPaddingLarge": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "treeIndent": {
+      "$description": "GearUI tree depth increment; extension of the selection row contract.",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "actionSheetRow": {
+      "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    },
+    "actionSheetDescriptionRow": {
+      "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
+      "$value": {
+        "value": 78,
+        "unit": "px"
+      }
+    },
+    "actionSheetGridRow": {
+      "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
+      "$value": {
+        "value": 96,
+        "unit": "px"
+      }
+    }
+  }
+}

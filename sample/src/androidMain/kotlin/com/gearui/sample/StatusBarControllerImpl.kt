@@ -3,6 +3,7 @@ package com.gearui.sample
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
+import android.view.Window
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import com.tencent.kuikly.compose.ui.graphics.Color
@@ -10,7 +11,7 @@ import com.tencent.kuikly.compose.ui.graphics.toArgb
 
 /**
  * Android system bar controller implementation
- * Controls the status bar and navigation bar (the IME background) colours
+ * Tints the status bar and keeps the bottom system navigation bar transparent.
  */
 actual object StatusBarControllerImpl {
 
@@ -18,6 +19,19 @@ actual object StatusBarControllerImpl {
 
     fun register(activity: AppCompatActivity) {
         this.activity = activity
+        keepNavigationBarTransparent(activity.window)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun keepNavigationBarTransparent(window: Window) {
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.navigationBarDividerColor = android.graphics.Color.TRANSPARENT
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Otherwise Android may add its own three-button navigation scrim.
+            window.isNavigationBarContrastEnforced = false
+        }
     }
 
     fun unregister() {
@@ -40,8 +54,8 @@ actual object StatusBarControllerImpl {
             // Status bar background colour
             activity.window.statusBarColor = color.toArgb()
 
-            // Navigation bar background colour (the background behind the IME)
-            activity.window.navigationBarColor = color.toArgb()
+            // Theme changes must not paint a separate strip over the page background.
+            keepNavigationBarTransparent(activity.window)
 
             // System bar icon colour
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

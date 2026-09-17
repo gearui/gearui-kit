@@ -3,6 +3,7 @@ package com.gearui.components.pagination
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.interaction.disabledAppearance
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -114,10 +115,11 @@ private fun PaginationButton(
     Box(
         modifier = Modifier
             .background(
-                if (enabled) colors.surface else colors.muted,
+                colors.surface,
                 shapes.md
             )
             .border(BorderWidth.thin, colors.border, shapes.md)
+            .disabledAppearance(!enabled)
             .clickable(enabled = enabled) { onClick() }
             .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         contentAlignment = Alignment.Center
@@ -125,7 +127,7 @@ private fun PaginationButton(
         Text(
             text = label,
             style = Theme.typography.bodySmall,
-            color = if (enabled) colors.foreground else colors.mutedForeground,
+            color = colors.foreground,
             maxLines = 1,
             softWrap = false
         )

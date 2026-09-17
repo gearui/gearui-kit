@@ -16,4 +16,12 @@ val SampleStringsZhHant = SampleStrings(
     versionLabel = "版本",
     gearUiComponents = "GearUI 元件庫",
     darkPurple = "暗紫",
+    brandAccent = "關鍵色",
+    brandDefault = "預設",
+    brandBlue = "藍色",
+    brandGreen = "綠色",
+    brandOrange = "橙色",
+    shapeStyle = "形狀",
+    shapeRounded = "圓角",
+    shapeSquare = "直角",
 )

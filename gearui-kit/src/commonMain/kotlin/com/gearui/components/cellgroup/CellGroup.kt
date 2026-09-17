@@ -95,7 +95,7 @@ fun <T> CellGroup(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(Theme.shapes.lg)
+                .clip(Theme.shapes.xl)
                 .background(colors.surface),
         ) {
             items.forEachIndexed { index, item ->

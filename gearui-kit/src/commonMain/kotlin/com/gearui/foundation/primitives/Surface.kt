@@ -11,6 +11,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.scale
 import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
@@ -46,6 +47,22 @@ fun Surface(
     interactionSource: MutableInteractionSource = remember { createMutableInteractionSource() },
     onClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
+) = SurfaceWithShape(
+    modifier, enabled, tokens, colors, interactionSource, onClick,
+    RoundedCornerShape(tokens.radius), content
+)
+
+/** Internal shape-aware path; existing public Surface callers retain their token radius. */
+@Composable
+internal fun SurfaceWithShape(
+    modifier: Modifier,
+    enabled: Boolean,
+    tokens: SurfaceTokens,
+    colors: SurfaceColorTokens,
+    interactionSource: MutableInteractionSource,
+    onClick: (() -> Unit)?,
+    shape: Shape,
+    content: @Composable BoxScope.() -> Unit
 ) {
     // =========================
     // Interaction State
@@ -80,11 +97,11 @@ fun Surface(
         modifier = modifier
             .then(if (tokens.height > 0.dp) Modifier.height(tokens.height) else Modifier)
             .scale(targetScale)
-            .clip(RoundedCornerShape(tokens.radius))
+            .clip(shape)
             .background(backgroundColor)
             .then(
                 if (tokens.borderWidth > 0.dp) {
-                    Modifier.border(tokens.borderWidth, borderColor, RoundedCornerShape(tokens.radius))
+                    Modifier.border(tokens.borderWidth, borderColor, shape)
                 } else Modifier
             )
             .then(
@@ -141,4 +158,3 @@ data class SurfaceColorTokens(
     /** pressed background */
     val pressedBackground: Color = background
 )
-

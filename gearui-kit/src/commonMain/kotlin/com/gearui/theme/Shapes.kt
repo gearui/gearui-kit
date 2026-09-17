@@ -3,18 +3,19 @@ package com.gearui.theme
 import androidx.compose.runtime.Immutable
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.graphics.Shape
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
 
 /**
- * GearUI semantic shape scale (six steps).
+ * GearUI semantic shape roles.
  *
- * Scale (see `docs/TOKEN_FREEZE_DECISIONS.md` Decision 2):
+ * Current mapping (see `docs/DESIGN_SYSTEM_SPEC.md` section 0.1):
  *
  *   none = 0       — square, no rounding (banner, sectioned full-bleed)
- *   sm   = 4.dp    — tags, chips, dense controls
- *   md   = 6.dp    — inputs, default surface rounding
- *   lg   = 8.dp    — buttons, cards (GearUI mobile default)
- *   xl   = 12.dp   — sheets, large cards, prominent surfaces
+ *   sm   = 8.dp    — tags, chips, dense controls
+ *   md   = 12.dp   — compact controls
+ *   lg   = 14.dp   — regular controls and cards
+ *   controlLarge = 16.dp — large buttons and fields
+ *   xl   = 24.dp   — sheets, large cards, prominent surfaces
  *   full = 9999.dp — capsule buttons, fully rounded segmented controls
  *
  * Use `CircleShape` directly (e.g. `Modifier.clip(CircleShape)`) for
@@ -31,6 +32,8 @@ data class Shapes(
     val lg: Shape,
     val xl: Shape,
     val full: Shape,
+    /** Large controls, distinct from regular controls and overlay surfaces. */
+    val controlLarge: Shape = lg,
 )
 
 /* ---------------------------------------------------------------------- */
@@ -39,11 +42,12 @@ data class Shapes(
 
 object ShapesDefault {
     val Default = Shapes(
-        none = RoundedCornerShape(0.dp),
-        sm = RoundedCornerShape(4.dp),
-        md = RoundedCornerShape(6.dp),
-        lg = RoundedCornerShape(8.dp),
-        xl = RoundedCornerShape(12.dp),
-        full = RoundedCornerShape(9999.dp),
+        none = RoundedCornerShape(ControlGeometry.radiusNone),
+        sm = RoundedCornerShape(ControlGeometry.radiusSmall),
+        md = RoundedCornerShape(ControlGeometry.radiusMedium),
+        lg = RoundedCornerShape(ControlGeometry.radiusDefault),
+        xl = RoundedCornerShape(ControlGeometry.radiusOverlay),
+        full = RoundedCornerShape(ControlGeometry.radiusFull),
+        controlLarge = RoundedCornerShape(ControlGeometry.radiusLarge),
     )
 }

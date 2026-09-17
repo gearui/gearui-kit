@@ -1,0 +1,261 @@
+{
+  "$description": "HeroUI Native 1.0.9 pressable feedback defaults. Runtime cancellation remains behavior, not a token.",
+  "feedback": {
+    "selectForegroundMix": {
+      "$type": "number",
+      "$value": 0.2
+    },
+    "selectIndicatorDamping": {
+      "$type": "number",
+      "$value": 140
+    },
+    "selectIndicatorStiffness": {
+      "$type": "number",
+      "$value": 1000
+    },
+    "selectIndicatorMass": {
+      "$type": "number",
+      "$value": 4
+    },
+    "selectIndicatorRotation": {
+      "$type": "number",
+      "$value": 180
+    },
+    "pressDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 300,
+        "unit": "ms"
+      }
+    },
+    "highlightDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 200,
+        "unit": "ms"
+      }
+    },
+    "pressScale": {
+      "$type": "number",
+      "$value": 0.985
+    },
+    "referenceWidth": {
+      "$type": "dimension",
+      "$value": {
+        "value": 300,
+        "unit": "px"
+      }
+    },
+    "highlightOpacity": {
+      "$type": "number",
+      "$value": 1
+    },
+    "neutralMix": {
+      "$type": "number",
+      "$value": 0.04
+    },
+    "accentMix": {
+      "$type": "number",
+      "$value": 0.1
+    },
+    "transparentHighlightOpacity": {
+      "$type": "number",
+      "$value": 0.3
+    },
+    "disabledOpacity": {
+      "$type": "number",
+      "$value": 0.5
+    },
+    "pressEasing": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.58,
+        1
+      ]
+    },
+    "selectionPressScale": {
+      "$type": "number",
+      "$value": 0.96
+    },
+    "selectionPressDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      }
+    },
+    "selectionRevealDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 100,
+        "unit": "ms"
+      }
+    },
+    "selectionRevealScale": {
+      "$type": "number",
+      "$value": 0.8
+    },
+    "radioExitScale": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "radioRevealDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 300,
+        "unit": "ms"
+      }
+    },
+    "switchColorDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 175,
+        "unit": "ms"
+      }
+    },
+    "switchStiffness": {
+      "$type": "number",
+      "$value": 1600
+    },
+    "switchDamping": {
+      "$type": "number",
+      "$value": 120
+    },
+    "switchMass": {
+      "$type": "number",
+      "$value": 2
+    },
+    "switchEasing": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.25,
+        0.1,
+        0.25,
+        1
+      ]
+    },
+    "sliderDragScale": {
+      "$type": "number",
+      "$value": 0.9
+    },
+    "sliderStiffness": {
+      "$type": "number",
+      "$value": 200
+    },
+    "sliderDamping": {
+      "$type": "number",
+      "$value": 15
+    },
+    "sliderMass": {
+      "$type": "number",
+      "$value": 0.5
+    },
+    "accordionIndicatorStiffness": {
+      "$type": "number",
+      "$value": 1000
+    },
+    "accordionIndicatorDamping": {
+      "$type": "number",
+      "$value": 140
+    },
+    "accordionMass": {
+      "$type": "number",
+      "$value": 4
+    },
+    "accordionLayoutStiffness": {
+      "$type": "number",
+      "$value": 1600
+    },
+    "accordionLayoutDamping": {
+      "$type": "number",
+      "$value": 140
+    },
+    "accordionRotation": {
+      "$type": "number",
+      "$value": 180
+    },
+    "accordionFadeDuration": {
+      "$type": "duration",
+      "$value": {
+        "$ref": "#/transitions/accordionEnter/$value/duration"
+      }
+    },
+    "accordionEnterEasing": {
+      "$type": "cubicBezier",
+      "$value": {
+        "$ref": "#/transitions/accordionEnter/$value/timingFunction"
+      }
+    },
+    "accordionExitEasing": {
+      "$type": "cubicBezier",
+      "$value": {
+        "$ref": "#/transitions/accordionExit/$value/timingFunction"
+      }
+    },
+    "accordionEnterTransition": {
+      "$type": "transition",
+      "$value": "{transitions.accordionEnter}"
+    },
+    "accordionExitTransition": {
+      "$type": "transition",
+      "$value": "{transitions.accordionExit}"
+    },
+    "tagSoftOpacity": {
+      "$type": "number",
+      "$value": 0.15
+    },
+    "tagAccentForegroundMix": {
+      "$type": "number",
+      "$value": 0.2
+    },
+    "tagSuccessForegroundMix": {
+      "$type": "number",
+      "$value": 0.3
+    },
+    "tagWarningForegroundMix": {
+      "$type": "number",
+      "$value": 0.35
+    }
+  },
+  "transitions": {
+    "accordionEnter": {
+      "$type": "transition",
+      "$value": {
+        "duration": {
+          "value": 200,
+          "unit": "ms"
+        },
+        "delay": {
+          "value": 0,
+          "unit": "ms"
+        },
+        "timingFunction": [
+          0,
+          0,
+          0.58,
+          1
+        ]
+      }
+    },
+    "accordionExit": {
+      "$type": "transition",
+      "$value": {
+        "duration": {
+          "$ref": "#/transitions/accordionEnter/$value/duration"
+        },
+        "delay": {
+          "value": 0,
+          "unit": "ms"
+        },
+        "timingFunction": [
+          0.42,
+          0,
+          1,
+          1
+        ]
+      }
+    }
+  }
+}

@@ -55,7 +55,7 @@ object ComponentConfig {
         ComponentInfo("treeselect", "树选择", "TreeSelect", ComponentCategory.FORM, "/components/treeselect", "树形选择器", "Tree selector"),
 
         // Navigation components
-        ComponentInfo("navbar", "导航栏", "NavBar", ComponentCategory.NAVIGATION, "/components/navbar", "H5页面导航栏", "Page navigation bar"),
+        ComponentInfo("navbar", "导航栏", "NavBar", ComponentCategory.NAVIGATION, "/components/navbar", "通用页面导航栏", "Page navigation bar"),
         ComponentInfo("bottom-navbar", "底部导航栏", "BottomNavBar", ComponentCategory.NAVIGATION, "/components/bottom-navbar", "应用底部主导航", "App bottom navigation"),
         ComponentInfo("tabs", "选项卡", "Tabs", ComponentCategory.NAVIGATION, "/components/tabs", "内容切换", "Content switching"),
         ComponentInfo("navigation-menu", "导航菜单", "NavigationMenu", ComponentCategory.NAVIGATION, "/components/navigation-menu", "顶部导航菜单", "Top navigation menu"),

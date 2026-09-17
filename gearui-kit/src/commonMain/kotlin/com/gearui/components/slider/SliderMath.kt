@@ -12,6 +12,16 @@ import kotlin.math.roundToInt
  */
 internal object SliderMath {
 
+    /** Thumb travel excludes half a thumb at each end of the visual track. */
+    fun positionRatio(position: Float, trackWidth: Float, thumbWidth: Float): Float {
+        val travel = (trackWidth - thumbWidth).coerceAtLeast(0f)
+        if (travel <= 0f) return 0f
+        return ((position - thumbWidth / 2) / travel).coerceIn(0f, 1f)
+    }
+
+    fun thumbOffset(ratio: Float, trackWidth: Float, thumbWidth: Float): Float =
+        (trackWidth - thumbWidth).coerceAtLeast(0f) * ratio.coerceIn(0f, 1f)
+
     /** Normalises a value into 0..1 within the range. Degenerate ranges map to 0. */
     fun normalize(value: Float, range: ClosedFloatingPointRange<Float>): Float {
         val span = range.endInclusive - range.start

@@ -63,7 +63,12 @@ fun MaterialSurface(
     val opaque = fallback ?: colors.surface
     val blurred = isMaterialBlurEnabled()
 
-    Box(modifier = modifier.clip(shape)) {
+    DecoratedSurface(
+        modifier = modifier,
+        shape = shape,
+        shadows = if (material == Materials.Chrome) emptyList() else surfaceShadowStyles().overlay,
+    ) {
+    Box(modifier = Modifier.clip(shape)) {
         // matchParentSize, never fillMaxSize. A fillMaxSize child *participates*
         // in the Box's own measurement, so the Box stops wrapping its content and
         // expands to the largest size its constraints allow. Every surface routed
@@ -91,5 +96,6 @@ fun MaterialSurface(
             )
         }
         content()
+    }
     }
 }

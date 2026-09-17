@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
@@ -18,6 +19,7 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -26,13 +28,14 @@ import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.OverlayDismissPolicy
 import com.gearui.overlay.rememberOverlay
 import com.gearui.theme.Theme
+import com.gearui.theme.LocalInputColors
 import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
-import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.field.FieldErrorText
 
 /**
@@ -71,6 +74,8 @@ fun Cascader(
     val shapes = Theme.shapes
     val overlay = rememberOverlay()
     val density = LocalDensity.current
+    val optionsState = rememberUpdatedState(options)
+    val heightState = rememberUpdatedState(dropdownHeight)
 
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
@@ -80,7 +85,7 @@ fun Cascader(
     val selectedPathState = rememberUpdatedState(selectedPath)
     val onSelectState = rememberUpdatedState(onSelect)
 
-    val displayText = remember(selectedPath, options) {
+    val displayText = remember(selectedPath, options, placeholder, separator) {
         if (selectedPath.isEmpty()) {
             placeholder
         } else {
@@ -107,7 +112,7 @@ fun Cascader(
             anchorBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
-                offsetY = 4.dp,
+                offsetY = ControlGeometry.selectPanelOffset,
                 autoFlip = true,
                 dismissPolicy = OverlayDismissPolicy.Dropdown
             ),
@@ -118,22 +123,24 @@ fun Cascader(
             val widthDp = with(density) { anchorWidth.toDp() }
 
             CascaderDropdown(
-                options = options,
+                options = optionsState.value,
                 selectedPath = selectedPathState.value,
                 onSelect = { path ->
                     onSelectState.value(path)
                     // Only close if reached leaf node
-                    val option = findOptionByPath(options, path)
+                    val option = findOptionByPath(optionsState.value, path)
                     if (option?.children?.isEmpty() == true) {
                         closeDropdown()
                     }
                 },
-                height = dropdownHeight,
+                height = heightState.value,
                 width = widthDp
             )
         }
         expanded = true
     }
+
+    LaunchedEffect(enabled) { if (!enabled) closeDropdown() }
 
     DisposableEffect(Unit) {
         onDispose {
@@ -150,27 +157,22 @@ fun Cascader(
                 .onGloballyPositioned { coordinates ->
                     anchorBounds = coordinates.boundsInRoot()
                 }
-                .clip(FieldDefaults.shape)
-                .border(
-                    width = FieldSizeTokens.Medium.borderWidth,
-                    color = fieldBorderColor(error = error, enabled = enabled, active = expanded),
-                    shape = FieldDefaults.shape
-                )
-                .background(if (enabled) colors.surface else colors.muted)
-                .clickable(enabled = enabled) {
+                .then(fieldTriggerModifier(enabled, error) {
                     if (expanded) closeDropdown() else openDropdown()
-                }
+                })
                 .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = displayText,
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = Theme.typography.bodyMedium,
                 color = when {
-                    !enabled -> colors.mutedForeground
-                    selectedPath.isNotEmpty() -> colors.foreground
-                    else -> colors.mutedForeground
+                    selectedPath.isNotEmpty() -> LocalInputColors.current.foreground
+                    else -> LocalInputColors.current.placeholder
                 }
             )
 
@@ -206,7 +208,8 @@ private fun CascaderDropdown(
             .width(width)
             .height(height)
             .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
-            .background(colors.surface, OverlayDefaults.panelShape)
+            .clip(OverlayDefaults.panelShape)
+            .background(colors.popover, OverlayDefaults.panelShape)
             .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
     ) {
         levels.forEachIndexed { levelIndex, levelOptions ->
@@ -224,7 +227,7 @@ private fun CascaderDropdown(
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(8.dp)
+                    contentPadding = PaddingValues(ControlGeometry.selectItemPadding)
                 ) {
                     items(levelOptions) { option ->
                         val isSelected = selectedPath.getOrNull(levelIndex) == option.value
@@ -236,6 +239,7 @@ private fun CascaderDropdown(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .heightIn(min = FieldSizeTokens.Medium.height)
                                 .clip(shapes.sm)
                                 .background(
                                     when {
@@ -253,6 +257,9 @@ private fun CascaderDropdown(
                         ) {
                             Text(
                                 text = option.label,
+                                modifier = Modifier.weight(1f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                                 style = Theme.typography.bodyMedium,
                                 color = when {
                                     option.disabled -> colors.mutedForeground

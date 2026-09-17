@@ -132,12 +132,12 @@ fun Popover(
 
     val textColor = remember(theme, colors) {
         when (theme) {
-            PopoverTheme.DARK -> colors.primaryForeground
+            PopoverTheme.DARK -> colors.background
             PopoverTheme.LIGHT -> colors.foreground
             PopoverTheme.BRAND -> colors.primaryForeground
-            PopoverTheme.SUCCESS -> colors.primaryForeground
-            PopoverTheme.WARNING -> colors.foreground
-            PopoverTheme.ERROR -> colors.primaryForeground
+            PopoverTheme.SUCCESS -> colors.successForeground
+            PopoverTheme.WARNING -> colors.warningForeground
+            PopoverTheme.ERROR -> colors.destructiveForeground
         }
     }
 
@@ -157,9 +157,11 @@ fun Popover(
         val currentPlacement = placement
         val currentOffset = offset
         val currentCloseOnClickOutside = closeOnClickOutside
-        val currentBackgroundColor = backgroundColor
-        val currentTextColor = textColor
-        val currentShowArrow = showArrow
+        val currentBackgroundColor by rememberUpdatedState(backgroundColor)
+        val currentTextColor by rememberUpdatedState(textColor)
+        val currentShowArrow by rememberUpdatedState(showArrow)
+        val currentBorderColor by rememberUpdatedState(borderColor)
+        val currentContent by rememberUpdatedState(content)
 
         DisposableEffect(bounds, currentPlacement, currentOffset) {
             val overlayId = overlay.show(
@@ -198,9 +200,9 @@ fun Popover(
                     placement = currentPlacement,
                     backgroundColor = currentBackgroundColor,
                     textColor = currentTextColor,
-                    borderColor = borderColor,
+                    borderColor = currentBorderColor,
                     showArrow = currentShowArrow,
-                    content = content
+                    content = currentContent
                 )
             }
 
@@ -338,7 +340,7 @@ private fun PopoverBody(
     // The chain has to be split: the shadow belongs outside the clip, the fill
     // is what the material replaces, and the border is drawn over it. Keeping
     // them in one chain is what stopped this surface from being a material.
-    Box(modifier = Modifier.shadow(Theme.elevation.raised, OverlayDefaults.panelShape)) {
+    Box {
     MaterialSurface(
         material = Materials.Popover,
         shape = OverlayDefaults.panelShape,

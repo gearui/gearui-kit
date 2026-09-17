@@ -5,6 +5,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import com.tencent.kuikly.compose.ui.graphics.Color
 import androidx.compose.runtime.setValue
 import com.gearui.foundation.layout.Spacing
 import com.gearui.components.popover.PopoverPlacement
@@ -23,6 +25,8 @@ import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
@@ -85,7 +89,7 @@ fun ContextMenu(
     val colors = Theme.colors
     val shapes = Theme.shapes
     var triggerBounds by remember { mutableStateOf<Rect?>(null) }
-    var pressedIndex by remember { mutableStateOf<Int?>(null) }
+    val currentItems by rememberUpdatedState(items)
 
     val bounds = triggerBounds
     // 🔴 Re-anchoring is not the user closing the menu.
@@ -118,26 +122,30 @@ fun ContextMenu(
                     if (!reanchoring.value) state.hide()
                 }
             ) {
+                val colors = Theme.colors
+                val shapes = Theme.shapes
                 Column(
                     modifier = Modifier
                         // width(IntrinsicSize.Max): the column width is the intrinsic width of the longest item,
                         // with widthIn keeping very short or very long content in check, so short text does not bloat out to max.
                         .width(IntrinsicSize.Max)
                         .widthIn(min = 140.dp, max = 260.dp)
-                        .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
                 ) {
-                // Popover material, same tier as Popover and Tooltip. Split from the
-                // chain above for the same reason: the shadow stays outside the clip.
+                // MaterialSurface owns the token shadow stack outside its content clip.
                 MaterialSurface(
                     material = Materials.Popover,
                     shape = OverlayDefaults.panelShape,
                 ) {
+                val colors = Theme.colors
+                val shapes = Theme.shapes
                 Column(
                     modifier = Modifier
                         .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
                         .padding(Spacing.xs)
                 ) {
-                    items.forEachIndexed { index, item ->
+                    currentItems.forEach { item ->
+                        val interaction = remember(item) { MutableInteractionSource() }
+                        val pressed by interaction.collectIsPressedAsState()
                         val itemColor = when {
                             item.disabled -> colors.mutedForeground
                             item.danger -> colors.destructive
@@ -148,23 +156,9 @@ fun ContextMenu(
                                 .fillMaxWidth()
                                 .clip(shapes.sm)
                                 .background(
-                                    if (pressedIndex == index) colors.muted else colors.surface
+                                    if (pressed && !item.disabled) colors.muted else Color.Transparent
                                 )
-                                .pointerInput(index) {
-                                    awaitEachGesture {
-                                        awaitFirstDown(requireUnconsumed = false)
-                                        pressedIndex = index
-                                        while (true) {
-                                            val event = awaitPointerEvent()
-                                            val change = event.changes.firstOrNull() ?: break
-                                            if (!change.pressed) {
-                                                pressedIndex = null
-                                                break
-                                            }
-                                        }
-                                    }
-                                }
-                                .clickable(enabled = !item.disabled) {
+                                .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                                     item.onClick()
                                     state.hide()
                                 }
@@ -195,7 +189,6 @@ fun ContextMenu(
             }
 
             onDispose {
-                pressedIndex = null
                 reanchoring.value = true
                 overlay.dismiss(overlayId)
                 reanchoring.value = false

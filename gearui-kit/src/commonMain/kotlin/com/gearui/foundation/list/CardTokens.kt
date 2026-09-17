@@ -1,9 +1,8 @@
 package com.gearui.foundation.list
 
 import com.gearui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.border.BorderWidth
-import com.gearui.foundation.layout.Spacing
 
 /**
  * CardTokens - Card sizing spec
@@ -27,9 +26,10 @@ object CardDefaults {
     /**
      */
     val Default = CardTokens(
-        cornerRadius = 8.dp,      // lg — GearUI 卡片默认圆角（冻结后 large→lg）
-        padding = Spacing.md,
-        borderWidth = BorderWidth.hairline,     // border-first：发丝级描边，不引入 elevation 语义
+        cornerRadius = ControlGeometry.radiusOverlay,
+        padding = ControlGeometry.cardPadding,
+        // Explicit fallback until layered Native surface shadows are supported.
+        borderWidth = BorderWidth.hairline,
         elevation = 0f
     )
 

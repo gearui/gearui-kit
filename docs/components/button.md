@@ -4,7 +4,7 @@
 
 ## 概述
 
-Button 用来发起一次明确、闭环的用户动作（"提交"、"删除"、"购买"），强调一次点击对应一个结果。它覆盖填充 / 描边 / 文字三种形态，4 主题色 + 4 尺寸 + 5 形状的正交参数组合，并内建 loading / disabled / block / 图标位置等业务高频能力。
+Button 用来发起一次明确、闭环的用户动作（"提交"、"删除"、"购买"），强调一次点击对应一个结果。它覆盖填充 / 描边 / 文字三种形态，6 主题色 + 4 尺寸 + 5 形状的正交参数组合，并内建 loading / disabled / block / 图标位置等业务高频能力。
 
 ## 何时使用
 
@@ -34,7 +34,7 @@ fun Demo() {
 
 ## 生产推荐示例
 
-来自 `sample/.../button/ButtonExample.kt`：
+组合方式与 sample 的操作组合一致：
 
 ```kotlin
 import com.gearui.components.button.*
@@ -82,7 +82,7 @@ fun PurchaseBar(loading: Boolean, onBuy: () -> Unit) {
 | `text` | `String` | `""` | 按钮文字。空串 + 提供图标 → 进入"icon-only"模式。 |
 | `theme` | `ButtonTheme` | `PRIMARY` | 主题色，见下方枚举。 |
 | `type` | `ButtonType` | `FILL` | 视觉形态，见下方枚举。 |
-| `size` | `ButtonSize` | `MEDIUM` | 高度档位：48 / 40 / 32 / 28 dp。 |
+| `size` | `ButtonSize` | `MEDIUM` | 高度档位：56 / 48 / 40 / 28 dp。 |
 | `disabled` | `Boolean` | `false` | 不可点击且降为禁用色。 |
 | `loading` | `Boolean` | `false` | 显示进度圈，禁用点击；不影响布局尺寸。 |
 | `block` | `Boolean` | `false` | 通栏，使用 `fillMaxWidth()`。 |
@@ -96,15 +96,15 @@ fun PurchaseBar(loading: Boolean, onBuy: () -> Unit) {
 | `icon` | `String?` | `null` | 图标名（走 `FoundationIcon` 体系，preferSvg）。 |
 | `iconWidget` | `(@Composable () -> Unit)?` | `null` | 自定义图标 slot。同时提供时优先于 `icon`。 |
 | `iconPosition` | `ButtonIconPosition` | `LEFT` | 图标在文字左 / 右。 |
-| `iconTextSpacing` | `Dp` | `8.dp` | 图标与文字间距。 |
+| `iconTextSpacing` | `Dp` | `Dp.Unspecified` | 按尺寸解析为 5 / 6 / 8 / 10 dp；可显式覆盖。 |
 
 ## 枚举与常量
 
 ### `ButtonTheme`
-- `PRIMARY`：品牌色（默认）
-- `DANGER` / `WARNING` / `SUCCESS`：状态色，对应 `Theme.colors.danger/warning/success`
-- `DEFAULT`：中性灰，用于次操作
-- `LIGHT`：浅色品牌底，用于强主题页面的次按钮
+- `PRIMARY`：品牌色，默认主题；次要操作可显式选择 DEFAULT
+- `DANGER` / `WARNING` / `SUCCESS`：状态色，对应 `Theme.colors.destructive/warning/success`
+- `DEFAULT`：显式中性色阶，含独立按下、悬停及键盘焦点反馈
+- `LIGHT`：同一中性色阶的浅表面变体，保留同一状态反馈；不是深色背景的反色文字补丁
 
 ### `ButtonType`
 - `FILL`：实心，主操作
@@ -114,17 +114,17 @@ fun PurchaseBar(loading: Boolean, onBuy: () -> Unit) {
 ### `ButtonSize`
 | 档位 | 高度 | 横向 padding | 文字样式 |
 | --- | --- | --- | --- |
-| `LARGE` | 48 dp | 20 dp | `Typography.BodyLarge` |
-| `MEDIUM` | 40 dp | 16 dp | `Typography.BodyMedium` |
-| `SMALL` | 32 dp | 12 dp | `Typography.BodySmall` |
-| `EXTRA_SMALL` | 28 dp | 8 dp | `Typography.BodySmall` |
+| `LARGE` | 56 dp | 20 dp | `Theme.typography.bodyLarge` |
+| `MEDIUM` | 48 dp | 16 dp | `Theme.typography.bodyMedium` |
+| `SMALL` | 40 dp | 14 dp | `Theme.typography.bodySmall` |
+| `EXTRA_SMALL` | 28 dp | 7 dp | `Theme.typography.bodyExtraSmall` |
 
 ### `ButtonShape`
-- `RECTANGLE`：8 dp 圆角（默认）
+- `RECTANGLE`：采用 `Theme.shapes.full`（默认主题为胶囊形，可由主题覆盖）
 - `ROUND`：高度的一半，圆角胶囊
-- `SQUARE`：8 dp 圆角；与空 `text` + `icon` 组合形成正方形按钮（宽 = 高）
+- `SQUARE`：随尺寸采用同一圆角；与空 `text` + `icon` 组合形成正方形按钮（宽 = 高）
 - `CIRCLE`：完全圆形；与空 `text` + `icon` 组合形成圆形图标按钮
-- `FILLED`：胶囊（与 `ROUND` 视觉相同，语义上表示填充态）
+- `FILLED`：胶囊（与 `ROUND` 视觉相同，保留现有 API）
 
 ### `ButtonIconPosition`
 - `LEFT` / `RIGHT`：图标相对文字的位置。
@@ -132,7 +132,7 @@ fun PurchaseBar(loading: Boolean, onBuy: () -> Unit) {
 ## 常见问题与边界条件
 
 - **Q：`disabled` 和 `loading` 同时为 true 时优先级？**
-  A：两者都会阻断点击。视觉上 `loading` 优先呈现进度圈；`disabled` 影响颜色降级（`textDisabled` / `disabledContainer`）。
+  A：两者都会阻断点击。视觉上 `loading` 优先呈现进度圈；`disabled` 影响颜色降级（共享 disabled opacity）。
 
 - **Q：icon-only 模式如何触发？**
   A：`text` 为空且 `icon` 或 `iconWidget` 非空时进入；当 `shape` 为 `SQUARE` / `CIRCLE` 时按钮宽度强制等于高度（正方形 / 圆形），其他 shape 仍按内容宽度。

@@ -86,6 +86,20 @@ fun BottomSheet(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
+    val currentDismiss by rememberUpdatedState(onDismiss)
+    val currentContent by rememberUpdatedState<@Composable () -> Unit>({
+                BottomSheetSurface(
+                    title = title,
+                    description = description,
+                    items = items,
+                    showCancel = showCancel,
+                    cancelText = cancelText,
+                    maxListHeight = maxListHeight,
+                    onDismiss = onDismiss,
+                    onItemClick = onItemClick
+                )
+    })
+
     LaunchedEffect(visible) {
         if (visible) {
             overlayId = controller.show(
@@ -98,18 +112,9 @@ fun BottomSheet(
                         outsideClick = closeOnClickOutside
                     )
                 ),
-                onDismiss = onDismiss
+                onDismiss = { currentDismiss() }
             ) {
-                BottomSheetSurface(
-                    title = title,
-                    description = description,
-                    items = items,
-                    showCancel = showCancel,
-                    cancelText = cancelText,
-                    maxListHeight = maxListHeight,
-                    onDismiss = onDismiss,
-                    onItemClick = onItemClick
-                )
+                currentContent()
             }
         } else {
             overlayId?.let { controller.dismiss(it) }
@@ -160,16 +165,16 @@ fun BottomSheet(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
-    // 🔴 标题与副标题必须跟着数据变，不能停在 show 的那一刻。
-    //
-    // 下面的 LaunchedEffect 只在 visible 变化时跑一次，闭包捕获的是当时的字符串值。
-    // 而这类弹层的常见形态是"打开时数据还没到"——比如已读名单的副标题要等 RPC 回来
-    // 才知道是几人。捕获值的结果是：列表行出来了（body 是 composable，读的是 state），
-    // 副标题却永远停在「0/0 人已读」。
-    // rememberUpdatedState 给的是稳定 State，surface 在 host 的 composition 里读它。
+    // The visibility effect captures values only once. Read stable State holders
+    // so an open sheet receives async titles/counts along with its body, rather
+    // than leaving a read-receipt subtitle stuck at its initial count.
     val currentTitle by rememberUpdatedState(title)
     val currentDescription by rememberUpdatedState(description)
     val currentHeader by rememberUpdatedState(header)
+    val currentBody by rememberUpdatedState(content)
+    val currentDismiss by rememberUpdatedState(onDismiss)
+    val currentShowCancel by rememberUpdatedState(showCancel)
+    val currentCancelText by rememberUpdatedState(cancelText)
 
     LaunchedEffect(visible) {
         if (visible) {
@@ -183,16 +188,16 @@ fun BottomSheet(
                         outsideClick = closeOnClickOutside
                     )
                 ),
-                onDismiss = onDismiss
+                onDismiss = { currentDismiss() }
             ) {
                 BottomSheetSurface(
                     title = currentTitle,
                     description = currentDescription,
-                    showCancel = showCancel,
-                    cancelText = cancelText,
-                    onDismiss = onDismiss,
+                    showCancel = currentShowCancel,
+                    cancelText = currentCancelText,
+                    onDismiss = { currentDismiss() },
                     header = currentHeader,
-                    body = content,
+                    body = currentBody,
                 )
             }
         } else {
@@ -346,7 +351,7 @@ internal fun BottomSheetSurface(
                 // 🔴 A caller-drawn header belongs in the drag region, not in the body.
                 //
                 // Sheets whose top row is not "centred title + cancel" — a picker with
-                // 「关闭 / 标题 / 多选」, say — drew it themselves inside the body, which
+                // "close / title / multiselect", say — drew it themselves inside the body, which
                 // left the grabber as the only thing that could be dragged: a ~20dp
                 // strip. Dragging down from the visible title, which is what people
                 // actually do, did nothing at all.
@@ -550,6 +555,9 @@ object BottomSheet {
         val controller = LocalOverlayController.current
         var overlayId by remember { mutableStateOf<Long?>(null) }
 
+        val currentContent by rememberUpdatedState(content)
+        val currentDismiss by rememberUpdatedState(onDismiss)
+
         LaunchedEffect(visible) {
             if (visible) {
                 overlayId = controller.show(
@@ -562,9 +570,9 @@ object BottomSheet {
                             outsideClick = closeOnClickOutside
                         )
                     ),
-                    onDismiss = onDismiss
+                    onDismiss = { currentDismiss() }
                 ) {
-                    BottomSheetHostSurface(content = content)
+                    BottomSheetHostSurface(content = currentContent)
                 }
             } else {
                 overlayId?.let { controller.dismiss(it) }

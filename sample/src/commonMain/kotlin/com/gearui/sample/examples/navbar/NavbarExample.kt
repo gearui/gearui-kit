@@ -8,12 +8,10 @@ import com.tencent.kuikly.compose.foundation.layout.width
 import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
 import com.gearui.components.navbar.NavBarItem
@@ -42,403 +40,309 @@ fun NavbarExample(
     ) {
         // ==================== Component types ====================
 
-        // Basic H5 navigation bar
+        // Basic navigation bar
         ExampleSection(
-            title = "基础H5导航栏",
+            useCardContainer = false,
+            title = "基础导航栏",
             description = "高度48，标题字体加粗，启用默认返回按钮"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") }
-                )
-            }
+            NavBar(
+                title = "标题文字",
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") }
+            )
         }
 
         // With a trailing action button
         ExampleSection(
+            useCardContainer = false,
             title = "超长标题",
             description = "标题必须单行省略，不能在固定高度的导航栏里换行"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "这是一个非常非常长的页面标题用来验证截断行为",
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") }
-                )
-            }
+            NavBar(
+                title = "这是一个非常非常长的页面标题用来验证截断行为",
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") }
+            )
         }
 
         ExampleSection(
+            useCardContainer = false,
             title = "带右侧操作按钮",
             description = "支持右侧添加图标按钮"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
-                        )
+            NavBar(
+                title = "标题文字",
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.dots_three,
+                        onClick = { Toast.show("更多") }
                     )
                 )
-            }
+            )
         }
 
         // With a leading close button
         ExampleSection(
+            useCardContainer = false,
             title = "带左侧关闭按钮",
             description = "可自定义左侧按钮图标"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    leftItems = listOf(
-                        NavBarItem(
-                            icon = Icons.x,
-                            onClick = { Toast.show("关闭") }
-                        )
+            NavBar(
+                title = "标题文字",
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                leftItems = listOf(
+                    NavBarItem(
+                        icon = Icons.x,
+                        onClick = { Toast.show("关闭") }
                     )
                 )
-            }
+            )
         }
 
         // Several action buttons
         ExampleSection(
+            useCardContainer = false,
             title = "多操作按钮",
             description = "支持左右两侧添加多个图标按钮"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.house,
-                            onClick = { Toast.show("主页") }
-                        ),
-                        NavBarItem(
-                            icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
-                        )
+            NavBar(
+                title = "标题文字",
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.house,
+                        onClick = { Toast.show("主页") }
+                    ),
+                    NavBarItem(
+                        icon = Icons.dots_three,
+                        onClick = { Toast.show("更多") }
                     )
                 )
-            }
+            )
         }
 
         // With a search field
         ExampleSection(
+            useCardContainer = false,
             title = "带搜索导航栏",
             description = "集成搜索组件的导航栏"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    titleWidget = {
-                        // Search box style
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(32.dp)
-                                .background(
-                                    colors.muted,
-                                    RoundedCornerShape(16.dp)
-                                )
-                                .padding(horizontal = 12.dp),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    name = Icons.magnifying_glass,
-                                    size = IconSizes.Default.md,
-                                    tint = colors.mutedForeground
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                    text = "搜索",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.mutedForeground
-                                )
-                            }
+            NavBar(
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                titleWidget = {
+                    // Search box style
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(32.dp)
+                            .background(
+                                colors.muted,
+                                RoundedCornerShape(16.dp)
+                            )
+                            .padding(horizontal = 12.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                name = Icons.magnifying_glass,
+                                size = IconSizes.Default.md,
+                                tint = colors.mutedForeground
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "搜索",
+                                style = Theme.typography.bodyMedium,
+                                color = colors.mutedForeground
+                            )
                         }
                     }
-                )
-            }
+                }
+            )
         }
 
         // With an image
         ExampleSection(
+            useCardContainer = false,
             title = "带图片导航栏",
             description = "使用图片或Logo作为标题"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    titleWidget = {
-                        // Mock logo image
-                        Box(
-                            modifier = Modifier
-                                .width(80.dp)
-                                .height(24.dp)
-                                .background(colors.primary, RoundedCornerShape(4.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "LOGO",
-                                style = Theme.typography.label,
-                                color = colors.primaryForeground
-                            )
-                        }
+            NavBar(
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                titleWidget = {
+                    // Mock logo image
+                    Box(
+                        modifier = Modifier
+                            .width(80.dp)
+                            .height(24.dp)
+                            .background(colors.primary, RoundedCornerShape(4.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "LOGO",
+                            style = Theme.typography.label,
+                            color = colors.primaryForeground
+                        )
                     }
-                )
-            }
+                }
+            )
         }
 
         // ==================== Component styles ====================
 
         // Centred title
         ExampleSection(
+            useCardContainer = false,
             title = "标题居中",
             description = "默认标题居中显示"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    centerTitle = true,
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
-                        )
+            NavBar(
+                title = "标题文字",
+                centerTitle = true,
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.dots_three,
+                        onClick = { Toast.show("更多") }
                     )
                 )
-            }
+            )
         }
 
         // Leading title
         ExampleSection(
+            useCardContainer = false,
             title = "标题居左",
             description = "标题左对齐显示"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    centerTitle = false,
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
-                        )
+            NavBar(
+                title = "标题文字",
+                centerTitle = false,
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.dots_three,
+                        onClick = { Toast.show("更多") }
                     )
                 )
-            }
+            )
         }
 
         // Large title
         ExampleSection(
+            useCardContainer = false,
             title = "大标题尺寸",
             description = "扩展高度(104)，带副标题区域"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "标题文字",
-                    height = 56.dp,
-                    useDefaultBack = true,
-                    onBackClick = { Toast.show("返回") },
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
+            NavBar(
+                title = "标题文字",
+                height = 56.dp,
+                useDefaultBack = true,
+                onBackClick = { Toast.show("返回") },
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.dots_three,
+                        onClick = { Toast.show("更多") }
+                    )
+                ),
+                belowTitleWidget = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            text = "大标题文字",
+                            style = Theme.typography.headlineSmall,
+                            color = colors.foreground
                         )
-                    ),
-                    belowTitleWidget = {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            Text(
-                                text = "大标题文字",
-                                style = Theme.typography.headlineSmall,
-                                color = colors.foreground
-                            )
-                        }
                     }
-                )
-            }
+                }
+            )
         }
 
         // Custom colours
         ExampleSection(
+            useCardContainer = false,
             title = "自定义颜色",
             description = "支持自定义背景色、文字色"
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             ) {
                 // Dark background
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                ) {
-                    NavBar(
-                        title = "深色背景",
-                        backgroundColor = colors.primary,
-                        titleColor = colors.primaryForeground,
-                        useDefaultBack = true,
-                        onBackClick = { Toast.show("返回") },
-                        rightItems = listOf(
-                            NavBarItem(
-                                icon = Icons.dots_three,
-                                iconColor = colors.primaryForeground,
-                                onClick = { Toast.show("更多") }
-                            )
+                NavBar(
+                    title = "深色背景",
+                    backgroundColor = colors.primary,
+                    titleColor = colors.primaryForeground,
+                    useDefaultBack = true,
+                    onBackClick = { Toast.show("返回") },
+                    rightItems = listOf(
+                        NavBarItem(
+                            icon = Icons.dots_three,
+                            iconColor = colors.primaryForeground,
+                            onClick = { Toast.show("更多") }
                         )
                     )
-                }
+                )
 
                 // Red background
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                ) {
-                    NavBar(
-                        title = "红色背景",
-                        backgroundColor = colors.destructive,
-                        titleColor = colors.primaryForeground,
-                        useDefaultBack = true,
-                        onBackClick = { Toast.show("返回") },
-                        rightItems = listOf(
-                            NavBarItem(
-                                icon = Icons.dots_three,
-                                iconColor = colors.primaryForeground,
-                                onClick = { Toast.show("更多") }
-                            )
+                NavBar(
+                    title = "红色背景",
+                    backgroundColor = colors.destructive,
+                    titleColor = colors.primaryForeground,
+                    useDefaultBack = true,
+                    onBackClick = { Toast.show("返回") },
+                    rightItems = listOf(
+                        NavBarItem(
+                            icon = Icons.dots_three,
+                            iconColor = colors.primaryForeground,
+                            onClick = { Toast.show("更多") }
                         )
                     )
-                }
+                )
 
                 // Mock gradient - a tinted background
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-                ) {
-                    NavBar(
-                        title = "淡色背景",
-                        backgroundColor = colors.muted,
-                        useDefaultBack = true,
-                        onBackClick = { Toast.show("返回") },
-                        rightItems = listOf(
-                            NavBarItem(
-                                icon = Icons.dots_three,
-                                onClick = { Toast.show("更多") }
-                            )
+                NavBar(
+                    title = "淡色背景",
+                    backgroundColor = colors.muted,
+                    useDefaultBack = true,
+                    onBackClick = { Toast.show("返回") },
+                    rightItems = listOf(
+                        NavBarItem(
+                            icon = Icons.dots_three,
+                            onClick = { Toast.show("更多") }
                         )
                     )
-                }
+                )
             }
         }
 
         // Without a back button
         ExampleSection(
+            useCardContainer = false,
             title = "无返回按钮",
             description = "不显示左侧返回按钮"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            ) {
-                NavBar(
-                    title = "首页",
-                    useDefaultBack = false,
-                    rightItems = listOf(
-                        NavBarItem(
-                            icon = Icons.list,
-                            onClick = { Toast.show("菜单") }
-                        )
+            NavBar(
+                title = "首页",
+                useDefaultBack = false,
+                rightItems = listOf(
+                    NavBarItem(
+                        icon = Icons.list,
+                        onClick = { Toast.show("菜单") }
                     )
                 )
-            }
+            )
         }
     }
 }

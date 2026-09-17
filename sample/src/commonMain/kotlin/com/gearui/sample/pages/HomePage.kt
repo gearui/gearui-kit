@@ -50,7 +50,7 @@ fun HomePage(
     val strings = SampleI18n.strings
     val focusManager = LocalFocusManager.current
     var searchQuery by remember { mutableStateOf("") }
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
+    val navBarColor = colors.surface
 
     val isEnglish = settingsState.languageTag.startsWith("en", ignoreCase = true)
 
@@ -71,6 +71,7 @@ fun HomePage(
 
     PageScaffold(
         backgroundColor = colors.background,
+        topSafeAreaColor = navBarColor,
         consumeBottomSafeArea = true
     ) {
         Column(modifier = Modifier.fillMaxSize().background(colors.background)) {

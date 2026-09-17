@@ -28,6 +28,9 @@ import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.interaction.disabledAppearance
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
@@ -255,8 +258,7 @@ fun FormExample(
                     label = "用户名",
                     required = true,
                     isHorizontal = isHorizontal,
-                    error = usernameError,
-                    help = "请输入用户名"
+                    error = usernameError
                 ) {
                     Input(
                         value = username,
@@ -314,7 +316,8 @@ fun FormExample(
                                 Text(
                                     text = label,
                                     style = Theme.typography.bodyMedium,
-                                    color = if (!formDisabled) colors.foreground else colors.mutedForeground
+                                    color = colors.foreground,
+                                    modifier = Modifier.disabledAppearance(formDisabled)
                                 )
                             }
                         }
@@ -350,10 +353,11 @@ fun FormExample(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(40.dp)
-                            .clip(shapes.sm)
-                            .border(1.dp, if (!formDisabled) colors.border else colors.mutedForeground, shapes.sm)
-                            .background(if (!formDisabled) colors.surface else colors.muted)
+                            .height(FieldSizeTokens.Medium.height)
+                            .disabledAppearance(formDisabled)
+                            .clip(FieldDefaults.shape)
+                            .border(FieldSizeTokens.Medium.borderWidth, colors.input, FieldDefaults.shape)
+                            .background(colors.surface)
                             .clickable(enabled = !formDisabled) { showPlacePicker = true }
                             .padding(horizontal = 12.dp),
                         contentAlignment = Alignment.CenterStart
@@ -362,7 +366,7 @@ fun FormExample(
                             text = place.ifEmpty { "请选择籍贯" },
                             style = Theme.typography.bodyMedium,
                             color = if (place.isNotEmpty()) {
-                                if (!formDisabled) colors.foreground else colors.mutedForeground
+                                colors.foreground
                             } else {
                                 colors.mutedForeground
                             }
@@ -399,6 +403,7 @@ fun FormExample(
                     error = rateError
                 ) {
                     Rate(
+                        modifier = Modifier.disabledAppearance(formDisabled),
                         value = selfEvaluation,
                         onValueChange = if (!formDisabled) { { selfEvaluation = it } } else null,
                         count = 5,

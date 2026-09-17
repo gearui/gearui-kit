@@ -5,6 +5,8 @@ import com.gearui.foundation.elevation.Elevations
 import com.gearui.foundation.motion.Motion
 import com.gearui.foundation.motion.Motions
 import androidx.compose.runtime.*
+import com.gearui.foundation.button.DefaultButtonColors
+import com.gearui.foundation.field.DefaultInputColors
 
 /* --------------------------------------------------------- */
 /* ThemeMode - three-state theme strategy */
@@ -25,6 +27,8 @@ enum class ThemeMode {
 /* --------------------------------------------------------- */
 
 val LocalThemeColors = staticCompositionLocalOf { Themes.Light.colors }
+internal val LocalButtonColors = staticCompositionLocalOf { DefaultButtonColors.Light }
+internal val LocalInputColors = staticCompositionLocalOf { DefaultInputColors.Light }
 val LocalThemeTypography = staticCompositionLocalOf { Typographies.Default }
 val LocalThemeShapes = staticCompositionLocalOf { ShapesDefault.Default }
 val LocalThemeElevation = staticCompositionLocalOf { Elevations.Default }
@@ -92,6 +96,8 @@ fun Theme(
 
     CompositionLocalProvider(
         LocalThemeColors provides resolved.colors,
+        LocalButtonColors provides (resolved.buttonColors ?: DefaultButtonColors.from(resolved.colors)),
+        LocalInputColors provides (resolved.inputColors ?: DefaultInputColors.from(resolved.colors)),
         LocalThemeTypography provides typography,
         LocalThemeShapes provides shapes,
         LocalThemeElevation provides elevation,

@@ -1,0 +1,747 @@
+{
+  "$description": "GearUI semantic roles mapped to reference v5 numbered font sizes. Platform line heights are resolved at build time; lineHeight is a DTCG multiplier.",
+  "profiles": {
+    "native": {
+      "$type": "typography",
+      "displayLarge": {
+        "$description": "Reference heading size 13; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 60,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "displayMedium": {
+        "$description": "Reference heading size 11; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 46,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.1956521739130435
+        }
+      },
+      "headlineLarge": {
+        "$description": "Reference heading size 10; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 40,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "headlineMedium": {
+        "$description": "Reference heading size 8; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 28,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2142857142857142
+        }
+      },
+      "headlineSmall": {
+        "$description": "Reference heading size 7; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 24,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2083333333333333
+        }
+      },
+      "titleExtraLarge": {
+        "$description": "Reference heading size 6; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 22,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.1818181818181819
+        }
+      },
+      "titleLarge": {
+        "$description": "Reference heading size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "titleMedium": {
+        "$description": "Reference heading size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 17,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.1764705882352942
+        }
+      },
+      "titleSmall": {
+        "$description": "Reference heading size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "bodyExtraLarge": {
+        "$description": "Reference body size 6; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 22,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2272727272727273
+        }
+      },
+      "bodyLarge": {
+        "$description": "Reference body size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.25
+        }
+      },
+      "bodyMedium": {
+        "$description": "Reference body size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 17,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2941176470588236
+        }
+      },
+      "bodySmall": {
+        "$description": "Reference body size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "bodyExtraSmall": {
+        "$description": "Reference body size 2; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4166666666666667
+        }
+      },
+      "markLarge": {
+        "$description": "Reference body size 5; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.25
+        }
+      },
+      "markMedium": {
+        "$description": "Reference body size 4; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 17,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2941176470588236
+        }
+      },
+      "markSmall": {
+        "$description": "Reference body size 3; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "markExtraSmall": {
+        "$description": "Reference body size 2; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4166666666666667
+        }
+      },
+      "linkLarge": {
+        "$description": "Reference body size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.25
+        }
+      },
+      "linkMedium": {
+        "$description": "Reference body size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 17,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2941176470588236
+        }
+      },
+      "linkSmall": {
+        "$description": "Reference body size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "caption": {
+        "$description": "Reference body size 2; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4166666666666667
+        }
+      },
+      "label": {
+        "$description": "Reference body size 1; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 11,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4545454545454546
+        }
+      }
+    },
+    "web": {
+      "$type": "typography",
+      "displayLarge": {
+        "$description": "Reference heading size 13; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 60,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "displayMedium": {
+        "$description": "Reference heading size 11; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 46,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2391304347826086
+        }
+      },
+      "headlineLarge": {
+        "$description": "Reference heading size 10; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 40,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.25
+        }
+      },
+      "headlineMedium": {
+        "$description": "Reference heading size 8; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 26,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3076923076923077
+        }
+      },
+      "headlineSmall": {
+        "$description": "Reference heading size 7; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 22,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3636363636363635
+        }
+      },
+      "titleExtraLarge": {
+        "$description": "Reference heading size 6; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3888888888888888
+        }
+      },
+      "titleLarge": {
+        "$description": "Reference heading size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4375
+        }
+      },
+      "titleMedium": {
+        "$description": "Reference heading size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4666666666666666
+        }
+      },
+      "titleSmall": {
+        "$description": "Reference heading size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "bodyExtraLarge": {
+        "$description": "Reference body size 6; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "bodyLarge": {
+        "$description": "Reference body size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "bodyMedium": {
+        "$description": "Reference body size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5333333333333334
+        }
+      },
+      "bodySmall": {
+        "$description": "Reference body size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "bodyExtraSmall": {
+        "$description": "Reference body size 2; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 13,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5384615384615385
+        }
+      },
+      "markLarge": {
+        "$description": "Reference body size 5; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "markMedium": {
+        "$description": "Reference body size 4; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5333333333333334
+        }
+      },
+      "markSmall": {
+        "$description": "Reference body size 3; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "markExtraSmall": {
+        "$description": "Reference body size 2; GearUI emphasis weight.",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 13,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5384615384615385
+        }
+      },
+      "linkLarge": {
+        "$description": "Reference body size 5; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "linkMedium": {
+        "$description": "Reference body size 4; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 15,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5333333333333334
+        }
+      },
+      "linkSmall": {
+        "$description": "Reference body size 3; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "caption": {
+        "$description": "Reference body size 2; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 13,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5384615384615385
+        }
+      },
+      "label": {
+        "$description": "Reference body size 1; ",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      }
+    }
+  }
+}

@@ -45,6 +45,7 @@ fun InputExample(
 
         // Basic input
         ExampleSection(
+            useCardContainer = false,
             title = "基础输入框",
             description = "标准文本输入框"
         ) {
@@ -99,6 +100,7 @@ fun InputExample(
 
         // Input with a character limit
         ExampleSection(
+            useCardContainer = false,
             title = "带字数限制输入框",
             description = "限制最大输入字符数"
         ) {
@@ -129,6 +131,7 @@ fun InputExample(
 
         // Input with actions
         ExampleSection(
+            useCardContainer = false,
             title = "带操作输入框",
             description = "输入框右侧带操作按钮或图标"
         ) {
@@ -182,6 +185,7 @@ fun InputExample(
 
         // Input with an icon
         ExampleSection(
+            useCardContainer = false,
             title = "带图标输入框",
             description = "输入框左侧带图标"
         ) {
@@ -219,6 +223,7 @@ fun InputExample(
 
         // Specific input types
         ExampleSection(
+            useCardContainer = false,
             title = "特定类型输入框",
             description = "密码、验证码、手机号、价格等"
         ) {
@@ -349,6 +354,7 @@ fun InputExample(
 
         // Input states
         ExampleSection(
+            useCardContainer = false,
             title = "输入框状态",
             description = "错误提示、只读状态"
         ) {
@@ -375,6 +381,7 @@ fun InputExample(
 
         // Overlong content
         ExampleSection(
+            useCardContainer = false,
             title = "信息超长状态",
             description = "标签超长、输入超长"
         ) {
@@ -402,6 +409,7 @@ fun InputExample(
 
         // Content alignment
         ExampleSection(
+            useCardContainer = false,
             title = "内容位置",
             description = "左对齐、居中、右对齐"
         ) {
@@ -434,6 +442,7 @@ fun InputExample(
 
         // Stacked style
         ExampleSection(
+            useCardContainer = false,
             title = "竖排样式",
             description = "标签在输入框上方"
         ) {
@@ -457,6 +466,7 @@ fun InputExample(
 
         // Inset style
         ExampleSection(
+            useCardContainer = false,
             title = "非通栏样式",
             description = "卡片式输入框"
         ) {
@@ -478,6 +488,7 @@ fun InputExample(
 
         // Label outside style
         ExampleSection(
+            useCardContainer = false,
             title = "标签外置样式",
             description = "标签在输入框外部上方"
         ) {
@@ -510,6 +521,7 @@ fun InputExample(
 
         // Disabled state
         ExampleSection(
+            useCardContainer = false,
             title = "禁用状态",
             description = "输入框不可交互"
         ) {

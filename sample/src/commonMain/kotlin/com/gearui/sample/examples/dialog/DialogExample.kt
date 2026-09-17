@@ -17,6 +17,9 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.LocalSettingsState
+import com.gearui.sample.pages.ThemeStyle
+import com.gearui.sample.pages.BrandAccent
 import com.gearui.theme.Theme
 
 /**
@@ -29,6 +32,8 @@ fun DialogExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
+    val settings = LocalSettingsState.current
+    var contentVersion by remember { mutableStateOf(0) }
 
     // Visibility state of each dialog
     var showConfirmDialog by remember { mutableStateOf(false) }
@@ -173,10 +178,19 @@ fun DialogExample(
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Text(
-                                text = "这里可以放置任意自定义内容",
+                                text = "内容版本：$contentVersion",
                                 style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
+                            Button(text = "更新内容", onClick = { contentVersion++ })
+                            Button(text = "切换明暗", onClick = {
+                                settings.themeStyle = if (settings.themeStyle == ThemeStyle.DARK)
+                                    ThemeStyle.LIGHT else ThemeStyle.DARK
+                            })
+                            Button(text = "切换关键色", onClick = {
+                                settings.brandAccent = if (settings.brandAccent == BrandAccent.GREEN)
+                                    BrandAccent.DEFAULT else BrandAccent.GREEN
+                            })
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {

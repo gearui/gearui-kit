@@ -5,6 +5,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonType
 import com.gearui.components.tree.TreeNode
@@ -140,6 +141,7 @@ fun TreeSelectExample(
 
         // Basic tree select
         ExampleSection(
+            useCardContainer = false,
             title = "基础树形选择",
             description = "二级树形结构，点击叶子节点选择"
         ) {
@@ -163,6 +165,7 @@ fun TreeSelectExample(
 
         // Multi-select tree
         ExampleSection(
+            useCardContainer = false,
             title = "多选树形选择",
             description = "支持复选框多选模式"
         ) {
@@ -196,12 +199,14 @@ fun TreeSelectExample(
                             )
                         },
                         size = ButtonSize.SMALL,
+                        theme = ButtonTheme.DEFAULT,
                         type = ButtonType.OUTLINE
                     )
                     Button(
                         text = "清空",
                         onClick = { multiSelectedKeys = emptySet() },
                         size = ButtonSize.SMALL,
+                        theme = ButtonTheme.DEFAULT,
                         type = ButtonType.OUTLINE
                     )
                 }
@@ -212,6 +217,7 @@ fun TreeSelectExample(
 
         // Three-level tree select
         ExampleSection(
+            useCardContainer = false,
             title = "三级树形选择",
             description = "支持三级嵌套的树形结构"
         ) {
@@ -237,6 +243,7 @@ fun TreeSelectExample(
         // ========== Quick test ==========
 
         ExampleSection(
+            useCardContainer = false,
             title = "快速测试",
             description = "快速重置各选择器状态"
         ) {
@@ -248,6 +255,7 @@ fun TreeSelectExample(
                     text = "重置基础",
                     onClick = { basicSelectedKey = null },
                     size = ButtonSize.SMALL,
+                    theme = ButtonTheme.DEFAULT,
                     type = ButtonType.OUTLINE,
                     modifier = Modifier.weight(1f)
                 )
@@ -255,6 +263,7 @@ fun TreeSelectExample(
                     text = "重置多选",
                     onClick = { multiSelectedKeys = emptySet() },
                     size = ButtonSize.SMALL,
+                    theme = ButtonTheme.DEFAULT,
                     type = ButtonType.OUTLINE,
                     modifier = Modifier.weight(1f)
                 )
@@ -262,6 +271,7 @@ fun TreeSelectExample(
                     text = "重置三级",
                     onClick = { thirdSelectedKey = null },
                     size = ButtonSize.SMALL,
+                    theme = ButtonTheme.DEFAULT,
                     type = ButtonType.OUTLINE,
                     modifier = Modifier.weight(1f)
                 )

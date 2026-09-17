@@ -1,5 +1,8 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.foundation.control.ControlGeometry
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.gearui.foundation.sheet.ActionSheetDefaults
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -227,6 +230,23 @@ fun ActionSheetContent(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
 
+    val currentDismiss = rememberUpdatedState(onDismiss)
+    val currentOverlayContent = rememberUpdatedState<@Composable () -> Unit>({
+        ActionSheetSurface(
+            items = items,
+            theme = theme,
+            align = align,
+            description = description,
+            showCancel = showCancel,
+            cancelText = cancelText,
+            gridColumns = gridColumns,
+            maxListHeight = maxListHeight,
+            onSelected = onSelected,
+            onCancel = onCancel,
+            onDismiss = onDismiss
+        )
+    })
+
     LaunchedEffect(visible) {
         if (visible) {
             overlayId = controller.show(
@@ -239,21 +259,9 @@ fun ActionSheetContent(
                         outsideClick = true
                     )
                 ),
-                onDismiss = onDismiss
+                onDismiss = { currentDismiss.value() }
             ) {
-                ActionSheetSurface(
-                    items = items,
-                    theme = theme,
-                    align = align,
-                    description = description,
-                    showCancel = showCancel,
-                    cancelText = cancelText,
-                    gridColumns = gridColumns,
-                    maxListHeight = maxListHeight,
-                    onSelected = onSelected,
-                    onCancel = onCancel,
-                    onDismiss = onDismiss
-                )
+                currentOverlayContent.value()
             }
         } else {
             overlayId?.let { controller.dismiss(it) }
@@ -311,14 +319,13 @@ private fun ActionSheetSurface(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { /* 阻止点击穿透 */ }
+                .clickable { /* Consume surface taps. */ }
         ) {
             // Description
             if (description != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(colors.surface)
                         .padding(horizontal = Spacing.lg, vertical = Spacing.md),
                     contentAlignment = when (align) {
                         ActionSheetAlign.CENTER -> Alignment.Center
@@ -378,19 +385,19 @@ private fun ActionSheetSurface(
                         .fillMaxWidth()
                         .clip(OverlayDefaults.sheetShape)
                         .background(colors.surface)
-                        .clickable { /* 阻止点击穿透 */ }
+                        .clickable { /* Consume surface taps. */ }
                 ) {
                 // Cancel button, with press feedback
-                var cancelPressed by remember { mutableStateOf(false) }
+                val cancelInteraction = remember { MutableInteractionSource() }
+                val cancelPressed by cancelInteraction.collectIsPressedAsState()
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(ControlGeometry.actionSheetRow)
                         .background(
                             if (cancelPressed) colors.muted else colors.surface
                         )
-                        .clickable {
-                            cancelPressed = true
+                        .clickable(interactionSource = cancelInteraction, indication = null) {
                             onCancel?.invoke()
                             onDismiss()
                         },
@@ -425,9 +432,9 @@ private fun ActionSheetList(
     val colors = Theme.colors
 
     // List height: 56dp per item, 78dp when it has a description, capped at maxHeight
-    val itemHeightNormal = 56
-    val itemHeightWithDesc = 78
-    var totalHeightValue = 0
+    val itemHeightNormal = ControlGeometry.actionSheetRow.value
+    val itemHeightWithDesc = ControlGeometry.actionSheetDescriptionRow.value
+    var totalHeightValue = 0f
     items.forEach { item ->
         totalHeightValue += if (item.description != null) itemHeightWithDesc else itemHeightNormal
     }
@@ -438,7 +445,6 @@ private fun ActionSheetList(
         modifier = Modifier
             .fillMaxWidth()
             .height(listHeight)
-            .background(colors.surface)
     ) {
         itemsIndexed(items) { index, item ->
             ActionSheetListItem(
@@ -468,7 +474,8 @@ private fun ActionSheetListItem(
     val colors = Theme.colors
     val shapes = Theme.shapes
     val sheetTokens = ActionSheetDefaults.Default
-    var isPressed by remember { mutableStateOf(false) }
+    val interaction = remember { MutableInteractionSource() }
+    val isPressed by interaction.collectIsPressedAsState()
 
     val textColor = when {
         item.disabled -> colors.mutedForeground
@@ -481,7 +488,7 @@ private fun ActionSheetListItem(
         ActionSheetAlign.LEFT -> Arrangement.Start
     }
 
-    val itemHeight = if (item.description != null) 78.dp else 56.dp
+    val itemHeight = if (item.description != null) ControlGeometry.actionSheetDescriptionRow else ControlGeometry.actionSheetRow
 
     Column {
         Row(
@@ -489,10 +496,9 @@ private fun ActionSheetListItem(
                 .fillMaxWidth()
                 .height(itemHeight)
                 .background(
-                    if (isPressed && !item.disabled) colors.muted else colors.surface
+                    if (isPressed && !item.disabled) colors.muted else Color.Transparent
                 )
-                .clickable(enabled = !item.disabled) {
-                    isPressed = true
+                .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                     onClick()
                 }
                 .padding(horizontal = Spacing.lg),
@@ -587,10 +593,11 @@ private fun ActionSheetGrid(
     onSelected: ((ActionSheetItem, Int) -> Unit)?
 ) {
     val colors = Theme.colors
-    val rows = (items.size + columns - 1) / columns
+    val safeColumns = columns.coerceAtLeast(1)
+    val rows = actionSheetRowCount(items.size, safeColumns)
 
     // Rows are 96dp; at most two are shown before it scrolls
-    val rowHeight = 96.dp
+    val rowHeight = ControlGeometry.actionSheetGridRow
     val maxRows = 2
     val displayRows = minOf(rows, maxRows)
     val needScroll = rows > maxRows
@@ -606,7 +613,7 @@ private fun ActionSheetGrid(
                 ActionSheetGridRow(
                     items = items,
                     rowIndex = rowIndex,
-                    columns = columns,
+                    columns = safeColumns,
                     onSelected = onSelected
                 )
             }
@@ -621,7 +628,7 @@ private fun ActionSheetGrid(
                 ActionSheetGridRow(
                     items = items,
                     rowIndex = rowIndex,
-                    columns = columns,
+                    columns = safeColumns,
                     onSelected = onSelected
                 )
             }
@@ -676,7 +683,8 @@ private fun ActionSheetGridItem(
     onClick: () -> Unit
 ) {
     val colors = Theme.colors
-    var isPressed by remember { mutableStateOf(false) }
+    val interaction = remember { MutableInteractionSource() }
+    val isPressed by interaction.collectIsPressedAsState()
     val textColor = if (item.disabled) colors.mutedForeground else colors.foreground
 
     val shapes = Theme.shapes
@@ -688,8 +696,7 @@ private fun ActionSheetGridItem(
             .background(
                 if (isPressed && !item.disabled) colors.muted else Color.Transparent
             )
-            .clickable(enabled = !item.disabled) {
-                isPressed = true
+            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                 onClick()
             }
             .padding(Spacing.sm),
@@ -754,3 +761,6 @@ private fun ActionSheetGridItem(
         )
     }
 }
+
+internal fun actionSheetRowCount(count: Int, columns: Int): Int =
+    if (count <= 0) 0 else 1 + (count - 1) / columns.coerceAtLeast(1)

@@ -1,6 +1,7 @@
 package com.gearui.foundation.tag
 
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 
@@ -31,22 +32,22 @@ data class TagTokens(
 object TagSizeTokens {
 
     val Large = TagTokens(
-        height = 32.dp,
-        paddingHorizontal = Spacing.md,
+        height = ControlGeometry.tagHeightLarge,
+        paddingHorizontal = ControlGeometry.tagPaddingLarge,
         iconSize = 14.dp,
         iconBoxSize = 16.dp,
     )
 
     val Medium = TagTokens(
-        height = 24.dp,
-        paddingHorizontal = Spacing.sm,
+        height = ControlGeometry.tagHeightMedium,
+        paddingHorizontal = ControlGeometry.tagPaddingMedium,
         iconSize = 12.dp,
         iconBoxSize = 14.dp,
     )
 
     val Small = TagTokens(
-        height = 20.dp,
-        paddingHorizontal = Spacing.sm,
+        height = ControlGeometry.tagHeightSmall,
+        paddingHorizontal = ControlGeometry.tagPaddingSmall,
         iconSize = 12.dp,
         iconBoxSize = 14.dp,
     )

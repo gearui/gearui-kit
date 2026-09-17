@@ -41,6 +41,7 @@ fun SearchBarExample(
     ) {
         // Basic search bar
         ExampleSection(
+            useCardContainer = false,
             title = "基础搜索栏",
             description = "最基本的搜索输入框"
         ) {
@@ -63,6 +64,7 @@ fun SearchBarExample(
 
         // Rounded style
         ExampleSection(
+            useCardContainer = false,
             title = "圆角搜索栏",
             description = "圆角矩形样式的搜索框"
         ) {
@@ -76,6 +78,7 @@ fun SearchBarExample(
 
         // Square style
         ExampleSection(
+            useCardContainer = false,
             title = "直角搜索栏",
             description = "直角矩形样式的搜索框"
         ) {
@@ -89,6 +92,7 @@ fun SearchBarExample(
 
         // With a cancel button
         ExampleSection(
+            useCardContainer = false,
             title = "带取消按钮",
             description = "显示取消按钮，点击可清空并取消搜索"
         ) {
@@ -116,6 +120,7 @@ fun SearchBarExample(
 
         // With an action button
         ExampleSection(
+            useCardContainer = false,
             title = "带搜索按钮",
             description = "右侧带搜索按钮，点击触发搜索"
         ) {
@@ -142,6 +147,7 @@ fun SearchBarExample(
 
         // Disabled state
         ExampleSection(
+            useCardContainer = false,
             title = "禁用状态",
             description = "不可编辑的搜索框"
         ) {
@@ -155,6 +161,7 @@ fun SearchBarExample(
 
         // Usage notes
         ExampleSection(
+            useCardContainer = false,
             title = "使用说明",
             description = "SearchBar 组件特性"
         ) {

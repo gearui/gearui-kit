@@ -61,6 +61,8 @@ object Dialog {
         val controller = LocalOverlayController.current
         val effectiveMaskColor = maskColor ?: OverlayDefaults.scrimColor
         var overlayId by remember { mutableStateOf<Long?>(null) }
+        val currentContent = rememberUpdatedState(content)
+        val currentDismiss = rememberUpdatedState(onDismiss)
 
         LaunchedEffect(visible) {
             if (visible) {
@@ -74,9 +76,9 @@ object Dialog {
                             outsideClick = dismissOnOutside
                         )
                     ),
-                    onDismiss = onDismiss
+                    onDismiss = { currentDismiss.value() }
                 ) {
-                    DialogSurface(content = content)
+                    DialogSurface(content = currentContent.value)
                 }
             } else {
                 overlayId?.let { controller.dismiss(it) }

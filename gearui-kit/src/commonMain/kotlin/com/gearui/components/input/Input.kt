@@ -1,4 +1,7 @@
 package com.gearui.components.input
+import com.gearui.foundation.typography.resolveFontFamily
+
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
@@ -37,6 +40,11 @@ import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.field.FieldFocusOverlay
+import com.gearui.foundation.field.rememberInputFeedback
+import com.gearui.theme.LocalInputColors
+import com.tencent.kuikly.compose.foundation.hoverable
+import com.tencent.kuikly.compose.foundation.interaction.collectIsHoveredAsState
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
@@ -67,7 +75,7 @@ fun Input(
     size: InputSize = InputSize.MEDIUM,
     placeholder: String = "",
     label: String? = null,
-    labelPosition: String = "left", // "left" or "top"
+    labelPosition: String = "top", // "left" or "top"
     required: Boolean = false,
     helperText: String? = null,
     error: String? = null,
@@ -90,13 +98,17 @@ fun Input(
     autoFocus: Boolean = false,
 ) {
     val colors = Theme.colors
+    val inputColors = LocalInputColors.current
     val shapes = Theme.shapes
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val interactionSource = remember { createMutableInteractionSource() }
     val inputFocusRequester = remember { FocusRequester() }
-    var isFocused by remember { mutableStateOf(false) }
+    val focusedState = remember { mutableStateOf(false) }
+    var isFocused by focusedState
+    val hoverSource = remember { com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource() }
+    val hoveredState = hoverSource.collectIsHoveredAsState()
     val hasError = error != null
 
     // Autofocus
@@ -120,7 +132,7 @@ fun Input(
     }
 
     val shape = when (size) {
-        InputSize.LARGE -> FieldDefaults.shape
+        InputSize.LARGE -> FieldDefaults.largeShape
         InputSize.MEDIUM -> FieldDefaults.shape
         InputSize.SMALL -> FieldDefaults.compactShape
     }
@@ -129,17 +141,26 @@ fun Input(
     // rebuilt the moment focus changes, which recreates the underlying EditText;
     val borderColor = when {
         hasError -> colors.destructive
-        else -> colors.border
+        else -> inputColors.border
     }
 
     // Keep border width stable to avoid layout jump when focus/error changes.
     val borderWidth = tokens.borderWidth
 
     val backgroundColor = when {
-        !enabled -> colors.muted
         cardStyle -> colors.muted
-        else -> colors.surface
+        else -> inputColors.background
     }
+
+    val inputTextStyle = when (size) {
+        InputSize.LARGE -> Theme.typography.bodyLarge
+        InputSize.MEDIUM -> Theme.typography.bodyMedium
+        InputSize.SMALL -> Theme.typography.bodySmall
+    }
+    val feedback = rememberInputFeedback(
+        inputColors, shape, focusedState, hoveredState, enabled,
+        if (hasError) colors.destructive else null,
+    )
 
     // Input content
     @Composable
@@ -194,7 +215,8 @@ fun Input(
         // clickable — that only covers taps on the padding, and cannot compensate
         // for Kuikly's intermittent focus loss inside the EditText. pointerInput
         Box(
-            modifier = containerModifier
+            modifier = feedback.then(containerModifier)
+                .hoverable(hoverSource, enabled = enabled)
                 .pointerInput(canFocus) {
                     if (!canFocus) return@pointerInput
                     awaitEachGesture {
@@ -272,9 +294,11 @@ fun Input(
                             }
                         },
                         textStyle = TextStyle(
-                            fontSize = Theme.typography.bodyMedium.fontSize,
-                            fontWeight = Theme.typography.bodyMedium.fontWeight,
-                            color = if (!enabled) colors.mutedForeground else colors.foreground,
+                            fontSize = inputTextStyle.fontSize,
+                            fontWeight = inputTextStyle.fontWeight,
+                            fontFamily = inputTextStyle.resolveFontFamily(),
+                            letterSpacing = inputTextStyle.letterSpacing,
+                            color = inputColors.foreground,
                             textAlign = textAlign
                         ),
                         cursorBrush = SolidColor(colors.primary),
@@ -321,8 +345,8 @@ fun Input(
                                 if (value.isEmpty() && placeholder.isNotEmpty()) {
                                     Text(
                                         text = placeholder,
-                                        style = Theme.typography.bodyMedium,
-                                        color = colors.mutedForeground
+                                        style = inputTextStyle,
+                                        color = inputColors.placeholder
                                     )
                                 }
                                 innerTextField()
@@ -378,46 +402,19 @@ fun Input(
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     suffix()
                 }
-
-                // Character counter — single line: inline on the right
-                if (showCounter && maxLength != null && maxLines == 1) {
-                    Spacer(modifier = Modifier.width(Spacing.sm))
-                    Text(
-                        text = "${value.length}/$maxLength",
-                        style = Theme.typography.bodySmall,
-                        color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
-                    )
-                }
-            }
-            // Multiline (textarea): the counter sinks to the box's BOTTOM-RIGHT corner (like WeChat's
-            // signature editor). Inline-right would crowd the first line of text and read as a suffix, not a count.
-            if (showCounter && maxLength != null && maxLines > 1) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = tokens.paddingHorizontal,
-                            end = tokens.paddingHorizontal,
-                            bottom = 8.dp
-                        ),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Text(
-                        text = "${value.length}/$maxLength",
-                        style = Theme.typography.bodySmall,
-                        color = if (value.length >= maxLength) colors.destructive else colors.mutedForeground
-                    )
-                }
             }
           }
+          FieldFocusOverlay(inputColors, shape, focusedState, enabled, if (hasError) colors.destructive else null)
         }
     }
 
     // Main layout
-    Column(modifier = modifier) {
+    Column(modifier = modifier.then(com.tencent.kuikly.compose.ui.Modifier.graphicsLayer {
+        alpha = if (enabled) 1f else com.gearui.foundation.motion.FeedbackDefaults.disabledOpacity
+    })) {
         // Top label (when labelPosition == "top")
         if (label != null && labelPosition == "top") {
-            Row(modifier = Modifier.padding(bottom = Spacing.sm)) {
+            Row(modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)) {
                 if (required) {
                     Text(
                         text = "*",
@@ -435,15 +432,27 @@ fun Input(
 
         InputField()
 
-        // Helper text below
+        // Metadata never competes with the editable line for horizontal space.
         val bottomText = error ?: helperText
-        if (bottomText != null) {
-            Text(
-                text = bottomText,
-                style = Theme.typography.bodySmall,
-                color = if (hasError) colors.destructive else colors.mutedForeground,
-                modifier = Modifier.padding(top = Spacing.xs)
-            )
+        if (bottomText != null || (showCounter && maxLength != null)) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = Spacing.xs),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            ) {
+                Text(
+                    text = bottomText.orEmpty(),
+                    style = Theme.typography.bodySmall,
+                    color = if (hasError) colors.destructive else colors.mutedForeground,
+                    modifier = Modifier.weight(1f),
+                )
+                if (showCounter && maxLength != null) {
+                    Text(
+                        text = "${value.length}/$maxLength",
+                        style = Theme.typography.bodySmall,
+                        color = if (hasError) colors.destructive else colors.mutedForeground,
+                    )
+                }
+            }
         }
     }
 }

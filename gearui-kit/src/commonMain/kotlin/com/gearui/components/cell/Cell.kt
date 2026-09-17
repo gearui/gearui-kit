@@ -9,15 +9,11 @@ import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.list.CellDefaults
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.TextStyle
-import com.gearui.foundation.typography.Typography
-import com.tencent.kuikly.compose.ui.text.font.FontWeight
-import com.tencent.kuikly.compose.ui.unit.sp
+import com.gearui.foundation.control.ControlGeometry
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.gearui.theme.Theme
-import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
@@ -40,14 +36,12 @@ fun Cell(
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
     /**
-     * 自绘标题，给出时**取代** [title] 的渲染（[title] 仍然要传，作为无障碍与排障时的纯文本）。
-     *
-     * 存在的理由：标题里需要富文本的场景不止一个——搜索结果要把命中的字标色。
-     * 没有这个插槽，调用方只能绕开 Cell 自己拼一行，于是同一个列表里两种行高、
-     * 两种分割线，改一处样式要改两处。
+     * Replaces the title rendering for rich text such as search highlighting.
+     * Keep [title] as the plain-text accessibility/diagnostic counterpart.
+     * This slot preserves shared row geometry instead of requiring a second row implementation.
      */
     titleContent: (@Composable () -> Unit)? = null,
-    /** 同上，用于副标题（搜索命中在备注/账号名时，副标题要显示并高亮那一段）。 */
+    /** Rich subtitle counterpart, including highlighted account names or notes. */
     descriptionContent: (@Composable () -> Unit)? = null,
 ) {
     val colors = Theme.colors
@@ -57,6 +51,7 @@ fun Cell(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = tokens.minHeight)
+            .graphicsLayer { alpha = if (enabled) 1f else tokens.disabledAlpha }
             .background(colors.surface)
             .then(
                 if (onClick != null && enabled) {
@@ -71,23 +66,11 @@ fun Cell(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Leading icon. In a two-line cell the icon aligns with the TITLE line (box height = title line
-        // height, centred inside) — not the whole row, which would leave it hovering between title and
+        // Native ListGroup centers the prefix against the complete content block.
+        // Do not constrain its height: a caller may supply an avatar instead of an icon.
         if (leading != null) {
-            if (description != null) {
-                // heightIn, not height: 24dp is the *title line* an icon should centre on, but a
-                // leading slot taller than that (a 40dp avatar in a name + username row) must keep
-                // its own height. A fixed height squashed it to 40x24 — a visibly stretched avatar.
-                Box(
-                    modifier = Modifier.align(Alignment.Top).heightIn(min = 24.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    leading()
-                }
-            } else {
-                leading()
-            }
-            Spacer(modifier = Modifier.width(10.dp))
+            leading()
+            Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
         }
 
         // Middle content
@@ -97,22 +80,17 @@ fun Cell(
             } else {
                 Text(
                     text = title,
-                    // Matches a UIKit table row: body 17pt Regular. BodyLarge(16) with full-black foreground reads
-                    // heavier than the system Settings app; 17 Regular is what iOS users see as the default row title.
-                    style = CellTextStyles.Title,
-                    color = titleColor ?: if (enabled) colors.foreground else colors.mutedForeground
+                    style = Theme.typography.titleMedium,
+                    color = titleColor ?: colors.foreground
                 )
             }
 
             if (descriptionContent != null) {
-                Spacer(modifier = Modifier.height(Spacing.xs))
                 descriptionContent()
             } else if (description != null) {
-                Spacer(modifier = Modifier.height(Spacing.xs))
                 Text(
                     text = description,
-                    // UIKit footnote 13pt。
-                    style = CellTextStyles.Footnote,
+                    style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
@@ -120,24 +98,23 @@ fun Cell(
 
         // Trailing description text
         if (note != null) {
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
             Text(
                 text = note,
-                // UIKit puts the trailing value at the same size as the title (17), separated only by the secondary colour.
-                style = CellTextStyles.Title,
+                style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground
             )
         }
 
         // Trailing custom content
         if (trailing != null) {
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
             trailing()
         }
 
         // Chevron
         if (arrow) {
-            Spacer(modifier = Modifier.width(Spacing.sm))
+            Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
             Icon(
                 name = Icons.caret_right,
                 size = IconSizes.Default.md,
@@ -145,14 +122,4 @@ fun Cell(
             )
         }
     }
-}
-
-/**
- * Text metrics for Cell, matching a UIKit inset-grouped table:
- * row title / trailing value = body 17pt Regular; description = footnote 13pt.
- * (The kit's Typography walks a multiple-of-4 scale with no 17; pinned to UIKit here, not snapped to the scale.)
- */
-private object CellTextStyles {
-    val Title = TextStyle(17.sp, 24.sp, FontWeight.Normal)
-    val Footnote = TextStyle(13.sp, 18.sp, FontWeight.Normal)
 }

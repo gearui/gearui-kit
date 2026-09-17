@@ -17,6 +17,17 @@ import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.control.selectionTimingEasing
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.feedbackDuration
+import com.tencent.kuikly.compose.animation.core.*
+import com.tencent.kuikly.compose.foundation.interaction.*
+import com.tencent.kuikly.compose.foundation.selection.triStateToggleable
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.tencent.kuikly.compose.ui.platform.LocalDensity
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.state.ToggleableState
 
 /**
  * Checkbox - fully Theme-driven checkbox
@@ -39,69 +50,47 @@ fun Checkbox(
     indeterminate: Boolean = false,
     size: CheckboxSize = CheckboxSize.MEDIUM
 ) {
-    // ⭐ Framework Rule #1: this is always the first line
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
+        .triStateToggleable(
+            state = if (indeterminate) ToggleableState.Indeterminate else if (checked) ToggleableState.On else ToggleableState.Off,
+            enabled = enabled, role = Role.Checkbox, interactionSource = interaction, indication = null,
+            onClick = { onCheckedChange(!checked) },
+        ), contentAlignment = Alignment.Center) {
+        CheckboxMark(checked, indeterminate, enabled, pressed, size)
+    }
+}
+
+@Composable
+private fun CheckboxMark(checked: Boolean, indeterminate: Boolean, enabled: Boolean, pressed: Boolean, size: CheckboxSize) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    // Size parameters
+    val shape = Theme.shapes.sm
+    val motion = Theme.motion
     val boxSize = when (size) {
-        CheckboxSize.LARGE -> 24.dp
-        CheckboxSize.MEDIUM -> 20.dp
-        CheckboxSize.SMALL -> 16.dp
+        CheckboxSize.LARGE -> ControlGeometry.selectionLarge
+        CheckboxSize.MEDIUM -> ControlGeometry.selectionMedium
+        CheckboxSize.SMALL -> ControlGeometry.selectionSmall
     }
-    val checkSize = boxSize * 0.6f
-
-    // Whether it renders as checked (indeterminate counts)
-    val isActive = checked || indeterminate
-
-    // ⭐ Colour mapping: Theme semantics -> Checkbox visuals
-    val backgroundColor = when {
-        !enabled && isActive -> colors.muted
-        !enabled -> colors.surface
-        isActive -> colors.primary
-        else -> colors.surface
-    }
-
-    val borderColor = when {
-        !enabled -> colors.mutedForeground
-        isActive -> colors.primary
-        else -> colors.border
-    }
-
-    val checkColor = when {
-        !enabled -> colors.mutedForeground
-        else -> colors.primaryForeground
-    }
-
-    Box(
-        modifier = modifier
-            .size(boxSize)
-            .clip(shapes.sm)
-            .background(backgroundColor)
-            .border(BorderWidth.thin, borderColor, shapes.sm)
-            .then(
-                if (enabled) {
-                    Modifier.clickable { onCheckedChange(!checked) }
-                } else Modifier
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        // Indeterminate marker, or the ✓ tick
-        when {
-            indeterminate -> {
-                Icon(
-                    name = Icons.minus,
-                    size = checkSize,
-                    tint = checkColor
-                )
-            }
-            checked -> {
-                Icon(
-                    name = Icons.check,
-                    size = checkSize,
-                    tint = checkColor
-                )
-            }
+    val active = checked || indeterminate
+    val reveal by animateFloatAsState(if (active) 1f else 0f,
+        tween(motion.feedbackDuration(FeedbackDefaults.selectionRevealDuration), easing = selectionTimingEasing))
+    val scale by animateFloatAsState(if (pressed && enabled && motion.normal > 0) FeedbackDefaults.selectionPressScale else 1f,
+        tween(motion.feedbackDuration(FeedbackDefaults.selectionPressDuration), easing = selectionTimingEasing))
+    val travel = with(LocalDensity.current) { ControlGeometry.checkboxIndicatorTravel.toPx() }
+    Box(Modifier.size(boxSize).graphicsLayer {
+        alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
+        scaleX = scale; scaleY = scale
+    }.clip(shape).background(colors.surface)
+        // Until field shadows are portable, keep an unselected mark visible on a surface.
+        .border(BorderWidth.thin, if (active) colors.primary else colors.border, shape), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxSize().graphicsLayer {
+                alpha = reveal
+                scaleX = FeedbackDefaults.selectionRevealScale + (1f - FeedbackDefaults.selectionRevealScale) * reveal
+                scaleY = scaleX
+                translationX = -travel * (1f - reveal)
+            }.background(colors.primary), contentAlignment = Alignment.Center) {
+            Icon(if (indeterminate) Icons.minus else Icons.check, size = boxSize * (2f / 3f), tint = colors.primaryForeground)
         }
     }
 }
@@ -128,29 +117,16 @@ fun CheckboxWithLabel(
     size: CheckboxSize = CheckboxSize.MEDIUM
 ) {
     val colors = Theme.colors
-
-    Row(
-        modifier = modifier
-            .then(
-                if (enabled) {
-                    Modifier.clickable { onCheckedChange(!checked) }
-                } else Modifier
-            )
-            .padding(vertical = Spacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
-    ) {
-        Checkbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
-            size = size
-        )
-
-        Text(
-            text = label,
-            color = if (enabled) colors.foreground else colors.mutedForeground,
-            style = Theme.typography.bodyLarge
-        )
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
+    Row(modifier.heightIn(min = ControlGeometry.selectionTouchTarget)
+        .triStateToggleable(state = if (checked) ToggleableState.On else ToggleableState.Off,
+            enabled = enabled, role = Role.Checkbox, interactionSource = interaction, indication = null,
+            onClick = { onCheckedChange(!checked) })
+        .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+        CheckboxMark(checked, false, enabled, pressed, size)
+        Text(label, color = if (enabled) colors.foreground else colors.mutedForeground, style = Theme.typography.bodyLarge)
     }
 }
 
@@ -178,6 +154,7 @@ fun CheckboxGroup(
                     onSelectionChange(newSelection)
                 },
                 label = option,
+                enabled = enabled,
             )
         }
     }

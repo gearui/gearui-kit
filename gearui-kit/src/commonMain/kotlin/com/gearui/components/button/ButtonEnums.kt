@@ -4,13 +4,13 @@ package com.gearui.components.button
  * Button size
  */
 enum class ButtonSize {
-    /** large - 48dp tall */
+    /** large - 52dp tall */
     LARGE,
 
-    /** medium - 40dp tall (default) */
+    /** medium - 44dp tall (default) */
     MEDIUM,
 
-    /** small - 32dp tall */
+    /** small - 36dp tall */
     SMALL,
 
     /** extra small - 28dp tall */
@@ -35,7 +35,7 @@ enum class ButtonType {
  * Button colour theme
  */
 enum class ButtonTheme {
-    /** primary / brand (default) */
+    /** primary / brand (default); use for the main action */
     PRIMARY,
 
     /** danger */
@@ -47,7 +47,7 @@ enum class ButtonTheme {
     /** success */
     SUCCESS,
 
-    /** default / grey */
+    /** neutral; use for secondary actions */
     DEFAULT,
 
     /** light / tinted */
@@ -58,13 +58,13 @@ enum class ButtonTheme {
  * Button shape
  */
 enum class ButtonShape {
-    /** rectangle (default, 6dp radius) */
+    /** rectangle (default, size-dependent radius) */
     RECTANGLE,
 
-    /** rounded rectangle (9dp radius) */
+    /** rounded ends (half the control height) */
     ROUND,
 
-    /** square (no radius) */
+    /** square icon target with size-dependent radius */
     SQUARE,
 
     /** circle (fully rounded) */

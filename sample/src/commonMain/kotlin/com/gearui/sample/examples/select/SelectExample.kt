@@ -64,6 +64,7 @@ fun SelectExample(
     ) {
         // Basic single select
         ExampleSection(
+            useCardContainer = false,
             title = "基础单选",
             description = "单选下拉选择"
         ) {
@@ -77,6 +78,7 @@ fun SelectExample(
 
         // With a label
         ExampleSection(
+            useCardContainer = false,
             title = "带标签",
             description = "显示字段标签"
         ) {
@@ -91,6 +93,7 @@ fun SelectExample(
 
         // Multi-select mode
         ExampleSection(
+            useCardContainer = false,
             title = "多选模式",
             description = "支持选择多个选项"
         ) {
@@ -105,6 +108,7 @@ fun SelectExample(
 
         // Disabled state
         ExampleSection(
+            useCardContainer = false,
             title = "禁用状态",
             description = "不可交互"
         ) {
@@ -119,6 +123,7 @@ fun SelectExample(
 
         // Error state
         ExampleSection(
+            useCardContainer = false,
             title = "错误状态",
             description = "显示错误提示"
         ) {

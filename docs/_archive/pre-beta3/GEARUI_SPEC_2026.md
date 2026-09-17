@@ -1,0 +1,548 @@
+# GearUI Kit SPEC (2026)
+
+## 1. 目标与范围
+
+本 SPEC 定义 GearUI Kit 在 2026 年度的统一工程标准，覆盖：
+- 架构先进性
+- 性能
+- 易用性
+- 灵活性
+
+适用范围：
+- `gearui-kit`（组件库）
+- `sample`（示例与验证入口）
+- CI/CD 与文档系统
+
+---
+
+## 2. 非目标
+
+- 不在 2026 年内追求一次性重写组件库。
+- 不引入与 KuiklyUI Runtime 冲突的底层渲染方案。
+- 不允许在无兼容策略的前提下进行大规模 Breaking Changes。
+
+---
+
+## 3. 设计原则
+
+1. Token First：组件样式能力优先通过语义 Token 建模。
+2. Runtime Neutral：组件能力对 iOS/Android/鸿蒙/H5 等价可用。
+3. Backward Compatibility：公共 API 与 Token 变更必须可审计。
+4. Measurable Quality：性能与质量必须有可量化指标并入 CI。
+5. Progressive Delivery：先建立护栏，再逐步优化实现。
+
+### 3.5 Runtime Responsibility Boundary
+
+GearUI Kit 严格区分 Runtime 能力与组件能力。
+
+Runtime 层负责：
+- Theme / DarkMode / I18n 的合并与传播。
+- Overlay 的生命周期、关闭策略与事件监听。
+- 路由切换、返回键、系统事件的统一处理。
+- 性能相关的全局策略（重组边界、状态收敛）。
+
+组件层禁止：
+- 直接监听系统级事件（scroll / back / route）。
+- 自行实现 Overlay 关闭逻辑。
+- 绕过 Runtime 直接操作全局状态。
+
+违规处理：
+- 违反以上约束的实现视为架构缺陷，不允许合并。
+
+---
+
+## 4. 架构先进性规范
+
+### 4.1 Token 治理
+
+- 引入 Token Schema 版本：`major.minor.patch`。
+- 每次 Token 变更必须生成 diff 报告（新增/删除/语义变更）。
+- 禁止组件层直接硬编码颜色；必须通过 `Theme.colors`。
+- Token 采用语义合并制（merge-based）而非整体替换：
+  - 上层仅覆盖声明的语义 Token。
+  - 未覆盖部分必须从父级继承。
+  - 禁止通过整体替换 `ThemeSpec` 绕过语义层。
+
+验收标准：
+- CI 中存在 `token-compat-check` 任务。
+- 删除或重命名语义 Token 时，CI 默认失败。
+- Theme / Component / Instance 覆盖不会导致未声明 Token 丢失。
+- 合并过程不产生可观额外对象分配（需纳入 benchmark 验证）。
+
+### 4.2 API 兼容治理
+
+- 对 `gearui-kit` 对外 API 做兼容检查（binary/source API diff）。
+- 破坏性变更必须附迁移说明与废弃周期。
+
+验收标准：
+- CI 中存在 `api-compat-check` 任务。
+- 每次 release 产出变更级别标记：`patch/minor/major`。
+
+### 4.3 主题覆盖体系
+
+- 保留当前覆盖式 `ThemeSpec` 方案作为一等能力。
+- 允许三层覆盖：
+1. Global（全局主题）
+2. Component（组件级 Token）
+3. Instance（单实例参数）
+
+验收标准：
+- 至少 3 个核心组件支持 Component 级 Token 覆盖并有示例。
+
+### 4.4 Overlay Architecture
+
+Overlay 属于 Runtime 一等能力，而非组件实现细节。
+
+规范要求：
+- 所有 Overlay 必须通过 Overlay Runtime 创建与销毁。
+- 组件仅声明 `OverlayOptions`（位置、模态、DismissPolicy）。
+- Overlay 关闭策略（点击、滚动、超时、路由变化）统一由 Runtime 执行。
+
+禁止行为：
+- 组件直接监听 scroll / pointer 事件以关闭自身。
+- Overlay 内部修改路由或全局状态。
+
+验收标准：
+- 删除 Overlay Runtime 后，相关组件无法编译。
+- Overlay 行为在 sample 中可统一验证。
+
+### 4.5 Runtime Environment & Insets Pipeline（新增基线）
+
+GearUI Kit 的系统环境数据采用统一 Runtime 管线，禁止业务侧分散处理。
+
+统一数据流：
+1. Platform（Android/iOS/Web）采集原始系统信息。
+2. Runtime 归一化为 `RuntimeEnvironment`。
+3. Compose/Kit 通过 `LocalRuntimeEnvironment`（或等价上下文）读取。
+4. 组件按默认规则自动应用（NavBar/BottomNavBar/PageScaffold）。
+
+Insets 语义（强制）：
+- `RuntimeEnvironment.safeArea` 只表示系统状态栏、导航栏、手势区和异形屏安全区。
+- `RuntimeEnvironment.keyboard` 单独表示 IME 高度与可见状态；IME 不得并入
+  `safeArea.bottom`，页面 chrome、BottomNavBar、ActionSheet 不得随键盘高度漂移。
+- `RuntimeFlags.unifiedSafeAreaPipeline` 默认为开启；关闭仅作为宿主集成回滚路径，不是
+  sample 或业务页面的标准验证模型。
+- 普通页面由 `PageScaffold` 消费 top/bottom safe area；启用该路径时 NavBar 不得再次
+  消费 top safe area。聊天输入栏等需要跟随键盘的区域显式读取 `keyboard.height`。
+- Keyboard geometry 必须由宿主上报：Android 使用 `WindowInsets.Type.ime()`，iOS 使用
+  `UIKeyboardWillChangeFrame/WillHide`。GearUI 的 Input/Textarea 和业务页面不得通过
+  组件级 `Modifier.keyboardHeightChange` 建立全局键盘状态；该回调依赖输入组件挂载状态，
+  无法作为页面级 IME geometry 的唯一事实源。Kuikly 原生输入 overlay 在部分截图工具中
+  可能无法与 render surface 正确合成，必须用连续录屏或真机视觉确认，不能把截图黑屏
+  直接判定为页面渲染失败。
+
+App 入口约束（强制）：
+- 每个页面树只允许一个 `App` 根入口作为 Runtime 生效点（single runtime root）。
+- 禁止同一页面树出现双层 `App` 嵌套，避免 `runtimeFlags` 与 `RuntimeEnvironment` 被内层默认值覆盖。
+- 如页面需自行管理 App（业务自定义 theme/runtimeFlags），必须关闭基类自动包装（等价于 `autoWrapApp=false`），保证入口唯一。
+
+职责边界：
+- Runtime 负责采集与同步：
+  - window metrics（width/height/activity size/density/orientation）
+  - insets（status/navigation/gesture/ime）
+  - safeArea（top/bottom/left/right，作为 insets 的派生视图）
+  - theme state（dark mode / contrast）
+- GearUI Kit 负责消费规则：
+  - 不直接调用平台 API
+  - 不在组件中实现平台分支采集逻辑
+
+Host -> Runtime 动态桥接约束（Android/iOS）：
+- Host 必须提供“首帧注入 + 动态更新”双路径：
+1. initial bootstrap：首帧前注入初始 safeArea，避免首帧抖动。
+2. dynamic update：系统栏/手势栏/方向变化时持续调用 Runtime 更新接口。
+- iOS Kuikly host 必须实现 `viewControllerHostWindow` 并返回当前页面的 `self.view.window`，禁止依赖全局 `keyWindow` 猜测 Scene。
+- iOS host 必须在 `viewSafeAreaInsetsDidChange` 后发送包含 `width`、`height`、`safeAreaInsets` 的 `rootViewSizeDidChanged`；仅调用 `viewDidLayoutSubviews` 不足以覆盖“尺寸未变但 safe-area 改变”的场景。
+- bottom safeArea 计算不得只依赖单一来源（如 `navigationBars`）；应采用多来源 max 合并（system bars / gestures / tappable / stable insets 等平台等价字段）。
+
+强约束：
+- 安全区主来源必须是 Runtime；初始化传入仅可作为 override/fallback。
+- 业务页面禁止手写系统安全区补丁（如 `padding(top = safeArea.top)` 作为常态方案）。
+- 业务页面禁止通过 `safeArea.bottom` 的数值差或阈值推断键盘是否可见。
+- 横屏与异形屏必须支持 `left/right` 安全区，不得只实现 `top/bottom`。
+- 安全区只作用于“内容布局层”，不得作为根容器尺寸裁剪策略。
+- 根容器与 Overlay 宿主必须保持 `fillMaxSize`，禁止因安全区导致画布缩小。
+- 全屏页面（直播/短视频/全屏图等）允许内容铺满屏幕；其前景控件（按钮、标题、操作条）按 safeArea 约束布局。
+- Overlay（弹窗/菜单/抽屉）必须维持全屏坐标系，安全区仅用于其内容偏移，不改变 Overlay 根层尺寸。
+- NavBar/BottomNavBar/Drawer/ActionSheet 不允许暴露页面级 `useSafeArea` 参数，安全区消费策略必须由 Runtime Flags 统一控制。
+
+建议数据模型（规范性）：
+- `RuntimeEnvironment`
+  - `window`: `widthPx/heightPx/activityWidthPx/activityHeightPx/density/orientation`
+  - `insets`: `statusBarTop/navigationBarBottom/gestureBottom/imeBottom/left/right`
+  - `safeArea`: `top/bottom/left/right`
+  - `theme`: `darkMode/contrastMode`
+
+验收标准：
+- sample 中可看到 `LocalRuntimeEnvironment` 驱动的 NavBar/BottomNavBar 自动安全区行为。
+- Runtime insets 变化（旋转、系统栏变化、键盘变化）可触发组件正确重算。
+- 业务 demo 不再依赖页面级 safe area 手工补丁。
+- 全屏页面与 Overlay 仍为全屏画布，且前景内容不被刘海/手势区遮挡。
+
+### 4.6 Fullscreen Container Contract（新增硬约束）
+
+GearUI Kit 默认运行前提：根容器必须具备全屏渲染优先级（edge-to-edge compatible）。
+
+规范要求：
+- App/Root Host 必须 attach 到 fullscreen container（match-parent）。
+- 非全屏容器会导致 insets/safeArea/overlay/keyboard 计算失真，视为架构错误。
+- 禁止在 App 根节点施加全局 safeArea padding。
+
+运行时策略：
+- Debug：检测到非全屏容器时，直接 fail-fast（抛错或阻断渲染）。
+- Release：输出严重告警日志并上报 telemetry（`fullscreen_contract_violation`）。
+
+验收标准：
+- sample 提供全屏契约检测开关与可视化日志。
+- Android/iOS Host 模板文档明确 edge-to-edge 与 fullscreen 必填项。
+
+### 4.7 KuiklyUI Runtime Compatibility（新增）
+
+GearUI Kit 在推进 RuntimeEnvironment / Insets 体系时，必须保证与 KuiklyUI Runtime 的兼容稳定性。
+
+1. Single Source of Truth
+- 系统环境数据唯一来源为 KuiklyUI Runtime（`LocalConfiguration` / `pageData`）。
+- 禁止在 gearui-kit 内并行维护第二套 insets/safeArea 状态源。
+
+2. Backward Compatibility
+- 不得破坏现有 runtime 事件与字段语义，包括但不限于：
+  - `safeAreaInsets`
+  - `rootViewSizeDidChanged`
+  - `windowSizeDidChanged`
+  - `densityInfo`
+- 若需扩展字段，必须采用向后兼容新增，不允许重定义旧字段含义。
+
+3. Progressive Rollout
+- 新的系统环境能力按“可选开关 -> 默认开启”渐进发布：
+  - 阶段 1：feature flag（默认关闭）+ fallback 到旧路径
+  - 阶段 2：灰度开启并监控
+  - 阶段 3：默认开启，保留回退开关一个小版本周期
+
+4. Fail Strategy
+- Fullscreen Contract 冲突处理必须分环境：
+  - Debug：fail-fast（抛错/阻断渲染）
+  - Release：telemetry + 显式告警 + 可降级渲染
+- 禁止在 Release 直接 crash 作为默认策略。
+
+验收标准：
+- 新能力上线后，历史 sample 与业务 demo 无需改代码即可运行。
+- 兼容回归覆盖 `safeAreaInsets`、尺寸变化事件与密度变化事件。
+- 文档中存在明确回退方案与开关生命周期说明。
+
+### 4.8 Built-in Assets Integration Contract
+
+GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的一部分，不属于业务 App 的临时资源。
+
+规范要求：
+- 内置资产必须在首次 clean build 后即可被 Android / iOS / Web 对应宿主正确加载。
+- 消费方不得自行猜测 GearUI Kit 内部资源目录结构。
+- iOS CocoaPods / Framework 集成链路必须保证资源复制在 framework 同步后稳定执行。
+- 资源复制不得使用会清空目标目录并造成竞态的同步策略，除非该策略已在目标平台验证无竞态。
+- GearUI Kit sample 与业务 App 必须共享同一套资源集成逻辑，禁止长期维护两套不同脚本。
+- 所有内置资产必须具备可校验清单或等价完整性检查。
+
+推荐实现：
+- P1：提供共享 Gradle 脚本 `gradle/gearui-resources.gradle.kts`。
+- P2：提供 `gearui-gradle-plugin`，暴露 `id("com.gearui.kit.integration")`。
+- P2：提供 `verifyGearuiResources` 任务，检查宿主 bundle 中资源完整性。
+
+验收标准：
+- clean build + 首次安装后，内置图标正常显示，无需二次构建。
+- iOS `.app/compose-resources/icons/` 中资源数量与 GearUI Kit 内置图标清单一致。
+- Android / Web 后续接入时必须提供等价资源校验。
+
+---
+
+## 5. 性能规范
+
+### 5.1 基准场景
+
+必须长期追踪以下场景：
+- 长列表（1000+ item）滚动与加载。
+- 表单页（20+ 组件）输入与校验交互。
+- 主题切换（Light/Dark/Custom）切换耗时。
+- Overlay 叠加（Toast/Dialog/Popup）展示与销毁。
+
+### 5.2 指标（默认目标）
+
+- 首屏可交互时间（TTI）：
+  - Android：<= 1200ms（中端机）
+  - iOS：<= 1000ms（中端机）
+  - H5：<= 1800ms（4G）
+- 滚动丢帧率：
+  - 列表滑动掉帧比例 < 3%
+- 主题切换完成耗时：
+  - <= 120ms（无明显闪烁）
+
+### 5.2.1 结构性性能指标（必须跟踪）
+
+除耗时与帧率外，需长期追踪：
+- 主题切换时的重组节点数量。
+- Overlay 出现/消失时受影响的重组范围。
+- 重组深度（最大嵌套层级）。
+
+目标：
+- Overlay 操作不触发非 Overlay 子树重组。
+- 局部 Token 覆盖不导致全局重组。
+
+### 5.3 工程要求
+
+- 建立 `benchmark` 任务并入 CI 夜跑。
+- 提供性能回归阈值（超阈值失败或告警）。
+- 对关键组件标注稳定性（`@Immutable/@Stable`）并减少无效重组。
+
+---
+
+## 6. 易用性规范
+
+### 6.1 API 一致性
+
+- 参数顺序统一：`modifier`、核心参数、行为回调、可选样式。
+- 默认值与命名语义统一，避免同义参数并存。
+- 参数语义一经公开不得变更含义（即使类型不变）。
+- 同名参数在不同组件中的语义必须一致。
+
+状态参数命名边界：
+- **Field family**（Input / Textarea / Select / MultiSelect / Cascader / TreeSelect /
+  DatePickerInput / TimePickerInput）统一使用 `enabled: Boolean = true` 与
+  `error: String? = null`。Field 是表单值输入/选择控件，默认可交互；错误态是字段
+  校验结果，不应拆成 `errorText`、`status` 或 `disabled` 等局部命名。
+- **SearchBar** 属于搜索入口而不是表单字段，使用 `enabled`，但不提供 `error`。
+- **Action / affordance family**（Button / Tag / SwipeCell action / sheet item 等）可以
+  保留 `disabled: Boolean = false`。这些组件表达的是动作或标签的不可用状态，
+  `disabled` 在按钮生态中是常见且直接的语义；不为追求机械一致性做破坏性改名。
+- 禁止在同一个组件族内同时暴露 `enabled` 与 `disabled` 两套极性相反的参数。
+
+### 6.2 文档与示例
+
+语言约定（强制）：
+- **文档双语，英文为主**：`X.md` 为英文正本，`X.zh-Hans.md` 为对应中文版；两者章节结构保持一致。
+- **代码注释一律英文**，不分库与 sample。注释与代码同处一地、只有一个读者——读到那一行的人；
+  中英混杂意味着一半解释对一半读者失效。
+- 面向用户的中文文案属于 i18n 语言包，不是注释问题，由 SPEC_CI_MAPPING 第 7 条管。
+- 执行方式见 SPEC_CI_MAPPING 第 18 条（按文件计数冻结存量，只可减不可增）。
+
+
+每个组件文档至少包含：
+- 最小可用示例
+- 生产推荐示例
+- 常见问题与边界条件
+
+`sample` 要求：
+- 成为回归验证入口（主题、语言、平台行为）。
+- 新增组件必须附 sample 页面与截图/录屏。
+
+### 6.3 迁移体验
+
+- 版本升级必须提供迁移清单。
+- `@Deprecated` 至少保留一个小版本周期（紧急修复除外）。
+
+### 6.4 Sample 即架构验证
+
+`sample` 不仅是展示工具，也是架构回归入口。
+
+要求：
+- 所有 Runtime 能力必须在 sample 中被真实使用。
+- sample 中禁止出现临时代码或绕过 Runtime 的实现。
+- CI 需通过 sample 行为验证 Overlay / Theme / DarkMode。
+
+### 6.5 输入焦点与键盘交互基线
+
+输入组件（Input/SearchBar/基于输入原语封装的单行输入）必须遵循统一交互基线：
+- 单行输入在 IME `Done`（或等价完成动作）触发时，默认执行 `clearFocus(force = true)` 并收起软键盘。
+- 点击输入框外部空白区域、滚动容器等全局失焦策略，与 `Done` 行为保持一致，不允许出现状态分叉。
+- 禁止把 `Done` 失焦逻辑下沉到业务页面；必须由组件或 Runtime 默认实现。
+
+验收标准：
+- iOS 与 Android 上，单行 Input 输入后点击输入法“完成”，键盘立即收起且光标失焦。
+- 如业务需要保留焦点，必须通过显式参数关闭默认行为，默认值保持“完成即失焦”。
+
+---
+
+## 7. 灵活性规范
+
+### 7.1 品牌主题包（Brand Pack）
+
+- 支持将“特黑/暗紫”等主题抽离为独立主题包。
+- 主题包遵循统一 Token 接口并可按需加载。
+
+### 7.2 局部扩展能力
+
+- 允许组件级 Token 覆盖而不影响全局主题。
+- 保证扩展点不会破坏平台一致性与可维护性。
+- 禁止通过扩展点注入任意 Composable 改变组件结构。
+- 禁止替换组件内部状态机。
+- 禁止绕过 Token 体系直接操作样式。
+
+### 7.3 设计到代码链路
+
+- 规划 Token 生成链路（设计源 -> Token 代码）。
+- 保证生成结果可审计、可回滚、可比对。
+
+---
+
+## 8. CI/CD 规范
+
+默认流水线要求：
+1. `build`：多模块编译通过。
+2. `unit-test`：单元测试。
+3. `api-compat-check`：公共 API 兼容检查。
+4. `token-compat-check`：Token Schema 兼容检查。
+5. `sample-smoke`：示例应用冒烟（关键页面）。
+6. `benchmark-nightly`：性能夜跑。
+
+---
+
+## 9. 发布规范
+
+- 发布前必须通过上述 CI 基线。
+- 发布说明必须包含：
+1. 新增能力
+2. 兼容性变化
+3. 性能变化
+4. 迁移指引
+- 若版本包含 Runtime / Overlay / Theme 行为变化，必须在发布说明中显式标注。
+
+---
+
+## 10. 里程碑验收（绝对日期）
+
+### 截止 2026-04-30
+- API 兼容检查与 Token 兼容检查上线 CI。
+- 核心 10 个组件完成文档模板化。
+
+### 截止 2026-08-31
+- 性能基准体系上线并形成趋势看板。
+- 主题切换与长列表性能达成基线目标。
+
+### 截止 2026-12-31
+- Brand Pack 机制可用。
+- 组件级 Token 覆盖能力在核心组件稳定落地。
+
+---
+
+## 11. Architecture Guardrails（PR Gate）
+
+本文档内规则即 PR 审查硬规则。命中任一 `REJECT`，默认拒绝合并（除非架构 owner 明确豁免）。
+
+### 11.1 REJECT（不可违规）
+
+1. Runtime 边界
+- `REJECT`：组件直接监听系统级事件（scroll / back / route）。
+- `REJECT`：组件自行实现 Overlay 关闭策略。
+- `REJECT`：组件绕过 Runtime 直接修改全局主题、语言或路由状态。
+- `REJECT`：组件或业务页面直接调用平台 API 采集 insets/safeArea（应由 Runtime 统一提供）。
+- `REJECT`：业务页面长期手写 safe area padding 作为系统安全区主方案。
+- `REJECT`：在根容器或 Overlay 宿主上施加安全区 padding，导致全屏画布被裁剪。
+- `REJECT`：通过页面级参数手动切换 NavBar/BottomNavBar/Drawer/ActionSheet 的安全区策略（必须由 Runtime 统一决策）。
+- `REJECT`：同一页面树出现双层 `App`（或等价双 Runtime 根）导致 `runtimeFlags`/safeArea 语义漂移。
+
+2. Token 与样式
+- `REJECT`：组件层新增硬编码颜色值（`Color(0x...)`）替代语义 Token。
+- `REJECT`：整体替换 `ThemeSpec` 造成未声明 Token 丢失。
+- `REJECT`：绕过 Token 体系直接写死样式分支。
+- `REJECT`：交互组件缺失统一状态映射（`default/hover/active/focus/disabled/invalid`）。
+- `REJECT`：组件直接耦合全局语义色，未通过组件角色 Token 中转。
+- `REJECT`：新增 `Theme.colors` 字段不遵循语义成对规则。
+
+3. Overlay
+- `REJECT`：Overlay 不经过 Runtime 创建与销毁。
+- `REJECT`：Overlay 内直接操作路由或全局状态。
+- `REJECT`：Overlay 通过组件私有监听逻辑实现关闭。
+- `REJECT`：Overlay 遮罩不覆盖全屏容器（状态栏/手势区未纳入同一遮罩层级）。
+
+4. Fullscreen Contract
+- `REJECT`：App/Root Host 未以全屏容器（match-parent/edge-to-edge）挂载。
+- `REJECT`：在非全屏前提下继续以“页面补丁”规避系统栏与安全区问题。
+- `REJECT`：缺失全屏契约检测（Debug fail-fast 或 Release telemetry 其一都没有）。
+
+5. API 兼容
+- `REJECT`：公共 API 破坏性变更无兼容方案与迁移说明。
+- `REJECT`：同名参数在不同组件语义不一致。
+- `REJECT`：已公开参数语义被改写但未升级版本等级。
+
+6. Sample 与文档
+- `REJECT`：新增 Runtime 能力未在 sample 提供真实使用路径。
+- `REJECT`：新增组件无最小示例和迁移说明。
+- `REJECT`：sample 中出现绕过 Runtime 的临时代码。
+- `REJECT`：主题/配色改造 PR 未更新语义映射文档。
+- `REJECT`：组件配色改造 PR 未更新角色用色矩阵。
+
+7. Built-in Assets
+- `REJECT`：消费方长期维护与 GearUI Kit sample 不一致的内置资产复制逻辑。
+- `REJECT`：首次 clean build 后内置图标 / 字体 / 动画资源缺失。
+- `REJECT`：资源复制任务存在已知竞态但无校验或 fallback。
+- `REJECT`：组件直接依赖业务 App 资源路径加载 GearUI Kit 内置资产。
+
+8. Primitive Reuse Boundary
+- `REJECT`：components 层重复实现 primitives 层已存在的基础能力（如 Badge / Divider / Surface / Text / Icon / Spacer），导致行为、尺寸、Token 或边界条件不一致。
+- `REJECT`：components 层手写 badge 数字溢出（`99+` / `maxCount`）、红点尺寸、Surface 圆角、Text 字号语义等已被 primitives 覆盖的边界逻辑。
+- `REJECT`：primitives 层组件外的代码绕过 primitive 直接使用 `Color(0x...)` / 硬编码 dp 重新拼装等价能力。
+- `REJECT`：导航栏（BottomNavBar / Tabs / 工具栏）等**固定槽位**组件依赖 Badge 视觉溢出 anchor 边界（如直接把 Badge 放在 `Modifier.size(iconSize)` 的 Box 内 align(TopEnd)）。Kuikly Compose native 渲染层会按 anchor 容器的尺寸裁剪溢出子节点，无法稳定渲染 `99+` 等多字符徽标。
+  - 槽位组件必须为 icon + badge 显式预留**包含 badge 完整尺寸**的容器（典型 36dp×28dp），icon 居中、badge align 角点，badge 完全落在容器 bounds 内。这是组件自身布局责任，不应外推为通用 primitive。
+- `REJECT`：计数徽标（`Badge(count = ...)`）出现文本省略（如 `9...` / `99...`）。计数徽标语义是数字摘要，必须通过 `maxCount` 归一化为 `99+` 等稳定文本，并由调用方保证容器宽度足够（不能放进比 badge 自身更窄的 anchor 容器）。
+
+  原则：primitives 是组件库内部基础能力的 single source of truth；components 只能组合 primitives，不得复制其布局、状态、样式或边界逻辑。除非有明确架构豁免并在 PR 中说明。
+
+### 11.2 WARN（需说明）
+
+- `WARN`：核心路径新增对象分配，可能扩大重组范围。
+- `WARN`：Overlay 行为依赖平台分支，未给出一致性验证。
+- `WARN`：主题扩展点新增但无可回归样例。
+- `WARN`：新增内置资产但未更新资源清单或校验任务。
+- `WARN`：新增平台 target 但未定义内置资产打包策略。
+
+### 11.3 Reviewer Checklist
+
+1. 是否遵守 Runtime 责任边界。
+2. 是否保持 Token 合并制与语义完整性。
+3. 是否通过 Overlay Runtime 统一策略。
+4. 是否满足 API 兼容与迁移约束。
+5. 是否补齐 sample 验证与文档说明。
+6. 是否给出性能影响说明（至少定性）。
+
+---
+
+## 12. I18n 分层架构
+
+GearUI Kit 不集中托管所有库的语言包。每个库自定义强类型 strings，共享 GearUI Kit 提供的语言运行时。详见 [`I18N_INTEGRATION.md`](./I18N_INTEGRATION.md)。
+
+### 12.1 运行时职责
+
+GearUI Kit 提供：
+- `LocalLanguageTag`：当前 BCP47 语言 tag（normalized）
+- `LocalFallbackLanguageTag`：fallback tag，所有库共用
+- `I18nRoot(languageTag, fallbackLanguageTag, content)`：唯一语言入口
+- `normalizeLanguageTag(tag)` / `resolveLanguagePack(tag, packs, defaultTag)`：复用工具
+- `App(languageTag, fallbackLanguageTag, stringsOverrides, ...)`：自动挂 `I18nRoot` + `I18nProvider`
+
+GearUI Kit 不提供：
+- 全局 `Map<String, String>` registry
+- 跨库共享的 `Strings` data class
+- 字符串 key 查找 API
+
+### 12.2 上层库职责
+
+每个库必须独立提供：
+1. `XxxStrings` data class（强类型，全字段非 null）
+2. `XxxStringsPatch` data class（字段级覆盖，全字段 nullable）
+3. `XxxStringsPatch.isEmpty` 扩展（判别空 patch）
+4. `XxxStrings.merge(patch: XxxStringsPatch?): XxxStrings`（patch 空时返回 receiver，零分配）
+5. `XxxStringPacks.builtIn: Map<String, XxxStrings>` 内置语言映射
+6. `XxxI18nProvider(overrides, content)`：从 `LocalLanguageTag` 读语言、解析、merge、缓存
+7. `object XxxI18n { val strings @Composable get }`：组件访问点
+
+### 12.3 REJECT（不可违规）
+
+- `REJECT`：上层库自己再造一个 `LocalLanguageTag` / `LocalFallbackLanguageTag`，与 gearui-kit 并存。
+- `REJECT`：上层 `XxxI18nProvider` 接收 `languageTag` 作为参数（必须从 `LocalLanguageTag` 读）。
+- `REJECT`：应用层在 `App` 之外再嵌套 `I18nRoot(...)`（App 已挂载）。
+- `REJECT`：用 `Map<String, String>` + 字符串 key 访问文案。
+- `REJECT`：在每次组件重组中调用 `resolveLanguagePack` / `normalizeLanguageTag`（必须 `remember` 缓存）。
+- `REJECT`：在 `XxxStrings.merge` 中无条件 `copy()`（patch 为 null/empty 必须直接返回 receiver）。
+
+### 12.4 验收标准
+
+- 上层库的 `XxxI18nProvider` 不接收 `languageTag` 参数。
+- `LocalLanguageTag` 单点切换时所有层 strings 同步重组（不需要业务侧手动同步）。
+- BCV baseline 包含每层 strings 的字段集合，删除/重命名字段触发 CI 失败。
+- sample 中存在至少一处 `stringsOverrides` 字段级覆盖示例（可在 `MainDemo` 或专门的设置页演示）。

@@ -33,10 +33,11 @@ fun ExamplePage(
     val shapes = Theme.shapes
     val settingsState = LocalSettingsState.current
     val listState = rememberLazyListState()
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
+    val navBarColor = colors.surface
 
     PageScaffold(
         backgroundColor = colors.background,
+        topSafeAreaColor = navBarColor,
         consumeBottomSafeArea = true
     ) {
         Column(

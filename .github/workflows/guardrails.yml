@@ -23,6 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Generated control tokens
+        run: |
+          python3 scripts/generate_tokens.py --check
+          python3 -m unittest discover -s scripts/tests -p 'test_*.py'
+
       # ripgrep is not preinstalled on the GitHub-hosted Ubuntu images (checked
       # against the 22.04 and 24.04 manifests). Four guards require it and fail
       # loudly when it is missing rather than scanning nothing, so install it

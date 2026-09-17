@@ -31,6 +31,7 @@ fun DatePickerExample(
     ) {
         // Date picker
         ExampleSection(
+            useCardContainer = false,
             title = "日期选择器",
             description = "选择年月日"
         ) {
@@ -54,6 +55,7 @@ fun DatePickerExample(
 
         // With a default value
         ExampleSection(
+            useCardContainer = false,
             title = "带默认值",
             description = "设置初始日期值"
         ) {
@@ -69,6 +71,7 @@ fun DatePickerExample(
 
         // Time picker
         ExampleSection(
+            useCardContainer = false,
             title = "时间选择器",
             description = "选择时分"
         ) {
@@ -92,6 +95,7 @@ fun DatePickerExample(
 
         // Time with a default value
         ExampleSection(
+            useCardContainer = false,
             title = "时间默认值",
             description = "设置初始时间值"
         ) {
@@ -107,6 +111,7 @@ fun DatePickerExample(
 
         // Date and time picker
         ExampleSection(
+            useCardContainer = false,
             title = "日期时间选择器",
             description = "同时选择日期和时间"
         ) {
@@ -132,6 +137,7 @@ fun DatePickerExample(
 
         // Disabled state
         ExampleSection(
+            useCardContainer = false,
             title = "禁用状态",
             description = "不可交互的选择器"
         ) {
@@ -156,6 +162,7 @@ fun DatePickerExample(
 
         // Without a label
         ExampleSection(
+            useCardContainer = false,
             title = "无标签样式",
             description = "不显示标签的选择器"
         ) {
@@ -184,6 +191,7 @@ fun DatePickerExample(
 
         // Usage notes
         ExampleSection(
+            useCardContainer = false,
             title = "使用说明",
             description = "DatePicker 组件特性"
         ) {

@@ -38,3 +38,7 @@ out/
 # Compose
 .compose/
 kotlin-js-store/
+
+# Token compiler Python caches
+__pycache__/
+*.pyc

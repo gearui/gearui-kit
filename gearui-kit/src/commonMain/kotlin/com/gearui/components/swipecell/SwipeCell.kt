@@ -4,6 +4,10 @@ import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.spring
 import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.ui.graphics.lerp
+import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.detectHorizontalDragGestures
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -408,14 +412,15 @@ private fun SwipeCellActionButton(
         SwipeCellActionTheme.SUCCESS -> colors.successForeground
     }
 
-    var isPressed by remember { mutableStateOf(false) }
+    val interaction = remember { MutableInteractionSource() }
+    val isPressed by interaction.collectIsPressedAsState()
 
     Box(
         modifier = modifier
             .background(
-                if (isPressed) backgroundColor.copy(alpha = 0.85f) else backgroundColor
+                if (isPressed) lerp(backgroundColor, foregroundColor, FeedbackDefaults.neutralMix) else backgroundColor
             )
-            .clickable { onClick() },
+            .clickable(interactionSource = interaction, indication = null) { onClick() },
         contentAlignment = Alignment.Center
     ) {
         if (action.icon != null && action.iconPosition == SwipeCellIconPosition.TOP) {

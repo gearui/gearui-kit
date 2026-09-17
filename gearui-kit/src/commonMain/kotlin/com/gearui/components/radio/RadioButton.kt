@@ -13,9 +13,18 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.interaction.disabledAppearance
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.feedbackDuration
+import com.tencent.kuikly.compose.animation.core.*
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.selection.selectable
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.tencent.kuikly.compose.ui.semantics.Role
 
 /**
  * RadioButton - fully Theme-driven radio button
@@ -37,51 +46,32 @@ fun RadioButton(
     enabled: Boolean = true,
     size: RadioSize = RadioSize.MEDIUM
 ) {
-    // ⭐ Framework Rule #1: this is always the first line
+    val interaction = remember { MutableInteractionSource() }
+    Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
+        .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick),
+        contentAlignment = Alignment.Center) {
+        RadioMark(selected, enabled, size)
+    }
+}
+
+@Composable
+private fun RadioMark(selected: Boolean, enabled: Boolean, size: RadioSize) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    // Size parameters
-    val outerSize = when (size) {
-        RadioSize.LARGE -> 24.dp
-        RadioSize.MEDIUM -> 20.dp
-        RadioSize.SMALL -> 16.dp
+    val motion = Theme.motion
+    val outer = when (size) {
+        RadioSize.LARGE -> ControlGeometry.selectionLarge
+        RadioSize.MEDIUM -> ControlGeometry.selectionMedium
+        RadioSize.SMALL -> ControlGeometry.selectionSmall
     }
-    // The selected dot is kept proportionally smaller to keep the visual hierarchy consistent
-    val innerSize = outerSize * 0.38f
-
-    // ⭐ Colour mapping: Theme semantics -> Radio visuals
-    val borderColor = when {
-        !enabled -> colors.mutedForeground
-        selected -> colors.primary
-        else -> colors.border
-    }
-
-    val innerColor = if (!enabled) colors.mutedForeground else colors.primary
-
-    Box(
-        modifier = modifier
-            .size(outerSize)
-            .clip(CircleShape)
-            // Unselected is left unfilled so dark themes do not show a "black block"
-            .background(Color.Transparent)
-            .border(BorderWidth.thin, borderColor, CircleShape)
-            .then(
-                if (enabled) {
-                    Modifier.clickable(onClick = onClick)
-                } else Modifier
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        // Selected marker (inner circle)
-        if (selected) {
-            Box(
-                modifier = Modifier
-                    .size(innerSize)
-                    .clip(CircleShape)
-                    .background(innerColor)
-            )
-        }
+    val scale by animateFloatAsState(if (selected || motion.normal <= 0) 1f else FeedbackDefaults.radioExitScale,
+        tween(motion.feedbackDuration(FeedbackDefaults.radioRevealDuration), easing = FeedbackDefaults.pressEasing))
+    Box(Modifier.size(outer).graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
+        .clip(CircleShape).background(if (selected) colors.primary else colors.surface)
+        // Semantic outline is the fallback for the reference's field shadow.
+        .border(BorderWidth.thin, if (selected) colors.primary else colors.border, CircleShape), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(ControlGeometry.radioThumb * (outer / ControlGeometry.selectionMedium))
+            .graphicsLayer { alpha = if (selected) 1f else 0f; scaleX = scale; scaleY = scale }
+            .clip(CircleShape).background(colors.primaryForeground))
     }
 }
 
@@ -107,29 +97,14 @@ fun RadioButtonWithLabel(
     size: RadioSize = RadioSize.MEDIUM
 ) {
     val colors = Theme.colors
-
-    Row(
-        modifier = modifier
-            .then(
-                if (enabled) {
-                    Modifier.clickable(onClick = onClick)
-                } else Modifier
-            )
-            .padding(vertical = Spacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
-    ) {
-        RadioButton(
-            selected = selected,
-            onClick = onClick,
-            size = size
-        )
-
-        Text(
-            text = label,
-            color = if (enabled) colors.foreground else colors.mutedForeground,
-            style = Theme.typography.bodyLarge
-        )
+    val interaction = remember { MutableInteractionSource() }
+    Row(modifier.heightIn(min = ControlGeometry.selectionTouchTarget)
+        .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick)
+        .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+        RadioMark(selected, enabled, size)
+        Text(label, color = colors.foreground, style = Theme.typography.bodyLarge,
+            modifier = Modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity })
     }
 }
 
@@ -155,6 +130,7 @@ fun <T> RadioGroup(
                 selected = option == selectedOption,
                 onClick = { onOptionSelected(option) },
                 label = labelProvider(option),
+                enabled = enabled,
             )
         }
     }
@@ -182,7 +158,7 @@ fun <T> RadioCardGroup(
     val shapes = Theme.shapes
 
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().disabledAppearance(!enabled),
         horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         options.forEach { option ->
@@ -197,7 +173,7 @@ fun <T> RadioCardGroup(
                         else colors.muted
                     )
                     .border(
-                        width = if (isSelected) 2.dp else 1.dp,
+                        width = if (isSelected) BorderWidth.thick else BorderWidth.thin,
                         color = if (isSelected) colors.primary else colors.border,
                         shape = shapes.md
                     )
@@ -225,8 +201,7 @@ fun <T> RadioCardGroup(
                     Text(
                         text = labelProvider(option),
                         color = if (isSelected) colors.primary
-                        else if (enabled) colors.foreground
-                        else colors.mutedForeground
+                        else colors.foreground
                     )
 
                     // Selected indicator

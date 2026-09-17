@@ -27,8 +27,8 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * Internal visual regression page — NOT part of the component gallery.
  *
  * Stacks every field-family trigger so the shared FieldTokens geometry can be
- * checked side by side: they should agree on height (40dp), corner radius
- * (`Shapes.md`, 6dp), horizontal padding, border weight and trailing icon
+ * checked side by side: they should agree on height (48dp), corner radius
+ * (`Shapes.lg`, 14dp), horizontal padding, border weight and trailing icon
  * size. Reach for this whenever those tokens change, instead of rebuilding a
  * throwaway page each time.
  *

@@ -11,6 +11,8 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 
@@ -60,9 +62,10 @@ fun Stepper(
 
     Row(
         modifier = modifier
+            .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
             .height(height)
             .clip(shapes.md)
-            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, shapes.md),
+            .border(BorderWidth.thin, colors.border, shapes.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Decrement button
@@ -70,7 +73,8 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(height)
-                .background(if (canDecrease) colors.surface else colors.muted)
+                .graphicsLayer { alpha = if (enabled && !canDecrease) FeedbackDefaults.disabledOpacity else 1f }
+                .background(colors.surface)
                 .clickable(enabled = canDecrease) {
                     onValueChange((value - step).coerceAtLeast(min))
                 },
@@ -79,7 +83,7 @@ fun Stepper(
             Text(
                 text = "−",
                 style = textStyle,
-                color = if (canDecrease) colors.foreground else colors.mutedForeground
+                color = colors.foreground
             )
         }
 
@@ -88,7 +92,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(BorderWidth.thin)
-                .background(if (enabled) colors.border else colors.mutedForeground)
+                .background(colors.border)
         )
 
         // Value display
@@ -96,13 +100,13 @@ fun Stepper(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .background(if (enabled && !disableInput) colors.surface else colors.muted),
+                .background(colors.surface),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = value.toString(),
                 style = textStyle,
-                color = if (enabled) colors.foreground else colors.mutedForeground
+                color = colors.foreground
             )
         }
 
@@ -111,7 +115,7 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(BorderWidth.thin)
-                .background(if (enabled) colors.border else colors.mutedForeground)
+                .background(colors.border)
         )
 
         // Increment button
@@ -119,7 +123,8 @@ fun Stepper(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(height)
-                .background(if (canIncrease) colors.surface else colors.muted)
+                .graphicsLayer { alpha = if (enabled && !canIncrease) FeedbackDefaults.disabledOpacity else 1f }
+                .background(colors.surface)
                 .clickable(enabled = canIncrease) {
                     onValueChange((value + step).coerceAtMost(max))
                 },
@@ -128,7 +133,7 @@ fun Stepper(
             Text(
                 text = "+",
                 style = textStyle,
-                color = if (canIncrease) colors.foreground else colors.mutedForeground
+                color = colors.foreground
             )
         }
     }
@@ -174,8 +179,10 @@ fun StepperWithLabel(
         Text(
             text = label,
             style = Theme.typography.bodyMedium,
-            color = if (enabled) colors.foreground else colors.mutedForeground,
-            modifier = Modifier.weight(1f)
+            color = colors.foreground,
+            modifier = Modifier.weight(1f).graphicsLayer {
+                alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
+            }
         )
 
         Spacer(modifier = Modifier.width(labelGap))

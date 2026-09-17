@@ -30,6 +30,7 @@ fun CascaderExample(
     ) {
         // Basic cascading select
         ExampleSection(
+            useCardContainer = false,
             title = "基础用法",
             description = "点击展开下一级选项"
         ) {
@@ -104,6 +105,7 @@ fun CascaderExample(
 
         // Default value
         ExampleSection(
+            useCardContainer = false,
             title = "默认值",
             description = "设置初始选中值"
         ) {
@@ -152,6 +154,7 @@ fun CascaderExample(
 
         // Custom separator
         ExampleSection(
+            useCardContainer = false,
             title = "自定义分隔符",
             description = "使用自定义分隔符显示选中值"
         ) {
@@ -211,6 +214,7 @@ fun CascaderExample(
 
         // Disabled options
         ExampleSection(
+            useCardContainer = false,
             title = "禁用选项",
             description = "部分选项可设置为禁用状态"
         ) {
@@ -258,6 +262,7 @@ fun CascaderExample(
 
         // Usage notes
         ExampleSection(
+            useCardContainer = false,
             title = "使用说明",
             description = "Cascader 组件特性"
         ) {

@@ -2,9 +2,11 @@ package com.gearui.theme
 
 import androidx.compose.runtime.Immutable
 import com.tencent.kuikly.compose.ui.graphics.Color
+import com.gearui.foundation.button.ButtonColors
+import com.gearui.foundation.button.DefaultButtonColors
 
 /**
- * GearUI semantic color model (24 fields, business-neutral).
+ * GearUI semantic color model (business-neutral).
  *
  * Roles are grouped into:
  *  - Surfaces: background / surface / card / popover / muted (+ their foregrounds)
@@ -63,7 +65,11 @@ data class Colors(
 
 @Immutable
 data class ThemeSpec(
-    val colors: Colors
+    val colors: Colors,
+    /** Null derives neutral button states from this theme's semantic colors. */
+    val buttonColors: ButtonColors? = null,
+    /** Null derives Input states from semantic colors for custom brands. */
+    val inputColors: com.gearui.foundation.field.InputColors? = null,
 )
 
 /* ---------------------------------------------------------------------- */
@@ -73,96 +79,80 @@ data class ThemeSpec(
 object Themes {
 
     val Light = ThemeSpec(
+        inputColors = com.gearui.foundation.field.DefaultInputColors.Light,
+        buttonColors = DefaultButtonColors.Light,
         colors = Colors(
-            background = Color(0xFFFFFFFF),
-            foreground = Color(0xFF09090B),
-            surface = Color(0xFFFFFFFF),
-            surfaceForeground = Color(0xFF09090B),
-            card = Color(0xFFFFFFFF),
-            cardForeground = Color(0xFF09090B),
-            popover = Color(0xFFFFFFFF),
-            popoverForeground = Color(0xFF09090B),
-            muted = Color(0xFFF4F4F5),
-            // Matches iOS secondaryLabel (rgba(60,60,67,0.6) flattened onto white ≈ #8A8A8E).
-            // The old 0xFF52525B (zinc-600) was a step darker; secondary text did not
-            // separate from primary text and whole screens read as "too black".
-            mutedForeground = Color(0xFF8A8A8E),
+            background = DefaultPalette.lightBackground,
+            foreground = DefaultPalette.lightForeground,
+            surface = DefaultPalette.lightSurface,
+            surfaceForeground = DefaultPalette.lightSurfaceForeground,
+            card = DefaultPalette.lightSurface,
+            cardForeground = DefaultPalette.lightForeground,
+            popover = DefaultPalette.lightOverlay,
+            popoverForeground = DefaultPalette.lightForeground,
+            muted = DefaultPalette.lightMuted,
+            mutedForeground = DefaultPalette.lightMutedForeground,
 
-            primary = Color(0xFF18181B),
-            primaryForeground = Color(0xFFFFFFFF),
-            secondary = Color(0xFFF4F4F5),
-            secondaryForeground = Color(0xFF18181B),
-            accent = Color(0xFFF4F4F5),
-            accentForeground = Color(0xFF18181B),
+            primary = DefaultPalette.lightPrimary,
+            primaryForeground = DefaultPalette.lightPrimaryForeground,
+            secondary = DefaultPalette.lightButtonBackground,
+            secondaryForeground = DefaultPalette.lightButtonContent,
+            accent = DefaultPalette.lightSurface,
+            accentForeground = DefaultPalette.lightSurfaceForeground,
 
-            destructive = Color(0xFFDC2626),
-            destructiveForeground = Color(0xFFFFFFFF),
-            success = Color(0xFF16A34A),
-            successForeground = Color(0xFFFFFFFF),
-            warning = Color(0xFFF59E0B),
-            warningForeground = Color(0xFF09090B),
+            destructive = DefaultPalette.lightDestructive,
+            destructiveForeground = DefaultPalette.lightDestructiveForeground,
+            success = DefaultPalette.lightSuccess,
+            successForeground = DefaultPalette.lightSuccessForeground,
+            warning = DefaultPalette.lightWarning,
+            warningForeground = DefaultPalette.lightWarningForeground,
             info = Color(0xFF2563EB),
             infoForeground = Color(0xFFFFFFFF),
 
-            border = Color(0xFFE4E4E7),
-            input = Color(0xFFE4E4E7),
-            ring = Color(0xFF18181B),
+            border = DefaultPalette.lightBorder,
+            input = DefaultPalette.lightInputBorder,
+            ring = DefaultPalette.lightRing,
         )
     )
 
     val Dark = ThemeSpec(
+        inputColors = com.gearui.foundation.field.DefaultInputColors.Dark,
+        buttonColors = DefaultButtonColors.Dark,
         colors = Colors(
-            // Neutral grey ramp: truly neutral (R=G=B), matching iOS, with the old zinc blue cast removed
-            background = Color(0xFF0A0A0A),
-            foreground = Color(0xFFFAFAFA),
-            surface = Color(0xFF121212),
-            surfaceForeground = Color(0xFFFAFAFA),
-            card = Color(0xFF121212),
-            cardForeground = Color(0xFFFAFAFA),
-            popover = Color(0xFF1C1C1C),
-            popoverForeground = Color(0xFFFAFAFA),
-            muted = Color(0xFF1C1C1C),
-            mutedForeground = Color(0xFFA1A1A1),
+            background = DefaultPalette.darkBackground,
+            foreground = DefaultPalette.darkForeground,
+            surface = DefaultPalette.darkSurface,
+            surfaceForeground = DefaultPalette.darkSurfaceForeground,
+            card = DefaultPalette.darkSurface,
+            cardForeground = DefaultPalette.darkForeground,
+            popover = DefaultPalette.darkOverlay,
+            popoverForeground = DefaultPalette.darkForeground,
+            muted = DefaultPalette.darkMuted,
+            mutedForeground = DefaultPalette.darkMutedForeground,
 
-            primary = Color(0xFFFAFAFA),
-            primaryForeground = Color(0xFF0A0A0A),
-            secondary = Color(0xFF272727),
-            secondaryForeground = Color(0xFFFAFAFA),
-            accent = Color(0xFF272727),
-            accentForeground = Color(0xFFFAFAFA),
+            primary = DefaultPalette.darkPrimary,
+            primaryForeground = DefaultPalette.darkPrimaryForeground,
+            secondary = DefaultPalette.darkButtonBackground,
+            secondaryForeground = DefaultPalette.darkButtonContent,
+            accent = DefaultPalette.darkSurface,
+            accentForeground = DefaultPalette.darkSurfaceForeground,
 
-            destructive = Color(0xFFF87171),
-            destructiveForeground = Color(0xFFFFFFFF),
-            success = Color(0xFF22C55E),
-            successForeground = Color(0xFF0A0A0A),
-            warning = Color(0xFFF59E0B),
-            warningForeground = Color(0xFF0A0A0A),
+            destructive = DefaultPalette.darkDestructive,
+            destructiveForeground = DefaultPalette.darkDestructiveForeground,
+            success = DefaultPalette.darkSuccess,
+            successForeground = DefaultPalette.darkSuccessForeground,
+            warning = DefaultPalette.darkWarning,
+            warningForeground = DefaultPalette.darkWarningForeground,
             info = Color(0xFF60A5FA),
             infoForeground = Color(0xFF0A0A0A),
 
-            border = Color(0xFF333333),
-            input = Color(0xFF333333),
-            ring = Color(0xFFFAFAFA),
+            border = DefaultPalette.darkBorder,
+            input = DefaultPalette.darkInputBorder,
+            ring = DefaultPalette.darkRing,
         )
     )
 }
 
-/**
- * PAGE background for grouped list screens (settings / profile style
- * inset-grouped tables).
- *
- * The iOS sense of depth comes from a systemGroupedBackground (#F2F2F7) page
- * under white cell cards. With light-theme background/surface/card all white,
- * cards and page melt into one sheet with nothing left but hairlines. Dark
- * themes already keep a step between background (#0A0A0A) and surface
- * (#121212), so they stay on background.
- *
- * Decided by background brightness rather than an explicit mode flag, so
- * custom brand themes land on the correct side automatically.
- */
+/** Grouped pages follow the selected theme rather than a fixed iOS palette. */
 val Colors.groupedBackground: Color
-    get() = if (background.red + background.green + background.blue < 1.5f) {
-        background
-    } else {
-        Color(0xFFF2F2F7)
-    }
+    get() = background

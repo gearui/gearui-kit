@@ -1,11 +1,13 @@
 package com.gearui.sample.pages
 
 import androidx.compose.runtime.*
+import com.gearui.foundation.primitives.ScrollView
+import com.gearui.foundation.scroll.ScrollTokens
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
@@ -34,7 +36,14 @@ enum class ThemeStyle(val displayName: String) {
 /**
  * Settings state
  */
+enum class BrandAccent(val title: String, val color: Color?) {
+    DEFAULT("Default", null), BLUE("Blue", Color(0xFF0088FF)),
+    GREEN("Green", Color(0xFF12875C)), ORANGE("Orange", Color(0xFFFF9500))
+}
+
 class SettingsState {
+    var brandAccent by mutableStateOf(BrandAccent.DEFAULT)
+    var squareControls by mutableStateOf(false)
     var languageTag by mutableStateOf("zh-Hans")
     var themeStyle by mutableStateOf(ThemeStyle.SYSTEM)
 }
@@ -59,7 +68,7 @@ fun SettingsPage(
     val colors = Theme.colors
     val coreStrings = I18n.strings
     val sampleStrings = SampleI18n.strings
-    val navBarColor = if (settingsState.themeStyle == ThemeStyle.DARK_PURPLE) colors.primary else colors.surface
+    val navBarColor = colors.surface
     val languageOptions = DefaultSampleLanguageOptions
 
     // Display name of the theme style in the current language
@@ -72,6 +81,7 @@ fun SettingsPage(
 
     PageScaffold(
         backgroundColor = colors.background,
+        topSafeAreaColor = navBarColor,
         consumeBottomSafeArea = true
     ) {
         Column(
@@ -89,12 +99,11 @@ fun SettingsPage(
         )
 
         // Settings content
-        Column(
+        ScrollView(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.background)
-                .padding(Spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xl)
+                .background(colors.background),
+            tokens = ScrollTokens.Default.copy(spacing = Spacing.xl)
         ) {
             // Language
             SettingsCardSection(title = coreStrings.language) {
@@ -146,6 +155,38 @@ fun SettingsPage(
                 }
             }
 
+            SettingsCardSection(title = sampleStrings.brandAccent) {
+                BrandAccent.entries.chunked(2).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                        row.forEach { accent ->
+                            RadioCardItemCompact(
+                                selected = settingsState.brandAccent == accent,
+                                onClick = { settingsState.brandAccent = accent },
+                                title = when (accent) {
+                                    BrandAccent.DEFAULT -> sampleStrings.brandDefault
+                                    BrandAccent.BLUE -> sampleStrings.brandBlue
+                                    BrandAccent.GREEN -> sampleStrings.brandGreen
+                                    BrandAccent.ORANGE -> sampleStrings.brandOrange
+                                },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+            }
+            SettingsCardSection(title = sampleStrings.shapeStyle) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                    listOf(false to sampleStrings.shapeRounded, true to sampleStrings.shapeSquare).forEach { (square, title) ->
+                        RadioCardItemCompact(
+                            selected = settingsState.squareControls == square,
+                            onClick = { settingsState.squareControls = square },
+                            title = title,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+            }
+
             // About
             SettingsCardSection(
                 title = sampleStrings.aboutTitle
@@ -153,12 +194,12 @@ fun SettingsPage(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(Spacing.sm))
+                        .clip(Theme.shapes.lg)
                         .background(colors.surface)
                         .border(
                             width = 1.dp,
                             color = colors.border,
-                            shape = RoundedCornerShape(Spacing.sm)
+                            shape = Theme.shapes.lg
                         )
                         .padding(Spacing.lg),
                     verticalArrangement = Arrangement.spacedBy(Spacing.md)
@@ -222,12 +263,12 @@ private fun RadioCardItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(Spacing.sm))
+            .clip(Theme.shapes.lg)
             .background(cardBackground)
             .border(
                 width = 1.dp,
                 color = cardBorderColor,
-                shape = RoundedCornerShape(Spacing.sm)
+                shape = Theme.shapes.lg
             )
             .clickable(onClick = onClick)
             .padding(Spacing.lg),
@@ -273,12 +314,12 @@ private fun RadioCardItemCompact(
 
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(Spacing.sm))
+            .clip(Theme.shapes.lg)
             .background(cardBackground)
             .border(
                 width = 1.dp,
                 color = cardBorderColor,
-                shape = RoundedCornerShape(Spacing.sm)
+                shape = Theme.shapes.lg
             )
             .clickable(onClick = onClick)
             .padding(horizontal = Spacing.lg, vertical = Spacing.lg),

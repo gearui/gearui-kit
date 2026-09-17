@@ -85,6 +85,8 @@ fun Text(
         fontSize = finalFontSize,
         lineHeight = style.lineHeight,
         fontWeight = finalFontWeight,
+        fontFamily = style.resolveFontFamily(),
+        letterSpacing = style.letterSpacing,
         color = finalColor,
         // Kuikly's TextStyle takes a non-null TextAlign; Start is its own default.
         textAlign = textAlign ?: TextAlign.Start

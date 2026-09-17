@@ -1,0 +1,41 @@
+{
+  "version": "2025.10",
+  "name": "Independent brand and shape example",
+  "sets": {
+    "base": {
+      "sources": [{
+        "brand": {
+          "accent": { "$type": "color", "$value": { "colorSpace": "srgb", "components": [0, 0.48, 1] } }
+        },
+        "shape": {
+          "radius": { "$type": "dimension", "$value": { "value": 14, "unit": "px" } }
+        },
+        "button": {
+          "fill": { "$value": "{brand.accent}" },
+          "radius": { "$value": "{shape.radius}" }
+        }
+      }]
+    }
+  },
+  "modifiers": {
+    "brand": {
+      "contexts": {
+        "blue": [],
+        "green": [{ "brand": { "accent": { "$type": "color", "$value": { "colorSpace": "srgb", "components": [0.1, 0.5, 0.3] } } } }]
+      },
+      "default": "blue"
+    },
+    "shape": {
+      "contexts": {
+        "rounded": [],
+        "square": [{ "shape": { "radius": { "$type": "dimension", "$value": { "value": 0, "unit": "px" } } } }]
+      },
+      "default": "rounded"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/base" },
+    { "$ref": "#/modifiers/brand" },
+    { "$ref": "#/modifiers/shape" }
+  ]
+}

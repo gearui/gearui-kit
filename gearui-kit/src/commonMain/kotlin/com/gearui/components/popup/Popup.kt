@@ -68,6 +68,7 @@ object Popup {
 
         // Keep the onDismiss callback current
         val onDismissState = rememberUpdatedState(onDismiss)
+        val contentState = rememberUpdatedState(content)
 
         // React to visible changes
         LaunchedEffect(visible) {
@@ -96,7 +97,7 @@ object Popup {
                     ),
                     onDismiss = { onDismissState.value() }
                 ) {
-                    PopupSurface(content = content)
+                    PopupSurface(content = contentState.value)
                 }
                 anchorBoundsWhenOpened = anchorBounds
             } else {

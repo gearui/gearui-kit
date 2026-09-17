@@ -2,7 +2,31 @@
 
 公开 token API 在 1.0 冻结前完成了一次收口。本文件记录 **被删除的 pre-1.0 过时 API → 1.0 正式 API** 的映射，供下游（`privchat-ui` / `live-chat` / `lms-app` 等）迁移参考。
 
-迁移过程见 `docs/TOKEN_FREEZE_DECISIONS.md` 的 burn-down 表（Batch 1–13）。
+历史迁移过程见 [_archive/pre-beta3/TOKEN_FREEZE_DECISIONS.md](_archive/pre-beta3/TOKEN_FREEZE_DECISIONS.md)。
+
+
+## beta3 候选迁移检查
+
+此节描述当前迁移要求，不代表已发布。当前规则以 [SPEC](SPEC.md) 为准。
+以下 Batch 13 等章节是历史映射，旧字段数量、默认尺寸和调色板数值不是现行规范。
+
+- 所有消费者重新编译。`apiCheck` 校验的是当前基线，不证明与 beta2 二进制兼容。
+- `ButtonType.GHOST` 改为 `TEXT`；默认 Button 仍使用 `PRIMARY`，中性按钮显式传 `DEFAULT`。
+- 路由实现 `NavRoute`，用 `NavigatorController<MyRoute>` 固定公共路由类型；
+  `entry.route` 直接携带数据，不再维护 `entry.key -> payload` 表。
+- Navigator 使用 `initialRoute` 或 `controller` 两个独立入口，不同时传两者；
+  不再传自定义 entry key，不自行实现 controller。`popTo` 传路由对象，按 routeName 匹配。
+- 返回拦截接收 `PopReason`。`Pending` 的继续/取消流程以当前 NavApi 与导航契约为准，
+  不照搬旧 PopRequest 示例。
+- `TextStyle` 字体列表/字距、Shapes 和主题调色板等构造器新增字段：更新自定义构造调用及 API 基线。
+- Input/Textarea 默认标签在上方；需要旧的横向布局时显式指定。检查窄屏、计数器、校验文案与键盘。
+- Card 可使用 token 驱动的多层装饰，不再以“所有卡片必须无阴影”为规则。
+- 品牌色与圆角方案独立配置；不要通过切换品牌重置整个主题。
+- Kuikly runtime、平台 renderer、KSP 与 iOS Pods 保持 2.27.0 对齐。
+
+当前发布门槛与未验收范围见 [beta3 readiness](BETA3_RELEASE_READINESS.md)。
+
+## 历史迁移映射（非当前默认值表）
 
 ## Batch 13A — `Colors` 过时 bridge 字段移除
 
@@ -138,3 +162,54 @@
 | `Radius.circle` | `Radius.circle` | 9999dp（保留，= full，用于圆形头像/徽章） |
 
 库内仅 `AvatarTokens` 用到 `Radius.circle`（保留，无改动）；四个下游仓库均未使用 `Radius`。
+
+## HeroUI Native default profile (pre-1.0)
+
+This is an intentional visual/default-profile change, not a binary-compatible
+patch. Recompile downstream applications after updating the library. No action
+family `disabled` parameters are renamed.
+
+- Regular/large fields are 48/56 logical pixels. Adjacent custom controls should
+  use `FieldSizeTokens` and `FieldDefaults`, not duplicate the old heights.
+- Input labels default to above the control; helper/error/counter content is
+  outside the field. Explicit left labels remain available. A fixed outer height
+  must budget for supporting text as well as the input area.
+- `Shapes.controlLarge` separates large controls from regular fields and sheets.
+  `ThemeSpec` now accepts optional button/input palettes. Defaulted constructor
+  additions preserve common source calls but do not preserve old compiled ABI.
+- Card defaults follow the active theme shape; an explicit radius remains a local
+  override. Its thin-border material is a documented renderer fallback, not a
+  multi-layer HeroUI shadow implementation.
+- BottomSheet's content overload gains an optional header; AutoResizeTextarea
+  gains outlined presentation; overlay transition options and swipe-dismiss
+  session identity are represented in the API dump. Recompile positional and
+  trailing-lambda consumers; Android consumer compilation has been checked.
+- `withBrandAccent(color, foreground?)` changes primary, on-primary and focus
+  roles only. It preserves surfaces, typography and shapes. The default contrast
+  choice is black/white for opaque sRGB colors; an explicit foreground overrides
+  it. Transparent brand colors are rejected.
+
+```kotlin
+val branded = Themes.Light.withBrandAccent(Color(0xFF12875C))
+App(theme = branded, shapes = myShapes) {
+    // All controls inherit the brand and shape axes independently.
+}
+```
+
+`disabledAppearance` is visual only: custom controls must also disable their
+click/gesture handling. Read-only is a separate state and is not automatically dimmed.
+
+## Surface And Font Adapter
+
+`TextStyle` appends `fontFamily: List<String> = listOf("system-ui")` and
+`letterSpacing: TextUnit = 0.sp`. Existing source calls retain their defaults,
+but its generated constructor/copy ABI changes: recompile downstream binaries
+against the new kit. API dumps record this intentional change, not proof of
+compatibility with older compiled artifacts.
+
+Use `LocalFontRegistry` to map token family names to fonts already installed by
+the host. Unknown families fall through in order, then to the platform system font.
+Registration does not download or install a font. `LocalSurfaceShadowStyles`
+overrides surface/field/overlay stacks independently of brand accent and shape.
+Use `DecoratedSurface` with `SurfaceBorder` for non-solid border styles. See
+`SURFACE_RENDERING_ACCEPTANCE.md` for rendering and platform limits.

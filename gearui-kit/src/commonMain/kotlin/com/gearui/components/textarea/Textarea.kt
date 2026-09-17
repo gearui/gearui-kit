@@ -1,4 +1,8 @@
 package com.gearui.components.textarea
+import com.gearui.foundation.typography.resolveFontFamily
+
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.gearui.foundation.motion.FeedbackDefaults
 
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -26,13 +30,22 @@ import com.tencent.kuikly.compose.ui.unit.TextUnit
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.fieldBorderColor
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.field.FieldFocusOverlay
+import com.gearui.foundation.field.rememberInputFeedback
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.theme.LocalInputColors
+import com.tencent.kuikly.compose.foundation.hoverable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsHoveredAsState
 
 /**
  * Textarea layout direction
  */
 enum class TextareaLayout {
-    HORIZONTAL, // 水平布局（标签在左）
-    VERTICAL    // 垂直布局（标签在上）
+    HORIZONTAL, // Explicit inline-label variant.
+    VERTICAL    // Default: label above the editing surface.
 }
 
 /**
@@ -58,7 +71,7 @@ fun Textarea(
     minLines: Int = 4,
     maxLines: Int? = null,
     indicator: Boolean = false,
-    layout: TextareaLayout = TextareaLayout.HORIZONTAL,
+    layout: TextareaLayout = TextareaLayout.VERTICAL,
     autosize: Boolean = false,
     bordered: Boolean = true,
     cardStyle: Boolean = false,
@@ -162,7 +175,7 @@ private fun TextareaContent(
                     required = required,
                     enabled = enabled
                 )
-                Spacer(modifier = Modifier.height(Spacing.sm))
+                Spacer(modifier = Modifier.height(ControlGeometry.fieldLabelGap))
             }
 
             // Input area
@@ -299,6 +312,18 @@ private fun TextareaInputArea(
     val colors = Theme.colors
     val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
     val canFocus = enabled && !readOnly
+    val inputColors = LocalInputColors.current
+    val focusedState = remember { mutableStateOf(false) }
+    val hoverSource = remember { MutableInteractionSource() }
+    val hoveredState = hoverSource.collectIsHoveredAsState()
+    val fieldShape = FieldDefaults.shape
+    val standaloneLineHeight = Theme.typography.bodyMedium.lineHeight
+    // Kuikly grows with text but does not reserve empty minLines consistently.
+    val standaloneMinHeight = textareaMinimumHeight(standaloneLineHeight.value, minLines, autosize)
+    val feedback = rememberInputFeedback(
+        inputColors, fieldShape, focusedState, hoveredState, enabled,
+        if (error != null) colors.destructive else null,
+    )
     var focusRequestTick by remember { mutableStateOf(0) }
 
     LaunchedEffect(focusRequestTick, canFocus) {
@@ -322,25 +347,30 @@ private fun TextareaInputArea(
         else -> minLines
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.graphicsLayer {
+        alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
+    }) {
         // Field container
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(enabled = canFocus) {
+                .then(if (bordered) feedback else Modifier)
+                .hoverable(hoverSource, enabled = enabled && bordered)
+                .clickable(interactionSource = hoverSource, indication = null, enabled = canFocus) {
                     requestInputFocus()
                 }
                 .then(
                     if (bordered) {
                         Modifier
-                            .clip(Theme.shapes.xl)
+                            .heightIn(min = standaloneMinHeight)
+                            .clip(fieldShape)
                             .border(
                                 BorderWidth.thin,
-                                fieldBorderColor(error = error, enabled = enabled),
-                                Theme.shapes.xl,
+                                if (error != null) colors.destructive else inputColors.border,
+                                fieldShape,
                             )
-                            .background(if (enabled && !readOnly) colors.surface else colors.muted)
-                            .padding(Spacing.md)
+                            .background(inputColors.background)
+
                     } else {
                         Modifier
                             .clip(Theme.shapes.lg)
@@ -360,20 +390,27 @@ private fun TextareaInputArea(
                     }
                 )
         ) {
-            Column {
-                val fontSize = 16.sp
-                // The placeholder must use the SAME size/line-height as the body text: Typography.BodyMedium is
-                // 14sp/22sp, a different line box, so empty and filled states would differ by a few dp and the field would jump on the first character.
+            Column(modifier = if (bordered) Modifier.padding(
+                horizontal = FieldSizeTokens.Medium.paddingHorizontal,
+                vertical = ControlGeometry.textareaPaddingVertical,
+            ) else Modifier) {
+                val fontSize = if (bordered) Theme.typography.bodyMedium.fontSize else 16.sp
+                val resolvedLineHeight = if (bordered) Theme.typography.bodyMedium.lineHeight else lineHeight
+                // The placeholder and body share metrics to prevent first-character layout jumps.
                 val inputTextStyle = TextStyle(
                     fontSize = fontSize,
-                    lineHeight = lineHeight,
-                    color = if (enabled) colors.foreground else colors.mutedForeground,
+                    lineHeight = resolvedLineHeight,
+                    fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
+                    letterSpacing = Theme.typography.bodyMedium.letterSpacing,
+                    color = if (bordered) inputColors.foreground else if (enabled) colors.foreground else colors.mutedForeground,
                 )
                 // The same metrics, converted to the token types the kit Text needs.
                 val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
                     fontSize = fontSize,
-                    lineHeight = lineHeight,
+                    lineHeight = resolvedLineHeight,
                     fontWeight = com.tencent.kuikly.compose.ui.text.font.FontWeight.Normal,
+                    fontFamily = Theme.typography.bodyMedium.fontFamily,
+                    letterSpacing = Theme.typography.bodyMedium.letterSpacing,
                 )
 
                 BasicTextField(
@@ -386,11 +423,10 @@ private fun TextareaInputArea(
                     modifier = Modifier.keyboardDismissExempt()
                         .fillMaxWidth()
                         .focusRequester(inputFocusRequester)
-                        .then(
-                            if (onFocusChanged != null) {
-                                Modifier.onFocusChanged { onFocusChanged(it.isFocused) }
-                            } else Modifier
-                        ),
+                        .onFocusChanged {
+                            focusedState.value = it.isFocused
+                            onFocusChanged?.invoke(it.isFocused)
+                        },
                     enabled = enabled,
                     readOnly = readOnly,
                     textStyle = inputTextStyle,
@@ -404,40 +440,41 @@ private fun TextareaInputArea(
                                 Text(
                                     text = placeholder,
                                     style = placeholderTextStyle,
-                                    color = colors.mutedForeground,
+                                    color = if (bordered) inputColors.placeholder else colors.mutedForeground,
                                 )
                             }
                             innerTextField()
                         }
                     }
                 )
+            }
+            if (bordered) FieldFocusOverlay(inputColors, fieldShape, focusedState, enabled,
+                if (error != null) colors.destructive else null)
+        }
+        // Footer info row
+        if (additionInfo != null || (indicator && maxLength != null)) {
+            Spacer(modifier = Modifier.height(Spacing.sm))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (additionInfo != null) {
+                    Text(
+                        text = additionInfo,
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground
+                    )
+                } else {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
 
-                // Footer info row
-                if (additionInfo != null || (indicator && maxLength != null)) {
-                    Spacer(modifier = Modifier.height(Spacing.sm))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (additionInfo != null) {
-                            Text(
-                                text = additionInfo,
-                                style = Theme.typography.bodySmall,
-                                color = colors.mutedForeground
-                            )
-                        } else {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-
-                        if (indicator && maxLength != null) {
-                            Text(
-                                text = "${value.length}/$maxLength",
-                                style = Theme.typography.bodySmall,
-                                color = colors.mutedForeground
-                            )
-                        }
-                    }
+                if (indicator && maxLength != null) {
+                    Text(
+                        text = "${value.length}/$maxLength",
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground
+                    )
                 }
             }
         }

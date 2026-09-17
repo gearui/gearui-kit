@@ -9,7 +9,6 @@ import com.tencent.kuikly.compose.foundation.gestures.detectDragGestures
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
@@ -23,6 +22,9 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 
 /**
  * Slider style
@@ -81,8 +83,8 @@ fun Slider(
     val normalizedValue = SliderMath.normalize(displayValue, valueRange)
 
     // Track parameters
-    val trackHeight = if (style == SliderStyle.CAPSULE) 24.dp else 4.dp
-    val thumbSize = if (style == SliderStyle.CAPSULE) 18.dp else 20.dp
+    val trackHeight = if (style == SliderStyle.CAPSULE) ControlGeometry.sliderCapsuleHeight else ControlGeometry.sliderTrackHeight
+    val thumbSize = ControlGeometry.sliderThumbWidth
     val thumbRadius = thumbSize / 2
 
     // Usable track width, minus the thumb radius at each end
@@ -92,17 +94,12 @@ fun Slider(
 
     // Value for a given position
     fun calculateValue(positionX: Float): Float {
-        val effectiveWidth = getEffectiveWidth()
-        if (effectiveWidth <= 0) return valueRange.start
-
-        val thumbPx = with(density) { thumbRadius.toPx() }
-        val adjustedX = (positionX - thumbPx).coerceIn(0f, effectiveWidth)
-        val ratio = adjustedX / effectiveWidth
+        val ratio = SliderMath.positionRatio(positionX, sliderSize.width.toFloat(), with(density) { thumbSize.toPx() })
 
         return SliderMath.valueAt(ratio, valueRange, steps)
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
         // Current value, shown above the thumb
         if (showThumbValue) {
             Spacer(modifier = Modifier.height(20.dp))
@@ -126,7 +123,7 @@ fun Slider(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(trackHeight + 16.dp)
+                    .height(ControlGeometry.selectionTouchTarget)
                     .onSizeChanged { sliderSize = it }
                     .then(
                         if (enabled) {
@@ -165,8 +162,7 @@ fun Slider(
 
                 // Thumb
                 val thumbOffsetX = with(density) {
-                    val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
-                    (effectiveWidth * normalizedValue).toDp()
+                    SliderMath.thumbOffset(normalizedValue, sliderSize.width.toFloat(), thumbSize.toPx()).toDp()
                 }
 
                 Box(
@@ -189,17 +185,8 @@ fun Slider(
                     // The thumb itself
                     Box(
                         modifier = Modifier
-                            .size(thumbSize)
-                            .shadow(
-                                elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none,
-                                shape = CircleShape
-                            )
-                            .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.muted)
-                            .border(width = BorderWidth.thin,
-                                color = if (enabled) colors.border else colors.mutedForeground,
-                                shape = CircleShape
-                            )
+                            .width(thumbSize)
+                            .height(ControlGeometry.selectionTouchTarget)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -236,7 +223,7 @@ fun Slider(
                                     }
                                 } else Modifier
                             )
-                    )
+                    ) { SliderThumbFace(isDragging) }
                 }
             }
 
@@ -286,7 +273,6 @@ private fun NormalTrack(
     valueRange: ClosedFloatingPointRange<Float>
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
 
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -297,8 +283,8 @@ private fun NormalTrack(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(trackHeight)
-                .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.muted else colors.muted)
+                .clip(Theme.shapes.md)
+                .background(colors.muted)
         )
 
         // Active track
@@ -306,8 +292,8 @@ private fun NormalTrack(
             modifier = Modifier
                 .fillMaxWidth(normalizedValue.coerceAtLeast(0.001f))
                 .height(trackHeight)
-                .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.primary else colors.mutedForeground)
+                .clip(Theme.shapes.md)
+                .background(colors.primary)
         )
 
         // Tick marks
@@ -315,7 +301,7 @@ private fun NormalTrack(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = ControlGeometry.sliderThumbWidth / 2),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 for (i in 0..steps + 1) {
@@ -362,19 +348,19 @@ private fun CapsuleTrack(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(trackHeight)
-                .clip(RoundedCornerShape(trackHeight / 2))
-                .background(if (enabled) colors.muted else colors.muted)
+                .clip(Theme.shapes.md)
+                .background(colors.muted)
         )
 
         // Active track, inset slightly to leave room for the thumb
-        val innerPadding = 3.dp
+        val innerPadding = ControlGeometry.sliderCapsuleInset
         Box(
             modifier = Modifier
                 .padding(horizontal = innerPadding, vertical = innerPadding)
                 .fillMaxWidth(normalizedValue.coerceAtLeast(0.001f))
                 .height(trackHeight - innerPadding * 2)
-                .clip(RoundedCornerShape((trackHeight - innerPadding * 2) / 2))
-                .background(if (enabled) colors.primary else colors.mutedForeground)
+                .clip(Theme.shapes.md)
+                .background(colors.primary)
         )
     }
 }
@@ -426,9 +412,9 @@ fun RangeSlider(
     val startNormalized = SliderMath.normalize(displayStart, valueRange)
     val endNormalized = SliderMath.normalize(displayEnd, valueRange)
 
-    val thumbSize = 20.dp
+    val thumbSize = ControlGeometry.sliderThumbWidth
     val thumbRadius = thumbSize / 2
-    val trackHeight = 4.dp
+    val trackHeight = ControlGeometry.sliderTrackHeight
 
     // Usable track width
     fun getEffectiveWidth(): Float {
@@ -437,17 +423,12 @@ fun RangeSlider(
 
     // Value for a given position
     fun calculateValue(positionX: Float): Float {
-        val effectiveWidth = getEffectiveWidth()
-        if (effectiveWidth <= 0) return valueRange.start
-
-        val thumbPx = with(density) { thumbRadius.toPx() }
-        val adjustedX = (positionX - thumbPx).coerceIn(0f, effectiveWidth)
-        val ratio = adjustedX / effectiveWidth
+        val ratio = SliderMath.positionRatio(positionX, sliderSize.width.toFloat(), with(density) { thumbSize.toPx() })
 
         return SliderMath.valueAt(ratio, valueRange, steps)
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
         if (showThumbValue) {
             Spacer(modifier = Modifier.height(20.dp))
         }
@@ -470,7 +451,7 @@ fun RangeSlider(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(trackHeight + 16.dp)
+                    .height(ControlGeometry.selectionTouchTarget)
                     .onSizeChanged { sliderSize = it }
                     .then(
                         if (enabled) {
@@ -506,8 +487,8 @@ fun RangeSlider(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(trackHeight)
-                        .clip(RoundedCornerShape(trackHeight / 2))
-                        .background(if (enabled) colors.muted else colors.muted)
+                        .clip(Theme.shapes.md)
+                        .background(colors.muted)
                 )
 
                 // Active track (the span between the thumbs)
@@ -529,15 +510,14 @@ fun RangeSlider(
                             .offset(x = activeStart)
                             .width(activeWidth)
                             .height(trackHeight)
-                            .clip(RoundedCornerShape(trackHeight / 2))
-                            .background(if (enabled) colors.primary else colors.mutedForeground)
+                            .clip(Theme.shapes.md)
+                            .background(colors.primary)
                     )
                 }
 
                 // Start thumb
                 val startThumbOffsetX = with(density) {
-                    val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
-                    (effectiveWidth * startNormalized).toDp()
+                    SliderMath.thumbOffset(startNormalized, sliderSize.width.toFloat(), thumbSize.toPx()).toDp()
                 }
 
                 Box(
@@ -558,11 +538,8 @@ fun RangeSlider(
 
                     Box(
                         modifier = Modifier
-                            .size(thumbSize)
-                            .shadow(elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none, shape = CircleShape)
-                            .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.muted)
-                            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)
+                            .width(thumbSize)
+                            .height(ControlGeometry.selectionTouchTarget)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -602,13 +579,12 @@ fun RangeSlider(
                                     }
                                 } else Modifier
                             )
-                    )
+                    ) { SliderThumbFace(draggingThumb == 0) }
                 }
 
                 // End thumb
                 val endThumbOffsetX = with(density) {
-                    val effectiveWidth = (sliderSize.width.toFloat() - thumbSize.toPx())
-                    (effectiveWidth * endNormalized).toDp()
+                    SliderMath.thumbOffset(endNormalized, sliderSize.width.toFloat(), thumbSize.toPx()).toDp()
                 }
 
                 Box(
@@ -629,11 +605,8 @@ fun RangeSlider(
 
                     Box(
                         modifier = Modifier
-                            .size(thumbSize)
-                            .shadow(elevation = if (enabled) Theme.elevation.raised else Theme.elevation.none, shape = CircleShape)
-                            .clip(CircleShape)
-                            .background(if (enabled) colors.surface else colors.muted)
-                            .border(BorderWidth.thin, if (enabled) colors.border else colors.mutedForeground, CircleShape)
+                            .width(thumbSize)
+                            .height(ControlGeometry.selectionTouchTarget)
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
@@ -673,7 +646,7 @@ fun RangeSlider(
                                     }
                                 } else Modifier
                             )
-                    )
+                    ) { SliderThumbFace(draggingThumb == 1) }
                 }
             }
 

@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.typography.resolveFontFamily
 
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
@@ -34,6 +35,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.gearui.theme.Theme
+import com.gearui.theme.LocalInputColors
+import com.gearui.foundation.field.FieldFocusOverlay
+import com.gearui.foundation.field.rememberInputFeedback
 import kotlin.math.abs
 import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
@@ -41,6 +45,9 @@ import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 
 /**
  * SearchBar - fully Theme-driven search bar
@@ -120,8 +127,18 @@ fun SearchBar(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
-    var isFocused by remember { mutableStateOf(false) }
+    val focusedState = remember { mutableStateOf(false) }
+    var isFocused by focusedState
+    val hoveredState = remember { mutableStateOf(false) }
+    val inputColors = LocalInputColors.current
     var focusRequestTick by remember { mutableStateOf(0) }
+
+    LaunchedEffect(enabled) {
+        if (!enabled && isFocused) {
+            focusManager.clearFocus(force = true)
+            keyboardController?.hide()
+        }
+    }
 
     LaunchedEffect(focusRequestTick, enabled) {
         if (focusRequestTick > 0 && enabled) {
@@ -145,15 +162,18 @@ fun SearchBar(
     }
 
     val shapeModifier = when (shape) {
-        SearchBarShape.ROUNDED -> shapes.full
-        SearchBarShape.SQUARE -> FieldDefaults.shape
+        SearchBarShape.ROUNDED -> FieldDefaults.shape
+        SearchBarShape.SQUARE -> shapes.none
     }
+
+    val feedback = rememberInputFeedback(inputColors, shapeModifier, focusedState, hoveredState, enabled, null)
 
     val isCenter = alignment == SearchBarAlignment.CENTER
 
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
             .height(FieldSizeTokens.Medium.height),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -162,9 +182,10 @@ fun SearchBar(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
+                .then(feedback)
                 .clip(shapeModifier)
-                .background(if (enabled) colors.surface else colors.muted)
-                .border(BorderWidth.thin, colors.border, shapeModifier)
+                .background(inputColors.background)
+                .border(BorderWidth.thin, inputColors.border, shapeModifier)
                 .pointerInput(enabled) {
                     if (enabled) {
                         val dragThreshold = 10f
@@ -230,19 +251,22 @@ fun SearchBar(
                         Text(
                             text = placeholder,
                             style = Theme.typography.bodyMedium,
-                            color = colors.mutedForeground
+                            color = inputColors.placeholder
                         )
                     }
 
                     BasicTextField(
                         value = value,
-                        onValueChange = onValueChange,
+                        onValueChange = { if (enabled) onValueChange(it) },
+                        enabled = enabled,
                         textStyle = TextStyle(
                             fontSize = Theme.typography.bodyMedium.fontSize,
                             fontWeight = Theme.typography.bodyMedium.fontWeight,
-                            color = if (enabled) colors.foreground else colors.mutedForeground
+                            fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
+                            letterSpacing = Theme.typography.bodyMedium.letterSpacing,
+                            color = inputColors.foreground
                         ),
-                        cursorBrush = SolidColor(colors.primary),
+                        cursorBrush = SolidColor(inputColors.focusRing),
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.None,
                             imeAction = if (onSearch != null) ImeAction.Search else ImeAction.Default
@@ -272,24 +296,27 @@ fun SearchBar(
                 }
 
                 // Clear button
-                if (value.isNotEmpty() && enabled) {
-                    Spacer(modifier = Modifier.width(Spacing.sm))
+                // Keep the input's measured width stable while editing.
+                run {
+                    Spacer(modifier = Modifier.width(Spacing.md))
                     Box(
                         modifier = Modifier
-                            .size(20.dp)
+                            .size(ControlGeometry.searchClearSize)
+                            .graphicsLayer { alpha = if (value.isNotEmpty() && enabled) 1f else 0f }
                             .clip(CircleShape)
                             .background(colors.muted)
-                            .clickable { onValueChange("") },
+                            .clickable(enabled = enabled && value.isNotEmpty()) { onValueChange("") },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             name = Icons.x,
-                            size = IconSizes.Default.xs,
+                            size = IconSizes.Default.sm,
                             tint = colors.mutedForeground
                         )
                     }
                 }
             }
+            FieldFocusOverlay(inputColors, shapeModifier, focusedState, enabled, null)
         }
 
         // Cancel button — a small filled pill in the brand primary, not bare text:
@@ -361,7 +388,8 @@ fun SearchBarWithAction(
     enabled: Boolean = true
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -371,6 +399,9 @@ fun SearchBarWithAction(
             value = value,
             onValueChange = onValueChange,
             placeholder = placeholder,
+            enabled = enabled,
+            cancel = SearchBarCancel.Never,
+            onSearch = onAction,
             modifier = Modifier.weight(1f)
         )
 
@@ -378,9 +409,14 @@ fun SearchBarWithAction(
 
         Box(
             modifier = Modifier
-                .height(40.dp)
-                .clip(shapes.sm)
+                .height(FieldSizeTokens.Medium.height)
+                .clip(FieldDefaults.shape)
                 .background(if (enabled) colors.primary else colors.muted)
+                .clickable(enabled = enabled) {
+                    focusManager.clearFocus(force = true)
+                    keyboardController?.hide()
+                    onAction(value)
+                }
                 .padding(horizontal = Spacing.lg),
             contentAlignment = Alignment.Center
         ) {

@@ -11,6 +11,7 @@ import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
+import com.tencent.kuikly.compose.foundation.text.maxLength
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -420,7 +421,11 @@ private fun TextareaInputArea(
                             onValueChange(newValue)
                         }
                     },
+                    // Rejecting a value in onValueChange does not reset the native field; the
+                    // platform view would keep the extra text while the counter stops at the
+                    // limit. Kuikly's maxLength modifier enforces it inside the native field.
                     modifier = Modifier.keyboardDismissExempt()
+                        .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
                         .fillMaxWidth()
                         .focusRequester(inputFocusRequester)
                         .onFocusChanged {

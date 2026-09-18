@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.tencent.kuikly.compose.foundation.text.KeyboardActions
 import com.tencent.kuikly.compose.foundation.text.KeyboardOptions
+import com.tencent.kuikly.compose.foundation.text.maxLength
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -327,7 +328,12 @@ fun Input(
                         readOnly = readOnly,
                         enabled = enabled,
                         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+                        // The onValueChange guard above only protects the Compose value. The native
+                        // field keeps whatever was typed, so a rejected keystroke leaves the platform
+                        // view and the counter out of sync. Kuikly's maxLength modifier enforces the
+                        // limit inside the native field itself.
                         modifier = Modifier.keyboardDismissExempt()
+                            .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
                             .fillMaxWidth()
                             .focusRequester(inputFocusRequester)
                             .onFocusChanged { focusState ->

@@ -124,7 +124,7 @@ fun InputExample(
                     placeholder = "请输入文字",
                     maxLength = 10,
                     showCounter = true,
-                    helperText = "最大输入10个字符，汉字算两个"
+                    helperText = "最大输入10个字符，汉字同样按一个字符计数"
                 )
             }
         }

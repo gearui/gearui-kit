@@ -294,10 +294,17 @@ fun DecoratedSurface(
         if (outer.isNotEmpty()) Canvas(
             Modifier.matchParentSize().layout { measurable, constraints ->
                 val pad = ceil(bleed.toPx()).toInt()
-                val width = constraints.maxWidth
-                val height = constraints.maxHeight
-                val child = measurable.measure(Constraints.fixed(width + pad * 2, height + pad * 2))
-                layout(width, height) { child.place(-pad, -pad) }
+                // Intrinsic passes (for example a parent using IntrinsicSize.Max) measure
+                // this modifier with unbounded constraints. Constraints.Infinity plus the
+                // bleed overflows Int and Constraints.fixed throws, which on iOS killed the
+                // app the first time a ContextMenu opened. The decoration matches the
+                // parent, so an unbounded axis contributes nothing here.
+                val width = if (constraints.hasBoundedWidth) constraints.maxWidth else 0
+                val height = if (constraints.hasBoundedHeight) constraints.maxHeight else 0
+                val padW = if (constraints.hasBoundedWidth) pad else 0
+                val padH = if (constraints.hasBoundedHeight) pad else 0
+                val child = measurable.measure(Constraints.fixed(width + padW * 2, height + padH * 2))
+                layout(width, height) { child.place(-padW, -padH) }
             }
         ) { paintDecoration(shape, outer, bleed = bleed) }
         Box(Modifier.clip(shape), propagateMinConstraints = true, content = content)

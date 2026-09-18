@@ -80,6 +80,13 @@ jobs:
         # is only valid on :sample.
         run: ./gradlew --no-daemon :gearui-kit:iosSimulatorArm64MainBinaries :sample:linkDebugFrameworkIosSimulatorArm64
 
+      # The kit's native tests link against the real Kuikly host framework
+      # (OpenKuiklyIOSRender from the sample Pods). Without it the test
+      # executable cannot resolve _com_tencent_kuikly_IsCurrentOnContextThread;
+      # the script builds the host, never stubs the symbol.
+      - name: Run iOS simulator Kotlin tests
+        run: ./scripts/ios_native_tests.sh --no-daemon
+
   web-build:
     name: Web (H5) Build
     runs-on: ubuntu-latest

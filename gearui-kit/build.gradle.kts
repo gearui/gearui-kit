@@ -136,3 +136,46 @@ mavenPublishing {
         signAllPublications()
     }
 }
+
+// =============================================================================
+// iOS Kotlin tests need the real Kuikly host
+// =============================================================================
+// Kuikly's compose runtime calls into its CocoaPods host: OpenKuiklyIOSRender's
+// KuiklyRenderThreadBridge.m implements _com_tencent_kuikly_IsCurrentOnContextThread.
+// A bare Kotlin/Native test executable has no host, so its link step fails with
+// that undefined symbol. The gate links the real framework and never a stub:
+// build OpenKuiklyIOSRender once from the sample Pods project, then point the
+// test link at that products directory (scripts/ios_native_tests.sh does both).
+//
+//   -PgearuiIosTestHostDir=<.../Build/Products/Debug-iphonesimulator>
+//   GEARUI_IOS_TEST_HOST_DIR=<same>
+//
+// Without it the native test link fails fast with this explanation instead of
+// a raw linker error. Main binaries and the published klib are unaffected.
+val iosTestHostDir = providers.gradleProperty("gearuiIosTestHostDir")
+    .orElse(providers.environmentVariable("GEARUI_IOS_TEST_HOST_DIR"))
+
+kotlin.targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>().configureEach {
+    binaries.withType<org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable>().configureEach {
+        val hostDir = iosTestHostDir.orNull?.trimEnd('/')
+        if (hostDir != null) {
+            linkerOpts(
+                "-F$hostDir/OpenKuiklyIOSRender",
+                "-F$hostDir/SDWebImage",
+                "-framework", "OpenKuiklyIOSRender",
+                "-rpath", "$hostDir/OpenKuiklyIOSRender",
+                "-rpath", "$hostDir/SDWebImage",
+            )
+        } else {
+            linkTaskProvider.configure {
+                doFirst {
+                    throw GradleException(
+                        "iOS Kotlin tests need the Kuikly host framework. Run " +
+                            "scripts/ios_native_tests.sh, or build OpenKuiklyIOSRender from " +
+                            "sample/iosApp/Pods and pass -PgearuiIosTestHostDir=<Debug-iphonesimulator dir>."
+                    )
+                }
+            }
+        }
+    }
+}

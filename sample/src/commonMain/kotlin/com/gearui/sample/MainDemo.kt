@@ -215,10 +215,22 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
         }
 
         AppPage.SETTINGS -> {
-            SettingsPage(
-                settingsState = settingsState,
-                onBack = { currentPage = AppPage.HOME }
-            )
+            // Same host as component pages: without it Settings had no BackHandler
+            // (Android BACK left the app) and no edge swipe back on iOS.
+            ExampleDetailSwipeBackHost(
+                homeListState = homeListState,
+                onHomeComponentClick = { nextComponent ->
+                    currentComponent = nextComponent
+                    currentPage = AppPage.COMPONENT_DETAIL
+                },
+                onSettingsClick = {},
+                onBack = { returnToHome() }
+            ) {
+                SettingsPage(
+                    settingsState = settingsState,
+                    onBack = { returnToHome() }
+                )
+            }
         }
     }
 }

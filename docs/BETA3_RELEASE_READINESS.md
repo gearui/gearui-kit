@@ -4,6 +4,12 @@ For the subsequent KuiklyUI 2.28.0 dependency upgrade, see the
 [new dependency audit](DEPENDENCY_UPGRADE_2_28.md). The results below describe the
 earlier candidate and do not certify the upgraded graph.
 
+Update 2026-09-18: the [device acceptance pass](BETA3_DEVICE_ACCEPTANCE.md) ran the
+critical keyboard/overlay/theme checklist on iOS and Android, found and fixed four
+defects (including an iOS crash on ContextMenu), and gave the native test gate a
+real mechanism. Remaining before publication: a remote CI run on the final commit,
+then version/tag/signing.
+
 Audit date: 2026-09-17. Verdict: **candidate preparation is justified; publication
 is not approved yet**. This is a tested working tree based on `2f306a7`, not an
 immutable release commit. Existing changes and new files remain uncommitted.
@@ -52,17 +58,17 @@ application integration or runtime resource loading on each platform.
 
 ## Before Publication
 
-- Resolve the iOS consumer compilation failure or explicitly establish/document why
-  that consumer is outside this candidate's integration scope. It is not an observed
-  GearUI API error, but the requested end-to-end consumer check is currently red.
-- Decide the native-test gate honestly: standalone `iosSimulatorArm64Test` cannot
-  link `_com_tencent_kuikly_IsCurrentOnContextThread`. Its real implementation is in
-  the CocoaPods Kuikly host (`KuiklyRenderThreadBridge.m`); the full sample host links
-  and launches. Supply a proper native test host, or record a reviewed beta testing
-  exception with Android/JS logic tests and iOS host acceptance as limited evidence.
-  Do not stub the symbol or suppress undefined symbols and call that native validation.
-- Finish the critical-path device checklist below. Existing focused material checks
-  and this audit's home-screen smoke tests do not cover every changed component.
+- ~~Resolve the iOS consumer compilation failure~~ Resolved: `privchat-ui` `39ba0cd`;
+  the 2.28 audit compiled the PrivChat iOS application.
+- ~~Decide the native-test gate honestly~~ Resolved on 2026-09-18: the test link now
+  takes the real OpenKuiklyIOSRender framework via `-PgearuiIosTestHostDir`
+  (`scripts/ios_native_tests.sh` builds it from the sample Pods; the CI iOS job runs
+  it). 190 tests, 0 failures locally. Without the property the link fails fast with
+  an explanation. No symbol is stubbed. The CI step still needs its first remote run.
+- ~~Finish the critical-path device checklist below~~ Executed on 2026-09-18 for iOS
+  and Android; see [device acceptance](BETA3_DEVICE_ACCEPTANCE.md) for results,
+  fixes and what remains unaccepted (screen reader, performance, Web, HarmonyOS,
+  iOS Dynamic Type).
 - Review/commit the complete candidate, including untracked required files. Run
   remote CI against that exact commit; restore permitted repository access as needed.
 - After approval, set version/tag and verify signed Central staging and dependency

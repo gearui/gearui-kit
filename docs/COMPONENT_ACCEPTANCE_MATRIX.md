@@ -19,7 +19,7 @@ claim that every occurrence violates the token contract. Composite primitives
 | anchor | 1 | 4 | no | Static sweep only; component-level device acceptance pending |
 | backtop | 1 | 10 | no | Static sweep only; component-level device acceptance pending |
 | bottomnavbar | 1 | 7 | no | Static sweep only; component-level device acceptance pending |
-| bottomsheet | 1 | 3 | yes | Latest content/callbacks in all three entry points |
+| bottomsheet | 1 | 3 | yes | Latest content/callbacks in all three entry points; 2026-09-18 device pass: scrim/grabber/BACK/edge-swipe dismissal, theme switch |
 | button | 2 | 6 | no | Static sweep only; component-level device acceptance pending |
 | calendar | 4 | 7 | no | Static sweep only; component-level device acceptance pending |
 | cascader | 1 | 1 | yes | Static sweep only; component-level device acceptance pending |
@@ -27,23 +27,23 @@ claim that every occurrence violates the token contract. Composite primitives
 | cellgroup | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | checkbox | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | collapse | 2 | 0 | no | Prior partial device checks; full matrix pending |
-| contextmenu | 1 | 4 | yes | Cancelled/disabled press handling; current data/theme |
-| dialog | 3 | 5 | yes | Prior partial device checks; full matrix pending |
-| drawer | 1 | 7 | yes | Static sweep only; component-level device acceptance pending |
+| contextmenu | 1 | 4 | yes | Cancelled/disabled press handling; 2026-09-18 device pass: open/dismiss on both platforms after the iOS crash fix |
+| dialog | 3 | 5 | yes | 2026-09-18 device pass: BACK/edge swipe and outside tap do not dismiss ConfirmDialog by default |
+| drawer | 1 | 7 | yes | 2026-09-18 device pass: scrim tap, swipe, BACK/edge swipe |
 | empty | 1 | 1 | no | Static sweep only; component-level device acceptance pending |
 | form | 1 | 1 | no | Prior partial device checks; full matrix pending |
 | grid | 2 | 5 | no | Static sweep only; component-level device acceptance pending |
 | icon | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | image | 1 | 6 | no | Static sweep only; component-level device acceptance pending |
 | imageviewer | 1 | 5 | no | Static sweep only; component-level device acceptance pending |
-| input | 1 | 3 | no | Prior partial device checks; full matrix pending |
+| input | 1 | 3 | no | 2026-09-18 device pass: typing, IME action, maxLength enforced natively, dark theme, Android font scale 1.3 |
 | loading | 1 | 9 | no | Static sweep only; component-level device acceptance pending |
 | navbar | 1 | 4 | no | Static sweep only; component-level device acceptance pending |
 | navigationmenu | 1 | 2 | yes | Static sweep only; component-level device acceptance pending |
 | notification | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | pagination | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | picker | 2 | 19 | no | Static sweep only; component-level device acceptance pending |
-| popover | 1 | 22 | yes | Static sweep only; component-level device acceptance pending |
+| popover | 1 | 22 | yes | 2026-09-18 device pass: arrow popover opens and closes on both platforms |
 | popup | 1 | 2 | yes | Static sweep only; component-level device acceptance pending |
 | progress | 1 | 4 | no | Static sweep only; component-level device acceptance pending |
 | radio | 1 | 1 | no | Static sweep only; component-level device acceptance pending |
@@ -52,7 +52,7 @@ claim that every occurrence violates the token contract. Composite primitives
 | scaffold | 1 | 4 | no | Static sweep only; component-level device acceptance pending |
 | searchbar | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
 | segmented | 1 | 6 | no | Static sweep only; component-level device acceptance pending |
-| select | 4 | 0 | yes | Prior partial device checks; full matrix pending |
+| select | 4 | 0 | yes | 2026-09-18 device pass: opens and closes; selection semantics not re-verified |
 | skeleton | 1 | 13 | no | Static sweep only; component-level device acceptance pending |
 | slider | 3 | 3 | no | Static sweep only; component-level device acceptance pending |
 | snackbar | 1 | 0 | no | Static sweep only; component-level device acceptance pending |
@@ -64,7 +64,7 @@ claim that every occurrence violates the token contract. Composite primitives
 | table | 1 | 6 | no | Static sweep only; component-level device acceptance pending |
 | tabs | 1 | 4 | no | Static sweep only; component-level device acceptance pending |
 | tag | 1 | 0 | no | Prior partial device checks; full matrix pending |
-| textarea | 2 | 1 | no | Prior partial device checks; full matrix pending |
+| textarea | 2 | 1 | no | maxLength enforced natively (same fix as Input); device interaction not re-verified |
 | timeline | 1 | 12 | no | Static sweep only; component-level device acceptance pending |
 | toast | 1 | 3 | yes | Static sweep only; component-level device acceptance pending |
 | tooltip | 1 | 0 | no | Static sweep only; component-level device acceptance pending |

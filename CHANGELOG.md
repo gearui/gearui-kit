@@ -42,6 +42,16 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
 - CI now explicitly runs Android Kotlin tests/lint and browser Kotlin tests, in
   addition to existing generation, guardrail, build and API checks.
 
+### Fixes
+
+- Input/Textarea enforce `maxLength` inside the native field; previously the
+  platform editor kept rejected characters while the counter stopped at the limit.
+- DecoratedSurface no longer throws under unbounded (intrinsic) constraints; on iOS
+  this terminated the app when a ContextMenu opened.
+- Sample Settings page handles BACK and edge swipe like other pages.
+- iOS Kotlin tests link against the real Kuikly host (`scripts/ios_native_tests.sh`,
+  `-PgearuiIosTestHostDir`); CI's iOS job runs them.
+
 ### Documentation
 
 - [SPEC](docs/SPEC.md) is the authoritative entry. Visual rules, runtime contracts,

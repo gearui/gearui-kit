@@ -51,8 +51,9 @@ historical counts here.
 
 ## Build Gates
 
-CI builds Android kit/sample, links the iOS simulator sample and builds the Web
-host. Release packaging additionally checks all three iOS artifacts, metadata,
+CI builds Android kit/sample, links the iOS simulator sample, runs the iOS
+simulator Kotlin tests against the real Kuikly host (`scripts/ios_native_tests.sh`)
+and builds the Web host. Release packaging additionally checks all three iOS artifacts, metadata,
 Android AAR, JS artifact and assets from the exact candidate. HarmonyOS uses the
 separate build and needs explicit compile/package/device evidence.
 

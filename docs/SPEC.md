@@ -39,6 +39,8 @@ entry point, not a release approval or a claim of completed visual parity.
   compatibility pins and new verification results.
 
 - [Beta3 readiness](BETA3_RELEASE_READINESS.md): current release decision and blockers.
+- [Beta3 device acceptance](BETA3_DEVICE_ACCEPTANCE.md): keyboard/overlay/theme
+  checklist results on iOS and Android, with the defects fixed during the pass.
 - [Component matrix](COMPONENT_ACCEPTANCE_MATRIX.md): component-specific gaps.
 - [DTCG evidence](DTCG_ACCEPTANCE.md): token compiler tests and limits.
 - [Surface evidence](SURFACE_RENDERING_ACCEPTANCE.md): focused material/font device checks.

@@ -1,5 +1,11 @@
 package com.gearui.overlay
 
+import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.tencent.kuikly.compose.ui.unit.dp
+import com.tencent.kuikly.compose.ui.unit.IntOffset
+import com.tencent.kuikly.compose.ui.unit.IntSize
+import com.tencent.kuikly.compose.ui.unit.Density
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.BackHandler
@@ -187,11 +193,15 @@ fun OverlayHost(
 
         // Overlay layer, always on top.
         // Scroll dismissal is triggered by components such as GearLazyColumn via OverlayManager.notifyScroll().
+        // Overlay content needs the viewport too (a dialog sizes itself against it),
+        // not only the page content above.
+        CompositionLocalProvider(LocalOverlayViewportSize provides hostSize) {
         controller.items.forEach { item ->
             OverlayItemLayout(
                 item = item,
                 controller = controller
             )
+        }
         }
     }
 }
@@ -224,10 +234,30 @@ private fun OverlayItemLayout(
     val progress = remember { Animatable(if (transition == OverlayTransition.None) 1f else 0f) }
     LaunchedEffect(visible) {
         val target = if (visible) 1f else 0f
-        if (transition == OverlayTransition.None) {
-            progress.snapTo(target)
-        } else {
-            progress.animateTo(target, tween(OverlayDefaults.transitionDurationMillis))
+        when {
+            transition == OverlayTransition.None -> progress.snapTo(target)
+            visible -> progress.animateTo(
+                target,
+                tween(OverlayDefaults.transitionDurationMillis, easing = FeedbackDefaults.overlayEaseOut),
+            )
+            // A sliding surface times its own exit against the enter duration; the host
+            // must not unmount it sooner.
+            transition == OverlayTransition.SurfaceSlide -> progress.animateTo(
+                target,
+                tween(OverlayDefaults.transitionDurationMillis, easing = FeedbackDefaults.overlayEaseOut),
+            )
+            // Reference: dialogs leave with ease-in, anchored panels with ease-out.
+            else -> progress.animateTo(
+                target,
+                tween(
+                    OverlayDefaults.exitDurationMillis,
+                    easing = if (options.placement == OverlayPlacement.Center) {
+                        FeedbackDefaults.overlayEaseIn
+                    } else {
+                        FeedbackDefaults.overlayEaseOut
+                    },
+                ),
+            )
         }
         // Dismissal only started the exit; the item is still mounted so it could animate.
         // Now that it has, it can go.
@@ -424,14 +454,39 @@ private fun OverlayItemLayout(
             }
         } else {
             // Other placements need measurement and position calculation.
+            val motion = remember(item.anchorBounds, offset, popupSize, options.placement) {
+                anchoredEntryMotion(item.anchorBounds, offset, popupSize, options, density)
+            }
+            val p = progress.value
             Box(
                 Modifier
                     .offset { offset }
                     .onSizeChanged { popupSize = it }
+                    // Reference motion (use-popup-dialog/popover-content-animation.ts):
+                    // a centred dialog scales 0.96 -> 1 both ways; an anchored panel
+                    // slides in from its trigger by up to 12, scaling 0.97 -> 1 on the
+                    // way in only, and slides back out without scaling.
+                    .graphicsLayer {
+                        if (transition == OverlayTransition.Fade && isPositionReady) {
+                            val scale = when {
+                                options.placement == OverlayPlacement.Center ->
+                                    FeedbackDefaults.dialogEnterScale + (1f - FeedbackDefaults.dialogEnterScale) * p
+                                visible && motion != null ->
+                                    FeedbackDefaults.anchoredEnterScale + (1f - FeedbackDefaults.anchoredEnterScale) * p
+                                else -> 1f
+                            }
+                            scaleX = scale
+                            scaleY = scale
+                            if (motion != null) {
+                                val shift = motion.distancePx * (1f - p)
+                                if (motion.vertical) translationY = shift else translationX = shift
+                            }
+                        }
+                    }
                     // Fully transparent until the position is settled, then shown.
                     // Two reasons to be invisible, one modifier: not yet positioned, and
                     // not yet arrived.
-                    .alpha(if (isPositionReady) progress.value else 0f)
+                    .alpha(if (isPositionReady) p else 0f)
                     // Intercept clicks so they do not reach the backdrop.
                     .clickable(onClick = {
                         // Intentionally empty: interception is the point.
@@ -442,6 +497,39 @@ private fun OverlayItemLayout(
                 }
             }
         }
+    }
+}
+
+/** Axis and signed start offset for an anchored panel's slide, in pixels. */
+internal data class AnchoredEntryMotion(val vertical: Boolean, val distancePx: Float)
+
+/**
+ * Which way an anchored panel slides in, from where it actually landed.
+ *
+ * Uses the resolved position rather than the requested placement, so a panel that
+ * auto-flipped above its trigger still slides away from the trigger. Mirrors the
+ * reference: content below/right of the trigger starts at -distance, above/left at
+ * +distance, and the distance is the panel offset capped at 12.
+ */
+internal fun anchoredEntryMotion(
+    anchor: Rect?,
+    offset: IntOffset,
+    popupSize: IntSize,
+    options: OverlayOptions,
+    density: Density,
+): AnchoredEntryMotion? {
+    if (anchor == null || popupSize == IntSize.Zero) return null
+    val cap = with(density) { FeedbackDefaults.anchoredEnterTranslate.dp.toPx() }
+    val gapY = with(density) { options.offsetY.toPx() }
+    val gapX = with(density) { options.offsetX.toPx() }
+    val top = offset.y.toFloat()
+    val left = offset.x.toFloat()
+    return when {
+        top >= anchor.bottom - 1f -> AnchoredEntryMotion(true, -minOf(gapY.coerceAtLeast(0f), cap))
+        top + popupSize.height <= anchor.top + 1f -> AnchoredEntryMotion(true, minOf(gapY.coerceAtLeast(0f), cap))
+        left >= anchor.right - 1f -> AnchoredEntryMotion(false, -minOf(gapX.coerceAtLeast(0f), cap))
+        left + popupSize.width <= anchor.left + 1f -> AnchoredEntryMotion(false, minOf(gapX.coerceAtLeast(0f), cap))
+        else -> null
     }
 }
 

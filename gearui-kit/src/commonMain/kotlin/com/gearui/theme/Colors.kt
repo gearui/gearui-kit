@@ -57,6 +57,12 @@ data class Colors(
     val border: Color,
     val input: Color,
     val ring: Color,
+
+    /**
+     * Separator lines and the sheet handle (reference `--separator`). Stronger than
+     * [border], which outlines surfaces. Defaults to [border] for hand-built themes.
+     */
+    val separator: Color = border,
 )
 
 /* ---------------------------------------------------------------------- */
@@ -110,6 +116,7 @@ object Themes {
             infoForeground = Color(0xFFFFFFFF),
 
             border = DefaultPalette.lightBorder,
+            separator = DefaultPalette.lightSeparator,
             input = DefaultPalette.lightInputBorder,
             ring = DefaultPalette.lightRing,
         )
@@ -147,6 +154,7 @@ object Themes {
             infoForeground = Color(0xFF0A0A0A),
 
             border = DefaultPalette.darkBorder,
+            separator = DefaultPalette.darkSeparator,
             input = DefaultPalette.darkInputBorder,
             ring = DefaultPalette.darkRing,
         )

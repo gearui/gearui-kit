@@ -1,5 +1,16 @@
 package com.gearui.components.bottomsheet
 
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.menuItemFeedback
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberUpdatedState
 import com.gearui.foundation.primitives.Text
@@ -16,7 +27,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.primitives.DividerFull
 import com.gearui.foundation.material.MaterialSurface
 import com.gearui.foundation.material.Materials
 import com.gearui.foundation.sheet.SheetGrabber
@@ -358,56 +368,66 @@ internal fun BottomSheetSurface(
                 if (header != null) {
                     header()
                 } else if (title != null || description != null) {
+                    // Reference `.bottom-sheet__label` / `__description`: start-aligned,
+                    // large medium title over a muted description; no divider below.
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(Spacing.lg),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .padding(
+                                start = ControlGeometry.overlayPadding,
+                                end = ControlGeometry.overlayPadding,
+                                bottom = ControlGeometry.menuPaddingBlock,
+                            ),
+                        horizontalAlignment = Alignment.Start
                     ) {
                         if (title != null) {
                             Text(
                                 text = title,
-                                style = Theme.typography.titleMedium,
+                                style = Theme.typography.titleMedium.copy(fontWeight = FontWeight.Medium),
                                 color = colors.foreground
                             )
                         }
 
                         if (description != null) {
-                            Spacer(modifier = Modifier.height(Spacing.xs))
+                            if (title != null) Spacer(modifier = Modifier.height(ControlGeometry.dialogTextGap))
                             Text(
                                 text = description,
-                                style = Theme.typography.bodySmall,
+                                style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
                         }
                     }
-
-                    DividerFull()
                 }
                 }
 
                 body()
-            }
-            }
 
-            // Cancel button
-            if (showCancel) {
-                Spacer(modifier = Modifier.height(Spacing.sm))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colors.surface)
-                        .clickable(onClick = onDismiss)
-                        .padding(vertical = Spacing.lg),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = cancelText,
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
-                    )
+                // Cancel lives inside the sheet as a neutral button (reference
+                // tertiary), not as a flat strip under it.
+                if (showCancel) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = ControlGeometry.overlayPadding,
+                                end = ControlGeometry.overlayPadding,
+                                top = ControlGeometry.dialogActionGap,
+                            )
+                    ) {
+                        Button(
+                            text = cancelText,
+                            onClick = onDismiss,
+                            modifier = Modifier.fillMaxWidth(),
+                            theme = ButtonTheme.DEFAULT,
+                            type = ButtonType.FILL,
+                            size = ButtonSize.MEDIUM,
+                            shape = ButtonShape.ROUND,
+                            block = true,
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.height(ControlGeometry.menuPaddingBlock))
+            }
             }
 
             // Bottom safe area: read the real inset and treat 16dp only as a floor.
@@ -434,22 +454,19 @@ private fun BottomSheetItemList(
 ) {
     val colors = Theme.colors
 
-    // List height: 56dp per item, capped at maxHeight
-    val itemHeight = 56
-    val totalHeightValue = items.size * itemHeight
-    val totalHeight = totalHeightValue.dp
+    // List height: one reference menu row per item, capped at maxHeight
+    val totalHeight = ControlGeometry.actionSheetRow * items.size
     val listHeight = if (totalHeight > maxHeight) maxHeight else totalHeight
 
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .height(listHeight)
-            .background(colors.surface)
+            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline)
     ) {
         itemsIndexed(items) { index, item ->
             BottomSheetItemRow(
                 item = item,
-                showDivider = index < items.size - 1,
                 onClick = {
                     if (!item.disabled) {
                         onItemClick(item, index)
@@ -467,53 +484,41 @@ private fun BottomSheetItemList(
 @Composable
 private fun BottomSheetItemRow(
     item: BottomSheetItem,
-    showDivider: Boolean = true,
     onClick: () -> Unit
 ) {
     val colors = Theme.colors
+    val interaction = remember { MutableInteractionSource() }
 
     val textColor = when {
-        item.disabled -> colors.mutedForeground
         item.danger -> colors.destructive
         else -> colors.foreground
     }
 
-    Column {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .clickable(enabled = !item.disabled, onClick = onClick)
-                .padding(horizontal = Spacing.lg),
-            contentAlignment = Alignment.Center
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                if (item.icon != null) {
-                    item.icon.invoke()
-                    Spacer(modifier = Modifier.width(Spacing.sm))
-                }
-
-                Text(
-                    text = item.label,
-                    style = Theme.typography.bodyLarge,
-                    color = textColor
-                )
-            }
-        }
-
-        // Divider
-        if (showDivider) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Spacing.lg)
-                    .height(BorderWidth.hairline)
-                    .background(colors.border)
+    // Reference `.menu__item`: radius 16, padding 10, gap 10, animated press fill.
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(ControlGeometry.actionSheetRow)
+            .menuItemFeedback(
+                interaction = interaction,
+                shape = RoundedCornerShape(ControlGeometry.radiusMenuItem),
+                enabled = !item.disabled,
+                danger = item.danger,
             )
+            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null, onClick = onClick)
+            .padding(horizontal = ControlGeometry.menuItemPaddingInline)
+            .alpha(if (item.disabled) FeedbackDefaults.disabledOpacity else 1f),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(ControlGeometry.menuItemGap)
+    ) {
+        if (item.icon != null) {
+            item.icon.invoke()
         }
+        Text(
+            text = item.label,
+            style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+            color = textColor
+        )
     }
 }
 

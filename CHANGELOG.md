@@ -42,6 +42,31 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
 - CI now explicitly runs Android Kotlin tests/lint and browser Kotlin tests, in
   addition to existing generation, guardrail, build and API checks.
 
+### Overlays aligned with HeroUI Native
+
+- Dialog follows the reference dialog: start-aligned title and muted description,
+  20 padding, radius 24, width capped at 384 with 20 from each edge, and real
+  Buttons (stacked danger + neutral Cancel, or an end-aligned row). The iOS
+  alert layout with hairline-split action cells is gone; `DialogAction` roles are
+  unchanged.
+- Menus (ContextMenu, PopoverMenu), ActionSheet and BottomSheet lists use the
+  reference menu row: radius 16, animated press fill (default, or danger at 10%)
+  with a 0.98 press scale over 150ms, no separators. ActionSheet is one sheet with
+  Cancel as a neutral button inside it; BottomSheet headers are start-aligned.
+- Every overlay surface drops its extra border and uses the overlay colour and
+  shadow stack. Panels and dialogs are radius 24, sheets 32. Toast is an overlay
+  surface with soft status label colours instead of a solid colour block.
+- Scrim is the reference backdrop (black 20%, was 55%). Overlays enter over 200ms
+  and leave over 150ms; dialogs scale from 0.96, anchored panels slide up to 12
+  from their trigger and scale from 0.97. Menu/popover offset is 9.
+- New `Colors.separator` role (reference `--separator`) for Divider and the sheet
+  handle; it was drawn with the lighter border colour.
+- All values come from new DTCG tokens (overlay geometry, menu geometry, overlay
+  motion, backdrop, separator).
+- Sample: `MainDemo` mounted two nested `App`s (the base `View` wrapper plus its
+  own), so toasts and the imperative ActionSheet rendered on the light theme above
+  the real one. The guard now rejects that shape.
+
 ### Fixes
 
 - Input/Textarea enforce `maxLength` inside the native field; previously the

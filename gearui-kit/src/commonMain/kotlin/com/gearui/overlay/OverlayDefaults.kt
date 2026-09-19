@@ -1,9 +1,9 @@
 package com.gearui.overlay
 
 import androidx.compose.runtime.Composable
-import com.gearui.foundation.elevation.Elevation
-import com.gearui.foundation.layout.Radius
-import com.gearui.theme.Theme
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.theme.DefaultPalette
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.graphics.Color
@@ -14,26 +14,20 @@ import com.gearui.foundation.layout.Spacing
 /**
  * Runtime defaults for overlays.
  *
- * The scrim is a runtime-layer token rather than part of the core Colors set
- * (see TOKEN_FREEZE_DECISIONS, Decision 1). Overlay, Dialog, BottomSheet,
- * ActionSheet and the other modal layers all take their scrim colour from here.
+ * Values follow HeroUI Native 1.0.9 (`src/styles/components/{dialog,popover,menu,
+ * select,toast,bottom-sheet}.css` and the popup animation hooks) through the DTCG
+ * sources in `tokens/`; nothing here is a free-standing number.
  *
  * ## Overlay surface contract
  *
- * Overlays are grouped by how they are positioned. Shape and elevation are
- * fixed together per group; components do not pick steps themselves.
+ * | Group | Shape | Members |
+ * |---|---|---|
+ * | panel (trigger-anchored / transient) | [panelShape] 24 (`--radius-3xl`) | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
+ * | modal (centred, takes focus) | [modalShape] 24 (`--radius-3xl`) | Dialog, Tour |
+ * | sheet (edge-anchored) | [sheetShape] 32 top corners (`--radius-4xl`) | BottomSheet, ActionSheet, Drawer |
  *
- * | Group | Shape | Elevation | Members |
- * |---|---|---|---|
- * | panel (trigger-anchored / transient) | [panelShape] `md` 6dp | [Elevation.raised] / [Elevation.floating] | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
- * | modal (centred, takes focus) | [modalShape] `xl` 12dp | [Elevation.modal] | Dialog, Tour |
- * | sheet (edge-anchored) | [sheetShape] 12dp top corners | none — the scrim separates it | BottomSheet, ActionSheet, Drawer |
- *
- * Before this contract the three groups were mixed: Dialog used `lg` (8) while
- * the Select dropdown it covered used `xl` (12), so the modal was less rounded
- * than the dropdown. Cascader, TreeSelect, Popup and Snackbar used `sm` (4)
- * while Popover, ContextMenu and Notification used `md` (6) — four radii for
- * one kind of surface.
+ * Every overlay surface uses the overlay colour and the overlay shadow stack. They
+ * draw no border: in the dark theme the shadow stack is itself a 1px inset hairline.
  *
  * Three runtime rules are guaranteed by [OverlayHost] and must not be
  * reimplemented per component:
@@ -46,41 +40,40 @@ import com.gearui.foundation.layout.Spacing
 object OverlayDefaults {
     /** Surface shape for trigger-anchored and transient overlays. */
     val panelShape: Shape
-        @Composable get() = Theme.shapes.md
+        @Composable get() = RoundedCornerShape(ControlGeometry.radiusOverlay)
 
     /** Surface shape for centred modal cards. */
     val modalShape: Shape
-        @Composable get() = Theme.shapes.xl
+        @Composable get() = RoundedCornerShape(ControlGeometry.radiusOverlay)
 
     /** Corner radius for edge-anchored sheets; only the corners facing content are rounded. */
-    val sheetCornerRadius: Dp = Radius.xl
+    val sheetCornerRadius: Dp = ControlGeometry.radiusSheet
 
     /** Sheet rising from the bottom: only the top corners are rounded. */
     val sheetShape: Shape =
         RoundedCornerShape(topStart = sheetCornerRadius, topEnd = sheetCornerRadius)
 
     /**
-     * Modal scrim: pure black at roughly 55% opacity.
+     * Modal scrim: the reference `--backdrop`, black at 20%.
      *
-     * The base must be pure black rather than near-black such as 09090B. In the
-     * dark theme the page background is itself close to 09090B, so a near-black
-     * scrim darkens almost nothing and the overlay fails to separate from the
-     * page. Pure black darkens the background in both themes.
+     * The reference uses the same backdrop in both themes, so this stays a plain value
+     * rather than a theme lookup; a unit test fails if the two tokens ever diverge.
      */
-    val scrimColor: Color = Color(0x8C000000)
+    val scrimColor: Color = DefaultPalette.lightBackdrop
 
     /**
-     * How long an overlay takes to arrive, and to leave.
+     * How long an overlay takes to arrive.
      *
-     * One number for every layer, because they are seen together: a dialog that fades in
-     * over 150ms on top of a scrim that takes 300ms reads as two separate events. It also
-     * bounds the exit — the host keeps dismissed content mounted exactly this long before
-     * unmounting it, so a surface animating itself has this budget and no more.
-     *
-     * 240ms is the short end of the platform range (iOS sheets are around 300ms). Panels
-     * open in response to a tap and anything slower feels like waiting for the app.
+     * Surfaces that slide themselves in (sheets, drawers) use this for both directions,
+     * and the host keeps dismissed content mounted this long so their exit can finish.
      */
-    const val transitionDurationMillis: Int = 240
+    val transitionDurationMillis: Int = FeedbackDefaults.overlayEnterDuration
+
+    /** How long a fading or scaling overlay takes to leave; shorter than arriving. */
+    val exitDurationMillis: Int = FeedbackDefaults.overlayExitDuration
+
+    /** Distance from the trigger for anchored panels (menu and popover `offset`). */
+    val anchorOffset: Dp = ControlGeometry.overlayOffset
 }
 
 /**

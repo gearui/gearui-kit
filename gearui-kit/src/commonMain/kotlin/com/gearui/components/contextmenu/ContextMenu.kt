@@ -49,6 +49,13 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.menuItemFeedback
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 
 /**
  * Context menu action model.
@@ -110,7 +117,7 @@ fun ContextMenu(
                 anchorBounds = bounds,
                 options = OverlayOptions(
                     placement = placementToOverlay(placement),
-                    offsetY = Spacing.xs,
+                    offsetY = OverlayDefaults.anchorOffset,
                     modal = false,
                     maskColor = null,
                     dismissPolicy = OverlayDismissPolicy.Dropdown.copy(
@@ -137,15 +144,17 @@ fun ContextMenu(
                     shape = OverlayDefaults.panelShape,
                 ) {
                 val colors = Theme.colors
-                val shapes = Theme.shapes
+                // HeroUI Native menu.css: no border (the overlay shadow separates it),
+                // padding-inline 6 / padding-block 12, rows at radius 16.
+                val itemShape = RoundedCornerShape(ControlGeometry.radiusMenuItem)
                 Column(
-                    modifier = Modifier
-                        .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
-                        .padding(Spacing.xs)
+                    modifier = Modifier.padding(
+                        horizontal = ControlGeometry.menuPaddingInline,
+                        vertical = ControlGeometry.menuPaddingBlock,
+                    )
                 ) {
                     currentItems.forEach { item ->
                         val interaction = remember(item) { MutableInteractionSource() }
-                        val pressed by interaction.collectIsPressedAsState()
                         val itemColor = when {
                             item.disabled -> colors.mutedForeground
                             item.danger -> colors.destructive
@@ -154,19 +163,23 @@ fun ContextMenu(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(shapes.sm)
-                                .background(
-                                    if (pressed && !item.disabled) colors.muted else Color.Transparent
+                                .menuItemFeedback(
+                                    interaction = interaction,
+                                    shape = itemShape,
+                                    enabled = !item.disabled,
+                                    danger = item.danger,
                                 )
                                 .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                                     item.onClick()
                                     state.hide()
                                 }
                                 .padding(
-                                    horizontal = Spacing.md,
-                                    vertical = 10.dp
-                                ),
+                                    horizontal = ControlGeometry.menuItemPaddingInline,
+                                    vertical = ControlGeometry.menuItemPaddingBlock,
+                                )
+                                .alpha(if (item.disabled) FeedbackDefaults.disabledOpacity else 1f),
                             verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.menuItemGap),
                         ) {
                             if (item.icon != null) {
                                 Icon(
@@ -174,12 +187,11 @@ fun ContextMenu(
                                     size = IconSizes.Default.lg,
                                     tint = itemColor,
                                 )
-                                Spacer(Modifier.width(10.dp))
                             }
                             Text(
                                 text = item.label,
-                                style = Theme.typography.bodyMedium,
-                                color = itemColor,
+                                style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                                color = if (item.disabled) colors.foreground else itemColor,
                             )
                         }
                     }

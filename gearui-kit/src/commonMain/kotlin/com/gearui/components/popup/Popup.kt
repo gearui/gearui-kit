@@ -1,5 +1,7 @@
 package com.gearui.components.popup
 
+import com.gearui.foundation.material.Materials
+import com.gearui.foundation.material.MaterialSurface
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -140,11 +142,12 @@ internal fun PopupSurface(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    Box(
-        modifier = modifier
-            .clip(OverlayDefaults.panelShape)
-            .background(colors.surface)
-            .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
+    // Overlay surface and shadow, no border (reference overlay contract).
+    MaterialSurface(
+        material = Materials.Popover,
+        shape = OverlayDefaults.panelShape,
+        fallback = colors.popover,
+        modifier = modifier,
     ) {
         content()
     }

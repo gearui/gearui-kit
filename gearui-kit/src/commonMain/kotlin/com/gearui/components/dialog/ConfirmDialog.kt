@@ -6,7 +6,7 @@ import com.gearui.i18n.I18n
 /**
  * ConfirmDialog - confirmation dialog
  *
- * Title, message, and two actions drawn as a platform alert. Use
+ * Title, message, and two actions in the HeroUI dialog layout. Use
  * [destructive] when confirming means losing something: deleting a friend,
  * leaving a group, revoking a message.
  */

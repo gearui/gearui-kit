@@ -217,6 +217,68 @@
     "tagWarningForegroundMix": {
       "$type": "number",
       "$value": 0.35
+    },
+    "menuItemPressScale": {
+      "$type": "number",
+      "$value": 0.98
+    },
+    "menuItemPressDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      }
+    },
+    "menuItemDangerPressOpacity": {
+      "$type": "number",
+      "$value": 0.1
+    },
+    "overlayEnterDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 200,
+        "unit": "ms"
+      }
+    },
+    "overlayExitDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      }
+    },
+    "dialogEnterScale": {
+      "$type": "number",
+      "$value": 0.96
+    },
+    "anchoredEnterScale": {
+      "$type": "number",
+      "$value": 0.97
+    },
+    "anchoredEnterTranslate": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "overlayEaseOut": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.58,
+        1
+      ]
+    },
+    "overlayEaseIn": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.42,
+        0,
+        1,
+        1
+      ]
     }
   },
   "transitions": {

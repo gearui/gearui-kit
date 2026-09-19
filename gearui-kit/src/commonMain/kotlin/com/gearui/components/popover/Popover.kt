@@ -1,5 +1,11 @@
 package com.gearui.components.popover
 
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.menuItemFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -107,7 +113,7 @@ fun Popover(
     placement: PopoverPlacement = PopoverPlacement.BOTTOM,
     theme: PopoverTheme = PopoverTheme.LIGHT,
     showArrow: Boolean = false,
-    offset: Dp = 8.dp,
+    offset: Dp = OverlayDefaults.anchorOffset,
     closeOnClickOutside: Boolean = true,
     content: @Composable () -> Unit,
     trigger: @Composable (onClick: () -> Unit) -> Unit
@@ -162,6 +168,7 @@ fun Popover(
         val currentShowArrow by rememberUpdatedState(showArrow)
         val currentBorderColor by rememberUpdatedState(borderColor)
         val currentContent by rememberUpdatedState(content)
+        val bodyPadding = LocalPopoverBodyPadding.current
 
         DisposableEffect(bounds, currentPlacement, currentOffset) {
             val overlayId = overlay.show(
@@ -196,6 +203,7 @@ fun Popover(
                     state.isVisible = false
                 }
             ) {
+                CompositionLocalProvider(LocalPopoverBodyPadding provides bodyPadding) {
                 PopoverContent(
                     placement = currentPlacement,
                     backgroundColor = currentBackgroundColor,
@@ -204,6 +212,7 @@ fun Popover(
                     showArrow = currentShowArrow,
                     content = currentContent
                 )
+                }
             }
 
             onDispose {
@@ -346,10 +355,10 @@ private fun PopoverBody(
         shape = OverlayDefaults.panelShape,
         fallback = backgroundColor,
     ) {
+    // HeroUI Native popover.css: padding-inline 16 / padding-block 12, no border;
+    // the overlay shadow stack separates the surface in both themes.
     Box(
-        modifier = Modifier
-            .border(BorderWidth.thin, borderColor, OverlayDefaults.panelShape)
-            .padding(horizontal = Spacing.lg, vertical = Spacing.md)
+        modifier = Modifier.padding(LocalPopoverBodyPadding.current)
     ) {
         CompositionLocalProvider(
             LocalPopoverTextColor provides textColor
@@ -453,6 +462,17 @@ private fun placementToOverlay(placement: PopoverPlacement): OverlayPlacement {
 val LocalPopoverTextColor = compositionLocalOf { Color.Unspecified }
 
 /**
+ * Inner padding of the popover surface. Read where [Popover] is called and handed to
+ * the overlay content, so [PopoverMenu] can use the menu padding instead.
+ */
+internal val LocalPopoverBodyPadding = compositionLocalOf {
+    PaddingValues(
+        horizontal = ControlGeometry.popoverPaddingInline,
+        vertical = ControlGeometry.popoverPaddingBlock,
+    )
+}
+
+/**
  * Tooltip - simplified text hint
  */
 @Composable
@@ -520,6 +540,14 @@ fun PopoverMenu(
 ) {
     val colors = Theme.colors
 
+    // HeroUI Native menu.css: padding-inline 6 / padding-block 12, rows at radius 16,
+    // no separators, animated press fill (see menuItemFeedback).
+    CompositionLocalProvider(
+        LocalPopoverBodyPadding provides PaddingValues(
+            horizontal = ControlGeometry.menuPaddingInline,
+            vertical = ControlGeometry.menuPaddingBlock,
+        )
+    ) {
     Popover(
         state = state,
         modifier = modifier,
@@ -527,43 +555,43 @@ fun PopoverMenu(
         theme = theme,
         showArrow = true,
         content = {
+            val itemShape = RoundedCornerShape(ControlGeometry.radiusMenuItem)
             Column(
-                modifier = Modifier.width(160.dp)
+                modifier = Modifier.widthIn(min = 160.dp)
             ) {
-                items.forEachIndexed { index, item ->
+                items.forEach { item ->
+                    val interaction = remember(item) { MutableInteractionSource() }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.Transparent)
-                            .clickable(enabled = !item.disabled) {
+                            .menuItemFeedback(
+                                interaction = interaction,
+                                shape = itemShape,
+                                enabled = !item.disabled,
+                                danger = item.danger,
+                            )
+                            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                                 item.onClick()
                                 state.hide()
                             }
-                            .padding(vertical = Spacing.md, horizontal = Spacing.md),
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(
+                                horizontal = ControlGeometry.menuItemPaddingInline,
+                                vertical = ControlGeometry.menuItemPaddingBlock,
+                            )
+                            .alpha(if (item.disabled) FeedbackDefaults.disabledOpacity else 1f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(ControlGeometry.menuItemGap),
                     ) {
                         if (item.icon != null) {
                             item.icon.invoke()
-                            Spacer(modifier = Modifier.width(Spacing.sm))
                         }
-
                         Text(
                             text = item.label,
-                            style = Theme.typography.bodyMedium,
+                            style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                             color = when {
-                                item.disabled -> colors.mutedForeground
                                 item.danger -> colors.destructive
                                 else -> LocalPopoverTextColor.current
                             }
-                        )
-                    }
-
-                    if (index < items.size - 1) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(BorderWidth.thin)
-                                .background(colors.border.copy(alpha = 0.3f))
                         )
                     }
                 }
@@ -571,4 +599,5 @@ fun PopoverMenu(
         },
         trigger = trigger
     )
+    }
 }

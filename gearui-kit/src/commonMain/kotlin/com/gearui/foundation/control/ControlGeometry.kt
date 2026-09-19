@@ -8,9 +8,9 @@ internal object ControlGeometry {
     val accordionSurfacePadding = 20.dp
     val accordionTriggerGap = 16.dp
     val accordionVerticalPadding = 16.dp
-    val actionSheetDescriptionRow = 78.dp
+    val actionSheetDescriptionRow = 60.dp
     val actionSheetGridRow = 96.dp
-    val actionSheetRow = 56.dp
+    val actionSheetRow = 40.dp
     val buttonGapExtraSmall = 5.dp
     val buttonGapLarge = 10.dp
     val buttonGapMedium = 8.dp
@@ -25,6 +25,10 @@ internal object ControlGeometry {
     val controlLarge = 56.dp
     val controlMedium = 48.dp
     val controlSmall = 40.dp
+    val dialogActionGap = 12.dp
+    val dialogActionsTop = 32.dp
+    val dialogMaxWidth = 384.dp
+    val dialogTextGap = 4.dp
     val fieldLabelGap = 6.dp
     val fieldPaddingLarge = 12.dp
     val fieldPaddingMedium = 12.dp
@@ -34,13 +38,24 @@ internal object ControlGeometry {
     val listItemGap = 12.dp
     val listMinHeight = 52.dp
     val listPadding = 16.dp
+    val menuItemGap = 10.dp
+    val menuItemPaddingBlock = 8.dp
+    val menuItemPaddingInline = 10.dp
+    val menuPaddingBlock = 12.dp
+    val menuPaddingInline = 6.dp
+    val overlayOffset = 9.dp
+    val overlayPadding = 20.dp
+    val popoverPaddingBlock = 12.dp
+    val popoverPaddingInline = 16.dp
     val radioThumb = 10.dp
     val radiusDefault = 14.dp
     val radiusFull = 9999.dp
     val radiusLarge = 16.dp
     val radiusMedium = 12.dp
+    val radiusMenuItem = 16.dp
     val radiusNone = 0.dp
     val radiusOverlay = 24.dp
+    val radiusSheet = 32.dp
     val radiusSmall = 8.dp
     val searchClearSize = 24.dp
     val selectContentPadding = 12.dp
@@ -51,6 +66,7 @@ internal object ControlGeometry {
     val selectionMedium = 24.dp
     val selectionSmall = 20.dp
     val selectionTouchTarget = 44.dp
+    val sheetMenuPaddingInline = 12.dp
     val sliderCapsuleHeight = 24.dp
     val sliderCapsuleInset = 3.dp
     val sliderThumbHeight = 20.dp
@@ -70,5 +86,6 @@ internal object ControlGeometry {
     val tagPaddingSmall = 8.dp
     val textareaMinHeight = 128.dp
     val textareaPaddingVertical = 8.dp
+    val toastPadding = 16.dp
     val treeIndent = 16.dp
 }

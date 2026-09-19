@@ -4,6 +4,7 @@ package com.gearui.theme
 import com.tencent.kuikly.compose.ui.graphics.Color
 
 internal object DefaultPalette {
+    val darkBackdrop = Color(0.0f, 0.0f, 0.0f, 0.2f)
     val darkBackground = Color(0.021721669f, 0.021694641f, 0.028367428f, 1f)
     val darkBorder = Color(0.158629492f, 0.15862184f, 0.171576396f, 1f)
     val darkButtonBackground = Color(0.152896917f, 0.152886848f, 0.165770248f, 1f)
@@ -25,12 +26,14 @@ internal object DefaultPalette {
     val darkPrimary = Color(0.016599386f, 0.52157564f, 0.968539356f, 1f)
     val darkPrimaryForeground = Color(0.988276211f, 0.988276211f, 0.988276211f, 1f)
     val darkRing = Color(0.016599386f, 0.52157564f, 0.968539356f, 1f)
+    val darkSeparator = Color(0.279221067f, 0.279249523f, 0.293431278f, 1f)
     val darkSuccess = Color(0.089664996f, 0.78819165f, 0.391964351f, 1f)
     val darkSuccessForeground = Color(0.094083545f, 0.094081351f, 0.105924776f, 1f)
     val darkSurface = Color(0.094083545f, 0.094081351f, 0.105924776f, 1f)
     val darkSurfaceForeground = Color(0.988276211f, 0.988276211f, 0.988276211f, 1f)
     val darkWarning = Color(0.968531341f, 0.717603534f, 0.313834332f, 1f)
     val darkWarningForeground = Color(0.094083545f, 0.094081351f, 0.105924776f, 1f)
+    val lightBackdrop = Color(0.0f, 0.0f, 0.0f, 0.2f)
     val lightBackground = Color(0.960848743f, 0.960848743f, 0.960848743f, 1f)
     val lightBorder = Color(0.868722602f, 0.868722346f, 0.880331804f, 1f)
     val lightButtonBackground = Color(0.921202232f, 0.921202573f, 0.924139299f, 1f)
@@ -52,6 +55,7 @@ internal object DefaultPalette {
     val lightPrimary = Color(0.016599386f, 0.52157564f, 0.968539356f, 1f)
     val lightPrimaryForeground = Color(0.988276211f, 0.988276211f, 0.988276211f, 1f)
     val lightRing = Color(0.016599386f, 0.52157564f, 0.968539356f, 1f)
+    val lightSeparator = Color(0.66804914f, 0.668044702f, 0.67909702f, 1f)
     val lightSuccess = Color(0.089664996f, 0.78819165f, 0.391964351f, 1f)
     val lightSuccessForeground = Color(0.094083545f, 0.094081351f, 0.105924776f, 1f)
     val lightSurface = Color(1.0f, 1.0f, 1.0f, 1f)

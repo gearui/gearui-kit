@@ -17,8 +17,17 @@ fi
 echo "[single-app-root] checking sample App root uniqueness..."
 
 # Rule 1: MainDemo must provide App root.
-if ! rg -n 'App\(' "$MAIN_DEMO" >/dev/null; then
+if ! rg -n '\bApp\(' "$MAIN_DEMO" >/dev/null; then
   echo "Single-root violation: MainDemo must define App root entry."
+  exit 1
+fi
+
+# Rule 1b: a View subclass that mounts App itself must turn off the base class's
+# own App wrapper, or the page gets two nested Apps (two OverlayRoots and two
+# ToastHosts, the outer one on the default light theme).
+if rg -n ':\s*View\(\)' "$MAIN_DEMO" >/dev/null \
+  && ! rg -n 'override fun autoWrapApp\(\)\s*:\s*Boolean\s*=\s*false' "$MAIN_DEMO" >/dev/null; then
+  echo "Single-root violation: MainDemo extends View and calls App, so it must override autoWrapApp() = false."
   exit 1
 fi
 
@@ -26,7 +35,7 @@ fi
 TMP_HITS="$(mktemp)"
 trap 'rm -f "$TMP_HITS"' EXIT
 
-rg -n 'App\(' "$SAMPLE_DIR" \
+rg -n '\bApp\(' "$SAMPLE_DIR" \
   | sed "s|$ROOT_DIR/||" >"$TMP_HITS" || true
 
 if [[ ! -s "$TMP_HITS" ]]; then

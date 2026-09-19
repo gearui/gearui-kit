@@ -1,5 +1,12 @@
 package com.gearui.components.toast
 
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.graphics.lerp
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
@@ -183,19 +190,16 @@ private fun ToastSurface(toast: ToastData) {
     val colors = Theme.colors
     val shapes = Theme.shapes
 
-    // Colour mapping: type -> visuals
-    val (backgroundColor, textColor) = when (toast.type) {
-        ToastType.INFO -> colors.foreground to colors.background
-        ToastType.SUCCESS -> colors.success to colors.successForeground
-        ToastType.WARNING -> colors.warning to colors.warningForeground
-        ToastType.ERROR -> colors.destructive to colors.destructiveForeground
-    }
+    val textColor = toastForeground(toast.type)
 
+    // Reference `.toast__root`: overlay surface and shadow, radius 24, padding 16.
+    MaterialSurface(
+        material = Materials.Popover,
+        shape = OverlayDefaults.panelShape,
+        fallback = colors.popover,
+    ) {
     Box(
-        modifier = Modifier
-            .clip(OverlayDefaults.panelShape)
-            .background(backgroundColor)
-            .padding(horizontal = Spacing.xl, vertical = Spacing.md),
+        modifier = Modifier.padding(ControlGeometry.toastPadding),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -219,13 +223,32 @@ private fun ToastSurface(toast: ToastData) {
                 Spacer(modifier = Modifier.width(Spacing.sm))
             }
 
-            // Text
+            // Text: reference `.toast__label`, medium weight.
             Text(
                 text = toast.message,
-                style = Theme.typography.bodyMedium,
+                style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                 color = textColor
             )
         }
+    }
+    }
+}
+
+/**
+ * Label colour per toast type, on the overlay surface.
+ *
+ * Reference `.toast__label--variant-*`: default uses the overlay foreground, status
+ * variants use their soft foreground — the status colour pulled toward the text
+ * colour so yellow and green stay legible on white. Same mixes as the soft Tag.
+ */
+@Composable
+private fun toastForeground(type: ToastType): Color {
+    val colors = Theme.colors
+    return when (type) {
+        ToastType.INFO -> colors.popoverForeground
+        ToastType.SUCCESS -> lerp(colors.success, colors.foreground, FeedbackDefaults.tagSuccessForegroundMix)
+        ToastType.WARNING -> lerp(colors.warning, colors.foreground, FeedbackDefaults.tagWarningForegroundMix)
+        ToastType.ERROR -> colors.destructive
     }
 }
 
@@ -299,13 +322,7 @@ fun LocalToast(
 
     if (!visible) return
 
-    // Colour mapping
-    val (backgroundColor, textColor) = when (type) {
-        ToastType.INFO -> colors.foreground to colors.background
-        ToastType.SUCCESS -> colors.success to colors.successForeground
-        ToastType.WARNING -> colors.warning to colors.warningForeground
-        ToastType.ERROR -> colors.destructive to colors.destructiveForeground
-    }
+    val textColor = toastForeground(type)
 
     // Position alignment
     val alignment = when (position) {
@@ -326,19 +343,22 @@ fun LocalToast(
             .padding(verticalPadding),
         contentAlignment = alignment
     ) {
+        MaterialSurface(
+            material = Materials.Popover,
+            shape = OverlayDefaults.panelShape,
+            fallback = colors.popover,
+            modifier = Modifier.widthIn(min = 120.dp, max = 280.dp),
+        ) {
         Box(
-            modifier = Modifier
-                .widthIn(min = 120.dp, max = 280.dp)
-                .clip(OverlayDefaults.panelShape)
-                .background(backgroundColor)
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+            modifier = Modifier.padding(ControlGeometry.toastPadding),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = message,
                 color = textColor,
-                style = Theme.typography.bodyMedium
+                style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
             )
+        }
         }
     }
 }

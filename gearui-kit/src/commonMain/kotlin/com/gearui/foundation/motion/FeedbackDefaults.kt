@@ -50,4 +50,14 @@ internal object FeedbackDefaults {
     val accordionExitEasing = CubicBezierEasing(0.42f, 0f, 1f, 1f)
     val accordionEnterTransition = TokenTransition(200, 0, CubicBezierEasing(0f, 0f, 0.58f, 1f))
     val accordionExitTransition = TokenTransition(200, 0, CubicBezierEasing(0.42f, 0f, 1f, 1f))
+    val menuItemPressScale = 0.98f
+    val menuItemPressDuration = 150
+    val menuItemDangerPressOpacity = 0.1f
+    val overlayEnterDuration = 200
+    val overlayExitDuration = 150
+    val dialogEnterScale = 0.96f
+    val anchoredEnterScale = 0.97f
+    val anchoredEnterTranslate = 12f
+    val overlayEaseOut = CubicBezierEasing(0f, 0f, 0.58f, 1f)
+    val overlayEaseIn = CubicBezierEasing(0.42f, 0f, 1f, 1f)
 }

@@ -1,5 +1,7 @@
 package com.gearui.components.select
 
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.control.ControlGeometry
@@ -52,11 +54,16 @@ internal fun <T> SelectPanel(
     val width = with(density) { anchorWidth.toDp().coerceAtMost(viewportWidth.toDp() - Spacing.lg) }
     val rowHeight = FieldSizeTokens.Medium.height
 
+    // Same overlay surface as every other panel: overlay colour and the overlay
+    // shadow stack (HeroUI Native select.css `.select__content`).
+    MaterialSurface(
+        material = Materials.Popover,
+        shape = shape,
+        fallback = colors.popover,
+        modifier = Modifier.width(width).height(layout.height.dp),
+    ) {
     Box(
-        Modifier.width(width).height(layout.height.dp)
-            .shadow(Theme.elevation.floating, shape)
-            .clip(shape)
-            .background(colors.popover)
+        Modifier.fillMaxSize()
             .padding(ControlGeometry.selectContentPadding)
     ) {
         if (rows.isEmpty()) {
@@ -79,6 +86,7 @@ internal fun <T> SelectPanel(
             }
         }
     }
+    }
 }
 
 @Composable
@@ -89,7 +97,7 @@ private fun <T> SelectPanelRow(option: SelectOption<T>, selected: Boolean, enabl
     val pressed by interaction.collectIsPressedAsState()
     Row(
         Modifier.fillMaxWidth().height(FieldSizeTokens.Medium.height)
-            .background(if (enabled && (hovered || pressed)) colors.muted else colors.popover)
+            .background(if (enabled && (hovered || pressed)) colors.muted else colors.popover.copy(alpha = 0f))
             .hoverable(interaction, enabled)
             .selectable(selected = selected, enabled = enabled, role = if (multiple) Role.Checkbox else Role.RadioButton,
                 interactionSource = interaction, indication = null, onClick = onClick)

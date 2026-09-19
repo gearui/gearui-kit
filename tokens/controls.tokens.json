@@ -401,16 +401,14 @@
       }
     },
     "actionSheetRow": {
-      "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
       "$value": {
-        "value": 56,
+        "value": 40,
         "unit": "px"
       }
     },
     "actionSheetDescriptionRow": {
-      "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
       "$value": {
-        "value": 78,
+        "value": 60,
         "unit": "px"
       }
     },
@@ -418,6 +416,108 @@
       "$description": "GearUI action-sheet geometry; extension, not a HeroUI Native component mapping.",
       "$value": {
         "value": 96,
+        "unit": "px"
+      }
+    },
+    "radiusSheet": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "radiusMenuItem": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "overlayPadding": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "overlayOffset": {
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      }
+    },
+    "menuPaddingInline": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "menuPaddingBlock": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "menuItemPaddingInline": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "menuItemPaddingBlock": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "menuItemGap": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "popoverPaddingInline": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "popoverPaddingBlock": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "dialogMaxWidth": {
+      "$value": {
+        "value": 384,
+        "unit": "px"
+      }
+    },
+    "dialogTextGap": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "dialogActionsTop": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "dialogActionGap": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "toastPadding": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "sheetMenuPaddingInline": {
+      "$value": {
+        "value": 12,
         "unit": "px"
       }
     }

@@ -210,7 +210,6 @@ private fun CascaderDropdown(
             .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
             .background(colors.popover, OverlayDefaults.panelShape)
-            .border(BorderWidth.thin, colors.border, OverlayDefaults.panelShape)
     ) {
         levels.forEachIndexed { levelIndex, levelOptions ->
             Column(

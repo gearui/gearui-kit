@@ -58,6 +58,12 @@ enum class AppPage {
 @Page("MainDemo")
 class MainDemo : View() {
 
+    // MainDemoContent mounts the one App itself (it owns theme, brand and language).
+    // Leaving the base class's wrapper on nests a second, light-themed App around it:
+    // two OverlayRoots, two ToastHosts, two ActionSheet hosts, and the outer light
+    // toast drawn on top of the dark one.
+    override fun autoWrapApp(): Boolean = false
+
     @Composable
     override fun Content() {
         MainDemoContent()

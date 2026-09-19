@@ -165,6 +165,18 @@
     },
     "darkOverlay": {
       "$value": "{reference.dark.overlay}"
+    },
+    "lightBackdrop": {
+      "$value": "{reference.light.backdrop}"
+    },
+    "darkBackdrop": {
+      "$value": "{reference.dark.backdrop}"
+    },
+    "lightSeparator": {
+      "$value": "{reference.light.separator}"
+    },
+    "darkSeparator": {
+      "$value": "{reference.dark.separator}"
     }
   },
   "reference": {

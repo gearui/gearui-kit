@@ -20,7 +20,7 @@ import com.gearui.foundation.border.BorderWidth
  *
  * Rework notes:
  * - the hardcoded colours in DividerTokens are gone
- * - Theme.colors.border is used directly
+ * - Theme.colors.separator is used directly (reference `--separator`)
  */
 
 /**
@@ -44,7 +44,7 @@ fun Divider(
             .fillMaxWidth()
             .padding(start = insetStart, end = insetEnd)
             .height(thickness)
-            .background(colors.border)
+            .background(colors.separator)
     )
 }
 

@@ -37,9 +37,8 @@ fun SheetGrabber(modifier: Modifier = Modifier) {
                 .width(36.dp)
                 .height(5.dp)
                 .background(
-                    // Border rather than mutedForeground: the grabber sits above
-                    // the content and must not compete with it for attention.
-                    color = Theme.colors.border,
+                    // Reference `.bottom-sheet__content-handle-indicator`: separator.
+                    color = Theme.colors.separator,
                     // A capsule, which at 5dp tall is the shape scale's `full`
                     // rather than an off-scale radius picked to look right.
                     shape = Theme.shapes.full,

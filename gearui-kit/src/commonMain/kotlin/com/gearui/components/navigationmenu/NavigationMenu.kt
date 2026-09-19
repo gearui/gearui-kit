@@ -1,5 +1,6 @@
 package com.gearui.components.navigationmenu
 
+import com.gearui.overlay.OverlayDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -89,10 +90,10 @@ fun NavigationMenu(
                 Column(
                     modifier = Modifier
                         .widthIn(min = 280.dp, max = 380.dp)
-                        .clip(shapes.lg)
-                        .shadow(Theme.elevation.raised, shapes.lg)
-                        .background(colors.surface)
-                        .border(BorderWidth.thin, colors.border, shapes.lg)
+                        // Overlay panel: radius 24, overlay colour, no border.
+                        .shadow(Theme.elevation.raised, OverlayDefaults.panelShape)
+                        .clip(OverlayDefaults.panelShape)
+                        .background(colors.popover)
                         .padding(Spacing.sm),
                     verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                 ) {

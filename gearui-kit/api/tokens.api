@@ -25,6 +25,7 @@
   ring
   secondary
   secondaryForeground
+  separator
   success
   successForeground
   surface
@@ -88,6 +89,7 @@
   ring = DefaultPalette.lightRing
   secondary = DefaultPalette.lightButtonBackground
   secondaryForeground = DefaultPalette.lightButtonContent
+  separator = DefaultPalette.lightSeparator
   success = DefaultPalette.lightSuccess
   successForeground = DefaultPalette.lightSuccessForeground
   surface = DefaultPalette.lightSurface
@@ -117,6 +119,7 @@
   ring = DefaultPalette.darkRing
   secondary = DefaultPalette.darkButtonBackground
   secondaryForeground = DefaultPalette.darkButtonContent
+  separator = DefaultPalette.darkSeparator
   success = DefaultPalette.darkSuccess
   successForeground = DefaultPalette.darkSuccessForeground
   surface = DefaultPalette.darkSurface
@@ -125,6 +128,7 @@
   warningForeground = DefaultPalette.darkWarningForeground
 
 [source] colors.tokens.json
+  colors.darkBackdrop = {"$type":"color","$value":"{reference.dark.backdrop}"}
   colors.darkBackground = {"$type":"color","$value":"{reference.dark.background}"}
   colors.darkBorder = {"$type":"color","$value":"{reference.dark.border}"}
   colors.darkButtonBackground = {"$type":"color","$value":"{reference.dark.default}"}
@@ -146,12 +150,14 @@
   colors.darkPrimary = {"$type":"color","$value":"{reference.dark.accent}"}
   colors.darkPrimaryForeground = {"$type":"color","$value":"{reference.dark.accent-foreground}"}
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
+  colors.darkSeparator = {"$type":"color","$value":"{reference.dark.separator}"}
   colors.darkSuccess = {"$type":"color","$value":"{reference.dark.success}"}
   colors.darkSuccessForeground = {"$type":"color","$value":"{reference.dark.success-foreground}"}
   colors.darkSurface = {"$type":"color","$value":"{reference.dark.surface}"}
   colors.darkSurfaceForeground = {"$type":"color","$value":"{reference.dark.surface-foreground}"}
   colors.darkWarning = {"$type":"color","$value":"{reference.dark.warning}"}
   colors.darkWarningForeground = {"$type":"color","$value":"{reference.dark.warning-foreground}"}
+  colors.lightBackdrop = {"$type":"color","$value":"{reference.light.backdrop}"}
   colors.lightBackground = {"$type":"color","$value":"{reference.light.background}"}
   colors.lightBorder = {"$type":"color","$value":"{reference.light.border}"}
   colors.lightButtonBackground = {"$type":"color","$value":"{reference.light.default}"}
@@ -173,6 +179,7 @@
   colors.lightPrimary = {"$type":"color","$value":"{reference.light.accent}"}
   colors.lightPrimaryForeground = {"$type":"color","$value":"{reference.light.accent-foreground}"}
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
+  colors.lightSeparator = {"$type":"color","$value":"{reference.light.separator}"}
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
   colors.lightSuccessForeground = {"$type":"color","$value":"{reference.light.success-foreground}"}
   colors.lightSurface = {"$type":"color","$value":"{reference.light.surface}"}
@@ -253,9 +260,9 @@
   geometry.accordionSurfacePadding = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.accordionTriggerGap = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.accordionVerticalPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
-  geometry.actionSheetDescriptionRow = {"$type":"dimension","$value":{"unit":"px","value":78}}
+  geometry.actionSheetDescriptionRow = {"$type":"dimension","$value":{"unit":"px","value":60}}
   geometry.actionSheetGridRow = {"$type":"dimension","$value":{"unit":"px","value":96}}
-  geometry.actionSheetRow = {"$type":"dimension","$value":{"unit":"px","value":56}}
+  geometry.actionSheetRow = {"$type":"dimension","$value":{"unit":"px","value":40}}
   geometry.buttonGapExtraSmall = {"$type":"dimension","$value":{"unit":"px","value":5}}
   geometry.buttonGapLarge = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.buttonGapMedium = {"$type":"dimension","$value":{"unit":"px","value":8}}
@@ -270,6 +277,10 @@
   geometry.controlLarge = {"$type":"dimension","$value":{"unit":"px","value":56}}
   geometry.controlMedium = {"$type":"dimension","$value":{"unit":"px","value":48}}
   geometry.controlSmall = {"$type":"dimension","$value":{"unit":"px","value":40}}
+  geometry.dialogActionGap = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.dialogActionsTop = {"$type":"dimension","$value":{"unit":"px","value":32}}
+  geometry.dialogMaxWidth = {"$type":"dimension","$value":{"unit":"px","value":384}}
+  geometry.dialogTextGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.fieldLabelGap = {"$type":"dimension","$value":{"unit":"px","value":6}}
   geometry.fieldPaddingLarge = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.fieldPaddingMedium = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -279,13 +290,24 @@
   geometry.listItemGap = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.listMinHeight = {"$type":"dimension","$value":{"unit":"px","value":52}}
   geometry.listPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
+  geometry.menuItemGap = {"$type":"dimension","$value":{"unit":"px","value":10}}
+  geometry.menuItemPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":8}}
+  geometry.menuItemPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":10}}
+  geometry.menuPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.menuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":6}}
+  geometry.overlayOffset = {"$type":"dimension","$value":{"unit":"px","value":9}}
+  geometry.overlayPadding = {"$type":"dimension","$value":{"unit":"px","value":20}}
+  geometry.popoverPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.popoverPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.radioThumb = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.radiusDefault = {"$type":"dimension","$value":{"unit":"px","value":14}}
   geometry.radiusFull = {"$type":"dimension","$value":{"unit":"px","value":9999}}
   geometry.radiusLarge = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.radiusMedium = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.radiusMenuItem = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.radiusNone = {"$type":"dimension","$value":{"unit":"px","value":0}}
   geometry.radiusOverlay = {"$type":"dimension","$value":{"unit":"px","value":24}}
+  geometry.radiusSheet = {"$type":"dimension","$value":{"unit":"px","value":32}}
   geometry.radiusSmall = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.searchClearSize = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.selectContentPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -296,6 +318,7 @@
   geometry.selectionMedium = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.selectionSmall = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.selectionTouchTarget = {"$type":"dimension","$value":{"unit":"px","value":44}}
+  geometry.sheetMenuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.sliderCapsuleHeight = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.sliderCapsuleInset = {"$type":"dimension","$value":{"unit":"px","value":3}}
   geometry.sliderThumbHeight = {"$type":"dimension","$value":{"unit":"px","value":20}}
@@ -315,6 +338,7 @@
   geometry.tagPaddingSmall = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.textareaMinHeight = {"$type":"dimension","$value":{"unit":"px","value":128}}
   geometry.textareaPaddingVertical = {"$type":"dimension","$value":{"unit":"px","value":8}}
+  geometry.toastPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.treeIndent = {"$type":"dimension","$value":{"unit":"px","value":16}}
 
 [source] feedback.tokens.json
@@ -330,10 +354,20 @@
   feedback.accordionLayoutStiffness = {"$type":"number","$value":1600}
   feedback.accordionMass = {"$type":"number","$value":4}
   feedback.accordionRotation = {"$type":"number","$value":180}
+  feedback.anchoredEnterScale = {"$type":"number","$value":0.97}
+  feedback.anchoredEnterTranslate = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  feedback.dialogEnterScale = {"$type":"number","$value":0.96}
   feedback.disabledOpacity = {"$type":"number","$value":0.5}
   feedback.highlightDuration = {"$type":"duration","$value":{"unit":"ms","value":200}}
   feedback.highlightOpacity = {"$type":"number","$value":1}
+  feedback.menuItemDangerPressOpacity = {"$type":"number","$value":0.1}
+  feedback.menuItemPressDuration = {"$type":"duration","$value":{"unit":"ms","value":150}}
+  feedback.menuItemPressScale = {"$type":"number","$value":0.98}
   feedback.neutralMix = {"$type":"number","$value":0.04}
+  feedback.overlayEaseIn = {"$type":"cubicBezier","$value":[0.42,0,1,1]}
+  feedback.overlayEaseOut = {"$type":"cubicBezier","$value":[0,0,0.58,1]}
+  feedback.overlayEnterDuration = {"$type":"duration","$value":{"unit":"ms","value":200}}
+  feedback.overlayExitDuration = {"$type":"duration","$value":{"unit":"ms","value":150}}
   feedback.pressDuration = {"$type":"duration","$value":{"unit":"ms","value":300}}
   feedback.pressEasing = {"$type":"cubicBezier","$value":[0,0,0.58,1]}
   feedback.pressScale = {"$type":"number","$value":0.985}

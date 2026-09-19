@@ -21,6 +21,18 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.primitives.ScrollView
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.material.MaterialSurface
+import com.gearui.foundation.material.Materials
+import com.gearui.overlay.LocalOverlayViewportSize
+import com.tencent.kuikly.compose.ui.platform.LocalDensity
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.gearui.foundation.typography.TextStyle
 
 /**
  * Dialog - base for modal dialogs
@@ -96,6 +108,10 @@ object Dialog {
 
 /**
  * DialogSurface - shared visual container for Dialog
+ *
+ * HeroUI Native dialog.css: overlay colour, overlay shadow, radius 24, no border.
+ * The portal keeps 20 from each screen edge and the reference dialogs cap the
+ * card at `max-w-sm` (384).
  */
 @Composable
 internal fun DialogSurface(
@@ -103,55 +119,54 @@ internal fun DialogSurface(
     content: @Composable () -> Unit
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    Box(
+    val density = LocalDensity.current
+    val viewportWidth = with(density) { LocalOverlayViewportSize.current.width.toDp() }
+    val available = viewportWidth - ControlGeometry.overlayPadding * 2
+    val width = if (available.value > 0f && available < ControlGeometry.dialogMaxWidth) {
+        available
+    } else {
+        ControlGeometry.dialogMaxWidth
+    }
+    MaterialSurface(
+        material = Materials.Popover,
+        shape = OverlayDefaults.modalShape,
+        fallback = colors.popover,
         modifier = modifier
-            .widthIn(min = 270.dp, max = 320.dp)
+            .width(width)
             // 🔴 Height must HUG the content, and be capped.
             //
             // Constraining width but not height lets any "take all the height you
             // offer" child (a multiline Input is exactly that: it deliberately hands
-            // height to the caller) stretch the dialog to the full screen — the
-            // title runs into the status bar, the buttons are pushed off screen,
-            // and the user cannot even tap Confirm. That is not the child's fault;
-            // this layer was missing one constraint: a modal card must not grow
-            // without bound because one child wants to.
+            // height to the caller) stretch the dialog to the full screen, pushing
+            // the actions off screen. A modal card must not grow without bound
+            // because one child wants to.
             .wrapContentHeight()
-            .heightIn(max = 560.dp)
-            .shadow(Theme.elevation.modal, OverlayDefaults.modalShape)
-            .background(colors.surface, OverlayDefaults.modalShape)
-            .border(BorderWidth.thin, colors.border, OverlayDefaults.modalShape)
+            .heightIn(max = 560.dp),
     ) {
         content()
     }
 }
 
 /**
- * DialogContent — title, optional body, then a list of actions.
+ * DialogContent — title, optional body, then the actions.
  *
- * The shape is the platform alert: everything centred, the actions stacked
- * full-width under a hairline, one per row. That is what people already know
- * from every system prompt, and it is why actions are a `List<DialogAction>`
- * rather than a composable slot — the previous slot was a `RowScope` of raw
- * Buttons, so each screen chose its own button type, theme, size and spacing,
- * and the result was a right-aligned desktop dialog with a filled button in
- * the corner. Roles decide the drawing now; callers only say what an action
- * means.
+ * Follows the HeroUI Native dialog: a start-aligned title (large, medium weight)
+ * over a muted description, 20 of padding, and real Buttons below with 32 above
+ * them. Callers still pass [DialogAction] roles; the dialog decides the drawing:
  *
- * Layout rules:
- * - **Two short actions sit side by side**, split by a vertical hairline, the
- *   way a system alert does; anything else stacks. "Short" is measured in
- *   characters because Kuikly cannot measure text here, so the threshold is
- *   deliberately conservative — a wrong guess must never clip a label.
- * - **CANCEL always goes last** regardless of the order passed in. Backing out
- *   belongs in the same place in every dialog; a caller that lists it first
- *   should not move the button under the user's thumb.
+ * - **Stacked, full width** when an action is destructive, when there are more
+ *   than two, or when a label is long — the reference confirm pattern (danger
+ *   button, then a neutral Cancel). CANCEL always goes last.
+ * - **One row, end-aligned, small buttons** otherwise — the reference form
+ *   footer, with Cancel first and the primary action on the trailing edge.
  *
- * @param title required; the question being asked
+ * "Long" is measured in characters because Kuikly cannot measure text here, so
+ * the threshold is conservative: a wrong guess must never clip a label.
+ *
+ * @param title the question being asked
  * @param message optional supporting line
  * @param content optional custom body, scrollable, between message and actions
- * @param actions one row each; empty is not useful and renders nothing
+ * @param actions empty renders none
  */
 @Composable
 fun DialogContent(
@@ -161,77 +176,50 @@ fun DialogContent(
     actions: List<DialogAction> = emptyList(),
 ) {
     val colors = Theme.colors
-
-    // Prefer giving a dialog a title: it is the question being asked, and the
-    // interaction reference this kit follows (Apple/UIKit, DESIGN_SYSTEM_SPEC
-    // §0.1) treats the title as the required part and the message as optional
-    // support. A message-only dialog is still allowed, so it has to look
-    // deliberate rather than like a dialog whose title failed to load — which
-    // is what happens if the message keeps its supporting styling and the
-    // layout keeps the empty title's space above it.
-    val messageIsPrimary = title == null
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Spacing.xl)
-                .padding(
-                    // Without a title there is nothing to give the extra room to.
-                    top = if (messageIsPrimary) Spacing.lg else Spacing.xl,
-                    bottom = if (actions.isEmpty()) Spacing.xl else Spacing.lg,
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            if (title != null) {
-                com.gearui.foundation.primitives.Text(
-                    text = title,
-                    style = Theme.typography.titleSmall,
-                    color = colors.foreground,
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            if (message != null) {
-                if (title != null) Spacer(modifier = Modifier.height(Spacing.xs))
-                com.gearui.foundation.primitives.Text(
-                    text = message,
-                    // The only text in the card carries it, so it reads as content
-                    // rather than as a footnote under a missing heading.
-                    style = if (messageIsPrimary) {
-                        Theme.typography.bodyMedium
-                    } else {
-                        Theme.typography.bodySmall
-                    },
-                    color = if (messageIsPrimary) colors.foreground else colors.mutedForeground,
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            // Custom content SCROLLS; title and actions stay FIXED.
-            //
-            // Capping only the outer box (heightIn max) is not enough: when content
-            // exceeds the cap, under large system fonts, or on small screens, the
-            // overflow is clipped together with the actions — the user sees the
-            // dialog and cannot reach its buttons, short of killing the app.
-            //
-            // Kuikly has no Modifier.verticalScroll, so this uses the repository's own
-            // ScrollView (a LazyColumn with one item wrapping a Column — the same
-            // workaround as the existing nav-return case).
-            if (content != null) {
-                Spacer(modifier = Modifier.height(Spacing.lg))
-                ScrollView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        // The cap leaves room for title and actions: 360 + title/actions/padding stays within the outer 560.
-                        .heightIn(max = 360.dp)
-                ) {
-                    content()
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(ControlGeometry.overlayPadding),
+    ) {
+        if (title != null) {
+            com.gearui.foundation.primitives.Text(
+                text = title,
+                style = DialogDefaults.titleStyle,
+                color = colors.foreground,
+                textAlign = TextAlign.Start,
+            )
+        }
+        if (message != null) {
+            if (title != null) Spacer(modifier = Modifier.height(ControlGeometry.dialogTextGap))
+            com.gearui.foundation.primitives.Text(
+                text = message,
+                // A message-only dialog promotes it to the title's colour so it does
+                // not read as a footnote under a heading that failed to load.
+                style = Theme.typography.bodyMedium,
+                color = if (title == null) colors.foreground else colors.mutedForeground,
+                textAlign = TextAlign.Start,
+            )
+        }
+        // Custom content SCROLLS; title and actions stay FIXED.
+        //
+        // Capping only the outer box (heightIn max) is not enough: when content
+        // exceeds the cap, under large system fonts, or on small screens, the
+        // overflow is clipped together with the actions and the user cannot reach
+        // the buttons. Kuikly has no Modifier.verticalScroll, so this uses the
+        // repository's ScrollView.
+        if (content != null) {
+            if (title != null || message != null) Spacer(modifier = Modifier.height(Spacing.lg))
+            ScrollView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    // Leaves room for title and actions within the outer 560 cap.
+                    .heightIn(max = 360.dp)
+            ) {
+                content()
             }
         }
-
         if (actions.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(ControlGeometry.dialogActionsTop))
             DialogActions(actions)
         }
     }
@@ -242,64 +230,59 @@ private const val SIDE_BY_SIDE_MAX_CHARS = 6
 
 @Composable
 private fun DialogActions(actions: List<DialogAction>) {
-    val colors = Theme.colors
-
-    // Cancel last, everything else in the order given.
-    val ordered = actions.filter { it.role != DialogActionRole.CANCEL } +
-        actions.filter { it.role == DialogActionRole.CANCEL }
-
-    val sideBySide = ordered.size == 2 && ordered.all { it.text.length <= SIDE_BY_SIDE_MAX_CHARS }
-
-    Box(modifier = Modifier.fillMaxWidth().height(BorderWidth.hairline).background(colors.border))
-
-    if (sideBySide) {
-        Row(modifier = Modifier.fillMaxWidth().height(DialogDefaults.actionHeight)) {
-            DialogActionCell(ordered[0], Modifier.weight(1f))
-            Box(modifier = Modifier.width(BorderWidth.hairline).fillMaxHeight().background(colors.border))
-            DialogActionCell(ordered[1], Modifier.weight(1f))
+    val others = actions.filter { it.role != DialogActionRole.CANCEL }
+    val cancels = actions.filter { it.role == DialogActionRole.CANCEL }
+    val stacked = actions.size > 2 ||
+        actions.any { it.role == DialogActionRole.DESTRUCTIVE } ||
+        actions.any { it.text.length > SIDE_BY_SIDE_MAX_CHARS }
+    if (stacked) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap),
+        ) {
+            (others + cancels).forEach { action ->
+                DialogActionButton(action, ButtonSize.MEDIUM, Modifier.fillMaxWidth(), block = true)
+            }
         }
     } else {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            ordered.forEachIndexed { index, action ->
-                if (index > 0) {
-                    Box(modifier = Modifier.fillMaxWidth().height(BorderWidth.hairline).background(colors.border))
-                }
-                DialogActionCell(action, Modifier.fillMaxWidth().height(DialogDefaults.actionHeight))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap, Alignment.End),
+        ) {
+            (cancels + others).forEach { action ->
+                DialogActionButton(action, ButtonSize.SMALL, Modifier, block = false)
             }
         }
     }
 }
 
 @Composable
-private fun DialogActionCell(action: DialogAction, modifier: Modifier) {
-    val colors = Theme.colors
-    val tint = when (action.role) {
-        DialogActionRole.DESTRUCTIVE -> colors.destructive
-        else -> colors.primary
+private fun DialogActionButton(action: DialogAction, size: ButtonSize, modifier: Modifier, block: Boolean) {
+    val theme = when (action.role) {
+        DialogActionRole.PRIMARY -> ButtonTheme.PRIMARY
+        DialogActionRole.DESTRUCTIVE -> ButtonTheme.DANGER
+        // Reference: Cancel is a tertiary (neutral fill) button.
+        DialogActionRole.NORMAL, DialogActionRole.CANCEL -> ButtonTheme.DEFAULT
     }
-    val style = when (action.role) {
-        DialogActionRole.PRIMARY, DialogActionRole.CANCEL ->
-            Theme.typography.markMedium
-        else -> Theme.typography.bodyMedium
-    }
-
-    Box(
-        modifier = modifier
-            .then(if (action.enabled) Modifier.clickable { action.onClick() } else Modifier)
-            .height(DialogDefaults.actionHeight),
-        contentAlignment = Alignment.Center,
-    ) {
-        com.gearui.foundation.primitives.Text(
-            text = action.text,
-            style = style,
-            color = if (action.enabled) tint else colors.mutedForeground,
-            textAlign = TextAlign.Center,
-        )
-    }
+    Button(
+        text = action.text,
+        onClick = action.onClick,
+        modifier = modifier,
+        theme = theme,
+        type = ButtonType.FILL,
+        size = size,
+        shape = ButtonShape.ROUND,
+        disabled = !action.enabled,
+        block = block,
+    )
 }
 
-/** Geometry shared by the dialog family. */
+/** Geometry and type shared by the dialog family. */
 object DialogDefaults {
-    /** Height of one action row. Matches the platform alert button. */
-    val actionHeight: Dp = 44.dp
+    /** Minimum touch height of an action. */
+    val actionHeight: Dp = ControlGeometry.controlSmall
+
+    /** Title: reference `text-lg` at medium weight. */
+    val titleStyle: TextStyle
+        @Composable get() = Theme.typography.titleMedium.copy(fontWeight = FontWeight.Medium)
 }

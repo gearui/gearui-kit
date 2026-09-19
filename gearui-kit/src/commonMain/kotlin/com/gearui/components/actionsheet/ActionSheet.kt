@@ -1,5 +1,14 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.motion.menuItemFeedback
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
@@ -119,7 +128,7 @@ object ActionSheet {
     fun showList(
         items: List<ActionSheetItem>,
         description: String? = null,
-        align: ActionSheetAlign = ActionSheetAlign.CENTER,
+        align: ActionSheetAlign = ActionSheetAlign.LEFT,
         showCancel: Boolean = true,
         cancelText: String? = null,
         onSelected: ((ActionSheetItem, Int) -> Unit)? = null,
@@ -216,7 +225,7 @@ fun ActionSheetContent(
     visible: Boolean,
     items: List<ActionSheetItem>,
     theme: ActionSheetTheme = ActionSheetTheme.LIST,
-    align: ActionSheetAlign = ActionSheetAlign.CENTER,
+    align: ActionSheetAlign = ActionSheetAlign.LEFT,
     description: String? = null,
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
@@ -302,31 +311,31 @@ private fun ActionSheetSurface(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
-        // Two cards, not one. The cancel action is not a fifth option, and on a
-        // platform sheet what says so is the backdrop showing between them.
-        // This used to be a single clipped surface with the gap painted
-        // colors.muted: 8dp of a colour 10 luminance levels off the surface it
-        // sat on, which in dark mode read as a hairline, not as a break.
-        Column(modifier = Modifier.fillMaxWidth()) {
-        // Sheet material: a modal surface that owns the screen. The shape goes on
-        // the material so the blur is clipped too — clip only the content and the
-        // blur squares off the sheet's rounded corners.
+        // One sheet, as in the reference (HeroUI Native bottom sheet holding a menu):
+        // radius 32, overlay surface, menu rows inset by 12, and Cancel as a neutral
+        // button inside the same surface rather than a separate card.
         MaterialSurface(
             material = Materials.Sheet,
             modifier = Modifier.fillMaxWidth(),
             shape = OverlayDefaults.sheetShape,
+            fallback = colors.popover,
         ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { /* Consume surface taps. */ }
+                .padding(top = ControlGeometry.menuPaddingBlock)
         ) {
-            // Description
+            // Description: reference `.menu__label` — small, medium weight, muted.
             if (description != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = Spacing.lg, vertical = Spacing.md),
+                        .padding(
+                            start = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
+                            end = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
+                            bottom = ControlGeometry.menuItemPaddingBlock,
+                        ),
                     contentAlignment = when (align) {
                         ActionSheetAlign.CENTER -> Alignment.Center
                         ActionSheetAlign.LEFT -> Alignment.CenterStart
@@ -334,17 +343,10 @@ private fun ActionSheetSurface(
                 ) {
                     Text(
                         text = description,
-                        style = Theme.typography.bodyMedium,
+                        style = Theme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
                         color = colors.mutedForeground
                     )
                 }
-                // Divider
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(BorderWidth.hairline)
-                        .background(colors.border)
-                )
             }
 
             // Content area
@@ -366,55 +368,36 @@ private fun ActionSheetSurface(
                 }
             }
 
-            // Without a cancel card this card owns the bottom inset.
-            if (!showCancel) {
-                Spacer(modifier = Modifier.height(bottomInset))
-            }
-        }
-        }
-
-            // Cancel button
             if (showCancel) {
-                // The gap is left unpainted on purpose: the scrim shows
-                // through it, which is what separates the two cards. Tapping
-                // it reaches the scrim and dismisses, as it should.
-                Spacer(modifier = Modifier.height(Spacing.sm))
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(OverlayDefaults.sheetShape)
-                        .background(colors.surface)
-                        .clickable { /* Consume surface taps. */ }
-                ) {
-                // Cancel button, with press feedback
-                val cancelInteraction = remember { MutableInteractionSource() }
-                val cancelPressed by cancelInteraction.collectIsPressedAsState()
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(ControlGeometry.actionSheetRow)
-                        .background(
-                            if (cancelPressed) colors.muted else colors.surface
+                        .padding(
+                            start = ControlGeometry.overlayPadding,
+                            end = ControlGeometry.overlayPadding,
+                            top = ControlGeometry.dialogActionGap,
                         )
-                        .clickable(interactionSource = cancelInteraction, indication = null) {
+                ) {
+                    Button(
+                        text = cancelText,
+                        onClick = {
                             onCancel?.invoke()
                             onDismiss()
                         },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = cancelText,
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
+                        modifier = Modifier.fillMaxWidth(),
+                        theme = ButtonTheme.DEFAULT,
+                        type = ButtonType.FILL,
+                        size = ButtonSize.MEDIUM,
+                        shape = ButtonShape.ROUND,
+                        block = true,
                     )
                 }
-
-                    // The bottom inset is painted by whichever card is last, so
-                    // no scrim shows at the home indicator.
-                    Spacer(modifier = Modifier.height(bottomInset))
-                }
             }
+
+            // The sheet owns the bottom inset, so no scrim shows at the home indicator.
+            Spacer(modifier = Modifier.height(ControlGeometry.menuPaddingBlock))
+            Spacer(modifier = Modifier.height(bottomInset))
+        }
         }
     }
 }
@@ -445,12 +428,12 @@ private fun ActionSheetList(
         modifier = Modifier
             .fillMaxWidth()
             .height(listHeight)
+            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline)
     ) {
         itemsIndexed(items) { index, item ->
             ActionSheetListItem(
                 item = item,
                 align = align,
-                showDivider = index < items.size - 1,
                 onClick = {
                     if (!item.disabled) {
                         onSelected?.invoke(item, index)
@@ -468,14 +451,12 @@ private fun ActionSheetList(
 private fun ActionSheetListItem(
     item: ActionSheetItem,
     align: ActionSheetAlign,
-    showDivider: Boolean,
     onClick: () -> Unit
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
     val sheetTokens = ActionSheetDefaults.Default
     val interaction = remember { MutableInteractionSource() }
-    val isPressed by interaction.collectIsPressedAsState()
 
     val textColor = when {
         item.disabled -> colors.mutedForeground
@@ -489,96 +470,87 @@ private fun ActionSheetListItem(
     }
 
     val itemHeight = if (item.description != null) ControlGeometry.actionSheetDescriptionRow else ControlGeometry.actionSheetRow
+    val danger = item.textColor == colors.destructive
 
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(itemHeight)
-                .background(
-                    if (isPressed && !item.disabled) colors.muted else Color.Transparent
-                )
-                .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
-                    onClick()
-                }
-                .padding(horizontal = Spacing.lg),
-            horizontalArrangement = horizontalArrangement,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Icon
-            if (item.icon != null) {
-                Icon(
-                    name = item.icon,
-                    size = IconSizes.Default.lg,
-                    tint = if (item.disabled) colors.mutedForeground else colors.foreground,
-                )
-                Spacer(modifier = Modifier.width(Spacing.sm))
+    // Reference `.menu__item`: radius 16, padding 10, gap 10, animated press fill.
+    // No separators between rows.
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(itemHeight)
+            .menuItemFeedback(
+                interaction = interaction,
+                shape = RoundedCornerShape(ControlGeometry.radiusMenuItem),
+                enabled = !item.disabled,
+                danger = danger,
+            )
+            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
+                onClick()
             }
+            .padding(horizontal = ControlGeometry.menuItemPaddingInline)
+            .alpha(if (item.disabled) FeedbackDefaults.disabledOpacity else 1f),
+        horizontalArrangement = when (align) {
+            ActionSheetAlign.CENTER -> Arrangement.spacedBy(ControlGeometry.menuItemGap, Alignment.CenterHorizontally)
+            ActionSheetAlign.LEFT -> Arrangement.spacedBy(ControlGeometry.menuItemGap)
+        },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (item.icon != null) {
+            Icon(
+                name = item.icon,
+                size = IconSizes.Default.lg,
+                tint = if (item.textColor != null && !item.disabled) textColor else colors.foreground,
+            )
+        }
 
-            // Text content
-            Column(
-                horizontalAlignment = when (align) {
-                    ActionSheetAlign.CENTER -> Alignment.CenterHorizontally
-                    ActionSheetAlign.LEFT -> Alignment.Start
-                }
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = item.label,
-                        style = Theme.typography.bodyLarge,
-                        color = textColor
-                    )
+        Column(
+            horizontalAlignment = when (align) {
+                ActionSheetAlign.CENTER -> Alignment.CenterHorizontally
+                ActionSheetAlign.LEFT -> Alignment.Start
+            }
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = item.label,
+                    style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                    color = if (item.disabled) colors.foreground else textColor
+                )
 
-                    // Badge
-                    if (item.badge != null) {
-                        Spacer(modifier = Modifier.width(Spacing.sm))
-                        Box(
-                            modifier = Modifier
-                                .clip(shapes.lg)
-                                .background(colors.destructive)
-                                .padding(horizontal = 6.dp, vertical = 2.dp)
-                        ) {
-                            Text(
-                                text = item.badge,
-                                style = Theme.typography.bodyExtraSmall,
-                                color = colors.destructiveForeground
-                            )
-                        }
-                    }
-
-                    // Red dot
-                    if (item.showRedPoint && item.badge == null) {
-                        Spacer(modifier = Modifier.width(Spacing.xs))
-                        Box(
-                            modifier = Modifier
-                                .size(sheetTokens.redDot)
-                                .clip(CircleShape)
-                                .background(colors.destructive)
+                if (item.badge != null) {
+                    Spacer(modifier = Modifier.width(Spacing.sm))
+                    Box(
+                        modifier = Modifier
+                            .clip(shapes.lg)
+                            .background(colors.destructive)
+                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = item.badge,
+                            style = Theme.typography.bodyExtraSmall,
+                            color = colors.destructiveForeground
                         )
                     }
                 }
 
-                // Description
-                if (item.description != null) {
-                    Spacer(modifier = Modifier.height(Spacing.xs))
-                    Text(
-                        text = item.description,
-                        style = Theme.typography.bodyMedium,
-                        color = colors.mutedForeground
+                if (item.showRedPoint && item.badge == null) {
+                    Spacer(modifier = Modifier.width(Spacing.xs))
+                    Box(
+                        modifier = Modifier
+                            .size(sheetTokens.redDot)
+                            .clip(CircleShape)
+                            .background(colors.destructive)
                     )
                 }
             }
-        }
 
-        // Divider
-        if (showDivider) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Spacing.lg)
-                    .height(BorderWidth.hairline)
-                    .background(colors.border)
-            )
+            // Reference `.menu__item-description`: small, muted.
+            if (item.description != null) {
+                Text(
+                    text = item.description,
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
+                )
+            }
         }
     }
 }

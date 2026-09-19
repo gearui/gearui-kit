@@ -68,7 +68,12 @@ fun NavBar(
     val colors = Theme.colors
     // Defaults to the page background: in dark themes surface (#121212) is one step lighter than
     // background (#0A0A0A), which paints a visible band across the top that does not meet the status bar. In light themes both are white, invisible.
-    val bgColor = backgroundColor ?: colors.background
+    // surface, not background: the bottom navigation bar already defaults to surface,
+    // and a screen carrying both drew its two chrome bars in two different colours —
+    // visibly so in dark mode, where the top bar came out near-black against the
+    // bottom bar's dark grey. Chrome is chrome; the page background belongs to the
+    // content between them.
+    val bgColor = backgroundColor ?: colors.surface
     val textColor = titleColor ?: colors.foreground
 
     // Safe area insets

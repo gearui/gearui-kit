@@ -7,7 +7,6 @@ import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.theme.Colors
 import com.gearui.theme.LocalInputColors
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.ExperimentalLayoutApi
@@ -23,7 +22,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.graphics.lerp
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.Dp
 
@@ -109,11 +107,11 @@ private fun GroupTag(
     val metrics = tagGroupMetrics(size)
     val shape = RoundedCornerShape(metrics.radius)
     val fill = when {
-        selected -> accentSoft(colors)
+        selected -> colors.primarySoft
         variant == TagGroupVariant.SURFACE -> colors.surface
         else -> colors.muted
     }
-    val foreground = if (selected) accentSoftForeground(colors) else LocalInputColors.current.foreground
+    val foreground = if (selected) colors.primarySoftForeground else LocalInputColors.current.foreground
     val style = when (size) {
         TagGroupSize.SMALL -> Theme.typography.bodyExtraSmall
         TagGroupSize.MEDIUM -> Theme.typography.bodySmall
@@ -159,12 +157,6 @@ private fun tagGroupMetrics(size: TagGroupSize) = when (size) {
     TagGroupSize.MEDIUM -> TagGroupMetrics(ControlGeometry.tagGroupMediumPaddingInline, ControlGeometry.tagGroupMediumPaddingBlock, ControlGeometry.tagGroupMediumRadius, ControlGeometry.tagGroupSmallPaddingInline / 2)
     TagGroupSize.LARGE -> TagGroupMetrics(ControlGeometry.tagGroupLargePaddingInline, ControlGeometry.tagGroupLargePaddingBlock, ControlGeometry.tagGroupLargeRadius, ControlGeometry.tagGroupLargePaddingBlock)
 }
-
-/** Reference `accent-soft`: the accent at 15% over the surface. */
-internal fun accentSoft(colors: Colors): Color = colors.primary.copy(alpha = 0.15f)
-
-/** Reference `accent-soft-foreground`: the accent mixed 20% toward the foreground. */
-internal fun accentSoftForeground(colors: Colors): Color = lerp(colors.primary, colors.foreground, 0.20f)
 
 /** Selection after tapping [key]. SINGLE clears when the selected tag is tapped again. */
 internal fun nextTagSelection(current: Set<String>, key: String, mode: TagGroupSelectionMode): Set<String> = when (mode) {

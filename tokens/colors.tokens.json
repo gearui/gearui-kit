@@ -205,6 +205,54 @@
         "alpha": 1,
         "hex": "#d4d4d8"
       }
+    },
+    "lightAccentSoft": {
+      "$value": "{reference.light.accent-soft}"
+    },
+    "lightAccentSoftForeground": {
+      "$value": "{reference.light.accent-soft-foreground}"
+    },
+    "lightDangerSoft": {
+      "$value": "{reference.light.danger-soft}"
+    },
+    "lightDangerSoftForeground": {
+      "$value": "{reference.light.danger-soft-foreground}"
+    },
+    "lightWarningSoft": {
+      "$value": "{reference.light.warning-soft}"
+    },
+    "lightWarningSoftForeground": {
+      "$value": "{reference.light.warning-soft-foreground}"
+    },
+    "lightSuccessSoft": {
+      "$value": "{reference.light.success-soft}"
+    },
+    "lightSuccessSoftForeground": {
+      "$value": "{reference.light.success-soft-foreground}"
+    },
+    "darkAccentSoft": {
+      "$value": "{reference.dark.accent-soft}"
+    },
+    "darkAccentSoftForeground": {
+      "$value": "{reference.dark.accent-soft-foreground}"
+    },
+    "darkDangerSoft": {
+      "$value": "{reference.dark.danger-soft}"
+    },
+    "darkDangerSoftForeground": {
+      "$value": "{reference.dark.danger-soft-foreground}"
+    },
+    "darkWarningSoft": {
+      "$value": "{reference.dark.warning-soft}"
+    },
+    "darkWarningSoftForeground": {
+      "$value": "{reference.dark.warning-soft-foreground}"
+    },
+    "darkSuccessSoft": {
+      "$value": "{reference.dark.success-soft}"
+    },
+    "darkSuccessSoftForeground": {
+      "$value": "{reference.dark.success-soft-foreground}"
     }
   },
   "reference": {
@@ -464,6 +512,94 @@
       },
       "link": {
         "$value": "{reference.light.foreground}"
+      },
+      "accent-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6204,
+            0.195,
+            253.83
+          ],
+          "alpha": 0.15
+        }
+      },
+      "accent-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5384,
+            0.157,
+            254.06
+          ],
+          "alpha": 1
+        }
+      },
+      "danger-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6532,
+            0.2328,
+            25.74
+          ],
+          "alpha": 0.15
+        }
+      },
+      "danger-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5646,
+            0.186,
+            25.38
+          ],
+          "alpha": 1
+        }
+      },
+      "warning-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7819,
+            0.1585,
+            72.33
+          ],
+          "alpha": 0.15
+        }
+      },
+      "warning-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5818,
+            0.1013,
+            71.68
+          ],
+          "alpha": 1
+        }
+      },
+      "success-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7329,
+            0.1935,
+            150.81
+          ],
+          "alpha": 0.15
+        }
+      },
+      "success-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5761,
+            0.1342,
+            151.34
+          ],
+          "alpha": 1
+        }
       }
     },
     "dark": {
@@ -699,6 +835,94 @@
       },
       "link": {
         "$value": "{reference.dark.foreground}"
+      },
+      "accent-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6204,
+            0.195,
+            253.83
+          ],
+          "alpha": 0.15
+        }
+      },
+      "accent-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6945,
+            0.156,
+            253.83
+          ],
+          "alpha": 1
+        }
+      },
+      "danger-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.594,
+            0.1967,
+            24.63
+          ],
+          "alpha": 0.15
+        }
+      },
+      "danger-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6734,
+            0.1574,
+            24.63
+          ],
+          "alpha": 1
+        }
+      },
+      "warning-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8203,
+            0.1388,
+            76.34
+          ],
+          "alpha": 0.15
+        }
+      },
+      "warning-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8801,
+            0.0902,
+            76.34
+          ],
+          "alpha": 1
+        }
+      },
+      "success-soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7329,
+            0.1935,
+            150.81
+          ],
+          "alpha": 0.15
+        }
+      },
+      "success-soft-foreground": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8104,
+            0.1354,
+            150.81
+          ],
+          "alpha": 1
+        }
       }
     }
   }

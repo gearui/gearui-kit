@@ -76,6 +76,7 @@ import com.gearui.sample.examples.runtime.TabHostExample
 import com.gearui.sample.examples.navigator.NavigatorKuiklySpikeExample
 import com.gearui.sample.examples.navigator.NavigatorV1DemoExample
 import com.gearui.sample.examples.link.LinkExample
+import com.gearui.sample.examples.inputgroup.InputGroupExample
 import com.gearui.sample.examples.combobox.ComboBoxExample
 import com.gearui.sample.examples.numberfield.NumberFieldExample
 import com.gearui.sample.examples.togglebutton.ToggleButtonExample
@@ -115,6 +116,7 @@ object NavigationManager {
             "icon" -> IconExample(component, onBack)
             "icon-render" -> IconExample(component, onBack)
             "link" -> LinkExample(component, onBack)
+            "input-group" -> InputGroupExample(component, onBack)
             "combo-box" -> ComboBoxExample(component, onBack)
             "number-field" -> NumberFieldExample(component, onBack)
             "toggle-button" -> ToggleButtonExample(component, onBack)

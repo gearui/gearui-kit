@@ -20,7 +20,6 @@ import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.graphics.lerp
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 
 /** Status of an [Alert]; sets the indicator icon and the title colour. */
@@ -100,18 +99,13 @@ fun Alert(
     }
 }
 
-/**
- * The reference `*-soft-foreground` roles: the status colour mixed toward the
- * foreground so it stays legible on the surface (accent and danger 20%, warning 35%,
- * success 30%). Mixed in sRGB rather than OKLab; the difference is below what the
- * eye separates at these ratios.
- */
+/** The soft foreground of each status, from the theme's colour roles. */
 internal fun alertStatusColor(colors: Colors, status: AlertStatus): Color = when (status) {
     AlertStatus.DEFAULT -> colors.foreground
-    AlertStatus.ACCENT -> lerp(colors.primary, colors.foreground, 0.20f)
-    AlertStatus.SUCCESS -> lerp(colors.success, colors.foreground, 0.30f)
-    AlertStatus.WARNING -> lerp(colors.warning, colors.foreground, 0.35f)
-    AlertStatus.DANGER -> lerp(colors.destructive, colors.foreground, 0.20f)
+    AlertStatus.ACCENT -> colors.primarySoftForeground
+    AlertStatus.SUCCESS -> colors.successSoftForeground
+    AlertStatus.WARNING -> colors.warningSoftForeground
+    AlertStatus.DANGER -> colors.destructiveSoftForeground
 }
 
 /** Reference icons: a check for success, a triangle for warning, "info" otherwise. Danger uses the circled warning so it does not read as neutral information. */

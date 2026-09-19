@@ -47,6 +47,8 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldFocusOverlay
+import com.gearui.foundation.field.LocalFieldEmbedded
+import com.gearui.foundation.field.FieldFrame
 import com.gearui.foundation.field.rememberInputFeedback
 import com.gearui.theme.LocalInputColors
 import com.tencent.kuikly.compose.foundation.hoverable
@@ -128,6 +130,7 @@ fun Input(
     val hoverSource = remember { com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource() }
     val hoveredState = hoverSource.collectIsHoveredAsState()
     val hasError = error != null
+    val embedded = LocalFieldEmbedded.current
 
     // Autofocus only once the field is on screen. Requesting focus during the first
     // composition is silently dropped inside a lazy list, where the item composes
@@ -208,7 +211,10 @@ fun Input(
         // minimum height; with the parent's height unbounded, the weighted content row
         // below then measured to zero and the text, placeholder, prefix and suffix all
         // vanished, leaving an empty gray pill.
-        val containerModifier = if (maxLines > 1) {
+        val containerModifier = if (embedded) {
+            // The group owns the frame; the field only keeps its height.
+            if (maxLines > 1) Modifier.fillMaxWidth().heightIn(min = tokens.height) else Modifier.fillMaxWidth().height(tokens.height)
+        } else if (maxLines > 1) {
             // Multiline (textarea): a fixed single-line height would clip the content, so height belongs
             // to the external modifier (pages pass .height(N)); this only guarantees the single-line minimum.
             Modifier
@@ -234,11 +240,7 @@ fun Input(
         // Reference `.input__input--variant-primary`: field colour, no border, and the
         // field shadow stack (`ios:shadow-field`). cardStyle is the secondary variant
         // (default fill for use on surfaces) and has no shadow.
-        DecoratedSurface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = shape,
-            shadows = if (cardStyle) emptyList() else surfaceShadowStyles().field,
-        ) {
+        FieldFrame(embedded = embedded, shape = shape, shadowed = !cardStyle) {
             Box(
                 modifier = feedback.then(containerModifier)
                     .onGloballyPositioned { if (it.size.width > 0) positioned = true }
@@ -426,7 +428,8 @@ fun Input(
                     }
                 }
               }
-              FieldFocusOverlay(inputColors, shape, focusedState, enabled, if (hasError) colors.destructive else null)
+              // The group owns the focus ring when the field is embedded in one.
+              if (!embedded) FieldFocusOverlay(inputColors, shape, focusedState, enabled, if (hasError) colors.destructive else null)
             }
         }
     }

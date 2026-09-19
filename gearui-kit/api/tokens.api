@@ -12,6 +12,8 @@
   cardForeground
   destructive
   destructiveForeground
+  destructiveSoft
+  destructiveSoftForeground
   foreground
   info
   infoForeground
@@ -22,6 +24,8 @@
   popoverForeground
   primary
   primaryForeground
+  primarySoft
+  primarySoftForeground
   ring
   secondary
   secondaryForeground
@@ -29,10 +33,14 @@
   separator
   success
   successForeground
+  successSoft
+  successSoftForeground
   surface
   surfaceForeground
   warning
   warningForeground
+  warningSoft
+  warningSoftForeground
 
 [fields] Typography
   bodyExtraLarge
@@ -77,6 +85,8 @@
   cardForeground = DefaultPalette.lightForeground
   destructive = DefaultPalette.lightDestructive
   destructiveForeground = DefaultPalette.lightDestructiveForeground
+  destructiveSoft = DefaultPalette.lightDangerSoft
+  destructiveSoftForeground = DefaultPalette.lightDangerSoftForeground
   foreground = DefaultPalette.lightForeground
   info = Color(0xFF2563EB)
   infoForeground = Color(0xFFFFFFFF)
@@ -87,6 +97,8 @@
   popoverForeground = DefaultPalette.lightForeground
   primary = DefaultPalette.lightPrimary
   primaryForeground = DefaultPalette.lightPrimaryForeground
+  primarySoft = DefaultPalette.lightAccentSoft
+  primarySoftForeground = DefaultPalette.lightAccentSoftForeground
   ring = DefaultPalette.lightRing
   secondary = DefaultPalette.lightButtonBackground
   secondaryForeground = DefaultPalette.lightButtonContent
@@ -94,10 +106,14 @@
   separator = DefaultPalette.lightSeparator
   success = DefaultPalette.lightSuccess
   successForeground = DefaultPalette.lightSuccessForeground
+  successSoft = DefaultPalette.lightSuccessSoft
+  successSoftForeground = DefaultPalette.lightSuccessSoftForeground
   surface = DefaultPalette.lightSurface
   surfaceForeground = DefaultPalette.lightSurfaceForeground
   warning = DefaultPalette.lightWarning
   warningForeground = DefaultPalette.lightWarningForeground
+  warningSoft = DefaultPalette.lightWarningSoft
+  warningSoftForeground = DefaultPalette.lightWarningSoftForeground
 
 [preset] Themes.Dark.colors
   accent = DefaultPalette.darkSurface
@@ -108,6 +124,8 @@
   cardForeground = DefaultPalette.darkForeground
   destructive = DefaultPalette.darkDestructive
   destructiveForeground = DefaultPalette.darkDestructiveForeground
+  destructiveSoft = DefaultPalette.darkDangerSoft
+  destructiveSoftForeground = DefaultPalette.darkDangerSoftForeground
   foreground = DefaultPalette.darkForeground
   info = Color(0xFF60A5FA)
   infoForeground = Color(0xFF0A0A0A)
@@ -118,6 +136,8 @@
   popoverForeground = DefaultPalette.darkForeground
   primary = DefaultPalette.darkPrimary
   primaryForeground = DefaultPalette.darkPrimaryForeground
+  primarySoft = DefaultPalette.darkAccentSoft
+  primarySoftForeground = DefaultPalette.darkAccentSoftForeground
   ring = DefaultPalette.darkRing
   secondary = DefaultPalette.darkButtonBackground
   secondaryForeground = DefaultPalette.darkButtonContent
@@ -125,12 +145,18 @@
   separator = DefaultPalette.darkSeparator
   success = DefaultPalette.darkSuccess
   successForeground = DefaultPalette.darkSuccessForeground
+  successSoft = DefaultPalette.darkSuccessSoft
+  successSoftForeground = DefaultPalette.darkSuccessSoftForeground
   surface = DefaultPalette.darkSurface
   surfaceForeground = DefaultPalette.darkSurfaceForeground
   warning = DefaultPalette.darkWarning
   warningForeground = DefaultPalette.darkWarningForeground
+  warningSoft = DefaultPalette.darkWarningSoft
+  warningSoftForeground = DefaultPalette.darkWarningSoftForeground
 
 [source] colors.tokens.json
+  colors.darkAccentSoft = {"$type":"color","$value":"{reference.dark.accent-soft}"}
+  colors.darkAccentSoftForeground = {"$type":"color","$value":"{reference.dark.accent-soft-foreground}"}
   colors.darkBackdrop = {"$type":"color","$value":"{reference.dark.backdrop}"}
   colors.darkBackground = {"$type":"color","$value":"{reference.dark.background}"}
   colors.darkBorder = {"$type":"color","$value":"{reference.dark.border}"}
@@ -142,6 +168,8 @@
   colors.darkButtonHoverContent = {"$type":"color","$value":"{reference.dark.default-foreground}"}
   colors.darkButtonPressed = {"$type":"color","$value":"{reference.dark.default}"}
   colors.darkButtonPressedBorder = {"$type":"color","$value":"{reference.dark.border}"}
+  colors.darkDangerSoft = {"$type":"color","$value":"{reference.dark.danger-soft}"}
+  colors.darkDangerSoftForeground = {"$type":"color","$value":"{reference.dark.danger-soft-foreground}"}
   colors.darkDestructive = {"$type":"color","$value":"{reference.dark.danger}"}
   colors.darkDestructiveForeground = {"$type":"color","$value":"{reference.dark.danger-foreground}"}
   colors.darkForeground = {"$type":"color","$value":"{reference.dark.foreground}"}
@@ -158,10 +186,16 @@
   colors.darkSeparator = {"$type":"color","$value":"{reference.dark.separator}"}
   colors.darkSuccess = {"$type":"color","$value":"{reference.dark.success}"}
   colors.darkSuccessForeground = {"$type":"color","$value":"{reference.dark.success-foreground}"}
+  colors.darkSuccessSoft = {"$type":"color","$value":"{reference.dark.success-soft}"}
+  colors.darkSuccessSoftForeground = {"$type":"color","$value":"{reference.dark.success-soft-foreground}"}
   colors.darkSurface = {"$type":"color","$value":"{reference.dark.surface}"}
   colors.darkSurfaceForeground = {"$type":"color","$value":"{reference.dark.surface-foreground}"}
   colors.darkWarning = {"$type":"color","$value":"{reference.dark.warning}"}
   colors.darkWarningForeground = {"$type":"color","$value":"{reference.dark.warning-foreground}"}
+  colors.darkWarningSoft = {"$type":"color","$value":"{reference.dark.warning-soft}"}
+  colors.darkWarningSoftForeground = {"$type":"color","$value":"{reference.dark.warning-soft-foreground}"}
+  colors.lightAccentSoft = {"$type":"color","$value":"{reference.light.accent-soft}"}
+  colors.lightAccentSoftForeground = {"$type":"color","$value":"{reference.light.accent-soft-foreground}"}
   colors.lightBackdrop = {"$type":"color","$value":"{reference.light.backdrop}"}
   colors.lightBackground = {"$type":"color","$value":"{reference.light.background}"}
   colors.lightBorder = {"$type":"color","$value":"{reference.light.border}"}
@@ -173,6 +207,8 @@
   colors.lightButtonHoverContent = {"$type":"color","$value":"{reference.light.default-foreground}"}
   colors.lightButtonPressed = {"$type":"color","$value":"{reference.light.default}"}
   colors.lightButtonPressedBorder = {"$type":"color","$value":"{reference.light.border}"}
+  colors.lightDangerSoft = {"$type":"color","$value":"{reference.light.danger-soft}"}
+  colors.lightDangerSoftForeground = {"$type":"color","$value":"{reference.light.danger-soft-foreground}"}
   colors.lightDestructive = {"$type":"color","$value":"{reference.light.danger}"}
   colors.lightDestructiveForeground = {"$type":"color","$value":"{reference.light.danger-foreground}"}
   colors.lightForeground = {"$type":"color","$value":"{reference.light.foreground}"}
@@ -189,21 +225,29 @@
   colors.lightSeparator = {"$type":"color","$value":"{reference.light.separator}"}
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
   colors.lightSuccessForeground = {"$type":"color","$value":"{reference.light.success-foreground}"}
+  colors.lightSuccessSoft = {"$type":"color","$value":"{reference.light.success-soft}"}
+  colors.lightSuccessSoftForeground = {"$type":"color","$value":"{reference.light.success-soft-foreground}"}
   colors.lightSurface = {"$type":"color","$value":"{reference.light.surface}"}
   colors.lightSurfaceForeground = {"$type":"color","$value":"{reference.light.surface-foreground}"}
   colors.lightWarning = {"$type":"color","$value":"{reference.light.warning}"}
   colors.lightWarningForeground = {"$type":"color","$value":"{reference.light.warning-foreground}"}
+  colors.lightWarningSoft = {"$type":"color","$value":"{reference.light.warning-soft}"}
+  colors.lightWarningSoftForeground = {"$type":"color","$value":"{reference.light.warning-soft-foreground}"}
   reference.base.black = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0,0,0]}}
   reference.base.eclipse = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.2103,0.0059,285.89]}}
   reference.base.snow = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9911,0,0]}}
   reference.base.white = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[1,0,0]}}
   reference.dark.accent = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.6204,0.195,253.83]}}
   reference.dark.accent-foreground = {"$type":"color","$value":"{reference.base.snow}"}
+  reference.dark.accent-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.6204,0.195,253.83]}}
+  reference.dark.accent-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.6945,0.156,253.83]}}
   reference.dark.backdrop = {"$type":"color","$value":{"alpha":0.2,"colorSpace":"oklch","components":[0,0,0]}}
   reference.dark.background = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.12,0.005,285.823]}}
   reference.dark.border = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.28,0.006,286.033]}}
   reference.dark.danger = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.594,0.1967,24.63]}}
   reference.dark.danger-foreground = {"$type":"color","$value":"{reference.base.snow}"}
+  reference.dark.danger-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.594,0.1967,24.63]}}
+  reference.dark.danger-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.6734,0.1574,24.63]}}
   reference.dark.default = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.27399999999999997,0.006,286.033]}}
   reference.dark.default-foreground = {"$type":"color","$value":"{reference.base.snow}"}
   reference.dark.field-background = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.2103,0.0059,285.89]}}
@@ -221,6 +265,8 @@
   reference.dark.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.4,0.006,286.033]}}
   reference.dark.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.dark.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
+  reference.dark.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
+  reference.dark.success-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.8104,0.1354,150.81]}}
   reference.dark.surface = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.2103,0.0059,285.89]}}
   reference.dark.surface-foreground = {"$type":"color","$value":"{reference.dark.foreground}"}
   reference.dark.surface-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.257,0.0037,286.14]}}
@@ -229,13 +275,19 @@
   reference.dark.surface-tertiary-foreground = {"$type":"color","$value":"{reference.dark.foreground}"}
   reference.dark.warning = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.8203,0.1388,76.34]}}
   reference.dark.warning-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
+  reference.dark.warning-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.8203,0.1388,76.34]}}
+  reference.dark.warning-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.8801,0.0902,76.34]}}
   reference.light.accent = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.6204,0.195,253.83]}}
   reference.light.accent-foreground = {"$type":"color","$value":"{reference.base.snow}"}
+  reference.light.accent-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.6204,0.195,253.83]}}
+  reference.light.accent-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5384,0.157,254.06]}}
   reference.light.backdrop = {"$type":"color","$value":{"alpha":0.2,"colorSpace":"oklch","components":[0,0,0]}}
   reference.light.background = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9702,0,0]}}
   reference.light.border = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9,0.004,286.32]}}
   reference.light.danger = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.6532,0.2328,25.74]}}
   reference.light.danger-foreground = {"$type":"color","$value":"{reference.base.snow}"}
+  reference.light.danger-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.6532,0.2328,25.74]}}
+  reference.light.danger-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5646,0.186,25.38]}}
   reference.light.default = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.94,0.001,286.375]}}
   reference.light.default-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.light.field-background = {"$type":"color","$value":"{reference.base.white}"}
@@ -253,6 +305,8 @@
   reference.light.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.74,0.004,286.32]}}
   reference.light.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.light.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
+  reference.light.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
+  reference.light.success-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5761,0.1342,151.34]}}
   reference.light.surface = {"$type":"color","$value":"{reference.base.white}"}
   reference.light.surface-foreground = {"$type":"color","$value":"{reference.light.foreground}"}
   reference.light.surface-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9524,0.0013,286.37]}}
@@ -261,6 +315,8 @@
   reference.light.surface-tertiary-foreground = {"$type":"color","$value":"{reference.light.foreground}"}
   reference.light.warning = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7819,0.1585,72.33]}}
   reference.light.warning-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
+  reference.light.warning-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7819,0.1585,72.33]}}
+  reference.light.warning-soft-foreground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5818,0.1013,71.68]}}
 
 [source] controls.tokens.json
   geometry.accordionPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -310,6 +366,11 @@
   geometry.menuItemPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.menuPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.menuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":6}}
+  geometry.noticeBarGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
+  geometry.noticeBarHeight = {"$type":"dimension","$value":{"unit":"px","value":40}}
+  geometry.noticeBarPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.noticeBarScrollGap = {"$type":"dimension","$value":{"unit":"px","value":48}}
+  geometry.noticeBarScrollSpeed = {"$type":"dimension","$value":{"unit":"px","value":40}}
   geometry.otpCaretMax = {"$type":"dimension","$value":{"unit":"px","value":18}}
   geometry.otpCaretMin = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.otpCaretWidth = {"$type":"dimension","$value":{"unit":"px","value":2}}
@@ -384,6 +445,10 @@
   geometry.textareaPaddingVertical = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.toastPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.treeIndent = {"$type":"dimension","$value":{"unit":"px","value":16}}
+  geometry.uploadRemoveIcon = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.uploadRemoveSize = {"$type":"dimension","$value":{"unit":"px","value":20}}
+  geometry.uploadTileGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
+  geometry.uploadTileSize = {"$type":"dimension","$value":{"unit":"px","value":80}}
 
 [source] feedback.tokens.json
   feedback.accentMix = {"$type":"number","$value":0.1}

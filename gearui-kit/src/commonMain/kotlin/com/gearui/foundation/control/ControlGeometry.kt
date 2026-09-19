@@ -51,6 +51,11 @@ internal object ControlGeometry {
     val menuItemPaddingInline = 10.dp
     val menuPaddingBlock = 12.dp
     val menuPaddingInline = 6.dp
+    val noticeBarGap = 8.dp
+    val noticeBarHeight = 40.dp
+    val noticeBarPaddingInline = 12.dp
+    val noticeBarScrollGap = 48.dp
+    val noticeBarScrollSpeed = 40.dp
     val otpCaretMax = 18.dp
     val otpCaretMin = 16.dp
     val otpCaretWidth = 2.dp
@@ -125,4 +130,8 @@ internal object ControlGeometry {
     val textareaPaddingVertical = 8.dp
     val toastPadding = 16.dp
     val treeIndent = 16.dp
+    val uploadRemoveIcon = 12.dp
+    val uploadRemoveSize = 20.dp
+    val uploadTileGap = 8.dp
+    val uploadTileSize = 80.dp
 }

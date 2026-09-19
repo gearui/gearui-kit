@@ -36,6 +36,9 @@ val StringsZhHant = Strings(
     ),
     dateTime = DateTimeStrings(
         datePlaceholder = "選擇日期",
+        rangeStartPlaceholder = "開始日期",
+        rangeEndPlaceholder = "結束日期",
+        selectRangeTitle = "選擇日期範圍",
         timePlaceholder = "選擇時間",
         selectDateTitle = "選擇日期",
         selectTimeTitle = "選擇時間",

@@ -65,6 +65,35 @@ fun CalendarExample(
             component = component,
             onBack = onBack
         ) {
+            ExampleSection(
+                title = "日期范围字段",
+                description = "DateRangePickerInput：字段触发日历，选完回填区间"
+            ) {
+                var rangeFrom by remember { mutableStateOf<CalendarDate?>(null) }
+                var rangeTo by remember { mutableStateOf<CalendarDate?>(null) }
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                    com.gearui.components.calendar.DateRangePickerInput(
+                        start = rangeFrom,
+                        end = rangeTo,
+                        onRangeChange = { from, to ->
+                            rangeFrom = from
+                            rangeTo = to
+                        },
+                        label = "统计区间",
+                        required = true,
+                    )
+                    Text(
+                        text = if (rangeFrom != null && rangeTo != null) {
+                            "已选：${rangeFrom?.year}-${rangeFrom?.month}-${rangeFrom?.day} 至 ${rangeTo?.year}-${rangeTo?.month}-${rangeTo?.day}"
+                        } else {
+                            "尚未选择区间"
+                        },
+                        style = Theme.typography.bodySmall,
+                        color = Theme.colors.mutedForeground
+                    )
+                }
+            }
+
             // ========== Component types ==========
             ExampleSection(
                 title = "组件类型",

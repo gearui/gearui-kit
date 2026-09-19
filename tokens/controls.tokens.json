@@ -742,6 +742,60 @@
         "value": 20,
         "unit": "px"
       }
+    },
+    "noticeBarHeight": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "noticeBarPaddingInline": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "noticeBarGap": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "noticeBarScrollSpeed": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "noticeBarScrollGap": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "uploadTileSize": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
+    },
+    "uploadTileGap": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "uploadRemoveSize": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "uploadRemoveIcon": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
     }
   }
 }

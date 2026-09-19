@@ -1,155 +1,114 @@
 package com.gearui.sample.examples.upload
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
-import com.gearui.components.button.ButtonType
-import com.gearui.components.icon.Icons
+import androidx.compose.runtime.setValue
 import com.gearui.components.toast.Toast
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.primitives.Text
+import com.gearui.components.upload.Upload
+import com.gearui.components.upload.UploadItem
+import com.gearui.components.upload.UploadStatus
+import com.gearui.foundation.field.FieldDescription
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.foundation.layout.Row
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
-
-private enum class UploadState { NORMAL, LOADING, RETRY, ERROR }
-
-private data class UploadFileDemo(
-    val id: Int,
-    val name: String,
-    val state: UploadState
-)
+import kotlinx.coroutines.delay
 
 @Composable
 fun UploadExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val files = remember {
-        mutableStateListOf(
-            UploadFileDemo(1, "example-1.png", UploadState.NORMAL),
-            UploadFileDemo(2, "example-2.png", UploadState.NORMAL)
+    // The host owns picking and transfer; the demo fakes both.
+    var items by remember {
+        mutableStateOf(
+            listOf(
+                UploadItem(id = "1", name = "合同.pdf"),
+                UploadItem(id = "2", name = "身份证正面.jpg"),
+            )
         )
     }
-    val loadingFiles = remember {
-        mutableStateListOf(
-            UploadFileDemo(3, "uploading-a.png", UploadState.LOADING),
-            UploadFileDemo(4, "uploading-b.png", UploadState.LOADING)
-        )
-    }
-    val retryFiles = remember {
-        mutableStateListOf(
-            UploadFileDemo(5, "retry.png", UploadState.RETRY)
-        )
-    }
-    val errorFiles = remember {
-        mutableStateListOf(
-            UploadFileDemo(6, "error.png", UploadState.ERROR)
-        )
+    var next by remember { mutableStateOf(3) }
+
+    LaunchedEffect(items) {
+        val uploading = items.filter { it.status == UploadStatus.UPLOADING }
+        if (uploading.isEmpty()) return@LaunchedEffect
+        delay(300)
+        items = items.map { item ->
+            if (item.status != UploadStatus.UPLOADING) return@map item
+            val progress = item.progress + 0.25f
+            when {
+                progress >= 1f && item.id.toIntOrNull()?.rem(4) == 0 ->
+                    item.copy(status = UploadStatus.FAILED, progress = 1f)
+                progress >= 1f -> item.copy(status = UploadStatus.DONE, progress = 1f)
+                else -> item.copy(progress = progress)
+            }
+        }
     }
 
     ExamplePage(component = component, onBack = onBack) {
-        ExampleSection(title = "组件类型", description = "单选上传、替换上传、多选上传、自定义上传按钮") {
-            Button(
-                text = "单选上传（演示）",
-                type = ButtonType.OUTLINE,
-                block = true,
-                onClick = {
-                    files.clear()
-                    files.add(UploadFileDemo(7, "single-picked.png", UploadState.NORMAL))
-                    Toast.show("已选择 1 张图片")
-                }
-            )
-            Button(
-                text = "单选上传（替换）",
-                type = ButtonType.OUTLINE,
-                block = true,
-                onClick = {
-                    if (files.isEmpty()) files.add(UploadFileDemo(8, "replace.png", UploadState.NORMAL))
-                    else files[0] = files[0].copy(name = "replace-${files[0].id}.png")
-                    Toast.show("已替换首张图片")
-                }
-            )
-            Button(
-                text = "多选上传（追加）",
-                type = ButtonType.OUTLINE,
-                block = true,
-                onClick = {
-                    val nextId = (files.maxOfOrNull { it.id } ?: 0) + 1
-                    files.add(UploadFileDemo(nextId, "multi-$nextId.png", UploadState.NORMAL))
-                }
-            )
-            Button(
-                text = "自定义上传按钮事件",
-                type = ButtonType.OUTLINE,
-                block = true,
-                onClick = {
-                    val nextId = (files.maxOfOrNull { it.id } ?: 0) + 1
-                    files.add(UploadFileDemo(nextId, "custom-$nextId.png", UploadState.NORMAL))
-                    Toast.show("触发自定义上传逻辑")
-                }
-            )
-            UploadList(files = files)
+        ExampleSection(
+            useCardContainer = false,
+            title = "附件列表",
+            description = "点 + 添加，右上角移除；每 4 个会失败一次，点失败的瓦片重试"
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Upload(
+                    items = items,
+                    onAdd = {
+                        items = items + UploadItem(
+                            id = next.toString(),
+                            name = "文件-$next",
+                            status = UploadStatus.UPLOADING,
+                            progress = 0f,
+                        )
+                        next += 1
+                    },
+                    onRemove = { item -> items = items.filterNot { it.id == item.id } },
+                    onRetry = { item ->
+                        items = items.map { if (it.id == item.id) it.copy(status = UploadStatus.UPLOADING, progress = 0f) else it }
+                    },
+                    onPreview = { Toast.show("预览 ${it.name}") },
+                    maxCount = 6,
+                )
+                FieldDescription("已选 ${items.size} / 6")
+            }
         }
 
-        ExampleSection(title = "组件状态", description = "加载状态、重新上传、上传失败") {
-            UploadList(files = loadingFiles)
-            UploadList(files = retryFiles)
-            UploadList(files = errorFiles)
+        ExampleSection(
+            useCardContainer = false,
+            title = "状态",
+            description = "等待、上传中、失败、完成"
+        ) {
+            Upload(
+                items = listOf(
+                    UploadItem(id = "p", name = "排队中", status = UploadStatus.PENDING),
+                    UploadItem(id = "u", name = "上传中", status = UploadStatus.UPLOADING, progress = 0.6f),
+                    UploadItem(id = "f", name = "失败", status = UploadStatus.FAILED),
+                    UploadItem(id = "d", name = "已完成"),
+                ),
+                onAdd = {},
+                maxCount = 4,
+            )
         }
-    }
-}
 
-@Composable
-private fun UploadList(files: List<UploadFileDemo>) {
-    if (files.isEmpty()) return
-    val colors = Theme.colors
-
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        files.forEach { file ->
-            val statusText = when (file.state) {
-                UploadState.NORMAL -> "已上传"
-                UploadState.LOADING -> "上传中..."
-                UploadState.RETRY -> "重新上传"
-                UploadState.ERROR -> "上传失败"
-            }
-            val statusColor = when (file.state) {
-                UploadState.NORMAL -> colors.success
-                UploadState.LOADING -> colors.warning
-                UploadState.RETRY -> colors.primary
-                UploadState.ERROR -> colors.destructive
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.surface, RoundedCornerShape(8.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Icon(name = Icons.image, size = 16.dp, tint = colors.mutedForeground)
-                Text(text = file.name, style = Theme.typography.bodySmall, color = colors.foreground, modifier = Modifier.weight(1f))
-                Text(text = statusText, style = Theme.typography.bodySmall, color = statusColor)
-            }
+        ExampleSection(
+            useCardContainer = false,
+            title = "只读",
+            description = "enabled = false，不显示移除按钮"
+        ) {
+            Upload(
+                items = listOf(UploadItem(id = "r1", name = "回执.png"), UploadItem(id = "r2", name = "发票.pdf")),
+                onAdd = {},
+                onRemove = {},
+                enabled = false,
+                maxCount = 2,
+            )
         }
     }
 }

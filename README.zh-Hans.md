@@ -31,12 +31,12 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**81 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**82 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（21） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
+| 表单（22） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
 | 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
 | 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
 | 反馈（16） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
@@ -70,6 +70,7 @@
 | `ComboBox` | 输入选择器 | 输入筛选的下拉选择 |
 | `NumberField` | 数字输入 | 可输入可步进的数字字段 |
 | `ToggleButton` | 切换按钮 | 保持按下状态的按钮与按钮组 |
+| `InputGroup` | 输入框组 | 带前后附加块的输入框 |
 | `Switch` | 开关 | 开关选择 |
 | `Slider` | 滑块 | 数值选择 |
 | `Stepper` | 步进器 | 数字增减 |
@@ -137,7 +138,7 @@
 | `Loading` | 加载 | 加载状态 |
 | `Message` | 消息提醒 | 全局消息提示 |
 | `Alert` | 警示框 | 页面内状态提示 |
-| `NoticeBar` | 公告栏 | 滚动公告提醒 |
+| `NoticeBar` | 公告栏 | 滚动公告栏 |
 | `Notification` | 通知 | 全局通知 |
 | `Snackbar` | 消息条 | 底部消息 |
 | `Popup` | 弹出层 | 弹出内容 |

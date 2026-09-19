@@ -40,6 +40,19 @@
   indicator and translated copy, over the platform list gesture.
 - `CloseButton` takes an `icon`, so other icon-only controls share its shape.
 
+- `InputGroup` with `InputGroupAddon` and `InputGroupDivider`: a field with attached
+  blocks (a country code, a unit, a "send code" action) sharing one frame. An Input
+  inside a group drops its own surface.
+- `NoticeBar`: a running announcement strip with tones, an action slot and a close
+  button. It scrolls only when the text does not fit, and never under reduced motion.
+- `Upload`: attachment tiles with thumbnails, progress, retry and remove. It owns no
+  platform access; picking and transfer stay with the host.
+- `DateRangePickerInput`: a field trigger over the calendar's range selection, with
+  placeholders per end, a clear button and an error line.
+- Soft status colour roles (`primarySoft`, `successSoftForeground`, …) on `Colors`,
+  generated in OKLab from the reference mix ratios. Alert, TagGroup and NoticeBar read
+  them instead of mixing colours themselves, and `withBrandAccent` carries the soft pair.
+
 ### Changed
 
 - Rate redrawn: both layers use the same star glyph, the active layer is clipped per

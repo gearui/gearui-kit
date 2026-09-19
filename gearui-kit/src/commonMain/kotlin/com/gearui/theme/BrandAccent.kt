@@ -1,6 +1,7 @@
 package com.gearui.theme
 
 import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.graphics.lerp
 import kotlin.math.pow
 
 /**
@@ -16,6 +17,11 @@ fun ThemeSpec.withBrandAccent(color: Color, foreground: Color? = null): ThemeSpe
         colors = colors.copy(
             primary = color,
             primaryForeground = foreground ?: brandAccentForeground(color),
+            // The soft pair is derived from the accent, so it has to follow it. A data
+            // class copy keeps whatever the base theme set, which left a purple brand
+            // with the built-in blue's chips and banners.
+            primarySoft = color.copy(alpha = SoftColorMix.FILL_ALPHA),
+            primarySoftForeground = lerp(color, colors.foreground, 1f - SoftColorMix.ACCENT),
             ring = color,
         ),
         buttonColors = buttonColors?.copy(focusRing = color),

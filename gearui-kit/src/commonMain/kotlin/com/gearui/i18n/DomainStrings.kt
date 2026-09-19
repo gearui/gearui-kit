@@ -183,6 +183,9 @@ fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
 @Immutable
 data class DateTimeStrings(
     val datePlaceholder: String,
+    val rangeStartPlaceholder: String,
+    val rangeEndPlaceholder: String,
+    val selectRangeTitle: String,
     val timePlaceholder: String,
     val selectDateTitle: String,
     val selectTimeTitle: String,
@@ -199,6 +202,9 @@ data class DateTimeStrings(
 
 data class DateTimeStringsPatch(
     val datePlaceholder: String? = null,
+    val rangeStartPlaceholder: String? = null,
+    val rangeEndPlaceholder: String? = null,
+    val selectRangeTitle: String? = null,
     val timePlaceholder: String? = null,
     val selectDateTitle: String? = null,
     val selectTimeTitle: String? = null,
@@ -213,6 +219,9 @@ data class DateTimeStringsPatch(
 
 val DateTimeStringsPatch.isEmpty: Boolean
     get() = datePlaceholder == null &&
+        rangeStartPlaceholder == null &&
+        rangeEndPlaceholder == null &&
+        selectRangeTitle == null &&
         timePlaceholder == null &&
         selectDateTitle == null &&
         selectTimeTitle == null &&
@@ -228,6 +237,9 @@ fun DateTimeStrings.merge(patch: DateTimeStringsPatch?): DateTimeStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
         datePlaceholder = patch.datePlaceholder ?: datePlaceholder,
+        rangeStartPlaceholder = patch.rangeStartPlaceholder ?: rangeStartPlaceholder,
+        rangeEndPlaceholder = patch.rangeEndPlaceholder ?: rangeEndPlaceholder,
+        selectRangeTitle = patch.selectRangeTitle ?: selectRangeTitle,
         timePlaceholder = patch.timePlaceholder ?: timePlaceholder,
         selectDateTitle = patch.selectDateTitle ?: selectDateTitle,
         selectTimeTitle = patch.selectTimeTitle ?: selectTimeTitle,

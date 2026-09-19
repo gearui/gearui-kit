@@ -36,6 +36,9 @@ val StringsEnUs = Strings(
     ),
     dateTime = DateTimeStrings(
         datePlaceholder = "Select a date",
+        rangeStartPlaceholder = "Start date",
+        rangeEndPlaceholder = "End date",
+        selectRangeTitle = "Select a date range",
         timePlaceholder = "Select a time",
         selectDateTitle = "Select a date",
         selectTimeTitle = "Select a time",

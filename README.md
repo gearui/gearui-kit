@@ -32,12 +32,12 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**81 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**82 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (21) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
+| Form (22) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
 | Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
 | Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
 | Feedback (16) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Message`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
@@ -71,6 +71,7 @@ component follows both without any per-screen wiring.
 | `ComboBox` | Filterable suggestions |
 | `NumberField` | Typed and stepped number |
 | `ToggleButton` | Toggle and button group |
+| `InputGroup` | Field with attached blocks |
 | `Switch` | Toggle switch |
 | `Slider` | Value selection |
 | `Stepper` | Number stepper |
@@ -138,7 +139,7 @@ component follows both without any per-screen wiring.
 | `Loading` | Loading state |
 | `Message` | Global message |
 | `Alert` | Inline status message |
-| `NoticeBar` | Notice bar |
+| `NoticeBar` | Scrolling announcement |
 | `Notification` | Global notification |
 | `Snackbar` | Bottom message |
 | `Popup` | Popup content |

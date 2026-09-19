@@ -1,5 +1,6 @@
 package com.gearui.sample.pages
 
+import com.gearui.runtime.LocalRuntimeEnvironment
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -72,8 +73,11 @@ fun HomePage(
     PageScaffold(
         backgroundColor = colors.background,
         topSafeAreaColor = navBarColor,
-        consumeBottomSafeArea = true
+        consumeBottomSafeArea = false
     ) {
+        // The list runs under the home indicator (edge to edge) and reserves the inset at its
+        // end instead: consuming it in PageScaffold painted a solid strip over the indicator.
+        val safeBottom = LocalRuntimeEnvironment.current.safeArea.bottom
         Column(modifier = Modifier.fillMaxSize().background(colors.background)) {
             // Combined top area: NavBar and SearchBar as one
             Column(
@@ -125,7 +129,7 @@ fun HomePage(
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp + safeBottom)
             ) {
 
                 // Search results, or the category list

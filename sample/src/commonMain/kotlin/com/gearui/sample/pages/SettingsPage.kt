@@ -1,5 +1,8 @@
 package com.gearui.sample.pages
 
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.foundation.layout.Spacer
+import com.gearui.runtime.LocalRuntimeEnvironment
 import androidx.compose.runtime.*
 import com.gearui.foundation.primitives.ScrollView
 import com.gearui.foundation.scroll.ScrollTokens
@@ -82,8 +85,11 @@ fun SettingsPage(
     PageScaffold(
         backgroundColor = colors.background,
         topSafeAreaColor = navBarColor,
-        consumeBottomSafeArea = true
+        consumeBottomSafeArea = false
     ) {
+        // The list runs under the home indicator (edge to edge) and reserves the inset at its
+        // end instead: consuming it in PageScaffold painted a solid strip over the indicator.
+        val safeBottom = LocalRuntimeEnvironment.current.safeArea.bottom
         Column(
         modifier = Modifier
             .fillMaxSize()
@@ -214,6 +220,7 @@ fun SettingsPage(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(safeBottom))
         }
         }
     }

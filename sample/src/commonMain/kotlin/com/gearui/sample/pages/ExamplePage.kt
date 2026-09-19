@@ -1,5 +1,6 @@
 package com.gearui.sample.pages
 
+import com.gearui.runtime.LocalRuntimeEnvironment
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -38,8 +39,11 @@ fun ExamplePage(
     PageScaffold(
         backgroundColor = colors.background,
         topSafeAreaColor = navBarColor,
-        consumeBottomSafeArea = true
+        consumeBottomSafeArea = false
     ) {
+        // The list runs under the home indicator (edge to edge) and reserves the inset at its
+        // end instead: consuming it in PageScaffold painted a solid strip over the indicator.
+        val safeBottom = LocalRuntimeEnvironment.current.safeArea.bottom
         Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +64,7 @@ fun ExamplePage(
                 .fillMaxSize()
                 .background(colors.background),
             state = listState,
-            contentPadding = PaddingValues(16.dp)
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp + safeBottom)
         ) {
             item {
                 Column(

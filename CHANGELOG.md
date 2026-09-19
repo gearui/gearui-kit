@@ -90,6 +90,16 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
 - Sample Settings page handles BACK and edge swipe like other pages.
 - iOS Kotlin tests link against the real Kuikly host (`scripts/ios_native_tests.sh`,
   `-PgearuiIosTestHostDir`); CI's iOS job runs them.
+- SearchBar gains `variant: FieldVariant` and defaults to the filled SECONDARY
+  field: with field borders gone, a white search bar vanished into white headers.
+- Single-line `cardStyle` Inputs take the fixed field height; they measured their
+  content row to zero and showed an empty pill (text, placeholder, prefix, suffix).
+- DecoratedSurface (Card and other decorated surfaces) redraws its outline and
+  shadow when resized, instead of keeping the first size's border.
+- NavBar defaults to `surface`, matching the bottom navigation bar.
+- Textarea keeps the caret after existing text when the field is rebuilt.
+- Sample pages run their lists under the iOS home indicator instead of painting a
+  solid strip over it.
 
 ### Documentation
 

@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.typography.resolveFontFamily
 
@@ -120,7 +121,13 @@ fun SearchBar(
     shape: SearchBarShape = SearchBarShape.ROUNDED,
     alignment: SearchBarAlignment = SearchBarAlignment.LEFT,
     /** Focus and raise the keyboard on entry (the right behaviour for a search page — the user came to type). */
-    autoFocus: Boolean = false
+    autoFocus: Boolean = false,
+    /**
+     * Fill of the field. Defaults to [FieldVariant.SECONDARY]: a search bar almost
+     * always sits in a header or on a card, where the white primary field would
+     * disappear into the surface. Pass PRIMARY on the page background.
+     */
+    variant: FieldVariant = FieldVariant.SECONDARY,
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
@@ -179,13 +186,17 @@ fun SearchBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Search box body
-        FieldSurface(Modifier.weight(1f).fillMaxHeight(), shape = shapeModifier) {
+        FieldSurface(
+            Modifier.weight(1f).fillMaxHeight(),
+            shape = shapeModifier,
+            shadowed = variant == FieldVariant.PRIMARY,
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .then(feedback)
                     .clip(shapeModifier)
-                    .background(inputColors.background)
+                    .background(if (variant == FieldVariant.PRIMARY) inputColors.background else colors.muted)
                     .border(BorderWidth.thin, inputColors.border, shapeModifier)
                     .pointerInput(enabled) {
                         if (enabled) {

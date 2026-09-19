@@ -1300,7 +1300,7 @@ public final class com/gearui/components/searchbar/SearchBarCancel : java/lang/E
 }
 
 public final class com/gearui/components/searchbar/SearchBarKt {
-	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLcom/gearui/components/searchbar/SearchBarCancel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZZLcom/gearui/components/searchbar/SearchBarCancel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;III)V
 	public static final fun SearchBarWithAction (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
 }
 
@@ -2315,6 +2315,14 @@ public final class com/gearui/foundation/field/FieldTokens {
 	public final fun getPaddingHorizontal-UdJoRJA ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/field/FieldVariant : java/lang/Enum {
+	public static final field PRIMARY Lcom/gearui/foundation/field/FieldVariant;
+	public static final field SECONDARY Lcom/gearui/foundation/field/FieldVariant;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/field/FieldVariant;
+	public static fun values ()[Lcom/gearui/foundation/field/FieldVariant;
 }
 
 public final class com/gearui/foundation/field/InputColors {

@@ -50,13 +50,14 @@ fun Loading(
 
     val indicatorColor = color ?: colors.primary
     val indicatorSize = when (size) {
-        LoadingSize.SMALL -> 18.dp
-        LoadingSize.MEDIUM -> 21.dp
-        LoadingSize.LARGE -> 24.dp
+        // Reference `.spinner__root--size-*`: 16 / 24 / 32.
+        LoadingSize.SMALL -> 16.dp
+        LoadingSize.MEDIUM -> 24.dp
+        LoadingSize.LARGE -> 32.dp
     }
     val strokeWidth = when (size) {
-        LoadingSize.SMALL -> 3.dp
-        LoadingSize.MEDIUM -> 3.5.dp
+        LoadingSize.SMALL -> 2.dp
+        LoadingSize.MEDIUM -> 3.dp
         LoadingSize.LARGE -> 4.dp
     }
 

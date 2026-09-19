@@ -1,5 +1,7 @@
 package com.gearui.components.cellgroup
 
+import com.gearui.foundation.material.surfaceShadowStyles
+import com.gearui.foundation.material.DecoratedSurface
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.list.CellDefaults
@@ -92,10 +94,16 @@ fun <T> CellGroup(
             }
         }
 
+        // Reference ListGroup is a Surface: surface colour, radius 24 and the surface
+        // shadow stack.
+        DecoratedSurface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = Theme.shapes.xl,
+            shadows = surfaceShadowStyles().surface,
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(Theme.shapes.xl)
                 .background(colors.surface),
         ) {
             items.forEachIndexed { index, item ->
@@ -106,6 +114,7 @@ fun <T> CellGroup(
                 }
                 itemContent(item)
             }
+        }
         }
     }
 }

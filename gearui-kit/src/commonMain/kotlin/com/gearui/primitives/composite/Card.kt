@@ -76,7 +76,8 @@ fun Card(
 
     // Semantic colour mapping
     val finalContainerColor = containerColor ?: colors.surface
-    val finalBorderColor = borderColor ?: colors.border
+    // Reference cards have no outline, only the surface shadow; pass borderColor to draw one.
+    val finalBorderColor = borderColor ?: Color.Transparent
 
     val surfaceTokens = SurfaceTokens(
         height = 0.dp,  // Content determines the height.

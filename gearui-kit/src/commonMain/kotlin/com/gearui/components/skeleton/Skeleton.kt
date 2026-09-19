@@ -62,13 +62,15 @@ enum class SkeletonVariant {
 fun Skeleton(
     modifier: Modifier = Modifier,
     variant: SkeletonVariant = SkeletonVariant.RECTANGULAR,
-    animation: SkeletonAnimation = SkeletonAnimation.PULSE,
+    animation: SkeletonAnimation = SkeletonAnimation.WAVE,
     cornerRadius: Dp = Spacing.xs
 ) {
     val colors = Theme.colors
 
-    val baseColor = colors.muted
-    val highlightColor = colors.surface
+    // Reference `.skeleton__root`: the muted text colour at 30%, shimmering by default
+    // (skeleton.constants.ts: shimmer 1500ms, pulse 1000ms, both linear).
+    val baseColor = colors.mutedForeground.copy(alpha = 0.3f)
+    val highlightColor = colors.mutedForeground.copy(alpha = 0.12f)
 
     val infiniteTransition = rememberInfiniteTransition()
 
@@ -85,7 +87,7 @@ fun Skeleton(
         initialValue = 0f,
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1200, easing = LinearEasing),
+            animation = tween(durationMillis = 1500, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         )
     )

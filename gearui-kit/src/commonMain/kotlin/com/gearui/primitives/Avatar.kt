@@ -1,5 +1,6 @@
 package com.gearui.primitives
 
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -79,8 +80,16 @@ fun Avatar(
                 text != null -> {
                     Text(
                         text = text.take(2).uppercase(),
-                        style = Theme.typography.bodyMedium.copy(fontSize = (size.value * 0.4).sp),
-                        color = resolvedContent
+                        // Reference `.avatar__fallback-text`: xs/sm/base by size, medium weight.
+                        style = Theme.typography.bodyMedium.copy(
+                            fontSize = when {
+                                size.value <= 40f -> 12.sp
+                                size.value <= 48f -> 14.sp
+                                else -> 16.sp
+                            },
+                            fontWeight = FontWeight.Medium,
+                        ),
+                        color = contentColor ?: colors.foreground
                     )
                 }
 

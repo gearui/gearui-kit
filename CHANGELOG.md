@@ -100,6 +100,11 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
 - Textarea keeps the caret after existing text when the field is rebuilt.
 - Sample pages run their lists under the iOS home indicator instead of painting a
   solid strip over it.
+- Input: revealing a password (`isPassword` true -> false) now unmasks on iOS.
+- HeroUI alignment: Card draws no outline by default (surface shadow only; pass
+  `borderColor` to keep one); CellGroup gets the surface shadow; Skeleton defaults
+  to shimmer (1500ms) on the muted text colour at 30%; Avatar fallback text is
+  12/14/16 at medium weight in the foreground colour; Loading sizes are 16/24/32.
 
 ### Documentation
 

@@ -821,6 +821,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field share_network Ljava/lang/String;
 	public static final field shield_check Ljava/lang/String;
 	public static final field sign_out Ljava/lang/String;
+	public static final field smiley Ljava/lang/String;
 	public static final field square Ljava/lang/String;
 	public static final field star Ljava/lang/String;
 	public static final field star_fill Ljava/lang/String;

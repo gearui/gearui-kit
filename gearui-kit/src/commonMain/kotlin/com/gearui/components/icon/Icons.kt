@@ -99,6 +99,7 @@ object Icons {
     const val share_network = "share_network"
     const val shield_check = "shield_check"
     const val sign_out = "sign_out"
+    const val smiley = "smiley"
     const val square = "square"
     const val star = "star"
     const val star_fill = "star_fill"
@@ -199,6 +200,7 @@ object Icons {
         share_network,
         shield_check,
         sign_out,
+        smiley,
         square,
         star,
         star_fill,

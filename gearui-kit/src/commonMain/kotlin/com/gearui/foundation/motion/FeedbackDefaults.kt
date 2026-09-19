@@ -63,4 +63,5 @@ internal object FeedbackDefaults {
     val tabsIndicatorStiffness = 1200f
     val tabsIndicatorDamping = 120f
     val pressHighlightOpacity = 0.1f
+    val ratingTrackOpacity = 0.25f
 }

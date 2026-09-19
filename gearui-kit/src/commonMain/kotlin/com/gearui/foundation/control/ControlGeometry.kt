@@ -74,6 +74,9 @@ internal object ControlGeometry {
     val radiusOverlay = 24.dp
     val radiusSheet = 32.dp
     val radiusSmall = 8.dp
+    val rateStarGap = 6.dp
+    val rateStarSize = 24.dp
+    val rateStarSizeCompact = 20.dp
     val scrollShadowSize = 50.dp
     val searchClearSize = 24.dp
     val selectContentPadding = 12.dp

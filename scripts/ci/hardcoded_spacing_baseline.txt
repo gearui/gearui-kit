@@ -32,7 +32,6 @@ gearui-kit/src/commonMain/kotlin/com/gearui/components/popover/Popover.kt	22
 gearui-kit/src/commonMain/kotlin/com/gearui/components/popup/Popup.kt	2
 gearui-kit/src/commonMain/kotlin/com/gearui/components/progress/Progress.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/radio/RadioButton.kt	6
-gearui-kit/src/commonMain/kotlin/com/gearui/components/rate/Rate.kt	3
 gearui-kit/src/commonMain/kotlin/com/gearui/components/result/Result.kt	1
 gearui-kit/src/commonMain/kotlin/com/gearui/components/scaffold/PageScaffold.kt	4
 gearui-kit/src/commonMain/kotlin/com/gearui/components/searchbar/SearchBar.kt	4

@@ -724,6 +724,24 @@
         "value": 32,
         "unit": "px"
       }
+    },
+    "rateStarSize": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "rateStarGap": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "rateStarSizeCompact": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
     }
   }
 }

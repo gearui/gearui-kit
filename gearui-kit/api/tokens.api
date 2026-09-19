@@ -333,6 +333,9 @@
   geometry.radiusOverlay = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.radiusSheet = {"$type":"dimension","$value":{"unit":"px","value":32}}
   geometry.radiusSmall = {"$type":"dimension","$value":{"unit":"px","value":8}}
+  geometry.rateStarGap = {"$type":"dimension","$value":{"unit":"px","value":6}}
+  geometry.rateStarSize = {"$type":"dimension","$value":{"unit":"px","value":24}}
+  geometry.rateStarSizeCompact = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.scrollShadowSize = {"$type":"dimension","$value":{"unit":"px","value":50}}
   geometry.searchClearSize = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.selectContentPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -415,6 +418,7 @@
   feedback.pressScale = {"$type":"number","$value":0.985}
   feedback.radioExitScale = {"$type":"number","$value":1.5}
   feedback.radioRevealDuration = {"$type":"duration","$value":{"unit":"ms","value":300}}
+  feedback.ratingTrackOpacity = {"$type":"number","$value":0.25}
   feedback.referenceWidth = {"$type":"dimension","$value":{"unit":"px","value":300}}
   feedback.selectForegroundMix = {"$type":"number","$value":0.2}
   feedback.selectIndicatorDamping = {"$type":"number","$value":140}

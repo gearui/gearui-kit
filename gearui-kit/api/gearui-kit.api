@@ -1319,9 +1319,9 @@ public final class com/gearui/components/radio/RadioSize : java/lang/Enum {
 }
 
 public final class com/gearui/components/rate/RateKt {
-	public static final fun Rate-767Y1jo (FLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;IZZLjava/lang/String;Ljava/lang/String;FFZLjava/util/List;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Rate-7nBR4E4 (FLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;IZZZLjava/lang/String;Ljava/lang/String;FFZZLjava/util/List;JLandroidx/compose/runtime/Composer;III)V
 	public static final fun RateDisplay-cNyrp_Y (FLcom/tencent/kuikly/compose/ui/Modifier;IFZLandroidx/compose/runtime/Composer;II)V
-	public static final fun RateWithDescription (FLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;IZLjava/util/List;Landroidx/compose/runtime/Composer;II)V
+	public static final fun RateWithDescription (FLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;IZZLjava/util/List;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/refresh/ComposableSingletons$PullRefreshKt {

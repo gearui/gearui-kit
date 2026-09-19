@@ -291,6 +291,10 @@
     "pressHighlightOpacity": {
       "$type": "number",
       "$value": 0.1
+    },
+    "ratingTrackOpacity": {
+      "$type": "number",
+      "$value": 0.25
     }
   },
   "transitions": {

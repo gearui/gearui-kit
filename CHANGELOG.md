@@ -42,6 +42,12 @@
 
 ### Changed
 
+- Rate redrawn: both layers use the same star glyph, the active layer is clipped per
+  star, and the track is muted rather than a heavy outline. A half star now lines up
+  exactly with the star under it. Tapping the leading half of a star gives the half
+  score (`allowHalf`), `allowClear` resets on a second tap, fractional scores snap to
+  the nearest half or whole star, and stars take the press scale. `icon` / `emptyIcon`
+  now take icon names rather than text glyphs.
 - Input, Textarea and Form item labels render through `FieldLabel`. The required
   asterisk now follows the label, as in the reference.
 - Field clear buttons tint with the reference press highlight instead of a

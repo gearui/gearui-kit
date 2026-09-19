@@ -65,13 +65,14 @@ fun RateExample(
         // Half-star rating
         ExampleSection(
             title = "半星评分",
-            description = "设置 allowHalf=true 支持半星选择"
+            description = "allowHalf=true：点星星左半边给半星，右半边给整星"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Rate(
                     value = rating2,
                     onValueChange = { rating2 = it },
-                    allowHalf = true
+                    allowHalf = true,
+                    allowClear = true,
                 )
 
                 Text(
@@ -79,6 +80,28 @@ fun RateExample(
                     style = Theme.typography.bodyMedium,
                     color = colors.mutedForeground
                 )
+            }
+        }
+
+        // Averages
+        ExampleSection(
+            title = "平均分展示",
+            description = "小数分值就近取半星，只读"
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                listOf(4.3f, 3.8f, 2.5f).forEach { average ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        RateDisplay(value = average)
+                        Text(
+                            text = "原始值 $average",
+                            style = Theme.typography.bodySmall,
+                            color = colors.mutedForeground
+                        )
+                    }
+                }
             }
         }
 

@@ -10,6 +10,16 @@ defects (including an iOS crash on ContextMenu), and gave the native test gate a
 real mechanism. Remaining before publication: a remote CI run on the final commit,
 then version/tag/signing.
 
+Update 2026-09-20, local gate on `68fc1a4` (overlays/controls aligned with HeroUI
+Native, fixes since): Python 119/119, token generation check, all shell guards,
+Android 198 tests + lint + apiCheck, headless Chrome 197 tests, iOS simulator
+Kotlin tests 197 via `scripts/ios_native_tests.sh` from a clean host, Android/Web/iOS
+sample builds, six-module Maven staging, PrivChat Android consumer build. Two
+defects this gate caught were fixed in `68fc1a4` (the iOS test script never ran;
+a stale token test). Still open: remote CI on the pushed commit, and the decisions
+listed in the changelog's alignment notes (native type scale, password reveal on
+iOS, intermittent Kuikly text-field focus crossing).
+
 Audit date: 2026-09-17. Verdict: **candidate preparation is justified; publication
 is not approved yet**. This is a tested working tree based on `2f306a7`, not an
 immutable release commit. Existing changes and new files remain uncommitted.

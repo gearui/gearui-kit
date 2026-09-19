@@ -73,6 +73,7 @@ object Icons {
     const val house = "house"
     const val image = "image"
     const val info = "info"
+    const val keyboard = "keyboard"
     const val link = "link"
     const val link_break = "link_break"
     const val list = "list"
@@ -172,6 +173,7 @@ object Icons {
         house,
         image,
         info,
+        keyboard,
         link,
         link_break,
         list,

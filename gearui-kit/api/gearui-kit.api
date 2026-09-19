@@ -795,6 +795,7 @@ public final class com/gearui/components/icon/Icons {
 	public static final field house Ljava/lang/String;
 	public static final field image Ljava/lang/String;
 	public static final field info Ljava/lang/String;
+	public static final field keyboard Ljava/lang/String;
 	public static final field link Ljava/lang/String;
 	public static final field link_break Ljava/lang/String;
 	public static final field list Ljava/lang/String;

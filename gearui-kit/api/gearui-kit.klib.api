@@ -3911,6 +3911,8 @@ final object com.gearui.components.icon/Icons { // com.gearui.components.icon/Ic
         final fun <get-image>(): kotlin/String // com.gearui.components.icon/Icons.image.<get-image>|<get-image>(){}[0]
     final const val info // com.gearui.components.icon/Icons.info|{}info[0]
         final fun <get-info>(): kotlin/String // com.gearui.components.icon/Icons.info.<get-info>|<get-info>(){}[0]
+    final const val keyboard // com.gearui.components.icon/Icons.keyboard|{}keyboard[0]
+        final fun <get-keyboard>(): kotlin/String // com.gearui.components.icon/Icons.keyboard.<get-keyboard>|<get-keyboard>(){}[0]
     final const val link // com.gearui.components.icon/Icons.link|{}link[0]
         final fun <get-link>(): kotlin/String // com.gearui.components.icon/Icons.link.<get-link>|<get-link>(){}[0]
     final const val link_break // com.gearui.components.icon/Icons.link_break|{}link_break[0]

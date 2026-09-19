@@ -41,6 +41,12 @@ import com.gearui.theme.LocalInputColors
 import com.tencent.kuikly.compose.foundation.hoverable
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.interaction.collectIsHoveredAsState
+import com.tencent.kuikly.compose.ui.text.input.TextFieldValue
+import com.tencent.kuikly.compose.ui.text.TextRange
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 /**
  * Textarea layout direction
@@ -416,11 +422,25 @@ private fun TextareaInputArea(
                         letterSpacing = Theme.typography.bodyMedium.letterSpacing,
                     )
 
+                    // 🔴 光标位置得自己管。String 版 BasicTextField 每次**重建**都从
+                    // `TextFieldValue(text)` 起步，selection 落在 0——带着草稿切走再切回来
+                    // （聊天输入栏切语音模式时整个输入框都不参与组合），光标就跑到文字最前面，
+                    // 想接着打字或删字得先手动点一下末尾。
+                    //
+                    // 文本以调用方为准、光标以本地为准；外部换掉文本时（发送后清空、恢复草稿）
+                    // 光标一律落到末尾，这也是用户唯一想继续编辑的位置。
+                    var caretState by remember {
+                        mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+                    }
+                    val fieldValue =
+                        if (caretState.text == value) caretState
+                        else TextFieldValue(value, TextRange(value.length))
                     BasicTextField(
-                        value = value,
+                        value = fieldValue,
                         onValueChange = { newValue ->
-                            if (maxLength == null || newValue.length <= maxLength) {
-                                onValueChange(newValue)
+                            if (maxLength == null || newValue.text.length <= maxLength) {
+                                caretState = newValue
+                                if (newValue.text != value) onValueChange(newValue.text)
                             }
                         },
                         // Rejecting a value in onValueChange does not reset the native field; the

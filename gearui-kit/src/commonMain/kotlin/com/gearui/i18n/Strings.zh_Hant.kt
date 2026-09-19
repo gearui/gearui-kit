@@ -13,6 +13,9 @@ val StringsZhHant = Strings(
         noSearchResult = "無搜尋結果",
         networkError = "網路錯誤",
         backToTop = "頂部",
+        pullToRefresh = "下拉重新整理",
+        releaseToRefresh = "放開立即重新整理",
+        refreshing = "重新整理中...",
     ),
     theming = ThemeStrings(
         theme = "主題",

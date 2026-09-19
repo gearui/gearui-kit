@@ -13,6 +13,9 @@ val StringsZhHans = Strings(
         noSearchResult = "无搜索结果",
         networkError = "网络错误",
         backToTop = "顶部",
+        pullToRefresh = "下拉刷新",
+        releaseToRefresh = "松开立即刷新",
+        refreshing = "正在刷新...",
     ),
     theming = ThemeStrings(
         theme = "主题",

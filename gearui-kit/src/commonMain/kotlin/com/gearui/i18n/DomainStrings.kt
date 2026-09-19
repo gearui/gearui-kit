@@ -30,6 +30,9 @@ data class CommonStrings(
     val noSearchResult: String,
     val networkError: String,
     val backToTop: String,
+    val pullToRefresh: String,
+    val releaseToRefresh: String,
+    val refreshing: String,
 )
 
 data class CommonStringsPatch(
@@ -44,6 +47,9 @@ data class CommonStringsPatch(
     val noSearchResult: String? = null,
     val networkError: String? = null,
     val backToTop: String? = null,
+    val pullToRefresh: String? = null,
+    val releaseToRefresh: String? = null,
+    val refreshing: String? = null,
 )
 
 val CommonStringsPatch.isEmpty: Boolean
@@ -57,7 +63,10 @@ val CommonStringsPatch.isEmpty: Boolean
         noData == null &&
         noSearchResult == null &&
         networkError == null &&
-        backToTop == null
+        backToTop == null &&
+        pullToRefresh == null &&
+        releaseToRefresh == null &&
+        refreshing == null
 
 fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
     if (patch == null || patch.isEmpty) return this
@@ -73,6 +82,9 @@ fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
         noSearchResult = patch.noSearchResult ?: noSearchResult,
         networkError = patch.networkError ?: networkError,
         backToTop = patch.backToTop ?: backToTop,
+        pullToRefresh = patch.pullToRefresh ?: pullToRefresh,
+        releaseToRefresh = patch.releaseToRefresh ?: releaseToRefresh,
+        refreshing = patch.refreshing ?: refreshing,
     )
 }
 

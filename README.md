@@ -32,16 +32,16 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**78 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**81 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (18) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
+| Form (21) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
 | Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
 | Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
 | Feedback (16) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Message`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
-| Layout (6) | `Grid`, `Swiper`, `SearchBar`, `Refresh`, `BottomSheet`, `BackTop` |
+| Layout (6) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `BottomSheet`, `BackTop` |
 
 <details>
 <summary>What each component does</summary>
@@ -68,6 +68,9 @@ component follows both without any per-screen wiring.
 | `Checkbox` | Multiple selection |
 | `Radio` | Single selection |
 | `InputOTP` | One-time code input |
+| `ComboBox` | Filterable suggestions |
+| `NumberField` | Typed and stepped number |
+| `ToggleButton` | Toggle and button group |
 | `Switch` | Toggle switch |
 | `Slider` | Value selection |
 | `Stepper` | Number stepper |
@@ -150,7 +153,7 @@ component follows both without any per-screen wiring.
 | `Grid` | Grid layout |
 | `Swiper` | Content carousel |
 | `SearchBar` | Search input |
-| `Refresh` | Pull-to-refresh showcase |
+| `PullRefresh` | Pull to refresh a list |
 | `BottomSheet` | Bottom sheet |
 | `BackTop` | Back to top |
 

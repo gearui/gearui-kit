@@ -712,6 +712,18 @@
         "value": 50,
         "unit": "px"
       }
+    },
+    "pullRefreshThreshold": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
+    },
+    "avatarGroupSize": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
     }
   }
 }

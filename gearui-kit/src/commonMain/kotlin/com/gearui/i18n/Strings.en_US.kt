@@ -13,6 +13,9 @@ val StringsEnUs = Strings(
         noSearchResult = "No results",
         networkError = "Network error",
         backToTop = "Top",
+        pullToRefresh = "Pull to refresh",
+        releaseToRefresh = "Release to refresh",
+        refreshing = "Refreshing…",
     ),
     theming = ThemeStrings(
         theme = "Theme",

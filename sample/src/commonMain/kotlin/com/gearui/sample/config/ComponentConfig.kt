@@ -42,6 +42,9 @@ object ComponentConfig {
         ComponentInfo("checkbox", "复选框", "Checkbox", ComponentCategory.FORM, "/components/checkbox", "多选操作", "Multiple selection"),
         ComponentInfo("radio", "单选框", "Radio", ComponentCategory.FORM, "/components/radio", "单选操作", "Single selection"),
         ComponentInfo("input-otp", "验证码输入", "InputOTP", ComponentCategory.FORM, "/components/input-otp", "分格验证码输入", "One-time code input"),
+        ComponentInfo("combo-box", "输入选择器", "ComboBox", ComponentCategory.FORM, "/components/combo-box", "输入筛选的下拉选择", "Filterable suggestions"),
+        ComponentInfo("number-field", "数字输入", "NumberField", ComponentCategory.FORM, "/components/number-field", "可输入可步进的数字字段", "Typed and stepped number"),
+        ComponentInfo("toggle-button", "切换按钮", "ToggleButton", ComponentCategory.FORM, "/components/toggle-button", "保持按下状态的按钮与按钮组", "Toggle and button group"),
         ComponentInfo("switch", "开关", "Switch", ComponentCategory.FORM, "/components/switch", "开关选择", "Toggle switch"),
         ComponentInfo("slider", "滑块", "Slider", ComponentCategory.FORM, "/components/slider", "数值选择", "Value selection"),
         ComponentInfo("stepper", "步进器", "Stepper", ComponentCategory.FORM, "/components/stepper", "数字增减", "Number stepper"),
@@ -117,7 +120,7 @@ object ComponentConfig {
         ComponentInfo("grid", "栅格", "Grid", ComponentCategory.LAYOUT, "/components/grid", "栅格布局", "Grid layout"),
         ComponentInfo("swiper", "轮播", "Swiper", ComponentCategory.LAYOUT, "/components/swiper", "内容轮播", "Content carousel"),
         ComponentInfo("searchbar", "搜索栏", "SearchBar", ComponentCategory.LAYOUT, "/components/searchbar", "搜索输入", "Search input"),
-        ComponentInfo("refresh", "下拉刷新", "Refresh", ComponentCategory.LAYOUT, "/components/refresh", "下拉刷新展示（演示页）", "Pull-to-refresh showcase"),
+        ComponentInfo("refresh", "下拉刷新", "PullRefresh", ComponentCategory.LAYOUT, "/components/refresh", "列表下拉刷新", "Pull to refresh a list"),
         ComponentInfo("bottomsheet", "底部抽屉", "BottomSheet", ComponentCategory.LAYOUT, "/components/bottomsheet", "底部弹出", "Bottom sheet"),
         ComponentInfo("backtop", "回到顶部", "BackTop", ComponentCategory.LAYOUT, "/components/backtop", "返回顶部", "Back to top")
     )

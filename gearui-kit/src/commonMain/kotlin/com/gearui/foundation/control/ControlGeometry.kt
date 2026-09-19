@@ -16,6 +16,7 @@ internal object ControlGeometry {
     val alertIcon = 18.dp
     val alertIndicatorOffset = 3.5.dp
     val alertPadding = 12.dp
+    val avatarGroupSize = 32.dp
     val buttonGapExtraSmall = 5.dp
     val buttonGapLarge = 10.dp
     val buttonGapMedium = 8.dp
@@ -62,6 +63,7 @@ internal object ControlGeometry {
     val overlayPadding = 20.dp
     val popoverPaddingBlock = 12.dp
     val popoverPaddingInline = 16.dp
+    val pullRefreshThreshold = 80.dp
     val radioThumb = 10.dp
     val radiusDefault = 14.dp
     val radiusFull = 9999.dp

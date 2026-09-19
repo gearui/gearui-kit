@@ -31,16 +31,16 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**78 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**81 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（18） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
+| 表单（21） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
 | 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
 | 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
 | 反馈（16） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
-| 布局（6） | `Grid`、`Swiper`、`SearchBar`、`Refresh`、`BottomSheet`、`BackTop` |
+| 布局（6） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`BottomSheet`、`BackTop` |
 
 <details>
 <summary>各组件用途</summary>
@@ -67,6 +67,9 @@
 | `Checkbox` | 复选框 | 多选操作 |
 | `Radio` | 单选框 | 单选操作 |
 | `InputOTP` | 验证码输入 | 分格验证码输入 |
+| `ComboBox` | 输入选择器 | 输入筛选的下拉选择 |
+| `NumberField` | 数字输入 | 可输入可步进的数字字段 |
+| `ToggleButton` | 切换按钮 | 保持按下状态的按钮与按钮组 |
 | `Switch` | 开关 | 开关选择 |
 | `Slider` | 滑块 | 数值选择 |
 | `Stepper` | 步进器 | 数字增减 |
@@ -149,7 +152,7 @@
 | `Grid` | 栅格 | 栅格布局 |
 | `Swiper` | 轮播 | 内容轮播 |
 | `SearchBar` | 搜索栏 | 搜索输入 |
-| `Refresh` | 下拉刷新 | 下拉刷新展示（演示页） |
+| `PullRefresh` | 下拉刷新 | 列表下拉刷新 |
 | `BottomSheet` | 底部抽屉 | 底部弹出 |
 | `BackTop` | 回到顶部 | 返回顶部 |
 

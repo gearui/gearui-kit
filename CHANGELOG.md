@@ -28,6 +28,18 @@
 - `ScrollShadow`: fades the edges of a scrolling area while content is hidden
   past them, vertical or horizontal.
 
+- `ComboBox`: a text field with filtered suggestions, using Select's panel. Optional
+  `autoFocus` opens the field and the suggestions with the screen.
+- `NumberField`: a number that can be typed or stepped, with decimals, negatives,
+  bounds and the field text stack.
+- `ToggleButton` and `ToggleButtonGroup`: buttons that stay pressed, single or
+  multiple selection.
+- `ButtonGroup`: related actions joined into one pill, with `ButtonGroupDivider`.
+- `AvatarGroup`: overlapping avatars with a "+N" counter.
+- `pullRefreshItem` and `rememberPullRefreshState`: pull-to-refresh with a themed
+  indicator and translated copy, over the platform list gesture.
+- `CloseButton` takes an `icon`, so other icon-only controls share its shape.
+
 ### Changed
 
 - Input, Textarea and Form item labels render through `FieldLabel`. The required
@@ -36,6 +48,8 @@
   foreground mix.
 - Fixed: press scale for icon controls measured width in pixels, not dp, which
   made the shrink about three times too weak on 3x screens.
+- Fixed: `Input(autoFocus = true)` did nothing inside a lazy list. The request ran
+  during the first composition, before the field was attached, and never retried.
 
 ## [1.0.0-beta3] - 2026-09-20
 

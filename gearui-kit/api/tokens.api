@@ -275,6 +275,7 @@
   geometry.alertIcon = {"$type":"dimension","$value":{"unit":"px","value":18}}
   geometry.alertIndicatorOffset = {"$type":"dimension","$value":{"unit":"px","value":3.5}}
   geometry.alertPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.avatarGroupSize = {"$type":"dimension","$value":{"unit":"px","value":32}}
   geometry.buttonGapExtraSmall = {"$type":"dimension","$value":{"unit":"px","value":5}}
   geometry.buttonGapLarge = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.buttonGapMedium = {"$type":"dimension","$value":{"unit":"px","value":8}}
@@ -321,6 +322,7 @@
   geometry.overlayPadding = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.popoverPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.popoverPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":16}}
+  geometry.pullRefreshThreshold = {"$type":"dimension","$value":{"unit":"px","value":80}}
   geometry.radioThumb = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.radiusDefault = {"$type":"dimension","$value":{"unit":"px","value":14}}
   geometry.radiusFull = {"$type":"dimension","$value":{"unit":"px","value":9999}}

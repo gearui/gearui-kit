@@ -1,20 +1,38 @@
 package com.gearui.sample.examples.refresh
 
 import androidx.compose.runtime.Composable
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonTheme
-import com.gearui.components.button.ButtonType
-import com.gearui.components.toast.Toast
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.gearui.components.cell.Cell
+import com.gearui.components.navbar.NavBar
+import com.gearui.components.refresh.pullRefreshItem
+import com.gearui.components.refresh.rememberPullRefreshState
+import com.gearui.components.scaffold.PageScaffold
+import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
+import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.sample.config.ComponentInfo
-import com.gearui.sample.pages.ExamplePage
-import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.PaddingValues
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.padding
+import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 /**
- * Pull-to-refresh page.
+ * Pull-to-refresh owns the whole page on purpose.
  *
- * Note: KuiklyUI already provides this capability. For now this page is an entry point describing the expected interaction; a full example follows.
+ * The gesture belongs to the page's own list: a list nested inside another scrolling
+ * list never gets the drag, so demonstrating it inside the shared ExamplePage would
+ * have shown a control that cannot work the way callers will use it.
  */
 @Composable
 fun RefreshExample(
@@ -22,27 +40,55 @@ fun RefreshExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
+    val listState = rememberLazyListState()
+    var refreshing by remember { mutableStateOf(false) }
+    var round by remember { mutableStateOf(1) }
+    val refreshState = rememberPullRefreshState(refreshing)
+    val safeBottom = LocalRuntimeEnvironment.current.safeArea.bottom
 
-    ExamplePage(
-        component = component,
-        onBack = onBack
+    LaunchedEffect(refreshing) {
+        if (refreshing) {
+            delay(1200)
+            round += 1
+            refreshing = false
+        }
+    }
+
+    PageScaffold(
+        backgroundColor = colors.background,
+        topSafeAreaColor = colors.surface,
+        consumeBottomSafeArea = false,
     ) {
-        ExampleSection(
-            title = "下拉刷新（展示）",
-            description = "KuiklyUI 已支持 pull-to-refresh，本示例先展示入口和预期行为。"
-        ) {
-            Text(
-                text = "预期行为：下拉触发刷新、展示刷新中状态、完成后回弹并更新列表数据。",
-                style = Theme.typography.bodyMedium,
-                color = colors.mutedForeground
+        Column(Modifier.fillMaxSize().background(colors.background)) {
+            NavBar(
+                title = component.nameEn,
+                centerTitle = true,
+                useDefaultBack = true,
+                onBackClick = onBack,
+                backgroundColor = colors.surface,
             )
-            Button(
-                text = "模拟刷新完成",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                block = true,
-                onClick = { Toast.show("刷新完成（演示）") }
-            )
+            GearLazyColumn(
+                state = listState,
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = safeBottom),
+            ) {
+                pullRefreshItem(
+                    state = refreshState,
+                    onRefresh = { refreshing = true },
+                    listState = listState,
+                )
+                item {
+                    Text(
+                        text = "下拉试试：超过阈值提示松手，刷新中转圈，完成后列表换一批。已刷新 $round 次",
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground,
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    )
+                }
+                items(20) { index ->
+                    Cell(title = "第 $round 批 · 第 ${index + 1} 条")
+                }
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
+import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
@@ -128,11 +129,13 @@ fun Input(
     val hoveredState = hoverSource.collectIsHoveredAsState()
     val hasError = error != null
 
-    // Autofocus
-    if (autoFocus) {
-        LaunchedEffect(Unit) {
-            inputFocusRequester.requestFocus()
-        }
+    // Autofocus only once the field is on screen. Requesting focus during the first
+    // composition is silently dropped inside a lazy list, where the item composes
+    // before it is attached, so `autoFocus` did nothing on exactly the screens that
+    // want it (a search page, a code screen).
+    var positioned by remember { mutableStateOf(false) }
+    LaunchedEffect(autoFocus, positioned, enabled) {
+        if (autoFocus && positioned && enabled) inputFocusRequester.requestFocus()
     }
 
     when {
@@ -238,6 +241,7 @@ fun Input(
         ) {
             Box(
                 modifier = feedback.then(containerModifier)
+                    .onGloballyPositioned { if (it.size.width > 0) positioned = true }
                     .hoverable(hoverSource, enabled = enabled)
                     .pointerInput(canFocus) {
                         if (!canFocus) return@pointerInput

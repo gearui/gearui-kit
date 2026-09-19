@@ -22,6 +22,23 @@ fun AvatarExample(
         component = component,
         onBack = onBack
     ) {
+        ExampleSection(
+            title = "AvatarGroup",
+            description = "重叠展示成员，超出部分折叠为 +N"
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                com.gearui.components.image.AvatarGroup(
+                    items = listOf("赵", "钱", "孙").map { com.gearui.components.image.AvatarGroupItem(fallbackText = it) },
+                )
+                com.gearui.components.image.AvatarGroup(
+                    items = listOf("A", "B", "C", "D", "E", "F", "G").map {
+                        com.gearui.components.image.AvatarGroupItem(fallbackText = it)
+                    },
+                    max = 4,
+                )
+            }
+        }
+
         // Avatar types
         ExampleSection(
             title = "头像类型",

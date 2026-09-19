@@ -23,7 +23,8 @@ import com.tencent.kuikly.compose.ui.unit.Dp
  * (dialogs, sheets, notifications, banners) so they look and respond the same.
  *
  * [containerColor] and [iconColor] exist for media surfaces such as an image viewer,
- * where the neutral fill would disappear against the photo.
+ * where the neutral fill would disappear against the photo. [icon] swaps the glyph for
+ * another icon-only control of the same shape, such as a number field's step buttons.
  */
 @Composable
 fun CloseButton(
@@ -34,6 +35,7 @@ fun CloseButton(
     iconSize: Dp = ControlGeometry.closeButtonIcon,
     containerColor: Color = Color.Unspecified,
     iconColor: Color = Color.Unspecified,
+    icon: String = Icons.x,
 ) {
     val colors = Theme.colors
     PressableFeedback(
@@ -49,7 +51,7 @@ fun CloseButton(
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                name = Icons.x,
+                name = icon,
                 size = iconSize,
                 tint = if (iconColor.isSpecified()) iconColor else colors.mutedForeground,
             )

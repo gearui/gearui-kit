@@ -28,6 +28,45 @@ fun TagExample(component: ComponentInfo, onBack: () -> Unit) {
                     }
                 }
             }
+        ExampleSection(title = "TagGroup", description = "可选择、可换行、可移除的标签集合", useCardContainer = false) {
+            var single by remember { mutableStateOf(setOf("news")) }
+            var multiple by remember { mutableStateOf(setOf("travel", "food")) }
+            var removable by remember {
+                mutableStateOf(listOf("Kotlin", "Compose", "Kuikly", "HeroUI").map {
+                    com.gearui.components.tag.TagGroupItem(it, it)
+                })
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                Text("单选")
+                com.gearui.components.tag.TagGroup(
+                    items = listOf("news" to "新闻", "travel" to "旅行", "food" to "美食", "tech" to "科技").map {
+                        com.gearui.components.tag.TagGroupItem(it.first, it.second)
+                    },
+                    selectedKeys = single,
+                    onSelectionChange = { single = it },
+                )
+                Text("多选 · 大尺寸")
+                com.gearui.components.tag.TagGroup(
+                    items = listOf("news" to "新闻", "travel" to "旅行", "food" to "美食", "tech" to "科技", "sport" to "运动").map {
+                        com.gearui.components.tag.TagGroupItem(it.first, it.second)
+                    },
+                    selectedKeys = multiple,
+                    onSelectionChange = { multiple = it },
+                    selectionMode = com.gearui.components.tag.TagGroupSelectionMode.MULTIPLE,
+                    size = com.gearui.components.tag.TagGroupSize.LARGE,
+                )
+                Text("可移除")
+                com.gearui.components.tag.TagGroup(
+                    items = removable,
+                    selectedKeys = emptySet(),
+                    onSelectionChange = {},
+                    selectionMode = com.gearui.components.tag.TagGroupSelectionMode.NONE,
+                    size = com.gearui.components.tag.TagGroupSize.SMALL,
+                    onRemove = { key -> removable = removable.filterNot { it.key == key } },
+                )
+            }
+        }
+
         ExampleSection(title = "标签尺寸", useCardContainer = false) {
             Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Tag("小尺寸", size = TagSize.SMALL, theme = TagTheme.PRIMARY)

@@ -87,7 +87,7 @@ fun Switch(
 }
 
 @Composable
-private fun SwitchVisual(
+internal fun SwitchVisual(
     checked: Boolean, enabled: Boolean, pressed: Boolean, type: SwitchType, size: SwitchSize,
     trackOnColor: Color?, trackOffColor: Color?, openText: String, closeText: String,
 ) {

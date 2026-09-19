@@ -35,6 +35,23 @@ fun SwitchExample(
         component = component,
         onBack = onBack
     ) {
+        ExampleSection(title = "SwitchGroup", description = "一组独立设置，整行可点，支持副说明", useCardContainer = false) {
+            var enabledKeys by remember { mutableStateOf(setOf("push")) }
+            com.gearui.components.switch.SwitchGroup(
+                items = listOf(
+                    com.gearui.components.switch.SwitchGroupItem("push", "推送通知", "接收新消息提醒"),
+                    com.gearui.components.switch.SwitchGroupItem("sound", "声音", "消息到达时播放提示音"),
+                    com.gearui.components.switch.SwitchGroupItem("night", "免打扰", "22:00 - 08:00 静音", enabled = false),
+                ),
+                checkedKeys = enabledKeys,
+                onCheckedChange = { key, checked ->
+                    enabledKeys = if (checked) enabledKeys + key else enabledKeys - key
+                },
+                label = "通知",
+                description = "控制这台设备上的提醒方式",
+            )
+        }
+
         // Component types
         ExampleSection(title = "组件类型") {
             // Basic switch

@@ -31,15 +31,15 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**75 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**78 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（17） | `Input`、`Checkbox`、`Radio`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
+| 表单（18） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
 | 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
-| 数据展示（16） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
-| 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
+| 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
+| 反馈（16） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（6） | `Grid`、`Swiper`、`SearchBar`、`Refresh`、`BottomSheet`、`BackTop` |
 
 <details>
@@ -66,6 +66,7 @@
 | `Input` | 输入框 | 文本输入 |
 | `Checkbox` | 复选框 | 多选操作 |
 | `Radio` | 单选框 | 单选操作 |
+| `InputOTP` | 验证码输入 | 分格验证码输入 |
 | `Switch` | 开关 | 开关选择 |
 | `Slider` | 滑块 | 数值选择 |
 | `Stepper` | 步进器 | 数字增减 |
@@ -110,6 +111,7 @@
 | `Image` | 图片 | 图片展示 |
 | `ImageViewer` | 图片预览 | 图片预览查看 |
 | `Avatar` | 头像 | 用户头像 |
+| `ScrollShadow` | 滚动渐隐 | 滚动区域边缘渐隐 |
 | `Collapse` | 折叠面板 | 内容折叠 |
 | `Progress` | 进度条 | 进度展示 |
 | `Empty` | 空状态 | 空数据提示 |
@@ -131,6 +133,7 @@
 | `ContextMenu` | 上下文菜单 | 上下文菜单 |
 | `Loading` | 加载 | 加载状态 |
 | `Message` | 消息提醒 | 全局消息提示 |
+| `Alert` | 警示框 | 页面内状态提示 |
 | `NoticeBar` | 公告栏 | 滚动公告提醒 |
 | `Notification` | 通知 | 全局通知 |
 | `Snackbar` | 消息条 | 底部消息 |

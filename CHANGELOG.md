@@ -16,6 +16,18 @@
 - Field text primitives `FieldLabel` and `FieldDescription`, next to `FieldErrorText`,
   plus `FieldDefaults.labelGap`.
 
+- `Alert`: an inline status message on a surface card, with five statuses, an
+  action slot and an optional close button.
+- `InputOTP`: one-time code entry. A single hidden native field owns the value,
+  the keyboard and paste; the slots only display it, with an accent outline and
+  a blinking caret on the active slot.
+- `SwitchGroup`: a labelled set of settings, each with an optional description,
+  toggled by tapping anywhere in the row.
+- `TagGroup`: wrapping tags with single, multiple or no selection, three sizes,
+  and optional removal.
+- `ScrollShadow`: fades the edges of a scrolling area while content is hidden
+  past them, vertical or horizontal.
+
 ### Changed
 
 - Input, Textarea and Form item labels render through `FieldLabel`. The required

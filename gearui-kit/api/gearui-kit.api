@@ -170,6 +170,21 @@ public final class com/gearui/components/actionsheet/ActionSheetTheme : java/lan
 	public static fun values ()[Lcom/gearui/components/actionsheet/ActionSheetTheme;
 }
 
+public final class com/gearui/components/alert/AlertKt {
+	public static final fun Alert (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/alert/AlertStatus;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/alert/AlertStatus : java/lang/Enum {
+	public static final field ACCENT Lcom/gearui/components/alert/AlertStatus;
+	public static final field DANGER Lcom/gearui/components/alert/AlertStatus;
+	public static final field DEFAULT Lcom/gearui/components/alert/AlertStatus;
+	public static final field SUCCESS Lcom/gearui/components/alert/AlertStatus;
+	public static final field WARNING Lcom/gearui/components/alert/AlertStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/alert/AlertStatus;
+	public static fun values ()[Lcom/gearui/components/alert/AlertStatus;
+}
+
 public final class com/gearui/components/anchor/AnchorItem {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
@@ -941,6 +956,10 @@ public final class com/gearui/components/input/InputSize : java/lang/Enum {
 	public static fun values ()[Lcom/gearui/components/input/InputSize;
 }
 
+public final class com/gearui/components/inputotp/InputOTPKt {
+	public static final fun InputOTP (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ILjava/lang/Integer;ZZZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+}
+
 public final class com/gearui/components/link/LinkKt {
 	public static final fun Link-r_VB7Ho (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/link/LinkSize;ZZJLjava/lang/String;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 	public static final fun LinkButton-BB4pwIA (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/link/LinkSize;ZJLandroidx/compose/runtime/Composer;II)V
@@ -1299,6 +1318,21 @@ public final class com/gearui/components/result/ResultStatus : java/lang/Enum {
 public final class com/gearui/components/scaffold/PageScaffoldKt {
 	public static final fun PageScaffold-1aA8QqQ (Lcom/tencent/kuikly/compose/ui/Modifier;ZZZLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun PageScaffold-H6BCnbY (Lcom/tencent/kuikly/compose/ui/Modifier;ZZZLcom/tencent/kuikly/compose/ui/graphics/Color;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/scrollshadow/ScrollShadowKt {
+	public static final fun ScrollShadow-pm5Rq2I (Lcom/tencent/kuikly/compose/foundation/gestures/ScrollableState;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/foundation/gestures/Orientation;Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;FJLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/scrollshadow/ScrollShadowVisibility : java/lang/Enum {
+	public static final field AUTO Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static final field BOTH Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static final field END Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static final field NONE Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static final field START Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
+	public static fun values ()[Lcom/gearui/components/scrollshadow/ScrollShadowVisibility;
 }
 
 public final class com/gearui/components/searchbar/SearchBarAlignment : java/lang/Enum {
@@ -1667,6 +1701,29 @@ public final class com/gearui/components/swiper/SwiperState {
 	public static synthetic fun previous$default (Lcom/gearui/components/swiper/SwiperState;ZILjava/lang/Object;)V
 }
 
+public final class com/gearui/components/switch/SwitchGroupItem {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lcom/gearui/components/switch/SwitchGroupItem;
+	public static synthetic fun copy$default (Lcom/gearui/components/switch/SwitchGroupItem;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lcom/gearui/components/switch/SwitchGroupItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEnabled ()Z
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getLabel ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/switch/SwitchGroupKt {
+	public static final fun SwitchGroup (Ljava/util/List;Ljava/util/Set;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZLcom/gearui/components/switch/SwitchSize;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class com/gearui/components/switch/SwitchKt {
 	public static final fun Switch-OVsTiYk (ZLkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/switch/SwitchType;Lcom/gearui/components/switch/SwitchSize;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 	public static final fun SwitchWithLabel (ZLkotlin/jvm/functions/Function1;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/switch/SwitchType;Lcom/gearui/components/switch/SwitchSize;Landroidx/compose/runtime/Composer;II)V
@@ -1790,6 +1847,55 @@ public final class com/gearui/components/tabs/TabsSize : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/tabs/TabsSize;
 	public static fun values ()[Lcom/gearui/components/tabs/TabsSize;
+}
+
+public final class com/gearui/components/tag/TagGroupItem {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lcom/gearui/components/tag/TagGroupItem;
+	public static synthetic fun copy$default (Lcom/gearui/components/tag/TagGroupItem;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lcom/gearui/components/tag/TagGroupItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getIcon ()Ljava/lang/String;
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getLabel ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/tag/TagGroupKt {
+	public static final fun TagGroup (Ljava/util/List;Ljava/util/Set;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/tag/TagGroupSelectionMode;Lcom/gearui/components/tag/TagGroupSize;Lcom/gearui/components/tag/TagGroupVariant;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/tag/TagGroupSelectionMode : java/lang/Enum {
+	public static final field MULTIPLE Lcom/gearui/components/tag/TagGroupSelectionMode;
+	public static final field NONE Lcom/gearui/components/tag/TagGroupSelectionMode;
+	public static final field SINGLE Lcom/gearui/components/tag/TagGroupSelectionMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/tag/TagGroupSelectionMode;
+	public static fun values ()[Lcom/gearui/components/tag/TagGroupSelectionMode;
+}
+
+public final class com/gearui/components/tag/TagGroupSize : java/lang/Enum {
+	public static final field LARGE Lcom/gearui/components/tag/TagGroupSize;
+	public static final field MEDIUM Lcom/gearui/components/tag/TagGroupSize;
+	public static final field SMALL Lcom/gearui/components/tag/TagGroupSize;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/tag/TagGroupSize;
+	public static fun values ()[Lcom/gearui/components/tag/TagGroupSize;
+}
+
+public final class com/gearui/components/tag/TagGroupVariant : java/lang/Enum {
+	public static final field DEFAULT Lcom/gearui/components/tag/TagGroupVariant;
+	public static final field SURFACE Lcom/gearui/components/tag/TagGroupVariant;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/tag/TagGroupVariant;
+	public static fun values ()[Lcom/gearui/components/tag/TagGroupVariant;
 }
 
 public final class com/gearui/components/tag/TagKt {

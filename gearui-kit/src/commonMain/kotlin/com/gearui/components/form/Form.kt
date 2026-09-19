@@ -262,19 +262,7 @@ private class FormScopeImpl(
                     modifier = Modifier.width(labelWidth),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (required) {
-                        Text(
-                            text = "*",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.destructive
-                        )
-                        Spacer(modifier = Modifier.width(Spacing.xs))
-                    }
-                    Text(
-                        text = label,
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
+                    com.gearui.foundation.field.FieldLabel(text = label, required = required)
                 }
 
                 Spacer(modifier = Modifier.width(Spacing.lg))
@@ -288,11 +276,7 @@ private class FormScopeImpl(
                     // Help text
                     help?.let {
                         Spacer(modifier = Modifier.height(Spacing.xs))
-                        Text(
-                            text = it,
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
+                        com.gearui.foundation.field.FieldDescription(text = it)
                     }
                 }
             }

@@ -62,4 +62,5 @@ internal object FeedbackDefaults {
     val overlayEaseIn = CubicBezierEasing(0.42f, 0f, 1f, 1f)
     val tabsIndicatorStiffness = 1200f
     val tabsIndicatorDamping = 120f
+    val pressHighlightOpacity = 0.1f
 }

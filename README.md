@@ -32,11 +32,11 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**73 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**75 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
-| Basic (7) | `Button`, `Icon`, `Link`, `Text`, `Tag`, `Badge`, `Divider` |
+| Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (17) | `Input`, `Checkbox`, `Radio`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
 | Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
 | Data display (16) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
@@ -52,7 +52,9 @@ component follows both without any per-screen wiring.
 | --- | --- |
 | `Button` | Trigger actions |
 | `Icon` | Icon display |
-| `Link` | Link text |
+| `Link` | Link and LinkButton |
+| `CloseButton` | Unified dismiss button |
+| `PressableFeedback` | Scale and highlight for any tappable area |
 | `Text` | Text display |
 | `Tag` | Marking and classification |
 | `Badge` | Message count indicator |

@@ -214,12 +214,7 @@ internal fun NotificationContent(
 
         // Close button
         if (closable) {
-            Icon(
-                name = Icons.x,
-                size = IconSizes.Default.lg,
-                tint = colors.mutedForeground,
-                modifier = Modifier.clickable(onClick = onDismiss)
-            )
+            com.gearui.components.closebutton.CloseButton(onClick = onDismiss)
         }
     }
 }

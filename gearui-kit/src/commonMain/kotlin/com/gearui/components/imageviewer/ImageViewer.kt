@@ -206,22 +206,11 @@ fun ImageViewer(
         ) {
             // Close button
             if (showCloseBtn) {
-                Box(
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape)
-                        .background(Color.White.copy(alpha = 0.2f))
-                        .clickable {
-                            onClose?.invoke(state.currentIndex) ?: state.hide()
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        name = Icons.x,
-                        size = IconSizes.Default.lg,
-                        tint = Color.White
-                    )
-                }
+                com.gearui.components.closebutton.CloseButton(
+                    onClick = { onClose?.invoke(state.currentIndex) ?: state.hide() },
+                    containerColor = Color.White.copy(alpha = 0.2f),
+                    iconColor = Color.White,
+                )
             } else {
                 Spacer(modifier = Modifier.width(Spacing.xxl))
             }

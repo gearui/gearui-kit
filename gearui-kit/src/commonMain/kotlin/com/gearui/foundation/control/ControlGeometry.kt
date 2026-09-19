@@ -21,6 +21,8 @@ internal object ControlGeometry {
     val buttonPaddingSmall = 14.dp
     val cardPadding = 16.dp
     val checkboxIndicatorTravel = 4.dp
+    val closeButtonIcon = 18.dp
+    val closeButtonSize = 32.dp
     val controlExtraSmall = 28.dp
     val controlLarge = 56.dp
     val controlMedium = 48.dp

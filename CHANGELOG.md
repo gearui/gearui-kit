@@ -1,5 +1,30 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `PressableFeedback`: HeroUI Native press feedback for any content. It uses the
+  width-compensated 0.985 scale and a 10% `#3f3f46` / `#d4d4d8` highlight stacked
+  above the content. Also `Modifier.pressScale` and `pressedSurfaceColor` for nodes
+  that paint their own fill.
+- `CloseButton`: a 32dp circular icon-only tertiary button with an 18dp muted icon.
+  CalendarPopup, Snackbar, Notification and ImageViewer now use it.
+- `Link` and `LinkButton`. Link is foreground medium text with a separator-colour
+  underline and optional icons. LinkButton is a ghost button with no padding and
+  no highlight.
+- Field text primitives `FieldLabel` and `FieldDescription`, next to `FieldErrorText`,
+  plus `FieldDefaults.labelGap`.
+
+### Changed
+
+- Input, Textarea and Form item labels render through `FieldLabel`. The required
+  asterisk now follows the label, as in the reference.
+- Field clear buttons tint with the reference press highlight instead of a
+  foreground mix.
+- Fixed: press scale for icon controls measured width in pixels, not dp, which
+  made the shrink about three times too weak on 3x screens.
+
 ## [1.0.0-beta3] - 2026-09-20
 
 Published to Maven Central. See [release readiness](docs/BETA3_RELEASE_READINESS.md)

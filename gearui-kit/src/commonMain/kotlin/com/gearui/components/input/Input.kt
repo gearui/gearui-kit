@@ -267,20 +267,8 @@ fun Input(
                 ) {
                     // Leading label, when labelPosition == "left"
                     if (label != null && labelPosition == "left") {
-                        Row {
-                            if (required) {
-                                Text(
-                                    text = "*",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.destructive
-                                )
-                            }
-                            Text(
-                                text = label,
-                                style = Theme.typography.bodyMedium,
-                                color = if (!enabled) colors.mutedForeground else colors.foreground
-                            )
-                        }
+                        // The field applies the disabled opacity itself.
+                        com.gearui.foundation.field.FieldLabel(text = label, required = required, invalid = hasError)
                         Spacer(modifier = Modifier.width(Spacing.md))
                     }
 
@@ -445,20 +433,12 @@ fun Input(
     })) {
         // Top label (when labelPosition == "top")
         if (label != null && labelPosition == "top") {
-            Row(modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap)) {
-                if (required) {
-                    Text(
-                        text = "*",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.destructive
-                    )
-                }
-                Text(
-                    text = label,
-                    style = Theme.typography.bodyMedium,
-                    color = if (!enabled) colors.mutedForeground else colors.foreground
-                )
-            }
+            com.gearui.foundation.field.FieldLabel(
+                text = label,
+                required = required,
+                invalid = hasError,
+                modifier = Modifier.padding(bottom = com.gearui.foundation.control.ControlGeometry.fieldLabelGap),
+            )
         }
 
         InputField()
@@ -470,10 +450,9 @@ fun Input(
                 modifier = Modifier.fillMaxWidth().padding(top = Spacing.xs),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
-                Text(
+                com.gearui.foundation.field.FieldDescription(
                     text = bottomText.orEmpty(),
-                    style = Theme.typography.bodySmall,
-                    color = if (hasError) colors.destructive else colors.mutedForeground,
+                    invalid = hasError,
                     modifier = Modifier.weight(1f),
                 )
                 if (showCounter && maxLength != null) {

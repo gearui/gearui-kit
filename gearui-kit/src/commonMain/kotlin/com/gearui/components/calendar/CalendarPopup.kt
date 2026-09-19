@@ -115,19 +115,7 @@ fun CalendarPopup(
                 )
 
                 // Close button
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clip(Theme.shapes.xl)
-                        .clickable { onClose() },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        name = Icons.x,
-                        size = IconSizes.Default.md,
-                        tint = colors.mutedForeground
-                    )
-                }
+                com.gearui.components.closebutton.CloseButton(onClick = onClose)
             }
 
             Spacer(modifier = Modifier.height(Spacing.lg))

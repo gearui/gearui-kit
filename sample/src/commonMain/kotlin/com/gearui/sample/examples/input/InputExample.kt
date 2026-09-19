@@ -41,6 +41,27 @@ fun InputExample(
         component = component,
         onBack = onBack
     ) {
+        // ==================== Field anatomy ====================
+        ExampleSection(
+            useCardContainer = false,
+            title = "字段结构 Label / Description / FieldError",
+            description = "自定义组合时用同一套字段文字：标签中粗、必填星号在后、说明灰色、错误红色"
+        ) {
+            var email by remember { mutableStateOf("") }
+            val emailError = if (email.isNotEmpty() && !email.contains("@")) "邮箱格式不正确" else null
+            Column(verticalArrangement = Arrangement.spacedBy(com.gearui.foundation.field.FieldDefaults.labelGap)) {
+                com.gearui.foundation.field.FieldLabel("邮箱", required = true, invalid = emailError != null)
+                Input(value = email, onValueChange = { email = it }, placeholder = "name@example.com")
+                if (emailError != null) {
+                    com.gearui.foundation.field.FieldErrorText(emailError)
+                } else {
+                    com.gearui.foundation.field.FieldDescription("仅用于找回密码，不会公开")
+                }
+            }
+            Spacer(Modifier.height(16.dp))
+            com.gearui.foundation.field.FieldLabel("禁用字段", required = true, enabled = false)
+        }
+
         // ==================== Component types ====================
 
         // Basic input

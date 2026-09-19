@@ -2,24 +2,18 @@ package com.gearui.sample.examples.link
 
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
+import com.gearui.components.link.Link
+import com.gearui.components.link.LinkButton
+import com.gearui.components.link.LinkSize
 import com.gearui.components.toast.Toast
-import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
-import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.Row
-import com.tencent.kuikly.compose.foundation.layout.Spacer
-import com.tencent.kuikly.compose.foundation.layout.height
-import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.layout.width
 import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 
 @Composable
@@ -31,71 +25,48 @@ fun LinkExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            title = "组件类型",
-            description = "基础链接、前后图标链接"
+            title = "Link",
+            description = "行内跳转：前景色 + 分隔线色下划线，按压缩放"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                LinkItem("跳转链接", color = colors.primary) { Toast.show("点击基础链接") }
-                LinkItem("下划线链接", color = colors.primary, underline = true) { Toast.show("点击下划线链接") }
+            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+                Link("查看详情", onClick = { Toast.show("查看详情") })
+                Link("帮助中心", onClick = { Toast.show("帮助中心") }, endIcon = Icons.arrow_square_out)
+                Link("复制链接", onClick = { Toast.show("复制链接") }, startIcon = Icons.link, underline = false)
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                LinkItem("前置图标链接", color = colors.primary, prefixIcon = Icons.link) { Toast.show("点击前置图标链接") }
-                LinkItem("后置图标链接", color = colors.primary, suffixIcon = Icons.arrow_square_out) { Toast.show("点击后置图标链接") }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("注册即表示同意", style = Theme.typography.bodySmall, color = colors.mutedForeground)
+                Link("《用户协议》", onClick = { Toast.show("用户协议") }, size = LinkSize.SMALL)
             }
         }
 
         ExampleSection(
-            title = "组件状态",
-            description = "主题色与禁用态"
+            title = "尺寸与状态",
+            description = "SMALL / MEDIUM / LARGE，禁用态"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                LinkItem("Primary", color = colors.primary) { Toast.show("Primary") }
-                LinkItem("Default", color = colors.foreground) { Toast.show("Default") }
-                LinkItem("Danger", color = colors.destructive) { Toast.show("Danger") }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                LinkItem("Warning", color = colors.warning) { Toast.show("Warning") }
-                LinkItem("Success", color = colors.success) { Toast.show("Success") }
-                LinkItem("禁用态", color = colors.mutedForeground, enabled = false) {}
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Link("Small", onClick = {}, size = LinkSize.SMALL)
+                Link("Medium", onClick = {})
+                Link("Large", onClick = {}, size = LinkSize.LARGE)
+                Link("禁用", onClick = {}, enabled = false)
             }
         }
-    }
-}
 
-@Composable
-private fun LinkItem(
-    text: String,
-    color: com.tencent.kuikly.compose.ui.graphics.Color,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    underline: Boolean = false,
-    prefixIcon: String? = null,
-    suffixIcon: String? = null,
-    onClick: () -> Unit
-) {
-    Column(
-        modifier = modifier.clickable(enabled = enabled, onClick = onClick),
-        verticalArrangement = Arrangement.spacedBy(2.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ExampleSection(
+            title = "LinkButton",
+            description = "无内边距、无高亮的 ghost 按钮，用于「忘记密码」「服务条款」等"
         ) {
-            if (prefixIcon != null) {
-                Icon(name = prefixIcon, size = 14.dp, tint = color)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                LinkButton("忘记密码？", onClick = { Toast.show("忘记密码") })
+                LinkButton("立即注册", onClick = { Toast.show("立即注册") }, color = colors.primary)
+                LinkButton("删除", onClick = { Toast.show("删除") }, color = colors.destructive)
+                LinkButton("禁用", onClick = {}, enabled = false)
             }
-            Text(text = text, style = Theme.typography.bodySmall, color = color)
-            if (suffixIcon != null) {
-                Icon(name = suffixIcon, size = 14.dp, tint = color)
-            }
-        }
-        if (underline) {
-            Spacer(
-                modifier = Modifier
-                    .width(56.dp)
-                    .height(1.dp)
-                    .background(color)
-            )
         }
     }
 }

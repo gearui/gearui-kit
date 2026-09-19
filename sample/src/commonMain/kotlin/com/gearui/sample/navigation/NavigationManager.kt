@@ -76,6 +76,8 @@ import com.gearui.sample.examples.runtime.TabHostExample
 import com.gearui.sample.examples.navigator.NavigatorKuiklySpikeExample
 import com.gearui.sample.examples.navigator.NavigatorV1DemoExample
 import com.gearui.sample.examples.link.LinkExample
+import com.gearui.sample.examples.closebutton.CloseButtonExample
+import com.gearui.sample.examples.pressablefeedback.PressableFeedbackExample
 import com.gearui.sample.examples.message.MessageExample
 import com.gearui.sample.examples.noticebar.NoticeBarExample
 import com.gearui.sample.examples.refresh.RefreshExample
@@ -107,6 +109,8 @@ object NavigationManager {
             "icon" -> IconExample(component, onBack)
             "icon-render" -> IconExample(component, onBack)
             "link" -> LinkExample(component, onBack)
+            "close-button" -> CloseButtonExample(component, onBack)
+            "pressable-feedback" -> PressableFeedbackExample(component, onBack)
             "text" -> TextExample(component, onBack)
             "tag" -> TagExample(component, onBack)
             "badge" -> BadgeExample(component, onBack)

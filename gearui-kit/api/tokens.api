@@ -150,6 +150,7 @@
   colors.darkMuted = {"$type":"color","$value":"{reference.dark.default}"}
   colors.darkMutedForeground = {"$type":"color","$value":"{reference.dark.muted}"}
   colors.darkOverlay = {"$type":"color","$value":"{reference.dark.overlay}"}
+  colors.darkPressHighlight = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.8313725490196079,0.8313725490196079,0.8470588235294118],"hex":"#d4d4d8"}}
   colors.darkPrimary = {"$type":"color","$value":"{reference.dark.accent}"}
   colors.darkPrimaryForeground = {"$type":"color","$value":"{reference.dark.accent-foreground}"}
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
@@ -180,6 +181,7 @@
   colors.lightMuted = {"$type":"color","$value":"{reference.light.default}"}
   colors.lightMutedForeground = {"$type":"color","$value":"{reference.light.muted}"}
   colors.lightOverlay = {"$type":"color","$value":"{reference.light.overlay}"}
+  colors.lightPressHighlight = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.24705882352941178,0.24705882352941178,0.27450980392156865],"hex":"#3f3f46"}}
   colors.lightPrimary = {"$type":"color","$value":"{reference.light.accent}"}
   colors.lightPrimaryForeground = {"$type":"color","$value":"{reference.light.accent-foreground}"}
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
@@ -278,6 +280,8 @@
   geometry.buttonPaddingSmall = {"$type":"dimension","$value":{"unit":"px","value":14}}
   geometry.cardPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.checkboxIndicatorTravel = {"$type":"dimension","$value":{"unit":"px","value":4}}
+  geometry.closeButtonIcon = {"$type":"dimension","$value":{"unit":"px","value":18}}
+  geometry.closeButtonSize = {"$type":"dimension","$value":{"unit":"px","value":32}}
   geometry.controlExtraSmall = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.controlLarge = {"$type":"dimension","$value":{"unit":"px","value":56}}
   geometry.controlMedium = {"$type":"dimension","$value":{"unit":"px","value":48}}
@@ -380,6 +384,7 @@
   feedback.overlayExitDuration = {"$type":"duration","$value":{"unit":"ms","value":150}}
   feedback.pressDuration = {"$type":"duration","$value":{"unit":"ms","value":300}}
   feedback.pressEasing = {"$type":"cubicBezier","$value":[0,0,0.58,1]}
+  feedback.pressHighlightOpacity = {"$type":"number","$value":0.1}
   feedback.pressScale = {"$type":"number","$value":0.985}
   feedback.radioExitScale = {"$type":"number","$value":1.5}
   feedback.radioRevealDuration = {"$type":"duration","$value":{"unit":"ms","value":300}}

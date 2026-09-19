@@ -287,6 +287,10 @@
     "tabsIndicatorDamping": {
       "$type": "number",
       "$value": 120
+    },
+    "pressHighlightOpacity": {
+      "$type": "number",
+      "$value": 0.1
     }
   },
   "transitions": {

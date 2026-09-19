@@ -266,12 +266,7 @@ internal fun SnackbarContent(
 
         // Close button
         if (showCloseButton) {
-            Icon(
-                name = Icons.x,
-                size = IconSizes.Default.md,
-                tint = colors.mutedForeground,
-                modifier = Modifier.clickable(onClick = onDismiss)
-            )
+            com.gearui.components.closebutton.CloseButton(onClick = onDismiss)
         }
     }
 }

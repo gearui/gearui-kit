@@ -181,7 +181,8 @@ private fun TextareaContent(
                     label = label,
                     labelIcon = labelIcon,
                     required = required,
-                    enabled = enabled
+                    enabled = enabled,
+                    invalid = error != null
                 )
                 Spacer(modifier = Modifier.height(ControlGeometry.fieldLabelGap))
             }
@@ -217,6 +218,7 @@ private fun TextareaContent(
                         labelIcon = labelIcon,
                         required = required,
                         enabled = enabled,
+                        invalid = error != null,
                         modifier = Modifier.padding(end = Spacing.lg)
                     )
                 }
@@ -247,36 +249,19 @@ private fun TextareaContent(
 @Composable
 private fun LabelRow(
     label: String,
-    labelIcon: String?,
+    @Suppress("UNUSED_PARAMETER") labelIcon: String?,
     required: Boolean,
     enabled: Boolean,
+    invalid: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    val colors = Theme.colors
-
-    Row(
+    com.gearui.foundation.field.FieldLabel(
+        text = label,
+        required = required,
+        invalid = invalid,
+        enabled = enabled,
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (labelIcon != null) {
-            Spacer(modifier = Modifier.width(Spacing.xs))
-        }
-
-        Text(
-            text = label,
-            style = Theme.typography.bodyMedium,
-            color = if (enabled) colors.foreground else colors.mutedForeground
-        )
-
-        if (required) {
-            Spacer(modifier = Modifier.width(Spacing.xs))
-            Text(
-                text = "*",
-                style = Theme.typography.bodyMedium,
-                color = colors.destructive
-            )
-        }
-    }
+    )
 }
 
 /**

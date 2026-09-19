@@ -99,4 +99,10 @@ object FieldDefaults {
 
     val largeShape: Shape
         @Composable get() = Theme.shapes.controlLarge
+
+    /**
+     * Gap in the field stack: label, control, then description or error. Use it
+     * when composing a field from [FieldLabel], [FieldDescription] and [FieldErrorText].
+     */
+    val labelGap: Dp = ControlGeometry.fieldLabelGap
 }

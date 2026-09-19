@@ -6,7 +6,7 @@
 
 ## 发布信息
 
-- 坐标：`com.gearui:gearui-kit:1.0.0-beta2`
+- 坐标：`com.gearui:gearui-kit:1.0.0-beta3`
 - 可从 Maven Central 获取；首个公开版本 `1.0.0-beta1` 发布于 2026-08-15
 - 已发布产物：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）
 - 另可通过独立配置构建鸿蒙（`ohosArm64`）；**未**发布到 Maven Central
@@ -170,7 +170,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta2")
+            implementation("com.gearui:gearui-kit:1.0.0-beta3")
         }
     }
 }
@@ -195,7 +195,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta2")
+            implementation("com.gearui:gearui-kit:1.0.0-beta3")
         }
     }
 }

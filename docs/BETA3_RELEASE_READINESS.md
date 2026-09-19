@@ -16,14 +16,15 @@ Android 198 tests + lint + apiCheck, headless Chrome 197 tests, iOS simulator
 Kotlin tests 197 via `scripts/ios_native_tests.sh` from a clean host, Android/Web/iOS
 sample builds, six-module Maven staging, PrivChat Android consumer build. Two
 defects this gate caught were fixed in `68fc1a4` (the iOS test script never ran;
-a stale token test). Still open: remote CI on the pushed commit, and the decisions
+a stale token test). Released from the iOS simulator acceptance by the maintainer's decision, without
+waiting on remote CI. Open for later betas: the decisions
 listed in the changelog's alignment notes (native type scale, password reveal on
 iOS, intermittent Kuikly text-field focus crossing).
 
 Audit date: 2026-09-17. Verdict: **candidate preparation is justified; publication
 is not approved yet**. This is a tested working tree based on `2f306a7`, not an
 immutable release commit. Existing changes and new files remain uncommitted.
-`POM_VERSION` remains `1.0.0-beta2`; beta3 was used only for isolated local staging.
+This record predates the release; `1.0.0-beta3` was published on 2026-09-20 from tag `v1.0.0-beta3`.
 
 ## Verified In This Audit
 

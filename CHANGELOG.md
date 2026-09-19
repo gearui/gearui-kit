@@ -1,9 +1,9 @@
 # Changelog
 
-## [Unreleased] - targeting 1.0.0-beta3
+## [1.0.0-beta3] - 2026-09-20
 
-This is an unpublished candidate. See [release readiness](docs/BETA3_RELEASE_READINESS.md)
-for verified gates and outstanding work. Earlier implementation notes are preserved
+Published to Maven Central. See [release readiness](docs/BETA3_RELEASE_READINESS.md)
+for the verification record and the known limitations. Earlier implementation notes are preserved
 in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
 
 ### Design system and components
@@ -114,4 +114,4 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
   DTCG adapter policy, source provenance and acceptance evidence have distinct owners.
 - Superseded rules are retained losslessly in a non-normative archive.
 
-## [1.0.0-beta2] — last published release
+## [1.0.0-beta2]

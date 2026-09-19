@@ -1,5 +1,7 @@
 package com.gearui.components.select
 
+import com.gearui.foundation.field.FieldSurface
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -162,36 +164,38 @@ fun <T> Select(
         }
 
         // Trigger
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .onGloballyPositioned { coordinates ->
-                    if (!expanded) {
-                        anchorBounds = coordinates.boundsInRoot()
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .onGloballyPositioned { coordinates ->
+                        if (!expanded) {
+                            anchorBounds = coordinates.boundsInRoot()
+                        }
                     }
-                }
-                .then(fieldTriggerModifier(enabled, error) {
-                    if (expanded) {
-                        closeDropdown()
-                    } else {
-                        openDropdown()
-                    }
-                })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = selectedOption?.label ?: placeholder,
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Theme.typography.bodyMedium,
-                color = if (selectedOption != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+                    .then(fieldTriggerModifier(enabled, error) {
+                        if (expanded) {
+                            closeDropdown()
+                        } else {
+                            openDropdown()
+                        }
+                    })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = selectedOption?.label ?: placeholder,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Theme.typography.bodyMedium,
+                    color = if (selectedOption != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            SelectIndicator(expanded)
+                SelectIndicator(expanded)
+            }
         }
 
         FieldErrorText(error)
@@ -325,33 +329,35 @@ fun <T> MultiSelect(
             )
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .onGloballyPositioned { coordinates ->
-                    if (!expanded) {
-                        anchorBounds = coordinates.boundsInRoot()
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .onGloballyPositioned { coordinates ->
+                        if (!expanded) {
+                            anchorBounds = coordinates.boundsInRoot()
+                        }
                     }
-                }
-                .then(fieldTriggerModifier(enabled, error) {
-                    if (expanded) closeDropdown() else openDropdown()
-                })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = if (values.isEmpty()) placeholder
-                    else I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size),
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Theme.typography.bodyMedium,
-                color = if (values.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+                    .then(fieldTriggerModifier(enabled, error) {
+                        if (expanded) closeDropdown() else openDropdown()
+                    })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = if (values.isEmpty()) placeholder
+                        else I18n.strings.field.selectedCountFormat.formatArgs("count" to values.size),
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Theme.typography.bodyMedium,
+                    color = if (values.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            SelectIndicator(expanded)
+                SelectIndicator(expanded)
+            }
         }
 
         FieldErrorText(error)

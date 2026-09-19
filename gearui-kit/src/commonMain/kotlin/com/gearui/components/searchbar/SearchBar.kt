@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.typography.resolveFontFamily
 
 import androidx.compose.runtime.*
@@ -178,145 +179,146 @@ fun SearchBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Search box body
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .then(feedback)
-                .clip(shapeModifier)
-                .background(inputColors.background)
-                .border(BorderWidth.thin, inputColors.border, shapeModifier)
-                .pointerInput(enabled) {
-                    if (enabled) {
-                        val dragThreshold = 10f
-                        awaitEachGesture {
-                            awaitFirstDown(requireUnconsumed = false)
-                            var totalDrag = 0f
-                            var isDragging = false
-
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                val change = event.changes.firstOrNull() ?: break
-                                if (!change.pressed) break
-
-                                val delta = change.positionChange()
-                                totalDrag += abs(delta.x) + abs(delta.y)
-                                if (!isDragging && totalDrag > dragThreshold) {
-                                    isDragging = true
-                                    focusManager.clearFocus(force = true)
-                                    keyboardController?.hide()
-                                }
-                            }
-
-                            if (!isDragging) {
-                                requestSearchFocus()
-                            }
-                        }
-                    }
-                }
-                .clickable(enabled = enabled) { requestSearchFocus() }
-        ) {
-            // Focus catcher: full bordered area inside SearchBar can request focus.
+        FieldSurface(Modifier.weight(1f).fillMaxHeight(), shape = shapeModifier) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable(enabled = enabled) { requestSearchFocus() }
-            )
+                    .then(feedback)
+                    .clip(shapeModifier)
+                    .background(inputColors.background)
+                    .border(BorderWidth.thin, inputColors.border, shapeModifier)
+                    .pointerInput(enabled) {
+                        if (enabled) {
+                            val dragThreshold = 10f
+                            awaitEachGesture {
+                                awaitFirstDown(requireUnconsumed = false)
+                                var totalDrag = 0f
+                                var isDragging = false
 
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = Spacing.md),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Search icon
-                Box(
-                    modifier = if (onSearch != null && enabled) Modifier.clickable { onSearch(value) } else Modifier,
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        name = Icons.magnifying_glass,
-                        size = FieldDefaults.trailingIconSize,
-                        tint = colors.mutedForeground
-                    )
-                }
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    val change = event.changes.firstOrNull() ?: break
+                                    if (!change.pressed) break
 
-                Spacer(modifier = Modifier.width(Spacing.sm))
+                                    val delta = change.positionChange()
+                                    totalDrag += abs(delta.x) + abs(delta.y)
+                                    if (!isDragging && totalDrag > dragThreshold) {
+                                        isDragging = true
+                                        focusManager.clearFocus(force = true)
+                                        keyboardController?.hide()
+                                    }
+                                }
 
-                Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = if (isCenter && value.isEmpty()) Alignment.Center else Alignment.CenterStart
-                ) {
-                    if (value.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = Theme.typography.bodyMedium,
-                            color = inputColors.placeholder
-                        )
-                    }
-
-                    BasicTextField(
-                        value = value,
-                        onValueChange = { if (enabled) onValueChange(it) },
-                        enabled = enabled,
-                        textStyle = TextStyle(
-                            fontSize = Theme.typography.bodyMedium.fontSize,
-                            fontWeight = Theme.typography.bodyMedium.fontWeight,
-                            fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
-                            letterSpacing = Theme.typography.bodyMedium.letterSpacing,
-                            color = inputColors.foreground
-                        ),
-                        cursorBrush = SolidColor(inputColors.focusRing),
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.None,
-                            imeAction = if (onSearch != null) ImeAction.Search else ImeAction.Default
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onSearch = {
-                                focusManager.clearFocus(force = true)
-                                keyboardController?.hide()
-                                onSearch?.invoke(value)
-                            },
-                            onDone = {
-                                focusManager.clearFocus(force = true)
-                                keyboardController?.hide()
-                                onSearch?.invoke(value)
+                                if (!isDragging) {
+                                    requestSearchFocus()
+                                }
                             }
-                        ),
-                        singleLine = true,
-                        // onFocusChanged sits on a chain that does not itself
-                        // depend on focus. Input.kt records why that distinction
-                        // matters: a chain rebuilt *because* focus changed
-                        // recreates the underlying EditText.
-                        modifier = Modifier.keyboardDismissExempt()
-                            .fillMaxWidth()
-                            .onFocusChanged { isFocused = it.isFocused }
-                            .focusRequester(focusRequester)
-                    )
-                }
+                        }
+                    }
+                    .clickable(enabled = enabled) { requestSearchFocus() }
+            ) {
+                // Focus catcher: full bordered area inside SearchBar can request focus.
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable(enabled = enabled) { requestSearchFocus() }
+                )
 
-                // Clear button
-                // Keep the input's measured width stable while editing.
-                run {
-                    Spacer(modifier = Modifier.width(Spacing.md))
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Spacing.md),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Search icon
                     Box(
-                        modifier = Modifier
-                            .size(ControlGeometry.searchClearSize)
-                            .graphicsLayer { alpha = if (value.isNotEmpty() && enabled) 1f else 0f }
-                            .clip(CircleShape)
-                            .background(colors.muted)
-                            .clickable(enabled = enabled && value.isNotEmpty()) { onValueChange("") },
+                        modifier = if (onSearch != null && enabled) Modifier.clickable { onSearch(value) } else Modifier,
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            name = Icons.x,
-                            size = IconSizes.Default.sm,
+                            name = Icons.magnifying_glass,
+                            size = FieldDefaults.trailingIconSize,
                             tint = colors.mutedForeground
                         )
                     }
+
+                    Spacer(modifier = Modifier.width(Spacing.sm))
+
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = if (isCenter && value.isEmpty()) Alignment.Center else Alignment.CenterStart
+                    ) {
+                        if (value.isEmpty()) {
+                            Text(
+                                text = placeholder,
+                                style = Theme.typography.bodyMedium,
+                                color = inputColors.placeholder
+                            )
+                        }
+
+                        BasicTextField(
+                            value = value,
+                            onValueChange = { if (enabled) onValueChange(it) },
+                            enabled = enabled,
+                            textStyle = TextStyle(
+                                fontSize = Theme.typography.bodyMedium.fontSize,
+                                fontWeight = Theme.typography.bodyMedium.fontWeight,
+                                fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
+                                letterSpacing = Theme.typography.bodyMedium.letterSpacing,
+                                color = inputColors.foreground
+                            ),
+                            cursorBrush = SolidColor(inputColors.focusRing),
+                            keyboardOptions = KeyboardOptions(
+                                capitalization = KeyboardCapitalization.None,
+                                imeAction = if (onSearch != null) ImeAction.Search else ImeAction.Default
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onSearch = {
+                                    focusManager.clearFocus(force = true)
+                                    keyboardController?.hide()
+                                    onSearch?.invoke(value)
+                                },
+                                onDone = {
+                                    focusManager.clearFocus(force = true)
+                                    keyboardController?.hide()
+                                    onSearch?.invoke(value)
+                                }
+                            ),
+                            singleLine = true,
+                            // onFocusChanged sits on a chain that does not itself
+                            // depend on focus. Input.kt records why that distinction
+                            // matters: a chain rebuilt *because* focus changed
+                            // recreates the underlying EditText.
+                            modifier = Modifier.keyboardDismissExempt()
+                                .fillMaxWidth()
+                                .onFocusChanged { isFocused = it.isFocused }
+                                .focusRequester(focusRequester)
+                        )
+                    }
+
+                    // Clear button
+                    // Keep the input's measured width stable while editing.
+                    run {
+                        Spacer(modifier = Modifier.width(Spacing.md))
+                        Box(
+                            modifier = Modifier
+                                .size(ControlGeometry.searchClearSize)
+                                .graphicsLayer { alpha = if (value.isNotEmpty() && enabled) 1f else 0f }
+                                .clip(CircleShape)
+                                .background(colors.muted)
+                                .clickable(enabled = enabled && value.isNotEmpty()) { onValueChange("") },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                name = Icons.x,
+                                size = IconSizes.Default.sm,
+                                tint = colors.mutedForeground
+                            )
+                        }
+                    }
                 }
+                FieldFocusOverlay(inputColors, shapeModifier, focusedState, enabled, null)
             }
-            FieldFocusOverlay(inputColors, shapeModifier, focusedState, enabled, null)
         }
 
         // Cancel button — a small filled pill in the brand primary, not bare text:

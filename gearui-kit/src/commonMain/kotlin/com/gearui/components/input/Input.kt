@@ -1,4 +1,6 @@
 package com.gearui.components.input
+import com.gearui.foundation.material.surfaceShadowStyles
+import com.gearui.foundation.material.DecoratedSurface
 import com.gearui.foundation.typography.resolveFontFamily
 
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
@@ -215,202 +217,211 @@ fun Input(
         // consumes the event, so tapping the field itself never reaches an outer
         // clickable — that only covers taps on the padding, and cannot compensate
         // for Kuikly's intermittent focus loss inside the EditText. pointerInput
-        Box(
-            modifier = feedback.then(containerModifier)
-                .hoverable(hoverSource, enabled = enabled)
-                .pointerInput(canFocus) {
-                    if (!canFocus) return@pointerInput
-                    awaitEachGesture {
-                        val down = awaitFirstDown(requireUnconsumed = false)
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            val change = event.changes.firstOrNull { it.id == down.id }
-                            if (change == null || !change.pressed) {
-                                requestInputFocus()
-                                break
+        // Reference `.input__input--variant-primary`: field colour, no border, and the
+        // field shadow stack (`ios:shadow-field`). cardStyle is the secondary variant
+        // (default fill for use on surfaces) and has no shadow.
+        DecoratedSurface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = shape,
+            shadows = if (cardStyle) emptyList() else surfaceShadowStyles().field,
+        ) {
+            Box(
+                modifier = feedback.then(containerModifier)
+                    .hoverable(hoverSource, enabled = enabled)
+                    .pointerInput(canFocus) {
+                        if (!canFocus) return@pointerInput
+                        awaitEachGesture {
+                            val down = awaitFirstDown(requireUnconsumed = false)
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                val change = event.changes.firstOrNull { it.id == down.id }
+                                if (change == null || !change.pressed) {
+                                    requestInputFocus()
+                                    break
+                                }
                             }
                         }
                     }
-                }
-        ) {
-          Column(modifier = Modifier.fillMaxSize()) {
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = tokens.paddingHorizontal,
-                        vertical = if (cardStyle) 12.dp else 0.dp
-                    ),
-                verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
             ) {
-                // Leading label, when labelPosition == "left"
-                if (label != null && labelPosition == "left") {
-                    Row {
-                        if (required) {
-                            Text(
-                                text = "*",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.destructive
-                            )
-                        }
-                        Text(
-                            text = label,
-                            style = Theme.typography.bodyMedium,
-                            color = if (!enabled) colors.mutedForeground else colors.foreground
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(Spacing.md))
-                }
-
-                // Prefix
-                if (prefix != null) {
-                    prefix()
-                    Spacer(modifier = Modifier.width(Spacing.sm))
-                }
-
-                // Input area.
-                // Architecture notes:
-                // 1) BasicTextField uses fillMaxWidth, not fillMaxSize; otherwise taps never reach the outer layer.
-                // 2) The placeholder goes back inside decorationBox: it belongs to BasicTextField's own render
-                //    tree, so a tap on the placeholder and a tap on innerTextField are handled the same way
-                //    and it cannot steal focus the way a sibling Text does.
-                Box(
+              Column(modifier = Modifier.fillMaxSize()) {
+                Row(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxHeight(),
-                    contentAlignment = when (textAlign) {
-                        TextAlign.Center -> Alignment.Center
-                        TextAlign.End -> Alignment.CenterEnd
-                        else -> Alignment.CenterStart
-                    }
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = tokens.paddingHorizontal,
+                            vertical = if (cardStyle) 12.dp else 0.dp
+                        ),
+                    verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
                 ) {
-                    BasicTextField(
-                        value = value,
-                        onValueChange = { newValue ->
-                            if (!readOnly && enabled) {
-                                if (maxLength == null || newValue.length <= maxLength) {
-                                    onValueChange(newValue)
-                                }
+                    // Leading label, when labelPosition == "left"
+                    if (label != null && labelPosition == "left") {
+                        Row {
+                            if (required) {
+                                Text(
+                                    text = "*",
+                                    style = Theme.typography.bodyMedium,
+                                    color = colors.destructive
+                                )
                             }
-                        },
-                        textStyle = TextStyle(
-                            fontSize = inputTextStyle.fontSize,
-                            fontWeight = inputTextStyle.fontWeight,
-                            fontFamily = inputTextStyle.resolveFontFamily(),
-                            letterSpacing = inputTextStyle.letterSpacing,
-                            color = inputColors.foreground,
-                            textAlign = textAlign
-                        ),
-                        cursorBrush = SolidColor(colors.primary),
-                        keyboardOptions = KeyboardOptions(
-                            // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
-                            // channel is the native secureTextEntry (triggered by keyboardType=password),
-                            // and visualTransformation has no effect across the Kuikly bridge.
-                            keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
-                            imeAction = when {
-                                onSend != null -> ImeAction.Send
-                                maxLines == 1 -> ImeAction.Done
-                                else -> ImeAction.Default
-                            }
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onSend = { onSend?.invoke() },
-                            onDone = {
-                                if (blurOnImeDone && maxLines == 1) {
-                                    focusManager.clearFocus(force = true)
-                                    keyboardController?.hide()
-                                }
-                            }
-                        ),
-                        singleLine = maxLines == 1,
-                        maxLines = maxLines,
-                        readOnly = readOnly,
-                        enabled = enabled,
-                        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-                        // The onValueChange guard above only protects the Compose value. The native
-                        // field keeps whatever was typed, so a rejected keystroke leaves the platform
-                        // view and the counter out of sync. Kuikly's maxLength modifier enforces the
-                        // limit inside the native field itself.
-                        modifier = Modifier.keyboardDismissExempt()
-                            .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
-                            .fillMaxWidth()
-                            .focusRequester(inputFocusRequester)
-                            .onFocusChanged { focusState ->
-                                isFocused = focusState.isFocused
-                                onFocusChanged?.invoke(focusState.isFocused)
-                            },
-                        decorationBox = { innerTextField ->
-                            Box(
-                                contentAlignment = when (textAlign) {
-                                    TextAlign.Center -> Alignment.Center
-                                    TextAlign.End -> Alignment.CenterEnd
-                                    else -> Alignment.CenterStart
-                                }
-                            ) {
-                                if (value.isEmpty() && placeholder.isNotEmpty()) {
-                                    Text(
-                                        text = placeholder,
-                                        style = inputTextStyle,
-                                        color = inputColors.placeholder
-                                    )
-                                }
-                                innerTextField()
-                            }
+                            Text(
+                                text = label,
+                                style = Theme.typography.bodyMedium,
+                                color = if (!enabled) colors.mutedForeground else colors.foreground
+                            )
                         }
-                    )
-                }
+                        Spacer(modifier = Modifier.width(Spacing.md))
+                    }
 
-                // Clear button
-                // pointerInput consumes the down event in the Initial pass so it never reaches the
-                // underlying native EditText, which would produce a visible "blur -> IME hides ->
-                // requestFocus -> IME reappears" flicker. Clearing fires on tap only, not on drag,
-                // and requestInputFocus is called afterwards as a safeguard.
-                if (clearable && value.isNotEmpty() && enabled && !readOnly) {
-                    Spacer(modifier = Modifier.width(Spacing.sm))
+                    // Prefix
+                    if (prefix != null) {
+                        prefix()
+                        Spacer(modifier = Modifier.width(Spacing.sm))
+                    }
+
+                    // Input area.
+                    // Architecture notes:
+                    // 1) BasicTextField uses fillMaxWidth, not fillMaxSize; otherwise taps never reach the outer layer.
+                    // 2) The placeholder goes back inside decorationBox: it belongs to BasicTextField's own render
+                    //    tree, so a tap on the placeholder and a tap on innerTextField are handled the same way
+                    //    and it cannot steal focus the way a sibling Text does.
                     Box(
                         modifier = Modifier
-                            .size(20.dp)
-                            .clip(CircleShape)
-                            .background(colors.muted)
-                            .pointerInput(Unit) {
-                                awaitEachGesture {
-                                    val down = awaitFirstDown(
-                                        requireUnconsumed = false,
-                                        pass = PointerEventPass.Initial,
-                                    )
-                                    down.consume()
-                                    while (true) {
-                                        val event = awaitPointerEvent(PointerEventPass.Initial)
-                                        val change = event.changes.firstOrNull { it.id == down.id } ?: break
-                                        change.consume()
-                                        if (!change.pressed) {
-                                            onClear?.invoke()
-                                            onValueChange("")
-                                            requestInputFocus()
-                                            break
-                                        }
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        contentAlignment = when (textAlign) {
+                            TextAlign.Center -> Alignment.Center
+                            TextAlign.End -> Alignment.CenterEnd
+                            else -> Alignment.CenterStart
+                        }
+                    ) {
+                        BasicTextField(
+                            value = value,
+                            onValueChange = { newValue ->
+                                if (!readOnly && enabled) {
+                                    if (maxLength == null || newValue.length <= maxLength) {
+                                        onValueChange(newValue)
                                     }
                                 }
                             },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            name = Icons.x,
-                            size = IconSizes.Default.xs,
-                            tint = colors.mutedForeground
+                            textStyle = TextStyle(
+                                fontSize = inputTextStyle.fontSize,
+                                fontWeight = inputTextStyle.fontWeight,
+                                fontFamily = inputTextStyle.resolveFontFamily(),
+                                letterSpacing = inputTextStyle.letterSpacing,
+                                color = inputColors.foreground,
+                                textAlign = textAlign
+                            ),
+                            cursorBrush = SolidColor(colors.primary),
+                            keyboardOptions = KeyboardOptions(
+                                // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
+                                // channel is the native secureTextEntry (triggered by keyboardType=password),
+                                // and visualTransformation has no effect across the Kuikly bridge.
+                                keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
+                                imeAction = when {
+                                    onSend != null -> ImeAction.Send
+                                    maxLines == 1 -> ImeAction.Done
+                                    else -> ImeAction.Default
+                                }
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onSend = { onSend?.invoke() },
+                                onDone = {
+                                    if (blurOnImeDone && maxLines == 1) {
+                                        focusManager.clearFocus(force = true)
+                                        keyboardController?.hide()
+                                    }
+                                }
+                            ),
+                            singleLine = maxLines == 1,
+                            maxLines = maxLines,
+                            readOnly = readOnly,
+                            enabled = enabled,
+                            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+                            // The onValueChange guard above only protects the Compose value. The native
+                            // field keeps whatever was typed, so a rejected keystroke leaves the platform
+                            // view and the counter out of sync. Kuikly's maxLength modifier enforces the
+                            // limit inside the native field itself.
+                            modifier = Modifier.keyboardDismissExempt()
+                                .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
+                                .fillMaxWidth()
+                                .focusRequester(inputFocusRequester)
+                                .onFocusChanged { focusState ->
+                                    isFocused = focusState.isFocused
+                                    onFocusChanged?.invoke(focusState.isFocused)
+                                },
+                            decorationBox = { innerTextField ->
+                                Box(
+                                    contentAlignment = when (textAlign) {
+                                        TextAlign.Center -> Alignment.Center
+                                        TextAlign.End -> Alignment.CenterEnd
+                                        else -> Alignment.CenterStart
+                                    }
+                                ) {
+                                    if (value.isEmpty() && placeholder.isNotEmpty()) {
+                                        Text(
+                                            text = placeholder,
+                                            style = inputTextStyle,
+                                            color = inputColors.placeholder
+                                        )
+                                    }
+                                    innerTextField()
+                                }
+                            }
                         )
                     }
-                }
 
-                // Suffix
-                if (suffix != null) {
-                    Spacer(modifier = Modifier.width(Spacing.sm))
-                    suffix()
+                    // Clear button
+                    // pointerInput consumes the down event in the Initial pass so it never reaches the
+                    // underlying native EditText, which would produce a visible "blur -> IME hides ->
+                    // requestFocus -> IME reappears" flicker. Clearing fires on tap only, not on drag,
+                    // and requestInputFocus is called afterwards as a safeguard.
+                    if (clearable && value.isNotEmpty() && enabled && !readOnly) {
+                        Spacer(modifier = Modifier.width(Spacing.sm))
+                        Box(
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clip(CircleShape)
+                                .background(colors.muted)
+                                .pointerInput(Unit) {
+                                    awaitEachGesture {
+                                        val down = awaitFirstDown(
+                                            requireUnconsumed = false,
+                                            pass = PointerEventPass.Initial,
+                                        )
+                                        down.consume()
+                                        while (true) {
+                                            val event = awaitPointerEvent(PointerEventPass.Initial)
+                                            val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                                            change.consume()
+                                            if (!change.pressed) {
+                                                onClear?.invoke()
+                                                onValueChange("")
+                                                requestInputFocus()
+                                                break
+                                            }
+                                        }
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                name = Icons.x,
+                                size = IconSizes.Default.xs,
+                                tint = colors.mutedForeground
+                            )
+                        }
+                    }
+
+                    // Suffix
+                    if (suffix != null) {
+                        Spacer(modifier = Modifier.width(Spacing.sm))
+                        suffix()
+                    }
                 }
+              }
+              FieldFocusOverlay(inputColors, shape, focusedState, enabled, if (hasError) colors.destructive else null)
             }
-          }
-          FieldFocusOverlay(inputColors, shape, focusedState, enabled, if (hasError) colors.destructive else null)
         }
     }
 

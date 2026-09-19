@@ -1,5 +1,6 @@
 package com.gearui.components.switch
 
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
@@ -152,7 +153,7 @@ fun SwitchWithLabel(
             enabled = enabled && type != SwitchType.LOADING, role = Role.Switch, onValueChange = onCheckedChange)
         .padding(vertical = Spacing.md), horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
-        Text(label, style = Theme.typography.bodyLarge, color = if (enabled) colors.foreground else colors.mutedForeground)
+        Text(label, style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium), color = if (enabled) colors.foreground else colors.mutedForeground)
         SwitchVisual(checked, enabled, pressed, type, size, null, null, I18n.strings.field.switchOn, I18n.strings.field.switchOff)
     }
 }

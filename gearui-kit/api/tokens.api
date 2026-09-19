@@ -25,6 +25,7 @@
   ring
   secondary
   secondaryForeground
+  segment
   separator
   success
   successForeground
@@ -89,6 +90,7 @@
   ring = DefaultPalette.lightRing
   secondary = DefaultPalette.lightButtonBackground
   secondaryForeground = DefaultPalette.lightButtonContent
+  segment = DefaultPalette.lightSegment
   separator = DefaultPalette.lightSeparator
   success = DefaultPalette.lightSuccess
   successForeground = DefaultPalette.lightSuccessForeground
@@ -119,6 +121,7 @@
   ring = DefaultPalette.darkRing
   secondary = DefaultPalette.darkButtonBackground
   secondaryForeground = DefaultPalette.darkButtonContent
+  segment = DefaultPalette.darkSegment
   separator = DefaultPalette.darkSeparator
   success = DefaultPalette.darkSuccess
   successForeground = DefaultPalette.darkSuccessForeground
@@ -142,7 +145,7 @@
   colors.darkDestructive = {"$type":"color","$value":"{reference.dark.danger}"}
   colors.darkDestructiveForeground = {"$type":"color","$value":"{reference.dark.danger-foreground}"}
   colors.darkForeground = {"$type":"color","$value":"{reference.dark.foreground}"}
-  colors.darkInputBorder = {"$type":"color","$value":"{reference.dark.border}"}
+  colors.darkInputBorder = {"$type":"color","$value":"{reference.dark.field-border}"}
   colors.darkInputHoverBorder = {"$type":"color","$value":"{reference.dark.field-border}"}
   colors.darkMuted = {"$type":"color","$value":"{reference.dark.default}"}
   colors.darkMutedForeground = {"$type":"color","$value":"{reference.dark.muted}"}
@@ -150,6 +153,7 @@
   colors.darkPrimary = {"$type":"color","$value":"{reference.dark.accent}"}
   colors.darkPrimaryForeground = {"$type":"color","$value":"{reference.dark.accent-foreground}"}
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
+  colors.darkSegment = {"$type":"color","$value":"{reference.dark.segment}"}
   colors.darkSeparator = {"$type":"color","$value":"{reference.dark.separator}"}
   colors.darkSuccess = {"$type":"color","$value":"{reference.dark.success}"}
   colors.darkSuccessForeground = {"$type":"color","$value":"{reference.dark.success-foreground}"}
@@ -171,7 +175,7 @@
   colors.lightDestructive = {"$type":"color","$value":"{reference.light.danger}"}
   colors.lightDestructiveForeground = {"$type":"color","$value":"{reference.light.danger-foreground}"}
   colors.lightForeground = {"$type":"color","$value":"{reference.light.foreground}"}
-  colors.lightInputBorder = {"$type":"color","$value":"{reference.light.border}"}
+  colors.lightInputBorder = {"$type":"color","$value":"{reference.light.field-border}"}
   colors.lightInputHoverBorder = {"$type":"color","$value":"{reference.light.field-border}"}
   colors.lightMuted = {"$type":"color","$value":"{reference.light.default}"}
   colors.lightMutedForeground = {"$type":"color","$value":"{reference.light.muted}"}
@@ -179,6 +183,7 @@
   colors.lightPrimary = {"$type":"color","$value":"{reference.light.accent}"}
   colors.lightPrimaryForeground = {"$type":"color","$value":"{reference.light.accent-foreground}"}
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
+  colors.lightSegment = {"$type":"color","$value":"{reference.light.segment}"}
   colors.lightSeparator = {"$type":"color","$value":"{reference.light.separator}"}
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
   colors.lightSuccessForeground = {"$type":"color","$value":"{reference.light.success-foreground}"}
@@ -330,6 +335,11 @@
   geometry.switchThumbHeight = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.switchThumbWidth = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.switchWidth = {"$type":"dimension","$value":{"unit":"px","value":48}}
+  geometry.tabsIndicatorHeight = {"$type":"dimension","$value":{"unit":"px","value":2}}
+  geometry.tabsListGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
+  geometry.tabsListPadding = {"$type":"dimension","$value":{"unit":"px","value":3}}
+  geometry.tabsTriggerPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":6}}
+  geometry.tabsTriggerPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.tagHeightLarge = {"$type":"dimension","$value":{"unit":"px","value":36}}
   geometry.tagHeightMedium = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.tagHeightSmall = {"$type":"dimension","$value":{"unit":"px","value":20}}
@@ -392,6 +402,8 @@
   feedback.switchEasing = {"$type":"cubicBezier","$value":[0.25,0.1,0.25,1]}
   feedback.switchMass = {"$type":"number","$value":2}
   feedback.switchStiffness = {"$type":"number","$value":1600}
+  feedback.tabsIndicatorDamping = {"$type":"number","$value":120}
+  feedback.tabsIndicatorStiffness = {"$type":"number","$value":1200}
   feedback.tagAccentForegroundMix = {"$type":"number","$value":0.2}
   feedback.tagSoftOpacity = {"$type":"number","$value":0.15}
   feedback.tagSuccessForegroundMix = {"$type":"number","$value":0.3}

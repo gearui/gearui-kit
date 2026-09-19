@@ -279,6 +279,14 @@
         1,
         1
       ]
+    },
+    "tabsIndicatorStiffness": {
+      "$type": "number",
+      "$value": 1200
+    },
+    "tabsIndicatorDamping": {
+      "$type": "number",
+      "$value": 120
     }
   },
   "transitions": {

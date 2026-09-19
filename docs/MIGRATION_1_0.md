@@ -26,7 +26,8 @@
 - 弹层默认外观改为 HeroUI Native：Dialog 左对齐 + 真实按钮、菜单行按压动画、ActionSheet 单张 sheet、
   遮罩 20% 黑。`DialogAction` / `ActionSheetItem` 等 API 不变，只需重新编译并复查截图。
   `ActionSheetAlign` 默认值由 CENTER 改为 LEFT，需要居中的调用方显式传入。
-- `Colors` 新增 `separator`（默认等于 `border`），直接构造 `Colors(...)` 的主题建议显式提供。
+- `Colors` 新增 `separator`、`segment`（默认分别等于 `border`、`surface`），直接构造 `Colors(...)` 的主题建议显式提供。
+- 输入框及各类字段触发器默认不再有描边，改为 field 阴影；放在白色卡片/表面上的字段请使用 `cardStyle = true`（填充变体），否则与卡片同色难以辨认。
 - `OverlayDefaults.transitionDurationMillis` 由 const 改为取自 token 的 val（200）；新增 `exitDurationMillis`、`anchorOffset`。
 - 继承 `com.gearui.View` 又自行调用 `App(...)` 的页面必须覆写 `autoWrapApp() = false`，否则会出现两层 App（两个 Toast/ActionSheet 宿主）。
 

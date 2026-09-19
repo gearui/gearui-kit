@@ -78,6 +78,11 @@ internal object ControlGeometry {
     val switchThumbHeight = 20.dp
     val switchThumbWidth = 28.dp
     val switchWidth = 48.dp
+    val tabsIndicatorHeight = 2.dp
+    val tabsListGap = 4.dp
+    val tabsListPadding = 3.dp
+    val tabsTriggerPaddingBlock = 6.dp
+    val tabsTriggerPaddingInline = 12.dp
     val tagHeightLarge = 36.dp
     val tagHeightMedium = 28.dp
     val tagHeightSmall = 20.dp

@@ -1,5 +1,6 @@
 package com.gearui.components.radio
 
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -103,7 +104,7 @@ fun RadioButtonWithLabel(
         .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
         RadioMark(selected, enabled, size)
-        Text(label, color = colors.foreground, style = Theme.typography.bodyLarge,
+        Text(label, color = colors.foreground, style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity })
     }
 }

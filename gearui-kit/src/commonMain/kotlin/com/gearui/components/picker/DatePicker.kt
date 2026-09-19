@@ -1,5 +1,7 @@
 package com.gearui.components.picker
 
+import com.gearui.foundation.field.FieldSurface
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -67,26 +69,28 @@ fun DatePickerInput(
         }
 
         // Input trigger
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .then(fieldTriggerModifier(enabled, error) { showPicker = true })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = value.ifEmpty { placeholder },
-                style = Theme.typography.bodyMedium,
-                color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .then(fieldTriggerModifier(enabled, error) { showPicker = true })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = value.ifEmpty { placeholder },
+                    style = Theme.typography.bodyMedium,
+                    color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            Icon(
-                name = Icons.calendar_blank,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+                Icon(
+                    name = Icons.calendar_blank,
+                    size = FieldDefaults.trailingIconSize,
+                    tint = colors.mutedForeground
+                )
+            }
         }
 
         FieldErrorText(error)
@@ -261,26 +265,28 @@ fun TimePickerInput(
             )
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .then(fieldTriggerModifier(enabled, error) { showPicker = true })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = value.ifEmpty { placeholder },
-                style = Theme.typography.bodyMedium,
-                color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .then(fieldTriggerModifier(enabled, error) { showPicker = true })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = value.ifEmpty { placeholder },
+                    style = Theme.typography.bodyMedium,
+                    color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            Icon(
-                name = Icons.clock,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+                Icon(
+                    name = Icons.clock,
+                    size = FieldDefaults.trailingIconSize,
+                    tint = colors.mutedForeground
+                )
+            }
         }
 
         FieldErrorText(error)

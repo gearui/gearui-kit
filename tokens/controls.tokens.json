@@ -520,6 +520,36 @@
         "value": 12,
         "unit": "px"
       }
+    },
+    "tabsListPadding": {
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      }
+    },
+    "tabsListGap": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "tabsTriggerPaddingInline": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "tabsTriggerPaddingBlock": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "tabsIndicatorHeight": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
     }
   }
 }

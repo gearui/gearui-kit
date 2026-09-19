@@ -67,6 +67,20 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
   own), so toasts and the imperative ActionSheet rendered on the light theme above
   the real one. The guard now rejects that shape.
 
+### Controls aligned with HeroUI Native
+
+- SegmentedControl follows the Tabs primary variant: a `default` pill track with
+  a white `segment` pill that springs between options (stiffness 1200, damping
+  120). It was a bordered white track with a gray selected cell.
+- Tabs underline is one 2px accent indicator as wide as the selected tab and
+  spring-animated, instead of a fixed 20dp stub; labels are medium weight.
+- Text fields and field triggers (Input, Textarea, SearchBar, Select, DatePicker,
+  Cascader, TreeSelect) drop the 1dp border for the reference field shadow;
+  `cardStyle` remains the filled variant for use on surfaces.
+- Checkbox, Radio and Switch labels and Cell titles use the base size at medium
+  weight (were the large body size or semibold title).
+- New `Colors.segment` role and DTCG tokens for tabs geometry and indicator spring.
+
 ### Fixes
 
 - Input/Textarea enforce `maxLength` inside the native field; previously the

@@ -1,5 +1,7 @@
 package com.gearui.components.cascader
 
+import com.gearui.foundation.field.FieldSurface
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
@@ -150,37 +152,39 @@ fun Cascader(
 
     Column(modifier = modifier) {
         // Trigger
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .onGloballyPositioned { coordinates ->
-                    anchorBounds = coordinates.boundsInRoot()
-                }
-                .then(fieldTriggerModifier(enabled, error) {
-                    if (expanded) closeDropdown() else openDropdown()
-                })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = displayText,
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Theme.typography.bodyMedium,
-                color = when {
-                    selectedPath.isNotEmpty() -> LocalInputColors.current.foreground
-                    else -> LocalInputColors.current.placeholder
-                }
-            )
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .onGloballyPositioned { coordinates ->
+                        anchorBounds = coordinates.boundsInRoot()
+                    }
+                    .then(fieldTriggerModifier(enabled, error) {
+                        if (expanded) closeDropdown() else openDropdown()
+                    })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = displayText,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Theme.typography.bodyMedium,
+                    color = when {
+                        selectedPath.isNotEmpty() -> LocalInputColors.current.foreground
+                        else -> LocalInputColors.current.placeholder
+                    }
+                )
 
-            Icon(
-                name = if (expanded) Icons.caret_up else Icons.caret_down,
-                size = FieldDefaults.trailingIconSize,
-                tint = colors.mutedForeground
-            )
+                Icon(
+                    name = if (expanded) Icons.caret_up else Icons.caret_down,
+                    size = FieldDefaults.trailingIconSize,
+                    tint = colors.mutedForeground
+                )
+            }
         }
 
         FieldErrorText(error)

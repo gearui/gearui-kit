@@ -1,5 +1,7 @@
 package com.gearui.components.treeselect
 
+import com.gearui.foundation.field.FieldSurface
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -126,30 +128,32 @@ fun TreeSelect(
 
     Column(modifier = modifier) {
         // Trigger
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .onGloballyPositioned { coordinates ->
-                    anchorBounds = coordinates.boundsInRoot()
-                }
-                .then(fieldTriggerModifier(enabled, error) {
-                    if (expanded) closeDropdown() else openDropdown()
-                })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = selectedNode?.title ?: placeholder,
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Theme.typography.bodyMedium,
-                color = if (selectedNode != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .onGloballyPositioned { coordinates ->
+                        anchorBounds = coordinates.boundsInRoot()
+                    }
+                    .then(fieldTriggerModifier(enabled, error) {
+                        if (expanded) closeDropdown() else openDropdown()
+                    })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = selectedNode?.title ?: placeholder,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Theme.typography.bodyMedium,
+                    color = if (selectedNode != null) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            SelectIndicator(expanded)
+                SelectIndicator(expanded)
+            }
         }
 
         FieldErrorText(error)
@@ -234,31 +238,33 @@ fun TreeSelectMultiple(
 
     Column(modifier = modifier) {
         // Trigger
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FieldSizeTokens.Medium.height)
-                .onGloballyPositioned { coordinates ->
-                    anchorBounds = coordinates.boundsInRoot()
-                }
-                .then(fieldTriggerModifier(enabled, error) {
-                    if (expanded) closeDropdown() else openDropdown()
-                })
-                .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = if (selectedKeys.isEmpty()) placeholder
-                else I18n.strings.field.selectedCountFormat.formatArgs("count" to selectedKeys.size),
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Theme.typography.bodyMedium,
-                color = if (selectedKeys.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
-            )
+        FieldSurface(Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FieldSizeTokens.Medium.height)
+                    .onGloballyPositioned { coordinates ->
+                        anchorBounds = coordinates.boundsInRoot()
+                    }
+                    .then(fieldTriggerModifier(enabled, error) {
+                        if (expanded) closeDropdown() else openDropdown()
+                    })
+                    .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = if (selectedKeys.isEmpty()) placeholder
+                    else I18n.strings.field.selectedCountFormat.formatArgs("count" to selectedKeys.size),
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Theme.typography.bodyMedium,
+                    color = if (selectedKeys.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
+                )
 
-            SelectIndicator(expanded)
+                SelectIndicator(expanded)
+            }
         }
 
         FieldErrorText(error)

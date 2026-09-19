@@ -1,5 +1,16 @@
 package com.gearui.components.tabs
 
+import com.tencent.kuikly.compose.foundation.layout.offset
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.components.segmented.segmentOffset
+import com.gearui.components.segmented.tabsIndicatorSpring
+import com.tencent.kuikly.compose.animation.core.Animatable
+import com.tencent.kuikly.compose.ui.layout.onSizeChanged
+import com.tencent.kuikly.compose.ui.platform.LocalDensity
+import com.tencent.kuikly.compose.ui.unit.IntOffset
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import kotlin.math.roundToInt
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
@@ -88,22 +99,58 @@ fun Tabs(
             }
 
             else -> {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
-                ) {
-                    items.forEach { item ->
-                        Box(modifier = Modifier.weight(1f)) {
-                            TabCell(
-                                item = item,
-                                selected = selected == item.id,
-                                onSelect = onSelect,
-                                tabHeight = tabHeight,
-                                size = size,
-                                outlineType = outlineType,
-                                showIndicator = showIndicator
-                            )
+                // Reference `tabs.css` secondary variant: triggers 4 apart and one 2px
+                // accent indicator, as wide as the selected trigger, that springs to it
+                // (stiffness 1200, damping 120) instead of a stub under each label.
+                val motion = Theme.motion
+                val density = LocalDensity.current
+                var rowWidth by remember { mutableStateOf(0) }
+                val gapPx = with(density) { ControlGeometry.tabsListGap.toPx() }
+                val selectedIndex = items.indexOfFirst { it.id == selected }
+                val (targetX, cellPx) = segmentOffset(rowWidth.toFloat(), items.size, gapPx, selectedIndex)
+                val indicatorX = remember { Animatable(targetX) }
+                var placed by remember { mutableStateOf(false) }
+                LaunchedEffect(targetX, rowWidth) {
+                    if (rowWidth == 0) return@LaunchedEffect
+                    val spec = tabsIndicatorSpring(motion)
+                    if (!placed || spec == null) {
+                        indicatorX.snapTo(targetX)
+                        placed = true
+                    } else {
+                        indicatorX.animateTo(targetX, spec)
+                    }
+                }
+                Box(modifier = Modifier.fillMaxWidth().onSizeChanged { rowWidth = it.width }) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap)
+                    ) {
+                        items.forEach { item ->
+                            Box(modifier = Modifier.weight(1f)) {
+                                TabCell(
+                                    item = item,
+                                    selected = selected == item.id,
+                                    onSelect = onSelect,
+                                    tabHeight = tabHeight,
+                                    size = size,
+                                    outlineType = outlineType,
+                                    // The shared sliding indicator below replaces the per-cell one.
+                                    showIndicator = false
+                                )
+                            }
                         }
+                    }
+                    if (outlineType == TabsOutlineType.UNDERLINE && showIndicator &&
+                        selectedIndex >= 0 && rowWidth > 0
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .offset { IntOffset(indicatorX.value.roundToInt(), 0) }
+                                .width(with(density) { cellPx.toDp() })
+                                .height(ControlGeometry.tabsIndicatorHeight)
+                                .background(colors.primary)
+                        )
                     }
                 }
             }
@@ -132,11 +179,12 @@ private fun TabCell(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    // Reference `.tabs__label`: medium weight.
     val textStyle = when (size) {
         TabsSize.SMALL -> Theme.typography.bodySmall
         TabsSize.MEDIUM -> Theme.typography.bodyMedium
-        TabsSize.LARGE -> Theme.typography.titleSmall
-    }
+        TabsSize.LARGE -> Theme.typography.bodyLarge
+    }.copy(fontWeight = FontWeight.Medium)
 
     val containerModifier = when (outlineType) {
         TabsOutlineType.UNDERLINE -> Modifier
@@ -158,8 +206,7 @@ private fun TabCell(
             .height(tabHeight)
             .clickable(enabled = !item.disabled) {
                 if (!selected) onSelect(item.id)
-            }
-            .padding(horizontal = Spacing.sm),
+            },
         contentAlignment = Alignment.Center
     ) {
         val contentColor = when {
@@ -170,6 +217,7 @@ private fun TabCell(
         }
 
         Row(
+            modifier = Modifier.padding(horizontal = Spacing.sm),
             horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -189,13 +237,17 @@ private fun TabCell(
         }
 
         if (outlineType == TabsOutlineType.UNDERLINE && selected && showIndicator) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .height(BorderWidth.thick)
-                    .width(20.dp)
-                    .background(colors.primary)
-            )
+            // matchParentSize takes the cell's size without taking part in measuring it,
+            // so the indicator spans the cell even inside a LazyRow (unbounded width)
+            // and cannot feed its own width back into the cell.
+            Box(modifier = Modifier.matchParentSize(), contentAlignment = Alignment.BottomCenter) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(ControlGeometry.tabsIndicatorHeight)
+                        .background(colors.primary)
+                )
+            }
         }
     }
 }

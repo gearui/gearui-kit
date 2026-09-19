@@ -1,4 +1,5 @@
 package com.gearui.components.textarea
+import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.typography.resolveFontFamily
 
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
@@ -352,109 +353,111 @@ private fun TextareaInputArea(
         alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
     }) {
         // Field container
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(if (bordered) feedback else Modifier)
-                .hoverable(hoverSource, enabled = enabled && bordered)
-                .clickable(interactionSource = hoverSource, indication = null, enabled = canFocus) {
-                    requestInputFocus()
-                }
-                .then(
-                    if (bordered) {
-                        Modifier
-                            .heightIn(min = standaloneMinHeight)
-                            .clip(fieldShape)
-                            .border(
-                                BorderWidth.thin,
-                                if (error != null) colors.destructive else inputColors.border,
-                                fieldShape,
-                            )
-                            .background(inputColors.background)
-
-                    } else {
-                        Modifier
-                            .clip(Theme.shapes.lg)
-                            .background(colors.muted)
-                            .then(
-                                if (outlined) {
-                                    Modifier.border(
-                                        BorderWidth.thin,
-                                        fieldBorderColor(error = error, enabled = enabled),
-                                        Theme.shapes.lg,
-                                    )
-                                } else {
-                                    Modifier
-                                }
-                            )
-                            .padding(horizontal = 10.dp, vertical = verticalPadding)
+        FieldSurface(Modifier.fillMaxWidth(), shape = fieldShape, shadowed = bordered) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(if (bordered) feedback else Modifier)
+                    .hoverable(hoverSource, enabled = enabled && bordered)
+                    .clickable(interactionSource = hoverSource, indication = null, enabled = canFocus) {
+                        requestInputFocus()
                     }
-                )
-        ) {
-            Column(modifier = if (bordered) Modifier.padding(
-                horizontal = FieldSizeTokens.Medium.paddingHorizontal,
-                vertical = ControlGeometry.textareaPaddingVertical,
-            ) else Modifier) {
-                val fontSize = if (bordered) Theme.typography.bodyMedium.fontSize else 16.sp
-                val resolvedLineHeight = if (bordered) Theme.typography.bodyMedium.lineHeight else lineHeight
-                // The placeholder and body share metrics to prevent first-character layout jumps.
-                val inputTextStyle = TextStyle(
-                    fontSize = fontSize,
-                    lineHeight = resolvedLineHeight,
-                    fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
-                    letterSpacing = Theme.typography.bodyMedium.letterSpacing,
-                    color = if (bordered) inputColors.foreground else if (enabled) colors.foreground else colors.mutedForeground,
-                )
-                // The same metrics, converted to the token types the kit Text needs.
-                val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
-                    fontSize = fontSize,
-                    lineHeight = resolvedLineHeight,
-                    fontWeight = com.tencent.kuikly.compose.ui.text.font.FontWeight.Normal,
-                    fontFamily = Theme.typography.bodyMedium.fontFamily,
-                    letterSpacing = Theme.typography.bodyMedium.letterSpacing,
-                )
-
-                BasicTextField(
-                    value = value,
-                    onValueChange = { newValue ->
-                        if (maxLength == null || newValue.length <= maxLength) {
-                            onValueChange(newValue)
-                        }
-                    },
-                    // Rejecting a value in onValueChange does not reset the native field; the
-                    // platform view would keep the extra text while the counter stops at the
-                    // limit. Kuikly's maxLength modifier enforces it inside the native field.
-                    modifier = Modifier.keyboardDismissExempt()
-                        .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
-                        .fillMaxWidth()
-                        .focusRequester(inputFocusRequester)
-                        .onFocusChanged {
-                            focusedState.value = it.isFocused
-                            onFocusChanged?.invoke(it.isFocused)
-                        },
-                    enabled = enabled,
-                    readOnly = readOnly,
-                    textStyle = inputTextStyle,
-                    cursorBrush = SolidColor(colors.primary),
-                    singleLine = false,
-                    minLines = minLines,
-                    maxLines = effectiveMaxLines,
-                    decorationBox = { innerTextField ->
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            if (value.isEmpty() && placeholder.isNotEmpty()) {
-                                Text(
-                                    text = placeholder,
-                                    style = placeholderTextStyle,
-                                    color = if (bordered) inputColors.placeholder else colors.mutedForeground,
+                    .then(
+                        if (bordered) {
+                            Modifier
+                                .heightIn(min = standaloneMinHeight)
+                                .clip(fieldShape)
+                                .border(
+                                    BorderWidth.thin,
+                                    if (error != null) colors.destructive else inputColors.border,
+                                    fieldShape,
                                 )
-                            }
-                            innerTextField()
+                                .background(inputColors.background)
+
+                        } else {
+                            Modifier
+                                .clip(Theme.shapes.lg)
+                                .background(colors.muted)
+                                .then(
+                                    if (outlined) {
+                                        Modifier.border(
+                                            BorderWidth.thin,
+                                            fieldBorderColor(error = error, enabled = enabled),
+                                            Theme.shapes.lg,
+                                        )
+                                    } else {
+                                        Modifier
+                                    }
+                                )
+                                .padding(horizontal = 10.dp, vertical = verticalPadding)
                         }
-                    }
-                )
+                    )
+            ) {
+                Column(modifier = if (bordered) Modifier.padding(
+                    horizontal = FieldSizeTokens.Medium.paddingHorizontal,
+                    vertical = ControlGeometry.textareaPaddingVertical,
+                ) else Modifier) {
+                    val fontSize = if (bordered) Theme.typography.bodyMedium.fontSize else 16.sp
+                    val resolvedLineHeight = if (bordered) Theme.typography.bodyMedium.lineHeight else lineHeight
+                    // The placeholder and body share metrics to prevent first-character layout jumps.
+                    val inputTextStyle = TextStyle(
+                        fontSize = fontSize,
+                        lineHeight = resolvedLineHeight,
+                        fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
+                        letterSpacing = Theme.typography.bodyMedium.letterSpacing,
+                        color = if (bordered) inputColors.foreground else if (enabled) colors.foreground else colors.mutedForeground,
+                    )
+                    // The same metrics, converted to the token types the kit Text needs.
+                    val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
+                        fontSize = fontSize,
+                        lineHeight = resolvedLineHeight,
+                        fontWeight = com.tencent.kuikly.compose.ui.text.font.FontWeight.Normal,
+                        fontFamily = Theme.typography.bodyMedium.fontFamily,
+                        letterSpacing = Theme.typography.bodyMedium.letterSpacing,
+                    )
+
+                    BasicTextField(
+                        value = value,
+                        onValueChange = { newValue ->
+                            if (maxLength == null || newValue.length <= maxLength) {
+                                onValueChange(newValue)
+                            }
+                        },
+                        // Rejecting a value in onValueChange does not reset the native field; the
+                        // platform view would keep the extra text while the counter stops at the
+                        // limit. Kuikly's maxLength modifier enforces it inside the native field.
+                        modifier = Modifier.keyboardDismissExempt()
+                            .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
+                            .fillMaxWidth()
+                            .focusRequester(inputFocusRequester)
+                            .onFocusChanged {
+                                focusedState.value = it.isFocused
+                                onFocusChanged?.invoke(it.isFocused)
+                            },
+                        enabled = enabled,
+                        readOnly = readOnly,
+                        textStyle = inputTextStyle,
+                        cursorBrush = SolidColor(colors.primary),
+                        singleLine = false,
+                        minLines = minLines,
+                        maxLines = effectiveMaxLines,
+                        decorationBox = { innerTextField ->
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                if (value.isEmpty() && placeholder.isNotEmpty()) {
+                                    Text(
+                                        text = placeholder,
+                                        style = placeholderTextStyle,
+                                        color = if (bordered) inputColors.placeholder else colors.mutedForeground,
+                                    )
+                                }
+                                innerTextField()
+                            }
+                        }
+                    )
+                }
+                if (bordered) FieldFocusOverlay(inputColors, fieldShape, focusedState, enabled,
+                    if (error != null) colors.destructive else null)
             }
-            if (bordered) FieldFocusOverlay(inputColors, fieldShape, focusedState, enabled,
-                if (error != null) colors.destructive else null)
         }
         // Footer info row
         if (additionInfo != null || (indicator && maxLength != null)) {

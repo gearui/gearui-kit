@@ -63,6 +63,12 @@ data class Colors(
      * [border], which outlines surfaces. Defaults to [border] for hand-built themes.
      */
     val separator: Color = border,
+
+    /**
+     * Selected segment of a segmented control (reference `--segment`): white on the
+     * light gray track, a lifted gray in dark. Defaults to [surface].
+     */
+    val segment: Color = surface,
 )
 
 /* ---------------------------------------------------------------------- */
@@ -117,6 +123,7 @@ object Themes {
 
             border = DefaultPalette.lightBorder,
             separator = DefaultPalette.lightSeparator,
+            segment = DefaultPalette.lightSegment,
             input = DefaultPalette.lightInputBorder,
             ring = DefaultPalette.lightRing,
         )
@@ -155,6 +162,7 @@ object Themes {
 
             border = DefaultPalette.darkBorder,
             separator = DefaultPalette.darkSeparator,
+            segment = DefaultPalette.darkSegment,
             input = DefaultPalette.darkInputBorder,
             ring = DefaultPalette.darkRing,
         )

@@ -24,8 +24,7 @@
       "$value": "{reference.light.border}"
     },
     "lightInputBorder": {
-      "$value": "{reference.light.border}",
-      "$description": "GearUI outline fallback: layered Native field shadows are not yet supported. Reference field-border remains unchanged."
+      "$value": "{reference.light.field-border}"
     },
     "lightRing": {
       "$value": "{reference.light.focus}"
@@ -52,8 +51,7 @@
       "$value": "{reference.dark.border}"
     },
     "darkInputBorder": {
-      "$value": "{reference.dark.border}",
-      "$description": "GearUI outline fallback: layered Native field shadows are not yet supported. Reference field-border remains unchanged."
+      "$value": "{reference.dark.field-border}"
     },
     "darkRing": {
       "$value": "{reference.dark.focus}"
@@ -177,6 +175,12 @@
     },
     "darkSeparator": {
       "$value": "{reference.dark.separator}"
+    },
+    "lightSegment": {
+      "$value": "{reference.light.segment}"
+    },
+    "darkSegment": {
+      "$value": "{reference.dark.segment}"
     }
   },
   "reference": {

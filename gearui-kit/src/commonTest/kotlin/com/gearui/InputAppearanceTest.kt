@@ -24,9 +24,17 @@ class InputAppearanceTest {
         assertEquals(null, inputFocusColor(custom, true, false, null))
     }
 
-    @Test fun defaultFieldsRemainVisibleWithoutLayeredShadow() {
-        kotlin.test.assertTrue(DefaultInputColors.Light.border.alpha > 0f)
-        kotlin.test.assertTrue(DefaultInputColors.Dark.border.alpha > 0f)
+    /**
+     * Reference fields have no border (`--field-border: transparent`) and separate
+     * from the page with `--shadow-field` in light; in dark the field fill itself
+     * contrasts with the background. Both halves must hold, or a default field on
+     * a white surface has neither a border nor a shadow.
+     */
+    @Test fun defaultFieldsUseReferenceShadowInsteadOfBorder() {
+        assertEquals(0f, DefaultInputColors.Light.border.alpha)
+        assertEquals(0f, DefaultInputColors.Dark.border.alpha)
+        kotlin.test.assertTrue(com.gearui.foundation.material.MaterialDefaults.lightField.any { it.color.alpha > 0f })
+        kotlin.test.assertTrue(Themes.Dark.colors.background != DefaultInputColors.Dark.background)
     }
 
     @Test fun explicitTransparentBorderIsNotOverridden() {

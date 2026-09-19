@@ -1,5 +1,6 @@
 package com.gearui.components.checkbox
 
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
@@ -126,7 +127,7 @@ fun CheckboxWithLabel(
         .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
         CheckboxMark(checked, false, enabled, pressed, size)
-        Text(label, color = if (enabled) colors.foreground else colors.mutedForeground, style = Theme.typography.bodyLarge)
+        Text(label, color = if (enabled) colors.foreground else colors.mutedForeground, style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium))
     }
 }
 

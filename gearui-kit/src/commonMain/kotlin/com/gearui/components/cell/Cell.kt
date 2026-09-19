@@ -1,5 +1,6 @@
 package com.gearui.components.cell
 
+import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
@@ -80,7 +81,8 @@ fun Cell(
             } else {
                 Text(
                     text = title,
-                    style = Theme.typography.titleMedium,
+                    // Reference `.list-group-item__title`: base size, medium weight.
+                    style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                     color = titleColor ?: colors.foreground
                 )
             }

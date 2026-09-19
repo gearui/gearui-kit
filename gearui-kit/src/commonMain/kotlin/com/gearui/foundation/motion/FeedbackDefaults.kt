@@ -60,4 +60,6 @@ internal object FeedbackDefaults {
     val anchoredEnterTranslate = 12f
     val overlayEaseOut = CubicBezierEasing(0f, 0f, 0.58f, 1f)
     val overlayEaseIn = CubicBezierEasing(0.42f, 0f, 1f, 1f)
+    val tabsIndicatorStiffness = 1200f
+    val tabsIndicatorDamping = 120f
 }

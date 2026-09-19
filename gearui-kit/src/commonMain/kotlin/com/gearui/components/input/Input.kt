@@ -1,4 +1,5 @@
 package com.gearui.components.input
+import com.tencent.kuikly.compose.extension.setProp
 import com.gearui.foundation.material.surfaceShadowStyles
 import com.gearui.foundation.material.DecoratedSurface
 import com.gearui.foundation.typography.resolveFontFamily
@@ -109,6 +110,18 @@ fun Input(
     val interactionSource = remember { createMutableInteractionSource() }
     val inputFocusRequester = remember { FocusRequester() }
     val focusedState = remember { mutableStateOf(false) }
+    // Kuikly only pushes a keyboard type for Number/Email/Password; switching back to
+    // plain text sends nothing, so on iOS a revealed password stayed masked
+    // (secureTextEntry follows the keyboardType attribute). A field that has ever been a
+    // password field therefore always states its keyboard type explicitly.
+    var passwordCapable by remember { mutableStateOf(false) }
+    if (isPassword) passwordCapable = true
+    val explicitKeyboardType = if (!passwordCapable) null else when {
+        isPassword -> "password"
+        keyboardType == KeyboardType.Number -> "number"
+        keyboardType == KeyboardType.Email -> "email"
+        else -> "text"
+    }
     var isFocused by focusedState
     val hoverSource = remember { com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource() }
     val hoveredState = hoverSource.collectIsHoveredAsState()
@@ -341,6 +354,7 @@ fun Input(
                             // limit inside the native field itself.
                             modifier = Modifier.keyboardDismissExempt()
                                 .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
+                                .then(if (explicitKeyboardType != null) Modifier.setProp("keyboardType", explicitKeyboardType) else Modifier)
                                 .fillMaxWidth()
                                 .focusRequester(inputFocusRequester)
                                 .onFocusChanged { focusState ->

@@ -422,13 +422,15 @@ private fun TextareaInputArea(
                         letterSpacing = Theme.typography.bodyMedium.letterSpacing,
                     )
 
-                    // 🔴 光标位置得自己管。String 版 BasicTextField 每次**重建**都从
-                    // `TextFieldValue(text)` 起步，selection 落在 0——带着草稿切走再切回来
-                    // （聊天输入栏切语音模式时整个输入框都不参与组合），光标就跑到文字最前面，
-                    // 想接着打字或删字得先手动点一下末尾。
+                    // 🔴 The caret has to be managed here. The String overload of BasicTextField
+                    // starts every **rebuild** from `TextFieldValue(text)`, with the selection at 0.
+                    // Leave with a draft and come back (the chat composer drops the whole field
+                    // out of composition in voice mode) and the caret lands before the text, so
+                    // typing or deleting first needs a tap at the end.
                     //
-                    // 文本以调用方为准、光标以本地为准；外部换掉文本时（发送后清空、恢复草稿）
-                    // 光标一律落到末尾，这也是用户唯一想继续编辑的位置。
+                    // Text comes from the caller, the caret stays local. When the text is replaced
+                    // from outside (cleared after send, draft restored) the caret goes to the end,
+                    // the only place the user would want to continue editing.
                     var caretState by remember {
                         mutableStateOf(TextFieldValue(value, TextRange(value.length)))
                     }

@@ -28,12 +28,14 @@ if [ ! -d Pods/Pods.xcodeproj ]; then
   pod install
 fi
 
+# -derivedDataPath is not accepted together with -target; SYMROOT/OBJROOT place
+# the products instead. Pods build into $SYMROOT/<config><platform>/<pod>/.
 xcodebuild \
   -project Pods/Pods.xcodeproj \
   -target OpenKuiklyIOSRender \
   -configuration Debug \
   -sdk iphonesimulator \
-  -derivedDataPath "$DERIVED" \
+  SYMROOT="$DERIVED/Build/Products" OBJROOT="$DERIVED/Build/Intermediates" \
   ARCHS="$ARCH" ONLY_ACTIVE_ARCH=NO \
   build -quiet
 

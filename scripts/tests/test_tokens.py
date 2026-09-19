@@ -198,7 +198,7 @@ class TokenGenerationTest(unittest.TestCase):
         doc = generator.resolve_document(json.loads(generator.COLOR_SOURCE.read_text()))
         self.assertEqual([0.6204, 0.195, 253.83], doc['colors']['lightPrimary']['$value']['components'])
         self.assertEqual(0, doc['reference']['dark']['field-border']['$value']['alpha'])
-        self.assertEqual(doc['reference']['dark']['border']['$value'], doc['colors']['darkInputBorder']['$value'])
+        self.assertEqual(doc['reference']['dark']['field-border']['$value'], doc['colors']['darkInputBorder']['$value'])
         self.assertEqual(doc['reference']['light']['surface']['$value'], doc['colors']['lightSurface']['$value'])
 
 

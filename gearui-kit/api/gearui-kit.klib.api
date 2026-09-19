@@ -3963,8 +3963,6 @@ final object com.gearui.components.icon/Icons { // com.gearui.components.icon/Ic
         final fun <get-shield_check>(): kotlin/String // com.gearui.components.icon/Icons.shield_check.<get-shield_check>|<get-shield_check>(){}[0]
     final const val sign_out // com.gearui.components.icon/Icons.sign_out|{}sign_out[0]
         final fun <get-sign_out>(): kotlin/String // com.gearui.components.icon/Icons.sign_out.<get-sign_out>|<get-sign_out>(){}[0]
-    final const val smiley // com.gearui.components.icon/Icons.smiley|{}smiley[0]
-        final fun <get-smiley>(): kotlin/String // com.gearui.components.icon/Icons.smiley.<get-smiley>|<get-smiley>(){}[0]
     final const val square // com.gearui.components.icon/Icons.square|{}square[0]
         final fun <get-square>(): kotlin/String // com.gearui.components.icon/Icons.square.<get-square>|<get-square>(){}[0]
     final const val star // com.gearui.components.icon/Icons.star|{}star[0]

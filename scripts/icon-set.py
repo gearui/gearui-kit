@@ -75,6 +75,7 @@ ICONS = [
     ('house', 'regular'),
     ('image', 'regular'),
     ('info', 'regular'),
+    ('keyboard', 'regular'),
     ('link', 'regular'),
     ('link-break', 'regular'),
     ('list', 'regular'),

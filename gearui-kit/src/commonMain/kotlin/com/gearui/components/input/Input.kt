@@ -187,14 +187,11 @@ fun Input(
         // conditional. It was already constant-true before (borderWidth = 1f).
         val borderModifier = Modifier.border(borderWidth, borderColor, shape)
 
-        val containerModifier = if (cardStyle) {
-            Modifier
-                .fillMaxWidth()
-                .heightIn(min = tokens.height)
-                .clip(shape)
-                .background(backgroundColor)
-                .then(borderModifier)
-        } else if (maxLines > 1) {
+        // Only multi-line fields grow. A single-line card-style field used to take just a
+        // minimum height; with the parent's height unbounded, the weighted content row
+        // below then measured to zero and the text, placeholder, prefix and suffix all
+        // vanished, leaving an empty gray pill.
+        val containerModifier = if (maxLines > 1) {
             // Multiline (textarea): a fixed single-line height would clip the content, so height belongs
             // to the external modifier (pages pass .height(N)); this only guarantees the single-line minimum.
             Modifier
@@ -250,7 +247,7 @@ fun Input(
                         .fillMaxWidth()
                         .padding(
                             horizontal = tokens.paddingHorizontal,
-                            vertical = if (cardStyle) 12.dp else 0.dp
+                            vertical = if (cardStyle && maxLines > 1) 12.dp else 0.dp
                         ),
                     verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
                 ) {

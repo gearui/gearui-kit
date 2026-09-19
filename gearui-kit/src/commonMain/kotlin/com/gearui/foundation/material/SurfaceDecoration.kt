@@ -1,5 +1,12 @@
 package com.gearui.foundation.material
 
+import com.tencent.kuikly.compose.ui.unit.IntSize
+import com.tencent.kuikly.compose.ui.layout.onSizeChanged
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.key
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.foundation.Canvas
 import com.tencent.kuikly.compose.foundation.layout.Box
@@ -290,7 +297,13 @@ fun DecoratedSurface(
         max(abs(it.offsetX.value), abs(it.offsetY.value)) + max(0f, it.spread.value) + it.blur.value * 1.5f
     } ?: 0f).dp
     val bleed = with(density) { ceil(rawBleed.toPx()).toInt().toDp() }
-    Box(modifier, propagateMinConstraints = true) {
+    // Kuikly does not re-run a Canvas draw block when only its size changes, so a surface
+    // whose content grows (a card gaining an error row) kept its old outline and shadow,
+    // with the border line cutting through the new content. Keying the canvases on the
+    // measured size recreates them, and so redraws them, whenever the surface resizes.
+    var size by remember { mutableStateOf(IntSize.Zero) }
+    Box(modifier.onSizeChanged { size = it }, propagateMinConstraints = true) {
+        key(size) {
         if (outer.isNotEmpty()) Canvas(
             Modifier.matchParentSize().layout { measurable, constraints ->
                 val pad = ceil(bleed.toPx()).toInt()
@@ -307,9 +320,12 @@ fun DecoratedSurface(
                 layout(width, height) { child.place(-padW, -padH) }
             }
         ) { paintDecoration(shape, outer, bleed = bleed) }
+        }
         Box(Modifier.clip(shape), propagateMinConstraints = true, content = content)
+        key(size) {
         if (inner.isNotEmpty() || border != null) Canvas(
             Modifier.matchParentSize()
         ) { paintDecoration(shape, inner, border) }
+        }
     }
 }

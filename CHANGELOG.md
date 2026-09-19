@@ -105,6 +105,8 @@ in [the pre-beta3 archive](docs/_archive/pre-beta3/CHANGELOG.md).
   `borderColor` to keep one); CellGroup gets the surface shadow; Skeleton defaults
   to shimmer (1500ms) on the muted text colour at 30%; Avatar fallback text is
   12/14/16 at medium weight in the foreground colour; Loading sizes are 16/24/32.
+- Input and SearchBar clear buttons get the Button press feedback (width-compensated
+  scale and neutral highlight), as the reference's icon-only tertiary buttons.
 
 ### Documentation
 

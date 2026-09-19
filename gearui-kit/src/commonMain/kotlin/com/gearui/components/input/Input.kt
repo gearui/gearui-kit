@@ -1,4 +1,5 @@
 package com.gearui.components.input
+import com.gearui.foundation.motion.iconPressFeedback
 import com.tencent.kuikly.compose.extension.setProp
 import com.gearui.foundation.material.surfaceShadowStyles
 import com.gearui.foundation.material.DecoratedSurface
@@ -388,12 +389,12 @@ fun Input(
                     // requestFocus -> IME reappears" flicker. Clearing fires on tap only, not on drag,
                     // and requestInputFocus is called afterwards as a safeguard.
                     if (clearable && value.isNotEmpty() && enabled && !readOnly) {
+                        var clearPressed by remember { mutableStateOf(false) }
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
                             modifier = Modifier
                                 .size(20.dp)
-                                .clip(CircleShape)
-                                .background(colors.muted)
+                                .iconPressFeedback(clearPressed, 20.dp, CircleShape)
                                 .pointerInput(Unit) {
                                     awaitEachGesture {
                                         val down = awaitFirstDown(
@@ -401,6 +402,7 @@ fun Input(
                                             pass = PointerEventPass.Initial,
                                         )
                                         down.consume()
+                                        clearPressed = true
                                         while (true) {
                                             val event = awaitPointerEvent(PointerEventPass.Initial)
                                             val change = event.changes.firstOrNull { it.id == down.id } ?: break
@@ -412,6 +414,7 @@ fun Input(
                                                 break
                                             }
                                         }
+                                        clearPressed = false
                                     }
                                 },
                             contentAlignment = Alignment.Center

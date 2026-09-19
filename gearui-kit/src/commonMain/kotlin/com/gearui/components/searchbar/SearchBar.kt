@@ -1,4 +1,7 @@
 package com.gearui.components.searchbar
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.motion.iconPressFeedback
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.typography.resolveFontFamily
@@ -310,14 +313,19 @@ fun SearchBar(
                     // Clear button
                     // Keep the input's measured width stable while editing.
                     run {
+                        val clearInteraction = remember { MutableInteractionSource() }
+                        val clearPressed by clearInteraction.collectIsPressedAsState()
                         Spacer(modifier = Modifier.width(Spacing.md))
                         Box(
                             modifier = Modifier
                                 .size(ControlGeometry.searchClearSize)
                                 .graphicsLayer { alpha = if (value.isNotEmpty() && enabled) 1f else 0f }
-                                .clip(CircleShape)
-                                .background(colors.muted)
-                                .clickable(enabled = enabled && value.isNotEmpty()) { onValueChange("") },
+                                .iconPressFeedback(clearPressed, ControlGeometry.searchClearSize, CircleShape)
+                                .clickable(
+                                    enabled = enabled && value.isNotEmpty(),
+                                    interactionSource = clearInteraction,
+                                    indication = null,
+                                ) { onValueChange("") },
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(

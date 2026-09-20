@@ -1,5 +1,10 @@
 package com.gearui.sample.examples.form
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.interaction.pressScale
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -192,6 +197,10 @@ fun FormExample(
             description = "基础表单"
         ) {
             // Layout toggle buttons
+            val horizontalInteraction = remember { MutableInteractionSource() }
+            val horizontalPressed by horizontalInteraction.collectIsPressedAsState()
+            val verticalInteraction = remember { MutableInteractionSource() }
+            val verticalPressed by verticalInteraction.collectIsPressedAsState()
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
@@ -203,7 +212,8 @@ fun FormExample(
                         .height(40.dp)
                         .clip(CircleShape)
                         .background(if (isHorizontal) colors.muted else colors.muted)
-                        .clickable(enabled = !formDisabled) { isHorizontal = true },
+                        .pressScale(horizontalPressed)
+                        .clickable(enabled = !formDisabled, interactionSource = horizontalInteraction, indication = null) { isHorizontal = true },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -220,7 +230,8 @@ fun FormExample(
                         .height(40.dp)
                         .clip(CircleShape)
                         .background(if (!isHorizontal) colors.muted else colors.muted)
-                        .clickable(enabled = !formDisabled) { isHorizontal = false },
+                        .pressScale(verticalPressed)
+                        .clickable(enabled = !formDisabled, interactionSource = verticalInteraction, indication = null) { isHorizontal = false },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

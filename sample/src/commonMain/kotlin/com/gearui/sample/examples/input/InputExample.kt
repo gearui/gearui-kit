@@ -1,5 +1,10 @@
 package com.gearui.sample.examples.input
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.interaction.pressScale
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.typography.IconSizes
@@ -187,6 +192,8 @@ fun InputExample(
 
                 // With an icon button
                 var value3 by remember { mutableStateOf("") }
+                val iconInteraction = remember { MutableInteractionSource() }
+                val iconPressed by iconInteraction.collectIsPressedAsState()
                 Input(
                     value = value3,
                     onValueChange = { value3 = it },
@@ -197,7 +204,9 @@ fun InputExample(
                             name = Icons.user,
                             size = IconSizes.Default.md,
                             tint = Theme.colors.foreground,
-                            modifier = Modifier.clickable { Toast.show("点击图标") }
+                            modifier = Modifier
+                                .pressScale(iconPressed)
+                                .clickable(interactionSource = iconInteraction, indication = null) { Toast.show("点击图标") }
                         )
                     }
                 )
@@ -252,6 +261,8 @@ fun InputExample(
                 // Password
                 var password by remember { mutableStateOf("") }
                 var showPassword by remember { mutableStateOf(false) }
+                val eyeInteraction = remember { MutableInteractionSource() }
+                val eyePressed by eyeInteraction.collectIsPressedAsState()
                 Input(
                     value = password,
                     onValueChange = { password = it },
@@ -262,7 +273,9 @@ fun InputExample(
                         Icon(
                             name = if (showPassword) Icons.eye else Icons.eye_slash,
                             size = IconSizes.Default.md,
-                            modifier = Modifier.clickable { showPassword = !showPassword }
+                            modifier = Modifier
+                                .pressScale(eyePressed)
+                                .clickable(interactionSource = eyeInteraction, indication = null) { showPassword = !showPassword }
                         )
                     }
                 )

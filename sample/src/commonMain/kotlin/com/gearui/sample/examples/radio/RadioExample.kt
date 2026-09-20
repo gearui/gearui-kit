@@ -1,5 +1,10 @@
 package com.gearui.sample.examples.radio
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.interaction.pressScale
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -184,10 +189,15 @@ fun RadioExample(
                     label = "单选框在右侧"
                 )
                 // Radio on the left
+                val leftRowInteraction = remember { MutableInteractionSource() }
+                val leftRowPressed by leftRowInteraction.collectIsPressedAsState()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { positionSelected2 = !positionSelected2 }
+                        .pressScale(leftRowPressed)
+                        .clickable(interactionSource = leftRowInteraction, indication = null) {
+                            positionSelected2 = !positionSelected2
+                        }
                         .padding(vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -291,17 +301,20 @@ private fun RadioCardItem(
 ) {
     val colors = Theme.colors
 
+    val cardInteraction = remember { MutableInteractionSource() }
+    val cardPressed by cardInteraction.collectIsPressedAsState()
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
+            .pressScale(cardPressed)
             .background(colors.surface)
             .border(
                 width = if (selected) 1.5.dp else 1.dp,
                 color = if (selected) colors.primary else colors.border,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable(onClick = onClick)
+            .clickable(interactionSource = cardInteraction, indication = null, onClick = onClick)
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

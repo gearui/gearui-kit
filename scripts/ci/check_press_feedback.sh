@@ -15,18 +15,23 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 SRC=gearui-kit/src/commonMain/kotlin/com/gearui/components
+# The sample is in scope too, and used not to be. That gap let the home page — the first
+# list anyone touches — ship a hand-built row with a bare clickable, no press response
+# and a "›" character for a chevron, while every component page had feedback.
+SAMPLE=sample/src/commonMain/kotlin/com/gearui/sample
 EXCEPTIONS=scripts/ci/press_feedback_exceptions.txt
 
 missing=""
 while IFS= read -r f; do
   rel=${f#"$SRC/"}
+  rel=${rel#"$SAMPLE/"}
   grep -qxF "$rel" "$EXCEPTIONS" && continue
   grep -qE '\.clickable\(|\.toggleable\(|\.selectable\(' "$f" || continue
   # collectIsPressedAsState counts: a component that reads its own pressed state is
   # driving its own visual (Switch scales, Tree and the select panel fill).
   grep -qE 'rowPressFeedback|pressScale|pressedSurfaceColor|PressableFeedback|pressableFeedback|iconPressFeedback|rememberInputFeedback|collectIsPressedAsState' "$f" && continue
   missing="$missing  $rel\n"
-done < <(find "$SRC" -name '*.kt' | sort)
+done < <(find "$SRC" "$SAMPLE" -name '*.kt' | sort)
 
 if [ -n "$missing" ]; then
   echo "✗ tap targets with no press feedback:"

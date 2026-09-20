@@ -80,7 +80,10 @@
   separators, and the DSL drew none. It now uses CellGroup's rule — before every row but
   the first — so a list and a group of the same rows are ruled the same way, and a
   section header starts a fresh run.
-- **Every tap target answers the finger.** Cell was a bare `clickable`, and so were
+- **Every tap target answers the finger**, including the sample's own screens. The
+  press-feedback guard covered the library only, so the demo home page — the first list
+  anyone touches — kept a hand-built row with a bare clickable and a "›" character for a
+  chevron. It is a Cell now, and the guard covers the sample. Cell was a bare `clickable`, and so were
   tags, stepper buttons, accordion headers, pagination pages, anchor links, transfer
   rows, cascader options, navigation menu items, tabs, the notice bar, notifications,
   the empty-state action, the picker's confirm and cancel, the image viewer's delete

@@ -27,6 +27,7 @@ import com.gearui.sample.config.ComponentCategory
 import com.gearui.sample.config.ComponentConfig
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.config.localizedDescription
+import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
 import com.gearui.theme.Theme
 
@@ -231,7 +232,11 @@ fun HomePage(
 
 
     /**
-     * Component list row
+     * Component list row.
+     *
+     * A Cell, not a hand-built Row: this page used to draw its own, which meant a bare
+     * clickable with no press response and a "›" character standing in for the chevron.
+     * The list a user touches first was the one row in the app that answered nothing.
      */
     @Composable
     private fun ComponentListItem(
@@ -241,60 +246,17 @@ fun HomePage(
         searchQuery: String = "",
     ) {
         val colors = Theme.colors
-        val name = component.nameEn
         val description = component.localizedDescription(isEnglish)
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .background(colors.surface)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    // Component name
-                    Text(
-                        text = name,
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
-                    )
-
-                    // Component description
-                    if (description.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = description,
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-
-                    // Show the component ID in search mode
-                    if (searchQuery.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "ID: ${component.id}",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-            }
-
-            // Chevron
-            Text(
-                text = "›",
-                style = Theme.typography.titleLarge,
-                color = colors.mutedForeground
-            )
+        val detail = if (searchQuery.isNotEmpty()) {
+            listOfNotNull(description.takeIf { it.isNotEmpty() }, "ID: ${component.id}").joinToString(" · ")
+        } else {
+            description
         }
 
+        Cell(
+            title = component.nameEn,
+            description = detail.takeIf { it.isNotEmpty() },
+            arrow = true,
+            onClick = onClick,
+        )
     }
-}

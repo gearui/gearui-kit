@@ -10,6 +10,8 @@ import com.gearui.theme.DefaultPalette
 import com.gearui.theme.Themes
 import com.gearui.theme.withBrandAccent
 import com.tencent.kuikly.compose.ui.graphics.Color
+import com.gearui.components.cellgroup.separatorCoveredByPress
+import kotlin.test.assertFalse
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -100,5 +102,26 @@ class SeparatorRoleTest {
     fun aHandBuiltThemeDerivesItsHairline() {
         val brand = Themes.Light.colors.copy()
         assertEquals(Themes.Light.colors.separatorSecondary, brand.separatorSecondary)
+    }
+}
+
+/** Which separators a pressed row swallows. */
+class SeparatorCoverageTest {
+
+    @Test
+    fun aPressedRowCoversTheLinesOnBothSidesOfIt() {
+        val pressed = { index: Int -> index == 2 }
+        // The line above row 2 and the line above row 3 both touch the pressed row.
+        assertTrue(separatorCoveredByPress(2, pressed))
+        assertTrue(separatorCoveredByPress(3, pressed))
+        assertFalse(separatorCoveredByPress(1, pressed))
+        assertFalse(separatorCoveredByPress(4, pressed))
+    }
+
+    @Test
+    fun nothingIsCoveredWhenNothingIsPressed() {
+        val pressed = { _: Int -> false }
+        assertFalse(separatorCoveredByPress(0, pressed))
+        assertFalse(separatorCoveredByPress(5, pressed))
     }
 }

@@ -268,7 +268,7 @@
   reference.dark.segment = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.3964,0.01,285.93]}}
   reference.dark.segment-foreground = {"$type":"color","$value":"{reference.dark.foreground}"}
   reference.dark.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.4,0.006,286.033]}}
-  reference.dark.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.3274,0.005,285.89]}}
+  reference.dark.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.2946,0.0053,285.89]}}
   reference.dark.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.dark.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.dark.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
@@ -309,7 +309,7 @@
   reference.light.segment = {"$type":"color","$value":"{reference.base.white}"}
   reference.light.segment-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.light.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.74,0.004,286.32]}}
-  reference.light.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.8815,0.0009,285.89]}}
+  reference.light.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9273,0.0005,285.89]}}
   reference.light.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.light.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.light.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
@@ -414,6 +414,7 @@
   geometry.selectionMedium = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.selectionSmall = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.selectionTouchTarget = {"$type":"dimension","$value":{"unit":"px","value":44}}
+  geometry.separatorThickness = {"$type":"dimension","$value":{"unit":"px","value":1}}
   geometry.sheetMenuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.sheetMenuRowGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.sliderCapsuleHeight = {"$type":"dimension","$value":{"unit":"px","value":24}}

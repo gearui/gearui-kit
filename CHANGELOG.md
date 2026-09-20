@@ -67,6 +67,14 @@
   first and last rows round with it and the rows between stay square, as the platform's
   lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
   scale, which is what the reference scales.
+- **A pressed row swallows the lines on both sides of it**, as the platform's lists do.
+  A separator belongs to the pair of rows it sits between, so the container — CellGroup
+  or List — hides it while either of them is pressed; left showing, it cut the highlight
+  in two. Rows get their interaction source from the container through
+  `LocalRowInteractionSource`, since a row cannot reach a line drawn outside its bounds.
+- **The hairline matches the platform.** Measured against the system settings list on the
+  same simulator: #E8E8E8 at 1dp in light, (44,44,46) in dark. Ours was #D8D8D8 at 0.5dp
+  — thinner, and darker to compensate, which is what read as heavy.
 - **Row separators use a lighter hairline.** `Colors.separatorSecondary` (reference
   `--color-separator-secondary`) lands near #D8D8D8 on white; rows were being ruled with
   the strong `separator` near #AAA, which is meant for the sheet grabber and for

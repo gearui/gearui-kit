@@ -9,6 +9,7 @@ import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.theme.Theme
 import com.gearui.foundation.border.BorderWidth
 
@@ -35,7 +36,9 @@ import com.gearui.foundation.border.BorderWidth
  */
 @Composable
 fun Divider(
-    thickness: Dp = 0.5.dp,
+    // The platform's grouped lists rule at 1dp, measured on the simulator; at 0.5 the
+    // line has to be darker to stay visible, which is what made ours read heavy.
+    thickness: Dp = ControlGeometry.separatorThickness,
     insetStart: Dp = 0.dp,
     insetEnd: Dp = 0.dp
 ) {

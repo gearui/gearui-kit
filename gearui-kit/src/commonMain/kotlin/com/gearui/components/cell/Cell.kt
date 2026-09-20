@@ -8,6 +8,7 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.gearui.foundation.motion.rowPressFeedback
+import com.gearui.foundation.list.LocalRowInteractionSource
 import com.tencent.kuikly.compose.ui.graphics.RectangleShape
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
@@ -63,7 +64,9 @@ fun Cell(
     val colors = Theme.colors
     val tokens = if (compact) CellDefaults.Compact else CellDefaults.Default
     val interactive = onClick != null && enabled
-    val interaction = remember { MutableInteractionSource() }
+    // A group hands the row its source so it can watch the press and cover the
+    // separators either side; standalone, the row owns one.
+    val interaction = LocalRowInteractionSource.current ?: remember { MutableInteractionSource() }
 
     Row(
         modifier = modifier

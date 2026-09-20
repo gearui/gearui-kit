@@ -802,6 +802,12 @@
         "value": 8,
         "unit": "px"
       }
+    },
+    "separatorThickness": {
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      }
     }
   }
 }

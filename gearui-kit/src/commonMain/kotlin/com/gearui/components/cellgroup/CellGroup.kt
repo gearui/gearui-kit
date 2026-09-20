@@ -16,6 +16,14 @@ import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import com.gearui.foundation.list.LocalRowInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 
@@ -57,6 +65,17 @@ import com.tencent.kuikly.compose.ui.draw.clip
  * "after every row but the last" and is the form that needs no count at the call site.
  */
 internal fun separatorBeforeRow(index: Int): Boolean = index > 0
+
+/**
+ * Whether the separator before row [index] is covered by a press.
+ *
+ * A line belongs to the pair of rows it sits between, so it disappears when either of
+ * them is pressed — otherwise the highlight of a pressed row is cut in two by a line
+ * the row itself cannot reach. Extracted for the same reason as [separatorBeforeRow]:
+ * the rule is what needs testing, not the composition that applies it.
+ */
+internal fun separatorCoveredByPress(index: Int, pressed: (Int) -> Boolean): Boolean =
+    pressed(index) || pressed(index - 1)
 
 @Composable
 fun <T> CellGroup(
@@ -108,13 +127,34 @@ fun <T> CellGroup(
                 .fillMaxWidth()
                 .background(colors.surface),
         ) {
+            // One source per row, so the group can see which row is pressed. The
+            // separators on either side of it are then filled with the press colour
+            // instead of ruling across it: the platform's lists hide the lines that
+            // touch a pressed row, and a line left showing cuts the highlight in two.
+            val interactions = remember(items.size) {
+                List(items.size) { MutableInteractionSource() }
+            }
+            val pressed = interactions.map { it.collectIsPressedAsState().value }
+
             items.forEachIndexed { index, item ->
                 // Before each row but the first, so "no separator after the last"
                 // needs no count and cannot be got wrong.
                 if (separatorBeforeRow(index)) {
-                    Divider(insetStart = separatorInset)
+                    val covered = separatorCoveredByPress(index) { pressed.getOrElse(it) { false } }
+                    if (covered) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(ControlGeometry.separatorThickness)
+                                .background(colors.muted)
+                        )
+                    } else {
+                        Divider(thickness = ControlGeometry.separatorThickness, insetStart = separatorInset)
+                    }
                 }
-                itemContent(item)
+                CompositionLocalProvider(LocalRowInteractionSource provides interactions[index]) {
+                    itemContent(item)
+                }
             }
         }
         }

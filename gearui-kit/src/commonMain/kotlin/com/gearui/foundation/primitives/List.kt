@@ -6,6 +6,13 @@ import com.tencent.kuikly.compose.foundation.lazy.*
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.foundation.scroll.*
 import com.gearui.components.cellgroup.separatorBeforeRow
+import com.gearui.components.cellgroup.separatorCoveredByPress
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.list.LocalRowInteractionSource
+import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.gearui.foundation.list.CellDefaults
 import com.gearui.primitives.Divider
 import com.gearui.overlay.OverlayManager
@@ -50,6 +57,12 @@ interface ListScope {
 internal class ListScopeImpl(
     private val lazy: LazyListScope,
     private val divider: Boolean,
+    /**
+     * Which row is under a finger, shared by the whole run. A row can hide the line
+     * above it on its own, but the line below it is drawn by the next row, so the two
+     * have to agree — the same rule CellGroup applies, where the container sees them all.
+     */
+    private val pressedRow: MutableState<Int> = mutableStateOf(NO_ROW),
 ) : ListScope {
 
     /**
@@ -66,8 +79,7 @@ internal class ListScopeImpl(
     ) {
         val index = emitted++
         lazy.item(key) {
-            if (divider && separatorBeforeRow(index)) Divider(insetStart = CellDefaults.Default.paddingHorizontal)
-            content()
+            Row(index) { content() }
         }
     }
 
@@ -82,8 +94,38 @@ internal class ListScopeImpl(
             count = count,
             key = key
         ) { index ->
-            if (divider && separatorBeforeRow(first + index)) Divider(insetStart = CellDefaults.Default.paddingHorizontal)
-            itemContent(index)
+            Row(first + index) { itemContent(index) }
+        }
+    }
+
+    /**
+     * One row and the separator above it. The separator is filled with the press colour
+     * instead of ruled when it touches the pressed row, so the highlight is not cut in
+     * two — and the row gets the source the container is watching.
+     */
+    @Composable
+    private fun Row(index: Int, content: @Composable () -> Unit) {
+        val interaction = remember { MutableInteractionSource() }
+        val pressed by interaction.collectIsPressedAsState()
+        LaunchedEffect(pressed) {
+            if (pressed) pressedRow.value = index
+            else if (pressedRow.value == index) pressedRow.value = NO_ROW
+        }
+        if (divider && separatorBeforeRow(index)) {
+            val covered = separatorCoveredByPress(index) { pressedRow.value == it }
+            if (covered) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(ControlGeometry.separatorThickness)
+                        .background(Theme.colors.muted)
+                )
+            } else {
+                Divider(insetStart = CellDefaults.Default.paddingHorizontal)
+            }
+        }
+        CompositionLocalProvider(LocalRowInteractionSource provides interaction) {
+            content()
         }
     }
 
@@ -97,7 +139,7 @@ internal class ListScopeImpl(
 
         // A fresh run: the header separates this section from the one above it, and the
         // first row under a header must not carry a line.
-        val child = ListScopeImpl(lazy, divider)
+        val child = ListScopeImpl(lazy, divider, pressedRow)
         child.content()
     }
 }
@@ -133,6 +175,7 @@ fun List(
     content: ListScope.() -> Unit
 ) {
     var lastOffset by remember { mutableStateOf(0) }
+    val pressedRow = remember { mutableStateOf(NO_ROW) }
 
     // Polls for scroll offset changes
     LaunchedEffect(state) {
@@ -156,8 +199,12 @@ fun List(
     ) {
         val scope = ListScopeImpl(
             lazy = this,
-            divider = tokens.divider
+            divider = tokens.divider,
+            pressedRow = pressedRow,
         )
         scope.content()
     }
 }
+
+/** No row is pressed. */
+private const val NO_ROW = -1

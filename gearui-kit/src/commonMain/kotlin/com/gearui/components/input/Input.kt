@@ -1,4 +1,10 @@
 package com.gearui.components.input
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import com.tencent.kuikly.compose.ui.text.TextRange
+import com.tencent.kuikly.compose.ui.text.input.TextFieldValue
 import com.gearui.foundation.motion.iconPressFeedback
 import com.tencent.kuikly.compose.extension.setProp
 import com.gearui.foundation.material.surfaceShadowStyles
@@ -300,12 +306,29 @@ fun Input(
                             else -> Alignment.CenterStart
                         }
                     ) {
+                        // 🔴 The caret has to be managed here, as Textarea already does.
+                        // The String overload of BasicTextField starts every rebuild from
+                        // `TextFieldValue(text)`, with the selection at 0 — so a field
+                        // opened on existing text ("edit your nickname") puts the caret
+                        // before the first character, and the user has to tap at the end
+                        // before they can type or delete.
+                        //
+                        // Text comes from the caller, the caret stays local. When the text
+                        // is replaced from outside, the caret goes to the end, the only
+                        // place the user would want to continue from.
+                        var caretState by remember {
+                            mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+                        }
+                        val fieldValue =
+                            if (caretState.text == value) caretState
+                            else TextFieldValue(value, TextRange(value.length))
                         BasicTextField(
-                            value = value,
+                            value = fieldValue,
                             onValueChange = { newValue ->
                                 if (!readOnly && enabled) {
-                                    if (maxLength == null || newValue.length <= maxLength) {
-                                        onValueChange(newValue)
+                                    if (maxLength == null || newValue.text.length <= maxLength) {
+                                        caretState = newValue
+                                        if (newValue.text != value) onValueChange(newValue.text)
                                     }
                                 }
                             },

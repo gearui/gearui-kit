@@ -408,6 +408,7 @@
   geometry.selectionSmall = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.selectionTouchTarget = {"$type":"dimension","$value":{"unit":"px","value":44}}
   geometry.sheetMenuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
+  geometry.sheetMenuRowGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.sliderCapsuleHeight = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.sliderCapsuleInset = {"$type":"dimension","$value":{"unit":"px","value":3}}
   geometry.sliderThumbHeight = {"$type":"dimension","$value":{"unit":"px","value":20}}

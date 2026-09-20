@@ -373,17 +373,22 @@ internal fun BottomSheetSurface(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
+                            // Same left edge as a row's text (list inset + item inset),
+                            // so the title, the description and the options line up.
                             .padding(
-                                start = ControlGeometry.overlayPadding,
-                                end = ControlGeometry.overlayPadding,
+                                start = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
+                                end = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
                                 bottom = ControlGeometry.menuPaddingBlock,
                             ),
                         horizontalAlignment = Alignment.Start
                     ) {
                         if (title != null) {
+                            // Reference `.bottom-sheet__label` is text-lg medium: one step
+                            // above the options. At the body size it carried no weight of
+                            // its own and the heading read as the first row of the list.
                             Text(
                                 text = title,
-                                style = Theme.typography.titleMedium.copy(fontWeight = FontWeight.Medium),
+                                style = Theme.typography.titleLarge.copy(fontWeight = FontWeight.Medium),
                                 color = colors.foreground
                             )
                         }
@@ -454,15 +459,19 @@ private fun BottomSheetItemList(
 ) {
     val colors = Theme.colors
 
-    // List height: one reference menu row per item, capped at maxHeight
-    val totalHeight = ControlGeometry.actionSheetRow * items.size
+    // List height: one reference menu row per item plus the gaps between them, capped
+    // at maxHeight. Flush rows read as one block of text; the reference spaces the items
+    // of a sheet-presented menu apart instead of ruling lines between them.
+    val gaps = ControlGeometry.sheetMenuRowGap * (items.size - 1).coerceAtLeast(0)
+    val totalHeight = ControlGeometry.actionSheetRow * items.size + gaps
     val listHeight = if (totalHeight > maxHeight) maxHeight else totalHeight
 
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .height(listHeight)
-            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline)
+            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline),
+        verticalArrangement = Arrangement.spacedBy(ControlGeometry.sheetMenuRowGap),
     ) {
         itemsIndexed(items) { index, item ->
             BottomSheetItemRow(

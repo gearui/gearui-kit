@@ -282,7 +282,11 @@ object DialogDefaults {
     /** Minimum touch height of an action. */
     val actionHeight: Dp = ControlGeometry.controlSmall
 
-    /** Title: reference `text-lg` at medium weight. */
+    /**
+     * Title: reference `.dialog__label`, text-lg at medium weight. The comment already
+     * said text-lg; the role used was the body-sized one, which left the title the same
+     * size as the text under it.
+     */
     val titleStyle: TextStyle
-        @Composable get() = Theme.typography.titleMedium.copy(fontWeight = FontWeight.Medium)
+        @Composable get() = Theme.typography.titleLarge.copy(fontWeight = FontWeight.Medium)
 }

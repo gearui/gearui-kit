@@ -93,6 +93,7 @@ internal object ControlGeometry {
     val selectionSmall = 20.dp
     val selectionTouchTarget = 44.dp
     val sheetMenuPaddingInline = 12.dp
+    val sheetMenuRowGap = 8.dp
     val sliderCapsuleHeight = 24.dp
     val sliderCapsuleInset = 3.dp
     val sliderThumbHeight = 20.dp

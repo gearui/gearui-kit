@@ -4671,7 +4671,9 @@ public final class com/gearui/theme/Typographies {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/theme/Typographies;
 	public final fun getDefault ()Lcom/gearui/theme/Typography;
+	public final fun getPlatform ()Lcom/gearui/theme/Typography;
 	public final fun getReference ()Lcom/gearui/theme/Typography;
+	public final fun getWeb ()Lcom/gearui/theme/Typography;
 }
 
 public final class com/gearui/theme/Typography {

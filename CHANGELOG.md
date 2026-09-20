@@ -53,14 +53,26 @@
   generated in OKLab from the reference mix ratios. Alert, TagGroup and NoticeBar read
   them instead of mixing colours themselves, and `withBrandAccent` carries the soft pair.
 
-- `Typographies.Reference`: the reference type scale (12/16, 14/20, 16/24, 18/28, with
-  emphasis at 500) as an opt-in profile. The default stays on the platform scale.
+- `Typographies.Platform` (the previous iOS scale, 17 body with emphasis at 600) and
+  `Typographies.Web`, for apps that want them back.
 - Accessibility pass: CloseButton, rating stars and upload tiles carry translated
   labels; tags, toggle buttons, segmented controls and tabs announce their state;
   decorative icons are silent. The contract is in the engineering spec.
 
 ### Changed
 
+- **The default type scale is now the reference scale** (12/16, 14/20, 16/24, 18/28,
+  emphasis at 500), the same on every platform. It was per-platform — 17/15/20 on iOS,
+  a denser scale on the web — so one screen was a different size on each and neither
+  matched the reference. Text shifts by a step in consuming apps; `Typographies.Platform`
+  restores the old metrics.
+- Sheets: BottomSheet and ActionSheet space their options apart as the reference does
+  for a sheet-presented menu, instead of stacking them flush, and the header sits on the
+  same left edge as the option text.
+- ActionSheet renders through BottomSheet's chrome rather than its own copy, so it now
+  has the grabber, the entrance animation and drag-to-dismiss it was missing.
+- BottomSheet and Dialog titles are text-lg as the reference specifies. Both used the
+  body size, which left the heading the same size and weight as the text under it.
 - Rate redrawn: both layers use the same star glyph, the active layer is clipped per
   star, and the track is muted rather than a heavy outline. A half star now lines up
   exactly with the star under it. Tapping the leading half of a star gives the half

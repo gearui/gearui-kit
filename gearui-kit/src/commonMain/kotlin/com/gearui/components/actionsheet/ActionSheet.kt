@@ -38,6 +38,7 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.foundation.material.MaterialSurface
 import com.gearui.foundation.material.Materials
+import com.gearui.components.bottomsheet.BottomSheetSurface
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
@@ -300,34 +301,22 @@ private fun ActionSheetSurface(
     onDismiss: () -> Unit
 ) {
     val colors = Theme.colors
-    val runtimeFlags = LocalRuntimeFlags.current
-    val bottomInset = rememberSafeAreaInset(
-        edge = SafeAreaEdge.Bottom,
-        consume = runtimeFlags.actionSheetConsumesBottomSafeArea,
-        minimum = Spacing.lg,
-    )
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        // One sheet, as in the reference (HeroUI Native bottom sheet holding a menu):
-        // radius 32, overlay surface, menu rows inset by 12, and Cancel as a neutral
-        // button inside the same surface rather than a separate card.
-        MaterialSurface(
-            material = Materials.Sheet,
-            modifier = Modifier.fillMaxWidth(),
-            shape = OverlayDefaults.sheetShape,
-            fallback = colors.popover,
-        ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { /* Consume surface taps. */ }
-                .padding(top = ControlGeometry.menuPaddingBlock)
-        ) {
-            // Description: reference `.menu__label` — small, medium weight, muted.
-            if (description != null) {
+    // The sheet chrome is BottomSheet's: grabber, entrance, drag-to-dismiss, safe area
+    // and the cancel button. ActionSheet used to draw its own, and drifted — it appeared
+    // without animating, had no grabber, and could not be dragged away, so the two
+    // sheets in one app behaved differently for no reason the user could see.
+    BottomSheetSurface(
+        showCancel = showCancel,
+        cancelText = cancelText,
+        onDismiss = {
+            onCancel?.invoke()
+            onDismiss()
+        },
+        header = description?.let {
+            {
+                // Reference `.menu__label`: small, medium weight, muted, on the row's
+                // own left edge.
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -342,62 +331,26 @@ private fun ActionSheetSurface(
                     }
                 ) {
                     Text(
-                        text = description,
+                        text = it,
                         style = Theme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
                         color = colors.mutedForeground
                     )
                 }
             }
-
-            // Content area
-            when (theme) {
-                ActionSheetTheme.LIST -> {
-                    ActionSheetList(
-                        items = items,
-                        align = align,
-                        maxHeight = maxListHeight,
-                        onSelected = onSelected
-                    )
-                }
-                ActionSheetTheme.GRID -> {
-                    ActionSheetGrid(
-                        items = items,
-                        columns = gridColumns,
-                        onSelected = onSelected
-                    )
-                }
-            }
-
-            if (showCancel) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = ControlGeometry.overlayPadding,
-                            end = ControlGeometry.overlayPadding,
-                            top = ControlGeometry.dialogActionGap,
-                        )
-                ) {
-                    Button(
-                        text = cancelText,
-                        onClick = {
-                            onCancel?.invoke()
-                            onDismiss()
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.FILL,
-                        size = ButtonSize.MEDIUM,
-                        shape = ButtonShape.ROUND,
-                        block = true,
-                    )
-                }
-            }
-
-            // The sheet owns the bottom inset, so no scrim shows at the home indicator.
-            Spacer(modifier = Modifier.height(ControlGeometry.menuPaddingBlock))
-            Spacer(modifier = Modifier.height(bottomInset))
-        }
+        },
+    ) {
+        when (theme) {
+            ActionSheetTheme.LIST -> ActionSheetList(
+                items = items,
+                align = align,
+                maxHeight = maxListHeight,
+                onSelected = onSelected
+            )
+            ActionSheetTheme.GRID -> ActionSheetGrid(
+                items = items,
+                columns = gridColumns,
+                onSelected = onSelected
+            )
         }
     }
 }
@@ -421,6 +374,9 @@ private fun ActionSheetList(
     items.forEach { item ->
         totalHeightValue += if (item.description != null) itemHeightWithDesc else itemHeightNormal
     }
+    // Plus the gaps between rows: the reference spaces the items of a sheet-presented
+    // menu apart rather than ruling lines between them, and flush rows read as one block.
+    totalHeightValue += ControlGeometry.sheetMenuRowGap.value * (items.size - 1).coerceAtLeast(0)
     val totalHeight = totalHeightValue.dp
     val listHeight = if (totalHeight.value > maxHeight.value) maxHeight else totalHeight
 
@@ -428,7 +384,8 @@ private fun ActionSheetList(
         modifier = Modifier
             .fillMaxWidth()
             .height(listHeight)
-            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline)
+            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline),
+        verticalArrangement = Arrangement.spacedBy(ControlGeometry.sheetMenuRowGap),
     ) {
         itemsIndexed(items) { index, item ->
             ActionSheetListItem(

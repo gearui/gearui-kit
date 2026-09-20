@@ -115,26 +115,34 @@ data class Typography(
 /* --------------------------------------------------------- */
 /* --------------------------------------------------------- */
 
-internal expect fun platformTypography(): Typography
-
 object Typographies {
-    /** Native and Web type profiles are generated from the same DTCG source. */
-    val Default: Typography = platformTypography()
+    /**
+     * The type scale GearUI uses unless a host picks another one: the reference scale
+     * (HeroUI Native), 12/16, 14/20, 16/24, 18/28, with emphasis at 500.
+     *
+     * It is one scale on every platform on purpose. A per-platform scale made the same
+     * screen a different size on iOS than on the web, so a layout checked on one could
+     * not be trusted on the other, and the reference's own metrics could never be met.
+     */
+    val Default: Typography = TypographyProfiles.Reference
 
     /**
-     * The reference's own scale (Tailwind steps: 12/16, 14/20, 16/24, 18/28), with
-     * medium at 500 rather than 600.
-     *
-     * [Default] stays on the platform scale — 17/15/20 on iOS — because that is what a
-     * phone's own controls use and what apps built on GearUI already ship; swapping it
-     * would reflow every screen in every consumer at once. Pick this profile when
-     * matching the reference's metrics matters more than matching the platform, and pick
-     * it for the whole app rather than per screen: two scales in one product read as a
-     * bug, not as a choice.
-     *
-     * ```kotlin
-     * GearUITheme(typography = Typographies.Reference) { App() }
-     * ```
+     * The reference scale, named for callers that want to be explicit. Same object as
+     * [Default].
      */
     val Reference: Typography = TypographyProfiles.Reference
+
+    /**
+     * The platform scale GearUI used before: iOS metrics, 17 body over a 20 title, with
+     * emphasis at 600. Pick it for an app that has to sit beside the system's own
+     * controls, or to keep a shipped layout from reflowing after upgrading.
+     *
+     * ```kotlin
+     * GearUITheme(typography = Typographies.Platform) { App() }
+     * ```
+     */
+    val Platform: Typography = TypographyProfiles.Native
+
+    /** The denser web scale (15 body), for the web renderer. */
+    val Web: Typography = TypographyProfiles.Web
 }

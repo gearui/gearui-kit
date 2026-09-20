@@ -4803,8 +4803,12 @@ final object com.gearui.theme/Themes { // com.gearui.theme/Themes|null[0]
 final object com.gearui.theme/Typographies { // com.gearui.theme/Typographies|null[0]
     final val Default // com.gearui.theme/Typographies.Default|{}Default[0]
         final fun <get-Default>(): com.gearui.theme/Typography // com.gearui.theme/Typographies.Default.<get-Default>|<get-Default>(){}[0]
+    final val Platform // com.gearui.theme/Typographies.Platform|{}Platform[0]
+        final fun <get-Platform>(): com.gearui.theme/Typography // com.gearui.theme/Typographies.Platform.<get-Platform>|<get-Platform>(){}[0]
     final val Reference // com.gearui.theme/Typographies.Reference|{}Reference[0]
         final fun <get-Reference>(): com.gearui.theme/Typography // com.gearui.theme/Typographies.Reference.<get-Reference>|<get-Reference>(){}[0]
+    final val Web // com.gearui.theme/Typographies.Web|{}Web[0]
+        final fun <get-Web>(): com.gearui.theme/Typography // com.gearui.theme/Typographies.Web.<get-Web>|<get-Web>(){}[0]
 }
 
 final object com.gearui/ColorTokens { // com.gearui/ColorTokens|null[0]

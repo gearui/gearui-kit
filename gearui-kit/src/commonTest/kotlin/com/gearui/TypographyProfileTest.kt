@@ -3,7 +3,6 @@ package com.gearui
 import com.gearui.theme.Typographies
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /** The two type scales GearUI ships, and which one is the default. */
 class TypographyProfileTest {
@@ -24,9 +23,17 @@ class TypographyProfileTest {
     }
 
     @Test
-    fun theDefaultStaysOnThePlatformScale() {
-        // Changing this would reflow every screen in every consumer at once, so the
-        // default follows the platform and the reference scale is opt-in.
-        assertTrue(Typographies.Default.bodyMedium.fontSize.value != Typographies.Reference.bodyMedium.fontSize.value)
+    fun theDefaultIsTheReferenceScaleOnEveryPlatform() {
+        // One scale everywhere: a per-platform default made the same screen a different
+        // size on iOS than on the web, so neither could be checked against the reference.
+        assertEquals(Typographies.Reference.bodyMedium.fontSize.value, Typographies.Default.bodyMedium.fontSize.value)
+        assertEquals(Typographies.Reference.titleLarge.fontSize.value, Typographies.Default.titleLarge.fontSize.value)
+    }
+
+    @Test
+    fun thePlatformScaleIsStillAvailable() {
+        // The old iOS metrics remain opt-in for apps that must sit beside system controls.
+        assertEquals(17f, Typographies.Platform.bodyMedium.fontSize.value)
+        assertEquals(600, Typographies.Platform.markMedium.fontWeight.weight)
     }
 }

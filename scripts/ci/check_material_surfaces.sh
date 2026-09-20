@@ -26,7 +26,11 @@ for rel in $COMPONENTS; do
     echo "✗ missing file: $f"
     exit 1
   fi
-  if ! grep -q 'MaterialSurface(' "$f"; then
+  # Rendering through the shared sheet chrome counts: BottomSheetSurface is itself
+  # on this list, so its material is checked once rather than copied per component.
+  # ActionSheet used to duplicate that chrome, which is how the two sheets drifted
+  # apart in the first place.
+  if ! grep -q -e 'MaterialSurface(' -e 'BottomSheetSurface(' "$f"; then
     missing="$missing  $rel\n"
   fi
 done

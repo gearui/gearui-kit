@@ -19,7 +19,7 @@ internal object MaterialDefaults {
     val darkOverlay = listOf<TokenShadow>(TokenShadow(Color(1f, 1f, 1f, 0.2f), 0.dp, 0.dp, 1.dp, 0.dp, true))
     val darkSurface = listOf<TokenShadow>(TokenShadow(Color(0f, 0f, 0f, 0f), 0.dp, 0.dp, 0.dp, 0.dp, true))
     val lightField = listOf<TokenShadow>(TokenShadow(Color(0f, 0f, 0f, 0.04f), 0.dp, 2.dp, 4.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 1.dp, 2.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 0.dp, 1.dp, 0.dp, false))
-    val lightOverlay = listOf<TokenShadow>(TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 2.dp, 8.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.03f), 0.dp, -6.dp, 12.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.1f), 0.dp, 14.dp, 28.dp, 0.dp, false))
+    val lightOverlay = listOf<TokenShadow>(TokenShadow(Color(0f, 0f, 0f, 0.14f), 0.dp, 0.dp, 1.dp, 0.dp, true), TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 2.dp, 8.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.03f), 0.dp, -6.dp, 12.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.1f), 0.dp, 14.dp, 28.dp, 0.dp, false))
     val lightSurface = listOf<TokenShadow>(TokenShadow(Color(0f, 0f, 0f, 0.04f), 0.dp, 2.dp, 4.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 1.dp, 2.dp, 0.dp, false), TokenShadow(Color(0f, 0f, 0f, 0.06f), 0.dp, 0.dp, 1.dp, 0.dp, false))
     val pickerBottomMask = listOf<TokenGradientStop>(TokenGradientStop(0f, Color(1f, 1f, 1f, 0f)), TokenGradientStop(1f, Color(1f, 1f, 1f, 1f)))
     val pickerTopMask = listOf<TokenGradientStop>(TokenGradientStop(0f, Color(1f, 1f, 1f, 1f)), TokenGradientStop(1f, Color(1f, 1f, 1f, 0f)))

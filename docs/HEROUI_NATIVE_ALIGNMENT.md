@@ -69,5 +69,10 @@ So:
 | Light `overlay` | `white`, = `surface` | `white` | Unchanged: `surface` is already pure white, so light has no headroom above it. |
 | Light `overlay-shadow` | 2% / 1% / 3% black | 6% / 3% / 10% | The only cue left in light. Measured: the edge on white reaches level 231, from 247 at reference values. Geometry (offsets, blur) is unchanged. |
 
-Dark needs no shadow change: the reference's inset hairline renders and measures
-(42,42,44) on the menu edge.
+Both modes also paint the reference's `inset` layer as a real border rather than
+through the shadow renderer. Run as a blurred inset shadow it lands on the edge pixel
+at roughly a fifth of its declared alpha — the Gaussian spreads it and the shape's own
+antialiasing takes the rest — so on a white page a menu had no edge at all, and the
+diffuse drop shadow alone did not read as a boundary. Painted as a 1dp border it is
+what the declaration says: light measures 219 on white, dark 77 against a (32,32,35)
+menu, both on device.

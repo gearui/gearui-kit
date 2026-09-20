@@ -72,10 +72,18 @@ fun MaterialSurface(
     val opaque = fallback ?: roleColor
     val blurred = isMaterialBlurEnabled()
 
+    // An `inset` layer in the overlay stack is a hairline outline, not a shadow, and
+    // it has to be painted as one. Run through the shadow renderer it lands on the
+    // edge pixel at roughly a fifth of its declared alpha — the Gaussian spreads it
+    // and the shape's own antialiasing takes the rest — which is why a menu on a
+    // white page had no edge at all. The border primitive draws it at full strength.
+    val overlayStyles = if (material.role == MaterialRole.Chrome) emptyList() else surfaceShadowStyles().overlay
+    val hairline = overlayStyles.firstOrNull { it.inset }
     DecoratedSurface(
         modifier = modifier,
         shape = shape,
-        shadows = if (material == Materials.Chrome) emptyList() else surfaceShadowStyles().overlay,
+        shadows = overlayStyles.filterNot { it.inset },
+        border = hairline?.let { SurfaceBorder(color = it.color, width = it.blur) },
     ) {
     Box(modifier = Modifier.clip(shape)) {
         // matchParentSize, never fillMaxSize. A fillMaxSize child *participates*

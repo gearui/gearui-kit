@@ -116,7 +116,7 @@ internal fun segmentOffset(width: Float, count: Int, gap: Float, index: Int): Pa
 }
 
 @Composable
-private fun SegmentedTrack(
+internal fun SegmentedTrack(
     count: Int,
     selectedIndex: Int,
     enabled: Boolean,

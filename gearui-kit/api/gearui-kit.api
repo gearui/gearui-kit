@@ -1899,6 +1899,10 @@ public final class com/gearui/components/tabs/Tab {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/components/tabs/TabPagerKt {
+	public static final fun TabPager (IILkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class com/gearui/components/tabs/TabsKt {
 	public static final fun Tabs (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZZLcom/gearui/components/tabs/TabsSize;Lcom/gearui/components/tabs/TabsOutlineType;Landroidx/compose/runtime/Composer;II)V
 }

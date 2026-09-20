@@ -1,5 +1,6 @@
 package com.gearui.components.tabs
 
+import com.gearui.components.segmented.SegmentedTrack
 import com.tencent.kuikly.compose.foundation.layout.offset
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.components.segmented.segmentOffset
@@ -73,7 +74,10 @@ fun Tabs(
     showIndicator: Boolean = true,
     showDivider: Boolean = true,
     size: TabsSize = TabsSize.MEDIUM,
-    outlineType: TabsOutlineType = TabsOutlineType.UNDERLINE
+    // The reference's Tabs default to the `primary` variant — a pill on a track.
+    // `secondary`, the underlined one, is the alternative, not the default; ours had
+    // them the other way round, which is why a plain Tabs read as a Material tab bar.
+    outlineType: TabsOutlineType = TabsOutlineType.CAPSULE
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -103,6 +107,24 @@ fun Tabs(
                             )
                         }
                     }
+                }
+            }
+
+            // The reference's primary variant is the segmented track: one rounded
+            // indicator of `--color-segment` sliding over a `--color-default` track,
+            // which is what SegmentedControl already draws. Tabs used to paint each
+            // cell separately and fill the selected one with the brand colour — a
+            // different control wearing the same name.
+            outlineType == TabsOutlineType.CAPSULE -> {
+                val selectedIndex = items.indexOfFirst { it.id == selected }
+                SegmentedTrack(
+                    count = items.size,
+                    selectedIndex = selectedIndex,
+                    enabled = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    onSelect = { index -> items.getOrNull(index)?.let { if (it.id != selected) onSelect(it.id) } },
+                ) { index, isSelected ->
+                    TabsSegmentLabel(item = items[index], selected = isSelected, size = size)
                 }
             }
 
@@ -172,6 +194,35 @@ fun Tabs(
                     .background(colors.border)
             )
         }
+    }
+}
+
+/**
+ * The label inside a segmented tab. The track owns the surface, the indicator and the
+ * press feedback, so this is only the content — which is the whole reason Tabs can
+ * share it with SegmentedControl instead of drawing a second one.
+ */
+@Composable
+private fun TabsSegmentLabel(item: Tab, selected: Boolean, size: TabsSize) {
+    val colors = Theme.colors
+    val textStyle = when (size) {
+        TabsSize.SMALL -> Theme.typography.bodySmall
+        TabsSize.MEDIUM -> Theme.typography.bodyMedium
+        TabsSize.LARGE -> Theme.typography.bodyLarge
+    }.copy(fontWeight = FontWeight.Medium)
+    val contentColor = when {
+        item.disabled -> colors.mutedForeground
+        selected -> colors.foreground
+        else -> colors.mutedForeground
+    }
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (item.icon != null) {
+            Icon(name = item.icon, size = IconSizes.Default.sm, tint = contentColor)
+        }
+        Text(text = item.label, style = textStyle, color = contentColor, maxLines = 1)
     }
 }
 

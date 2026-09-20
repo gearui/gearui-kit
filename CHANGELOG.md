@@ -67,6 +67,15 @@
   first and last rows round with it and the rows between stay square, as the platform's
   lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
   scale, which is what the reference scales.
+- `TabPager`: the pages a `Tabs` bar selects between, swipeable side to side, with the
+  selection shared so a tap scrolls and a swipe moves the bar. Give it the space it
+  should have — `weight(1f)` in a Column — since a pager that claims the parent's whole
+  height scrolls back into a viewport that runs off the screen.
+- **Tabs default to the reference's `primary` variant**: a `segment`-coloured pill
+  sliding on a `default`-coloured track, drawn by the same track as SegmentedControl.
+  Ours defaulted to the underlined `secondary` variant and, under CAPSULE, filled the
+  selected tab with the brand colour — between them, a plain `Tabs` read as a Material
+  tab bar rather than an iOS segmented control.
 - **A menu hangs off its trigger.** It carried the 9dp anchor gap that belongs to a
   tooltip or a popover pointing at something; under a NavBar action slot, which is
   `fillMaxHeight`, that gap is measured from the bar's bottom edge and left the menu

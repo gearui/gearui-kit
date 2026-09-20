@@ -67,6 +67,10 @@
   first and last rows round with it and the rows between stay square, as the platform's
   lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
   scale, which is what the reference scales.
+- **A menu hangs off its trigger.** It carried the 9dp anchor gap that belongs to a
+  tooltip or a popover pointing at something; under a NavBar action slot, which is
+  `fillMaxHeight`, that gap is measured from the bar's bottom edge and left the menu
+  reading as detached from the icon that opened it.
 - **A floating surface paints the overlay role, not `surface`.** The reference draws the
   line by elevation — menu, popover, dialog, sheet and toast all paint `--color-overlay`
   — and half of ours had drifted onto `surface`, ContextMenu and BottomSheet among them.

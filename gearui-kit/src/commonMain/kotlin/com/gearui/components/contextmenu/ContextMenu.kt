@@ -117,7 +117,13 @@ fun ContextMenu(
                 anchorBounds = bounds,
                 options = OverlayOptions(
                     placement = placementToOverlay(placement),
-                    offsetY = OverlayDefaults.anchorOffset,
+                    // A menu hangs off its trigger, with nothing between them. The
+                    // 9dp anchor gap belongs to surfaces that must not look attached
+                    // — a tooltip, a popover pointing at something. Here it reads as
+                    // the menu having come loose, and it is worse than it sounds: a
+                    // NavBar action slot is fillMaxHeight, so the gap is measured from
+                    // the bar's bottom edge and the icon ends up 15dp away, not 9.
+                    offsetY = 0.dp,
                     modal = false,
                     maskColor = null,
                     dismissPolicy = OverlayDismissPolicy.Dropdown.copy(

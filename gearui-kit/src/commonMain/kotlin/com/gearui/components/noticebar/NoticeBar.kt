@@ -18,6 +18,9 @@ import com.tencent.kuikly.compose.animation.core.LinearEasing
 import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Row
@@ -71,12 +74,19 @@ fun NoticeBar(
 ) {
     val colors = Theme.colors
     val content = noticeBarForeground(colors, tone)
+    val interaction = remember { MutableInteractionSource() }
     Row(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = ControlGeometry.noticeBarHeight)
             .background(noticeBarFill(colors, tone))
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .then(
+                if (onClick != null) {
+                    Modifier
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                        .clickable(interactionSource = interaction, indication = null, onClick = onClick)
+                } else Modifier
+            )
             .padding(horizontal = ControlGeometry.noticeBarPaddingInline),
         horizontalArrangement = Arrangement.spacedBy(ControlGeometry.noticeBarGap),
         verticalAlignment = Alignment.CenterVertically,

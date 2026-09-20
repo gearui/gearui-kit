@@ -20,6 +20,8 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
@@ -99,12 +101,14 @@ fun NavigationMenu(
                 ) {
                     expandedSection.items.forEach { item ->
                         val selected = item.id == selectedItemId
+                        val itemInteraction = remember { MutableInteractionSource() }
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(shapes.md)
                                 .background(if (selected) colors.muted else colors.surface)
-                                .clickable(enabled = !item.disabled) {
+                                .rowPressFeedback(interaction = itemInteraction, shape = shapes.md, enabled = !item.disabled)
+                                .clickable(enabled = !item.disabled, interactionSource = itemInteraction, indication = null) {
                                     onSectionSelect(expandedSection.id)
                                     onItemSelect(item.id)
                                     expandedSectionId = null
@@ -143,6 +147,7 @@ fun NavigationMenu(
             val selected = section.id == selectedSectionId
             val expanded = section.id == expandedSectionId
             val hasPopup = section.items.isNotEmpty()
+            val sectionInteraction = remember { MutableInteractionSource() }
 
             Box(
                 modifier = Modifier
@@ -155,7 +160,8 @@ fun NavigationMenu(
                         else if (selected) colors.muted
                         else colors.surface
                     )
-                    .clickable(enabled = !section.disabled) {
+                    .rowPressFeedback(interaction = sectionInteraction, shape = shapes.md, enabled = !section.disabled)
+                    .clickable(enabled = !section.disabled, interactionSource = sectionInteraction, indication = null) {
                         onSectionSelect(section.id)
                         expandedSectionId = when {
                             !hasPopup -> null

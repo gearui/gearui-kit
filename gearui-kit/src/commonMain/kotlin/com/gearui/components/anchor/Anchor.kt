@@ -2,6 +2,10 @@ package com.gearui.components.anchor
 
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -79,11 +83,13 @@ private fun AnchorLink(
     onClick: () -> Unit
 ) {
     val colors = Theme.colors
+    val interaction = remember { MutableInteractionSource() }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .padding(vertical = Spacing.xs, horizontal = Spacing.sm)
     ) {
         // Active indicator

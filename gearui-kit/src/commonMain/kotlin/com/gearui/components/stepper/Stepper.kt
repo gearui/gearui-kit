@@ -4,6 +4,9 @@ import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
@@ -45,6 +48,8 @@ fun Stepper(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
+    val decrementInteraction = remember { MutableInteractionSource() }
+    val incrementInteraction = remember { MutableInteractionSource() }
     val canDecrease = enabled && value > min
     val canIncrease = enabled && value < max
 
@@ -75,7 +80,8 @@ fun Stepper(
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canDecrease) FeedbackDefaults.disabledOpacity else 1f }
                 .background(colors.surface)
-                .clickable(enabled = canDecrease) {
+                .rowPressFeedback(interaction = decrementInteraction, shape = RectangleShape, enabled = canDecrease)
+                .clickable(enabled = canDecrease, interactionSource = decrementInteraction, indication = null) {
                     onValueChange((value - step).coerceAtLeast(min))
                 },
             contentAlignment = Alignment.Center
@@ -125,7 +131,8 @@ fun Stepper(
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canIncrease) FeedbackDefaults.disabledOpacity else 1f }
                 .background(colors.surface)
-                .clickable(enabled = canIncrease) {
+                .rowPressFeedback(interaction = incrementInteraction, shape = RectangleShape, enabled = canIncrease)
+                .clickable(enabled = canIncrease, interactionSource = incrementInteraction, indication = null) {
                     onValueChange((value + step).coerceAtMost(max))
                 },
             contentAlignment = Alignment.Center

@@ -3,6 +3,11 @@ package com.gearui.components.picker
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.itemsIndexed
@@ -321,11 +326,15 @@ private fun PickerHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Cancel button
+        val cancelInteraction = remember { MutableInteractionSource() }
+        val cancelPressed by cancelInteraction.collectIsPressedAsState()
         Text(
             text = I18n.strings.common.cancel,
             style = Theme.typography.bodyLarge,
             color = colors.mutedForeground,
-            modifier = Modifier.clickable { onCancel() }
+            modifier = Modifier
+                .pressScale(cancelPressed)
+                .clickable(interactionSource = cancelInteraction, indication = null) { onCancel() }
         )
 
         // Title
@@ -343,11 +352,15 @@ private fun PickerHeader(
         }
 
         // Confirm button
+        val confirmInteraction = remember { MutableInteractionSource() }
+        val confirmPressed by confirmInteraction.collectIsPressedAsState()
         Text(
             text = I18n.strings.common.ok,
             style = Theme.typography.bodyLarge,
             color = colors.primary,
-            modifier = Modifier.clickable { onConfirm() }
+            modifier = Modifier
+                .pressScale(confirmPressed)
+                .clickable(interactionSource = confirmInteraction, indication = null) { onConfirm() }
         )
     }
 }

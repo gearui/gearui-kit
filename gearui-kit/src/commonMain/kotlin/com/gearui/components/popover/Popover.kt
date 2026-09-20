@@ -2,7 +2,7 @@ package com.gearui.components.popover
 
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
-import com.gearui.foundation.motion.menuItemFeedback
+import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
@@ -541,7 +541,7 @@ fun PopoverMenu(
     val colors = Theme.colors
 
     // HeroUI Native menu.css: padding-inline 6 / padding-block 12, rows at radius 16,
-    // no separators, animated press fill (see menuItemFeedback).
+    // no separators, animated press fill (see rowPressFeedback).
     CompositionLocalProvider(
         LocalPopoverBodyPadding provides PaddingValues(
             horizontal = ControlGeometry.menuPaddingInline,
@@ -564,7 +564,7 @@ fun PopoverMenu(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .menuItemFeedback(
+                            .rowPressFeedback(
                                 interaction = interaction,
                                 shape = itemShape,
                                 enabled = !item.disabled,

@@ -61,6 +61,16 @@
 
 ### Changed
 
+- **Every tap target answers the finger.** Cell was a bare `clickable`, and so were
+  tags, stepper buttons, accordion headers, pagination pages, anchor links, transfer
+  rows, cascader options, navigation menu items, tabs, the notice bar, notifications,
+  the empty-state action, the picker's confirm and cancel, the image viewer's delete
+  and the back-to-top button: the action ran with nothing on screen acknowledging the
+  touch. Radio built an interaction source and never read it. All of them now use the
+  shared feedback (`rowPressFeedback`, `pressScale`), and `check_press_feedback.sh`
+  keeps it that way.
+- `menuItemFeedback` is now `rowPressFeedback`: the same row press, no longer named
+  after menus alone (internal).
 - **The default type scale is now the reference scale** (12/16, 14/20, 16/24, 18/28,
   emphasis at 500), the same on every platform. It was per-platform — 17/15/20 on iOS,
   a denser scale on the web — so one screen was a different size on each and neither

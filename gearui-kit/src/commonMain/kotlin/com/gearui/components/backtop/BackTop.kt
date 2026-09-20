@@ -11,6 +11,9 @@ import com.tencent.kuikly.compose.animation.scaleOut
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
@@ -109,6 +112,8 @@ fun BackTop(
         BackTopTheme.DARK -> colors.border
     }
 
+    val interaction = remember { MutableInteractionSource() }
+
     // Size and shape from the style
     val circleSize = 48.dp
     val halfCircleWidth = 24.dp
@@ -131,7 +136,8 @@ fun BackTop(
                         .clip(CircleShape)
                         .background(backgroundColor)
                         .border(BorderWidth.thin, borderColor, CircleShape)
-                        .clickable(onClick = onClick),
+                        .rowPressFeedback(interaction = interaction, shape = CircleShape)
+                        .clickable(interactionSource = interaction, indication = null, onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {
                     if (showText) {
@@ -179,7 +185,8 @@ fun BackTop(
                         .clip(halfCircleShape)
                         .background(backgroundColor)
                         .border(BorderWidth.thin, borderColor, halfCircleShape)
-                        .clickable(onClick = onClick),
+                        .rowPressFeedback(interaction = interaction, shape = halfCircleShape)
+                        .clickable(interactionSource = interaction, indication = null, onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {
                     if (showText) {

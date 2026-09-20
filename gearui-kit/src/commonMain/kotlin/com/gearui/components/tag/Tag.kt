@@ -1,10 +1,13 @@
 package com.gearui.components.tag
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -111,6 +114,8 @@ fun Tag(
         )
     }
 
+    val interaction = remember { MutableInteractionSource() }
+
     Box(
         modifier = modifier
             .disabledAppearance(disabled)
@@ -124,10 +129,14 @@ fun Tag(
             )
             .then(
                 if (onClick != null) {
-                    Modifier.clickable(
-                        enabled = !disabled,
-                        onClick = onClick
-                    )
+                    Modifier
+                        .rowPressFeedback(interaction = interaction, shape = shape, enabled = !disabled)
+                        .clickable(
+                            enabled = !disabled,
+                            interactionSource = interaction,
+                            indication = null,
+                            onClick = onClick
+                        )
                 } else Modifier
             )
             .padding(horizontal = tokens.paddingHorizontal),

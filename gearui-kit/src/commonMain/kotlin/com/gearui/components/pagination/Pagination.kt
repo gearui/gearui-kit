@@ -8,6 +8,9 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Row
@@ -64,6 +67,7 @@ fun Pagination(
                     val selected = item.value == safeCurrent
                     val colors = Theme.colors
                     val shapes = Theme.shapes
+                    val pageInteraction = remember { MutableInteractionSource() }
                     Box(
                         modifier = Modifier
                             .background(
@@ -74,7 +78,8 @@ fun Pagination(
                                 color = if (selected) colors.primary else colors.border,
                                 shape = shapes.md
                             )
-                            .clickable { onPageChange(item.value) }
+                            .rowPressFeedback(interaction = pageInteraction, shape = shapes.md)
+                            .clickable(interactionSource = pageInteraction, indication = null) { onPageChange(item.value) }
                             .padding(horizontal = Spacing.md, vertical = Spacing.sm),
                         contentAlignment = Alignment.Center
                     ) {
@@ -112,6 +117,7 @@ private fun PaginationButton(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier = Modifier
             .background(
@@ -120,7 +126,8 @@ private fun PaginationButton(
             )
             .border(BorderWidth.thin, colors.border, shapes.md)
             .disabledAppearance(!enabled)
-            .clickable(enabled = enabled) { onClick() }
+            .rowPressFeedback(interaction = interaction, shape = shapes.md, enabled = enabled)
+            .clickable(enabled = enabled, interactionSource = interaction, indication = null) { onClick() }
             .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         contentAlignment = Alignment.Center
     ) {

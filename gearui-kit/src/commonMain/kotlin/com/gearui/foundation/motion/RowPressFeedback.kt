@@ -16,18 +16,20 @@ import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.graphics.lerp
 
 /**
- * Press feedback for a row inside an overlay list: menu, context menu, action sheet,
- * select options.
+ * Press feedback for a tappable row: a menu or action sheet option, a cell, a list item.
  *
  * Mirrors HeroUI Native `menu.animation.ts`: while pressed the row fades to the
  * `default` fill (danger rows to danger at 10%) and scales to 0.98, both over 150ms,
  * and returns the same way. Values come from `tokens/feedback.tokens.json`.
  *
+ * A row that paints its own background keeps it: the press fill is a second background
+ * drawn over it, transparent at rest.
+ *
  * The caller still owns the click handler and must pass the same [interaction] to it;
  * this modifier only draws. Place it before padding so the fill covers the whole row.
  */
 @Composable
-internal fun Modifier.menuItemFeedback(
+internal fun Modifier.rowPressFeedback(
     interaction: MutableInteractionSource,
     shape: Shape,
     enabled: Boolean = true,

@@ -6,6 +6,8 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.motion.Motion
 import com.gearui.i18n.I18n
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.gearui.foundation.interaction.pressScale
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.semantics.role
@@ -166,9 +168,12 @@ private fun SegmentedTrack(
             repeat(count) { index ->
                 val selected = index == selectedIndex
                 val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
+                val interaction = remember { MutableInteractionSource() }
+                val pressed by interaction.collectIsPressedAsState()
                 Box(
                     modifier = Modifier
                         .weight(1f)
+                        .pressScale(pressed && enabled)
                         .clip(pill)
                         .semantics {
                             role = Role.Tab

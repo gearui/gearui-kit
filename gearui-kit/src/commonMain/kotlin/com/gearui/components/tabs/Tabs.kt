@@ -25,6 +25,9 @@ import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
@@ -206,6 +209,7 @@ private fun TabCell(
     // (what Material TabRow and UIKit do). The old Column + SpaceBetween pushed the text to the top
     // edge and gave the indicator its own row — titles sat off-centre and looked squeezed by the bar.
     val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier = containerModifier
             .fillMaxWidth()
@@ -214,7 +218,8 @@ private fun TabCell(
                 role = Role.Tab
                 stateDescription = state
             }
-            .clickable(enabled = !item.disabled) {
+            .rowPressFeedback(interaction = interaction, shape = shapes.md, enabled = !item.disabled)
+            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                 if (!selected) onSelect(item.id)
             },
         contentAlignment = Alignment.Center

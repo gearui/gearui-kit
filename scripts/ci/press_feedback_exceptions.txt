@@ -1,0 +1,14 @@
+# Tap targets that legitimately show nothing on press. One path per line.
+#
+# Scrim and full-screen dismissals: the thing that answers the tap is the overlay
+# leaving, and a highlight on a backdrop reads as a bug.
+overlay/OverlayHost.kt
+drawer/Drawer.kt
+imageviewer/ImageViewer.kt
+dialog/Dialog.kt
+popover/Popover.kt
+bottomsheet/BottomSheet.kt
+actionsheet/ActionSheet.kt
+# Drag controls: the thumb follows the finger, which is the feedback.
+slider/Slider.kt
+swipecell/SwipeCell.kt

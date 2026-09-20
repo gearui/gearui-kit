@@ -4,6 +4,9 @@ import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -146,6 +149,7 @@ internal fun NotificationContent(
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
+    val cardInteraction = remember { MutableInteractionSource() }
 
     // Icon and colour for the type
     val (iconName, iconColor) = when (type) {
@@ -164,7 +168,11 @@ internal fun NotificationContent(
             // Whole-card click, attached when onClick != null. The action and close
             // buttons consume their own clicks — Compose pointerInput does not bubble
             .let { base ->
-                if (onClick != null) base.clickable { onClick(); onDismiss() } else base
+                if (onClick != null) {
+                    base
+                        .rowPressFeedback(interaction = cardInteraction, shape = OverlayDefaults.panelShape)
+                        .clickable(interactionSource = cardInteraction, indication = null) { onClick(); onDismiss() }
+                } else base
             }
             .padding(Spacing.lg),
         horizontalArrangement = Arrangement.spacedBy(Spacing.md),

@@ -51,7 +51,7 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
-import com.gearui.foundation.motion.menuItemFeedback
+import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.draw.alpha
@@ -163,7 +163,7 @@ fun ContextMenu(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .menuItemFeedback(
+                                .rowPressFeedback(
                                     interaction = interaction,
                                     shape = itemShape,
                                     enabled = !item.disabled,

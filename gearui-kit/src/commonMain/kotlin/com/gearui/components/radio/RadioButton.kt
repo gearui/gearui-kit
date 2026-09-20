@@ -19,6 +19,7 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.control.ControlGeometry
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.motion.feedbackDuration
 import com.tencent.kuikly.compose.animation.core.*
@@ -48,15 +49,16 @@ fun RadioButton(
     size: RadioSize = RadioSize.MEDIUM
 ) {
     val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
     Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
         .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick),
         contentAlignment = Alignment.Center) {
-        RadioMark(selected, enabled, size)
+        RadioMark(selected, enabled, pressed, size)
     }
 }
 
 @Composable
-private fun RadioMark(selected: Boolean, enabled: Boolean, size: RadioSize) {
+private fun RadioMark(selected: Boolean, enabled: Boolean, pressed: Boolean, size: RadioSize) {
     val colors = Theme.colors
     val motion = Theme.motion
     val outer = when (size) {
@@ -66,7 +68,14 @@ private fun RadioMark(selected: Boolean, enabled: Boolean, size: RadioSize) {
     }
     val scale by animateFloatAsState(if (selected || motion.normal <= 0) 1f else FeedbackDefaults.radioExitScale,
         tween(motion.feedbackDuration(FeedbackDefaults.radioRevealDuration), easing = FeedbackDefaults.pressEasing))
-    Box(Modifier.size(outer).graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
+    // Same press scale as Checkbox: the two controls sit in the same lists.
+    val pressScale by animateFloatAsState(if (pressed && enabled && motion.normal > 0) FeedbackDefaults.selectionPressScale else 1f,
+        tween(motion.feedbackDuration(FeedbackDefaults.pressDuration), easing = FeedbackDefaults.pressEasing))
+    Box(Modifier.size(outer).graphicsLayer {
+            alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
+            scaleX = pressScale
+            scaleY = pressScale
+        }
         .clip(CircleShape).background(if (selected) colors.primary else colors.surface)
         // Semantic outline is the fallback for the reference's field shadow.
         .border(BorderWidth.thin, if (selected) colors.primary else colors.border, CircleShape), contentAlignment = Alignment.Center) {
@@ -99,11 +108,12 @@ fun RadioButtonWithLabel(
 ) {
     val colors = Theme.colors
     val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsPressedAsState()
     Row(modifier.heightIn(min = ControlGeometry.selectionTouchTarget)
         .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick)
         .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-        RadioMark(selected, enabled, size)
+        RadioMark(selected, enabled, pressed, size)
         Text(label, color = colors.foreground, style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             modifier = Modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity })
     }

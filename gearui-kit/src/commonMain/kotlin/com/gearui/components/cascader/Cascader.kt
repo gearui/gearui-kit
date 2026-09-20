@@ -5,6 +5,10 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.items
@@ -238,6 +242,7 @@ private fun CascaderDropdown(
                             selectedPath.isNotEmpty() &&
                             selectedPath.last() == option.value &&
                             selectedPath.size == levelIndex + 1
+                        val optionInteraction = remember { MutableInteractionSource() }
 
                         Row(
                             modifier = Modifier
@@ -250,7 +255,8 @@ private fun CascaderDropdown(
                                         else -> Color.Transparent
                                     }
                                 )
-                                .clickable(enabled = !option.disabled) {
+                                .rowPressFeedback(interaction = optionInteraction, shape = RectangleShape, enabled = !option.disabled)
+                                .clickable(enabled = !option.disabled, interactionSource = optionInteraction, indication = null) {
                                     val newPath = selectedPath.take(levelIndex) + option.value
                                     onSelect(newPath)
                                 }

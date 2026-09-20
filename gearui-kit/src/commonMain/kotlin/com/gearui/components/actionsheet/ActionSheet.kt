@@ -1,7 +1,7 @@
 package com.gearui.components.actionsheet
 
 import com.gearui.foundation.motion.FeedbackDefaults
-import com.gearui.foundation.motion.menuItemFeedback
+import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.gearui.components.button.Button
@@ -435,7 +435,7 @@ private fun ActionSheetListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(itemHeight)
-            .menuItemFeedback(
+            .rowPressFeedback(
                 interaction = interaction,
                 shape = RoundedCornerShape(ControlGeometry.radiusMenuItem),
                 enabled = !item.disabled,

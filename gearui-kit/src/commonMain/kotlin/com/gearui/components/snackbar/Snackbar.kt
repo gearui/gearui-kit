@@ -5,6 +5,11 @@ import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -253,14 +258,18 @@ internal fun SnackbarContent(
 
         // Action button
         if (action != null && onActionClick != null) {
+            val actionInteraction = remember { MutableInteractionSource() }
+            val actionPressed by actionInteraction.collectIsPressedAsState()
             Text(
                 text = action,
                 style = Theme.typography.bodyMedium,
                 color = colors.primary,
-                modifier = Modifier.clickable(onClick = {
-                    onActionClick()
-                    onDismiss()
-                })
+                modifier = Modifier
+                    .pressScale(actionPressed)
+                    .clickable(interactionSource = actionInteraction, indication = null, onClick = {
+                        onActionClick()
+                        onDismiss()
+                    })
             )
         }
 

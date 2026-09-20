@@ -6,6 +6,10 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -150,6 +154,7 @@ private fun CollapsePanelItem(
     val colors = Theme.colors
 
     val rotation = collapseRotation(panel.isExpanded)
+    val interaction = remember { MutableInteractionSource() }
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -158,7 +163,8 @@ private fun CollapsePanelItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onToggle)
+                .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                .clickable(interactionSource = interaction, indication = null, onClick = onToggle)
                 .padding(horizontal = if (surface) ControlGeometry.accordionSurfacePadding else ControlGeometry.accordionPadding, vertical = ControlGeometry.accordionVerticalPadding),
             horizontalArrangement = Arrangement.spacedBy(ControlGeometry.accordionTriggerGap),
             verticalAlignment = Alignment.CenterVertically
@@ -207,6 +213,7 @@ fun CollapseItem(
     val shapes = Theme.shapes
 
     val rotation = collapseRotation(expanded)
+    val headerInteraction = remember { MutableInteractionSource() }
 
     Column(
         modifier = modifier
@@ -218,8 +225,11 @@ fun CollapseItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .rowPressFeedback(interaction = headerInteraction, shape = RectangleShape, enabled = enabled)
                 .clickable(
                     enabled = enabled,
+                    interactionSource = headerInteraction,
+                    indication = null,
                     onClick = { onExpandChange(!expanded) }
                 )
                 .padding(horizontal = ControlGeometry.accordionSurfacePadding, vertical = ControlGeometry.accordionVerticalPadding),

@@ -2,9 +2,13 @@ package com.gearui.components.cell
 
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.ui.Alignment
@@ -47,6 +51,8 @@ fun Cell(
 ) {
     val colors = Theme.colors
     val tokens = if (compact) CellDefaults.Compact else CellDefaults.Default
+    val interactive = onClick != null && enabled
+    val interaction = remember { MutableInteractionSource() }
 
     Row(
         modifier = modifier
@@ -55,8 +61,13 @@ fun Cell(
             .graphicsLayer { alpha = if (enabled) 1f else tokens.disabledAlpha }
             .background(colors.surface)
             .then(
-                if (onClick != null && enabled) {
-                    Modifier.clickable { onClick() }
+                // A row that does something has to answer the finger. Cell was a bare
+                // clickable: it ran the action with nothing on screen acknowledging the
+                // touch, which reads as a dead row on a slow screen or a slow handler.
+                if (interactive) {
+                    Modifier
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                        .clickable(interactionSource = interaction, indication = null) { onClick!!() }
                 } else {
                     Modifier
                 }

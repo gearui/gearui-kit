@@ -4,6 +4,9 @@ import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -86,11 +89,13 @@ fun EmptyState(
             customAction()
         } else if (actionText != null && onAction != null) {
             Spacer(modifier = Modifier.height(Spacing.xl))
+            val actionInteraction = remember { MutableInteractionSource() }
             Box(
                 modifier = Modifier
                     .clip(shapes.sm)
                     .background(colors.primary)
-                    .clickable(onClick = onAction)
+                    .rowPressFeedback(interaction = actionInteraction, shape = shapes.sm)
+                    .clickable(interactionSource = actionInteraction, indication = null, onClick = onAction)
                     .padding(horizontal = Spacing.xl, vertical = 10.dp)
             ) {
                 Text(

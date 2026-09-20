@@ -2,7 +2,7 @@ package com.gearui.components.bottomsheet
 
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
-import com.gearui.foundation.motion.menuItemFeedback
+import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.gearui.components.button.Button
@@ -508,7 +508,7 @@ private fun BottomSheetItemRow(
         modifier = Modifier
             .fillMaxWidth()
             .height(ControlGeometry.actionSheetRow)
-            .menuItemFeedback(
+            .rowPressFeedback(
                 interaction = interaction,
                 shape = RoundedCornerShape(ControlGeometry.radiusMenuItem),
                 enabled = !item.disabled,

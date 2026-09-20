@@ -3,6 +3,11 @@ package com.gearui.components.imageviewer
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.gestures.detectTransformGestures
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -243,13 +248,16 @@ fun ImageViewer(
             }
 
             // Delete button
+            val deleteInteraction = remember { MutableInteractionSource() }
+            val deletePressed by deleteInteraction.collectIsPressedAsState()
             if (showDeleteBtn) {
                 Box(
                     modifier = Modifier
                         .size(32.dp)
                         .clip(CircleShape)
                         .background(Color.White.copy(alpha = 0.2f))
-                        .clickable {
+                        .pressScale(deletePressed)
+                        .clickable(interactionSource = deleteInteraction, indication = null) {
                             onDelete?.invoke(state.currentIndex)
                         },
                     contentAlignment = Alignment.Center

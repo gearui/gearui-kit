@@ -3,6 +3,10 @@ package com.gearui.components.transfer
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.motion.rowPressFeedback
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.items
@@ -276,11 +280,14 @@ private fun TransferListItem(
     val colors = Theme.colors
     val shapes = Theme.shapes
 
+    val interaction = remember { MutableInteractionSource() }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .clickable(enabled = !item.disabled) {
+            .rowPressFeedback(interaction = interaction, shape = RectangleShape, enabled = !item.disabled)
+            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                 onCheckedChange(!checked)
             }
             .padding(horizontal = Spacing.md),

@@ -163,7 +163,7 @@ private fun CollapsePanelItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
                 .clickable(interactionSource = interaction, indication = null, onClick = onToggle)
                 .padding(horizontal = if (surface) ControlGeometry.accordionSurfacePadding else ControlGeometry.accordionPadding, vertical = ControlGeometry.accordionVerticalPadding),
             horizontalArrangement = Arrangement.spacedBy(ControlGeometry.accordionTriggerGap),
@@ -225,7 +225,7 @@ fun CollapseItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .rowPressFeedback(interaction = headerInteraction, shape = RectangleShape, enabled = enabled)
+                .rowPressFeedback(interaction = headerInteraction, shape = RectangleShape, enabled = enabled, scale = false)
                 .clickable(
                     enabled = enabled,
                     interactionSource = headerInteraction,

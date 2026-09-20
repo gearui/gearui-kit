@@ -20,7 +20,10 @@ import com.gearui.foundation.border.BorderWidth
  *
  * Rework notes:
  * - the hardcoded colours in DividerTokens are gone
- * - Theme.colors.separator is used directly (reference `--separator`)
+ * - Theme.colors.separatorSecondary is used directly (reference
+ *   `--color-separator-secondary`): this is the hairline inside a surface, between the
+ *   rows of a list. The strong `separator` is for the sheet grabber and for dividers
+ *   that separate whole sections.
  */
 
 /**
@@ -44,7 +47,7 @@ fun Divider(
             .fillMaxWidth()
             .padding(start = insetStart, end = insetEnd)
             .height(thickness)
-            .background(colors.separator)
+            .background(colors.separatorSecondary)
     )
 }
 

@@ -61,6 +61,16 @@
 
 ### Changed
 
+- **A pressed row fills its card edge to edge.** The row press scaled by 0.98, which on
+  a full-width row left a sliver of card showing down both sides, so the press stopped
+  short of the edges. Rows now fill; the corners come from the card's own clip, so the
+  first and last rows round with it and the rows between stay square, as the platform's
+  lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
+  scale, which is what the reference scales.
+- **Row separators use a lighter hairline.** `Colors.separatorSecondary` (reference
+  `--color-separator-secondary`) lands near #D8D8D8 on white; rows were being ruled with
+  the strong `separator` near #AAA, which is meant for the sheet grabber and for
+  dividers between whole sections, and drew a grid over every card.
 - **One row implementation.** There were two: `components.cell.Cell` behind CellGroup,
   and a second internal `Cell` behind `ListItem`, with its own geometry, its own press
   state and a separator drawn by each row — which is why the last row of a ListItem list

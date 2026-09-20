@@ -88,7 +88,7 @@ private fun AnchorLink(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+            .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .padding(vertical = Spacing.xs, horizontal = Spacing.sm)
     ) {

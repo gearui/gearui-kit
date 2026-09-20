@@ -34,13 +34,20 @@ internal fun Modifier.rowPressFeedback(
     shape: Shape,
     enabled: Boolean = true,
     danger: Boolean = false,
+    /**
+     * Scale the row while pressed. True for a discrete target — a menu or action sheet
+     * option, which is an inset card inside the sheet. False for a row that spans a
+     * card: scaling it leaves a sliver of card showing down both edges, so the press
+     * stops short of the edges instead of filling the row as the platform's lists do.
+     */
+    scale: Boolean = true,
 ): Modifier {
     val colors = Theme.colors
     val pressed by interaction.collectIsPressedAsState()
     val active = pressed && enabled
     val spec = tween<Float>(FeedbackDefaults.menuItemPressDuration)
     val fill by animateFloatAsState(if (active) 1f else 0f, spec)
-    val scale by animateFloatAsState(if (active) FeedbackDefaults.menuItemPressScale else 1f, spec)
+    val pressScale by animateFloatAsState(if (active && scale) FeedbackDefaults.menuItemPressScale else 1f, spec)
     val pressedFill = if (danger) {
         colors.destructive.copy(alpha = FeedbackDefaults.menuItemDangerPressOpacity)
     } else {
@@ -49,8 +56,8 @@ internal fun Modifier.rowPressFeedback(
     val idle = pressedFill.copy(alpha = 0f)
     return this
         .graphicsLayer {
-            scaleX = scale
-            scaleY = scale
+            scaleX = pressScale
+            scaleY = pressScale
         }
         .clip(shape)
         .background(if (fill > 0f) lerp(idle, pressedFill, fill) else Color.Transparent)

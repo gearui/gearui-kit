@@ -80,7 +80,7 @@ fun Stepper(
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canDecrease) FeedbackDefaults.disabledOpacity else 1f }
                 .background(colors.surface)
-                .rowPressFeedback(interaction = decrementInteraction, shape = RectangleShape, enabled = canDecrease)
+                .rowPressFeedback(interaction = decrementInteraction, shape = RectangleShape, enabled = canDecrease, scale = false)
                 .clickable(enabled = canDecrease, interactionSource = decrementInteraction, indication = null) {
                     onValueChange((value - step).coerceAtLeast(min))
                 },
@@ -131,7 +131,7 @@ fun Stepper(
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canIncrease) FeedbackDefaults.disabledOpacity else 1f }
                 .background(colors.surface)
-                .rowPressFeedback(interaction = incrementInteraction, shape = RectangleShape, enabled = canIncrease)
+                .rowPressFeedback(interaction = incrementInteraction, shape = RectangleShape, enabled = canIncrease, scale = false)
                 .clickable(enabled = canIncrease, interactionSource = incrementInteraction, indication = null) {
                     onValueChange((value + step).coerceAtMost(max))
                 },

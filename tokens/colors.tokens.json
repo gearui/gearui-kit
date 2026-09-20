@@ -253,6 +253,12 @@
     },
     "darkSuccessSoftForeground": {
       "$value": "{reference.dark.success-soft-foreground}"
+    },
+    "lightSeparatorSecondary": {
+      "$value": "{reference.light.separator-secondary}"
+    },
+    "darkSeparatorSecondary": {
+      "$value": "{reference.dark.separator-secondary}"
     }
   },
   "reference": {
@@ -600,6 +606,17 @@
           ],
           "alpha": 1
         }
+      },
+      "separator-secondary": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8815,
+            0.0009,
+            285.89
+          ],
+          "alpha": 1
+        }
       }
     },
     "dark": {
@@ -920,6 +937,17 @@
             0.8104,
             0.1354,
             150.81
+          ],
+          "alpha": 1
+        }
+      },
+      "separator-secondary": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.3274,
+            0.005,
+            285.89
           ],
           "alpha": 1
         }

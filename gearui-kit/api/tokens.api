@@ -31,6 +31,7 @@
   secondaryForeground
   segment
   separator
+  separatorSecondary
   success
   successForeground
   successSoft
@@ -104,6 +105,7 @@
   secondaryForeground = DefaultPalette.lightButtonContent
   segment = DefaultPalette.lightSegment
   separator = DefaultPalette.lightSeparator
+  separatorSecondary = DefaultPalette.lightSeparatorSecondary
   success = DefaultPalette.lightSuccess
   successForeground = DefaultPalette.lightSuccessForeground
   successSoft = DefaultPalette.lightSuccessSoft
@@ -143,6 +145,7 @@
   secondaryForeground = DefaultPalette.darkButtonContent
   segment = DefaultPalette.darkSegment
   separator = DefaultPalette.darkSeparator
+  separatorSecondary = DefaultPalette.darkSeparatorSecondary
   success = DefaultPalette.darkSuccess
   successForeground = DefaultPalette.darkSuccessForeground
   successSoft = DefaultPalette.darkSuccessSoft
@@ -184,6 +187,7 @@
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
   colors.darkSegment = {"$type":"color","$value":"{reference.dark.segment}"}
   colors.darkSeparator = {"$type":"color","$value":"{reference.dark.separator}"}
+  colors.darkSeparatorSecondary = {"$type":"color","$value":"{reference.dark.separator-secondary}"}
   colors.darkSuccess = {"$type":"color","$value":"{reference.dark.success}"}
   colors.darkSuccessForeground = {"$type":"color","$value":"{reference.dark.success-foreground}"}
   colors.darkSuccessSoft = {"$type":"color","$value":"{reference.dark.success-soft}"}
@@ -223,6 +227,7 @@
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
   colors.lightSegment = {"$type":"color","$value":"{reference.light.segment}"}
   colors.lightSeparator = {"$type":"color","$value":"{reference.light.separator}"}
+  colors.lightSeparatorSecondary = {"$type":"color","$value":"{reference.light.separator-secondary}"}
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
   colors.lightSuccessForeground = {"$type":"color","$value":"{reference.light.success-foreground}"}
   colors.lightSuccessSoft = {"$type":"color","$value":"{reference.light.success-soft}"}
@@ -263,6 +268,7 @@
   reference.dark.segment = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.3964,0.01,285.93]}}
   reference.dark.segment-foreground = {"$type":"color","$value":"{reference.dark.foreground}"}
   reference.dark.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.4,0.006,286.033]}}
+  reference.dark.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.3274,0.005,285.89]}}
   reference.dark.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.dark.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.dark.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
@@ -303,6 +309,7 @@
   reference.light.segment = {"$type":"color","$value":"{reference.base.white}"}
   reference.light.segment-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.light.separator = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.74,0.004,286.32]}}
+  reference.light.separator-secondary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.8815,0.0009,285.89]}}
   reference.light.success = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}
   reference.light.success-foreground = {"$type":"color","$value":"{reference.base.eclipse}"}
   reference.light.success-soft = {"$type":"color","$value":{"alpha":0.15,"colorSpace":"oklch","components":[0.7329,0.1935,150.81]}}

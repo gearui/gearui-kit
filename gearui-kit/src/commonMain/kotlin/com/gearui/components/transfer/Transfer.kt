@@ -286,7 +286,7 @@ private fun TransferListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .rowPressFeedback(interaction = interaction, shape = RectangleShape, enabled = !item.disabled)
+            .rowPressFeedback(interaction = interaction, shape = RectangleShape, enabled = !item.disabled, scale = false)
             .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                 onCheckedChange(!checked)
             }

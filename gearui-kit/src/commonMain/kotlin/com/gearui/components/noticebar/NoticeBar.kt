@@ -83,7 +83,7 @@ fun NoticeBar(
             .then(
                 if (onClick != null) {
                     Modifier
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
                         .clickable(interactionSource = interaction, indication = null, onClick = onClick)
                 } else Modifier
             )

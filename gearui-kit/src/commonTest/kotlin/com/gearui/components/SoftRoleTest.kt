@@ -80,3 +80,25 @@ class SoftRoleTest {
         assertEquals(colors.foreground, alertStatusColor(colors, AlertStatus.DEFAULT))
     }
 }
+
+/** The two separator weights: the strong line, and the hairline inside a surface. */
+class SeparatorRoleTest {
+
+    @Test
+    fun theInCardHairlineIsLighterThanTheStrongSeparator() {
+        val light = Themes.Light.colors
+        // On white the row hairline lands near #D8D8D8; the strong separator near #AAA
+        // is for the sheet grabber and for dividers between whole sections.
+        assertTrue(light.separatorSecondary.red > light.separator.red)
+        assertEquals(DefaultPalette.lightSeparatorSecondary, light.separatorSecondary)
+        // Dark inverts: the hairline sits below the strong line, not above it.
+        val dark = Themes.Dark.colors
+        assertTrue(dark.separatorSecondary.red < dark.separator.red)
+    }
+
+    @Test
+    fun aHandBuiltThemeDerivesItsHairline() {
+        val brand = Themes.Light.colors.copy()
+        assertEquals(Themes.Light.colors.separatorSecondary, brand.separatorSecondary)
+    }
+}

@@ -77,7 +77,11 @@ fun Cell(
                 // touch, which reads as a dead row on a slow screen or a slow handler.
                 if (interactive) {
                     Modifier
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape)
+                        // No scale: a row spans its card, and the press fills it edge to
+                        // edge the way the platform's own lists do. The corners come from
+                        // the card's own clip, so the first and last rows round with it
+                        // and the rows between them stay square.
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
                         .clickable(interactionSource = interaction, indication = null) { onClick!!() }
                 } else {
                     Modifier

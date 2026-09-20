@@ -72,6 +72,17 @@ data class Colors(
     val segment: Color = surface,
 
     /**
+     * The hairline *inside* a surface: between the rows of a list, a card's internal
+     * rules (reference `--color-separator-secondary`).
+     *
+     * [separator] is the strong line — the sheet grabber, a divider that separates
+     * whole sections, a link's underline. Using it between list rows draws a grid over
+     * the card: on white it lands near #AAA, where the platform's own lists sit near
+     * #D8D8D8, which is what this role is.
+     */
+    val separatorSecondary: Color = lerp(surface, surfaceForeground, 0.15f),
+
+    /**
      * Soft status fills and their foregrounds (reference `--color-*-soft` and
      * `--color-*-soft-foreground`): a tinted chip or banner that still reads as text
      * rather than as a solid badge. A soft fill is the status colour at 15%; a soft
@@ -158,6 +169,7 @@ object Themes {
 
             border = DefaultPalette.lightBorder,
             separator = DefaultPalette.lightSeparator,
+            separatorSecondary = DefaultPalette.lightSeparatorSecondary,
             segment = DefaultPalette.lightSegment,
             primarySoft = DefaultPalette.lightAccentSoft,
             primarySoftForeground = DefaultPalette.lightAccentSoftForeground,
@@ -206,6 +218,7 @@ object Themes {
 
             border = DefaultPalette.darkBorder,
             separator = DefaultPalette.darkSeparator,
+            separatorSecondary = DefaultPalette.darkSeparatorSecondary,
             segment = DefaultPalette.darkSegment,
             primarySoft = DefaultPalette.darkAccentSoft,
             primarySoftForeground = DefaultPalette.darkAccentSoftForeground,

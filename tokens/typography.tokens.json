@@ -742,6 +742,377 @@
           "lineHeight": 1.5
         }
       }
+    },
+    "reference": {
+      "$type": "typography",
+      "displayLarge": {
+        "$description": "HeroUI parity: 48/48",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 48,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.0
+        }
+      },
+      "displayMedium": {
+        "$description": "HeroUI parity: 36/40",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 36,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.1111111111111112
+        }
+      },
+      "headlineLarge": {
+        "$description": "HeroUI parity: 30/36",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 30,
+            "unit": "px"
+          },
+          "fontWeight": 800,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        }
+      },
+      "headlineMedium": {
+        "$description": "HeroUI parity: 24/32",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 24,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "headlineSmall": {
+        "$description": "HeroUI parity: 20/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4
+        }
+      },
+      "titleExtraLarge": {
+        "$description": "HeroUI parity: 20/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4
+        }
+      },
+      "titleLarge": {
+        "$description": "HeroUI parity: 18/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5555555555555556
+        }
+      },
+      "titleMedium": {
+        "$description": "HeroUI parity: 16/24",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "titleSmall": {
+        "$description": "HeroUI parity: 14/20",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4285714285714286
+        }
+      },
+      "bodyExtraLarge": {
+        "$description": "HeroUI parity: 20/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4
+        }
+      },
+      "bodyLarge": {
+        "$description": "HeroUI parity: 18/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5555555555555556
+        }
+      },
+      "bodyMedium": {
+        "$description": "HeroUI parity: 16/24",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "bodySmall": {
+        "$description": "HeroUI parity: 14/20",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4285714285714286
+        }
+      },
+      "bodyExtraSmall": {
+        "$description": "HeroUI parity: 12/16",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "markLarge": {
+        "$description": "HeroUI parity: 18/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5555555555555556
+        }
+      },
+      "markMedium": {
+        "$description": "HeroUI parity: 16/24",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "markSmall": {
+        "$description": "HeroUI parity: 14/20",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4285714285714286
+        }
+      },
+      "markExtraSmall": {
+        "$description": "HeroUI parity: 12/16",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "linkLarge": {
+        "$description": "HeroUI parity: 18/28",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 18,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5555555555555556
+        }
+      },
+      "linkMedium": {
+        "$description": "HeroUI parity: 16/24",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      },
+      "linkSmall": {
+        "$description": "HeroUI parity: 14/20",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4285714285714286
+        }
+      },
+      "caption": {
+        "$description": "HeroUI parity: 12/16",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        }
+      },
+      "label": {
+        "$description": "HeroUI parity: 11/16",
+        "$value": {
+          "fontFamily": "system-ui",
+          "fontSize": {
+            "value": 11,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4545454545454546
+        }
+      }
     }
   }
 }

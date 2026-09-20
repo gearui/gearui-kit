@@ -13,6 +13,11 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.i18n.I18n
+import com.gearui.i18n.formatArgs
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
@@ -92,6 +97,7 @@ fun Rate(
     ) {
         repeat(count) { index ->
             Star(
+                label = I18n.strings.field.ratingValueFormat.formatArgs("value" to (index + 1).toString()),
                 fraction = starFraction(clamped, index, allowHalf),
                 size = size,
                 activeIcon = activeIcon,
@@ -118,6 +124,7 @@ fun Rate(
 
 @Composable
 private fun Star(
+    label: String,
     fraction: Float,
     size: Dp,
     activeIcon: String,
@@ -146,7 +153,11 @@ private fun Star(
         modifier = Modifier
             .requiredSize(size)
             .pressScale(pressed)
-            .then(gesture),
+            .then(gesture)
+            .semantics {
+                contentDescription = label
+                if (onTap != null) role = Role.Button
+            },
     ) {
         Icon(name = trackIcon, size = size, tint = if (enabled) trackColor else trackColor.copy(alpha = trackColor.alpha * FeedbackDefaults.disabledOpacity))
         if (fraction > 0f) {

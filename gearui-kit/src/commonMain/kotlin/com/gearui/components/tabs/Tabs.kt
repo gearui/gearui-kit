@@ -16,7 +16,12 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.GearLazyRow
 import com.gearui.foundation.primitives.Text
+import com.gearui.i18n.I18n
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
@@ -200,10 +205,15 @@ private fun TabCell(
     // The label is centred VERTICALLY in the cell with the underline overlaid on the bottom edge
     // (what Material TabRow and UIKit do). The old Column + SpaceBetween pushed the text to the top
     // edge and gave the indicator its own row — titles sat off-centre and looked squeezed by the bar.
+    val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
     Box(
         modifier = containerModifier
             .fillMaxWidth()
             .height(tabHeight)
+            .semantics {
+                role = Role.Tab
+                stateDescription = state
+            }
             .clickable(enabled = !item.disabled) {
                 if (!selected) onSelect(item.id)
             },

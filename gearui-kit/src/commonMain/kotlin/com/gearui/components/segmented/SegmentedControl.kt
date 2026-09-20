@@ -5,7 +5,12 @@ import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.motion.Motion
+import com.gearui.i18n.I18n
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.spring
 import com.tencent.kuikly.compose.foundation.background
@@ -160,10 +165,15 @@ private fun SegmentedTrack(
         Row(horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap)) {
             repeat(count) { index ->
                 val selected = index == selectedIndex
+                val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .clip(pill)
+                        .semantics {
+                            role = Role.Tab
+                            stateDescription = state
+                        }
                         .clickable(
                             enabled = enabled && !selected,
                             interactionSource = remember { MutableInteractionSource() },

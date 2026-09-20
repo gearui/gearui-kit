@@ -7,6 +7,9 @@ import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.i18n.I18n
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.gearui.theme.LocalInputColors
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.ExperimentalLayoutApi
@@ -144,7 +147,16 @@ private fun GroupTag(
     }
 
     if (onClick != null) {
-        PressableFeedback(onClick = onClick, enabled = enabled, shape = shape) { body() }
+        val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
+        PressableFeedback(
+            onClick = onClick,
+            enabled = enabled,
+            shape = shape,
+            // The tag's own text is the label; only the state has to be added. The
+            // Selected flag is left off on purpose: Kuikly's bridge appends its own
+            // hardcoded, always-Chinese state for it, repeating ours and ignoring the locale.
+            modifier = Modifier.semantics { stateDescription = state },
+        ) { body() }
     } else {
         com.tencent.kuikly.compose.foundation.layout.Box(Modifier.alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)) { body() }
     }

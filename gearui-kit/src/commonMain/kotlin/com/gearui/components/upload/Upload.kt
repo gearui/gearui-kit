@@ -13,6 +13,9 @@ import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.i18n.I18n
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -168,13 +171,27 @@ private fun UploadTile(
             }
         }
         if (tap != null) {
-            PressableFeedback(onClick = tap, shape = shape, modifier = Modifier.fillMaxSize()) { body() }
+            // A tile that shows its name needs no description: the name is already read
+            // from the text, and adding it here made every tile announce it twice.
+            val label = when {
+                failed -> I18n.strings.common.retry
+                item.thumbnail != null -> item.name
+                else -> null
+            }
+            PressableFeedback(
+                onClick = tap,
+                shape = shape,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .then(if (label != null) Modifier.semantics { contentDescription = label } else Modifier),
+            ) { body() }
         } else {
             body()
         }
         if (onRemove != null && enabled) {
             CloseButton(
                 onClick = { onRemove(item) },
+                contentDescription = I18n.strings.common.remove,
                 modifier = Modifier.align(Alignment.TopEnd),
                 size = ControlGeometry.uploadRemoveSize,
                 iconSize = ControlGeometry.uploadRemoveIcon,
@@ -212,9 +229,10 @@ private fun StatusOverlay(content: @Composable () -> Unit) {
 private fun AddTile(size: Dp, enabled: Boolean, onAdd: () -> Unit) {
     val colors = Theme.colors
     val shape = Theme.shapes.lg
+    val label = I18n.strings.common.add
     PressableFeedback(
         onClick = onAdd,
-        modifier = Modifier.size(size),
+        modifier = Modifier.size(size).semantics { contentDescription = label },
         enabled = enabled,
         shape = shape,
     ) {

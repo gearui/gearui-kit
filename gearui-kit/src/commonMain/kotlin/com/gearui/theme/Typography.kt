@@ -120,4 +120,21 @@ internal expect fun platformTypography(): Typography
 object Typographies {
     /** Native and Web type profiles are generated from the same DTCG source. */
     val Default: Typography = platformTypography()
+
+    /**
+     * The reference's own scale (Tailwind steps: 12/16, 14/20, 16/24, 18/28), with
+     * medium at 500 rather than 600.
+     *
+     * [Default] stays on the platform scale — 17/15/20 on iOS — because that is what a
+     * phone's own controls use and what apps built on GearUI already ship; swapping it
+     * would reflow every screen in every consumer at once. Pick this profile when
+     * matching the reference's metrics matters more than matching the platform, and pick
+     * it for the whole app rather than per screen: two scales in one product read as a
+     * bug, not as a choice.
+     *
+     * ```kotlin
+     * GearUITheme(typography = Typographies.Reference) { App() }
+     * ```
+     */
+    val Reference: Typography = TypographyProfiles.Reference
 }

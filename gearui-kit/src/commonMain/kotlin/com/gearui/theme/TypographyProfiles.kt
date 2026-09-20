@@ -32,6 +32,32 @@ internal object TypographyProfiles {
         titleSmall = TextStyle(15.sp, 18.sp, FontWeight(600)),
     )
 
+    val Reference = Typography(
+        bodyExtraLarge = TextStyle(20.sp, 28.sp, FontWeight(400)),
+        bodyExtraSmall = TextStyle(12.sp, 16.sp, FontWeight(400)),
+        bodyLarge = TextStyle(18.sp, 28.sp, FontWeight(400)),
+        bodyMedium = TextStyle(16.sp, 24.sp, FontWeight(400)),
+        bodySmall = TextStyle(14.sp, 20.sp, FontWeight(400)),
+        caption = TextStyle(12.sp, 16.sp, FontWeight(400)),
+        displayLarge = TextStyle(48.sp, 48.sp, FontWeight(800)),
+        displayMedium = TextStyle(36.sp, 40.sp, FontWeight(800)),
+        headlineLarge = TextStyle(30.sp, 36.sp, FontWeight(800)),
+        headlineMedium = TextStyle(24.sp, 32.sp, FontWeight(700)),
+        headlineSmall = TextStyle(20.sp, 28.sp, FontWeight(700)),
+        label = TextStyle(11.sp, 16.sp, FontWeight(400)),
+        linkLarge = TextStyle(18.sp, 28.sp, FontWeight(400)),
+        linkMedium = TextStyle(16.sp, 24.sp, FontWeight(400)),
+        linkSmall = TextStyle(14.sp, 20.sp, FontWeight(400)),
+        markExtraSmall = TextStyle(12.sp, 16.sp, FontWeight(500)),
+        markLarge = TextStyle(18.sp, 28.sp, FontWeight(500)),
+        markMedium = TextStyle(16.sp, 24.sp, FontWeight(500)),
+        markSmall = TextStyle(14.sp, 20.sp, FontWeight(500)),
+        titleExtraLarge = TextStyle(20.sp, 28.sp, FontWeight(700)),
+        titleLarge = TextStyle(18.sp, 28.sp, FontWeight(600)),
+        titleMedium = TextStyle(16.sp, 24.sp, FontWeight(600)),
+        titleSmall = TextStyle(14.sp, 20.sp, FontWeight(600)),
+    )
+
     val Web = Typography(
         bodyExtraLarge = TextStyle(18.sp, 27.sp, FontWeight(400)),
         bodyExtraSmall = TextStyle(13.sp, 20.sp, FontWeight(400)),

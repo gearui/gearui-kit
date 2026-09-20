@@ -30,6 +30,13 @@ data class CommonStrings(
     val noSearchResult: String,
     val networkError: String,
     val backToTop: String,
+    /** Accessibility labels for icon-only controls. */
+    val close: String,
+    val remove: String,
+    val add: String,
+    /** Accessibility state of a selectable item. */
+    val selected: String,
+    val unselected: String,
     val pullToRefresh: String,
     val releaseToRefresh: String,
     val refreshing: String,
@@ -47,6 +54,11 @@ data class CommonStringsPatch(
     val noSearchResult: String? = null,
     val networkError: String? = null,
     val backToTop: String? = null,
+    val close: String? = null,
+    val remove: String? = null,
+    val add: String? = null,
+    val selected: String? = null,
+    val unselected: String? = null,
     val pullToRefresh: String? = null,
     val releaseToRefresh: String? = null,
     val refreshing: String? = null,
@@ -64,6 +76,11 @@ val CommonStringsPatch.isEmpty: Boolean
         noSearchResult == null &&
         networkError == null &&
         backToTop == null &&
+        close == null &&
+        remove == null &&
+        add == null &&
+        selected == null &&
+        unselected == null &&
         pullToRefresh == null &&
         releaseToRefresh == null &&
         refreshing == null
@@ -82,6 +99,11 @@ fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
         noSearchResult = patch.noSearchResult ?: noSearchResult,
         networkError = patch.networkError ?: networkError,
         backToTop = patch.backToTop ?: backToTop,
+        close = patch.close ?: close,
+        remove = patch.remove ?: remove,
+        add = patch.add ?: add,
+        selected = patch.selected ?: selected,
+        unselected = patch.unselected ?: unselected,
         pullToRefresh = patch.pullToRefresh ?: pullToRefresh,
         releaseToRefresh = patch.releaseToRefresh ?: releaseToRefresh,
         refreshing = patch.refreshing ?: refreshing,
@@ -140,6 +162,8 @@ data class FieldStrings(
     val transferSourceTitle: String,
     val transferTargetTitle: String,
     val tableEmpty: String,
+    /** Accessibility label of a rating star; placeholder `{value}`. */
+    val ratingValueFormat: String,
 )
 
 data class FieldStringsPatch(
@@ -151,6 +175,7 @@ data class FieldStringsPatch(
     val transferSourceTitle: String? = null,
     val transferTargetTitle: String? = null,
     val tableEmpty: String? = null,
+    val ratingValueFormat: String? = null,
 )
 
 val FieldStringsPatch.isEmpty: Boolean
@@ -161,7 +186,8 @@ val FieldStringsPatch.isEmpty: Boolean
         switchOff == null &&
         transferSourceTitle == null &&
         transferTargetTitle == null &&
-        tableEmpty == null
+        tableEmpty == null &&
+        ratingValueFormat == null
 
 fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
     if (patch == null || patch.isEmpty) return this
@@ -174,6 +200,7 @@ fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
         transferSourceTitle = patch.transferSourceTitle ?: transferSourceTitle,
         transferTargetTitle = patch.transferTargetTitle ?: transferTargetTitle,
         tableEmpty = patch.tableEmpty ?: tableEmpty,
+        ratingValueFormat = patch.ratingValueFormat ?: ratingValueFormat,
     )
 }
 

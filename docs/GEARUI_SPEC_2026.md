@@ -216,3 +216,25 @@ library packs. App owns I18nRoot. Product providers read that runtime, not a sec
 language parameter/root. Cache resolution/normalization; empty patches return the
 original instance. Do not replace typed strings with a global string-key registry.
 See [I18N_INTEGRATION.md](I18N_INTEGRATION.md) for the concrete contract.
+
+## Accessibility
+
+Every control a user can operate must be reachable by name and by state.
+
+- **Name.** A control whose visible content is text needs nothing: the text is the
+  name. A control that shows only an icon (CloseButton, a rating star, an upload tile
+  with a thumbnail) carries `contentDescription`, from `I18n`, never a literal.
+- **State.** Selection and on/off state go in `stateDescription`, from `I18n`. Do not
+  rely on the `Selected` semantics flag for what the user hears: Kuikly's bridge
+  appends a hardcoded Chinese "已选择" for it, which repeats the state and ignores the
+  app's language.
+- **Role.** `Role.Button` on tappable non-text targets, `Role.Tab` on segmented and tab
+  cells. Kuikly maps the rest to plain text.
+- **Decoration stays silent.** An icon inside a labelled control passes a null
+  description. An empty string is not the same thing: it joins the parent's
+  announcement as a stray separator.
+
+Semantics reach the platform automatically: Kuikly's `KuiklySemantisHandler` copies
+them onto the native views whenever the semantics tree changes, so no host wiring is
+needed. The result is checkable on a simulator without a screen reader — `idb ui
+describe-all` lists every label, role and state.

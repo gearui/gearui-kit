@@ -69,7 +69,9 @@ fun Icon(
 ) {
     Image(
         painter = rememberAsyncImagePainter(model = Icons.png(name)),
-        contentDescription = "",
+        // null, not "": an empty description still joins the parent's announcement as a
+        // stray separator ("Close, "). An icon inside a labelled control is decoration.
+        contentDescription = null,
         modifier = modifier.size(size),
         colorFilter = tint?.let { ColorFilter.tint(it) }
     )

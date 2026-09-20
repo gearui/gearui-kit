@@ -53,6 +53,12 @@
   generated in OKLab from the reference mix ratios. Alert, TagGroup and NoticeBar read
   them instead of mixing colours themselves, and `withBrandAccent` carries the soft pair.
 
+- `Typographies.Reference`: the reference type scale (12/16, 14/20, 16/24, 18/28, with
+  emphasis at 500) as an opt-in profile. The default stays on the platform scale.
+- Accessibility pass: CloseButton, rating stars and upload tiles carry translated
+  labels; tags, toggle buttons, segmented controls and tabs announce their state;
+  decorative icons are silent. The contract is in the engineering spec.
+
 ### Changed
 
 - Rate redrawn: both layers use the same star glyph, the active layer is clipped per

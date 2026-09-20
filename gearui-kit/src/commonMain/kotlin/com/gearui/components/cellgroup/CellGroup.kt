@@ -20,39 +20,41 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 
 /**
- * A run of list rows, with the rules that only a container can enforce.
+ * CellGroup — a card of rows: an optional group title above it, the surface with its
+ * radius and shadow, and a separator between each pair of rows (never after the last).
  *
- * Three of them, and each was previously left to whoever assembled the list:
+ * It owns the grouping only; the rows are [com.gearui.components.cell.Cell]s, which is
+ * why a row looks and presses the same inside a group as outside one. For a long or
+ * scrolling list use [com.gearui.foundation.primitives.List], the lazy container, and
+ * keep the rows the same.
  *
- * - **The header aligns with the row text**, not with the card's edge. A header
- *   flush against the edge sits one padding step to the left of everything it
- *   labels. The sample's own component list shipped that way, which is what
- *   prompted this component.
- * - **Separators are inset** to where the text begins, so the line reads as
- *   dividing rows rather than boxing them.
- * - **The last row has no separator.** A caller placing dividers between its own
- *   rows can get the first two right and cannot get this one right without
- *   counting, so in practice it either draws a stray line above the card's
- *   bottom edge or drops separators entirely.
+ * Three rules only a container can enforce, each previously left to whoever assembled
+ * the list:
  *
- * `Cell` deliberately draws no separator of its own; a row does not know whether
- * it is last. That knowledge lives here.
+ * - **The header aligns with the row text**, not with the card's edge. A header flush
+ *   against the edge sits one padding step to the left of everything it labels.
+ * - **Separators are inset** to where the text begins, so the line reads as dividing
+ *   rows rather than boxing them.
+ * - **The last row has no separator.** A caller placing its own dividers gets the first
+ *   two right and cannot get this one right without counting, so it either draws a stray
+ *   line above the card's bottom edge or drops separators entirely.
  *
- * @param separatorInset where the separator starts. Defaults to the row's own
- *   horizontal padding, which aligns it with the text of a row that has no
- *   leading element. A group of rows **with** leading icons or avatars should
- *   pass the larger inset that aligns with their text — the group cannot measure
- *   its children to work this out.
- * @param titleTrailing optional element at the trailing end of the header row,
- *   for a count or an action.
+ * `Cell` draws no separator of its own on purpose: a row does not know whether it is
+ * last. That knowledge lives here.
+ *
+ * @param separatorInset where the separator starts. Defaults to the row's own horizontal
+ *   padding, which aligns it with the text of a row that has no leading element. A group
+ *   of rows **with** leading icons or avatars should pass the larger inset that aligns
+ *   with their text — the group cannot measure its children to work this out.
+ * @param titleTrailing optional element at the trailing end of the header row, for a
+ *   count or an action.
  */
 /**
- * Where a separator goes in a run of [count] rows.
+ * Where a separator goes in a run of rows.
  *
- * Extracted so the rule can be tested: composition is where it is applied, not
- * where it is decided. The rule is "before every row but the first", which is
- * the same thing as "after every row but the last" and is the form that needs no
- * count at the call site — the form callers kept getting wrong.
+ * Extracted so the rule can be tested: composition is where it is applied, not where it
+ * is decided. The rule is "before every row but the first", which is the same thing as
+ * "after every row but the last" and is the form that needs no count at the call site.
  */
 internal fun separatorBeforeRow(index: Int): Boolean = index > 0
 

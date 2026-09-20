@@ -68,8 +68,12 @@ find "$SAMPLE_DIR" -name '*.kt' -print0 \
   | xargs -0 perl -CSD -ne '
       next if m{^\s*(\*|//|/\*)};
       s{//.*$}{};
+      # Also a label that opens with a glyph ("📧 Messages"): the emoji is standing in
+      # for a leading icon, which is how the List page shipped emoji rows past a guard
+      # that only looked for a literal containing nothing else.
       if (m{\bicon\w*\s*=\s*"[^"]*[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{22EE}-\x{22F1}\x{25A0}-\x{25FF}]}
-          || m{"[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{22EE}-\x{22F1}\x{25A0}-\x{25FF}]\x{FE0F}?"}) {
+          || m{"[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{2190}-\x{21FF}\x{2300}-\x{23FF}\x{22EE}-\x{22F1}\x{25A0}-\x{25FF}]\x{FE0F}?"}
+          || m{"[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{2300}-\x{23FF}\x{25A0}-\x{25FF}]\x{FE0F}?\s+\S}) {
         print "$ARGV:$.\n";
       }
     } continue {

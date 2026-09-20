@@ -25,24 +25,27 @@ fun CellExample(
         onBack = onBack
     ) {
         ExampleSection(
+            useCardContainer = false,
             title = "基础用法",
-            description = "标题、说明、箭头与点击事件"
+            description = "Cell 只管一行:标题、说明、右侧值、箭头。分隔线归 CellGroup 管"
         ) {
-            Column {
-                Cell(
-                    title = "基础单元格",
-                    note = "说明文字"
-                )
-                Cell(
-                    title = "可点击单元格",
-                    note = "点击查看",
-                    arrow = true,
-                    onClick = { Toast.show("点击了 Cell") }
-                )
-                Cell(
-                    title = "带描述信息",
-                    description = "这是额外的描述文本，用于补充说明"
-                )
+            com.gearui.components.cellgroup.CellGroup(items = listOf(0, 1, 2)) { index ->
+                when (index) {
+                    0 -> Cell(
+                        title = "基础单元格",
+                        note = "说明文字"
+                    )
+                    1 -> Cell(
+                        title = "可点击单元格",
+                        note = "点击查看",
+                        arrow = true,
+                        onClick = { Toast.show("点击了 Cell") }
+                    )
+                    else -> Cell(
+                        title = "带描述信息",
+                        description = "这是额外的描述文本，用于补充说明"
+                    )
+                }
             }
         }
 

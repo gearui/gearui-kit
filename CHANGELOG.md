@@ -61,6 +61,15 @@
 
 ### Changed
 
+- **One row implementation.** There were two: `components.cell.Cell` behind CellGroup,
+  and a second internal `Cell` behind `ListItem`, with its own geometry, its own press
+  state and a separator drawn by each row — which is why the last row of a ListItem list
+  carried a line under it and why rows pressed differently on different screens.
+  `ListItem` is now a naming wrapper over `Cell`, and the duplicate is gone.
+- `List` honours `ListTokens.divider`. The flag existed, `ListTokens.Settings` promised
+  separators, and the DSL drew none. It now uses CellGroup's rule — before every row but
+  the first — so a list and a group of the same rows are ruled the same way, and a
+  section header starts a fresh run.
 - **Every tap target answers the finger.** Cell was a bare `clickable`, and so were
   tags, stepper buttons, accordion headers, pagination pages, anchor links, transfer
   rows, cascader options, navigation menu items, tabs, the notice bar, notifications,

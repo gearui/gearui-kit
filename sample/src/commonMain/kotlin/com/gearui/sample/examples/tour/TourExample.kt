@@ -152,11 +152,17 @@ fun TourExample(
                 )
 
                 if (basicTourCompleted) {
-                    Text(
-                        text = "✓ 引导已完成",
-                        style = Theme.typography.bodySmall,
-                        color = colors.success
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.success)
+                        Text(
+                            text = "引导已完成",
+                            style = Theme.typography.bodySmall,
+                            color = colors.success
+                        )
+                    }
                 }
 
                 Tour(
@@ -184,11 +190,17 @@ fun TourExample(
                 )
 
                 if (multiStepTourCompleted) {
-                    Text(
-                        text = "✓ 详细引导已完成",
-                        style = Theme.typography.bodySmall,
-                        color = colors.success
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.success)
+                        Text(
+                            text = "详细引导已完成",
+                            style = Theme.typography.bodySmall,
+                            color = colors.success
+                        )
+                    }
                 }
 
                 Tour(
@@ -216,11 +228,17 @@ fun TourExample(
                 )
 
                 if (skipTourSkipped) {
-                    Text(
-                        text = "⚠ 用户跳过了引导",
-                        style = Theme.typography.bodySmall,
-                        color = colors.warning
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(name = Icons.warning, size = IconSizes.Default.md, tint = colors.warning)
+                        Text(
+                            text = "用户跳过了引导",
+                            style = Theme.typography.bodySmall,
+                            color = colors.warning
+                        )
+                    }
                 }
 
                 Tour(
@@ -268,11 +286,21 @@ fun TourExample(
                                     .padding(horizontal = 12.dp),
                                 contentAlignment = Alignment.CenterStart
                             ) {
-                                Text(
-                                    text = "🔍 搜索...",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.mutedForeground
-                                )
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        name = Icons.magnifying_glass,
+                                        size = IconSizes.Default.md,
+                                        tint = colors.mutedForeground,
+                                    )
+                                    Text(
+                                        text = "搜索...",
+                                        style = Theme.typography.bodyMedium,
+                                        color = colors.mutedForeground
+                                    )
+                                }
                             }
 
                             Spacer(modifier = Modifier.width(8.dp))

@@ -1,42 +1,28 @@
 package com.gearui.primitives.composite
 
 import androidx.compose.runtime.Composable
+import com.gearui.components.cell.Cell
 import com.tencent.kuikly.compose.ui.Modifier
-import com.gearui.foundation.primitives.Text
-import com.gearui.theme.Theme
 
 /**
- * ListItem - fully Theme-driven semantic list row
+ * ListItem — a row named after what it holds: a title, an optional subtitle and an
+ * optional value on the right.
  *
- * ✅ Rule: the first line is always `val colors = Theme.colors`
- * ❌ Never: TextColors or hardcoded colours
+ * It is [Cell] with the arrow decided for you: a row that does something gets the
+ * chevron, a row that only reports a value does not. Everything else — geometry,
+ * colours, press feedback — is Cell's, because there is one row in this library.
  *
- * Rework notes:
- * - the TextColors dependency is gone
- * - Theme.colors.foreground / mutedForeground are used directly
+ * Which of the three to reach for:
+ * - [Cell] / ListItem: **one row**.
+ * - [com.gearui.components.cellgroup.CellGroup]: **a card of rows**, with the group
+ *   title, the surface and the separators between them.
+ * - [com.gearui.foundation.primitives.List]: **the scrolling container**, a lazy list
+ *   with `item` / `items` / `section`. It says nothing about how a row looks; its rows
+ *   are Cells too.
  *
- * 👉 This is the component product code will reach for 90% of the time
- *
- * In essence: a semantic wrapper over Cell
- *
- * Responsibilities:
- * - offers the three-part title / subtitle / value semantic API
- * - applies the text styles (no hand-written Text)
- * - applies the colours (primary / secondary)
- * - shows the chevron automatically (whenever onClick is present)
- *
- * Example:
- * ```
- * ListItem(
- *     title = "Account and security",
- *     onClick = { navigateToSecurity() }
- * )
- *
- * ListItem(
- *     title = "Notifications",
- *     subtitle = "Receive new message alerts",
- *     value = "On"
- * )
+ * ```kotlin
+ * ListItem(title = "Notifications", subtitle = "New message alerts", value = "On")
+ * ListItem(title = "Account and security", onClick = ::openSecurity)
  * ```
  */
 @Composable
@@ -50,39 +36,16 @@ fun ListItem(
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: this is always the first line
-    val colors = Theme.colors
-
     Cell(
+        title = title,
         modifier = modifier,
+        note = value,
+        description = subtitle,
+        // A row that goes somewhere says so; one that shows a value does not.
+        arrow = onClick != null && trailing == null,
         enabled = enabled,
         onClick = onClick,
-        showArrow = onClick != null && trailing == null,  // 有点击但无自定义 trailing 时显示箭头
         leading = leading,
-        title = {
-            Text(
-                text = title,
-                style = Theme.typography.bodyMedium,
-                color = colors.foreground
-            )
-        },
-        subtitle = subtitle?.let {
-            {
-                Text(
-                    text = it,
-                    style = Theme.typography.caption,
-                    color = colors.mutedForeground
-                )
-            }
-        },
-        trailing = trailing ?: value?.let {
-            {
-                Text(
-                    text = it,
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+        trailing = trailing,
     )
 }

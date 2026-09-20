@@ -22,9 +22,20 @@ import com.gearui.theme.Theme
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Cell - list cell
+ * Cell — one row: a title, an optional description, an optional value or trailing
+ * slot, and a chevron when the row leads somewhere.
  *
- * For list rows; supports a title, a description, a chevron and more
+ * This is the only row implementation in the library, so every list looks and presses
+ * the same. Its neighbours are containers, not rival rows:
+ * - [com.gearui.components.cellgroup.CellGroup] is **a card of rows** — the group
+ *   title, the surface, the radius and the separators between rows.
+ * - [com.gearui.foundation.primitives.List] is **the scrolling container** — a lazy
+ *   list with `item` / `items` / `section`, whose rows are Cells.
+ * - [com.gearui.primitives.composite.ListItem] is this row under a title/subtitle/value
+ *   name, with the chevron decided for you.
+ *
+ * A tappable Cell answers the press; a display-only one does not, because nothing
+ * happens.
  */
 @Composable
 fun Cell(

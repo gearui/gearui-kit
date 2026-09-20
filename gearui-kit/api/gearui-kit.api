@@ -2819,13 +2819,16 @@ public final class com/gearui/foundation/material/BorderLineStyle : java/lang/En
 
 public final class com/gearui/foundation/material/Material {
 	public static final field $stable I
-	public fun <init> (FF)V
+	public fun <init> (FFLcom/gearui/foundation/material/MaterialRole;)V
+	public synthetic fun <init> (FFLcom/gearui/foundation/material/MaterialRole;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()F
 	public final fun component2 ()F
-	public final fun copy (FF)Lcom/gearui/foundation/material/Material;
-	public static synthetic fun copy$default (Lcom/gearui/foundation/material/Material;FFILjava/lang/Object;)Lcom/gearui/foundation/material/Material;
+	public final fun component3 ()Lcom/gearui/foundation/material/MaterialRole;
+	public final fun copy (FFLcom/gearui/foundation/material/MaterialRole;)Lcom/gearui/foundation/material/Material;
+	public static synthetic fun copy$default (Lcom/gearui/foundation/material/Material;FFLcom/gearui/foundation/material/MaterialRole;ILjava/lang/Object;)Lcom/gearui/foundation/material/Material;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBlurRadius ()F
+	public final fun getRole ()Lcom/gearui/foundation/material/MaterialRole;
 	public final fun getTintAlpha ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2838,6 +2841,14 @@ public final class com/gearui/foundation/material/MaterialPolicy : java/lang/Enu
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/material/MaterialPolicy;
 	public static fun values ()[Lcom/gearui/foundation/material/MaterialPolicy;
+}
+
+public final class com/gearui/foundation/material/MaterialRole : java/lang/Enum {
+	public static final field Chrome Lcom/gearui/foundation/material/MaterialRole;
+	public static final field Overlay Lcom/gearui/foundation/material/MaterialRole;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/material/MaterialRole;
+	public static fun values ()[Lcom/gearui/foundation/material/MaterialRole;
 }
 
 public final class com/gearui/foundation/material/MaterialSupportKt {

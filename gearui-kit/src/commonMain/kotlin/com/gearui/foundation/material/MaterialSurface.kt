@@ -35,17 +35,19 @@ import com.tencent.kuikly.core.views.BlurView
  *
  * @param material which surface this is; see [Materials].
  * @param fallback the opaque colour to paint when the blur does not run.
+ *   Overrides the material's role, for the surfaces that have a colour of
+ *   their own (a brand-tinted Popover, a Toast by type).
  *
- *   Defaults to `Theme.colors.surface`, which is right for sheets and popovers.
+ *   Defaults to the material's own role, which is right for sheets and
+ *   popovers.
  *   It is a parameter because it is **not** right for every surface: NavBar
  *   deliberately paints `colors.background`, since in a dark theme `surface`
  *   (#121212) is one step lighter than `background` (#0A0A0A) and draws a
  *   visible band across the top that does not meet the status bar. That was a
  *   fixed bug; a material whose fallback ignored it would put it back.
  *
- *   The *tint* over a running blur stays `Theme.colors.surface` for every
- *   material (§11.2) — a blurred backdrop is low-frequency enough that one tint
- *   works, which is the whole reason the fallback needs its own answer.
+ *   The *tint* over a running blur follows the same role, so a floating
+ *   surface reads the same whether or not the blur ran.
  * @param shape clipped shape. Clip the blur, not just the content, or the blur
  *   squares off the corners of a rounded sheet.
  */
@@ -60,7 +62,14 @@ fun MaterialSurface(
     content: @Composable () -> Unit,
 ) {
     val colors = Theme.colors
-    val opaque = fallback ?: colors.surface
+    // The material names its role; the theme gives it a value. Floating
+    // surfaces are `popover` (the reference's `--color-overlay`), bars are the
+    // page's own base colour.
+    val roleColor = when (material.role) {
+        MaterialRole.Chrome -> colors.background
+        MaterialRole.Overlay -> colors.popover
+    }
+    val opaque = fallback ?: roleColor
     val blurred = isMaterialBlurEnabled()
 
     DecoratedSurface(
@@ -86,7 +95,7 @@ fun MaterialSurface(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .background(colors.surface.copy(alpha = material.tintAlpha))
+                    .background(roleColor.copy(alpha = material.tintAlpha))
             )
         } else {
             Box(

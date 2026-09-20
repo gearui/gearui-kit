@@ -59,7 +59,6 @@ internal fun <T> SelectPanel(
     MaterialSurface(
         material = Materials.Popover,
         shape = shape,
-        fallback = colors.popover,
         modifier = Modifier.width(width).height(layout.height.dp),
     ) {
     Box(

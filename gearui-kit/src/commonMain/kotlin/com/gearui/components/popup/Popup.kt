@@ -146,7 +146,6 @@ internal fun PopupSurface(
     MaterialSurface(
         material = Materials.Popover,
         shape = OverlayDefaults.panelShape,
-        fallback = colors.popover,
         modifier = modifier,
     ) {
         content()

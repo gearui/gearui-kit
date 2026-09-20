@@ -40,3 +40,34 @@ screenshots illustrate customization goals, not shipped Native presets.
 
 The former stage-by-stage execution diary and Tamagui-era implementation counts
 are retained in `_archive/pre-beta3/`; they are not current acceptance.
+
+## Recorded Deviations
+
+Values that do not match the locked reference, with the reason and the measurement
+behind them. A deviation not listed here is a bug.
+
+### Overlay elevation on a full-bleed `surface` page
+
+The reference separates a floating surface from the page by **colour**: its pages sit
+on `--background`, so `--overlay` (= `--surface` in the default theme) already reads a
+step above them, and `--overlay-shadow` is decorative — 2–3% black in light, a 20% white
+inset hairline in dark. That holds only while the page is `background`. A page that
+paints `surface` edge to edge — a conversation list whose every row is a surface — puts
+the menu on exactly its own colour, and what is left is a shadow that was never doing
+the work.
+
+The reference's own worked theme in `docs/theming.md` shows the intended lever: it
+gives `--overlay` a value distinct from and lighter than `--surface` in both modes
+(light `0.998` vs `0.98`, dark `0.23` vs `0.2`). The two roles are meant to differ;
+the default theme collapsing them is a property of its page layering, not a rule.
+
+So:
+
+| | Reference default | GearUI | Why |
+| --- | --- | --- | --- |
+| Dark `overlay` | `oklch(0.2103 …)`, = `surface` | `oklch(0.243 …)` | The documented lever. Over a `surface` card, measured (32,32,35) against (24,24,27) — was identical. |
+| Light `overlay` | `white`, = `surface` | `white` | Unchanged: `surface` is already pure white, so light has no headroom above it. |
+| Light `overlay-shadow` | 2% / 1% / 3% black | 6% / 3% / 10% | The only cue left in light. Measured: the edge on white reaches level 231, from 247 at reference values. Geometry (offsets, blur) is unchanged. |
+
+Dark needs no shadow change: the reference's inset hairline renders and measures
+(42,42,44) on the menu edge.

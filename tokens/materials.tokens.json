@@ -105,7 +105,7 @@
               0,
               0
             ],
-            "alpha": 0.02
+            "alpha": 0.06
           },
           "offsetX": {
             "value": 0,
@@ -133,7 +133,7 @@
               0,
               0
             ],
-            "alpha": 0.01
+            "alpha": 0.03
           },
           "offsetX": {
             "value": 0,
@@ -161,7 +161,7 @@
               0,
               0
             ],
-            "alpha": 0.03
+            "alpha": 0.1
           },
           "offsetX": {
             "value": 0,

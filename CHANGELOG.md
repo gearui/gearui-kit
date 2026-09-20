@@ -67,6 +67,15 @@
   first and last rows round with it and the rows between stay square, as the platform's
   lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
   scale, which is what the reference scales.
+- **A floating surface paints the overlay role, not `surface`.** The reference draws the
+  line by elevation — menu, popover, dialog, sheet and toast all paint `--color-overlay`
+  — and half of ours had drifted onto `surface`, ContextMenu and BottomSheet among them.
+  A `Material` now names its role and `MaterialSurface` resolves it, so the answer lives
+  in one place instead of at each call site.
+- **A menu is visible over a full-bleed `surface` page.** Dark lifts the overlay role a
+  step above surface, the lever the reference's own worked theme uses; light strengthens
+  the overlay shadow, since `surface` is already pure white and has no headroom left.
+  Both measured on the simulator and recorded in `HEROUI_NATIVE_ALIGNMENT.md`.
 - **A pressed row swallows the lines on both sides of it**, as the platform's lists do.
   A separator belongs to the pair of rows it sits between, so the container — CellGroup
   or List — hides it while either of them is pressed; left showing, it cut the highlight

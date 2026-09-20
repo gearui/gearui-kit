@@ -128,7 +128,7 @@ fun Popover(
     val backgroundColor = remember(theme, colors) {
         when (theme) {
             PopoverTheme.DARK -> colors.foreground
-            PopoverTheme.LIGHT -> colors.surface
+            PopoverTheme.LIGHT -> colors.popover
             PopoverTheme.BRAND -> colors.primary
             PopoverTheme.SUCCESS -> colors.success
             PopoverTheme.WARNING -> colors.warning

@@ -931,6 +931,17 @@ final enum class com.gearui.foundation.material/MaterialPolicy : kotlin/Enum<com
     final fun values(): kotlin/Array<com.gearui.foundation.material/MaterialPolicy> // com.gearui.foundation.material/MaterialPolicy.values|values#static(){}[0]
 }
 
+final enum class com.gearui.foundation.material/MaterialRole : kotlin/Enum<com.gearui.foundation.material/MaterialRole> { // com.gearui.foundation.material/MaterialRole|null[0]
+    enum entry Chrome // com.gearui.foundation.material/MaterialRole.Chrome|null[0]
+    enum entry Overlay // com.gearui.foundation.material/MaterialRole.Overlay|null[0]
+
+    final val entries // com.gearui.foundation.material/MaterialRole.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.gearui.foundation.material/MaterialRole> // com.gearui.foundation.material/MaterialRole.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.gearui.foundation.material/MaterialRole // com.gearui.foundation.material/MaterialRole.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.gearui.foundation.material/MaterialRole> // com.gearui.foundation.material/MaterialRole.values|values#static(){}[0]
+}
+
 final enum class com.gearui.gestures/DismissDirection : kotlin/Enum<com.gearui.gestures/DismissDirection> { // com.gearui.gestures/DismissDirection|null[0]
     enum entry Down // com.gearui.gestures/DismissDirection.Down|null[0]
     enum entry Left // com.gearui.gestures/DismissDirection.Left|null[0]
@@ -2449,16 +2460,19 @@ final class com.gearui.foundation.list/CellTokens { // com.gearui.foundation.lis
 }
 
 final class com.gearui.foundation.material/Material { // com.gearui.foundation.material/Material|null[0]
-    constructor <init>(kotlin/Float, kotlin/Float) // com.gearui.foundation.material/Material.<init>|<init>(kotlin.Float;kotlin.Float){}[0]
+    constructor <init>(kotlin/Float, kotlin/Float, com.gearui.foundation.material/MaterialRole = ...) // com.gearui.foundation.material/Material.<init>|<init>(kotlin.Float;kotlin.Float;com.gearui.foundation.material.MaterialRole){}[0]
 
     final val blurRadius // com.gearui.foundation.material/Material.blurRadius|{}blurRadius[0]
         final fun <get-blurRadius>(): kotlin/Float // com.gearui.foundation.material/Material.blurRadius.<get-blurRadius>|<get-blurRadius>(){}[0]
+    final val role // com.gearui.foundation.material/Material.role|{}role[0]
+        final fun <get-role>(): com.gearui.foundation.material/MaterialRole // com.gearui.foundation.material/Material.role.<get-role>|<get-role>(){}[0]
     final val tintAlpha // com.gearui.foundation.material/Material.tintAlpha|{}tintAlpha[0]
         final fun <get-tintAlpha>(): kotlin/Float // com.gearui.foundation.material/Material.tintAlpha.<get-tintAlpha>|<get-tintAlpha>(){}[0]
 
     final fun component1(): kotlin/Float // com.gearui.foundation.material/Material.component1|component1(){}[0]
     final fun component2(): kotlin/Float // com.gearui.foundation.material/Material.component2|component2(){}[0]
-    final fun copy(kotlin/Float = ..., kotlin/Float = ...): com.gearui.foundation.material/Material // com.gearui.foundation.material/Material.copy|copy(kotlin.Float;kotlin.Float){}[0]
+    final fun component3(): com.gearui.foundation.material/MaterialRole // com.gearui.foundation.material/Material.component3|component3(){}[0]
+    final fun copy(kotlin/Float = ..., kotlin/Float = ..., com.gearui.foundation.material/MaterialRole = ...): com.gearui.foundation.material/Material // com.gearui.foundation.material/Material.copy|copy(kotlin.Float;kotlin.Float;com.gearui.foundation.material.MaterialRole){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.gearui.foundation.material/Material.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.gearui.foundation.material/Material.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.gearui.foundation.material/Material.toString|toString(){}[0]

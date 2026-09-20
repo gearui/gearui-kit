@@ -130,7 +130,6 @@ internal fun DialogSurface(
     MaterialSurface(
         material = Materials.Popover,
         shape = OverlayDefaults.modalShape,
-        fallback = colors.popover,
         modifier = modifier
             .width(width)
             // 🔴 Height must HUG the content, and be capped.

@@ -162,7 +162,15 @@
       "$value": "{reference.dark.warning-foreground}"
     },
     "darkOverlay": {
-      "$value": "{reference.dark.overlay}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.243,
+          0.0059,
+          285.89
+        ],
+        "alpha": 1
+      }
     },
     "lightBackdrop": {
       "$value": "{reference.light.backdrop}"

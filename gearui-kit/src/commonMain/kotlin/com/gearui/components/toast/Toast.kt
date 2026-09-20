@@ -196,7 +196,6 @@ private fun ToastSurface(toast: ToastData) {
     MaterialSurface(
         material = Materials.Popover,
         shape = OverlayDefaults.panelShape,
-        fallback = colors.popover,
     ) {
     Box(
         modifier = Modifier.padding(ControlGeometry.toastPadding),
@@ -346,8 +345,7 @@ fun LocalToast(
         MaterialSurface(
             material = Materials.Popover,
             shape = OverlayDefaults.panelShape,
-            fallback = colors.popover,
-            modifier = Modifier.widthIn(min = 120.dp, max = 280.dp),
+                modifier = Modifier.widthIn(min = 120.dp, max = 280.dp),
         ) {
         Box(
             modifier = Modifier.padding(ControlGeometry.toastPadding),

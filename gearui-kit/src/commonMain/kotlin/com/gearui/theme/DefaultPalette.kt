@@ -26,7 +26,7 @@ internal object DefaultPalette {
     val darkInputHoverBorder = Color(0f, 0f, 0f, 0f)
     val darkMuted = Color(0.152896917f, 0.152886848f, 0.165770248f, 1f)
     val darkMutedForeground = Color(0.622613326f, 0.62256156f, 0.663359593f, 1f)
-    val darkOverlay = Color(0.094083545f, 0.094081351f, 0.105924776f, 1f)
+    val darkOverlay = Color(0.123783054f, 0.123799782f, 0.136087447f, 1f)
     val darkPressHighlight = Color(0.8313725490196079f, 0.8313725490196079f, 0.8470588235294118f, 1f)
     val darkPrimary = Color(0.016599386f, 0.52157564f, 0.968539356f, 1f)
     val darkPrimaryForeground = Color(0.988276211f, 0.988276211f, 0.988276211f, 1f)

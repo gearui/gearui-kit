@@ -238,3 +238,23 @@ Semantics reach the platform automatically: Kuikly's `KuiklySemantisHandler` cop
 them onto the native views whenever the semantics tree changes, so no host wiring is
 needed. The result is checkable on a simulator without a screen reader — `idb ui
 describe-all` lists every label, role and state.
+
+### Press feedback belongs to the component
+
+`LocalIndication` cannot deliver it. Kuikly creates and delegates the indication node —
+the interaction source fires, the node attaches — but nothing it does reaches the view:
+measured on the simulator, neither a draw over the content, nor a draw under it, nor a
+layer transform from a `LayoutModifierNode` produced a single changed pixel, with an
+opaque red fill as the probe. The platform's own default indication draws over the
+content, which is why a plain `Modifier.clickable {}` answers a press with nothing.
+
+So the response lives inside the components, and every tappable thing is one:
+
+- A row is a `Cell`; a button is a `Button`; a choice is a `SegmentedControl` or a
+  `ToggleButton`.
+- Anything else that has to be tappable is wrapped in `PressableFeedback`.
+- A component with its own surface may instead use `rowPressFeedback` (fill) or
+  `pressScale`, since it is the one that knows its shape and background.
+
+`check_press_feedback.sh` fails the build on a tap target with no response;
+`check_sample_uses_components.sh` fails it on a raw tap modifier anywhere in the sample.

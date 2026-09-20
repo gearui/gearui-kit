@@ -1,10 +1,8 @@
 package com.gearui.sample.pages
 
+import com.gearui.foundation.interaction.PressableFeedback
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.interaction.pressScale
 import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.Spacer
 import com.gearui.runtime.LocalRuntimeEnvironment
@@ -272,13 +270,14 @@ private fun RadioCardItem(
     val cardBackground = if (selected) colors.muted else colors.surface
     val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
 
-    val interaction = remember { MutableInteractionSource() }
-    val pressed by interaction.collectIsPressedAsState()
-
+    PressableFeedback(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+        shape = Theme.shapes.lg,
+    ) {
     Row(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .pressScale(pressed)
             .clip(Theme.shapes.lg)
             .background(cardBackground)
             .border(
@@ -286,7 +285,6 @@ private fun RadioCardItem(
                 color = cardBorderColor,
                 shape = Theme.shapes.lg
             )
-            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .padding(Spacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -311,6 +309,7 @@ private fun RadioCardItem(
             onClick = onClick
         )
     }
+    }
 }
 
 
@@ -328,12 +327,13 @@ private fun RadioCardItemCompact(
     val cardBackground = if (selected) colors.muted else colors.surface
     val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
 
-    val rowInteraction = remember { MutableInteractionSource() }
-    val rowPressed by rowInteraction.collectIsPressedAsState()
-
+    PressableFeedback(
+        onClick = onClick,
+        modifier = modifier,
+        shape = Theme.shapes.lg,
+    ) {
     Row(
-        modifier = modifier
-            .pressScale(rowPressed)
+        modifier = Modifier
             .clip(Theme.shapes.lg)
             .background(cardBackground)
             .border(
@@ -341,7 +341,6 @@ private fun RadioCardItemCompact(
                 color = cardBorderColor,
                 shape = Theme.shapes.lg
             )
-            .clickable(interactionSource = rowInteraction, indication = null, onClick = onClick)
             .padding(horizontal = Spacing.lg, vertical = Spacing.lg),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -355,6 +354,7 @@ private fun RadioCardItemCompact(
             selected = selected,
             onClick = onClick
         )
+    }
     }
 }
 

@@ -80,6 +80,10 @@
   separators, and the DSL drew none. It now uses CellGroup's rule — before every row but
   the first — so a list and a group of the same rows are ruled the same way, and a
   section header starts a fresh run.
+- **The sample builds every screen out of the kit.** It had been hand-rolling what the
+  components already provide — a row, a segmented choice, an icon button — which is how
+  the home list ended up with no press response. Raw tap modifiers are gone from the
+  sample and `check_sample_uses_components.sh` keeps them out.
 - **Every tap target answers the finger**, including the sample's own screens. The
   press-feedback guard covered the library only, so the demo home page — the first list
   anyone touches — kept a hand-built row with a bare clickable and a "›" character for a

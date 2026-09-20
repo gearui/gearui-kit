@@ -1,10 +1,8 @@
 package com.gearui.sample.examples.radio
 
+import com.gearui.foundation.interaction.PressableFeedback
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.interaction.pressScale
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -189,15 +187,13 @@ fun RadioExample(
                     label = "单选框在右侧"
                 )
                 // Radio on the left
-                val leftRowInteraction = remember { MutableInteractionSource() }
-                val leftRowPressed by leftRowInteraction.collectIsPressedAsState()
+                PressableFeedback(
+                    onClick = { positionSelected2 = !positionSelected2 },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .pressScale(leftRowPressed)
-                        .clickable(interactionSource = leftRowInteraction, indication = null) {
-                            positionSelected2 = !positionSelected2
-                        }
                         .padding(vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -211,6 +207,7 @@ fun RadioExample(
                         selected = positionSelected2,
                         onClick = { positionSelected2 = !positionSelected2 }
                     )
+                }
                 }
             }
         }
@@ -301,20 +298,16 @@ private fun RadioCardItem(
 ) {
     val colors = Theme.colors
 
-    val cardInteraction = remember { MutableInteractionSource() }
-    val cardPressed by cardInteraction.collectIsPressedAsState()
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .pressScale(cardPressed)
             .background(colors.surface)
             .border(
                 width = if (selected) 1.5.dp else 1.dp,
                 color = if (selected) colors.primary else colors.border,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable(interactionSource = cardInteraction, indication = null, onClick = onClick)
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -353,8 +346,13 @@ private fun RadioCardItemCompact(
 ) {
     val colors = Theme.colors
 
+    PressableFeedback(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp),
+    ) {
     Row(
-        modifier = modifier
+        modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .background(colors.surface)
             .border(
@@ -362,7 +360,6 @@ private fun RadioCardItemCompact(
                 color = if (selected) colors.primary else colors.border,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -377,5 +374,6 @@ private fun RadioCardItemCompact(
             onClick = onClick,
             size = RadioSize.SMALL
         )
+    }
     }
 }

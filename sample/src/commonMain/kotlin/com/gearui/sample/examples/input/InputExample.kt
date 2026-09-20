@@ -1,10 +1,8 @@
 package com.gearui.sample.examples.input
 
+import com.gearui.foundation.interaction.PressableFeedback
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.interaction.pressScale
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.typography.IconSizes
@@ -192,22 +190,20 @@ fun InputExample(
 
                 // With an icon button
                 var value3 by remember { mutableStateOf("") }
-                val iconInteraction = remember { MutableInteractionSource() }
-                val iconPressed by iconInteraction.collectIsPressedAsState()
+
                 Input(
                     value = value3,
                     onValueChange = { value3 = it },
                     label = "标签文字",
                     placeholder = "请输入文字",
                     suffix = {
-                        Icon(
-                            name = Icons.user,
-                            size = IconSizes.Default.md,
-                            tint = Theme.colors.foreground,
-                            modifier = Modifier
-                                .pressScale(iconPressed)
-                                .clickable(interactionSource = iconInteraction, indication = null) { Toast.show("点击图标") }
-                        )
+                        PressableFeedback(onClick = { Toast.show("点击图标") }) {
+                            Icon(
+                                name = Icons.user,
+                                size = IconSizes.Default.md,
+                                tint = Theme.colors.foreground,
+                            )
+                        }
                     }
                 )
             }
@@ -261,8 +257,7 @@ fun InputExample(
                 // Password
                 var password by remember { mutableStateOf("") }
                 var showPassword by remember { mutableStateOf(false) }
-                val eyeInteraction = remember { MutableInteractionSource() }
-                val eyePressed by eyeInteraction.collectIsPressedAsState()
+
                 Input(
                     value = password,
                     onValueChange = { password = it },
@@ -270,13 +265,12 @@ fun InputExample(
                     placeholder = "请输入密码",
                     isPassword = !showPassword,
                     suffix = {
-                        Icon(
-                            name = if (showPassword) Icons.eye else Icons.eye_slash,
-                            size = IconSizes.Default.md,
-                            modifier = Modifier
-                                .pressScale(eyePressed)
-                                .clickable(interactionSource = eyeInteraction, indication = null) { showPassword = !showPassword }
-                        )
+                        PressableFeedback(onClick = { showPassword = !showPassword }) {
+                            Icon(
+                                name = if (showPassword) Icons.eye else Icons.eye_slash,
+                                size = IconSizes.Default.md,
+                            )
+                        }
                     }
                 )
 
@@ -336,14 +330,16 @@ fun InputExample(
                                     .height(24.dp)
                                     .background(colors.border)
                             )
-                            Text(
-                                text = if (countdown > 0) "重发(${countdown}秒)" else "发送验证码",
-                                style = Theme.typography.bodyMedium,
-                                color = if (countdown > 0) colors.mutedForeground else colors.primary,
-                                modifier = Modifier.clickable(enabled = countdown == 0) {
-                                    Toast.show("发送验证码")
-                                }
-                            )
+                            PressableFeedback(
+                                onClick = { Toast.show("发送验证码") },
+                                enabled = countdown == 0,
+                            ) {
+                                Text(
+                                    text = if (countdown > 0) "重发(${countdown}秒)" else "发送验证码",
+                                    style = Theme.typography.bodyMedium,
+                                    color = if (countdown > 0) colors.mutedForeground else colors.primary,
+                                )
+                            }
                         }
                     }
                 )

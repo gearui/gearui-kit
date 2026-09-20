@@ -1,10 +1,8 @@
 package com.gearui.sample.examples.sidebar
 
+import com.gearui.foundation.interaction.PressableFeedback
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.interaction.pressScale
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.typography.IconSizes
@@ -178,15 +176,11 @@ private fun SidebarItem(
             .background(backgroundColor)
     }
 
-    val interaction = remember { MutableInteractionSource() }
-    val pressed by interaction.collectIsPressedAsState()
-
-    Box(
-        modifier = itemModifier
-            .pressScale(pressed)
-            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(vertical = Spacing.lg, horizontal = Spacing.md)
+    PressableFeedback(
+        onClick = onClick,
+        modifier = itemModifier,
     ) {
+        Box(modifier = Modifier.padding(vertical = Spacing.lg, horizontal = Spacing.md)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -218,6 +212,7 @@ private fun SidebarItem(
                     .background(colors.primary)
             )
         }
+        }
     }
 }
 
@@ -247,17 +242,16 @@ private fun SidebarItemWithIcon(
         else -> unSelectedTextColor ?: colors.foreground
     }
 
-    val railInteraction = remember { MutableInteractionSource() }
-    val railPressed by railInteraction.collectIsPressedAsState()
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .pressScale(railPressed)
-            .background(backgroundColor)
-            .clickable(interactionSource = railInteraction, indication = null, onClick = onClick)
-            .padding(vertical = Spacing.md, horizontal = Spacing.sm)
+    PressableFeedback(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+                .padding(vertical = Spacing.md, horizontal = Spacing.sm)
+        ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -296,6 +290,7 @@ private fun SidebarItemWithIcon(
                     .height(16.dp)
                     .background(colors.primary)
             )
+        }
         }
     }
 }

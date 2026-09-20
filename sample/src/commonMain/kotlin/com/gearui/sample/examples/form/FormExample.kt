@@ -1,10 +1,9 @@
 package com.gearui.sample.examples.form
 
+import com.gearui.foundation.interaction.PressableFeedback
+import com.gearui.components.segmented.SegmentedControl
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.interaction.pressScale
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -197,50 +196,16 @@ fun FormExample(
             description = "基础表单"
         ) {
             // Layout toggle buttons
-            val horizontalInteraction = remember { MutableInteractionSource() }
-            val horizontalPressed by horizontalInteraction.collectIsPressedAsState()
-            val verticalInteraction = remember { MutableInteractionSource() }
-            val verticalPressed by verticalInteraction.collectIsPressedAsState()
-            Row(
+            // The kit's own control for a two-way choice, instead of two hand-built
+            // boxes: it carries the selection animation and the press response.
+            SegmentedControl(
+                options = listOf(true, false),
+                selectedOption = isHorizontal,
+                onOptionSelected = { isHorizontal = it },
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                // Horizontal layout button
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(40.dp)
-                        .clip(CircleShape)
-                        .background(if (isHorizontal) colors.muted else colors.muted)
-                        .pressScale(horizontalPressed)
-                        .clickable(enabled = !formDisabled, interactionSource = horizontalInteraction, indication = null) { isHorizontal = true },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "水平排布",
-                        style = Theme.typography.bodyMedium,
-                        color = if (isHorizontal) colors.primary else colors.foreground
-                    )
-                }
-
-                // Vertical layout button
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(40.dp)
-                        .clip(CircleShape)
-                        .background(if (!isHorizontal) colors.muted else colors.muted)
-                        .pressScale(verticalPressed)
-                        .clickable(enabled = !formDisabled, interactionSource = verticalInteraction, indication = null) { isHorizontal = false },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "竖直排布",
-                        style = Theme.typography.bodyMedium,
-                        color = if (!isHorizontal) colors.primary else colors.foreground
-                    )
-                }
-            }
+                enabled = !formDisabled,
+                labelProvider = { if (it) "水平排布" else "竖直排布" },
+            )
 
             Spacer(modifier = Modifier.height(Spacing.lg))
 
@@ -312,12 +277,11 @@ fun FormExample(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         genderOptions.forEach { (label, value) ->
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.clickable(enabled = !formDisabled) {
-                                    gender = value
-                                }
+                            PressableFeedback(
+                                onClick = { gender = value },
+                                enabled = !formDisabled,
                             ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
                                 RadioButton(
                                     selected = gender == value,
                                     onClick = { gender = value },
@@ -330,6 +294,7 @@ fun FormExample(
                                     color = colors.foreground,
                                     modifier = Modifier.disabledAppearance(formDisabled)
                                 )
+                            }
                             }
                         }
                     }
@@ -369,7 +334,6 @@ fun FormExample(
                             .clip(FieldDefaults.shape)
                             .border(FieldSizeTokens.Medium.borderWidth, colors.input, FieldDefaults.shape)
                             .background(colors.surface)
-                            .clickable(enabled = !formDisabled) { showPlacePicker = true }
                             .padding(horizontal = 12.dp),
                         contentAlignment = Alignment.CenterStart
                     ) {

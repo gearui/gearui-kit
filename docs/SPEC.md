@@ -11,6 +11,7 @@ entry point, not a release approval or a claim of completed visual parity.
 | [Engineering contract](GEARUI_SPEC_2026.md) | Runtime, insets, API, resources, i18n and release gates | Token values or upstream appearance |
 | [Token format and adapter](../tokens/README.md) | DTCG 2025.10 data support, conversion and renderer limits | Component lifecycle or an exhaustive conformance claim |
 | [Reference map](HEROUI_NATIVE_ALIGNMENT.md) | Pinned open-source HeroUI Native source locations | Paid/Web preset promises or completion claims |
+| [Component coverage](COMPONENT_COVERAGE_SPEC.md) | Component inventory against HeroUI v3 and HeroUI Native, absorption priorities | Per-component visual values or acceptance results |
 | [CI mapping](SPEC_CI_MAPPING.md) | Exact executable checks and their limits | Repeating design rules |
 | [Migration](MIGRATION_1_0.md) | Consumer source/binary changes | Release approval |
 | [Release procedure](RELEASING.md) | Candidate, artifact and publication workflow | Automatic permission to publish |

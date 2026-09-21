@@ -1,6 +1,7 @@
 package com.gearui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.RememberObserver
 import androidx.compose.runtime.Stable
@@ -14,6 +15,8 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import com.gearui.overlay.OverlayManager
+import com.gearui.gestures.LocalPageSwipeBackGate
+import com.gearui.gestures.PageSwipeBackGate
 import com.gearui.gestures.SwipeBackConfig
 import com.gearui.gestures.swipeBack
 import com.tencent.kuikly.compose.BackHandler
@@ -228,6 +231,25 @@ fun <R : NavRoute> Navigator(
                         base.swipeBack(
                             enabled = true,
                             config = swipeConfig,
+                            // Page-first: while the foreground page can still swipe
+                            // backwards itself (a pager off its first page), the
+                            // router stands down and the page owns the drag. At the
+                            // bottom of the stack the router has nowhere to go
+                            // either, so it stands down there as well — claiming the
+                            // drag only to no-op in beginSwipe would swallow the
+                            // page's own over-scroll tension on its first page.
+                            deferToPage = {
+                                state.activePageSwipeGate?.canSwipeBack?.invoke() == true ||
+                                    !state.hasBackStack
+                            },
+                            // A foreground page that cannot consume the right-swipe
+                            // (no horizontal pager, or a pager already at its
+                            // leftmost) hands the drag to the router from anywhere
+                            // on the screen, so the whole page tracks the finger.
+                            fullWidthWhenPageAtLeftmost = {
+                                state.hasBackStack &&
+                                    state.activePageSwipeGate?.canSwipeBack?.invoke() != true
+                            },
                             onStart = { state.beginSwipe() },
                             // 1:1 finger tracking: the page moves exactly as far as the finger, as WeChat does.
                             onProgress = { _, dragX -> state.updateSwipeByPixels(dragX) },
@@ -276,14 +298,30 @@ fun <R : NavRoute> Navigator(
                                 }
                                 .let { m -> if (opaque) m.background(screenBackground) else m },
                         ) {
-                            val scope = EntryScopeImpl(
-                                entry = layer.entry,
-                                controller = state,
-                                isTop = layer.role != NavLayerRole.Below,
-                                isForeground = layer.role == NavLayerRole.Front,
-                                retained = state.retainedOf(layer.entry.key),
-                            )
-                            scope.content(layer.entry)
+                            // Page-first swipe-back arbitration. Each layer owns a
+                            // gate; the foreground layer publishes it into the state
+                            // so the app-level back can consult it on touch-down.
+                            val pageGate = remember { PageSwipeBackGate() }
+                            DisposableEffect(layer.role) {
+                                if (layer.role == NavLayerRole.Front) {
+                                    state.activePageSwipeGate = pageGate
+                                }
+                                onDispose {
+                                    if (state.activePageSwipeGate === pageGate) {
+                                        state.activePageSwipeGate = null
+                                    }
+                                }
+                            }
+                            CompositionLocalProvider(LocalPageSwipeBackGate provides pageGate) {
+                                val scope = EntryScopeImpl(
+                                    entry = layer.entry,
+                                    controller = state,
+                                    isTop = layer.role != NavLayerRole.Below,
+                                    isForeground = layer.role == NavLayerRole.Front,
+                                    retained = state.retainedOf(layer.entry.key),
+                                )
+                                scope.content(layer.entry)
+                            }
                         }
                     }
                 }
@@ -380,6 +418,8 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     override fun onForgotten() = retainedStore.disposeAll()
     override fun onAbandoned() = retainedStore.disposeAll()
 
+
+    internal var activePageSwipeGate: PageSwipeBackGate? = null
 
     private val _entries = mutableStateListOf(
         NavEntry<R>(route = initialRoute, key = generateKey(initialRoute.routeName, 0)),

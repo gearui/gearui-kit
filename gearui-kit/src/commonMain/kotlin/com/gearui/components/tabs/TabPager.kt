@@ -2,6 +2,7 @@ package com.gearui.components.tabs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.gearui.gestures.LocalPageSwipeBackGate
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,11 @@ import com.tencent.kuikly.compose.ui.Modifier
  *   scroll this component started itself.
  * @param userScrollEnabled false pins the pages, leaving the bar as the only way across
  *   — for content that owns horizontal dragging itself, such as a map or a carousel.
+ * @param beyondViewportPageCount how many pages either side stay composed while off
+ *   screen. Pages here own real content — lists, avatars — and Kuikly builds their
+ *   native view tree on the main thread the moment a page first becomes visible, so
+ *   with the default 0 every backward drag pays that cost mid-gesture as a visible
+ *   hitch. Keeping the neighbours alive moves the cost to page entry, off the finger.
  * @param content one page.
  */
 @Composable
@@ -35,6 +41,7 @@ fun TabPager(
     onSelectedIndexChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     userScrollEnabled: Boolean = true,
+    beyondViewportPageCount: Int = 1,
     content: @Composable (index: Int) -> Unit,
 ) {
     if (count <= 0) return
@@ -43,6 +50,15 @@ fun TabPager(
         initialPage = selectedIndex.coerceIn(0, count - 1),
         pageCount = { count },
     )
+
+    // Page-first swipe-back arbitration. While this pager is not on its first
+    // page it can still move backwards, so it owns the right-swipe and the
+    // app-level swipe-back stands down; on the first page it reports false and
+    // the router takes the gesture. Read live at gesture-down, not snapshotted.
+    val swipeBackGate = LocalPageSwipeBackGate.current
+    LaunchedEffect(swipeBackGate) {
+        swipeBackGate?.canSwipeBack = { state.currentPage > 0 }
+    }
 
     // The bar moved: bring the pages with it.
     LaunchedEffect(selectedIndex) {
@@ -64,6 +80,7 @@ fun TabPager(
         state = state,
         modifier = modifier.fillMaxWidth(),
         userScrollEnabled = userScrollEnabled,
+        beyondViewportPageCount = beyondViewportPageCount,
     ) { page ->
         Box(modifier = Modifier.fillMaxSize()) { content(page) }
     }

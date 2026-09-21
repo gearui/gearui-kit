@@ -9,17 +9,21 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.components.icon.Icons
 import com.gearui.components.tabs.Tabs
 import com.gearui.components.tabs.Tab
+import com.gearui.components.tabs.TabPager
 import com.gearui.components.tabs.TabsOutlineType
 import com.gearui.components.tabs.TabsSize
+import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.lazy.items
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
@@ -94,6 +98,90 @@ fun TabsExample(
                     style = Theme.typography.bodyMedium,
                     color = colors.foreground
                 )
+            }
+        }
+
+        ExampleSection(
+            title = "左右滑动切换 (TabPager)",
+            description = "验证 tab 与页面左右滑动双向联动：可从任意页滑到相邻页并回滑。"
+        ) {
+            val swipeTabs = listOf(
+                Tab("swipe-0", "好友"),
+                Tab("swipe-1", "群组"),
+                Tab("swipe-2", "第三页")
+            )
+            var swipeSelected by remember { mutableStateOf(0) }
+            val pageColors = listOf(colors.primary, colors.muted, colors.foreground)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(280.dp)
+            ) {
+                Tabs(
+                    items = swipeTabs,
+                    selectedId = swipeTabs[swipeSelected].id,
+                    onSelect = { id -> swipeSelected = swipeTabs.indexOfFirst { it.id == id } }
+                )
+                TabPager(
+                    count = swipeTabs.size,
+                    selectedIndex = swipeSelected,
+                    onSelectedIndexChange = { swipeSelected = it },
+                    modifier = Modifier.weight(1f)
+                ) { page ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(pageColors[page]),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "页面 ${page + 1}",
+                            style = Theme.typography.bodyMedium,
+                            color = colors.background
+                        )
+                    }
+                }
+            }
+        }
+
+        ExampleSection(
+            title = "TabPager + 内嵌竖向列表 (复刻联系人页)",
+            description = "两页：第一页竖向可滚（30 项）、第二页不可滚（2 项），复刻 ContactPage 结构。"
+        ) {
+            val listTabs = listOf(
+                Tab("list-0", "好友"),
+                Tab("list-1", "群组")
+            )
+            var listSelected by remember { mutableStateOf(0) }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(360.dp)
+            ) {
+                Tabs(
+                    items = listTabs,
+                    selectedId = listTabs[listSelected].id,
+                    onSelect = { id -> listSelected = listTabs.indexOfFirst { it.id == id } }
+                )
+                TabPager(
+                    count = listTabs.size,
+                    selectedIndex = listSelected,
+                    onSelectedIndexChange = { listSelected = it },
+                    modifier = Modifier.weight(1f)
+                ) { page ->
+                    GearLazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(if (page == 0) 30 else 2) { i ->
+                            Text(
+                                text = (if (page == 0) "好友 " else "群组 ") + (i + 1),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(Spacing.sm),
+                                style = Theme.typography.bodyMedium,
+                                color = colors.foreground
+                            )
+                        }
+                    }
+                }
             }
         }
 

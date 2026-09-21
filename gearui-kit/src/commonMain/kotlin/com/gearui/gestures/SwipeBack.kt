@@ -5,6 +5,7 @@ import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.gestures.awaitHorizontalTouchSlopOrCancellation
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.input.pointer.PointerInputChange
+import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.ui.input.pointer.util.VelocityTracker
@@ -43,6 +44,16 @@ data class SwipeBackConfig(
  *
  * @param enabled       false skips recognition entirely (root pages, modal pages, ...)
  * @param config        gesture parameters, tunable per platform or page type
+ * @param deferToPage   consulted on touch-down; true means the foreground page can
+ *                      still swipe backwards itself (e.g. a horizontal pager not on
+ *                      its first page), so the app-level back stands down and the
+ *                      page owns the drag. See [PageSwipeBackGate].
+ * @param fullWidthWhenPageAtLeftmost
+ *                      consulted on touch-down; true widens the hot zone from the
+ *                      left edge to the full width, so once the page reports it is
+ *                      already at its leftmost the user can press anywhere and drag
+ *                      the whole page back with 1:1 finger tracking, instead of only
+ *                      from the edge (where the system back gesture often steals it).
  * @param onStart       fired once the gesture is recognised (the Recognized phase)
  * @param onProgress    fired continuously while dragging; progress is in [0f, 1f] (relative to commitDistance) and dragX is the absolute pixel offset
  * @param onCancel      released without meeting the commit conditions
@@ -51,6 +62,8 @@ data class SwipeBackConfig(
 fun Modifier.swipeBack(
     enabled: Boolean = true,
     config: SwipeBackConfig = SwipeBackConfig(),
+    deferToPage: () -> Boolean = { false },
+    fullWidthWhenPageAtLeftmost: () -> Boolean = { false },
     onStart: (() -> Unit)? = null,
     onProgress: ((progress: Float, dragX: Float) -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
@@ -66,7 +79,22 @@ fun Modifier.swipeBack(
         awaitEachGesture {
             // ── Idle → Tracking ──────────────────────────────────────────
             val down = awaitFirstDown(requireUnconsumed = false)
-            if (down.position.x > edgePx) return@awaitEachGesture   // 不在边缘，忽略
+            // Page-first arbitration: while the foreground page can still swipe
+            // backwards itself, the router must not take this drag — even inside
+            // the edge hot zone — or the page's own paging is starved.
+            if (deferToPage()) return@awaitEachGesture
+            // Once the page reports it cannot page backwards any further, the
+            // router back owns the drag from anywhere on the screen — not just
+            // the edge — so the whole page tracks the finger.
+            val edgeLimited = !fullWidthWhenPageAtLeftmost()
+            if (edgeLimited && down.position.x > edgePx) return@awaitEachGesture   // outside the edge hot zone, ignore
+
+            // When the router owns the drag full-width it must claim the events on
+            // the Initial pass, before the page's own horizontal pager consumes
+            // them on Main (a pager at its leftmost still eats a right-drag for
+            // its rubber-band, which would starve the router's finger tracking).
+            // The edge-only path keeps Main so child gestures behave as before.
+            val pass = if (edgeLimited) PointerEventPass.Main else PointerEventPass.Initial
 
             val startX = down.position.x
             val startY = down.position.y
@@ -77,7 +105,7 @@ fun Modifier.swipeBack(
             velocityTracker.addPosition(down.uptimeMillis, down.position)
 
             // -- Tracking: wait for horizontal touch slop, or cancel ------------
-            val slopChange: PointerInputChange? =
+            val slopChange: PointerInputChange? = if (edgeLimited) {
                 awaitHorizontalTouchSlopOrCancellation(down.id) { change, overSlop ->
                     totalDx += overSlop
                     totalDy = change.position.y - startY
@@ -87,6 +115,29 @@ fun Modifier.swipeBack(
                         recognized = true
                     }
                 }
+            } else {
+                // Manual slop on the Initial pass: recognise a rightward, mostly
+                // horizontal drag and consume it here so children never see it.
+                val touchSlop = viewConfiguration.touchSlop
+                var change: PointerInputChange? = null
+                while (true) {
+                    val event = awaitPointerEvent(pass)
+                    val c = event.changes.firstOrNull { it.id == down.id } ?: break
+                    if (!c.pressed) break
+                    totalDx = c.position.x - startX
+                    totalDy = c.position.y - startY
+                    if (abs(totalDx) > touchSlop &&
+                        abs(totalDx) > abs(totalDy) * config.directionRatio &&
+                        totalDx > 0f
+                    ) {
+                        c.consume()
+                        recognized = true
+                        change = c
+                        break
+                    }
+                }
+                change
+            }
 
             if (!recognized || slopChange == null) return@awaitEachGesture
 
@@ -100,15 +151,15 @@ fun Modifier.swipeBack(
             var pointer = slopChange.id
             var committed = false
             while (true) {
-                val event = awaitPointerEvent()
+                val event = awaitPointerEvent(pass)
                 val change = event.changes.firstOrNull { it.id == pointer } ?: break
-                if (!change.pressed) break  // 抬手
+                if (!change.pressed) break  // finger up
 
                 val dx = change.positionChange().x
                 val dy = change.positionChange().y
                 // Cancel if the vertical component grows far beyond the horizontal one
                 dragX += dx
-                if (dragX < 0f) dragX = 0f  // 不允许往左滑
+                if (dragX < 0f) dragX = 0f  // never report a leftward drag
 
                 velocityTracker.addPosition(change.uptimeMillis, change.position)
                 change.consume()

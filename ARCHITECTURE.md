@@ -41,7 +41,7 @@ Kuikly Compose
 
 统一入口：[`docs/SPEC.md`](./docs/SPEC.md)
 
-- 总体规范：`docs/GEARUI_SPEC_2026.md`
+- 总体规范：`docs/ENGINEERING_CONTRACT.md`
 - 审查护栏：`docs/ARCHITECTURE_GUARDRAILS.md`
 - CI 对应：`docs/SPEC_CI_MAPPING.md`
 - Token 语义冻结：`docs/GEARUI_TOKEN_SEMANTIC_FREEZE_V2.md`

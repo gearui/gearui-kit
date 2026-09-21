@@ -89,7 +89,7 @@ fun ProdDemo() { ... }
 1. **示例可编译**：所有示例必须能在 sample 工程编译通过。优先复用 `sample/src/commonMain/kotlin/com/gearui/sample/examples/<id>/` 下已有片段。
 2. **参数表与源码一致**：每次源码参数变更必须同步本文档；CI 后续会按 BCV 输出对照（暂未自动化）。
 3. **不写硬编码颜色**：示例代码遵循 SPEC 4.1，不在文档示例里出现 `Color(0x...)`，统一用 `Theme.colors.*`。
-4. **Runtime 边界**：涉及 Overlay / safeArea / Theme 的组件文档，"常见问题"必须显式指向 `GEARUI_SPEC_2026.md` §3.5 / §4.4 / §4.5，不要重新解释。
+4. **Runtime 边界**：涉及 Overlay / safeArea / Theme 的组件文档，"常见问题"必须显式指向 `ENGINEERING_CONTRACT.md` §3.5 / §4.4 / §4.5，不要重新解释。
 5. **语气**：陈述句为主，避免"建议 / 推荐 / 也许"。能力是固定的，不是建议。
 
 ## 索引

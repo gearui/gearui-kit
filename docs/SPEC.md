@@ -8,7 +8,7 @@ entry point, not a release approval or a claim of completed visual parity.
 | Document | Owns | Does not own |
 | --- | --- | --- |
 | [Design system](DESIGN_SYSTEM_SPEC.md) | Default appearance, component anatomy, state and theme rules, HeroUI Native source provenance | Runtime lifecycle or test results |
-| [Engineering contract](GEARUI_SPEC_2026.md) | Runtime, insets, API, resources, i18n, release gates and the executable CI gate list | Token values or upstream appearance |
+| [Engineering contract](ENGINEERING_CONTRACT.md) | Runtime, insets, API, resources, i18n, release gates and the executable CI gate list | Token values or upstream appearance |
 | [Token format and adapter](../tokens/README.md) | DTCG 2025.10 data support, conversion and renderer limits | Component lifecycle or an exhaustive conformance claim |
 | [Component coverage](COMPONENT_COVERAGE_SPEC.md) | Component inventory against HeroUI v3 and HeroUI Native, absorption priorities | Per-component visual values or acceptance results |
 | [Migration](MIGRATION_1_0.md) | Consumer source/binary changes | Release approval |
@@ -55,7 +55,7 @@ coverage, check the sample and consumer, then update migration/evidence as neede
 Use [component code](COMPONENT_TEMPLATE.md) and [documentation](COMPONENT_DOC_TEMPLATE.md)
 templates. Resource, keyboard and overlay fixes require runtime verification, not
 only a screenshot. See the engineering contract's
-[executable quality gates](GEARUI_SPEC_2026.md#8-executable-quality-gates) for the actual checks.
+[executable quality gates](ENGINEERING_CONTRACT.md#8-executable-quality-gates) for the actual checks.
 
 ## History
 

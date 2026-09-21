@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Rule: state parameter naming, per GEARUI_SPEC_2026 §6.1.
+# Rule: state parameter naming, per ENGINEERING_CONTRACT.md §6.1.
 #
 #   Field family   enabled: Boolean = true  +  error: String? = null
 #   SearchBar      enabled only — a search entry point has no value to validate
@@ -19,7 +19,7 @@ set -euo pipefail
 # validation, and a parameter name alone cannot tell the difference. A guard
 # whose first run is entirely false positives teaches people to ignore red,
 # which costs more than the drift it would catch. Field naming is held by
-# GEARUI_SPEC_2026 §6.1, the compiler and apiCheck instead.
+# ENGINEERING_CONTRACT.md §6.1, the compiler and apiCheck instead.
 #
 # Only function parameters are checked. A data model's own flag is a different
 # thing: `SelectOption(disabled = true)` marks one option unselectable while

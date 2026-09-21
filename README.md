@@ -302,7 +302,7 @@ exactly what remains.
 
 Documentation is written in English first; `*.zh-Hans.md` files are the Chinese
 counterparts. Code comments are English only — see
-[docs/GEARUI_SPEC_2026.md](./docs/GEARUI_SPEC_2026.md#8-executable-quality-gates) for the English-comment check
+[docs/ENGINEERING_CONTRACT.md](./docs/ENGINEERING_CONTRACT.md#8-executable-quality-gates) for the English-comment check
 that enforces it.
 
 ## Development Commands

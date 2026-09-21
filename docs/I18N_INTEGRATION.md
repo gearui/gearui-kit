@@ -286,6 +286,6 @@ CI 守卫 `scripts/ci/check_i18n_default_text.sh` 会拦下库源码里任何中
 
 ## SPEC 关联
 
-- `GEARUI_SPEC_2026.md` §12 I18n 分层架构（约束规范）
+- `ENGINEERING_CONTRACT.md` §12 I18n 分层架构（约束规范）
 - 删除 / 重命名 strings 字段 = API breaking，受 `binary-compatibility-validator` 阻断
 - 新增 strings 字段 = source breaking（构造函数参数变多），需配套升级所有 builtin pack 文件

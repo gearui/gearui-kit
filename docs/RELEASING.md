@@ -12,7 +12,7 @@ success on uncommitted sources is not release approval.
 1. Review and commit the complete candidate, including token sources, generated
    code, tests, API baselines, migration notes and resources. Never publish only
    the tracked portion while required new files remain untracked.
-2. Run all checks in the [executable quality gates](GEARUI_SPEC_2026.md#8-executable-quality-gates). Require remote CI on that
+2. Run all checks in the [executable quality gates](ENGINEERING_CONTRACT.md#8-executable-quality-gates). Require remote CI on that
    exact commit. API dump generation is not an API verification step.
 3. Check the supported consumers, full iOS host, Android/Web sample and the
    critical keyboard/overlay/theme paths. Record untested targets explicitly.

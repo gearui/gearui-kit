@@ -1,6 +1,6 @@
 # DTCG 2025.10 Alignment Evidence
 
-> This is batch evidence, not a release verdict. See [current beta3 readiness](BETA3_RELEASE_READINESS.md) for the latest verification and limitations.
+> This is batch evidence, not a release verdict. See [current beta3 readiness](../BETA3_RELEASE_READINESS.md) for the latest verification and limitations.
 
 ## Scope
 

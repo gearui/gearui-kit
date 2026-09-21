@@ -9,7 +9,7 @@
 先读 [当前发布检查](BETA3_RELEASE_READINESS.md)。未提交工作区的本地通过不是发布批准。
 
 1. 提交完整候选，包括新增 Token、生成代码、测试、API 基线、迁移说明与资源。
-2. 运行 [CI 对照表](SPEC_CI_MAPPING.md) 全部检查，远端 CI 必须对应同一提交；
+2. 运行[可执行质量门禁](GEARUI_SPEC_2026.md#8-executable-quality-gates)全部检查，远端 CI 必须对应同一提交；
    生成 API dump 不能代替检查。
 3. 验证消费方、iOS 宿主、Android/Web 示例及键盘/弹层/主题关键路径；标明未验平台。
 4. 在 macOS 隔离暂存六个 Maven 模块，检查资源、依赖元数据、JS/iOS KLib 和源码。

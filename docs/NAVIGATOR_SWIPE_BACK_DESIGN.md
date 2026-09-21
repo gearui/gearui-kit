@@ -1,6 +1,6 @@
 # Navigator + 微信式 Edge Swipe Back —— 设计文档
 
-状态：**Draft**（本轮只写设计，不动代码）
+状态：**Implemented**（设计已落地：页面级 `PageSwipeBackGate` 仲裁、栈底整宽 1:1 跟手返回、栈底过滑张力交还页面、TabPager 相邻页保活）
 所有者：gearui-kit
 消费者：privchat-app（首位）、未来其他 Kuikly Compose 业务
 

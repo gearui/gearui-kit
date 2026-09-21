@@ -11,7 +11,7 @@ claim that every occurrence violates the token contract. Composite primitives
   existing contract checks across all component directories.
 - Focused source review and fixes: ActionSheet, BottomSheet, ContextMenu, SwipeCell.
 - Device checks and automated results are recorded separately in
-  STANDARDIZATION_ACCEPTANCE.md. No row is a declaration of full HeroUI parity.
+  _archive/STANDARDIZATION_ACCEPTANCE.md. No row is a declaration of full HeroUI parity.
 
 | Directory | Kotlin files | Literal dimensions | Direct overlay entry | Acceptance scope |
 |---|---:|---:|---|---|
@@ -88,7 +88,7 @@ claim that every occurrence violates the token contract. Composite primitives
 
 - Hot rounded-to-square native border refresh remains a renderer limitation.
 - Shared surface consumers render layered shadows; legacy elevation consumers and
-  complete component/platform parity remain unaccepted. See SURFACE_RENDERING_ACCEPTANCE.md.
+  complete component/platform parity remain unaccepted. See _archive/SURFACE_RENDERING_ACCEPTANCE.md.
 - DTCG Format/Resolver support and renderer restrictions are specified in tokens/README.md;
   this matrix does not certify general conformance.
 - ActionSheet/Tour/TreeSelect are GearUI patterns; do not invent exact upstream

@@ -219,4 +219,4 @@ the host. Unknown families fall through in order, then to the platform system fo
 Registration does not download or install a font. `LocalSurfaceShadowStyles`
 overrides surface/field/overlay stacks independently of brand accent and shape.
 Use `DecoratedSurface` with `SurfaceBorder` for non-solid border styles. See
-`SURFACE_RENDERING_ACCEPTANCE.md` for rendering and platform limits.
+`_archive/SURFACE_RENDERING_ACCEPTANCE.md` for rendering and platform limits.

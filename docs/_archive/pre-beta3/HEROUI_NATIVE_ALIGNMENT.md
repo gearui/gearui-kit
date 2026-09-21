@@ -301,7 +301,7 @@ Still open: typography migration, default field shadows, complete field-family d
 semantics, runtime rem parity with the reference app, and recorded motion parity.
 Theme propagation into open overlays, square presets and dark-mode visual
 acceptance are not established by the light-mode smoke check. S3 is not complete.
-See [DTCG translation contract](../tokens/README.md) for implemented boundaries.
+See [DTCG translation contract](../../../tokens/README.md) for implemented boundaries.
 
 Each implementation batch updates this table with evidence. Do not refresh API
 or debt baselines to conceal unrelated failures. Avoid API-breaking renames for

@@ -1,6 +1,6 @@
 # Standardization Acceptance — 2026-09-16
 
-> This is batch evidence, not a release verdict. See [current beta3 readiness](BETA3_RELEASE_READINESS.md) for the latest verification and limitations.
+> This is batch evidence, not a release verdict. See [current beta3 readiness](../BETA3_RELEASE_READINESS.md) for the latest verification and limitations.
 
 ## Scope and result
 

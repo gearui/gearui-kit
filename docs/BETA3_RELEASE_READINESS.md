@@ -1,10 +1,10 @@
 # beta3 Release Readiness
 
 For the subsequent KuiklyUI 2.28.0 dependency upgrade, see the
-[new dependency audit](DEPENDENCY_UPGRADE_2_28.md). The results below describe the
+[new dependency audit](_archive/DEPENDENCY_UPGRADE_2_28.md). The results below describe the
 earlier candidate and do not certify the upgraded graph.
 
-Update 2026-09-18: the [device acceptance pass](BETA3_DEVICE_ACCEPTANCE.md) ran the
+Update 2026-09-18: the [device acceptance pass](_archive/BETA3_DEVICE_ACCEPTANCE.md) ran the
 critical keyboard/overlay/theme checklist on iOS and Android, found and fixed four
 defects (including an iOS crash on ContextMenu), and gave the native test gate a
 real mechanism. Remaining before publication: a remote CI run on the final commit,
@@ -77,7 +77,7 @@ application integration or runtime resource loading on each platform.
   it). 190 tests, 0 failures locally. Without the property the link fails fast with
   an explanation. No symbol is stubbed. The CI step still needs its first remote run.
 - ~~Finish the critical-path device checklist below~~ Executed on 2026-09-18 for iOS
-  and Android; see [device acceptance](BETA3_DEVICE_ACCEPTANCE.md) for results,
+  and Android; see [device acceptance](_archive/BETA3_DEVICE_ACCEPTANCE.md) for results,
   fixes and what remains unaccepted (screen reader, performance, Web, HarmonyOS,
   iOS Dynamic Type).
 - Review/commit the complete candidate, including untracked required files. Run

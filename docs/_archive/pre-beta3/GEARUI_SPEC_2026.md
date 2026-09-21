@@ -504,7 +504,7 @@ GearUI Kit 内置图标、字体、动画等资产属于组件库公共契约的
 
 ## 12. I18n 分层架构
 
-GearUI Kit 不集中托管所有库的语言包。每个库自定义强类型 strings，共享 GearUI Kit 提供的语言运行时。详见 [`I18N_INTEGRATION.md`](./I18N_INTEGRATION.md)。
+GearUI Kit 不集中托管所有库的语言包。每个库自定义强类型 strings，共享 GearUI Kit 提供的语言运行时。详见 [`I18N_INTEGRATION.md`](../../I18N_INTEGRATION.md)。
 
 ### 12.1 运行时职责
 

@@ -23,7 +23,7 @@ Phase 4e
 
 **No further development on Navigator / RouteHost / Transition / BackHandler / Overlay is planned before RC.** The next round is QA, not engineering. P2 backlog moves to v1.1 / v2.0 — see §6.
 
-**Spec**: see [NAVIGATOR_SWIPE_BACK_DESIGN.md](NAVIGATOR_SWIPE_BACK_DESIGN.md) for the design and §9 for the 30-item acceptance checklist this report cross-references.
+**Spec**: see [NAVIGATOR_SWIPE_BACK_DESIGN.md](../NAVIGATOR_SWIPE_BACK_DESIGN.md) for the design and §9 for the 30-item acceptance checklist this report cross-references.
 
 ## 1. Summary
 

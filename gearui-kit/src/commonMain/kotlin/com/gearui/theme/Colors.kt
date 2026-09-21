@@ -17,7 +17,7 @@ import com.gearui.foundation.button.DefaultButtonColors
  *
  * Component state colors (hover / pressed / focused / disabled / invalid /
  * selected / loading) live in component-specific `XxxTokens`, NOT in this
- * core model. See `docs/TOKEN_FREEZE_DECISIONS.md` Decision 1.
+ * core model. See `docs/_archive/pre-beta3/TOKEN_FREEZE_DECISIONS.md` Decision 1.
  *
  * Pre-1.0 legacy bridge properties were removed in Batch 13A; see
  * `docs/MIGRATION_1_0.md` for the old → new field mapping.

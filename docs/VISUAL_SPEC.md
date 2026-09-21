@@ -2,49 +2,42 @@
 
 [English](./VISUAL_SPEC.md) | [简体中文](./VISUAL_SPEC.zh-Hans.md)
 
-This document owns the visual reference and its rules: what GearUI looks like,
-where each value comes from, and the recorded deviations. Token mechanics and
-theming live in [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md).
+This document owns GearUI's visual rules: what the kit looks like and how every
+control behaves on screen. These are GearUI's own rules — the default look ships
+coherent today and is built to absorb the product's own brand direction over
+time. Token mechanics and theming live in
+[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md); the component inventory lives in
+[COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md).
 
-## 1. Visual Identity
+## 1. Visual Language
 
-GearUI adopts the default appearance and control feedback of pinned
-open-source **HeroUI Native 1.0.9**. This supersedes the Tamagui and iOS-only
-identities preserved in git history. Alignment covers anatomy, density,
-typography, surfaces, selection indicators, pressed/focus/disabled feedback
-and motion interruption. Color matching alone is not acceptance. Do not invent
-universal glow, haptics, scaling or bottom sheets; components without a
-reference counterpart remain explicit GearUI extensions.
+- **Content-first, flat surfaces.** Depth comes from tokenized shadows and
+  separators, not heavy chrome or bezels.
+- **Consistent density and rhythm.** Control geometry, spacing and type scale
+  come from tokens; a component never carries its own bare design literals.
+- **Feedback is part of the language.** Selection, press, focus and disabled
+  states are modeled per state family (§4). Color is never the only signal.
+- **Restraint.** No universal glow, haptics, gratuitous scaling or decorative
+  motion. Every movement has a purpose and a motion token.
+- **The default is a floor, not a ceiling.** Brand accent, shape style and
+  light/dark are independent axes ([DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) §2),
+  so a product can restyle without touching component anatomy or behavior. Any
+  future custom style is expressed through tokens and theme axes, not by
+  forking components.
 
-GearUI keeps its KMP/Kuikly runtime and Kotlin API conventions. Paid
-templates are never imported; HeroUI Pro/Web editor screenshots illustrate
-customization goals, not shipped Native presets. Applicable notices are
-retained when incorporating upstream code.
+## 2. Where Values Come From
 
-## 2. Source Lock And Provenance
+GearUI keeps no second prose schema of visual numbers.
 
-- Reference: HeroUI Native **1.0.9**, commit
-  `b9fa5410b5fbb875475127386166f4c029e9e73f`.
-- `tokens/reference/heroui-native.lock.json` records 42 file hashes. Verify a
-  local checkout with
-  `node scripts/check_heroui_reference.mjs /path/to/heroui-native`. This
-  optional audit must not make CI depend on a sibling repository. A passing
-  hash check proves provenance, not visual parity.
-
-| Concern | Reference path |
-| --- | --- |
-| Semantic palette, fields, shadow values | `src/styles/variables.css` |
-| Derived colors and radius roles | `src/styles/theme.css` |
-| Button geometry | `src/styles/components/button.css` |
-| Button default variant | `src/components/button/button.tsx` |
-| Press feedback and interruption | `src/components/pressable-feedback/pressable-feedback.animation.ts` |
-| Input surface/geometry | `src/styles/components/input.css` |
-| Field composition and state | `src/components/text-field/text-field.tsx` |
-| Select presentation | `src/components/select/select.tsx` |
-| Bottom-sheet gestures | `src/helpers/internal/components/bottom-sheet-content.tsx` |
-
-Resolve upstream units and aliases before generating Kotlin. Never transcribe
-promotional screenshots as source values.
+- Every concrete value — color, radius, spacing, elevation, motion — lives in
+  the token sources under `tokens/` and the generated code.
+  [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) owns that pipeline.
+- Component-specific numbers live in that component's own `XxxTokens` class,
+  derived from semantic tokens.
+- Prose describes rules and intent; it never hardcodes a number that belongs in
+  a token. A visual change is a token/source change — reviewed, regenerated and
+  snapshotted — not an edit to a component literal.
+- Screenshots illustrate a state; they are never the source of a value.
 
 ## 3. Component Anatomy
 
@@ -56,10 +49,10 @@ cards/surfaces use the filled variant (`cardStyle = true`).
 
 **Select and hierarchical selection.** A field trigger plus a layered option
 surface with clear selected/disabled states, aligned indicators, bounded
-scrolling and safe placement. Popover is the reference default; sheet/dialog
-are explicit presentations, not automatic phone substitutions.
-TreeSelect/Cascader are GearUI extensions: preserve hierarchy, expansion and
-selection semantics rather than imitating a desktop tree.
+scrolling and safe placement. Popover is the default presentation; sheet and
+dialog are explicit alternatives, not automatic phone substitutions.
+TreeSelect/Cascader preserve hierarchy, expansion and selection semantics for
+touch rather than imitating a desktop tree.
 
 **Cards and lists.** A card owns one surface, shape, padding and optional
 tokenized shadow/border. CellGroup owns grouping and separators; a Cell does
@@ -103,9 +96,9 @@ and a layer transform from a `LayoutModifierNode` all produced zero changed
 pixels with an opaque red probe. So every tappable thing is a component: a row
 is a `Cell`, a button is a `Button`, a choice is a `SegmentedControl` or
 `ToggleButton`; anything else wraps `PressableFeedback`, and a component with
-its own surface may use `rowPressFeedback` (fill) or `pressScale`. The
-reference values are HeroUI Native's: width-compensated 0.985 scale and a 10%
-`#3f3f46` / `#d4d4d8` highlight above the content.
+its own surface may use `rowPressFeedback` (fill) or `pressScale`. The shipped
+values are a width-compensated 0.985 scale plus a 10% `#3f3f46` / `#d4d4d8`
+highlight drawn above the content.
 
 ## 5. Shadows, Borders And Materials
 
@@ -116,10 +109,10 @@ content size. Blur is a bounded Gaussian edge approximation, not an exact 2D
 blur.
 
 Glass is optional, off by default (`RuntimeFlags.materialPolicy =
-MaterialPolicy.Never`) with an opaque fallback. It is not Liquid Glass
-refraction and not proof of platform parity. KuiklyUI supports Gaussian blur
-on all four renderers through the core `BlurView`, but four gaps block the
-default (findings pending an upstream report):
+MaterialPolicy.Never`) with an opaque fallback. It is not a refraction effect
+and not proof of platform parity. KuiklyUI supports Gaussian blur on all four
+renderers through the core `BlurView`, but four gaps block turning it on by
+default (findings pending an upstream KuiklyUI report):
 
 | # | Gap | Severity | Effort |
 | --- | --- | --- | --- |
@@ -132,30 +125,26 @@ The GearUI side is built and verified (`foundation/material/` and the sample's
 Material Probe page); turning it on is one default. Do not introduce blur
 where it hurts text contrast or motion performance.
 
-## 6. Recorded Deviations
+## 6. Overlay And Surface Elevation
 
-Values that do not match the locked reference, with the reason and measurement
-behind them. A deviation not listed here is a bug.
+A floating surface must read as a step above the page it floats over —
+including on a page that paints `surface` edge to edge (a conversation list
+whose every row is `surface`, for example). If a menu lands on exactly its own
+colour, separation is lost, so GearUI's own values enforce it:
 
-**Overlay elevation on a full-bleed `surface` page.** The reference separates
-a floating surface from the page by colour: its pages sit on `--background`,
-so `--overlay` (= `--surface` in the default theme) already reads a step
-above them and `--overlay-shadow` is decorative. That fails on a page that
-paints `surface` edge to edge — the menu lands on exactly its own colour. The
-reference's own worked theme (`docs/theming.md` upstream) shows the intended
-lever: `--overlay` distinct from and lighter than `--surface` in both modes.
+| | GearUI rule | Measured |
+| --- | --- | --- |
+| Dark `overlay` | Lighter than `surface`, never identical | (32,32,35) against (24,24,27) over a `surface` card |
+| Light `overlay` | `surface` is already pure white, so separation relies on shadow | — |
+| Light `overlay-shadow` | Strengthened to 6% / 3% / 10% black; geometry (offset, blur) unchanged | edge on white measures 231, versus 247 at weaker values |
 
-| | Reference default | GearUI | Why |
-| --- | --- | --- | --- |
-| Dark `overlay` | `oklch(0.2103 …)`, = `surface` | `oklch(0.243 …)` | The documented lever. Over a `surface` card, measured (32,32,35) against (24,24,27) — was identical. |
-| Light `overlay` | `white`, = `surface` | `white` | Unchanged: `surface` is already pure white. |
-| Light `overlay-shadow` | 2% / 1% / 3% black | 6% / 3% / 10% | The only cue left in light. Measured edge on white: level 231 vs 247 at reference values. Geometry unchanged. |
-
-Both modes also paint the reference's `inset` layer as a real 1dp border
-rather than a blurred inset shadow: run through the shadow renderer it lands
-on the edge pixel at roughly a fifth of its declared alpha, leaving a menu
-with no visible edge on a white page. As a border it measures 219 on white
-(light) and 77 against a (32,32,35) menu (dark), both on device.
+Both modes draw the top `inset` layer as a real 1dp border rather than a
+blurred inset shadow: run through the shadow renderer it lands on the edge
+pixel at roughly a fifth of its declared alpha, leaving a menu with no visible
+edge on a white page. As a border it measures 219 on white (light) and 77
+against a (32,32,35) menu (dark), both on device. These are GearUI's own
+values; a change is a token change with a recorded measurement, not an edit to
+a component literal.
 
 ## 7. Accessibility
 

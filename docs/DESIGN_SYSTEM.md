@@ -2,10 +2,9 @@
 
 [English](./DESIGN_SYSTEM.md) | [简体中文](./DESIGN_SYSTEM.zh-Hans.md)
 
-This document owns the token pipeline and theming rules. Concrete visual values
-come from the HeroUI Native reference ([VISUAL_SPEC.md](./VISUAL_SPEC.md));
-numeric defaults come from `tokens/` source JSON and generated code — never
-from a second prose schema.
+This document owns the token pipeline and theming rules. GearUI's own visual
+rules live in [VISUAL_SPEC.md](./VISUAL_SPEC.md); numeric defaults come from
+`tokens/` source JSON and generated code — never from a second prose schema.
 
 ## 1. Token Pipeline
 
@@ -112,7 +111,7 @@ token JSON.
 ## 8. Governance
 
 - A rule has one owner: this document owns theming rules; VISUAL_SPEC owns
-  reference values; `tokens/README.md` owns format policy.
+  the visual rules; `tokens/README.md` owns format policy.
 - Ratchets may shrink, not grow. Zero-baseline checks are hard gates.
 - Public token API changes require migration notes
   ([QUALITY_STATUS.md](./QUALITY_STATUS.md)) and an API baseline review;

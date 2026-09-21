@@ -116,7 +116,7 @@ Full encapsulation rules: [COMPONENT_SPEC.md](./COMPONENT_SPEC.md).
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | Layers, Kuikly integration, consumption model, runtime contracts |
 | [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) | Token pipeline, theme axes, color/geometry/typography/motion rules |
 | [I18N.md](./I18N.md) | Layered language runtime and typed string packs |
-| [VISUAL_SPEC.md](./VISUAL_SPEC.md) | HeroUI Native reference lock, anatomy, feedback, materials, accessibility |
+| [VISUAL_SPEC.md](./VISUAL_SPEC.md) | GearUI visual language, anatomy, feedback, materials, accessibility |
 | [COMPONENT_SPEC.md](./COMPONENT_SPEC.md) | Component encapsulation, API consistency, CI gates, review guardrails |
-| [COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md) | Component list versus HeroUI Native, gaps and priorities |
+| [COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md) | Complete component inventory, coverage against HeroUI Native, gaps and priorities |
 | [QUALITY_STATUS.md](./QUALITY_STATUS.md) | 1.0.0 goals, verified evidence, open risks, release procedure |

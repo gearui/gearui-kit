@@ -103,7 +103,7 @@ Back/点外/路由/超时关闭策略和"恰好一次"移除。面板局部手�
 | [ARCHITECTURE.zh-Hans.md](./ARCHITECTURE.zh-Hans.md) | 分层、Kuikly 集成、消费方式、运行时契约 |
 | [DESIGN_SYSTEM.zh-Hans.md](./DESIGN_SYSTEM.zh-Hans.md) | Token 管线、主题轴、颜色/几何/字体/动效规则 |
 | [I18N.zh-Hans.md](./I18N.zh-Hans.md) | 分层语言运行时与强类型语言包 |
-| [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) | HeroUI Native 参考锁定、结构、反馈、材质、无障碍 |
+| [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) | GearUI 视觉语言、结构、反馈、材质、无障碍 |
 | [COMPONENT_SPEC.zh-Hans.md](./COMPONENT_SPEC.zh-Hans.md) | 组件封装、API 一致性、CI 门禁、评审护栏 |
-| [COMPONENT_COVERAGE.zh-Hans.md](./COMPONENT_COVERAGE.zh-Hans.md) | 组件列表对比 HeroUI Native、缺口与优先级 |
+| [COMPONENT_COVERAGE.zh-Hans.md](./COMPONENT_COVERAGE.zh-Hans.md) | 完整组件清单、对比 HeroUI Native 覆盖、缺口与优先级 |
 | [QUALITY_STATUS.zh-Hans.md](./QUALITY_STATUS.zh-Hans.md) | 1.0.0 目标、已验证证据、开放风险、发布流程 |

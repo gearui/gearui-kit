@@ -2,44 +2,39 @@
 
 [English](./VISUAL_SPEC.md) | [简体中文](./VISUAL_SPEC.zh-Hans.md)
 
-本文档拥有视觉参考及其规则：GearUI 长什么样、每个数值来自哪里、以及记录
-在案的偏差。Token 机制与主题规则在
-[DESIGN_SYSTEM.zh-Hans.md](./DESIGN_SYSTEM.zh-Hans.md)。
+本文档拥有 GearUI 自己的视觉规则：kit 长什么样、每个控件在屏幕上如何表现。
+这些都是 GearUI 自己的规则——默认外观今天已经自成体系，并且被设计为可以
+随时间吸收产品自己的品牌方向。Token 机制与主题规则在
+[DESIGN_SYSTEM.zh-Hans.md](./DESIGN_SYSTEM.zh-Hans.md)；组件清单在
+[COMPONENT_COVERAGE.zh-Hans.md](./COMPONENT_COVERAGE.zh-Hans.md)。
 
-## 1. 视觉标识
+## 1. 视觉语言
 
-GearUI 采用锁定版本的开源 **HeroUI Native 1.0.9** 的默认外观与控件反馈，
-取代 git 历史中保留的 Tamagui 和纯 iOS 标识。对齐范围包括结构、密度、
-字体、表面、选中指示、按压/焦点/禁用反馈与动效打断。仅颜色一致不算验收。
-不要发明全局辉光、震动反馈、缩放或底部面板；没有参考对应的组件保持为显式
-的 GearUI 扩展。
+- **内容优先、扁平表面。** 层次感来自 token 化的阴影与分隔，而不是厚重的
+  边框或装饰条。
+- **一致的密度与节奏。** 控件几何、间距与字号刻度都来自 token；组件绝不
+  携带自己的裸设计字面量。
+- **反馈是视觉语言的一部分。** 选中、按压、焦点与禁用状态按状态家族建模
+  （§4）。颜色绝不是唯一信号。
+- **克制。** 不做全局辉光、震动反馈、无意义的缩放或装饰性动效。每一次
+  运动都有目的和一个 motion token。
+- **默认值是下限，不是上限。** 品牌强调色、形状风格与亮/暗是相互独立的轴
+  （[DESIGN_SYSTEM.zh-Hans.md](./DESIGN_SYSTEM.zh-Hans.md) §2），所以产品
+  可以在不触碰组件结构与行为的前提下重新设计外观。未来任何自定义风格都
+  通过 token 与主题轴表达，而不是分叉组件。
 
-GearUI 保留自己的 KMP/Kuikly 运行时与 Kotlin API 约定。绝不引入付费模板；
-HeroUI Pro/Web 编辑器截图只说明定制目标，不是 Native 出厂预设。吸收上游
-代码时保留适用的版权声明。
+## 2. 数值来源
 
-## 2. 参考锁定与溯源
+GearUI 不保留第二份散文式的视觉数值表。
 
-- 参考：HeroUI Native **1.0.9**，commit
-  `b9fa5410b5fbb875475127386166f4c029e9e73f`。
-- `tokens/reference/heroui-native.lock.json` 记录 42 个文件哈希。用
-  `node scripts/check_heroui_reference.mjs /path/to/heroui-native` 校验本地
-  checkout。该审计是可选项，不得让 CI 依赖同级仓库。哈希通过证明的是溯源，
-  不是视觉一致。
-
-| 关注点 | 参考路径 |
-| --- | --- |
-| 语义色板、字段、阴影值 | `src/styles/variables.css` |
-| 派生颜色与圆角角色 | `src/styles/theme.css` |
-| Button 几何 | `src/styles/components/button.css` |
-| Button 默认变体 | `src/components/button/button.tsx` |
-| 按压反馈与打断 | `src/components/pressable-feedback/pressable-feedback.animation.ts` |
-| Input 表面/几何 | `src/styles/components/input.css` |
-| 字段组合与状态 | `src/components/text-field/text-field.tsx` |
-| Select 呈现 | `src/components/select/select.tsx` |
-| 底部面板手势 | `src/helpers/internal/components/bottom-sheet-content.tsx` |
-
-生成 Kotlin 前先解析上游单位与别名。绝不把宣传截图当作数值来源。
+- 每个具体数值——颜色、圆角、间距、海拔、动效——都存在 `tokens/` 下的
+  token 源与生成代码里。[DESIGN_SYSTEM.zh-Hans.md](./DESIGN_SYSTEM.zh-Hans.md)
+  拥有那条管线。
+- 组件专属数值放在组件自己的 `XxxTokens` 类中，由语义 token 派生。
+- 散文只描述规则与意图；绝不把本该属于 token 的数值写死在散文里。一次
+  视觉改动就是一次 token/源改动——经过审查、重新生成并做快照——而不是
+  去改组件里的字面量。
+- 截图只用于说明某个状态；它绝不是数值的来源。
 
 ## 3. 组件结构
 
@@ -49,8 +44,8 @@ HeroUI Pro/Web 编辑器截图只说明定制目标，不是 Native 出厂预设
 （`cardStyle = true`）。
 
 **Select 与层级选择。** 字段触发器 + 分层选项表面，选中/禁用状态清晰、
-指示器对齐、滚动有界、放置安全。Popover 是参考默认；sheet/dialog 是显式
-呈现方式，不是所有手机上的自动替换。TreeSelect/Cascader 是 GearUI 扩展：
+指示器对齐、滚动有界、放置安全。Popover 是默认呈现方式；sheet 与 dialog
+是显式的替代方案，不是所有手机上的自动替换。TreeSelect/Cascader 为触控
 保留层级、展开与选择语义，而不是模仿桌面树。
 
 **卡片与列表。** 一张卡拥有一个表面、形状、padding 和可选的 token 化
@@ -85,9 +80,8 @@ HeroUI Pro/Web 编辑器截图只说明定制目标，不是 Native 出厂预设
 红色探针实测，内容之上绘制、之下绘制、`LayoutModifierNode` 层变换全部
 零像素变化。所以每个可点的东西都是组件：行是 `Cell`，按钮是 `Button`，
 选择是 `SegmentedControl` 或 `ToggleButton`；其余包 `PressableFeedback`，
-自带表面的组件可用 `rowPressFeedback`（填充）或 `pressScale`。参考数值
-来自 HeroUI Native：宽度补偿的 0.985 缩放 + 内容之上 10% 的
-`#3f3f46` / `#d4d4d8` 高亮。
+自带表面的组件可用 `rowPressFeedback`（填充）或 `pressScale`。出厂数值是
+宽度补偿的 0.985 缩放，加上内容之上 10% 的 `#3f3f46` / `#d4d4d8` 高亮。
 
 ## 5. 阴影、边框与材质
 
@@ -97,9 +91,9 @@ outset、inset、自定义虚线），不改变内容测量尺寸。模糊是有
 不是精确二维模糊。
 
 Glass 可选、默认关闭（`RuntimeFlags.materialPolicy = MaterialPolicy.Never`），
-带不透明回退。它不是 Liquid Glass 折射，也不是平台一致性的证明。KuiklyUI
-四端都通过核心 `BlurView` 支持高斯模糊，但四项缺口挡住了默认开启（结论
-待提交上游）：
+带不透明回退。它不是折射效果，也不是平台一致性的证明。KuiklyUI 四端都
+通过核心 `BlurView` 支持高斯模糊，但四项缺口挡住了默认开启（结论待提交
+KuiklyUI 上游）：
 
 | # | 缺口 | 严重度 | 工作量 |
 | --- | --- | --- | --- |
@@ -111,27 +105,23 @@ Glass 可选、默认关闭（`RuntimeFlags.materialPolicy = MaterialPolicy.Neve
 GearUI 侧已建成并验证（`foundation/material/` 与 sample 的 Material Probe
 页）；打开只差一个默认值。不要在伤害文本对比度或动效性能的地方引入模糊。
 
-## 6. 记录在案的偏差
+## 6. 浮层与表面抬升
 
-与锁定参考不一致的数值，附原因与实测依据。未列在这里的偏差就是 bug。
+浮起的表面必须看起来比它所浮于的页面高一级——包括在满幅铺 `surface` 的
+页面上（比如每行都是 `surface` 的会话列表）。如果菜单落在自己完全相同的
+颜色上，层次就丢了，所以 GearUI 用自己的数值来保证区分：
 
-**满幅 `surface` 页面上的浮层抬升。** 参考实现靠颜色把浮层与页面分开：
-它的页面坐在 `--background` 上，所以 `--overlay`（默认主题里 = `--surface`）
-天然高一级，`--overlay-shadow` 只是装饰。但页面满幅铺 `surface` 时（比如
-每行都是 surface 的会话列表）菜单就落在自己完全相同的颜色上。参考自己的
-示例主题（上游 `docs/theming.md`）展示了正确杠杆：两种模式下 `--overlay`
-都与 `--surface` 不同且更亮。
+| | GearUI 规则 | 实测 |
+| --- | --- | --- |
+| 暗色 `overlay` | 比 `surface` 更亮，绝不与之相同 | surface 卡上 (32,32,35) 对 (24,24,27) |
+| 亮色 `overlay` | `surface` 已是纯白，所以区分靠阴影 | — |
+| 亮色 `overlay-shadow` | 加强到 6% / 3% / 10% 黑；几何（偏移、模糊）不变 | 白底边缘实测 231，较弱值下为 247 |
 
-| | 参考默认 | GearUI | 原因 |
-| --- | --- | --- | --- |
-| 暗色 `overlay` | `oklch(0.2103 …)`，= `surface` | `oklch(0.243 …)` | 文档化杠杆。surface 卡上实测 (32,32,35) 对 (24,24,27)——原先完全相同 |
-| 亮色 `overlay` | `white`，= `surface` | `white` | 不变：`surface` 已是纯白，亮色没有抬升空间 |
-| 亮色 `overlay-shadow` | 2% / 1% / 3% 黑 | 6% / 3% / 10% | 亮色下唯一线索。白底边缘实测 231 级，参考值下为 247。几何（偏移、模糊）不变 |
-
-两种模式还把参考的 `inset` 层画成真实 1dp 边框而非模糊 inset 阴影：走
-阴影渲染器时它落到边缘像素只剩约五分之一的声明 alpha，白色页面上菜单
-完全没有边缘；作为边框，亮色白底实测 219，暗色对 (32,32,35) 菜单实测
-77，均为真机数据。
+两种模式都把顶层 `inset` 画成真实 1dp 边框而非模糊 inset 阴影：走阴影
+渲染器时它落到边缘像素只剩约五分之一的声明 alpha，白色页面上菜单完全没有
+边缘；作为边框，亮色白底实测 219，暗色对 (32,32,35) 菜单实测 77，均为
+真机数据。这些都是 GearUI 自己的数值；改动是一次带实测记录的 token 改动，
+而不是去改组件里的字面量。
 
 ## 7. 无障碍
 

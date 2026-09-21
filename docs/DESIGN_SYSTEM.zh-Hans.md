@@ -2,8 +2,8 @@
 
 [English](./DESIGN_SYSTEM.md) | [简体中文](./DESIGN_SYSTEM.zh-Hans.md)
 
-本文档拥有 token 管线与主题规则。具体视觉数值来自 HeroUI Native 参考
-（[VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md)）；数值默认值以
+本文档拥有 token 管线与主题规则。GearUI 自己的视觉规则在
+[VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md)；数值默认值以
 `tokens/` 源 JSON 和生成代码为准——绝不维护第二套文字版数值表。
 
 ## 1. Token 管线
@@ -94,7 +94,7 @@ Card 与 MaterialSurface 共享 `DecoratedSurface`：有序 outer/inset 阴影�
 
 ## 8. 治理
 
-- 规则只有一个所有者：本文档拥有主题规则；VISUAL_SPEC 拥有参考数值；
+- 规则只有一个所有者：本文档拥有主题规则；VISUAL_SPEC 拥有视觉规则；
   `tokens/README.md` 拥有格式策略。
 - 棘轮只能收紧，不能放松。零基线检查是硬门禁。
 - 公开 token API 变更需要迁移说明（见

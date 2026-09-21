@@ -30,7 +30,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * Frosted-glass probe.
  *
  * GearUI ships with `MaterialPolicy.Never`, so the flat surface is what real
- * screens get today — see `docs/UPSTREAM_KUIKLYUI_BLUR.md`. This page forces
+ * screens get today — see `docs/VISUAL_SPEC.md` §5. This page forces
  * the blur on anyway, because the reason it is off is a cross-renderer
  * calibration problem, and that is only visible by looking at the same
  * material on several devices.

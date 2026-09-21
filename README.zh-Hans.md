@@ -290,13 +290,14 @@ HAP **尚未在真机或模拟器上启动过**，因此鸿蒙上关于 UI 的�
 ## 文档入口
 
 - 架构总览：[ARCHITECTURE.md](./ARCHITECTURE.md)
-- 规范入口：[docs/SPEC.md](./docs/SPEC.md)
-- 发布流程（维护者）：[docs/RELEASING.zh-Hans.md](./docs/RELEASING.zh-Hans.md)
+- 文档入口：[docs/ARCHITECTURE.zh-Hans.md](./docs/ARCHITECTURE.zh-Hans.md)——设计系统、
+  多语言、视觉规范、组件规范、覆盖对比与质量状态
 - Web 宿主：[sample/jsApp/README.md](./sample/jsApp/README.md)
 - 鸿蒙宿主：[sample/ohosApp/README.md](./sample/ohosApp/README.md)
 
 文档以英文为主，`*.zh-Hans.md` 为对应中文版。**代码注释一律英文**——
-执行该约定的检查见 [docs/SPEC_CI_MAPPING.md](./docs/SPEC_CI_MAPPING.md) 中的英文注释护栏。
+执行该约定的检查是 `scripts/ci/check_english_comments.sh`（见
+[docs/COMPONENT_SPEC.zh-Hans.md](./docs/COMPONENT_SPEC.zh-Hans.md) §8）。
 
 ## 开发命令
 
@@ -313,7 +314,7 @@ HAP **尚未在真机或模拟器上启动过**，因此鸿蒙上关于 UI 的�
 # 鸿蒙走并行构建配置（尚未构建通过 —— 见 sample/ohosApp/README.md）
 ./gradlew -c settings.ohos.gradle.kts :sample:linkSharedDebugSharedOhosArm64
 
-# 架构护栏 —— 脚本清单以 SPEC_CI_MAPPING 为准，全部可本地运行
+# 架构护栏 —— 脚本清单以 docs/COMPONENT_SPEC.zh-Hans.md §8 为准，全部可本地运行
 for f in scripts/ci/check_*.sh; do "$f"; done
 ```
 

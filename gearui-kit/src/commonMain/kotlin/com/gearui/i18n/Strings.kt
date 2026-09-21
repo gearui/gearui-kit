@@ -7,7 +7,7 @@ import androidx.compose.runtime.Immutable
  * [DomainStrings.kt]). Each downstream library defines its own `XxxStrings`
  * data class and `XxxI18n` accessor, sharing only the language environment
  * ([LocalLanguageTag] / [LocalFallbackLanguageTag]) exposed by [I18nRoot].
- * See `docs/I18N_INTEGRATION.md`.
+ * See `docs/I18N.md`.
  *
  * The five theme/language fields are also re-exposed flat (`strings.theme`)
  * so existing call sites keep working.

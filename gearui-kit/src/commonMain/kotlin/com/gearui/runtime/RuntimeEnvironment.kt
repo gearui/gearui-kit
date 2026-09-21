@@ -59,7 +59,7 @@ data class RuntimeFlags(
      * baseline without frosted glass until KuiklyUI's blur is comparable across
      * renderers. It is not a missing capability — all four renderers blur — but
      * the same `blurRadius` means four different things, and on iOS the effect
-     * is locked to a light material. `docs/UPSTREAM_KUIKLYUI_BLUR.md` has the
+     * is locked to a light material. `docs/VISUAL_SPEC.md` §5 has the
      * findings and the proposed upstream fixes.
      *
      * [MaterialPolicy.Auto] and [MaterialPolicy.Always] work today; a host that

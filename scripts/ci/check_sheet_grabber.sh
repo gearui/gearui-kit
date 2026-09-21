@@ -6,7 +6,7 @@
 # about; a grabber with no drag is a control that does nothing when pulled. Both
 # are easy to end up with, because they live in different files.
 #
-# See DESIGN_SYSTEM_SPEC §11.3.1.
+# See docs/DESIGN_SYSTEM.md §6.
 set -euo pipefail
 cd "$(dirname "$0")/.."/..
 

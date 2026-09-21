@@ -295,15 +295,15 @@ exactly what remains.
 ## Documentation Entry
 
 - Architecture overview: [ARCHITECTURE.md](./ARCHITECTURE.md)
-- Spec entry: [docs/SPEC.md](./docs/SPEC.md)
-- Releasing (maintainers): [docs/RELEASING.md](./docs/RELEASING.md)
+- Documentation entry: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) — design system,
+  i18n, visual spec, component spec, coverage and quality status
 - Web host: [sample/jsApp/README.md](./sample/jsApp/README.md)
 - HarmonyOS host: [sample/ohosApp/README.md](./sample/ohosApp/README.md)
 
 Documentation is written in English first; `*.zh-Hans.md` files are the Chinese
-counterparts. Code comments are English only — see
-[docs/ENGINEERING_CONTRACT.md](./docs/ENGINEERING_CONTRACT.md#8-executable-quality-gates) for the English-comment check
-that enforces it.
+counterparts. Code comments are English only — enforced by
+`scripts/ci/check_english_comments.sh` (see
+[docs/COMPONENT_SPEC.md](./docs/COMPONENT_SPEC.md) §8).
 
 ## Development Commands
 

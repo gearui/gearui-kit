@@ -27,7 +27,7 @@ import com.tencent.kuikly.compose.ui.zIndex
  * **Which mechanism hides a child is this container's business, not the
  * caller's.** The three facts below are properties of KuiklyUI, they are not
  * obvious, and an application that has to know them means the framework did not
- * do its job (`DESIGN_SYSTEM_SPEC` / the shell spec's red line 2):
+ * do its job (`docs/ARCHITECTURE.md`, Hard Constraints):
  *
  * - `Modifier.alpha` is flushed to the native view's opacity by `KNode`, so it
  *   really hides. This is the one that works.

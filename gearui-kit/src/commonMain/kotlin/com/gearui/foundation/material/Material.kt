@@ -9,7 +9,7 @@ import androidx.compose.runtime.Immutable
  * the one place GearUI borrows a *physical* effect from iOS rather than a
  * layout convention, and it is deliberately not Liquid Glass: there is no
  * refraction, no specular edge and no lensing, only a Gaussian blur with a
- * surface tint over it. See DESIGN_SYSTEM_SPEC §0.1 and §12.
+ * surface tint over it. See `docs/DESIGN_SYSTEM.md` §6.
  *
  * A material holds no literal colour — it names the *role* it paints, so it
  * follows the brand and dark mode without holding a second copy of either.

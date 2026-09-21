@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
  * Navigator v1 entry point. Every stacked navigation in the app — messages,
  * contacts, profile, groups, QR codes — goes through this.
  *
- * Key invariants (see `gearui-kit/docs/NAVIGATOR_SWIPE_BACK_DESIGN.md`):
+ * Key invariants (see `gearui-kit/docs/ARCHITECTURE.md`, Runtime Contracts):
  *
  * 1. It does **not** replace Kuikly `@Page`. This is a stack inside a single
  *    ComposeContainer.

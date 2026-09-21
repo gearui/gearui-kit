@@ -10,7 +10,7 @@
 # A tap belongs to a component: Cell/ListItem for a row, Button for a button,
 # SegmentedControl for a choice, PressableFeedback for anything else that has to be
 # tappable. Those carry the press response; a raw modifier carries nothing, because
-# Kuikly's LocalIndication pipeline does not render (see DESIGN_SYSTEM_SPEC).
+# Kuikly's LocalIndication pipeline does not render (see docs/VISUAL_SPEC.md §4).
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 

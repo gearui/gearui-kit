@@ -44,7 +44,7 @@ Resolved JSON export retains data not consumed by the Kotlin generator.
 
 The capability matrix is backed by repository tests, not a certification claim.
 Keep adding interoperability fixtures rather than equating a green build with
-exhaustive conformance. See [acceptance evidence](../docs/DTCG_ACCEPTANCE.md).
+exhaustive conformance. The fixtures live in `scripts/tests`.
 
 ## Deliberate Policies
 

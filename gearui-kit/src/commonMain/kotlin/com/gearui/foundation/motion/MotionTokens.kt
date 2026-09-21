@@ -3,7 +3,7 @@ package com.gearui.foundation.motion
 /**
  * GearUI motion duration scale (milliseconds).
  *
- * Scale (see `docs/_archive/pre-beta3/TOKEN_FREEZE_DECISIONS.md` Decision 4):
+ * Scale (see `docs/DESIGN_SYSTEM.md` §5):
  *
  *   instant    = 0    — no animation, immediate state change
  *   fast       = 100  — micro-interactions: button press feedback, icon toggle

@@ -13,7 +13,7 @@ val LocalFallbackLanguageTag = staticCompositionLocalOf { "en-US" }
  * Root for layered i18n. Provides only the language environment — no strings —
  * so each library can layer its own per-library Provider without gearui-kit
  * knowing about it. Apps usually do not call this directly; [com.gearui.App]
- * mounts it. See `docs/I18N_INTEGRATION.md`.
+ * mounts it. See `docs/I18N.md`.
  */
 @Composable
 fun I18nRoot(

@@ -1,5 +1,5 @@
 # GearUI Token Schema Snapshot v1
-# SPEC 4.1 token-compat-check baseline.
+# docs/DESIGN_SYSTEM.md §1 token-compat-check baseline.
 # Refresh with:  ./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api
 # DO NOT edit by hand.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPEC 4.1 token-compat-check: detect deletion / rename / semantic drift
+# docs/DESIGN_SYSTEM.md §1 token-compat-check: detect deletion / rename / semantic drift
 # of GearColors / GearTypography / GearShapes fields and Themes.Light/Dark presets.
 set -euo pipefail
 
@@ -21,8 +21,8 @@ if ! diff -u "$BASELINE" "$ACTUAL"; then
     cat >&2 <<'EOF'
 
 Token schema drift detected.
-SPEC 4.1: deletion / rename of semantic tokens is REJECT;
-          additions and value changes must be explicit and audited.
+docs/DESIGN_SYSTEM.md §1: deletion / rename of semantic tokens is REJECT;
+            additions and value changes must be explicit and audited.
 
 If the change is intentional, refresh the baseline:
   ./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api

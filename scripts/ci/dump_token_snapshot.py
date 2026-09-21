@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Dump GearUI Kit semantic token snapshot.
 
-SPEC 4.1 / SPEC_CI_MAPPING token-compat-check.
+docs/DESIGN_SYSTEM.md §1 token-compat-check.
 
 Detects:
   1. Deletion or rename of fields on Colors / Typography / Shapes.
@@ -101,7 +101,7 @@ def extract_theme_preset(source: str, preset: str) -> list[tuple[str, str]]:
 def main() -> None:
     out: list[str] = []
     out.append("# GearUI Token Schema Snapshot v1")
-    out.append("# SPEC 4.1 token-compat-check baseline.")
+    out.append("# docs/DESIGN_SYSTEM.md §1 token-compat-check baseline.")
     out.append("# Refresh with:  ./scripts/ci/dump_token_snapshot.sh > gearui-kit/api/tokens.api")
     out.append("# DO NOT edit by hand.")
     out.append("")

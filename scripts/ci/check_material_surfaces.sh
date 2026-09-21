@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Every surface DESIGN_SYSTEM_SPEC §11.2 calls a material must render through
-# MaterialSurface.
+# Every surface the design system (docs/DESIGN_SYSTEM.md §6) calls a material must
+# render through MaterialSurface.
 #
 # Why this needs a guard: the material layer shipped with no consumer at all.
 # MaterialSurface existed, Materials.Chrome/Sheet/Popover existed, the sample had
@@ -36,10 +36,10 @@ for rel in $COMPONENTS; do
 done
 
 if [ -n "$missing" ]; then
-  echo "✗ §11.2 surfaces not rendering through MaterialSurface:"
+  echo "✗ Material surfaces not rendering through MaterialSurface:"
   printf "%b" "$missing"
   echo
-  echo "  Each of these is named as a material in DESIGN_SYSTEM_SPEC §11.2. Painting"
+  echo "  Each of these is named as a material in docs/DESIGN_SYSTEM.md §6. Painting"
   echo "  an opaque fill directly means materialPolicy cannot reach it, and turning"
   echo "  blur on does nothing."
   exit 1

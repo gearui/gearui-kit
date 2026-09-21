@@ -8,7 +8,7 @@ import com.gearui.foundation.control.ControlGeometry
 /**
  * GearUI semantic shape roles.
  *
- * Current mapping (see `docs/DESIGN_SYSTEM_SPEC.md` section 0.1):
+ * Current mapping (see `docs/DESIGN_SYSTEM.md` §4):
  *
  *   none = 0       — square, no rounding (banner, sectioned full-bleed)
  *   sm   = 8.dp    — tags, chips, dense controls
@@ -22,7 +22,7 @@ import com.gearui.foundation.control.ControlGeometry
  * round avatars / badges — there is no dedicated `circle` token.
  *
  * Pre-1.0 legacy bridge properties were removed in Batch 13B; see
- * `docs/MIGRATION_1_0.md` for the old → new field mapping.
+ * `docs/DESIGN_SYSTEM.md` §8 for the current API-change rules.
  */
 @Immutable
 data class Shapes(

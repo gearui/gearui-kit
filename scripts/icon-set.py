@@ -22,7 +22,7 @@ with 👁 and 👁‍🗨.
 
 Adding an icon means adding a line here and rerunning gen_icons.py. Adding one
 *for an application* means dropping a PNG into that app's own assets/icons/,
-which needs nothing from this file — see DESIGN_SYSTEM_SPEC 11.4.
+which needs nothing from this file — see docs/DESIGN_SYSTEM.md.
 """
 
 ICONS = [

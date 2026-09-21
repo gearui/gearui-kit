@@ -6,7 +6,7 @@ import androidx.compose.runtime.Stable
 /**
  * Public API types for Navigator v1.
  *
- * Design choices (see `gearui-kit/docs/NAVIGATOR_SWIPE_BACK_DESIGN.md`):
+ * Design choices (see `gearui-kit/docs/ARCHITECTURE.md`, Runtime Contracts):
  * - Routes are typed: Navigator is generic over [NavRoute] and an entry carries its route. Callers no
  *   longer bridge payloads through an outer state holder.
  * - Entry identity is Navigator's: keys are generated, never supplied. A caller-supplied key could

@@ -21,7 +21,7 @@ package com.gearui.components.icon
  * The set is generated: `scripts/icon-set.py` lists it and
  * `scripts/gen_icons.py` renders the assets. An **application** adds its own
  * icons by dropping PNGs into its own `assets/icons/`, which needs nothing from
- * here — see DESIGN_SYSTEM_SPEC 11.4.
+ * here — see `docs/DESIGN_SYSTEM.md`.
  */
 object Icons {
     const val address_book = "address_book"

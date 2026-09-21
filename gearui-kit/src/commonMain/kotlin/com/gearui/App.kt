@@ -71,7 +71,7 @@ import com.tencent.kuikly.compose.ui.Modifier
  *
  * Downstream libraries (privchat-ui and friends) only read `LocalLanguageTag.current`
  * internally to follow language changes; the application layer never passes languageTag again. See
- * `docs/I18N_INTEGRATION.md`.
+ * `docs/I18N.md`.
  *
  * @param themeMode theme mode (Light / Dark / System)
  * @param isSystemDark whether the system is in dark mode (only used when themeMode is System)

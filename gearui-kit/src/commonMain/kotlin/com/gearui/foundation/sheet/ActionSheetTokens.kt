@@ -14,7 +14,7 @@ import com.tencent.kuikly.compose.ui.unit.dp
  * it is 8dp across. Borrowing across the two means a brand that loosens spacing
  * silently inflates the dots.
  *
- * Geometry stays static by design. See DESIGN_SYSTEM_SPEC §6.1.
+ * Geometry stays static by design. See `docs/DESIGN_SYSTEM.md` §6.
  */
 data class ActionSheetTokens(
     /** Square tile behind a grid item's glyph. */

@@ -39,11 +39,11 @@ Kuikly Compose
 
 ## 规范文档
 
-统一入口：[`docs/SPEC.md`](./docs/SPEC.md)
+统一入口：[`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
 
-- 总体规范：`docs/ENGINEERING_CONTRACT.md`
-- 审查护栏：`docs/ARCHITECTURE_GUARDRAILS.md`
-- CI 对应：`docs/SPEC_CI_MAPPING.md`
-- Token 语义冻结：`docs/GEARUI_TOKEN_SEMANTIC_FREEZE_V2.md`
-- 颜色角色矩阵：`docs/GEARUI_COMPONENT_COLOR_ROLE_MATRIX.md`
-- 组件模板：`docs/COMPONENT_TEMPLATE.md`
+- 设计系统：`docs/DESIGN_SYSTEM.md`
+- 多语言系统：`docs/I18N.md`
+- 视觉设计规范：`docs/VISUAL_SPEC.md`
+- 组件封装规范：`docs/COMPONENT_SPEC.md`
+- 组件覆盖对比：`docs/COMPONENT_COVERAGE.md`
+- 质量状态与发布：`docs/QUALITY_STATUS.md`

@@ -12,8 +12,9 @@ Maven Central on 2026-09-20 from tag `v1.0.0-beta3`.
    `binary-compatibility-validator`; breaking changes only with migration
    notes. The pre-1.0 token API consolidation is done; downstream consumers
    (`privchat-ui`, `live-chat`, `lms-app`) recompile against the frozen shape.
-2. **Accepted visual parity with HeroUI Native 1.0.9** on iOS and Android,
-   with recorded deviations as the only differences.
+2. **Accepted visual consistency with GearUI's own
+   [VISUAL_SPEC.md](./VISUAL_SPEC.md)** on iOS and Android, with recorded
+   deviations as the only differences.
 3. **Accepted accessibility**: name/state/role semantics verified with a
    screen reader, not only with `idb ui describe-all`.
 4. **Measured performance** against the budgets: Android TTI ≤ 1200 ms,
@@ -37,7 +38,6 @@ Local gate on `68fc1a4` (2026-09-20, the published beta3 line):
 | iOS simulator Kotlin tests | 197 via `scripts/ios_native_tests.sh` against the real Kuikly host |
 | Token compiler tests | 119 passed; generated defaults match sources |
 | Shell guards | all `scripts/ci/check_*.sh` passed |
-| HeroUI source reference | 1.0.9, 42 pinned hashes verified |
 | Sample builds | Android / Web / iOS simulator build, install, launch |
 | Maven staging | six modules; AAR contains 97 icon assets; independent artifact consumer compiles (Android, JS, three iOS targets) |
 | Consumer builds | privchat-app Android and iOS compile against the kit |
@@ -76,11 +76,12 @@ evidence).
 - **Renderer limits**: hot rounded-to-square native border refresh does not
   propagate; blur is off by default pending the four upstream gaps
   ([VISUAL_SPEC.md](./VISUAL_SPEC.md) §5); iOS Dynamic Type unverified.
-- **Known product-level decisions carried from beta3**: native type scale
-  (HeroUI 16/14/18) undecided, password reveal on iOS, intermittent Kuikly
-  text-field focus crossing.
+- **Known product-level decisions carried from beta3**: the native type
+  scale is undecided, password reveal on iOS, intermittent Kuikly text-field
+  focus crossing.
 - **RTL**: typed packs exist; layout direction is not accepted.
-- Full HeroUI Native pixel/motion parity is unaccepted as a whole; recorded
+- Full pixel/motion consistency against
+  [VISUAL_SPEC.md](./VISUAL_SPEC.md) is unaccepted as a whole; recorded
   deviations are the documented differences, everything else still needs
   per-component visual passes.
 
@@ -140,7 +141,6 @@ CHROME_BIN='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
 python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 python3 scripts/generate_tokens.py --check
 for check in scripts/ci/check_*.sh; do bash "$check" || exit; done
-node scripts/check_heroui_reference.mjs
 bash scripts/ios_native_tests.sh   # needs -PgearuiIosTestHostDir host
 ```
 

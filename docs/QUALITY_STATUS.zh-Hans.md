@@ -12,8 +12,9 @@ Maven Central。
    下保持稳定；破坏性变更必须附迁移说明。1.0 前的 token API 整合已完成；
    下游消费方（`privchat-ui`、`live-chat`、`lms-app`）已针对冻结形态重新
    编译。
-2. **通过验收的 HeroUI Native 1.0.9 视觉一致性**（iOS 与 Android），
-   记录在案的偏差是唯一的差异。
+2. **通过验收的、符合 GearUI 自己的
+   [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) 的视觉一致性**（iOS 与
+   Android），记录在案的偏差是唯一的差异。
 3. **通过验收的无障碍**：名称/状态/角色语义用读屏器验证，而不只是
    `idb ui describe-all`。
 4. **实测性能**对照预算：Android TTI ≤ 1200 ms、iOS ≤ 1000 ms、
@@ -34,7 +35,6 @@ Maven Central。
 | iOS 模拟器 Kotlin 测试 | 197，经 `scripts/ios_native_tests.sh` 链接真实 Kuikly 宿主 |
 | Token 编译器测试 | 119 通过；生成默认值与源码一致 |
 | Shell 守卫 | 全部 `scripts/ci/check_*.sh` 通过 |
-| HeroUI 源码参考 | 1.0.9，42 个锁定哈希校验通过 |
 | Sample 构建 | Android / Web / iOS 模拟器构建、安装、启动 |
 | Maven staging | 六个模块；AAR 含 97 个图标资源；独立制品消费方编译通过（Android、JS、三个 iOS target） |
 | 消费方构建 | privchat-app 的 Android 与 iOS 针对 kit 编译通过 |
@@ -66,11 +66,12 @@ Navigator/TabPager 侧滑返回契约——页面优先仲裁、全宽 1:1 卡�
 - **渲染器限制**：圆角↔直角热切换的原生边框刷新不生效；模糊因四个上游
   缺口默认关闭（[VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §5）；
   iOS Dynamic Type 未验证。
-- **从 beta3 携带的已知产品级决策**：原生字号刻度（HeroUI 16/14/18）
-  未定、iOS 密码可见切换、Kuikly 文本框焦点偶发串扰。
+- **从 beta3 携带的已知产品级决策**：原生字号刻度未定、iOS 密码可见
+  切换、Kuikly 文本框焦点偶发串扰。
 - **RTL**：类型化语言包已有；布局方向未验收。
-- 完整的 HeroUI Native 像素/动效一致性作为整体尚未验收；记录在案的偏差
-  是文档化的差异，其余仍需逐组件视觉通过。
+- 完整的、对照 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) 的像素/
+  动效一致性作为整体尚未验收；记录在案的偏差是文档化的差异，其余仍需
+  逐组件视觉通过。
 
 ## 4. 发布流程
 
@@ -126,7 +127,6 @@ CHROME_BIN='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
 python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 python3 scripts/generate_tokens.py --check
 for check in scripts/ci/check_*.sh; do bash "$check" || exit; done
-node scripts/check_heroui_reference.mjs
 bash scripts/ios_native_tests.sh   # needs -PgearuiIosTestHostDir host
 ```
 

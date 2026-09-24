@@ -15,7 +15,11 @@ target 'iosApp' do
   use_frameworks!
 
   # GearUISample Framework (KMP 生成)
-  pod 'gearui_sample', :path => '../'
+  # The pod is the one the Kotlin cocoapods plugin generates and the repository
+  # tracks: sample/sample.podspec. This used to name 'gearui_sample', whose podspec
+  # was never committed — it only existed as a stale, git-ignored leftover on one
+  # machine, so every fresh checkout (CI included) failed at pod install.
+  pod 'sample', :path => '../'
 
   # KuiklyUI iOS 渲染引擎
   pod 'OpenKuiklyIOSRender', :git => 'https://github.com/Tencent-TDS/KuiklyUI.git', :tag => KUIKLY_VERSION

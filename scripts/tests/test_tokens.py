@@ -216,7 +216,11 @@ class CompositeTokenTest(unittest.TestCase):
     def test_shadow_order_and_signed_offsets_are_preserved(self):
         resolved = generator.resolve_document(self.document)
         layers = resolved['materials']['lightOverlay']['$value']
-        self.assertEqual([2, -6, 14], [x['offsetY']['value'] for x in layers])
+        # The light overlay leads with its 1dp inset hairline (offset 0, painted on
+        # top, drawn as the surface border), then the three drop layers in source
+        # order with their signs intact.
+        self.assertEqual([0, 2, -6, 14], [x['offsetY']['value'] for x in layers])
+        self.assertEqual([True, False, False, False], [bool(x.get('inset')) for x in layers])
         self.assertIn('-6.dp', generator.generate_materials(self.document))
 
     def test_inset_and_alpha_are_preserved(self):

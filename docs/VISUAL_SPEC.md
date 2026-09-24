@@ -71,6 +71,19 @@ Content stays reachable with long lists, keyboard and safe areas. One
 screenshot of an open sheet is not behavioral acceptance: test outside tap,
 Back, drag cancellation and rapid reopen.
 
+**Dialog actions.** The layout is a property of the question, decided by
+`DialogActionLayout` from the actions' roles and count, never by the screen:
+one action fills the card (BLOCK); two ordinary actions split the row at equal
+width with Cancel leading (SPLIT); three or more, any destructive action, or a
+label too long for half a card stack full-width with Cancel last (STACKED).
+These are the platform alert's answers — a lone small button in the corner of
+a wide card is decoration the thumb has to hunt for. The HeroUI form footer
+(small buttons on the trailing edge, TRAILING) exists only as an explicit
+choice for a dialog whose body is the point and whose buttons only close it.
+Full-width actions share one height, the medium control (48), which is also
+the touch floor; text sits 20 above the actions, the reference example's own
+spacing.
+
 ## 4. Feedback States
 
 Model only applicable states; do not force every control into seven named

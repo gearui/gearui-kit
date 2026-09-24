@@ -499,7 +499,7 @@
     },
     "dialogActionsTop": {
       "$value": {
-        "value": 32,
+        "value": 20,
         "unit": "px"
       }
     },

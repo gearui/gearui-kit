@@ -34,7 +34,7 @@ internal object ControlGeometry {
     val controlMedium = 48.dp
     val controlSmall = 40.dp
     val dialogActionGap = 12.dp
-    val dialogActionsTop = 32.dp
+    val dialogActionsTop = 20.dp
     val dialogMaxWidth = 384.dp
     val dialogTextGap = 4.dp
     val fieldLabelGap = 6.dp

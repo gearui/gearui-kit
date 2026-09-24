@@ -149,23 +149,22 @@ internal fun DialogSurface(
 /**
  * DialogContent — title, optional body, then the actions.
  *
- * Follows the HeroUI Native dialog: a start-aligned title (large, medium weight)
- * over a muted description, 20 of padding, and real Buttons below with 32 above
- * them. Callers still pass [DialogAction] roles; the dialog decides the drawing:
+ * Follows the HeroUI Native dialog for the card: a start-aligned title (large,
+ * medium weight) over a muted description, 20 of padding, and 20 between the text
+ * and the actions — the reference example's own spacing, and the platform alert's.
  *
- * - **Stacked, full width** when an action is destructive, when there are more
- *   than two, or when a label is long — the reference confirm pattern (danger
- *   button, then a neutral Cancel). CANCEL always goes last.
- * - **One row, end-aligned, small buttons** otherwise — the reference form
- *   footer, with Cancel first and the primary action on the trailing edge.
- *
- * "Long" is measured in characters because Kuikly cannot measure text here, so
- * the threshold is conservative: a wrong guess must never clip a label.
+ * The actions are laid out by [DialogActionLayout], resolved from their roles and
+ * count unless [actionLayout] names one. Callers pass [DialogAction] roles and the
+ * dialog decides the drawing; see [resolveDialogActionLayout] for the rule and
+ * [DialogActionLayout] for why an alert gets the platform's full-width actions
+ * while a form keeps the reference's trailing row.
  *
  * @param title the question being asked
  * @param message optional supporting line
  * @param content optional custom body, scrollable, between message and actions
  * @param actions empty renders none
+ * @param actionLayout null lets the policy decide; name [DialogActionLayout.TRAILING]
+ *   for a form-style dialog whose buttons only close it
  */
 @Composable
 fun DialogContent(
@@ -173,6 +172,7 @@ fun DialogContent(
     message: String? = null,
     content: (@Composable () -> Unit)? = null,
     actions: List<DialogAction> = emptyList(),
+    actionLayout: DialogActionLayout? = null,
 ) {
     val colors = Theme.colors
     Column(
@@ -219,36 +219,45 @@ fun DialogContent(
         }
         if (actions.isNotEmpty()) {
             Spacer(modifier = Modifier.height(ControlGeometry.dialogActionsTop))
-            DialogActions(actions)
+            DialogActions(actions, actionLayout ?: resolveDialogActionLayout(actions))
         }
     }
 }
 
-/** Longest label, in characters, that still fits a side-by-side pair. */
-private const val SIDE_BY_SIDE_MAX_CHARS = 6
-
 @Composable
-private fun DialogActions(actions: List<DialogAction>) {
-    val others = actions.filter { it.role != DialogActionRole.CANCEL }
-    val cancels = actions.filter { it.role == DialogActionRole.CANCEL }
-    val stacked = actions.size > 2 ||
-        actions.any { it.role == DialogActionRole.DESTRUCTIVE } ||
-        actions.any { it.text.length > SIDE_BY_SIDE_MAX_CHARS }
-    if (stacked) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap),
-        ) {
-            (others + cancels).forEach { action ->
+private fun DialogActions(actions: List<DialogAction>, layout: DialogActionLayout) {
+    val ordered = orderDialogActions(actions, layout)
+    when (layout) {
+        // The full-width layouts share one height: the platform alert's action row,
+        // which is also the touch floor. A single action and a split pair must not
+        // differ in height, or the same "OK" is taller in one dialog than the next.
+        DialogActionLayout.BLOCK -> Column(modifier = Modifier.fillMaxWidth()) {
+            ordered.forEach { action ->
                 DialogActionButton(action, ButtonSize.MEDIUM, Modifier.fillMaxWidth(), block = true)
             }
         }
-    } else {
-        Row(
+        DialogActionLayout.SPLIT -> Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap),
+        ) {
+            ordered.forEach { action ->
+                DialogActionButton(action, ButtonSize.MEDIUM, Modifier.weight(1f), block = true)
+            }
+        }
+        DialogActionLayout.STACKED -> Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap),
+        ) {
+            ordered.forEach { action ->
+                DialogActionButton(action, ButtonSize.MEDIUM, Modifier.fillMaxWidth(), block = true)
+            }
+        }
+        // The reference's form footer: small, hugging their labels, on the trailing edge.
+        DialogActionLayout.TRAILING -> Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(ControlGeometry.dialogActionGap, Alignment.End),
         ) {
-            (cancels + others).forEach { action ->
+            ordered.forEach { action ->
                 DialogActionButton(action, ButtonSize.SMALL, Modifier, block = false)
             }
         }
@@ -278,8 +287,8 @@ private fun DialogActionButton(action: DialogAction, size: ButtonSize, modifier:
 
 /** Geometry and type shared by the dialog family. */
 object DialogDefaults {
-    /** Minimum touch height of an action. */
-    val actionHeight: Dp = ControlGeometry.controlSmall
+    /** Height of an action in the full-width layouts; the platform alert's row, and the touch floor. */
+    val actionHeight: Dp = ControlGeometry.controlMedium
 
     /**
      * Title: reference `.dialog__label`, text-lg at medium weight. The comment already

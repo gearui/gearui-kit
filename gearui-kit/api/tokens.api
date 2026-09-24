@@ -356,7 +356,7 @@
   geometry.controlMedium = {"$type":"dimension","$value":{"unit":"px","value":48}}
   geometry.controlSmall = {"$type":"dimension","$value":{"unit":"px","value":40}}
   geometry.dialogActionGap = {"$type":"dimension","$value":{"unit":"px","value":12}}
-  geometry.dialogActionsTop = {"$type":"dimension","$value":{"unit":"px","value":32}}
+  geometry.dialogActionsTop = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.dialogMaxWidth = {"$type":"dimension","$value":{"unit":"px","value":384}}
   geometry.dialogTextGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.fieldLabelGap = {"$type":"dimension","$value":{"unit":"px","value":6}}

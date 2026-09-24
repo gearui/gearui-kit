@@ -606,6 +606,16 @@ public final class com/gearui/components/dialog/DialogAction {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/components/dialog/DialogActionLayout : java/lang/Enum {
+	public static final field BLOCK Lcom/gearui/components/dialog/DialogActionLayout;
+	public static final field SPLIT Lcom/gearui/components/dialog/DialogActionLayout;
+	public static final field STACKED Lcom/gearui/components/dialog/DialogActionLayout;
+	public static final field TRAILING Lcom/gearui/components/dialog/DialogActionLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/dialog/DialogActionLayout;
+	public static fun values ()[Lcom/gearui/components/dialog/DialogActionLayout;
+}
+
 public final class com/gearui/components/dialog/DialogActionRole : java/lang/Enum {
 	public static final field CANCEL Lcom/gearui/components/dialog/DialogActionRole;
 	public static final field DESTRUCTIVE Lcom/gearui/components/dialog/DialogActionRole;
@@ -624,7 +634,7 @@ public final class com/gearui/components/dialog/DialogDefaults {
 }
 
 public final class com/gearui/components/dialog/DialogKt {
-	public static final fun DialogContent (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/util/List;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DialogContent (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/util/List;Lcom/gearui/components/dialog/DialogActionLayout;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/drawer/DrawerItem {
@@ -1900,7 +1910,7 @@ public final class com/gearui/components/tabs/Tab {
 }
 
 public final class com/gearui/components/tabs/TabPagerKt {
-	public static final fun TabPager (IILkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TabPager (IILkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZILkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/tabs/TabsKt {
@@ -3396,6 +3406,17 @@ public final class com/gearui/gestures/DismissDirection : java/lang/Enum {
 	public static fun values ()[Lcom/gearui/gestures/DismissDirection;
 }
 
+public final class com/gearui/gestures/PageSwipeBackGate {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getCanSwipeBack ()Lkotlin/jvm/functions/Function0;
+	public final fun setCanSwipeBack (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class com/gearui/gestures/PageSwipeBackGateKt {
+	public static final fun getLocalPageSwipeBackGate ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
 public final class com/gearui/gestures/SwipeBackConfig {
 	public static final field $stable I
 	public fun <init> ()V
@@ -3419,8 +3440,8 @@ public final class com/gearui/gestures/SwipeBackConfig {
 }
 
 public final class com/gearui/gestures/SwipeBackKt {
-	public static final fun swipeBack (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
-	public static synthetic fun swipeBack$default (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static final fun swipeBack (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lcom/tencent/kuikly/compose/ui/Modifier;
+	public static synthetic fun swipeBack$default (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/gestures/SwipeBackConfig;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lcom/tencent/kuikly/compose/ui/Modifier;
 }
 
 public final class com/gearui/gestures/SwipeDismissConfig {

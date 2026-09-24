@@ -67,6 +67,14 @@
   first and last rows round with it and the rows between stay square, as the platform's
   lists do. Discrete targets — menu and action sheet options, chips, tiles — keep the
   scale, which is what the reference scales.
+- **Dialog actions follow the platform alert, not a screen's taste.** `DialogActionLayout`
+  is resolved from the actions' roles and count by a tested pure function: one action
+  fills the card (BLOCK), two ordinary ones split the row at equal width with Cancel
+  leading (SPLIT), three or more, a destructive one, or a long label stack full-width
+  with Cancel last (STACKED). The HeroUI form footer — small buttons on the trailing
+  edge — remains as an explicit `actionLayout = TRAILING` for a dialog whose body is the
+  point. Full-width actions share the 48 medium height; text sits 20 above the actions
+  (was 32), the reference example's own spacing. `DialogContent` gains `actionLayout`.
 - `TabPager`: the pages a `Tabs` bar selects between, swipeable side to side, with the
   selection shared so a tap scrolls and a swipe moves the bar. Give it the space it
   should have — `weight(1f)` in a Column — since a pager that claims the parent's whole

@@ -1,5 +1,7 @@
 package com.gearui.sample.examples.dialog
 
+import com.gearui.components.input.Input
+import com.gearui.components.dialog.DialogActionLayout
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -41,6 +43,9 @@ fun DialogExample(
     var showConfirmNoTitle by remember { mutableStateOf(false) }
     var showCustomDialog by remember { mutableStateOf(false) }
     var showDangerDialog by remember { mutableStateOf(false) }
+    var showThreeWay by remember { mutableStateOf(false) }
+    var showFormDialog by remember { mutableStateOf(false) }
+    var inputValue by remember { mutableStateOf("") }
 
     // Result message
     var resultText by remember { mutableStateOf("") }
@@ -154,6 +159,88 @@ fun DialogExample(
                 onCancel = { showDangerDialog = false },
                 destructive = true,
             )
+        }
+
+        // Three choices: the policy stacks them, cancel last.
+        ExampleSection(
+            title = "三个动作",
+            description = "三个及以上动作纵向通栏排列，取消永远在最后"
+        ) {
+            Button(
+                text = "三个动作",
+                onClick = { showThreeWay = true },
+                size = ButtonSize.MEDIUM
+            )
+
+            Dialog.Host(
+                visible = showThreeWay,
+                dismissOnOutside = true,
+                onDismiss = { showThreeWay = false }
+            ) {
+                DialogContent(
+                    title = "保存更改？",
+                    message = "你有尚未保存的修改。",
+                    actions = listOf(
+                        DialogAction(
+                            text = "保存",
+                            role = DialogActionRole.PRIMARY,
+                            onClick = { resultText = "已保存"; showThreeWay = false },
+                        ),
+                        DialogAction(
+                            text = "不保存",
+                            onClick = { resultText = "未保存"; showThreeWay = false },
+                        ),
+                        DialogAction(
+                            text = "取消",
+                            role = DialogActionRole.CANCEL,
+                            onClick = { showThreeWay = false },
+                        ),
+                    ),
+                )
+            }
+        }
+
+        // A form in a dialog: the buttons only close it, so the caller names the
+        // reference's trailing row — the one layout the policy never picks itself.
+        ExampleSection(
+            title = "表单对话框（显式 TRAILING）",
+            description = "正文是重点、按钮只负责关闭时，由调用方指定右对齐紧凑布局"
+        ) {
+            Button(
+                text = "表单对话框",
+                onClick = { showFormDialog = true },
+                size = ButtonSize.MEDIUM
+            )
+
+            Dialog.Host(
+                visible = showFormDialog,
+                dismissOnOutside = true,
+                onDismiss = { showFormDialog = false }
+            ) {
+                DialogContent(
+                    title = "重命名",
+                    content = {
+                        Input(
+                            value = inputValue,
+                            onValueChange = { inputValue = it },
+                            placeholder = "新名称",
+                        )
+                    },
+                    actionLayout = DialogActionLayout.TRAILING,
+                    actions = listOf(
+                        DialogAction(
+                            text = "取消",
+                            role = DialogActionRole.CANCEL,
+                            onClick = { showFormDialog = false },
+                        ),
+                        DialogAction(
+                            text = "确定",
+                            role = DialogActionRole.PRIMARY,
+                            onClick = { resultText = "已重命名"; showFormDialog = false },
+                        ),
+                    ),
+                )
+            }
         }
 
         // Dialog with custom content

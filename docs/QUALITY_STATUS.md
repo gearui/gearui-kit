@@ -63,6 +63,12 @@ required checks (default/long/empty/large data, press/disabled/loading/focus,
 light/dark/accent/shape live changes, overlay lifecycle, per-platform
 evidence).
 
+- **Dialog action layout** (`DialogActionLayout`): BLOCK / SPLIT / STACKED
+  resolved by a tested pure function (10 unit tests); TRAILING opt-in only.
+  Text-to-actions gap 32 → 20, full-width actions at the 48 medium height.
+  Verified in the sample on iPhone 17 Pro: single-action alert, two-action
+  confirm, destructive confirm, three-action stack, explicit trailing form.
+
 ## 3. Open Risks And Limits
 
 - **Screen reader and focus traversal**: unaccepted globally. Semantics are

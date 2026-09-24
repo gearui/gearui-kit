@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [1.0.0-beta4] - 2026-09-25
+
+Published to Maven Central. Verification record and open limits:
+[quality status](docs/QUALITY_STATUS.md).
+
+### Behaviour changes to review when upgrading
+
+Source-compatible, but they change what an unchanged screen draws:
+
+- `Tabs` defaults to `TabsOutlineType.CAPSULE` (the segmented track). Pass
+  `UNDERLINE` to keep the old look.
+- Dialog actions are laid out by `DialogActionLayout`: a single action now fills the
+  card and two ordinary actions split the row. Pass `actionLayout = TRAILING` for the
+  old trailing row of small buttons.
+- `ContextMenu` opens flush against its trigger (no 9dp gap).
+- Floating surfaces paint the overlay role (`colors.popover`); in dark mode it now sits
+  one step above `surface`. Overlays draw their hairline as a real 1dp border.
+- `Input` keeps the caret at the end of existing text instead of before it.
+
+### Binary-incompatible changes
+
+Recompile against beta4; these signatures changed (see `gearui-kit/api`):
+`DialogContent` (new `actionLayout`), `Material` (new `role`), `swipeBack`, `Rate`,
+`RateWithDescription`, `Colors` (new roles), and the `CommonStrings` /
+`DateTimeStrings` / `FieldStrings` string tables and their patches (new keys).
+
+
 ### Added
 
 - `PressableFeedback`: HeroUI Native press feedback for any content. It uses the

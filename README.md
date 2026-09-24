@@ -6,7 +6,7 @@ Build beautiful, iOS-inspired UI across iOS, Android, Web, and HarmonyOS with Ge
 
 ## Release Information
 
-- Coordinates: `com.gearui:gearui-kit:1.0.0-beta3`
+- Coordinates: `com.gearui:gearui-kit:1.0.0-beta4`
 - Available on Maven Central; `1.0.0-beta1` was the first public release (2026-08-15)
 - Published artifacts: Android, iOS (arm64 / simulator arm64 / x64), JS (browser)
 - Also builds for HarmonyOS (`ohosArm64`) through a separate configuration; not published to Maven Central
@@ -180,7 +180,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta3")
+            implementation("com.gearui:gearui-kit:1.0.0-beta4")
         }
     }
 }
@@ -205,7 +205,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta3")
+            implementation("com.gearui:gearui-kit:1.0.0-beta4")
         }
     }
 }

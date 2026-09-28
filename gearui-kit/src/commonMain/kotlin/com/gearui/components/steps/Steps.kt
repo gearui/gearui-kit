@@ -28,6 +28,7 @@ import com.gearui.foundation.typography.IconSizes
 data class StepItem(
     val title: String,
     val description: String? = null,
+    /** An [com.gearui.components.icon.Icons] name drawn in place of the step number. */
     val icon: String? = null
 )
 
@@ -35,10 +36,10 @@ data class StepItem(
  * Step status
  */
 enum class StepStatus {
-    WAITING,    // 等待
-    PROCESS,    // 进行中
-    FINISH,     // 完成
-    ERROR       // 错误
+    WAITING,
+    PROCESS,
+    FINISH,
+    ERROR
 }
 
 /**
@@ -53,8 +54,8 @@ enum class StepsDirection {
  * Steps theme
  */
 enum class StepsTheme {
-    DEFAULT,    // 默认带图标
-    DOT         // 点状
+    DEFAULT,
+    DOT
 }
 
 /**
@@ -333,11 +334,7 @@ private fun StepIcon(
 
                 else -> {
                     item.icon?.let { icon ->
-                        Text(
-                            text = icon,
-                            style = Theme.typography.bodySmall,
-                            color = contentColor
-                        )
+                        Icon(name = icon, size = IconSizes.Default.sm, tint = contentColor)
                     } ?: run {
                         Text(
                             text = (index + 1).toString(),

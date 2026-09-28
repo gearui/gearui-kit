@@ -28,7 +28,6 @@ import com.gearui.foundation.border.BorderWidth
 data class TourStep(
     val title: String,
     val description: String,
-    val targetKey: String? = null
 )
 
 /**

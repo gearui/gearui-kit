@@ -1,5 +1,8 @@
 package com.gearui.components.image
 
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.foundation.Image
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -31,20 +34,20 @@ import com.gearui.foundation.typography.IconSizes
  * Image fit mode
  */
 enum class ImageFit {
-    CONTAIN,    // 包含（等比缩放，保持完整）
-    COVER,      // 覆盖（等比缩放，填满容器）
-    FILL,       // 填充（拉伸填满）
-    NONE,       // 原始大小
-    SCALE_DOWN  // 缩小（不放大）
+    CONTAIN, // scale to fit, keeping the whole image
+    COVER, // scale to fill, cropping the overflow
+    FILL, // stretch to fill
+    NONE, // original size
+    SCALE_DOWN // scale down only, never up
 }
 
 /**
  * Image shape
  */
 enum class ImageShape {
-    SQUARE,     // 方形
-    ROUNDED,    // 圆角
-    CIRCLE      // 圆形
+    SQUARE,
+    ROUNDED,
+    CIRCLE
 }
 
 /**
@@ -95,6 +98,7 @@ fun GearImage(
     onClick: (() -> Unit)? = null
 ) {
     val colors = Theme.colors
+    val pressInteraction = remember { MutableInteractionSource() }
 
     val imageModifier = modifier
         .then(
@@ -119,8 +123,11 @@ fun GearImage(
             } else Modifier
         )
         .then(
-            if (onClick != null) Modifier.clickable { onClick() }
-            else Modifier
+            if (onClick != null) {
+                Modifier
+                    .pressScale(pressInteraction)
+                    .clickable(interactionSource = pressInteraction, indication = null) { onClick() }
+            } else Modifier
         )
 
     val contentScale = when (fit) {
@@ -297,13 +304,15 @@ fun ImageGallery(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacing)
     ) {
-        painters.chunked(columns).forEach { rowPainters ->
+        painters.chunked(columns).forEachIndexed { rowIndex, rowPainters ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(spacing),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 rowPainters.forEachIndexed { index, painter ->
-                    val globalIndex = painters.indexOf(painter)
+                    // Position, not identity: indexOf picked the first match, so every
+                    // repeated painter (all nulls while loading) reported index 0.
+                    val globalIndex = rowIndex * columns + index
                     GearImage(
                         painter = painter,
                         shape = shape,
@@ -330,7 +339,7 @@ fun ImageGallery(
 fun ImagePlaceholder(
     modifier: Modifier = Modifier,
     text: String = I18n.strings.media.imageEmpty,
-    /** Custom glyph; left empty the built-in icon is used. */
+    /** An [Icons] name; the image icon when left empty. */
     icon: String? = null
 ) {
     val colors = Theme.colors
@@ -344,19 +353,11 @@ fun ImagePlaceholder(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (icon == null) {
-                Icon(
-                    name = Icons.image,
-                    size = IconSizes.Default.xl,
-                    tint = colors.mutedForeground
-                )
-            } else {
-                Text(
-                    text = icon,
-                    style = Theme.typography.headlineLarge,
-                    color = colors.mutedForeground
-                )
-            }
+            Icon(
+                name = icon ?: Icons.image,
+                size = IconSizes.Default.xl,
+                tint = colors.mutedForeground
+            )
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
                 text = text,

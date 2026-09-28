@@ -402,7 +402,7 @@ private fun WheelPickerColumn(
             val firstVisibleOffset = listState.firstVisibleItemScrollOffset
 
             // Work out which index to snap to
-            val targetIndex = if (firstVisibleOffset > 60) { // 超过一半高度则跳到下一个
+            val targetIndex = if (firstVisibleOffset > 60) { // past half an item, snap to the next
                 firstVisibleIndex + 1
             } else {
                 firstVisibleIndex

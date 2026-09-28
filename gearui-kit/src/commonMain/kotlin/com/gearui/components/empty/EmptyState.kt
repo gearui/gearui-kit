@@ -1,19 +1,15 @@
 package com.gearui.components.empty
 
 import androidx.compose.runtime.*
+import com.gearui.components.button.Button
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.clickable
 import androidx.compose.runtime.remember
-import com.gearui.foundation.motion.rowPressFeedback
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
 import com.gearui.foundation.layout.Spacing
@@ -43,7 +39,6 @@ fun EmptyState(
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
     val colors = Theme.colors
-    val shapes = Theme.shapes
 
     Column(
         modifier = modifier
@@ -89,20 +84,7 @@ fun EmptyState(
             customAction()
         } else if (actionText != null && onAction != null) {
             Spacer(modifier = Modifier.height(Spacing.xl))
-            val actionInteraction = remember { MutableInteractionSource() }
-            Box(
-                modifier = Modifier
-                    .clip(shapes.sm)
-                    .rowPressFeedback(interaction = actionInteraction, shape = shapes.sm, base = colors.primary)
-                    .clickable(interactionSource = actionInteraction, indication = null, onClick = onAction)
-                    .padding(horizontal = Spacing.xl, vertical = 10.dp)
-            ) {
-                Text(
-                    text = actionText,
-                    style = Theme.typography.bodyMedium,
-                    color = colors.primaryForeground
-                )
-            }
+            Button(text = actionText, onClick = onAction)
         }
     }
 }

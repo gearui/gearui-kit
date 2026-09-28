@@ -9,12 +9,12 @@ import com.tencent.kuikly.compose.ui.geometry.Rect
  * Used by the Runtime for unified event dispatch
  */
 enum class OverlayEvent {
-    OutsideClick,   // 点击外部
-    Scroll,         // 页面滚动
-    BackPress,      // 返回键
-    RouteChange,    // 路由切换
-    Timeout,        // 定时超时
-    AnchorDetached, // 锚点消失
+    OutsideClick,
+    Scroll,
+    BackPress,
+    RouteChange,
+    Timeout,
+    AnchorDetached, // the anchor left the composition
 }
 
 /**
@@ -124,7 +124,7 @@ class OverlayController {
                 OverlayEvent.Scroll -> policy.scroll
                 OverlayEvent.BackPress -> policy.backPress
                 OverlayEvent.RouteChange -> policy.routeChange
-                OverlayEvent.Timeout -> true  // timeout 由定时器触发，直接关闭
+                OverlayEvent.Timeout -> true // fired by the timer: always dismiss
                 OverlayEvent.AnchorDetached -> policy.anchorDetached
             }
             println("[GearUI] Overlay item id=${item.id}, policy.scroll=${policy.scroll}, shouldRemove=$shouldRemove")

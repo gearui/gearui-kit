@@ -47,10 +47,10 @@ enum class SwitchSize {
  * Switch type
  */
 enum class SwitchType {
-    FILL,    // 填充型（默认）
-    TEXT,    // 带文字
-    LOADING, // 加载中
-    ICON     // 带图标
+    FILL, // filled (default)
+    TEXT,
+    LOADING,
+    ICON
 }
 
 /**

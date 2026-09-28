@@ -160,7 +160,7 @@ fun ToastHost() {
             options = OverlayOptions(
                 placement = OverlayPlacement.Center,
                 modal = false,
-                zIndex = 100f, // Toast 最高层级
+                zIndex = 100f, // toasts sit above every other layer
                 // It reports, it does not take focus: showing it must not close a keyboard the user is typing on.
                 dismissKeyboardOnShow = false,
                 dismissPolicy = OverlayDismissPolicy.toast(toast.duration)

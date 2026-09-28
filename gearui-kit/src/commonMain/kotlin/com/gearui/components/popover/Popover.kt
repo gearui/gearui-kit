@@ -39,30 +39,30 @@ import com.gearui.foundation.border.BorderWidth
  * PopoverTheme - bubble theme
  */
 enum class PopoverTheme {
-    DARK,       // 深色主题
-    LIGHT,      // 浅色主题
-    BRAND,      // 品牌色主题
-    SUCCESS,    // 成功主题
-    WARNING,    // 警告主题
-    ERROR       // 错误主题
+    DARK,
+    LIGHT,
+    BRAND,
+    SUCCESS,
+    WARNING,
+    ERROR
 }
 
 /**
  * PopoverPlacement - popup position
  */
 enum class PopoverPlacement {
-    TOP_LEFT,       // 上左
-    TOP,            // 上中
-    TOP_RIGHT,      // 上右
-    RIGHT_TOP,      // 右上
-    RIGHT,          // 右中
-    RIGHT_BOTTOM,   // 右下
-    BOTTOM_RIGHT,   // 下右
-    BOTTOM,         // 下中
-    BOTTOM_LEFT,    // 下左
-    LEFT_BOTTOM,    // 左下
-    LEFT,           // 左中
-    LEFT_TOP        // 左上
+    TOP_LEFT,
+    TOP,
+    TOP_RIGHT,
+    RIGHT_TOP,
+    RIGHT,
+    RIGHT_BOTTOM,
+    BOTTOM_RIGHT,
+    BOTTOM,
+    BOTTOM_LEFT,
+    LEFT_BOTTOM,
+    LEFT,
+    LEFT_TOP
 }
 
 /**

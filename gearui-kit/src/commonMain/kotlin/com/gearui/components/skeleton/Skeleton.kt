@@ -24,18 +24,18 @@ import com.gearui.foundation.layout.Spacing
  * Skeleton animation type
  */
 enum class SkeletonAnimation {
-    PULSE,      // 脉冲动画
-    WAVE,       // 波浪动画
-    NONE        // 无动画
+    PULSE,
+    WAVE,
+    NONE
 }
 
 /**
  * Skeleton variant
  */
 enum class SkeletonVariant {
-    TEXT,       // 文本骨架
-    CIRCULAR,   // 圆形骨架
-    RECTANGULAR // 矩形骨架
+    TEXT,
+    CIRCULAR,
+    RECTANGULAR
 }
 
 /**

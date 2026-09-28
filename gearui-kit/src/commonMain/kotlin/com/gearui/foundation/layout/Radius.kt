@@ -1,42 +1,35 @@
 package com.gearui.foundation.layout
 
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 
 /**
- * Radius - global corner radius scale (Dp values)
+ * The default corner radius scale as `Dp`, for code that needs a number rather than a
+ * `Shape` — a component token, a custom `RoundedCornerShape` with mixed corners.
  *
- * Exactly matches the frozen `theme.Shapes` scale (same names, same values), so there is only one standard:
- *
- *   none = 0
- *   sm   = 4dp
- *   md   = 6dp
- *   lg   = 8dp
- *   xl   = 12dp
- *   full = 9999dp (pill / fully rounded)
- *
- * `Shapes` supplies `Shape` instances (for `Modifier.clip`); `Radius` supplies the matching `Dp`
- * values (for places that need a Dp, such as component tokens). The numbers stay in sync.
+ * Read from the same generated geometry as `ShapesDefault.Default`, so the two cannot
+ * drift apart again (they did: this object kept the pre-beta5 4 / 6 / 8 / 12 after the
+ * shapes moved to HeroUI Native's scale). It is the *default* scale: a theme that
+ * replaces `shapes` is read through `Theme.shapes`, which is what components should use.
  */
 object Radius {
-    /** 0dp - square corners */
-    val none: Dp = 0.dp
+    val none: Dp = ControlGeometry.radiusNone
 
-    /** 4dp - small radius (tags, chips, dense controls) */
-    val sm: Dp = 4.dp
+    /** Small controls, chips, tags. */
+    val sm: Dp = ControlGeometry.radiusSmall
 
-    /** 6dp - default radius (inputs, default surfaces) */
-    val md: Dp = 6.dp
+    /** Fields. */
+    val md: Dp = ControlGeometry.radiusMedium
 
-    /** 8dp - large radius (buttons, cards; the GearUI mobile default) */
-    val lg: Dp = 8.dp
+    /** Buttons and cards. */
+    val lg: Dp = ControlGeometry.radiusDefault
 
-    /** 12dp - extra large radius (sheets, large cards, emphasised surfaces) */
-    val xl: Dp = 12.dp
+    /** Dialogs and overlay surfaces. */
+    val xl: Dp = ControlGeometry.radiusOverlay
 
-    /** 9999dp - pill / fully rounded */
-    val full: Dp = 9999.dp
+    /** Pill / fully rounded. */
+    val full: Dp = ControlGeometry.radiusFull
 
-    /** 9999dp - circular (round avatars and badges); identical to [full] */
-    val circle: Dp = 9999.dp
+    /** Circular avatars and badges; identical to [full]. */
+    val circle: Dp = ControlGeometry.radiusFull
 }

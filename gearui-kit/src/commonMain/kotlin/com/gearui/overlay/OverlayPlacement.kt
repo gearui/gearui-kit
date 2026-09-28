@@ -10,28 +10,28 @@ import com.tencent.kuikly.compose.ui.graphics.Color
  */
 enum class OverlayPlacement {
     // Above
-    TopLeft,        // 上左 - 左对齐，在上方
-    TopCenter,      // 上中 - 居中，在上方
-    TopRight,       // 上右 - 右对齐，在上方
+    TopLeft,
+    TopCenter,
+    TopRight,
 
     // Below
-    BottomLeft,     // 下左 - 左对齐，在下方
-    BottomCenter,   // 下中 - 居中，在下方
-    BottomRight,    // 下右 - 右对齐，在下方
+    BottomLeft,
+    BottomCenter,
+    BottomRight,
 
     // Left
-    LeftTop,        // 左上 - 在左侧，顶部对齐
-    LeftCenter,     // 左中 - 在左侧，垂直居中
-    LeftBottom,     // 左下 - 在左侧，底部对齐
+    LeftTop,
+    LeftCenter,
+    LeftBottom,
 
     // Right
-    RightTop,       // 右上 - 在右侧，顶部对齐
-    RightCenter,    // 右中 - 在右侧，垂直居中
-    RightBottom,    // 右下 - 在右侧，底部对齐
+    RightTop,
+    RightCenter,
+    RightBottom,
 
     // Special
-    Center,         // 屏幕居中（无 anchor）
-    Fullscreen,     // 全屏
+    Center,
+    Fullscreen,
 }
 
 /**

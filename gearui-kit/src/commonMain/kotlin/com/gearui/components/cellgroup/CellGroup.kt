@@ -1,5 +1,6 @@
 package com.gearui.components.cellgroup
 
+import androidx.compose.runtime.key as rowKey
 import com.gearui.foundation.material.surfaceShadowStyles
 import com.gearui.foundation.material.DecoratedSurface
 import androidx.compose.runtime.Composable
@@ -84,6 +85,12 @@ fun <T> CellGroup(
     title: String? = null,
     titleTrailing: (@Composable () -> Unit)? = null,
     separatorInset: Dp = CellDefaults.Default.paddingHorizontal,
+    /**
+     * A stable identity per item. Pass it when rows can be removed, inserted or
+     * reordered, so each row's state — its press, anything it remembers — stays with
+     * its item instead of sliding to whichever row takes its position.
+     */
+    key: ((T) -> Any)? = null,
     itemContent: @Composable (T) -> Unit,
 ) {
     val colors = Theme.colors
@@ -135,29 +142,34 @@ fun <T> CellGroup(
             // separators on either side of it are then filled with the press colour
             // instead of ruling across it: the platform's lists hide the lines that
             // touch a pressed row, and a line left showing cuts the highlight in two.
-            val interactions = remember(items.size) {
-                List(items.size) { MutableInteractionSource() }
+            val keys = items.mapIndexed { index, item -> key?.invoke(item) ?: index }
+            val sources = remember { HashMap<Any, MutableInteractionSource>() }
+            val rowSources = keys.map { k -> sources.getOrPut(k) { MutableInteractionSource() } }
+            sources.keys.retainAll(keys.toSet())
+            val pressed = keys.mapIndexed { index, k ->
+                rowKey(k) { rowSources[index].collectIsPressedAsState().value }
             }
-            val pressed = interactions.map { it.collectIsPressedAsState().value }
 
             items.forEachIndexed { index, item ->
-                // Before each row but the first, so "no separator after the last"
-                // needs no count and cannot be got wrong.
-                if (separatorBeforeRow(index)) {
-                    val covered = separatorCoveredByPress(index) { pressed.getOrElse(it) { false } }
-                    if (covered) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(ControlGeometry.separatorThickness)
-                                .background(colors.muted)
-                        )
-                    } else {
-                        Divider(thickness = ControlGeometry.separatorThickness, insetStart = separatorInset)
+                rowKey(keys[index]) {
+                    // Before each row but the first, so "no separator after the last"
+                    // needs no count and cannot be got wrong.
+                    if (separatorBeforeRow(index)) {
+                        val covered = separatorCoveredByPress(index) { pressed.getOrElse(it) { false } }
+                        if (covered) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(ControlGeometry.separatorThickness)
+                                    .background(colors.muted)
+                            )
+                        } else {
+                            Divider(thickness = ControlGeometry.separatorThickness, insetStart = separatorInset)
+                        }
                     }
-                }
-                CompositionLocalProvider(LocalRowInteractionSource provides interactions[index]) {
-                    itemContent(item)
+                    CompositionLocalProvider(LocalRowInteractionSource provides rowSources[index]) {
+                        itemContent(item)
+                    }
                 }
             }
         }

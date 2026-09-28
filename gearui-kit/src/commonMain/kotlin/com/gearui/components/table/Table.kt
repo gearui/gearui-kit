@@ -25,9 +25,9 @@ import com.gearui.foundation.border.BorderWidth
  * Pinned column side
  */
 enum class TableColFixed {
-    NONE,   // 不固定
-    LEFT,   // 左侧固定
-    RIGHT   // 右侧固定
+    NONE,
+    LEFT,
+    RIGHT
 }
 
 /**
@@ -336,7 +336,7 @@ private fun <T> FixedColumnTable(
     val dataHeight = if (data.isNotEmpty()) {
         rowHeight * data.size + 0.5.dp * (data.size - 1)
     } else {
-        rowHeight * 3  // 空状态高度
+        rowHeight * 3 // empty-state height
     }
     val totalHeight = headerHeight + dataHeight
 

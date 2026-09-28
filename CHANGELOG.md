@@ -37,6 +37,25 @@ Not binary-compatible with 1.0.0-beta5: components are removed (see "Removed").
   card. It now uses the iOS system grey (`lightSelectionOutline` /
   `darkSelectionOutline`), which clears the 3:1 non-text contrast minimum.
 
+- `CellGroup` kept each row's press state by position, so removing a row handed its
+  state to the next one. Rows can now pass `key`, and state follows the item.
+- `ImageGallery` reported index 0 for every repeated painter (all nulls while
+  loading); it uses the item's position.
+- `StepItem.icon` and `ImagePlaceholder(icon = …)` drew the icon *name* as text; both
+  now draw the icon.
+- `Result`: FORBIDDEN showed a crossed-out camera and QUESTION the info glyph; they now
+  use a lock and a question mark.
+- `EmptyState`'s default action was a hand-built box; it is a `Button`.
+- `Avatar` and `GearImage` ran `onClick` with no press feedback; they scale on press.
+  Avatar initials take their size from the type scale instead of fixed `sp`.
+- `Radius` still carried the pre-beta5 4 / 6 / 8 / 12 while `Theme.shapes` had moved
+  to 8 / 12 / 14 / 24. It is now read from the same generated geometry.
+
+### Removed (API)
+
+- `TourStep.targetKey` and `Textarea(labelIcon = …)`: neither was ever read. A
+  parameter that silently does nothing is worse than none.
+
 ## [1.0.0-beta5] - 2026-09-28
 
 Published to Maven Central. Binary-compatible with 1.0.0-beta4: the public API dump is

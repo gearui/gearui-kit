@@ -31,8 +31,12 @@ trap 'rm -f "$tmp_hits"' EXIT
 
 cd "$ROOT_DIR"
 # shellcheck disable=SC2046
+# A comment is either a whole comment line or a trailing `// …` after code. String
+# literals are removed first, so a URL or a Chinese UI string is not taken for one.
 perl -CSD -ne '
-    print "$ARGV:$.: $_" if m{^\s*(//|\*|/\*)} && m{[\x{4e00}-\x{9fff}]};
+    my $code = $_;
+    $code =~ s/"(?:[^"\\]|\\.)*"//g;
+    print "$ARGV:$.: $_" if (m{^\s*(//|\*|/\*)} || $code =~ m{//}) && $code =~ m{(//|^\s*\*|/\*).*[\x{4e00}-\x{9fff}]};
   } continue {
     close ARGV if eof;
   ' $(git ls-files '*.kt') 2>/dev/null > "$tmp_hits" || true

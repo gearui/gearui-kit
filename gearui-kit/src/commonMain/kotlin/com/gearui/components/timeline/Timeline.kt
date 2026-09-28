@@ -42,9 +42,9 @@ enum class TimelineColor {
  * Timeline mode
  */
 enum class TimelineMode {
-    LEFT,       // 内容在左侧
-    RIGHT,      // 内容在右侧
-    ALTERNATE   // 交替显示
+    LEFT,
+    RIGHT,
+    ALTERNATE
 }
 
 /**

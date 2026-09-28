@@ -22,12 +22,12 @@ import com.gearui.foundation.typography.IconSizes
  * Result status type
  */
 enum class ResultStatus {
-    SUCCESS,    // 成功
-    ERROR,      // 错误
-    WARNING,    // 警告
-    INFO,       // 信息
-    QUESTION,   // 疑问
-    FORBIDDEN,  // 禁止
+    SUCCESS,
+    ERROR,
+    WARNING,
+    INFO,
+    QUESTION,
+    FORBIDDEN,
     NOT_FOUND   // 404
 }
 
@@ -67,7 +67,6 @@ fun Result(
     extraContent: (@Composable () -> Unit)? = null
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
 
     val (defaultIconName, iconColor) = getStatusIconAndColor(status, colors)
     val displayIconName = icon ?: defaultIconName
@@ -138,8 +137,8 @@ private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme
         ResultStatus.ERROR -> Icons.x to colors.destructive
         ResultStatus.WARNING -> Icons.warning to colors.warning
         ResultStatus.INFO -> Icons.info to colors.primary
-        ResultStatus.QUESTION -> Icons.info to colors.primary
-        ResultStatus.FORBIDDEN -> Icons.camera_slash to colors.destructive
+        ResultStatus.QUESTION -> Icons.question to colors.primary
+        ResultStatus.FORBIDDEN -> Icons.lock_simple to colors.destructive
         ResultStatus.NOT_FOUND -> null to colors.mutedForeground
     }
 }

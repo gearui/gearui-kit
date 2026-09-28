@@ -156,7 +156,7 @@ fun Drawer(
                 currentOverlayContent.value()
             }
             // Start the enter animation once the overlay is on screen
-            kotlinx.coroutines.delay(16) // 等待一帧确保 Overlay 已渲染
+            kotlinx.coroutines.delay(16) // wait one frame so the overlay has rendered
             animationTarget.value = true
         } else if (!shouldShowOverlay && overlayId != null) {
             controller.dismiss(overlayId!!)

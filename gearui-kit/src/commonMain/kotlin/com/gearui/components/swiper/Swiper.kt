@@ -28,19 +28,19 @@ import com.gearui.foundation.typography.IconSizes
  * Swiper navigation type - indicator style
  */
 enum class SwiperNavigation {
-    DOTS,       // 点状指示器
-    DOTS_BAR,   // 点条状指示器（选中时变长条）
-    FRACTION,   // 分数指示器 (1/5)
-    NONE        // 无指示器
+    DOTS,
+    DOTS_BAR, // dots; the current one stretches into a bar
+    FRACTION, // a fraction, such as 1/5
+    NONE
 }
 
 /**
  * Swiper indicator position
  */
 enum class SwiperIndicatorPosition {
-    BOTTOM,           // 内部底部
-    TOP,              // 外部顶部
-    OUTSIDE_BOTTOM    // 外部底部
+    BOTTOM, // inside, at the bottom
+    TOP, // outside, above
+    OUTSIDE_BOTTOM // outside, below
 }
 
 /**
@@ -101,9 +101,9 @@ fun Swiper(
     fun pageToContentIndex(page: Int): Int {
         return if (loop && itemCount > 1) {
             when (page) {
-                0 -> itemCount - 1  // 虚拟首页 -> 最后一项
-                totalPages - 1 -> 0  // 虚拟尾页 -> 第一项
-                else -> page - 1     // 真实页面
+                0 -> itemCount - 1 // leading clone -> last item
+                totalPages - 1 -> 0 // trailing clone -> first item
+                else -> page - 1 // a real page
             }
         } else {
             page

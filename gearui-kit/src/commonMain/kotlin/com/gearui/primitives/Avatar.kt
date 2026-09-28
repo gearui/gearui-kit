@@ -1,5 +1,8 @@
 package com.gearui.primitives
 
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -13,7 +16,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.gearui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.avatar.AvatarSizeTokens
@@ -38,7 +40,7 @@ fun Avatar(
     icon: Painter? = null,
 
     size: Dp = AvatarSizeTokens.Medium.size,
-    radius: Dp = AvatarSizeTokens.Medium.radius,  // 圆形
+    radius: Dp = AvatarSizeTokens.Medium.radius,
 
     // Downstream code (PrivChatAvatar and friends) can pin the fallback colours so the light/dark
     // theme does not disagree visually with a bitmap (such as the avatar at the centre of a QR code).
@@ -51,7 +53,6 @@ fun Avatar(
 
     onClick: (() -> Unit)? = null
 ) {
-    // ⭐ Framework Rule #1: this is always the first line
     val colors = Theme.colors
     val resolvedBackground = backgroundColor ?: colors.muted
     val resolvedContent = contentColor ?: colors.mutedForeground
@@ -64,7 +65,10 @@ fun Avatar(
                 .background(resolvedBackground)
                 .then(
                     if (onClick != null) {
-                        Modifier.clickable(onClick = onClick)
+                        val interaction = remember { MutableInteractionSource() }
+                        Modifier
+                            .pressScale(interaction)
+                            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
                     } else Modifier
                 ),
             contentAlignment = Alignment.Center
@@ -81,14 +85,11 @@ fun Avatar(
                     Text(
                         text = text.take(2).uppercase(),
                         // Reference `.avatar__fallback-text`: xs/sm/base by size, medium weight.
-                        style = Theme.typography.bodyMedium.copy(
-                            fontSize = when {
-                                size.value <= 40f -> 12.sp
-                                size.value <= 48f -> 14.sp
-                                else -> 16.sp
-                            },
-                            fontWeight = FontWeight.Medium,
-                        ),
+                        style = when {
+                            size.value <= 40f -> Theme.typography.bodyExtraSmall
+                            size.value <= 48f -> Theme.typography.bodySmall
+                            else -> Theme.typography.bodyMedium
+                        }.copy(fontWeight = FontWeight.Medium),
                         color = contentColor ?: colors.foreground
                     )
                 }

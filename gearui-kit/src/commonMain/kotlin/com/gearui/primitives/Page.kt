@@ -34,7 +34,7 @@ fun Page(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.background),  // ⭐ 自动跟随主题
+            .background(colors.background),
         content = content
     )
 }

@@ -34,19 +34,19 @@ import kotlin.math.roundToInt
  * SwipeCellDirection - swipe direction
  */
 enum class SwipeCellDirection {
-    LEFT,   // 左滑（显示右侧操作）
-    RIGHT,  // 右滑（显示左侧操作）
-    NONE    // 无滑动
+    LEFT, // swipe left to reveal the trailing actions
+    RIGHT, // swipe right to reveal the leading actions
+    NONE
 }
 
 /**
  * SwipeCellActionTheme - action button theme
  */
 enum class SwipeCellActionTheme {
-    PRIMARY,    // 主要色
-    DANGER,     // 危险色
-    WARNING,    // 警告色
-    SUCCESS     // 成功色
+    PRIMARY,
+    DANGER,
+    WARNING,
+    SUCCESS
 }
 
 /**
@@ -65,8 +65,8 @@ data class SwipeCellAction(
  * SwipeCellIconPosition - icon position
  */
 enum class SwipeCellIconPosition {
-    LEFT,       // 图标在左边（横向）
-    TOP         // 图标在上边（纵向）
+    LEFT, // icon before the label
+    TOP // icon above the label
 }
 
 /**

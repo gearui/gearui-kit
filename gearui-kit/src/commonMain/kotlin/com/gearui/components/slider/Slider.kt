@@ -30,8 +30,8 @@ import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
  * Slider style
  */
 enum class SliderStyle {
-    NORMAL,   // 普通样式
-    CAPSULE   // 胶囊样式
+    NORMAL,
+    CAPSULE
 }
 
 /**

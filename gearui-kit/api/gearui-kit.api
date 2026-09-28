@@ -430,7 +430,7 @@ public final class com/gearui/components/cell/CellKt {
 }
 
 public final class com/gearui/components/cellgroup/CellGroupKt {
-	public static final fun CellGroup-bTwgcpM (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CellGroup-Qc8RS9M (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;FLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/checkbox/CheckboxKt {
@@ -1939,7 +1939,7 @@ public final class com/gearui/components/tag/TagVariant : java/lang/Enum {
 
 public final class com/gearui/components/textarea/TextareaKt {
 	public static final fun AutoResizeTextarea-cDZVdZA (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;FJZLandroidx/compose/runtime/Composer;III)V
-	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/textarea/TextareaLayout : java/lang/Enum {
@@ -2099,16 +2099,13 @@ public final class com/gearui/components/tour/TourState {
 
 public final class com/gearui/components/tour/TourStep {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/components/tour/TourStep;
-	public static synthetic fun copy$default (Lcom/gearui/components/tour/TourStep;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/components/tour/TourStep;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/components/tour/TourStep;
+	public static synthetic fun copy$default (Lcom/gearui/components/tour/TourStep;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/components/tour/TourStep;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
-	public final fun getTargetKey ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

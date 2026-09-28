@@ -74,7 +74,6 @@ fun Textarea(
     error: String? = null,
     placeholder: String = "",
     label: String? = null,
-    labelIcon: String? = null,
     maxLength: Int? = null,
     minLines: Int = 4,
     maxLines: Int? = null,
@@ -109,7 +108,6 @@ fun Textarea(
                     readOnly = readOnly,
                     placeholder = placeholder,
                     label = label,
-                    labelIcon = labelIcon,
                     maxLength = maxLength,
                     minLines = minLines,
                     maxLines = maxLines,
@@ -131,7 +129,6 @@ fun Textarea(
                 readOnly = readOnly,
                 placeholder = placeholder,
                 label = label,
-                labelIcon = labelIcon,
                 maxLength = maxLength,
                 minLines = minLines,
                 maxLines = maxLines,
@@ -157,7 +154,6 @@ private fun TextareaContent(
     readOnly: Boolean,
     placeholder: String,
     label: String?,
-    labelIcon: String?,
     maxLength: Int?,
     minLines: Int,
     maxLines: Int?,
@@ -179,7 +175,6 @@ private fun TextareaContent(
             if (label != null) {
                 LabelRow(
                     label = label,
-                    labelIcon = labelIcon,
                     required = required,
                     enabled = enabled,
                     invalid = error != null
@@ -215,7 +210,6 @@ private fun TextareaContent(
                 if (label != null) {
                     LabelRow(
                         label = label,
-                        labelIcon = labelIcon,
                         required = required,
                         enabled = enabled,
                         invalid = error != null,
@@ -249,7 +243,6 @@ private fun TextareaContent(
 @Composable
 private fun LabelRow(
     label: String,
-    @Suppress("UNUSED_PARAMETER") labelIcon: String?,
     required: Boolean,
     enabled: Boolean,
     invalid: Boolean = false,

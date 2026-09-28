@@ -198,7 +198,7 @@ fun Badge(
             val halfHeight = badgeHeight / 2
             Pair(halfHeight, -halfHeight)
         }
-        BadgeType.Subscript -> Pair(0.dp, 0.dp) // 角标不需要偏移
+        BadgeType.Subscript -> Pair(0.dp, 0.dp) // a corner ribbon needs no offset
     }
 
     val actualOffset = offset ?: defaultOffset

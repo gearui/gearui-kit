@@ -74,14 +74,30 @@ class MainDemo : View() {
 
     @Composable
     override fun Content() {
-        MainDemoContent()
+        // Automation hook: the host may open a page directly (`route`, a component id,
+        // or "settings") in a given theme (`theme`: light | dark) and language
+        // (`lang`). The Android host fills these from intent extras.
+        val params = pageData.params
+        MainDemoContent(
+            startRoute = params.optString("route"),
+            startTheme = params.optString("theme"),
+            startLanguage = params.optString("lang"),
+        )
     }
 }
 
 @Composable
-fun MainDemoContent() {
+fun MainDemoContent(startRoute: String = "", startTheme: String = "", startLanguage: String = "") {
     // Settings state - drives theme and language
-    val settingsState = remember { SettingsState() }
+    val settingsState = remember {
+        SettingsState().apply {
+            when (startTheme) {
+                "light" -> themeStyle = ThemeStyle.LIGHT
+                "dark" -> themeStyle = ThemeStyle.DARK
+            }
+            if (startLanguage.isNotEmpty()) languageTag = startLanguage
+        }
+    }
 
     // System dark mode state
     val isSystemDark = StatusBarControllerImpl.isSystemDarkMode()
@@ -118,7 +134,7 @@ fun MainDemoContent() {
         // The sample's own language pack, relying on the LocalLanguageTag that App already provides
         SampleI18nProvider {
             CompositionLocalProvider(LocalSettingsState provides settingsState) {
-                MainDemoContentInner(settingsState = settingsState)
+                MainDemoContentInner(settingsState = settingsState, startRoute = startRoute)
             }
         }
     }
@@ -157,7 +173,7 @@ expect object StatusBarControllerImpl {
 }
 
 @Composable
-private fun MainDemoContentInner(settingsState: SettingsState) {
+private fun MainDemoContentInner(settingsState: SettingsState, startRoute: String = "") {
     // Opt-in build fixture for identical native/web screenshots; normal builds stay on Home.
     if (SampleBuildInfo.SURFACE_ACCEPTANCE.isNotEmpty()) {
         com.gearui.sample.pages.ExamplePage(
@@ -172,8 +188,19 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
         return
     }
     // Navigation state
-    var currentPage by remember { mutableStateOf(AppPage.HOME) }
-    var currentComponent by remember { mutableStateOf<ComponentInfo?>(null) }
+    val startComponent = remember(startRoute) {
+        com.gearui.sample.config.ComponentConfig.all.firstOrNull { it.id == startRoute }
+    }
+    var currentPage by remember {
+        mutableStateOf(
+            when {
+                startRoute == "settings" -> AppPage.SETTINGS
+                startComponent != null -> AppPage.COMPONENT_DETAIL
+                else -> AppPage.HOME
+            }
+        )
+    }
+    var currentComponent by remember { mutableStateOf(startComponent) }
 
     // Home list scroll state
     val homeListState = rememberLazyListState()

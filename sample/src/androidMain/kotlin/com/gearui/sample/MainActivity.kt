@@ -49,8 +49,11 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
         kuiklyDelegator.onAttach(
             container,
             "",
-            "MainDemo",  // 对应 @Page("MainDemo") 注解
-            emptyMap()
+            "MainDemo",  // matches @Page("MainDemo")
+            // Automation: `adb shell am start -n … --es route switch --es theme dark`
+            listOf("route", "theme", "lang")
+                .mapNotNull { key -> intent.getStringExtra(key)?.let { key to it } }
+                .toMap()
         )
     }
 

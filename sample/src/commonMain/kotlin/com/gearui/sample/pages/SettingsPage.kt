@@ -1,6 +1,16 @@
 package com.gearui.sample.pages
 
-import com.gearui.foundation.interaction.PressableFeedback
+import com.tencent.kuikly.compose.ui.semantics.stateDescription
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.graphics.luminance
+import com.gearui.theme.Themes
+import com.gearui.foundation.list.CellDefaults
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.primitives.Icon
+import com.gearui.components.icon.Icons
+import com.gearui.components.segmented.SegmentedControl
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.cell.Cell
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.foundation.layout.height
@@ -11,15 +21,12 @@ import com.gearui.foundation.primitives.ScrollView
 import com.gearui.foundation.scroll.ScrollTokens
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
-import com.gearui.components.radio.RadioButton
 import com.gearui.components.scaffold.PageScaffold
 import com.gearui.foundation.primitives.Text
 import com.gearui.i18n.I18n
@@ -107,121 +114,73 @@ fun SettingsPage(
             backgroundColor = navBarColor
         )
 
-        // Settings content
+        // Settings content, built from the kit's own list and segmented controls: a
+        // choice among a few short options is a segmented control; a choice with a
+        // second line, or among longer labels, is a grouped list with a checkmark —
+        // the way the platform's own Settings does it.
         ScrollView(
             modifier = Modifier
                 .fillMaxSize()
                 .background(colors.background),
-            tokens = ScrollTokens.Default.copy(spacing = Spacing.xl)
+            tokens = ScrollTokens.Default.copy(spacing = Spacing.lg)
         ) {
-            // Language
-            SettingsCardSection(title = coreStrings.language) {
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                    languageOptions.forEach { language ->
-                        RadioCardItem(
-                            selected = settingsState.languageTag == language.tag,
-                            onClick = { settingsState.languageTag = language.tag },
-                            title = language.displayName,
-                            description = language.code
-                        )
-                    }
-                }
+            CellGroup(items = languageOptions, title = coreStrings.language) { language ->
+                SelectableCell(
+                    title = language.displayName,
+                    description = language.code,
+                    selected = settingsState.languageTag == language.tag,
+                    onSelect = { settingsState.languageTag = language.tag },
+                )
             }
 
-            // Theme style - horizontal card radio group
-            SettingsCardSection(title = coreStrings.theme) {
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                    // First row: light + dark
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                        RadioCardItemCompact(
-                            selected = settingsState.themeStyle == ThemeStyle.LIGHT,
-                            onClick = { settingsState.themeStyle = ThemeStyle.LIGHT },
-                            title = themeDisplayNames[ThemeStyle.LIGHT] ?: ThemeStyle.LIGHT.displayName,
-                            modifier = Modifier.weight(1f)
-                        )
-                        RadioCardItemCompact(
-                            selected = settingsState.themeStyle == ThemeStyle.DARK,
-                            onClick = { settingsState.themeStyle = ThemeStyle.DARK },
-                            title = themeDisplayNames[ThemeStyle.DARK] ?: ThemeStyle.DARK.displayName,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    // Second row: deep purple + follow system
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                        RadioCardItemCompact(
-                            selected = settingsState.themeStyle == ThemeStyle.DARK_PURPLE,
-                            onClick = { settingsState.themeStyle = ThemeStyle.DARK_PURPLE },
-                            title = themeDisplayNames[ThemeStyle.DARK_PURPLE] ?: ThemeStyle.DARK_PURPLE.displayName,
-                            modifier = Modifier.weight(1f)
-                        )
-                        RadioCardItemCompact(
-                            selected = settingsState.themeStyle == ThemeStyle.SYSTEM,
-                            onClick = { settingsState.themeStyle = ThemeStyle.SYSTEM },
-                            title = themeDisplayNames[ThemeStyle.SYSTEM] ?: ThemeStyle.SYSTEM.displayName,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
+            SegmentedSection(title = coreStrings.theme) {
+                SegmentedControl(
+                    options = ThemeStyle.entries,
+                    selectedOption = settingsState.themeStyle,
+                    onOptionSelected = { settingsState.themeStyle = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    labelProvider = { themeDisplayNames[it] ?: it.displayName },
+                )
             }
 
-            SettingsCardSection(title = sampleStrings.brandAccent) {
-                BrandAccent.entries.chunked(2).forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                        row.forEach { accent ->
-                            RadioCardItemCompact(
-                                selected = settingsState.brandAccent == accent,
-                                onClick = { settingsState.brandAccent = accent },
-                                title = when (accent) {
-                                    BrandAccent.DEFAULT -> sampleStrings.brandDefault
-                                    BrandAccent.BLUE -> sampleStrings.brandBlue
-                                    BrandAccent.GREEN -> sampleStrings.brandGreen
-                                    BrandAccent.ORANGE -> sampleStrings.brandOrange
-                                },
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-                    }
-                }
-            }
-            SettingsCardSection(title = sampleStrings.shapeStyle) {
-                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                    listOf(false to sampleStrings.shapeRounded, true to sampleStrings.shapeSquare).forEach { (square, title) ->
-                        RadioCardItemCompact(
-                            selected = settingsState.squareControls == square,
-                            onClick = { settingsState.squareControls = square },
-                            title = title,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
+            val defaultAccent = (if (colors.background.luminance() < 0.5f) Themes.Dark else Themes.Light).colors.primary
+            // The separator starts where the text does, past the swatch.
+            CellGroup(
+                items = BrandAccent.entries,
+                title = sampleStrings.brandAccent,
+                separatorInset = CellDefaults.Default.paddingHorizontal + IconSizes.Default.md + Spacing.md,
+            ) { accent ->
+                SelectableCell(
+                    title = when (accent) {
+                        BrandAccent.DEFAULT -> sampleStrings.brandDefault
+                        BrandAccent.BLUE -> sampleStrings.brandBlue
+                        BrandAccent.GREEN -> sampleStrings.brandGreen
+                        BrandAccent.ORANGE -> sampleStrings.brandOrange
+                    },
+                    selected = settingsState.brandAccent == accent,
+                    onSelect = { settingsState.brandAccent = accent },
+                    leading = { AccentSwatch(accent.color ?: defaultAccent) },
+                )
             }
 
-            // About
-            SettingsCardSection(
-                title = sampleStrings.aboutTitle
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(Theme.shapes.lg)
-                        .background(colors.surface)
-                        .border(
-                            width = 1.dp,
-                            color = colors.border,
-                            shape = Theme.shapes.lg
-                        )
-                        .padding(Spacing.lg),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.md)
-                ) {
-                    SettingsInfoRow(
-                        title = sampleStrings.versionLabel,
-                        value = SampleBuildInfo.VERSION
-                    )
-                    SettingsInfoRow(
-                        title = "GearUI Kit",
-                        value = sampleStrings.gearUiComponents
-                    )
-                }
+            SegmentedSection(title = sampleStrings.shapeStyle) {
+                SegmentedControl(
+                    options = listOf(false, true),
+                    selectedOption = settingsState.squareControls,
+                    onOptionSelected = { settingsState.squareControls = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    labelProvider = { if (it) sampleStrings.shapeSquare else sampleStrings.shapeRounded },
+                )
+            }
+
+            CellGroup(
+                items = listOf(
+                    sampleStrings.versionLabel to SampleBuildInfo.VERSION,
+                    "GearUI Kit" to sampleStrings.gearUiComponents,
+                ),
+                title = sampleStrings.aboutTitle,
+            ) { (title, value) ->
+                Cell(title = title, note = value)
             }
             Spacer(modifier = Modifier.height(safeBottom))
         }
@@ -230,158 +189,60 @@ fun SettingsPage(
 }
 
 /**
- * Settings card group
+ * A row that is one of a set of choices. The checkmark is decoration; the state
+ * reaches a screen reader through stateDescription (VISUAL_SPEC §7).
  */
 @Composable
-private fun SettingsCardSection(
+private fun SelectableCell(
     title: String,
-    content: @Composable () -> Unit
+    selected: Boolean,
+    onSelect: () -> Unit,
+    description: String? = null,
+    leading: (@Composable () -> Unit)? = null,
 ) {
     val colors = Theme.colors
+    val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
+    Cell(
+        title = title,
+        description = description,
+        onClick = onSelect,
+        leading = leading,
+        modifier = Modifier.semantics { stateDescription = state },
+        trailing = if (selected) {
+            { Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.primary) }
+        } else null,
+    )
+}
 
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.md)
-    ) {
-        // Group title
+/**
+ * A titled section holding one segmented control. The title uses the grouped list's
+ * title style and inset, so a segmented section and a CellGroup read as one page.
+ */
+@Composable
+private fun SegmentedSection(title: String, content: @Composable () -> Unit) {
+    val colors = Theme.colors
+    Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = title,
-            style = Theme.typography.titleMedium,
-            color = colors.foreground
+            style = Theme.typography.bodySmall,
+            color = colors.mutedForeground,
+            modifier = Modifier.padding(
+                start = CellDefaults.Default.paddingHorizontal,
+                end = CellDefaults.Default.paddingHorizontal,
+                top = Spacing.md,
+                bottom = Spacing.sm,
+            ),
         )
-
-        // Group content
         content()
     }
 }
 
-/**
- * Card-style radio option (vertical, with a description)
- */
 @Composable
-private fun RadioCardItem(
-    selected: Boolean,
-    onClick: () -> Unit,
-    title: String,
-    description: String,
-    modifier: Modifier = Modifier
-) {
-    val colors = Theme.colors
-    val cardBackground = if (selected) colors.muted else colors.surface
-    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
-
-    PressableFeedback(
-        onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
-        shape = Theme.shapes.lg,
-    ) {
-    Row(
+private fun AccentSwatch(color: Color) {
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(Theme.shapes.lg)
-            .background(cardBackground)
-            .border(
-                width = 1.dp,
-                color = cardBorderColor,
-                shape = Theme.shapes.lg
-            )
-            .padding(Spacing.lg),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
-        ) {
-            Text(
-                text = title,
-                style = Theme.typography.bodyLarge,
-                color = colors.foreground
-            )
-            Text(
-                text = description,
-                style = Theme.typography.bodySmall,
-                color = colors.mutedForeground
-            )
-        }
-        RadioButton(
-            selected = selected,
-            onClick = onClick
-        )
-    }
-    }
-}
-
-
-/**
- * Card-style radio option (horizontal, compact)
- */
-@Composable
-private fun RadioCardItemCompact(
-    selected: Boolean,
-    onClick: () -> Unit,
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    val colors = Theme.colors
-    val cardBackground = if (selected) colors.muted else colors.surface
-    val cardBorderColor = if (selected) colors.primary.copy(alpha = 0.72f) else colors.border
-
-    PressableFeedback(
-        onClick = onClick,
-        modifier = modifier,
-        shape = Theme.shapes.lg,
-    ) {
-    Row(
-        modifier = Modifier
-            .clip(Theme.shapes.lg)
-            .background(cardBackground)
-            .border(
-                width = 1.dp,
-                color = cardBorderColor,
-                shape = Theme.shapes.lg
-            )
-            .padding(horizontal = Spacing.lg, vertical = Spacing.lg),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            style = Theme.typography.bodyMedium,
-            color = colors.foreground
-        )
-        RadioButton(
-            selected = selected,
-            onClick = onClick
-        )
-    }
-    }
-}
-
-/**
- * Information row
- */
-@Composable
-private fun SettingsInfoRow(
-    title: String,
-    value: String
-) {
-    val colors = Theme.colors
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            style = Theme.typography.bodyMedium,
-            color = colors.foreground
-        )
-        Text(
-            text = value,
-            style = Theme.typography.bodySmall,
-            color = colors.mutedForeground
-        )
-    }
+            .size(IconSizes.Default.md)
+            .clip(Theme.shapes.full)
+            .background(color)
+    )
 }

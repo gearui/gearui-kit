@@ -93,11 +93,15 @@ fun <T> CellGroup(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    // The alignment rule, in one place: the same inset the rows
-                    // give their content.
+                    // The title lines up with the rows' content edge, not with the
+                    // separator. A group whose rows lead with an icon or avatar moves
+                    // its separators past it, and tying the title to that inset pushed
+                    // the title right with them, out of line with every other group.
+                    // The platform aligns section titles to the content edge whatever
+                    // the rows hold.
                     .padding(
-                        start = separatorInset,
-                        end = separatorInset,
+                        start = CellDefaults.Default.paddingHorizontal,
+                        end = CellDefaults.Default.paddingHorizontal,
                         top = Spacing.md,
                         bottom = Spacing.sm,
                     ),

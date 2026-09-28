@@ -39,6 +39,9 @@
   (197,197,199) light, (90,90,94) dark. HeroUI's default fill sat 12 levels from the
   grouped background and the off switch disappeared on it.
 - **Tag remove icon is 12**, HeroUI's value (was 14).
+- **A `CellGroup` title lines up with the rows' content edge**, not with the separator.
+  A group whose rows lead with an icon or avatar insets its separators past it, and
+  the title used to move with them, out of line with every other group.
 - **Performance: startup is measured to content, not to the first frame.** The sample
   marks process start → first frame of the home list in-app on Android and iOS; a
   `benchmark` build type (release code, not debuggable) is what `scripts/perf` measure.

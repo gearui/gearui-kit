@@ -20,7 +20,7 @@ Build beautiful, iOS-inspired UI across iOS, Android, Web, and HarmonyOS with Ge
 
 ## Screenshots
 
-Captured from the sample app on an iPhone 17 Pro simulator.
+Captured from the sample app on an iPhone 17 Pro Max simulator (iOS 26.2).
 
 | Home (Chinese) | Home (English) | Settings (Light) | Settings (Dark) |
 | --- | --- | --- | --- |

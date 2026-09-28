@@ -27,8 +27,11 @@ object CellDefaults {
      */
     val Default = CellTokens(
         minHeight = ControlGeometry.listMinHeight,
-        paddingHorizontal = ControlGeometry.listPadding,
-        paddingVertical = ControlGeometry.listPadding,
+        // The axes are separate on purpose: iOS starts text 20 in from the card edge
+        // but centres one line in a 52 row, which is 14 above and below. A single
+        // padding for both made a 56 row with text 16 in.
+        paddingHorizontal = ControlGeometry.listPaddingInline,
+        paddingVertical = ControlGeometry.listPaddingBlock,
         disabledAlpha = FeedbackDefaults.disabledOpacity,
         showDivider = true
     )

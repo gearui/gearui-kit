@@ -39,6 +39,25 @@ GearUI keeps no second prose schema of visual numbers.
   snapshotted — not an edit to a component literal.
 - Screenshots illustrate a state; they are never the source of a value.
 
+**Which reference a value follows.** HeroUI Native is the floor; the platform
+decides where the two disagree on something the user reads as "iOS". The rule:
+
+- **Inside a control** — button, field, tabs, menu, dialog card, popover,
+  radius scale — take HeroUI Native.
+- **Platform-signature controls and list rhythm** — switch, list row height and
+  leading, grouped cards, separators — take the current iOS release, measured
+  on the simulator rather than remembered.
+- **Neither has it** (a compact tier, a width cap) — GearUI's own value, with a
+  written reason.
+
+Every control token records this decision in
+`$extensions."com.gearui.source"`: both reference values, the side chosen and
+why. `scripts/component_spec.py --check` rejects a token whose shipped value
+drifts from its chosen side, a GearUI value without a reason, and a new token
+without provenance; tokens not yet sourced sit in a baseline that may only
+shrink. The per-component table, [COMPONENT_METRICS.md](./COMPONENT_METRICS.md),
+is generated from those sources.
+
 ## 3. Component Anatomy
 
 **Fields.** Labels sit above standalone fields by default; explicit horizontal

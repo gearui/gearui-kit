@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""GearUI component metrics: where every control value comes from.
+
+Each control token may carry its provenance under
+``$extensions["com.gearui.source"]``:
+
+    {
+      "heroui": {"value": 48, "ref": "switch.css .switch__root width"},
+      "ios":    {"value": 63, "ref": "iOS 26.2 Settings, measured"},
+      "basis":  "heroui" | "ios" | "gearui",
+      "why":    "why this side wins"
+    }
+
+The rules the check enforces:
+
+* ``basis`` names the side the shipped value comes from, and the shipped value
+  must equal that side's value — a decision cannot silently drift from its
+  source.
+* ``gearui`` (our own value) always needs a ``why``.
+* When both references exist and disagree, the choice needs a ``why`` too.
+* Tokens still without provenance are listed in ``tokens/provenance-baseline.txt``.
+  The baseline is a ratchet: it may only shrink. A new token without provenance
+  fails, and a baselined token that gains provenance must leave the baseline.
+
+The generated documents are a projection of the token sources, not a second
+schema: change the token, regenerate, and the table follows.
+
+Usage:
+    python3 scripts/component_spec.py           # regenerate the documents
+    python3 scripts/component_spec.py --check   # verify provenance and freshness
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from collections import OrderedDict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "tokens/controls.tokens.json"
+BASELINE = ROOT / "tokens/provenance-baseline.txt"
+DOCS = {
+    "en": ROOT / "docs/COMPONENT_METRICS.md",
+    "zh": ROOT / "docs/COMPONENT_METRICS.zh-Hans.md",
+}
+EXT = "com.gearui.source"
+BASES = ("heroui", "ios", "gearui")
+
+
+def load_tokens(path: Path = SOURCE) -> "OrderedDict[str, dict]":
+    document = json.loads(path.read_text(), object_pairs_hook=OrderedDict)
+    group = document["geometry"]
+    return OrderedDict((k, v) for k, v in group.items() if not k.startswith("$"))
+
+
+def token_value(token: dict):
+    value = token["$value"]
+    if isinstance(value, dict) and "value" in value:
+        return value["value"]
+    return value
+
+
+def source_of(token: dict):
+    return (token.get("$extensions") or {}).get(EXT)
+
+
+def component_of(name: str) -> str:
+    return re.match(r"[a-z]+", name).group(0)
+
+
+def validate_source(name: str, value, source: dict) -> list[str]:
+    errors = []
+    basis = source.get("basis")
+    if basis not in BASES:
+        return [f"{name}: basis must be one of {', '.join(BASES)}, got {basis!r}"]
+    for side in ("heroui", "ios"):
+        ref = source.get(side)
+        if ref is not None and ("value" not in ref or not ref.get("ref")):
+            errors.append(f"{name}: {side} needs both value and ref")
+    why = (source.get("why") or "").strip()
+    if basis in ("heroui", "ios"):
+        ref = source.get(basis)
+        if ref is None:
+            errors.append(f"{name}: basis {basis} but no {basis} reference")
+        elif ref.get("value") != value:
+            errors.append(f"{name}: basis {basis} is {ref.get('value')} but the token ships {value}")
+    if basis == "gearui" and not why:
+        errors.append(f"{name}: a GearUI value needs a why")
+    h, i = source.get("heroui"), source.get("ios")
+    if h is not None and i is not None and h.get("value") != i.get("value") and not why:
+        errors.append(f"{name}: HeroUI {h.get('value')} and iOS {i.get('value')} disagree; say why {basis} wins")
+    return errors
+
+
+def read_baseline(path: Path = BASELINE) -> list[str]:
+    if not path.exists():
+        return []
+    return [line.strip() for line in path.read_text().splitlines()
+            if line.strip() and not line.startswith("#")]
+
+
+def check(tokens, baseline: list[str]) -> list[str]:
+    errors = []
+    names = set(tokens)
+    listed = set(baseline)
+    if len(listed) != len(baseline):
+        errors.append("provenance baseline has duplicate entries")
+    for name, token in tokens.items():
+        source = source_of(token)
+        if source is None:
+            if name not in listed:
+                errors.append(f"{name}: new token without provenance (add $extensions.{EXT})")
+        else:
+            if name in listed:
+                errors.append(f"{name}: has provenance now; remove it from {BASELINE.name}")
+            errors.extend(validate_source(name, token_value(token), source))
+    for name in sorted(listed - names):
+        errors.append(f"{name}: in {BASELINE.name} but no such token")
+    return errors
+
+
+def fmt(value) -> str:
+    if value is None:
+        return "—"
+    if isinstance(value, float) and value.is_integer():
+        value = int(value)
+    return str(value)
+
+
+LABELS = {
+    "en": {
+        "title": "# GearUI Component Metrics",
+        "switch": "[English](./COMPONENT_METRICS.md) | [简体中文](./COMPONENT_METRICS.zh-Hans.md)",
+        "intro": (
+            "Generated by `scripts/component_spec.py` from `tokens/controls.tokens.json`. "
+            "Do not edit by hand: change the token and its `$extensions.\"com.gearui.source\"`, "
+            "then regenerate. The decision rule lives in [VISUAL_SPEC.md](./VISUAL_SPEC.md) §2."
+        ),
+        "coverage": "Sourced: **{done} of {total}** control tokens. The rest are listed in "
+                    "`tokens/provenance-baseline.txt`, which may only shrink.",
+        "head": "| Token | GearUI | HeroUI Native | iOS | Basis | Why |",
+        "basis": {"heroui": "HeroUI", "ios": "iOS", "gearui": "GearUI"},
+        "pending": "_not yet sourced_",
+        "refs": "References",
+    },
+    "zh": {
+        "title": "# GearUI 组件度量",
+        "switch": "[English](./COMPONENT_METRICS.md) | [简体中文](./COMPONENT_METRICS.zh-Hans.md)",
+        "intro": (
+            "由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改："
+            "改 token 及其 `$extensions.\"com.gearui.source\"` 后重新生成。取值规则见 "
+            "[VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。"
+        ),
+        "coverage": "已标注来源：**{done} / {total}** 个控件 token。其余列在 "
+                    "`tokens/provenance-baseline.txt`，该清单只能缩小。",
+        "head": "| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |",
+        "basis": {"heroui": "HeroUI", "ios": "iOS", "gearui": "GearUI"},
+        "pending": "_尚未标注_",
+        "refs": "参考出处",
+    },
+}
+
+
+def render(tokens, lang: str) -> str:
+    L = LABELS[lang]
+    done = sum(1 for t in tokens.values() if source_of(t) is not None)
+    groups: "OrderedDict[str, list]" = OrderedDict()
+    for name in sorted(tokens, key=lambda n: (component_of(n), n)):
+        groups.setdefault(component_of(name), []).append(name)
+    lines = [L["title"], "", L["switch"], "", L["intro"], "",
+             L["coverage"].format(done=done, total=len(tokens)), ""]
+    refs = []
+    for component, names in groups.items():
+        lines += [f"## {component}", "", L["head"], "| --- | ---: | ---: | ---: | --- | --- |"]
+        for name in names:
+            token = tokens[name]
+            source = source_of(token)
+            value = fmt(token_value(token))
+            if source is None:
+                lines.append(f"| `{name}` | {value} | | | {L['pending']} | |")
+                continue
+            h, i = source.get("heroui"), source.get("ios")
+            why = (source.get("why") or "").replace("|", "\\|").replace("\n", " ")
+            lines.append(
+                f"| `{name}` | {value} | {fmt(h and h.get('value'))} | {fmt(i and i.get('value'))} "
+                f"| {L['basis'][source['basis']]} | {why} |"
+            )
+            for side in ("heroui", "ios"):
+                ref = source.get(side)
+                if ref is not None:
+                    refs.append((ref["ref"]))
+        lines.append("")
+    unique = list(OrderedDict.fromkeys(refs))
+    if unique:
+        lines += [f"## {L['refs']}", ""] + [f"- {r}" for r in unique] + [""]
+    return "\n".join(lines)
+
+
+def main(argv: list[str]) -> int:
+    tokens = load_tokens()
+    errors = check(tokens, read_baseline())
+    if "--check" in argv:
+        for lang, path in DOCS.items():
+            if not path.exists() or path.read_text() != render(tokens, lang):
+                errors.append(f"{path.relative_to(ROOT)} is stale; run scripts/component_spec.py")
+        if errors:
+            print("\n".join(f"✗ {e}" for e in errors))
+            return 1
+        done = sum(1 for t in tokens.values() if source_of(t) is not None)
+        print(f"✓ component metrics: {done}/{len(tokens)} control tokens sourced, documents current")
+        return 0
+    if errors:
+        print("\n".join(f"✗ {e}" for e in errors))
+        return 1
+    for lang, path in DOCS.items():
+        path.write_text(render(tokens, lang))
+    print("wrote", ", ".join(str(p.relative_to(ROOT)) for p in DOCS.values()))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

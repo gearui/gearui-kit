@@ -26,6 +26,7 @@ jobs:
       - name: Generated control tokens
         run: |
           python3 scripts/generate_tokens.py --check
+          python3 scripts/component_spec.py --check
           python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 
       # ripgrep is not preinstalled on the GitHub-hosted Ubuntu images (checked

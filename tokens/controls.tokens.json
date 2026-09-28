@@ -2,277 +2,6 @@
   "$description": "HeroUI Native control dimensions under the explicit GearUI mapping 1rem = 16 logical px, spacing = 4 logical px. Extra-small is a GearUI extension.",
   "geometry": {
     "$type": "dimension",
-    "selectContentPadding": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "selectItemPadding": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "selectIndicatorSlot": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "selectPanelOffset": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "controlExtraSmall": {
-      "$value": {
-        "value": 28,
-        "unit": "px"
-      }
-    },
-    "controlSmall": {
-      "$value": {
-        "value": 40,
-        "unit": "px"
-      }
-    },
-    "controlMedium": {
-      "$value": {
-        "value": 48,
-        "unit": "px"
-      }
-    },
-    "controlLarge": {
-      "$value": {
-        "value": 56,
-        "unit": "px"
-      }
-    },
-    "buttonPaddingExtraSmall": {
-      "$value": {
-        "value": 7,
-        "unit": "px"
-      }
-    },
-    "buttonPaddingSmall": {
-      "$value": {
-        "value": 14,
-        "unit": "px"
-      }
-    },
-    "buttonPaddingMedium": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "buttonPaddingLarge": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "fieldPaddingSmall": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "fieldPaddingMedium": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "fieldPaddingLarge": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "radiusNone": {
-      "$value": {
-        "value": 0,
-        "unit": "px"
-      }
-    },
-    "radiusSmall": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "radiusMedium": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "radiusDefault": {
-      "$value": {
-        "value": 14,
-        "unit": "px"
-      }
-    },
-    "radiusLarge": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "radiusOverlay": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "radiusFull": {
-      "$value": {
-        "value": 9999,
-        "unit": "px"
-      }
-    },
-    "textareaPaddingVertical": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "buttonGapExtraSmall": {
-      "$description": "Resolved v5 Button gap for the configured size; independent from padding and radius semantics.",
-      "$value": {
-        "value": 5,
-        "unit": "px"
-      }
-    },
-    "buttonGapSmall": {
-      "$value": {
-        "value": 6,
-        "unit": "px"
-      }
-    },
-    "buttonGapMedium": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "buttonGapLarge": {
-      "$value": {
-        "value": 10,
-        "unit": "px"
-      }
-    },
-    "selectionSmall": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "selectionMedium": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "selectionLarge": {
-      "$value": {
-        "value": 28,
-        "unit": "px"
-      }
-    },
-    "selectionTouchTarget": {
-      "$value": {
-        "value": 44,
-        "unit": "px"
-      }
-    },
-    "radioThumb": {
-      "$value": {
-        "value": 10,
-        "unit": "px"
-      }
-    },
-    "switchWidth": {
-      "$value": {
-        "value": 48,
-        "unit": "px"
-      }
-    },
-    "switchHeight": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "switchThumbWidth": {
-      "$value": {
-        "value": 28,
-        "unit": "px"
-      }
-    },
-    "switchThumbHeight": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "switchInset": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "checkboxIndicatorTravel": {
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      }
-    },
-    "searchClearSize": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "sliderTrackHeight": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "sliderThumbWidth": {
-      "$value": {
-        "value": 28,
-        "unit": "px"
-      }
-    },
-    "sliderThumbHeight": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "sliderThumbInset": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "sliderCapsuleHeight": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "sliderCapsuleInset": {
-      "$value": {
-        "value": 3,
-        "unit": "px"
-      }
-    },
     "accordionPadding": {
       "$type": "dimension",
       "$value": {
@@ -287,13 +16,6 @@
         "unit": "px"
       }
     },
-    "accordionVerticalPadding": {
-      "$type": "dimension",
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
     "accordionTriggerGap": {
       "$type": "dimension",
       "$value": {
@@ -301,108 +23,10 @@
         "unit": "px"
       }
     },
-    "listPadding": {
+    "accordionVerticalPadding": {
       "$type": "dimension",
       "$value": {
         "value": 16,
-        "unit": "px"
-      }
-    },
-    "listItemGap": {
-      "$type": "dimension",
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "listMinHeight": {
-      "$type": "dimension",
-      "$value": {
-        "value": 52,
-        "unit": "px"
-      }
-    },
-    "listCompactMinHeight": {
-      "$type": "dimension",
-      "$value": {
-        "value": 44,
-        "unit": "px"
-      }
-    },
-    "listCompactPadding": {
-      "$type": "dimension",
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "cardPadding": {
-      "$type": "dimension",
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "fieldLabelGap": {
-      "$type": "dimension",
-      "$value": {
-        "value": 6,
-        "unit": "px"
-      }
-    },
-    "textareaMinHeight": {
-      "$type": "dimension",
-      "$value": {
-        "value": 128,
-        "unit": "px"
-      }
-    },
-    "tagHeightSmall": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "tagHeightMedium": {
-      "$value": {
-        "value": 28,
-        "unit": "px"
-      }
-    },
-    "tagHeightLarge": {
-      "$value": {
-        "value": 36,
-        "unit": "px"
-      }
-    },
-    "tagPaddingSmall": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "tagPaddingMedium": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "tagPaddingLarge": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "treeIndent": {
-      "$description": "GearUI tree depth increment; extension of the selection row contract.",
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "actionSheetRow": {
-      "$value": {
-        "value": 40,
         "unit": "px"
       }
     },
@@ -419,153 +43,15 @@
         "unit": "px"
       }
     },
-    "radiusSheet": {
+    "actionSheetRow": {
       "$value": {
-        "value": 32,
+        "value": 40,
         "unit": "px"
       }
     },
-    "radiusMenuItem": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "overlayPadding": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "overlayOffset": {
-      "$value": {
-        "value": 9,
-        "unit": "px"
-      }
-    },
-    "menuPaddingInline": {
-      "$value": {
-        "value": 6,
-        "unit": "px"
-      }
-    },
-    "menuPaddingBlock": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "menuItemPaddingInline": {
-      "$value": {
-        "value": 10,
-        "unit": "px"
-      }
-    },
-    "menuItemPaddingBlock": {
+    "alertActionTop": {
       "$value": {
         "value": 8,
-        "unit": "px"
-      }
-    },
-    "menuItemGap": {
-      "$value": {
-        "value": 10,
-        "unit": "px"
-      }
-    },
-    "popoverPaddingInline": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "popoverPaddingBlock": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "dialogMaxWidth": {
-      "$value": {
-        "value": 384,
-        "unit": "px"
-      }
-    },
-    "dialogTextGap": {
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      }
-    },
-    "dialogActionsTop": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "dialogActionGap": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "toastPadding": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "sheetMenuPaddingInline": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "tabsListPadding": {
-      "$value": {
-        "value": 3,
-        "unit": "px"
-      }
-    },
-    "tabsListGap": {
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      }
-    },
-    "tabsTriggerPaddingInline": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "tabsTriggerPaddingBlock": {
-      "$value": {
-        "value": 6,
-        "unit": "px"
-      }
-    },
-    "tabsIndicatorHeight": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "closeButtonSize": {
-      "$value": {
-        "value": 32,
-        "unit": "px"
-      }
-    },
-    "closeButtonIcon": {
-      "$value": {
-        "value": 18,
-        "unit": "px"
-      }
-    },
-    "alertPadding": {
-      "$value": {
-        "value": 12,
         "unit": "px"
       }
     },
@@ -587,135 +73,9 @@
         "unit": "px"
       }
     },
-    "alertActionTop": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "otpSlotWidth": {
-      "$value": {
-        "value": 44,
-        "unit": "px"
-      }
-    },
-    "otpSlotHeight": {
-      "$value": {
-        "value": 48,
-        "unit": "px"
-      }
-    },
-    "otpGap": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "otpSeparatorWidth": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "otpSeparatorHeight": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "otpCaretWidth": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "otpCaretMin": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "otpCaretMax": {
-      "$value": {
-        "value": 18,
-        "unit": "px"
-      }
-    },
-    "tagGroupGap": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "tagGroupSmallPaddingInline": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "tagGroupSmallPaddingBlock": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "tagGroupSmallRadius": {
+    "alertPadding": {
       "$value": {
         "value": 12,
-        "unit": "px"
-      }
-    },
-    "tagGroupMediumPaddingInline": {
-      "$value": {
-        "value": 10,
-        "unit": "px"
-      }
-    },
-    "tagGroupMediumPaddingBlock": {
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      }
-    },
-    "tagGroupMediumRadius": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "tagGroupLargePaddingInline": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "tagGroupLargePaddingBlock": {
-      "$value": {
-        "value": 6,
-        "unit": "px"
-      }
-    },
-    "tagGroupLargeRadius": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "tagGroupRemoveIcon": {
-      "$value": {
-        "value": 14,
-        "unit": "px"
-      }
-    },
-    "scrollShadowSize": {
-      "$value": {
-        "value": 50,
-        "unit": "px"
-      }
-    },
-    "pullRefreshThreshold": {
-      "$value": {
-        "value": 80,
         "unit": "px"
       }
     },
@@ -725,21 +85,485 @@
         "unit": "px"
       }
     },
-    "rateStarSize": {
+    "buttonGapExtraSmall": {
+      "$description": "Resolved v5 Button gap for the configured size; independent from padding and radius semantics.",
       "$value": {
-        "value": 24,
+        "value": 5,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Half a step below sm for the 28 compact tier, which HeroUI does not have."
+        }
+      }
+    },
+    "buttonGapLarge": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 10,
+            "ref": "heroui-native 1.0.9 button.css size-lg gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "buttonGapMedium": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 button.css size-md gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "buttonGapSmall": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 button.css size-sm gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "buttonPaddingExtraSmall": {
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Half a step below sm for the 28 compact tier, which HeroUI does not have."
+        }
+      }
+    },
+    "buttonPaddingLarge": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 button.css size-lg padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "buttonPaddingMedium": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 button.css size-md padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "buttonPaddingSmall": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 14,
+            "ref": "heroui-native 1.0.9 button.css size-sm padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "cardPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
         "unit": "px"
       }
     },
-    "rateStarGap": {
+    "checkboxIndicatorTravel": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "closeButtonIcon": {
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 18,
+            "ref": "heroui-native 1.0.9 close-button.tsx icon size"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "closeButtonSize": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 32,
+            "ref": "heroui-native 1.0.9 close-button.css height"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "controlExtraSmall": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "HeroUI ships sm/md/lg only. The compact tier takes 28, the height of iOS 26's inline switch track, so chips and small actions line up with switches in the same row."
+        }
+      }
+    },
+    "controlLarge": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 56,
+            "ref": "heroui-native 1.0.9 button.css size-lg height"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "controlMedium": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 48,
+            "ref": "heroui-native 1.0.9 button.css size-md height"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "controlSmall": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 40,
+            "ref": "heroui-native 1.0.9 button.css size-sm height"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "dialogActionGap": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 dialog.md example gap-3 between actions"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "dialogActionsTop": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 dialog.md example mb-5 above the actions"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "dialogMaxWidth": {
+      "$value": {
+        "value": 384,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The reference sizes a dialog by the portal's 20 padding only; a cap keeps a tablet or wide window from stretching a card across the screen."
+        }
+      }
+    },
+    "dialogTextGap": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 dialog.md example gap-1.5 between title and description"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "fieldLabelGap": {
+      "$type": "dimension",
       "$value": {
         "value": 6,
         "unit": "px"
       }
     },
-    "rateStarSizeCompact": {
+    "fieldPaddingLarge": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "fieldPaddingMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 input.css padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "fieldPaddingSmall": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "listCompactMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {
+            "value": 44,
+            "ref": "Apple HIG minimum hit target"
+          },
+          "basis": "ios"
+        }
+      }
+    },
+    "listCompactPadding": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "listItemGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 list-group.css item gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "listMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 52,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {
+            "value": 52,
+            "ref": "iOS 26.2 Settings, measured on simulator (row height)"
+          },
+          "basis": "ios"
+        }
+      }
+    },
+    "listPaddingBlock": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 list-group.css item padding"
+          },
+          "ios": {
+            "value": 14,
+            "ref": "iOS 26.2 Settings, measured on simulator (52pt row, one 24pt text line centred)"
+          },
+          "basis": "ios",
+          "why": "HeroUI's 16 on both axes makes a 56pt row; iOS rows are 52. Splitting the axes keeps iOS's height and leading."
+        }
+      }
+    },
+    "listPaddingInline": {
       "$value": {
         "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 list-group.css item padding"
+          },
+          "ios": {
+            "value": 20,
+            "ref": "iOS 26.2 Settings, measured on simulator (content leading inside the card)"
+          },
+          "basis": "ios",
+          "why": "List rhythm follows the platform: text starts where iOS starts it, and the separator starts with the text."
+        }
+      }
+    },
+    "menuItemGap": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 10,
+            "ref": "heroui-native 1.0.9 menu.css item gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "menuItemPaddingBlock": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 menu.css item padding-block"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "menuItemPaddingInline": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 10,
+            "ref": "heroui-native 1.0.9 menu.css item padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "menuPaddingBlock": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 menu.css content padding-block"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "menuPaddingInline": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 menu.css content padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "noticeBarGap": {
+      "$value": {
+        "value": 8,
         "unit": "px"
       }
     },
@@ -755,9 +579,9 @@
         "unit": "px"
       }
     },
-    "noticeBarGap": {
+    "noticeBarScrollGap": {
       "$value": {
-        "value": 8,
+        "value": 48,
         "unit": "px"
       }
     },
@@ -767,31 +591,348 @@
         "unit": "px"
       }
     },
-    "noticeBarScrollGap": {
+    "otpCaretMax": {
       "$value": {
-        "value": 48,
+        "value": 18,
         "unit": "px"
       }
     },
-    "uploadTileSize": {
+    "otpCaretMin": {
       "$value": {
-        "value": 80,
+        "value": 16,
         "unit": "px"
       }
     },
-    "uploadTileGap": {
+    "otpCaretWidth": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "otpGap": {
       "$value": {
         "value": 8,
         "unit": "px"
       }
     },
-    "uploadRemoveSize": {
+    "otpSeparatorHeight": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "otpSeparatorWidth": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "otpSlotHeight": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "otpSlotWidth": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "overlayOffset": {
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 9,
+            "ref": "heroui-native 1.0.9 menu/popover DEFAULT_OFFSET"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "overlayPadding": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 dialog.css content padding"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "popoverPaddingBlock": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 popover.css content padding-block"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "popoverPaddingInline": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 popover.css content padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "pullRefreshThreshold": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
+    },
+    "radioThumb": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "radiusDefault": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "radiusFull": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 9999,
+            "ref": "heroui-native 1.0.9 switch.css border-radius 9999px"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusLarge": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 theme.css --radius-2xl"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 theme.css --radius-xl"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusMenuItem": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 menu.css item --radius-2xl"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusNone": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "No rounding; the zero of the scale."
+        }
+      }
+    },
+    "radiusOverlay": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 24,
+            "ref": "heroui-native 1.0.9 theme.css --radius-3xl (dialog, menu, popover)"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusSheet": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 32,
+            "ref": "heroui-native 1.0.9 theme.css --radius-4xl"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "radiusSmall": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 theme.css --radius-lg"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "rateStarGap": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "rateStarSize": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "rateStarSizeCompact": {
       "$value": {
         "value": 20,
         "unit": "px"
       }
     },
-    "uploadRemoveIcon": {
+    "scrollShadowSize": {
+      "$value": {
+        "value": 50,
+        "unit": "px"
+      }
+    },
+    "searchClearSize": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "selectContentPadding": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "selectIndicatorSlot": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "selectItemPadding": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "selectPanelOffset": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "selectionLarge": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "selectionMedium": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "selectionSmall": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "selectionTouchTarget": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "separatorThickness": {
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 0.33,
+            "ref": "heroui-native 1.0.9 separator.css hairlineWidth() at 3x"
+          },
+          "ios": {
+            "value": 1,
+            "ref": "iOS 26.2 Settings, measured on simulator (grouped list separator)"
+          },
+          "basis": "ios",
+          "why": "A hairline is one device pixel and needs a darker colour to be seen; iOS grouped lists rule at 1pt in a lighter colour."
+        }
+      }
+    },
+    "sheetMenuPaddingInline": {
       "$value": {
         "value": 12,
         "unit": "px"
@@ -803,9 +944,383 @@
         "unit": "px"
       }
     },
-    "separatorThickness": {
+    "sliderCapsuleHeight": {
       "$value": {
-        "value": 1,
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "sliderCapsuleInset": {
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      }
+    },
+    "sliderThumbHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "sliderThumbInset": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "sliderThumbWidth": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "sliderTrackHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "switchHeight": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 24,
+            "ref": "heroui-native 1.0.9 switch.css root height"
+          },
+          "ios": {
+            "value": 28,
+            "ref": "iOS 26.2 Settings, measured on simulator"
+          },
+          "basis": "ios",
+          "why": "The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves."
+        }
+      }
+    },
+    "switchInset": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 switch.css thumb inset"
+          },
+          "ios": {
+            "value": 2,
+            "ref": "iOS 26.2 Settings, measured on simulator"
+          },
+          "basis": "ios"
+        }
+      }
+    },
+    "switchThumbHeight": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 switch.css thumb height"
+          },
+          "ios": {
+            "value": 24,
+            "ref": "iOS 26.2 Settings, measured on simulator"
+          },
+          "basis": "ios",
+          "why": "The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves."
+        }
+      }
+    },
+    "switchThumbWidth": {
+      "$value": {
+        "value": 37,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 28,
+            "ref": "heroui-native 1.0.9 switch.css thumb width"
+          },
+          "ios": {
+            "value": 37,
+            "ref": "iOS 26.2 Settings, measured on simulator"
+          },
+          "basis": "ios",
+          "why": "The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves."
+        }
+      }
+    },
+    "switchWidth": {
+      "$value": {
+        "value": 63,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 48,
+            "ref": "heroui-native 1.0.9 switch.css root width"
+          },
+          "ios": {
+            "value": 63,
+            "ref": "iOS 26.2 Settings, measured on simulator"
+          },
+          "basis": "ios",
+          "why": "The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves."
+        }
+      }
+    },
+    "tabsIndicatorHeight": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 tabs.css secondary indicator border-bottom"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "tabsListGap": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 4,
+            "ref": "heroui-native 1.0.9 tabs.css list gap"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "tabsListPadding": {
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 3,
+            "ref": "heroui-native 1.0.9 tabs.css list primary padding"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "tabsTriggerPaddingBlock": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 tabs.css trigger padding-block"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "tabsTriggerPaddingInline": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 tabs.css trigger padding-inline"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "tagGroupGap": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "tagGroupLargePaddingBlock": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "tagGroupLargePaddingInline": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "tagGroupLargeRadius": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "tagGroupMediumPaddingBlock": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "tagGroupMediumPaddingInline": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "tagGroupMediumRadius": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "tagGroupRemoveIcon": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "tagGroupSmallPaddingBlock": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "tagGroupSmallPaddingInline": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "tagGroupSmallRadius": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "tagHeightLarge": {
+      "$value": {
+        "value": 36,
+        "unit": "px"
+      }
+    },
+    "tagHeightMedium": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "tagHeightSmall": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "tagPaddingLarge": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "tagPaddingMedium": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "tagPaddingSmall": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "textareaMinHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 128,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 128,
+            "ref": "heroui-native 1.0.9 text-area.css height"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "textareaPaddingVertical": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 text-area.css padding-block"
+          },
+          "basis": "heroui"
+        }
+      }
+    },
+    "toastPadding": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "treeIndent": {
+      "$description": "GearUI tree depth increment; extension of the selection row contract.",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "uploadRemoveIcon": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "uploadRemoveSize": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "uploadTileGap": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "uploadTileSize": {
+      "$value": {
+        "value": 80,
         "unit": "px"
       }
     }

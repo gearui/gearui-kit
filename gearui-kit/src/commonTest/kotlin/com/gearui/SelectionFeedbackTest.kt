@@ -7,12 +7,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SelectionFeedbackTest {
-    @Test fun defaultGeometryMatchesNativeSource() {
+    // The switch takes iOS 26's geometry (measured: 63×28 track, 37×24 thumb, 2 inset);
+    // the other selection controls keep HeroUI's.
+    @Test fun defaultGeometryMatchesItsChosenSource() {
         assertEquals(24f, ControlGeometry.selectionMedium.value)
-        assertEquals(48f, ControlGeometry.switchWidth.value)
-        assertEquals(24f, ControlGeometry.switchHeight.value)
-        assertEquals(28f, ControlGeometry.switchThumbWidth.value)
-        assertEquals(20f, ControlGeometry.switchThumbHeight.value)
+        assertEquals(63f, ControlGeometry.switchWidth.value)
+        assertEquals(28f, ControlGeometry.switchHeight.value)
+        assertEquals(37f, ControlGeometry.switchThumbWidth.value)
+        assertEquals(24f, ControlGeometry.switchThumbHeight.value)
+        assertEquals(
+            ControlGeometry.switchHeight.value,
+            ControlGeometry.switchThumbHeight.value + ControlGeometry.switchInset.value * 2,
+            "the thumb sits one inset from the top and bottom of the track",
+        )
         assertEquals(10f, ControlGeometry.radioThumb.value)
         assertTrue(ControlGeometry.selectionTouchTarget >= ControlGeometry.selectionLarge)
     }

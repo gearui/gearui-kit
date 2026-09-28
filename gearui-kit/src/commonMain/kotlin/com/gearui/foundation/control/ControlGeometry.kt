@@ -36,7 +36,7 @@ internal object ControlGeometry {
     val dialogActionGap = 12.dp
     val dialogActionsTop = 20.dp
     val dialogMaxWidth = 384.dp
-    val dialogTextGap = 4.dp
+    val dialogTextGap = 6.dp
     val fieldLabelGap = 6.dp
     val fieldPaddingLarge = 12.dp
     val fieldPaddingMedium = 12.dp
@@ -45,7 +45,8 @@ internal object ControlGeometry {
     val listCompactPadding = 8.dp
     val listItemGap = 12.dp
     val listMinHeight = 52.dp
-    val listPadding = 16.dp
+    val listPaddingBlock = 14.dp
+    val listPaddingInline = 20.dp
     val menuItemGap = 10.dp
     val menuItemPaddingBlock = 8.dp
     val menuItemPaddingInline = 10.dp
@@ -101,11 +102,11 @@ internal object ControlGeometry {
     val sliderThumbInset = 2.dp
     val sliderThumbWidth = 28.dp
     val sliderTrackHeight = 20.dp
-    val switchHeight = 24.dp
+    val switchHeight = 28.dp
     val switchInset = 2.dp
-    val switchThumbHeight = 20.dp
-    val switchThumbWidth = 28.dp
-    val switchWidth = 48.dp
+    val switchThumbHeight = 24.dp
+    val switchThumbWidth = 37.dp
+    val switchWidth = 63.dp
     val tabsIndicatorHeight = 2.dp
     val tabsListGap = 4.dp
     val tabsListPadding = 3.dp

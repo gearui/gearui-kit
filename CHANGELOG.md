@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+### Added
+
+- **Every control value records where it comes from.** Control tokens carry
+  `$extensions."com.gearui.source"` — the HeroUI Native value, the measured iOS value,
+  which one ships and why — and `scripts/component_spec.py --check` (in CI) rejects a
+  value that drifts from its chosen side, a GearUI value without a reason, and a new
+  token without provenance. Unsourced tokens sit in a baseline that may only shrink.
+  `docs/COMPONENT_METRICS.md` is generated from the same data. 54 of 133 sourced.
+
+### Changed
+
+- **Switch takes iOS 26's geometry**, measured on the simulator: 63×28 track, 37×24
+  thumb, inset 2 (was HeroUI's 48×24 / 28×20).
+- **List rows follow the iOS rhythm**: text starts 20 in and rows are 52 tall
+  (was 16 on both axes, a 56 row). `listPadding` is split into `listPaddingInline`
+  and `listPaddingBlock`; the separator inset follows the text.
+- **Dialog title-to-description gap is 6**, HeroUI's own value (was 4).
+
 ## [1.0.0-beta4] - 2026-09-25
 
 Published to Maven Central. Verification record and open limits:

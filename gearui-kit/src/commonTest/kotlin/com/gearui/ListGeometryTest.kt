@@ -7,9 +7,17 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ListGeometryTest {
-    @Test fun defaultRowsUseReferenceInsetsAndGap() {
-        assertEquals(16f, CellDefaults.Default.paddingHorizontal.value)
-        assertEquals(16f, CellDefaults.Default.paddingVertical.value)
+    // List rhythm follows iOS 26 (measured): text starts 20 in, and one 24 line centred in
+    // the 52 row leaves 14 above and below. The item gap stays HeroUI's.
+    @Test fun defaultRowsFollowThePlatformRhythm() {
+        assertEquals(20f, CellDefaults.Default.paddingHorizontal.value)
+        assertEquals(14f, CellDefaults.Default.paddingVertical.value)
+        assertEquals(52f, CellDefaults.Default.minHeight.value)
+        assertEquals(
+            CellDefaults.Default.minHeight.value,
+            CellDefaults.Default.paddingVertical.value * 2 + 24f,
+            "a single 24 line fills the minimum row exactly",
+        )
         assertEquals(12f, ControlGeometry.listItemGap.value)
     }
 

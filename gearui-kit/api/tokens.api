@@ -358,7 +358,7 @@
   geometry.dialogActionGap = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.dialogActionsTop = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.dialogMaxWidth = {"$type":"dimension","$value":{"unit":"px","value":384}}
-  geometry.dialogTextGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
+  geometry.dialogTextGap = {"$type":"dimension","$value":{"unit":"px","value":6}}
   geometry.fieldLabelGap = {"$type":"dimension","$value":{"unit":"px","value":6}}
   geometry.fieldPaddingLarge = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.fieldPaddingMedium = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -367,7 +367,8 @@
   geometry.listCompactPadding = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.listItemGap = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.listMinHeight = {"$type":"dimension","$value":{"unit":"px","value":52}}
-  geometry.listPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
+  geometry.listPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":14}}
+  geometry.listPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.menuItemGap = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.menuItemPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.menuItemPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":10}}
@@ -423,11 +424,11 @@
   geometry.sliderThumbInset = {"$type":"dimension","$value":{"unit":"px","value":2}}
   geometry.sliderThumbWidth = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.sliderTrackHeight = {"$type":"dimension","$value":{"unit":"px","value":20}}
-  geometry.switchHeight = {"$type":"dimension","$value":{"unit":"px","value":24}}
+  geometry.switchHeight = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.switchInset = {"$type":"dimension","$value":{"unit":"px","value":2}}
-  geometry.switchThumbHeight = {"$type":"dimension","$value":{"unit":"px","value":20}}
-  geometry.switchThumbWidth = {"$type":"dimension","$value":{"unit":"px","value":28}}
-  geometry.switchWidth = {"$type":"dimension","$value":{"unit":"px","value":48}}
+  geometry.switchThumbHeight = {"$type":"dimension","$value":{"unit":"px","value":24}}
+  geometry.switchThumbWidth = {"$type":"dimension","$value":{"unit":"px","value":37}}
+  geometry.switchWidth = {"$type":"dimension","$value":{"unit":"px","value":63}}
   geometry.tabsIndicatorHeight = {"$type":"dimension","$value":{"unit":"px","value":2}}
   geometry.tabsListGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.tabsListPadding = {"$type":"dimension","$value":{"unit":"px","value":3}}

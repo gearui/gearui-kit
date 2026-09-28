@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.gearui.foundation.layout.Spacing
+import com.gearui.components.cell.Cell
 import com.gearui.components.icon.Icons
 import com.gearui.components.tabs.Tabs
 import com.gearui.components.tabs.Tab
@@ -26,10 +27,13 @@ import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
-import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
+
+/** Viewport heights for the pager demos: the pages need a bounded height to swipe. */
+private val SwipePagerHeight = 280.dp
+private val NestedListPagerHeight = 360.dp
 
 @Composable
 fun TabsExample(
@@ -43,67 +47,66 @@ fun TabsExample(
         onBack = onBack
     ) {
         ExampleSection(
-            title = "组件类型",
-            description = "用于内容分类后的展示切换。"
+            title = "等分标签",
+            description = "标签数越多，单个标签可容纳的字数越少"
         ) {
             TabsDemoRow(listOf("选项", "选项"))
             TabsDemoRow(listOf("选项", "选项", "上限六个字"))
             TabsDemoRow(listOf("选项", "选项", "选项", "上限四字"))
             TabsDemoRow(listOf("选项", "选项", "选项", "选项", "上限三"))
-            TabsDemoRow(
-                labels = listOf(
-                    "选项", "选项", "选项", "选项", "选项", "选项", "选项", "选项"
-                ),
-                isScrollable = true
-            )
-            TabsDemoItemsRow(
-                items = listOf(
-                    Tab("icon-1", "选项1", icon = Icons.house),
-                    Tab("icon-2", "选项2", icon = Icons.list),
-                    Tab("icon-3", "选项3", icon = Icons.user)
-                )
-            )
-            TabsDemoItemsRow(
-                items = listOf(
-                    Tab("badge-1", "选项"),
-                    Tab("badge-2", "选项(8)", icon = Icons.bell),
-                    Tab("badge-3", "选项", icon = Icons.info)
-                )
-            )
-
-            var contentSelected by remember { mutableStateOf("tab-0") }
-            val contentTabs = listOf(
-                Tab("tab-0", "选项"),
-                Tab("tab-1", "选项"),
-                Tab("tab-2", "选项")
-            )
-            Tabs(
-                items = contentTabs,
-                selectedId = contentSelected,
-                onSelect = { contentSelected = it }
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .background(colors.muted),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = when (contentSelected) {
-                        "tab-0" -> "内容区 1"
-                        "tab-1" -> "内容区 2"
-                        else -> "内容区 3"
-                    },
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
-                )
-            }
         }
 
         ExampleSection(
-            title = "左右滑动切换 (TabPager)",
-            description = "验证 tab 与页面左右滑动双向联动：可从任意页滑到相邻页并回滑。"
+            title = "可滚动",
+            description = "isScrollable 让超出宽度的标签横向滚动"
+        ) {
+            TabsDemoRow(
+                labels = List(8) { "选项${it + 1}" },
+                isScrollable = true
+            )
+        }
+
+        ExampleSection(
+            title = "带图标",
+            description = "Tab 的 icon 显示在文字前"
+        ) {
+            TabsDemoItemsRow(
+                items = listOf(
+                    Tab("icon-1", "首页", icon = Icons.house),
+                    Tab("icon-2", "通知", icon = Icons.bell),
+                    Tab("icon-3", "我的", icon = Icons.user)
+                )
+            )
+        }
+
+        ExampleSection(
+            title = "切换内容",
+            description = "选中的标签决定下方显示的内容"
+        ) {
+            var contentSelected by remember { mutableStateOf("tab-0") }
+            Tabs(
+                items = listOf(
+                    Tab("tab-0", "选项 1"),
+                    Tab("tab-1", "选项 2"),
+                    Tab("tab-2", "选项 3")
+                ),
+                selectedId = contentSelected,
+                onSelect = { contentSelected = it }
+            )
+            Text(
+                text = when (contentSelected) {
+                    "tab-0" -> "内容区 1"
+                    "tab-1" -> "内容区 2"
+                    else -> "内容区 3"
+                },
+                style = Theme.typography.bodyMedium,
+                color = colors.foreground
+            )
+        }
+
+        ExampleSection(
+            title = "左右滑动切换",
+            description = "TabPager 与 Tabs 双向联动，滑动页面或点标签都能切换"
         ) {
             val swipeTabs = listOf(
                 Tab("swipe-0", "好友"),
@@ -111,11 +114,12 @@ fun TabsExample(
                 Tab("swipe-2", "第三页")
             )
             var swipeSelected by remember { mutableStateOf(0) }
-            val pageColors = listOf(colors.primary, colors.muted, colors.foreground)
+            // Each page gets a distinct fill so the swipe is visible.
+            val pageColors = listOf(colors.primary to colors.primaryForeground, colors.muted to colors.foreground, colors.foreground to colors.background)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(280.dp)
+                    .height(SwipePagerHeight)
             ) {
                 Tabs(
                     items = swipeTabs,
@@ -131,13 +135,13 @@ fun TabsExample(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(pageColors[page]),
+                            .background(pageColors[page].first),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "页面 ${page + 1}",
                             style = Theme.typography.bodyMedium,
-                            color = colors.background
+                            color = pageColors[page].second
                         )
                     }
                 }
@@ -145,8 +149,8 @@ fun TabsExample(
         }
 
         ExampleSection(
-            title = "TabPager + 内嵌竖向列表 (复刻联系人页)",
-            description = "两页：第一页竖向可滚（30 项）、第二页不可滚（2 项），复刻 ContactPage 结构。"
+            title = "内嵌竖向列表",
+            description = "第一页 30 项可竖向滚动，第二页 2 项不滚动，横滑不受影响"
         ) {
             val listTabs = listOf(
                 Tab("list-0", "好友"),
@@ -156,7 +160,7 @@ fun TabsExample(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(360.dp)
+                    .height(NestedListPagerHeight)
             ) {
                 Tabs(
                     items = listTabs,
@@ -171,14 +175,7 @@ fun TabsExample(
                 ) { page ->
                     GearLazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(if (page == 0) 30 else 2) { i ->
-                            Text(
-                                text = (if (page == 0) "好友 " else "群组 ") + (i + 1),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(Spacing.sm),
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
+                            Cell(title = (if (page == 0) "好友 " else "群组 ") + (i + 1))
                         }
                     }
                 }
@@ -187,7 +184,7 @@ fun TabsExample(
 
         ExampleSection(
             title = "组件状态",
-            description = "选中、默认、禁用状态。"
+            description = "选中、默认、禁用"
         ) {
             var selected by remember { mutableStateOf("selected") }
             Tabs(
@@ -202,8 +199,8 @@ fun TabsExample(
         }
 
         ExampleSection(
-            title = "组件样式",
-            description = "尺寸与外观变体。"
+            title = "尺寸与外观",
+            description = "TabsSize 三档尺寸，TabsOutlineType 胶囊与卡片外观"
         ) {
             TabsDemoRow(
                 labels = listOf("小尺寸", "选项2", "选项3", "选项4"),

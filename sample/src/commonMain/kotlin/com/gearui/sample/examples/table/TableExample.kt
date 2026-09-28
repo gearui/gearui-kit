@@ -1,34 +1,115 @@
 package com.gearui.sample.examples.table
 
+import androidx.compose.runtime.Composable
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
 import com.gearui.components.icon.Icons
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.typography.IconSizes
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.components.table.SimpleTable
 import com.gearui.components.table.Table
-import com.gearui.components.table.TableColumn
 import com.gearui.components.table.TableAlign
 import com.gearui.components.table.TableColFixed
-import com.gearui.components.table.SimpleTable
+import com.gearui.components.table.TableColumn
 import com.gearui.components.table.rememberTableSelectionState
 import com.gearui.components.tag.Tag
 import com.gearui.components.tag.TagTheme
 import com.gearui.components.toast.Toast
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.unit.Dp
+import com.tencent.kuikly.compose.ui.unit.dp
+
+// Demo dimensions: the viewport heights and column widths are what the examples show off.
+private val TableHeight = 300.dp
+private val EmptyTableHeight = 150.dp
+private val SimpleTableHeight = 250.dp
+private val NarrowColumnWidth = 72.dp
+private val MediumColumnWidth = 96.dp
+private val WideColumnWidth = 128.dp
+private val ExtraWideColumnWidth = 160.dp
+
+private typealias Row4 = Map<String, String>
+
+private val defaultKeys = listOf("title1", "title2", "title3", "title4")
+
+/** Rows of placeholder content; [longContentIndex] gets a longer first cell to show truncation. */
+private fun generateData(count: Int, longContentIndex: Int = -1): List<Row4> =
+    List(count) { index ->
+        mapOf(
+            "title1" to if (index == longContentIndex) "内容内容内容内容" else "内容",
+            "title2" to "内容",
+            "title3" to "内容",
+            "title4" to "内容"
+        )
+    }
+
+/** Wide rows: the first one is long enough to push the table past the screen width. */
+private fun generateWideData(): List<Row4> =
+    listOf(
+        mapOf(
+            "title1" to "横向平铺内容不省略",
+            "title2" to "横向平铺内容不省略",
+            "title3" to "横向平铺内容不省略"
+        )
+    ) + List(10) { mapOf("title1" to "内容", "title2" to "内容", "title3" to "内容") }
+
+/** A plain text column reading [key] from a map row. */
+private fun textColumn(
+    key: String,
+    title: String = "标题",
+    width: Dp? = null,
+    align: TableAlign = TableAlign.LEFT
+): TableColumn<Row4> = TableColumn(
+    key = key,
+    title = title,
+    width = width,
+    align = align,
+    render = { item, _ -> CellText(item[key] ?: "") }
+)
+
+@Composable
+private fun CellText(text: String, danger: Boolean = false) {
+    Text(
+        text = text,
+        style = Theme.typography.bodyMedium,
+        color = if (danger) Theme.colors.destructive else Theme.colors.foreground,
+        maxLines = 1
+    )
+}
+
+private data class ProductItem(
+    val id: String,
+    val name: String,
+    val category: String,
+    val price: String,
+    val stock: String,
+    val sales: String
+)
+
+private data class OrderItem(
+    val id: String,
+    val product: String,
+    val amount: String,
+    val status: String
+)
 
 /**
  * Table component examples
  *
- *
  * Tables present several pieces of data sharing one structure, making them easy to organise,
- * compare and analyse, and support search, filtering and sorting. A table usually has a header, data rows and a footer.
+ * compare and analyse. A table usually has a header, data rows and a footer.
  */
 @Composable
 fun TableExample(
@@ -36,346 +117,95 @@ fun TableExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
-
-    // Basic sample data
-    fun generateData(count: Int, longContentIndex: Int = -1): List<Map<String, String>> {
-        return List(count) { index ->
-            if (index == longContentIndex) {
-                mapOf(
-                    "title1" to "内容内容内容内容",
-                    "title2" to "内容",
-                    "title3" to "内容",
-                    "title4" to "内容"
-                )
-            } else {
-                mapOf(
-                    "title1" to "内容",
-                    "title2" to "内容",
-                    "title3" to "内容",
-                    "title4" to "内容"
-                )
-            }
-        }
-    }
-
-    // Wide sample data
-    fun generateHorizontalData(): List<Map<String, String>> {
-        val data = mutableListOf<Map<String, String>>()
-        data.add(mapOf(
-            "title1" to "横向平铺内容不省略",
-            "title2" to "横向平铺内容不省略",
-            "title3" to "横向平铺内容不省略"
-        ))
-        repeat(10) {
-            data.add(mapOf(
-                "title1" to "内容",
-                "title2" to "内容",
-                "title3" to "内容"
-            ))
-        }
-        return data
-    }
-
-    // Selection state
-    val selectionState = rememberTableSelectionState<Map<String, String>>()
+    val selectionState = rememberTableSelectionState<Row4>()
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ==================== Component types ====================
-
-        // Basic table
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "基础表格",
-            description = "最基本的表格展示"
+            description = "表头加数据行，超出高度时纵向滚动"
         ) {
             Table(
                 data = generateData(10, 9),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground,
-                                maxLines = 1
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title4",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title4"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
-                modifier = Modifier.fillMaxWidth().height(300.dp)
+                columns = defaultKeys.map { textColumn(it) },
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
             )
         }
 
-        // Table with action buttons
         ExampleSection(
-            title = "带操作按钮表格",
-            description = "表格列中包含操作按钮"
+            surface = SectionSurface.Plain,
+            title = "操作列",
+            description = "行内操作用文字按钮或图标按钮"
         ) {
             Table(
                 data = generateData(10, 9),
                 columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        width = 80.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground,
-                                maxLines = 1
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        width = 80.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        width = 80.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
+                    textColumn("title1", width = NarrowColumnWidth),
+                    textColumn("title2", width = NarrowColumnWidth),
                     TableColumn(
                         key = "operations",
                         title = "操作",
-                        width = 120.dp,
                         render = { _, index ->
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                Text(
+                            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                                Button(
                                     text = "修改",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.primary,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("修改第 ${index + 1} 行")
-                                    }
+                                    type = ButtonType.TEXT,
+                                    size = ButtonSize.EXTRA_SMALL,
+                                    onClick = { Toast.show("修改第 ${index + 1} 行") }
                                 )
-                                Text(
-                                    text = "通过",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.primary,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("通过第 ${index + 1} 行")
-                                    }
+                                Button(
+                                    icon = Icons.upload_simple,
+                                    type = ButtonType.TEXT,
+                                    theme = ButtonTheme.DEFAULT,
+                                    shape = ButtonShape.SQUARE,
+                                    size = ButtonSize.EXTRA_SMALL,
+                                    onClick = { Toast.show("上传第 ${index + 1} 行") }
                                 )
-                            }
-                        }
-                    )
-                ),
-                modifier = Modifier.fillMaxWidth().height(300.dp)
-            )
-        }
-
-        // Table with icon actions
-        ExampleSection(
-            title = "带图标操作表格",
-            description = "使用图标作为操作按钮"
-        ) {
-            Table(
-                data = generateData(10, 9),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground,
-                                maxLines = 1
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "operations",
-                        title = "操作",
-                        render = { _, index ->
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                Icon(
-                                    name = Icons.upload_simple,
-                                    size = IconSizes.Default.md,
-                                    tint = Theme.colors.foreground,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("上传第 ${index + 1} 行")
-                                    }
-                                )
-                                Icon(
-                                    name = Icons.trash,
-                                    size = IconSizes.Default.md,
-                                    tint = Theme.colors.foreground,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("删除第 ${index + 1} 行")
-                                    }
+                                Button(
+                                    icon = Icons.trash,
+                                    type = ButtonType.TEXT,
+                                    theme = ButtonTheme.DANGER,
+                                    shape = ButtonShape.SQUARE,
+                                    size = ButtonSize.EXTRA_SMALL,
+                                    onClick = { Toast.show("删除第 ${index + 1} 行") }
                                 )
                             }
                         }
                     )
                 ),
-                modifier = Modifier.fillMaxWidth().height(300.dp)
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
             )
         }
 
-        // Selectable table
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "可选择表格",
-            description = "支持多选行功能"
+            description = "selectable 开启行多选，选中结果在 selectionState 中"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (selectionState.selectedItems.isNotEmpty()) {
-                    Text(
-                        text = "已选择 ${selectionState.selectedItems.size} 项",
-                        style = Theme.typography.bodySmall,
-                        color = colors.primary
-                    )
-                }
-
-                Table(
-                    data = generateData(10),
-                    columns = listOf(
-                        TableColumn(
-                            key = "title1",
-                            title = "标题",
-                            render = { item, _ ->
-                                Text(
-                                    text = item["title1"] ?: "",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.foreground
-                                )
-                            }
-                        ),
-                        TableColumn(
-                            key = "title2",
-                            title = "标题",
-                            render = { item, _ ->
-                                Text(
-                                    text = item["title2"] ?: "",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.foreground
-                                )
-                            }
-                        ),
-                        TableColumn(
-                            key = "title3",
-                            title = "标题",
-                            render = { item, _ ->
-                                Text(
-                                    text = item["title3"] ?: "",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.foreground
-                                )
-                            }
-                        ),
-                        TableColumn(
-                            key = "title4",
-                            title = "标题",
-                            render = { item, _ ->
-                                Text(
-                                    text = item["title4"] ?: "",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.foreground
-                                )
-                            }
-                        )
-                    ),
-                    selectable = true,
-                    selectionState = selectionState,
-                    modifier = Modifier.fillMaxWidth().height(300.dp)
+            if (selectionState.selectedItems.isNotEmpty()) {
+                Text(
+                    text = "已选择 ${selectionState.selectedItems.size} 项",
+                    style = Theme.typography.bodySmall,
+                    color = colors.primary
                 )
             }
+            Table(
+                data = generateData(10),
+                columns = defaultKeys.map { textColumn(it) },
+                selectable = true,
+                selectionState = selectionState,
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
+            )
         }
 
-        // Pinned columns + horizontal scrolling
         ExampleSection(
-            title = "固定列+滚动表格",
-            description = "左侧列固定，中间列可横向滚动，右侧操作列固定"
+            surface = SectionSurface.Plain,
+            title = "固定列",
+            description = "左侧编号列与右侧操作列固定，中间列横向滚动"
         ) {
-            data class ProductItem(
-                val id: String,
-                val name: String,
-                val category: String,
-                val price: String,
-                val stock: String,
-                val sales: String
-            )
-
             val products = listOf(
                 ProductItem("P001", "iPhone 15 Pro", "手机", "¥8,999", "156", "2,341"),
                 ProductItem("P002", "MacBook Air M3", "电脑", "¥9,499", "89", "1,234"),
@@ -393,431 +223,95 @@ fun TableExample(
                     TableColumn(
                         key = "id",
                         title = "编号",
-                        width = 70.dp,
+                        width = NarrowColumnWidth,
                         fixed = TableColFixed.LEFT,
-                        render = { item, _ ->
-                            Text(
-                                text = item.id,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        render = { item, _ -> CellText(item.id) }
                     ),
                     TableColumn(
                         key = "name",
                         title = "商品名称",
-                        width = 130.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item.name,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        width = WideColumnWidth,
+                        render = { item, _ -> CellText(item.name) }
                     ),
                     TableColumn(
                         key = "category",
                         title = "分类",
-                        width = 80.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item.category,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        width = NarrowColumnWidth,
+                        render = { item, _ -> CellText(item.category) }
                     ),
                     TableColumn(
                         key = "price",
                         title = "价格",
-                        width = 100.dp,
+                        width = MediumColumnWidth,
                         align = TableAlign.RIGHT,
-                        render = { item, _ ->
-                            Text(
-                                text = item.price,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.destructive
-                            )
-                        }
+                        render = { item, _ -> CellText(item.price, danger = true) }
                     ),
                     TableColumn(
                         key = "stock",
                         title = "库存",
-                        width = 80.dp,
+                        width = NarrowColumnWidth,
                         align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item.stock,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        render = { item, _ -> CellText(item.stock) }
                     ),
                     TableColumn(
                         key = "sales",
                         title = "销量",
-                        width = 80.dp,
+                        width = NarrowColumnWidth,
                         align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item.sales,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        render = { item, _ -> CellText(item.sales) }
                     ),
                     TableColumn(
                         key = "operations",
                         title = "操作",
-                        width = 100.dp,
+                        width = MediumColumnWidth,
                         fixed = TableColFixed.RIGHT,
                         render = { item, _ ->
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Text(
-                                    text = "编辑",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.primary,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("编辑 ${item.name}")
-                                    }
-                                )
-                                Text(
-                                    text = "删除",
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.destructive,
-                                    modifier = Modifier.clickable {
-                                        Toast.show("删除 ${item.name}")
-                                    }
-                                )
-                            }
+                            Button(
+                                text = "编辑",
+                                type = ButtonType.TEXT,
+                                size = ButtonSize.EXTRA_SMALL,
+                                onClick = { Toast.show("编辑 ${item.name}") }
+                            )
                         }
                     )
                 ),
-                modifier = Modifier.fillMaxWidth().height(350.dp)
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
             )
         }
 
-        // Wide scrollable table
         ExampleSection(
-            title = "横向平铺可滚动表格",
-            description = "内容较宽时可横向滚动"
+            surface = SectionSurface.Plain,
+            title = "横向滚动",
+            description = "列宽之和超过屏幕时，整表横向滚动"
         ) {
             Table(
-                data = generateHorizontalData(),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        width = 160.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        width = 160.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        width = 160.dp,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
-                modifier = Modifier.fillMaxWidth().height(300.dp)
+                data = generateWideData(),
+                columns = listOf("title1", "title2", "title3").map {
+                    textColumn(it, width = ExtraWideColumnWidth)
+                },
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
             )
         }
 
-        // ==================== Component styles ====================
-
-        // Zebra-striped table
         ExampleSection(
-            title = "带斑马纹表格样式",
-            description = "隔行变色，提高可读性"
+            surface = SectionSurface.Plain,
+            title = "斑马纹与边框",
+            description = "striped 隔行变色，bordered 加外框"
         ) {
             Table(
                 data = generateData(10, 9),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground,
-                                maxLines = 1
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title4",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title4"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
+                columns = defaultKeys.map { textColumn(it, align = TableAlign.CENTER) },
                 striped = true,
-                modifier = Modifier.fillMaxWidth().height(300.dp)
-            )
-        }
-
-        // Bordered table
-        ExampleSection(
-            title = "带边框表格样式",
-            description = "单元格带边框线"
-        ) {
-            Table(
-                data = generateData(10, 9),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground,
-                                maxLines = 1
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title4",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title4"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
                 bordered = true,
-                modifier = Modifier.fillMaxWidth().height(300.dp)
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
             )
         }
 
-        // Centred content
         ExampleSection(
-            title = "内容居中表格",
-            description = "所有列内容居中对齐"
+            surface = SectionSurface.Plain,
+            title = "状态标签",
+            description = "列内渲染 Tag，金额右对齐、状态居中"
         ) {
-            Table(
-                data = generateData(10),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title4",
-                        title = "标题",
-                        align = TableAlign.CENTER,
-                        render = { item, _ ->
-                            Text(
-                                text = item["title4"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
-                modifier = Modifier.fillMaxWidth().height(300.dp)
-            )
-        }
-
-        // Empty table
-        ExampleSection(
-            title = "空数据表格",
-            description = "无数据时显示空状态提示"
-        ) {
-            Table(
-                data = emptyList<Map<String, String>>(),
-                columns = listOf(
-                    TableColumn(
-                        key = "title1",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title1"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title2",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title2"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title3",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title3"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    ),
-                    TableColumn(
-                        key = "title4",
-                        title = "标题",
-                        render = { item, _ ->
-                            Text(
-                                text = item["title4"] ?: "",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
-                    )
-                ),
-                emptyText = "暂无数据",
-                modifier = Modifier.fillMaxWidth().height(150.dp)
-            )
-        }
-
-        // Simple table
-        ExampleSection(
-            title = "简单表格",
-            description = "使用字符串数组快速创建表格"
-        ) {
-            SimpleTable(
-                headers = listOf("编号", "名称", "数量", "价格"),
-                rows = listOf(
-                    listOf("001", "苹果", "50", "¥5.00"),
-                    listOf("002", "香蕉", "30", "¥3.00"),
-                    listOf("003", "橙子", "45", "¥4.50"),
-                    listOf("004", "葡萄", "25", "¥8.00"),
-                    listOf("005", "西瓜", "15", "¥15.00")
-                ),
-                striped = true,
-                modifier = Modifier.fillMaxWidth().height(250.dp)
-            )
-        }
-
-        // Table with status tags
-        ExampleSection(
-            title = "带状态标签表格",
-            description = "使用标签展示状态信息"
-        ) {
-            data class OrderItem(
-                val id: String,
-                val product: String,
-                val amount: String,
-                val status: String
-            )
-
             val orders = listOf(
                 OrderItem("20240101001", "iPhone 15", "¥6,999", "已发货"),
                 OrderItem("20240101002", "MacBook Pro", "¥14,999", "待付款"),
@@ -832,36 +326,18 @@ fun TableExample(
                     TableColumn(
                         key = "id",
                         title = "订单号",
-                        render = { item, _ ->
-                            Text(
-                                text = item.id,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        render = { item, _ -> CellText(item.id) }
                     ),
                     TableColumn(
                         key = "product",
                         title = "商品",
-                        render = { item, _ ->
-                            Text(
-                                text = item.product,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.foreground
-                            )
-                        }
+                        render = { item, _ -> CellText(item.product) }
                     ),
                     TableColumn(
                         key = "amount",
                         title = "金额",
                         align = TableAlign.RIGHT,
-                        render = { item, _ ->
-                            Text(
-                                text = item.amount,
-                                style = Theme.typography.bodyMedium,
-                                color = colors.destructive
-                            )
-                        }
+                        render = { item, _ -> CellText(item.amount, danger = true) }
                     ),
                     TableColumn(
                         key = "status",
@@ -872,7 +348,6 @@ fun TableExample(
                                 "已完成" -> TagTheme.SUCCESS
                                 "已发货" -> TagTheme.PRIMARY
                                 "处理中" -> TagTheme.WARNING
-                                "已取消" -> TagTheme.DEFAULT
                                 "待付款" -> TagTheme.DANGER
                                 else -> TagTheme.DEFAULT
                             }
@@ -880,7 +355,39 @@ fun TableExample(
                         }
                     )
                 ),
-                modifier = Modifier.fillMaxWidth().height(280.dp)
+                modifier = Modifier.fillMaxWidth().height(TableHeight)
+            )
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "空数据",
+            description = "无数据时显示 emptyText"
+        ) {
+            Table(
+                data = emptyList<Row4>(),
+                columns = defaultKeys.map { textColumn(it) },
+                emptyText = "暂无数据",
+                modifier = Modifier.fillMaxWidth().height(EmptyTableHeight)
+            )
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "SimpleTable",
+            description = "用字符串二维数组快速生成表格"
+        ) {
+            SimpleTable(
+                headers = listOf("编号", "名称", "数量", "价格"),
+                rows = listOf(
+                    listOf("001", "苹果", "50", "¥5.00"),
+                    listOf("002", "香蕉", "30", "¥3.00"),
+                    listOf("003", "橙子", "45", "¥4.50"),
+                    listOf("004", "葡萄", "25", "¥8.00"),
+                    listOf("005", "西瓜", "15", "¥15.00")
+                ),
+                striped = true,
+                modifier = Modifier.fillMaxWidth().height(SimpleTableHeight)
             )
         }
     }

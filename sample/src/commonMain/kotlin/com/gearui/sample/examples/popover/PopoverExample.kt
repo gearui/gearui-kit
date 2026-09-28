@@ -14,16 +14,19 @@ import com.gearui.components.popover.PopoverMenu
 import com.gearui.components.popover.PopoverMenuItem
 import com.gearui.components.popover.PopoverPlacement
 import com.gearui.components.popover.PopoverTheme
-import com.gearui.components.popover.Tooltip
 import com.gearui.components.popover.rememberPopoverState
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
+// Demo content dimension: the width of the custom-content bubble.
+private val CustomContentWidth = 200.dp
+
 /**
- * Popover component examples
+ * Popover component examples.
  */
 @Composable
 fun PopoverExample(
@@ -32,28 +35,7 @@ fun PopoverExample(
 ) {
     val colors = Theme.colors
 
-    // Basic Popover state
-    val basicPopoverState = rememberPopoverState()
-    val noArrowPopoverState = rememberPopoverState()
-
-    // Popover state for each theme
-    val darkPopoverState = rememberPopoverState()
-    val lightPopoverState = rememberPopoverState()
-    val brandPopoverState = rememberPopoverState()
-    val successPopoverState = rememberPopoverState()
-    val warningPopoverState = rememberPopoverState()
-    val errorPopoverState = rememberPopoverState()
-
-    // Placement demo
-    val topPopoverState = rememberPopoverState()
-    val bottomPopoverState = rememberPopoverState()
-    val leftPopoverState = rememberPopoverState()
-    val rightPopoverState = rememberPopoverState()
-
-    // Custom content
     val customPopoverState = rememberPopoverState()
-
-    // PopoverMenu
     val menuState = rememberPopoverState()
     var menuResult by remember { mutableStateOf("") }
 
@@ -61,307 +43,62 @@ fun PopoverExample(
         component = component,
         onBack = onBack
     ) {
-        // With and without an arrow
         ExampleSection(
-            title = "带箭头/不带箭头",
-            description = "控制气泡是否显示箭头指示器"
+            title = "箭头",
+            description = "showArrow 控制气泡是否带箭头"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Popover(
-                    state = basicPopoverState,
-                    placement = PopoverPlacement.BOTTOM,
-                    showArrow = true,
-                    content = {
-                        Text(
-                            text = "这是带箭头的气泡",
-                            style = Theme.typography.bodyMedium,
-                            color = LocalPopoverTextColor.current
-                        )
-                    }
-                ) { onClick ->
-                    Button(
-                        text = "带箭头",
-                        onClick = onClick,
-                        size = ButtonSize.MEDIUM
-                    )
-                }
-
-                Popover(
-                    state = noArrowPopoverState,
-                    placement = PopoverPlacement.BOTTOM,
-                    showArrow = false,
-                    content = {
-                        Text(
-                            text = "这是不带箭头的气泡",
-                            style = Theme.typography.bodyMedium,
-                            color = LocalPopoverTextColor.current
-                        )
-                    }
-                ) { onClick ->
-                    Button(
-                        text = "不带箭头",
-                        onClick = onClick,
-                        size = ButtonSize.MEDIUM,
-                        type = ButtonType.OUTLINE
-                    )
-                }
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
+                TextPopover(label = "带箭头", message = "这是带箭头的气泡", showArrow = true)
+                TextPopover(label = "不带箭头", message = "这是不带箭头的气泡", showArrow = false)
             }
         }
 
-        // Theme styles
         ExampleSection(
             title = "主题风格",
-            description = "支持深色、浅色、品牌色、成功、警告、错误六种主题"
+            description = "DARK / LIGHT / BRAND / SUCCESS / WARNING / ERROR"
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                // First row: dark, light, brand
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = darkPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.DARK,
-                            content = {
-                                Text(
-                                    text = "深色主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "深色",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = lightPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.LIGHT,
-                            content = {
-                                Text(
-                                    text = "浅色主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "浅色",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                type = ButtonType.OUTLINE,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = brandPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.BRAND,
-                            content = {
-                                Text(
-                                    text = "品牌色主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "品牌色",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                }
-
-                // Second row: success, warning, error
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = successPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.SUCCESS,
-                            content = {
-                                Text(
-                                    text = "成功主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "成功",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = warningPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.WARNING,
-                            content = {
-                                Text(
-                                    text = "警告主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "警告",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-
-                    Box(modifier = Modifier.weight(1f)) {
-                        Popover(
-                            state = errorPopoverState,
-                            placement = PopoverPlacement.BOTTOM,
-                            theme = PopoverTheme.ERROR,
-                            content = {
-                                Text(
-                                    text = "错误主题",
-                                    style = Theme.typography.bodySmall,
-                                    color = LocalPopoverTextColor.current
-                                )
-                            }
-                        ) { onClick ->
-                            Button(
-                                text = "错误",
-                                onClick = onClick,
-                                size = ButtonSize.SMALL,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+            val themes = listOf(
+                Triple(PopoverTheme.DARK, "深色", "深色主题"),
+                Triple(PopoverTheme.LIGHT, "浅色", "浅色主题"),
+                Triple(PopoverTheme.BRAND, "品牌色", "品牌色主题"),
+                Triple(PopoverTheme.SUCCESS, "成功", "成功主题"),
+                Triple(PopoverTheme.WARNING, "警告", "警告主题"),
+                Triple(PopoverTheme.ERROR, "错误", "错误主题"),
+            )
+            // Anchored triggers stay at the Button's default width
+            themes.chunked(3).forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                    row.forEach { (theme, label, message) ->
+                        TextPopover(label = label, message = message, theme = theme)
                     }
                 }
             }
         }
 
-        // Placement
         ExampleSection(
             title = "弹出位置",
-            description = "支持上、下、左、右四个基本方向，共12种位置"
+            description = "TOP / BOTTOM / LEFT / RIGHT 四个方向，共 12 种 placement"
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Above
-                Popover(
-                    state = topPopoverState,
-                    placement = PopoverPlacement.TOP,
-                    content = {
-                        Text(
-                            text = "顶部弹出的气泡",
-                            style = Theme.typography.bodyMedium,
-                            color = LocalPopoverTextColor.current
-                        )
-                    }
-                ) { onClick ->
-                    Button(
-                        text = "顶部弹出",
-                        onClick = onClick,
-                        size = ButtonSize.MEDIUM
-                    )
-                }
-
-                // Left and right
+                TextPopover(label = "顶部", message = "顶部弹出的气泡", placement = PopoverPlacement.TOP)
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(48.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.huge),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Popover(
-                        state = leftPopoverState,
-                        placement = PopoverPlacement.LEFT,
-                        content = {
-                            Text(
-                                text = "左侧气泡",
-                                style = Theme.typography.bodySmall,
-                                color = LocalPopoverTextColor.current
-                            )
-                        }
-                    ) { onClick ->
-                        Button(
-                            text = "左侧",
-                            onClick = onClick,
-                            size = ButtonSize.SMALL
-                        )
-                    }
-
-                    Popover(
-                        state = rightPopoverState,
-                        placement = PopoverPlacement.RIGHT,
-                        content = {
-                            Text(
-                                text = "右侧气泡",
-                                style = Theme.typography.bodySmall,
-                                color = LocalPopoverTextColor.current
-                            )
-                        }
-                    ) { onClick ->
-                        Button(
-                            text = "右侧",
-                            onClick = onClick,
-                            size = ButtonSize.SMALL
-                        )
-                    }
+                    TextPopover(label = "左侧", message = "左侧气泡", placement = PopoverPlacement.LEFT)
+                    TextPopover(label = "右侧", message = "右侧气泡", placement = PopoverPlacement.RIGHT)
                 }
-
-                // Below
-                Popover(
-                    state = bottomPopoverState,
-                    placement = PopoverPlacement.BOTTOM,
-                    content = {
-                        Text(
-                            text = "底部弹出的气泡",
-                            style = Theme.typography.bodyMedium,
-                            color = LocalPopoverTextColor.current
-                        )
-                    }
-                ) { onClick ->
-                    Button(
-                        text = "底部弹出",
-                        onClick = onClick,
-                        size = ButtonSize.MEDIUM
-                    )
-                }
+                TextPopover(label = "底部", message = "底部弹出的气泡", placement = PopoverPlacement.BOTTOM)
             }
         }
 
-        // Custom content
         ExampleSection(
             title = "自定义内容",
-            description = "气泡内容支持完全自定义"
+            description = "content 可放置任意组件"
         ) {
             Popover(
                 state = customPopoverState,
@@ -369,8 +106,8 @@ fun PopoverExample(
                 theme = PopoverTheme.LIGHT,
                 content = {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.width(200.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                        modifier = Modifier.width(CustomContentWidth)
                     ) {
                         Text(
                             text = "自定义气泡内容",
@@ -382,9 +119,7 @@ fun PopoverExample(
                             style = Theme.typography.bodySmall,
                             color = colors.mutedForeground
                         )
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             Button(
                                 text = "取消",
                                 onClick = { customPopoverState.hide() },
@@ -400,109 +135,66 @@ fun PopoverExample(
                     }
                 }
             ) { onClick ->
-                Button(
-                    text = "自定义内容",
-                    onClick = onClick,
-                    size = ButtonSize.MEDIUM
-                )
+                Button(text = "自定义内容", onClick = onClick)
             }
         }
 
-        // PopoverMenu
         ExampleSection(
             title = "菜单式气泡",
-            description = "带菜单项的气泡弹出，支持图标、禁用、危险操作"
+            description = "PopoverMenu：菜单项支持禁用与危险操作"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                PopoverMenu(
-                    state = menuState,
-                    placement = PopoverPlacement.BOTTOM,
-                    theme = PopoverTheme.LIGHT,
-                    items = listOf(
-                        PopoverMenuItem(
-                            label = "编辑",
-                            onClick = { menuResult = "点击了编辑" }
-                        ),
-                        PopoverMenuItem(
-                            label = "复制",
-                            onClick = { menuResult = "点击了复制" }
-                        ),
-                        PopoverMenuItem(
-                            label = "分享",
-                            onClick = { menuResult = "点击了分享" }
-                        ),
-                        PopoverMenuItem(
-                            label = "禁用项",
-                            disabled = true,
-                            onClick = { }
-                        ),
-                        PopoverMenuItem(
-                            label = "删除",
-                            danger = true,
-                            onClick = { menuResult = "点击了删除" }
-                        )
-                    )
-                ) { onClick ->
-                    Button(
-                        text = "显示菜单",
-                        onClick = onClick,
-                        size = ButtonSize.MEDIUM
-                    )
-                }
-
-                if (menuResult.isNotEmpty()) {
-                    Text(
-                        text = "操作结果: $menuResult",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+            PopoverMenu(
+                state = menuState,
+                placement = PopoverPlacement.BOTTOM,
+                theme = PopoverTheme.LIGHT,
+                items = listOf(
+                    PopoverMenuItem(label = "编辑", onClick = { menuResult = "点击了编辑" }),
+                    PopoverMenuItem(label = "复制", onClick = { menuResult = "点击了复制" }),
+                    PopoverMenuItem(label = "分享", onClick = { menuResult = "点击了分享" }),
+                    PopoverMenuItem(label = "禁用项", disabled = true, onClick = { }),
+                    PopoverMenuItem(label = "删除", danger = true, onClick = { menuResult = "点击了删除" })
+                )
+            ) { onClick ->
+                Button(text = "显示菜单", onClick = onClick)
             }
-        }
 
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Popover 组件特性介绍"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (menuResult.isNotEmpty()) {
                 Text(
-                    text = "主题支持:",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "DARK / LIGHT / BRAND / SUCCESS / WARNING / ERROR",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "位置支持 (12种):",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "TOP_LEFT / TOP / TOP_RIGHT\nRIGHT_TOP / RIGHT / RIGHT_BOTTOM\nBOTTOM_RIGHT / BOTTOM / BOTTOM_LEFT\nLEFT_BOTTOM / LEFT / LEFT_TOP",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "组件类型:",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "Popover - 基础气泡\nTooltip - 文本提示\nPopoverMenu - 菜单气泡",
+                    text = "操作结果：$menuResult",
                     style = Theme.typography.bodySmall,
                     color = colors.mutedForeground
                 )
             }
         }
+    }
+}
+
+/** A Button that opens a Popover holding a single line of text. */
+@Composable
+private fun TextPopover(
+    label: String,
+    message: String,
+    placement: PopoverPlacement = PopoverPlacement.BOTTOM,
+    theme: PopoverTheme = PopoverTheme.LIGHT,
+    showArrow: Boolean = false
+) {
+    val state = rememberPopoverState()
+    Popover(
+        state = state,
+        placement = placement,
+        theme = theme,
+        showArrow = showArrow,
+        content = {
+            Text(
+                text = message,
+                style = Theme.typography.bodyMedium,
+                color = LocalPopoverTextColor.current
+            )
+        }
+    ) { onClick ->
+        Button(
+            text = label,
+            onClick = onClick
+        )
     }
 }

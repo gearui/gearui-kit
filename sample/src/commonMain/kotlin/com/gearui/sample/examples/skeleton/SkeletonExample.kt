@@ -1,10 +1,6 @@
 package com.gearui.sample.examples.skeleton
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
 import com.gearui.components.skeleton.Skeleton
 import com.gearui.components.skeleton.SkeletonAnimation
 import com.gearui.components.skeleton.SkeletonArticle
@@ -15,11 +11,40 @@ import com.gearui.components.skeleton.SkeletonImage
 import com.gearui.components.skeleton.SkeletonListItem
 import com.gearui.components.skeleton.SkeletonText
 import com.gearui.components.skeleton.SkeletonVariant
+import com.gearui.foundation.avatar.AvatarSizeTokens
+import com.gearui.foundation.layout.Radius
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.foundation.layout.size
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.unit.dp
+
+// Demo dimensions: the placeholder blocks being shown off.
+private val BlockHeight = 40.dp
+private val TextLineHeight = 16.dp
+private val ImageBlockSize = 80.dp
+private val CardImageHeight = 120.dp
+private val GridItemHeight = 80.dp
+
+/** A muted caption above an example. */
+@Composable
+private fun Caption(text: String) {
+    Text(
+        text = text,
+        style = Theme.typography.bodySmall,
+        color = Theme.colors.mutedForeground
+    )
+}
 
 /**
  * Skeleton component examples
@@ -29,294 +54,114 @@ fun SkeletonExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // Basic skeletons
         ExampleSection(
-            title = "基础用法",
-            description = "不同形状的骨架屏"
+            title = "形状",
+            description = "variant 可选矩形、圆形、文本"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Rectangle
-                Text(
-                    text = "矩形骨架",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-                Skeleton(
-                    variant = SkeletonVariant.RECTANGULAR,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                )
+            Caption("矩形 RECTANGULAR")
+            Skeleton(
+                variant = SkeletonVariant.RECTANGULAR,
+                modifier = Modifier.fillMaxWidth().height(BlockHeight)
+            )
+            Caption("圆形 CIRCULAR")
+            Skeleton(
+                variant = SkeletonVariant.CIRCULAR,
+                modifier = Modifier.size(BlockHeight)
+            )
+            Caption("文本 TEXT")
+            Skeleton(
+                variant = SkeletonVariant.TEXT,
+                modifier = Modifier.fillMaxWidth().height(TextLineHeight)
+            )
+        }
 
-                // Circle
-                Text(
-                    text = "圆形骨架",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Skeleton(
-                        variant = SkeletonVariant.CIRCULAR,
-                        modifier = Modifier.size(40.dp)
-                    )
-                    Skeleton(
-                        variant = SkeletonVariant.CIRCULAR,
-                        modifier = Modifier.size(48.dp)
-                    )
-                    Skeleton(
-                        variant = SkeletonVariant.CIRCULAR,
-                        modifier = Modifier.size(56.dp)
-                    )
-                }
-
-                // Text
-                Text(
-                    text = "文本骨架",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
+        ExampleSection(
+            title = "动画",
+            description = "脉冲 PULSE、波浪 WAVE、无动画 NONE"
+        ) {
+            listOf(
+                "脉冲 PULSE" to SkeletonAnimation.PULSE,
+                "波浪 WAVE" to SkeletonAnimation.WAVE,
+                "无动画 NONE" to SkeletonAnimation.NONE
+            ).forEach { (label, animation) ->
+                Caption(label)
                 Skeleton(
-                    variant = SkeletonVariant.TEXT,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
+                    animation = animation,
+                    modifier = Modifier.fillMaxWidth().height(BlockHeight)
                 )
             }
         }
 
-        // Animation types
-        ExampleSection(
-            title = "动画类型",
-            description = "脉冲动画、波浪动画、无动画"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Pulse
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "脉冲动画 (PULSE)",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Skeleton(
-                        animation = SkeletonAnimation.PULSE,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                    )
-                }
-
-                // Wave
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "波浪动画 (WAVE)",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Skeleton(
-                        animation = SkeletonAnimation.WAVE,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                    )
-                }
-
-                // No animation
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "无动画 (NONE)",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Skeleton(
-                        animation = SkeletonAnimation.NONE,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)
-                    )
-                }
-            }
-        }
-
-        // Text skeleton
         ExampleSection(
             title = "多行文本",
-            description = "SkeletonText 支持多行文本"
+            description = "SkeletonText 的行数、行距与末行宽度可调"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                SkeletonText(
-                    lines = 1,
-                    lineHeight = 20.dp,
-                    modifier = Modifier.fillMaxWidth(0.6f)
-                )
-
-                SkeletonText(
-                    lines = 3,
-                    lineHeight = 16.dp,
-                    lineSpacing = 10.dp,
-                    lastLineWidth = 0.7f
-                )
-
-                SkeletonText(
-                    lines = 4,
-                    lineHeight = 14.dp,
-                    lineSpacing = 8.dp,
-                    lastLineWidth = 0.5f,
-                    animation = SkeletonAnimation.WAVE
-                )
-            }
+            SkeletonText(
+                lines = 3,
+                lineHeight = TextLineHeight,
+                lineSpacing = Spacing.sm,
+                lastLineWidth = 0.7f
+            )
         }
 
-        // Avatars and images
         ExampleSection(
-            title = "头像和图片",
-            description = "SkeletonAvatar 和 SkeletonImage"
+            title = "头像与图片",
+            description = "SkeletonAvatar 与 SkeletonImage"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    SkeletonAvatar(size = 40.dp)
-                    Text(
-                        text = "小",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    SkeletonAvatar(size = 56.dp)
-                    Text(
-                        text = "中",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    SkeletonAvatar(size = 72.dp)
-                    Text(
-                        text = "大",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    SkeletonImage(
-                        width = 80.dp,
-                        height = 80.dp,
-                        cornerRadius = 8.dp
-                    )
-                    Text(
-                        text = "图片",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+                SkeletonAvatar(size = AvatarSizeTokens.Small.size)
+                SkeletonAvatar(size = AvatarSizeTokens.Medium.size)
+                SkeletonAvatar(size = AvatarSizeTokens.Large.size)
+                SkeletonImage(
+                    width = ImageBlockSize,
+                    height = ImageBlockSize,
+                    cornerRadius = Radius.lg
+                )
             }
         }
 
-        // List row template
         ExampleSection(
             title = "列表项模板",
-            description = "SkeletonListItem 常用于列表加载"
+            description = "SkeletonListItem 可带头像与缩略图"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                SkeletonListItem(
-                    showAvatar = true,
-                    showThumbnail = false
-                )
-                SkeletonListItem(
-                    showAvatar = true,
-                    showThumbnail = true
-                )
-                SkeletonListItem(
-                    showAvatar = false,
-                    showThumbnail = false,
-                    animation = SkeletonAnimation.WAVE
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                SkeletonListItem(showAvatar = true, showThumbnail = false)
+                SkeletonListItem(showAvatar = true, showThumbnail = true)
+                SkeletonListItem(showAvatar = false, showThumbnail = false)
             }
         }
 
-        // Card template
         ExampleSection(
             title = "卡片模板",
-            description = "SkeletonCard 常用于卡片加载"
+            description = "SkeletonCard 占住图片与文字区域"
         ) {
-            SkeletonCard(
-                imageHeight = 120.dp,
-                animation = SkeletonAnimation.PULSE
-            )
+            SkeletonCard(imageHeight = CardImageHeight)
         }
 
-        // Article template
         ExampleSection(
             title = "文章模板",
-            description = "SkeletonArticle 常用于文章加载"
+            description = "SkeletonArticle 包含标题、配图与段落"
         ) {
-            SkeletonArticle(
-                showImage = true,
-                animation = SkeletonAnimation.WAVE
-            )
+            SkeletonArticle(showImage = true)
         }
 
-        // Grid template
         ExampleSection(
             title = "网格模板",
-            description = "SkeletonGrid 常用于网格加载"
+            description = "SkeletonGrid 按行列排出等高格子"
         ) {
             SkeletonGrid(
                 columns = 3,
                 rows = 2,
-                itemHeight = 80.dp,
-                spacing = 8.dp
+                itemHeight = GridItemHeight,
+                spacing = Spacing.sm
             )
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Skeleton 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 支持三种形状: 矩形、圆形、文本",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. 支持三种动画: 脉冲、波浪、无动画",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. 提供预设模板: 列表项、卡片、文章、网格",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. 可自定义尺寸和圆角",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
         }
     }
 }

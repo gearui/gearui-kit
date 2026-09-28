@@ -1,16 +1,15 @@
 package com.gearui.sample.examples.picker
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.picker.Picker
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
+
+private class PickerRow(val title: String, val value: String, val onClick: () -> Unit)
 
 /**
  * Picker component examples
@@ -22,8 +21,6 @@ fun PickerExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     // Basic picker data
     val cityData = listOf("广州市", "韶关市", "深圳市", "珠海市", "汕头市")
 
@@ -70,105 +67,44 @@ fun PickerExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== Component types ====================
-
-        // Basic picker - region
+        // Each row opens a picker from the bottom sheet; the note shows the result.
         ExampleSection(
-            title = "基础选择器",
-            description = "单列数据选择"
+            surface = SectionSurface.Plain,
+            title = "选择器类型",
+            description = "Picker.Single 单列、Picker.Multi 多列独立、Picker.Linked 多列联动"
         ) {
-            Cell(
-                title = "选择地区",
-                note = selectedCity.ifEmpty { "请选择" },
-                arrow = true,
-                onClick = { showCityPicker = true }
-            )
-        }
-
-        // Basic picker - time (multiple columns)
-        ExampleSection(
-            title = "基础选择器 - 时间",
-            description = "多列独立数据选择"
-        ) {
-            Cell(
-                title = "选择时间",
-                note = selectedTime.ifEmpty { "请选择" },
-                arrow = true,
-                onClick = { showTimePicker = true }
-            )
-        }
-
-        // Linked picker
-        ExampleSection(
-            title = "联动选择器",
-            description = "多列数据联动选择"
-        ) {
-            Cell(
-                title = "选择地区",
-                note = selectedArea.ifEmpty { "请选择" },
-                arrow = true,
-                onClick = { showAreaPicker = true }
-            )
-        }
-
-        // ==================== Component styles ====================
-
-        // Picker with a title
-        ExampleSection(
-            title = "带标题选择器",
-            description = "显示标题的选择器"
-        ) {
-            Cell(
-                title = "选择地区",
-                note = selectedAreaWithTitle.ifEmpty { "请选择" },
-                arrow = true,
-                onClick = { showAreaWithTitlePicker = true }
-            )
-        }
-
-        // Picker without a title
-        ExampleSection(
-            title = "无标题选择器",
-            description = "不显示标题的选择器"
-        ) {
-            Cell(
-                title = "选择地区",
-                note = selectedAreaNoTitle.ifEmpty { "请选择" },
-                arrow = true,
-                onClick = { showAreaNoTitlePicker = true }
-            )
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Picker 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. Picker.Single: 单列选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            CellGroup(
+                items = listOf(
+                    PickerRow("单列 · 地区", selectedCity) { showCityPicker = true },
+                    PickerRow("多列 · 时间", selectedTime) { showTimePicker = true },
+                    PickerRow("联动 · 省市区", selectedArea) { showAreaPicker = true },
                 )
-                Text(
-                    text = "2. Picker.Multi: 多列独立选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            ) { row ->
+                Cell(
+                    title = row.title,
+                    note = row.value.ifEmpty { "请选择" },
+                    arrow = true,
+                    onClick = row.onClick
                 )
-                Text(
-                    text = "3. Picker.Linked: 多列联动选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            }
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "标题",
+            description = "title 为 null 时面板不显示标题"
+        ) {
+            CellGroup(
+                items = listOf(
+                    PickerRow("带标题", selectedAreaWithTitle) { showAreaWithTitlePicker = true },
+                    PickerRow("无标题", selectedAreaNoTitle) { showAreaNoTitlePicker = true },
                 )
-                Text(
-                    text = "4. 从底部弹出，支持滚动选择",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 支持自定义标题、取消、确定文案",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            ) { row ->
+                Cell(
+                    title = row.title,
+                    note = row.value.ifEmpty { "请选择" },
+                    arrow = true,
+                    onClick = row.onClick
                 )
             }
         }

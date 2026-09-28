@@ -2,13 +2,17 @@ package com.gearui.sample.examples.cell
 
 import androidx.compose.runtime.Composable
 import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.layout.Column
 
 /**
  * Cell component examples
@@ -25,11 +29,11 @@ fun CellExample(
         onBack = onBack
     ) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "基础用法",
-            description = "Cell 只管一行:标题、说明、右侧值、箭头。分隔线归 CellGroup 管"
+            description = "Cell 只管一行：标题、说明、右侧值、箭头；分隔线归 CellGroup 管"
         ) {
-            com.gearui.components.cellgroup.CellGroup(items = listOf(0, 1, 2)) { index ->
+            CellGroup(items = listOf(0, 1, 2)) { index ->
                 when (index) {
                     0 -> Cell(
                         title = "基础单元格",
@@ -50,30 +54,33 @@ fun CellExample(
         }
 
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "扩展插槽",
-            description = "前置/后置自定义内容"
+            description = "leading 放图标，trailing 放自定义的右侧内容"
         ) {
-            Column {
-                Cell(
-                    title = "前置内容",
-                    leading = {
-                        Text(
-                            text = "A",
-                            style = Theme.typography.bodyLarge,
-                            color = colors.primary
-                        )
-                    }
-                )
-                Cell(
-                    title = "后置内容",
-                    trailing = {
-                        Text(
-                            text = "ON",
-                            style = Theme.typography.bodySmall,
-                            color = colors.success
-                        )
-                    }
-                )
+            CellGroup(items = listOf(0, 1)) { index ->
+                when (index) {
+                    0 -> Cell(
+                        title = "前置内容",
+                        leading = {
+                            Icon(
+                                name = Icons.bell,
+                                size = IconSizes.Default.md,
+                                tint = colors.primary
+                            )
+                        }
+                    )
+                    else -> Cell(
+                        title = "后置内容",
+                        trailing = {
+                            Text(
+                                text = "已开启",
+                                style = Theme.typography.bodySmall,
+                                color = colors.success
+                            )
+                        }
+                    )
+                }
             }
         }
     }

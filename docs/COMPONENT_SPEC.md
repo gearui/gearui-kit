@@ -99,6 +99,32 @@ controls pass a null description.
 - Insets, theme, i18n and overlays use the same runtime as consumers.
 - Diagnostic fixtures are named, opt-in, and never the normal release entry.
 
+**Page standard.** The sample is the code people copy, so a page is held to the
+same rules as a component:
+
+- **Frame.** `ExamplePage` with `ExampleSection`s. A section is `Card` for loose
+  controls and `Plain` for a component that is a surface itself (CellGroup,
+  Card, List, Collapse, Alert, NoticeBar, Calendar, Table, Result…). Never a
+  card inside a card.
+- **Tokens only.** Spacing, shapes, border widths, icon sizes, typography and
+  colours come from the theme and scales — no `Color(0x…)`, no bare `dp`. A
+  dimension that *is* the demo (an image placeholder's height, a custom size
+  being shown off) is a named constant at the top of the file.
+- **Real components only.** A button is a `Button`, a row is a `Cell`, an icon
+  is `Icons.*`. No hand-built lookalikes, no letters or emoji standing in for
+  icons, no bare `clickable` without press feedback.
+- **Fields on cards** use the filled variant (`cardStyle = true`), as the
+  visual spec requires.
+- **Overlay triggers.** A set of entries that open a non-anchored overlay
+  (Dialog, ActionSheet, BottomSheet, Toast, Notification, Snackbar, Drawer,
+  Tour, full-screen Loading) is a `CellGroup` of rows with an arrow, one row
+  per variant, on a `Plain` section — the platform catalogue pattern. An
+  anchored overlay (Tooltip, Popover, ContextMenu, an anchored Popup) needs a
+  real trigger to point at, so it keeps a `Button` at its default width.
+- **Copy.** Titles and descriptions in Simplified Chinese, the sample's default
+  language; API and component names verbatim. One capability per section; the
+  description says what to look at in one line, not how the code works.
+
 ## 7. Migration Notes
 
 Public API changes require migration notes: list source, binary and behavioral

@@ -5,17 +5,22 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.list.CardDefaults
 import com.gearui.primitives.composite.Card
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.ui.unit.dp
+
+/** Height of the cover placeholder: the cover is the demo content. */
+private val CoverHeight = 120.dp
 
 /**
  * Card component examples
@@ -42,13 +47,13 @@ fun CardExample(
         ExampleSection(
             title = "基础卡片",
             description = "简单的卡片容器",
-            useCardContainer = false
+            surface = SectionSurface.Plain
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Text(text = "卡片标题", style = Theme.typography.titleMedium, color = colors.foreground)
                     Text(text = "这是卡片的内容区域，可以放置任意内容", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
@@ -60,22 +65,22 @@ fun CardExample(
         ExampleSection(
             title = "带封面卡片",
             description = "顶部封面区域与内容分层",
-            useCardContainer = false
+            surface = SectionSurface.Plain
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                padding = PaddingValues(0.dp)
+                padding = PaddingValues(Spacing.none)
             ) {
                 Column(modifier = Modifier.fillMaxWidth().background(colors.surface)) {
                     Box(
-                        modifier = Modifier.fillMaxWidth().height(120.dp).background(colors.muted),
+                        modifier = Modifier.fillMaxWidth().height(CoverHeight).background(colors.muted),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("封面占位", color = colors.mutedForeground)
+                        Text("封面占位", style = Theme.typography.bodySmall, color = colors.mutedForeground)
                     }
                     Column(
                         modifier = Modifier.padding(CardDefaults.Default.padding),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         Text(text = "图文卡片", style = Theme.typography.titleMedium, color = colors.foreground)
                         Text(text = "带有封面图的卡片样式", style = Theme.typography.bodyMedium, color = colors.mutedForeground)
@@ -88,23 +93,23 @@ fun CardExample(
         ExampleSection(
             title = "卡片操作",
             description = "底部操作按钮",
-            useCardContainer = false
+            surface = SectionSurface.Plain
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                padding = PaddingValues(0.dp)
+                padding = PaddingValues(Spacing.none)
             ) {
                 Column(modifier = Modifier.fillMaxWidth().background(colors.surface)) {
                     Column(
                         modifier = Modifier.padding(CardDefaults.Default.padding),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         Text(text = "操作卡片", style = Theme.typography.titleMedium, color = colors.foreground)
                         Text(text = actionResult, style = Theme.typography.bodyMedium, color = colors.mutedForeground)
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = CardDefaults.Default.padding, vertical = 12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End)
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = CardDefaults.Default.padding, vertical = Spacing.md),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.md, Alignment.End)
                     ) {
                         Button(text = "取消", onClick = { actionResult = "已取消" }, size = ButtonSize.SMALL, theme = ButtonTheme.DEFAULT)
                         Button(text = "确定", onClick = { actionResult = "已确认" }, size = ButtonSize.SMALL, theme = ButtonTheme.PRIMARY)

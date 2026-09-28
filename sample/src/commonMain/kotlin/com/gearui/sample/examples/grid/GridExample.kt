@@ -5,19 +5,40 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.grid.Grid
 import com.gearui.components.grid.ResponsiveGrid
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
+// Demo content dimensions: the placeholder blocks the grid lays out.
+private val CellHeight = 56.dp
+private val ResponsiveMinColumnWidth = 100.dp
+
+private data class GridEntry(val icon: String, val label: String)
+
+private val iconEntries = listOf(
+    GridEntry(Icons.house, "首页"),
+    GridEntry(Icons.magnifying_glass, "搜索"),
+    GridEntry(Icons.chat_circle, "消息"),
+    GridEntry(Icons.user, "我的"),
+    GridEntry(Icons.gear, "设置"),
+    GridEntry(Icons.question, "帮助"),
+    GridEntry(Icons.info, "关于"),
+    GridEntry(Icons.sign_out, "退出"),
+)
+
 /**
- * Grid component examples
- *
- * A grid layout system for responsive layouts
+ * Grid component examples: fixed-column and responsive layouts.
  */
 @Composable
 fun GridExample(
@@ -30,29 +51,63 @@ fun GridExample(
         component = component,
         onBack = onBack
     ) {
-        // Basic usage - 2 columns
         ExampleSection(
-            title = "基础用法 - 2列",
-            description = "2列等宽网格布局"
+            title = "基础用法",
+            description = "columns 设置固定列数，子项等宽排列"
         ) {
             Grid(
                 columns = 2,
-                horizontalSpacing = 12.dp,
-                verticalSpacing = 12.dp,
+                horizontalSpacing = Spacing.md,
+                verticalSpacing = Spacing.md,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 repeat(4) { index ->
+                    item { PlaceholderCell("项目 ${index + 1}") }
+                }
+            }
+        }
+
+        ExampleSection(
+            title = "三列布局",
+            description = "columns = 3"
+        ) {
+            Grid(
+                columns = 3,
+                horizontalSpacing = Spacing.sm,
+                verticalSpacing = Spacing.sm,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                repeat(6) { index ->
+                    item { PlaceholderCell("${index + 1}") }
+                }
+            }
+        }
+
+        ExampleSection(
+            title = "图标宫格",
+            description = "四列布局，常用于功能入口"
+        ) {
+            Grid(
+                columns = 4,
+                horizontalSpacing = Spacing.sm,
+                verticalSpacing = Spacing.lg,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                iconEntries.forEach { entry ->
                     item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                                .background(colors.muted),
-                            contentAlignment = Alignment.Center
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                         ) {
+                            Icon(
+                                name = entry.icon,
+                                size = IconSizes.Default.xl,
+                                tint = colors.primary
+                            )
                             Text(
-                                text = "项目 ${index + 1}",
-                                style = Theme.typography.bodyMedium,
+                                text = entry.label,
+                                style = Theme.typography.bodySmall,
                                 color = colors.foreground
                             )
                         }
@@ -61,171 +116,56 @@ fun GridExample(
             }
         }
 
-        // 3 columns
-        ExampleSection(
-            title = "3列布局",
-            description = "3列等宽网格布局"
-        ) {
-            Grid(
-                columns = 3,
-                horizontalSpacing = 8.dp,
-                verticalSpacing = 8.dp,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                repeat(6) { index ->
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp)
-                                .background(colors.primary.copy(alpha = 0.1f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "${index + 1}",
-                                style = Theme.typography.titleMedium,
-                                color = colors.primary
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // 4 columns
-        ExampleSection(
-            title = "4列布局",
-            description = "4列等宽网格布局，适合图标展示"
-        ) {
-            Grid(
-                columns = 4,
-                horizontalSpacing = 8.dp,
-                verticalSpacing = 8.dp,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                val icons = listOf("首页", "搜索", "消息", "我的", "设置", "帮助", "关于", "退出")
-                icons.forEach { name ->
-                    item {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(colors.muted)
-                                .padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .background(colors.primary),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = name.first().toString(),
-                                    style = Theme.typography.bodySmall,
-                                    color = colors.primaryForeground
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = name,
-                                style = Theme.typography.bodySmall,
-                                color = colors.mutedForeground
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // Gaps
         ExampleSection(
             title = "自定义间距",
-            description = "可以设置不同的水平和垂直间距"
+            description = "horizontalSpacing 与 verticalSpacing 分别设置"
         ) {
             Grid(
                 columns = 3,
-                horizontalSpacing = 16.dp,
-                verticalSpacing = 24.dp,
+                horizontalSpacing = Spacing.lg,
+                verticalSpacing = Spacing.xl,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 repeat(6) { index ->
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
-                                .background(colors.success.copy(alpha = 0.2f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "间距 ${index + 1}",
-                                style = Theme.typography.bodySmall,
-                                color = colors.success
-                            )
-                        }
-                    }
+                    item { PlaceholderCell("间距 ${index + 1}") }
                 }
             }
         }
 
-        // Responsive grid
         ExampleSection(
             title = "响应式网格",
-            description = "根据容器宽度自动调整列数"
+            description = "ResponsiveGrid 按 minColumnWidth 与容器宽度自动决定列数"
         ) {
             ResponsiveGrid(
-                minColumnWidth = 100.dp,
-                horizontalSpacing = 8.dp,
-                verticalSpacing = 8.dp,
+                minColumnWidth = ResponsiveMinColumnWidth,
+                horizontalSpacing = Spacing.sm,
+                verticalSpacing = Spacing.sm,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 repeat(9) { index ->
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                                .background(colors.warning.copy(alpha = 0.2f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "响应 ${index + 1}",
-                                style = Theme.typography.bodySmall,
-                                color = colors.warning
-                            )
-                        }
-                    }
+                    item { PlaceholderCell("响应 ${index + 1}") }
                 }
             }
         }
+    }
+}
 
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Grid 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. columns: 设置固定列数",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. horizontalSpacing/verticalSpacing: 自定义间距",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. ResponsiveGrid: 根据宽度自动调整列数",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. item { } 方法添加子项，自动排列",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+/** A labelled placeholder block standing in for real grid content. */
+@Composable
+private fun PlaceholderCell(label: String, height: Dp = CellHeight) {
+    val colors = Theme.colors
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .clip(Theme.shapes.md)
+            .background(colors.muted),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            style = Theme.typography.bodySmall,
+            color = colors.mutedForeground
+        )
     }
 }

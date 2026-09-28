@@ -1,28 +1,23 @@
 package com.gearui.sample.examples.tour
 
-import com.gearui.components.icon.Icons
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonType
-import com.gearui.components.button.ButtonTheme
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.tour.Tour
 import com.gearui.components.tour.TourStep
 import com.gearui.components.tour.rememberTourState
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
+
+// note = the outcome of the last run (completed / skipped), shown at the row's trailing edge
+private class TourRow(
+    val title: String,
+    val description: String,
+    val note: String?,
+    val onClick: () -> Unit,
+)
 
 /**
  * Tour component examples
@@ -38,8 +33,6 @@ fun TourExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     // Basic tour state
     val basicTourState = rememberTourState(
         steps = listOf(
@@ -102,27 +95,6 @@ fun TourExample(
         )
     )
 
-    // Scenario tour state
-    val sceneTourState = rememberTourState(
-        steps = listOf(
-            TourStep(
-                title = "搜索功能",
-                description = "在顶部搜索框中输入关键词，快速查找内容。",
-                targetKey = "search"
-            ),
-            TourStep(
-                title = "筛选功能",
-                description = "点击筛选按钮，可以按类别、时间等条件筛选。",
-                targetKey = "filter"
-            ),
-            TourStep(
-                title = "添加内容",
-                description = "点击加号按钮，创建新的内容。",
-                targetKey = "add"
-            )
-        )
-    )
-
     // Records whether the tour has been completed
     var basicTourCompleted by remember { mutableStateOf(false) }
     var multiStepTourCompleted by remember { mutableStateOf(false) }
@@ -132,287 +104,51 @@ fun TourExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
-        // Basic usage
         ExampleSection(
-            title = "基础用法",
-            description = "简单的三步引导流程"
+            surface = SectionSurface.Plain,
+            title = "引导类型",
+            description = "点击任一行开始对应的引导，结束后行尾显示结果"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    text = "开始基础引导",
-                    onClick = {
+            CellGroup(
+                items = listOf(
+                    TourRow("开始基础引导", "简单的三步引导流程", if (basicTourCompleted) "已完成" else null) {
                         basicTourCompleted = false
                         basicTourState.start()
                     },
-                    size = ButtonSize.LARGE,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                if (basicTourCompleted) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.success)
-                        Text(
-                            text = "引导已完成",
-                            style = Theme.typography.bodySmall,
-                            color = colors.success
-                        )
-                    }
-                }
-
-                Tour(
-                    state = basicTourState,
-                    onFinish = { basicTourCompleted = true }
-                )
-            }
-        }
-
-        // Multi-step tour
-        ExampleSection(
-            title = "多步骤引导",
-            description = "五步详细操作教程"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    text = "开始详细引导（5步）",
-                    onClick = {
+                    TourRow("开始详细引导（5步）", "五步详细操作教程", if (multiStepTourCompleted) "已完成" else null) {
                         multiStepTourCompleted = false
                         multiStepTourState.start()
                     },
-                    size = ButtonSize.LARGE,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                if (multiStepTourCompleted) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.success)
-                        Text(
-                            text = "详细引导已完成",
-                            style = Theme.typography.bodySmall,
-                            color = colors.success
-                        )
-                    }
-                }
-
-                Tour(
-                    state = multiStepTourState,
-                    onFinish = { multiStepTourCompleted = true }
-                )
-            }
-        }
-
-        // Skippable tour
-        ExampleSection(
-            title = "可跳过的引导",
-            description = "用户可以随时跳过引导"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    text = "开始引导（可跳过）",
-                    onClick = {
+                    TourRow("开始引导（可跳过）", "用户可以随时跳过引导", if (skipTourSkipped) "已跳过" else null) {
                         skipTourSkipped = false
                         skipTourState.start()
                     },
-                    size = ButtonSize.LARGE,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.fillMaxWidth()
                 )
-
-                if (skipTourSkipped) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(name = Icons.warning, size = IconSizes.Default.md, tint = colors.warning)
-                        Text(
-                            text = "用户跳过了引导",
-                            style = Theme.typography.bodySmall,
-                            color = colors.warning
-                        )
-                    }
-                }
-
-                Tour(
-                    state = skipTourState,
-                    onFinish = { },
-                    onSkip = { skipTourSkipped = true }
+            ) { row ->
+                Cell(
+                    title = row.title,
+                    description = row.description,
+                    note = row.note,
+                    arrow = true,
+                    onClick = row.onClick
                 )
             }
-        }
 
-        // ========== Use cases ==========
+            Tour(
+                state = basicTourState,
+                onFinish = { basicTourCompleted = true }
+            )
 
-        // A mock scenario
-        ExampleSection(
-            title = "场景示例",
-            description = "模拟实际界面中的引导效果"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                // Mock interface
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(colors.muted)
-                        .padding(16.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        // Top bar
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            // Mock search box
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(36.dp)
-                                    .clip(RoundedCornerShape(18.dp))
-                                    .background(colors.surface)
-                                    .padding(horizontal = 12.dp),
-                                contentAlignment = Alignment.CenterStart
-                            ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Icon(
-                                        name = Icons.magnifying_glass,
-                                        size = IconSizes.Default.md,
-                                        tint = colors.mutedForeground,
-                                    )
-                                    Text(
-                                        text = "搜索...",
-                                        style = Theme.typography.bodyMedium,
-                                        color = colors.mutedForeground
-                                    )
-                                }
-                            }
+            Tour(
+                state = multiStepTourState,
+                onFinish = { multiStepTourCompleted = true }
+            )
 
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            // Filter button
-                            Box(
-                                modifier = Modifier
-                                    .size(36.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(colors.surface),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    name = Icons.gear,
-                                    size = IconSizes.Default.sm,
-                                    tint = colors.mutedForeground,
-                                )
-                            }
-                        }
-
-                        // Content area
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(colors.surface),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "内容区域",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.mutedForeground
-                            )
-                        }
-
-                        // Bottom add button
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.CenterEnd
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(44.dp)
-                                    .clip(RoundedCornerShape(22.dp))
-                                    .background(colors.primary),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "+",
-                                    style = Theme.typography.titleLarge,
-                                    color = colors.primaryForeground
-                                )
-                            }
-                        }
-                    }
-                }
-
-                Button(
-                    text = "开始场景引导",
-                    onClick = { sceneTourState.start() },
-                    size = ButtonSize.LARGE,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Tour(
-                    state = sceneTourState,
-                    onFinish = { }
-                )
-            }
-        }
-
-        // ========== Quick test ==========
-
-        ExampleSection(
-            title = "快速测试",
-            description = "快速启动不同类型的引导"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Button(
-                    text = "3步",
-                    onClick = { basicTourState.start() },
-                    size = ButtonSize.SMALL,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    text = "5步",
-                    onClick = { multiStepTourState.start() },
-                    size = ButtonSize.SMALL,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    text = "可跳过",
-                    onClick = { skipTourState.start() },
-                    size = ButtonSize.SMALL,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    text = "场景",
-                    onClick = { sceneTourState.start() },
-                    size = ButtonSize.SMALL,
-                    type = ButtonType.OUTLINE,
-                    modifier = Modifier.weight(1f)
-                )
-            }
+            Tour(
+                state = skipTourState,
+                onFinish = { },
+                onSkip = { skipTourSkipped = true }
+            )
         }
     }
 }

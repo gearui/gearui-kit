@@ -1,20 +1,22 @@
 package com.gearui.sample.examples.bottomsheet
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.bottomsheet.BottomSheet
 import com.gearui.components.bottomsheet.BottomSheetItem
 import com.gearui.components.bottomsheet.BottomSheetState
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.icon.Icons
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.theme.Theme
+
+private class SheetRow(val title: String, val description: String? = null, val onClick: () -> Unit)
 
 /**
  * BottomSheet component examples
@@ -46,25 +48,31 @@ fun BottomSheetExample(
         component = component,
         onBack = onBack
     ) {
-        // Basic usage
+        // One entry per sheet variant; every BottomSheet goes through the Overlay system
         ExampleSection(
-            title = "基础用法",
-            description = "简单的选项列表"
+            surface = SectionSurface.Plain,
+            title = "面板类型",
+            description = "点击任一行弹出对应配置的 BottomSheet"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    text = "显示基础面板",
-                    onClick = { basicSheetState.show() },
-                    size = ButtonSize.MEDIUM
+            SheetRows(
+                listOf(
+                    SheetRow("基础面板", "简单的选项列表") { basicSheetState.show() },
+                    SheetRow("带标题面板", "可以添加标题和描述信息") { titleSheetState.show() },
+                    SheetRow("带图标面板", "选项可以带有图标") { iconSheetState.show() },
+                    SheetRow("危险操作面板", "危险操作项会高亮显示") { dangerSheetState.show() },
+                    SheetRow("带禁用项面板", "某些选项可以设置为禁用状态") { disabledSheetVisible = true },
+                    SheetRow("无取消按钮面板", "showCancel = false 隐藏底部的取消按钮") { noCancelSheetState.show() },
+                    SheetRow("多选项面板", "支持多个选项") { manyItemsSheetState.show() },
+                    SheetRow("自定义取消面板", "cancelText 自定义取消按钮的文字") { customCancelSheetVisible = true },
                 )
+            )
 
-                if (selectedAction.isNotEmpty()) {
-                    Text(
-                        text = "选择了: $selectedAction",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+            if (selectedAction.isNotEmpty()) {
+                Text(
+                    text = "选择了: $selectedAction",
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
+                )
             }
 
             // BottomSheet is built on the Overlay system, so it can go anywhere
@@ -79,18 +87,6 @@ fun BottomSheetExample(
                 onItemClick = { item, _ ->
                     selectedAction = item.label
                 }
-            )
-        }
-
-        // With a title and a description
-        ExampleSection(
-            title = "带标题和描述",
-            description = "可以添加标题和描述信息"
-        ) {
-            Button(
-                text = "显示带标题面板",
-                onClick = { titleSheetState.show() },
-                size = ButtonSize.MEDIUM
             )
 
             BottomSheet(
@@ -107,18 +103,6 @@ fun BottomSheetExample(
                     selectedAction = item.label
                 }
             )
-        }
-
-        // With icons
-        ExampleSection(
-            title = "带图标",
-            description = "选项可以带有图标"
-        ) {
-            Button(
-                text = "显示带图标面板",
-                onClick = { iconSheetState.show() },
-                size = ButtonSize.MEDIUM
-            )
 
             BottomSheet(
                 visible = iconSheetState.visible,
@@ -128,40 +112,40 @@ fun BottomSheetExample(
                     BottomSheetItem(
                         label = "微信",
                         icon = {
-                            Text(
-                                text = "W",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.success
+                            Icon(
+                                name = Icons.chat_circle,
+                                size = IconSizes.Default.xl,
+                                tint = colors.success
                             )
                         }
                     ),
                     BottomSheetItem(
                         label = "朋友圈",
                         icon = {
-                            Text(
-                                text = "M",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.success
+                            Icon(
+                                name = Icons.users_three,
+                                size = IconSizes.Default.xl,
+                                tint = colors.success
                             )
                         }
                     ),
                     BottomSheetItem(
                         label = "微博",
                         icon = {
-                            Text(
-                                text = "B",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.destructive
+                            Icon(
+                                name = Icons.share_network,
+                                size = IconSizes.Default.xl,
+                                tint = colors.destructive
                             )
                         }
                     ),
                     BottomSheetItem(
                         label = "复制链接",
                         icon = {
-                            Text(
-                                text = "L",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.primary
+                            Icon(
+                                name = Icons.link,
+                                size = IconSizes.Default.xl,
+                                tint = colors.primary
                             )
                         }
                     )
@@ -169,19 +153,6 @@ fun BottomSheetExample(
                 onItemClick = { item, _ ->
                     selectedAction = item.label
                 }
-            )
-        }
-
-        // Destructive action
-        ExampleSection(
-            title = "危险操作",
-            description = "危险操作项会高亮显示"
-        ) {
-            Button(
-                text = "显示危险操作面板",
-                onClick = { dangerSheetState.show() },
-                size = ButtonSize.MEDIUM,
-                theme = ButtonTheme.DANGER
             )
 
             BottomSheet(
@@ -197,18 +168,6 @@ fun BottomSheetExample(
                 onItemClick = { item, _ ->
                     selectedAction = item.label
                 }
-            )
-        }
-
-        // Disabled option
-        ExampleSection(
-            title = "禁用选项",
-            description = "某些选项可以设置为禁用状态"
-        ) {
-            Button(
-                text = "显示带禁用项面板",
-                onClick = { disabledSheetVisible = true },
-                size = ButtonSize.MEDIUM
             )
 
             BottomSheet(
@@ -227,18 +186,6 @@ fun BottomSheetExample(
                     }
                 }
             )
-        }
-
-        // Without a cancel button
-        ExampleSection(
-            title = "不显示取消按钮",
-            description = "可以隐藏底部的取消按钮"
-        ) {
-            Button(
-                text = "显示无取消按钮面板",
-                onClick = { noCancelSheetState.show() },
-                size = ButtonSize.MEDIUM
-            )
 
             BottomSheet(
                 visible = noCancelSheetState.visible,
@@ -252,18 +199,6 @@ fun BottomSheetExample(
                 onItemClick = { item, _ ->
                     selectedAction = item.label
                 }
-            )
-        }
-
-        // Many options
-        ExampleSection(
-            title = "多选项",
-            description = "支持多个选项"
-        ) {
-            Button(
-                text = "显示多选项面板",
-                onClick = { manyItemsSheetState.show() },
-                size = ButtonSize.MEDIUM
             )
 
             BottomSheet(
@@ -283,18 +218,6 @@ fun BottomSheetExample(
                     selectedAction = item.label
                 }
             )
-        }
-
-        // Custom cancel wording
-        ExampleSection(
-            title = "自定义取消文字",
-            description = "可以自定义取消按钮的文字"
-        ) {
-            Button(
-                text = "显示自定义取消面板",
-                onClick = { customCancelSheetVisible = true },
-                size = ButtonSize.MEDIUM
-            )
 
             BottomSheet(
                 visible = customCancelSheetVisible,
@@ -312,54 +235,18 @@ fun BottomSheetExample(
                 }
             )
         }
+    }
+}
 
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "BottomSheet 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 基于 Overlay 系统，全局弹出",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. BottomSheetState: 管理显示/隐藏状态",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. BottomSheetItem: 定义选项数据",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. 支持标题和描述",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 支持图标",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "6. 支持危险操作高亮",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "7. 支持禁用状态",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "8. 点击遮罩层关闭",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+// One arrow row per trigger (non-anchored overlay entries, see COMPONENT_SPEC §6).
+@Composable
+private fun SheetRows(rows: List<SheetRow>) {
+    CellGroup(items = rows) { row ->
+        Cell(
+            title = row.title,
+            description = row.description,
+            arrow = true,
+            onClick = row.onClick
+        )
     }
 }

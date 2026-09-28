@@ -3,19 +3,19 @@ package com.gearui.sample.examples.searchbar
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.searchbar.SearchBar
 import com.gearui.components.searchbar.SearchBarShape
 import com.gearui.components.searchbar.SearchBarWithAction
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
 /**
- * SearchBar component examples
- *
+ * SearchBar component examples.
  */
 @Composable
 fun SearchBarExample(
@@ -41,11 +41,11 @@ fun SearchBarExample(
     ) {
         // Basic search bar
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "基础搜索栏",
             description = "最基本的搜索输入框"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 SearchBar(
                     value = basicSearchValue,
                     onValueChange = { basicSearchValue = it },
@@ -64,7 +64,7 @@ fun SearchBarExample(
 
         // Rounded style
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "圆角搜索栏",
             description = "圆角矩形样式的搜索框"
         ) {
@@ -78,7 +78,7 @@ fun SearchBarExample(
 
         // Square style
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "直角搜索栏",
             description = "直角矩形样式的搜索框"
         ) {
@@ -92,11 +92,11 @@ fun SearchBarExample(
 
         // With a cancel button
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带取消按钮",
             description = "显示取消按钮，点击可清空并取消搜索"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 SearchBar(
                     value = cancelSearchValue,
                     onValueChange = { cancelSearchValue = it },
@@ -120,11 +120,11 @@ fun SearchBarExample(
 
         // With an action button
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带搜索按钮",
             description = "右侧带搜索按钮，点击触发搜索"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 SearchBarWithAction(
                     value = actionSearchValue,
                     onValueChange = { actionSearchValue = it },
@@ -147,7 +147,7 @@ fun SearchBarExample(
 
         // Disabled state
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "禁用状态",
             description = "不可编辑的搜索框"
         ) {
@@ -157,41 +157,6 @@ fun SearchBarExample(
                 placeholder = "搜索",
                 enabled = false
             )
-        }
-
-        // Usage notes
-        ExampleSection(
-            useCardContainer = false,
-            title = "使用说明",
-            description = "SearchBar 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 支持圆角和直角两种形状",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. 输入内容时显示清除按钮",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. 可选显示取消按钮",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. SearchBarWithAction 提供搜索按钮",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 支持禁用状态",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
         }
     }
 }

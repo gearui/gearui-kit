@@ -12,12 +12,10 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.layout.Arrangement
-import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+
+private val BASIC_LABELS = mapOf("messages" to "消息", "contacts" to "通讯录", "me" to "我")
 
 @Composable
 fun BottomNavBarExample(
@@ -30,59 +28,57 @@ fun BottomNavBarExample(
         component = component,
         onBack = onBack
     ) {
+        // The bar is a surface itself, so every section shows it on the page background.
         ExampleSection(
-            title = "Basic Usage",
-            description = "Bottom navigation for app-level section switching."
+            title = "基础用法",
+            description = "应用一级页面之间的切换，可带数字角标或红点",
+            surface = SectionSurface.Plain
         ) {
             var selectedId by remember { mutableStateOf("messages") }
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                BottomNavBar(
-                    items = listOf(
-                        BottomNavItem(
-                            id = "messages",
-                            label = "Messages",
-                            icon = Icons.chats,
-                            badgeCount = 12
-                        ),
-                        BottomNavItem(
-                            id = "contacts",
-                            label = "Contacts",
-                            icon = Icons.address_book,
-                            showBadgeDot = true
-                        ),
-                        BottomNavItem(
-                            id = "me",
-                            label = "Me",
-                            icon = Icons.user_circle
-                        )
+            BottomNavBar(
+                items = listOf(
+                    BottomNavItem(
+                        id = "messages",
+                        label = "消息",
+                        icon = Icons.chats,
+                        badgeCount = 12
                     ),
-                    selectedId = selectedId,
-                    onSelect = { selectedId = it }
-                )
+                    BottomNavItem(
+                        id = "contacts",
+                        label = "通讯录",
+                        icon = Icons.address_book,
+                        showBadgeDot = true
+                    ),
+                    BottomNavItem(
+                        id = "me",
+                        label = "我",
+                        icon = Icons.user_circle
+                    )
+                ),
+                selectedId = selectedId,
+                onSelect = { selectedId = it }
+            )
 
-                Text(
-                    text = "Selected tab: $selectedId",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-            }
+            Text(
+                text = "当前选中:${BASIC_LABELS[selectedId] ?: selectedId}",
+                style = Theme.typography.bodySmall,
+                color = colors.mutedForeground
+            )
         }
 
         ExampleSection(
-            title = "Badge Count Overflow",
-            description = "Verifies badge layout for single digit / two digits / >99 (must show 99+ without truncation)."
+            title = "角标溢出",
+            description = "一位数、两位数与超过 99 的角标，超出显示 99+ 且不被截断",
+            surface = SectionSurface.Plain
         ) {
             var selectedId by remember { mutableStateOf("five") }
 
             BottomNavBar(
                 items = listOf(
-                    BottomNavItem(id = "five", label = "Few", icon = Icons.chats, badgeCount = 5),
-                    BottomNavItem(id = "ninetynine", label = "Edge", icon = Icons.bell, badgeCount = 99),
-                    BottomNavItem(id = "overflow", label = "Overflow", icon = Icons.envelope_simple, badgeCount = 120)
+                    BottomNavItem(id = "five", label = "少量", icon = Icons.chats, badgeCount = 5),
+                    BottomNavItem(id = "ninetynine", label = "临界", icon = Icons.bell, badgeCount = 99),
+                    BottomNavItem(id = "overflow", label = "溢出", icon = Icons.envelope_simple, badgeCount = 120)
                 ),
                 selectedId = selectedId,
                 onSelect = { selectedId = it }
@@ -90,16 +86,17 @@ fun BottomNavBarExample(
         }
 
         ExampleSection(
-            title = "Disabled Item",
-            description = "Disabled tabs are visible but not clickable."
+            title = "禁用项",
+            description = "禁用的标签可见但不可点击",
+            surface = SectionSurface.Plain
         ) {
             var selectedId by remember { mutableStateOf("feed") }
 
             BottomNavBar(
                 items = listOf(
-                    BottomNavItem(id = "feed", label = "Feed", icon = Icons.house),
-                    BottomNavItem(id = "discover", label = "Discover", icon = Icons.magnifying_glass, disabled = true),
-                    BottomNavItem(id = "profile", label = "Profile", icon = Icons.user)
+                    BottomNavItem(id = "feed", label = "首页", icon = Icons.house),
+                    BottomNavItem(id = "discover", label = "发现", icon = Icons.magnifying_glass, disabled = true),
+                    BottomNavItem(id = "profile", label = "我的", icon = Icons.user)
                 ),
                 selectedId = selectedId,
                 onSelect = { selectedId = it }

@@ -2,27 +2,18 @@ package com.gearui.sample.examples.empty
 
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.empty.EmptyState
+import com.gearui.components.empty.EmptyStatePreset
+import com.gearui.components.empty.EmptyStateType
 import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.Arrangement
-import com.tencent.kuikly.compose.foundation.layout.Box
-import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
 
 @Composable
 fun EmptyExample(
@@ -35,72 +26,47 @@ fun EmptyExample(
         component = component,
         onBack = onBack
     ) {
-        ExampleSection(title = "图标空状态", description = "默认图标 + 描述文案") {
-            EmptyState(message = "描述文字")
+        ExampleSection(title = "基础用法", description = "默认图标加主文案与描述") {
+            EmptyState(message = "暂无内容", description = "这里还没有任何记录")
         }
 
-        ExampleSection(title = "自定义图标空状态", description = "自定义 icon 形态") {
+        ExampleSection(title = "自定义图标", description = "icon 插槽替换默认图标") {
             EmptyState(
-                message = "描述文字",
+                message = "等待处理",
                 icon = {
                     Icon(
                         name = Icons.hourglass,
-                        size = 36.dp,
+                        size = IconSizes.Display.md,
                         tint = colors.mutedForeground
                     )
                 }
             )
         }
 
-        ExampleSection(title = "自定义图片空状态", description = "自定义 image 区域") {
+        ExampleSection(title = "带操作", description = "actionText 与 onAction 生成默认操作按钮") {
             EmptyState(
-                message = "描述文字",
-                icon = {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(colors.muted)
-                            .padding(horizontal = 24.dp, vertical = 16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            name = Icons.image,
-                            size = 48.dp,
-                            tint = colors.mutedForeground
-                        )
-                    }
-                }
+                message = "暂无内容",
+                actionText = "刷新",
+                onAction = { Toast.show("点击了操作按钮") }
             )
         }
 
-        ExampleSection(title = "带操作空状态", description = "默认操作按钮") {
+        ExampleSection(title = "自定义操作", description = "customAction 放入任意按钮") {
             EmptyState(
-                message = "描述文字",
-                actionText = "操作按钮",
-                onAction = {
-                    Toast.show("点击了操作按钮")
-                }
-            )
-        }
-
-        ExampleSection(title = "自定义带操作空状态", description = "使用 customAction 自定义操作区") {
-            EmptyState(
-                message = "描述文字",
+                message = "暂无内容",
                 customAction = {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Button(
-                            text = "自定义操作按钮",
-                            theme = ButtonTheme.DANGER,
-                            size = ButtonSize.MEDIUM,
-                            onClick = { Toast.show("点击了自定义操作按钮") }
-                        )
-                    }
+                    Button(
+                        text = "清空筛选",
+                        theme = ButtonTheme.DANGER,
+                        onClick = { Toast.show("点击了自定义操作按钮") }
+                    )
                 }
             )
+        }
+
+        ExampleSection(title = "预设类型", description = "EmptyStatePreset 内置无搜索结果、无网络等文案与图标") {
+            EmptyStatePreset(type = EmptyStateType.NO_SEARCH_RESULT)
+            EmptyStatePreset(type = EmptyStateType.NO_NETWORK)
         }
     }
 }

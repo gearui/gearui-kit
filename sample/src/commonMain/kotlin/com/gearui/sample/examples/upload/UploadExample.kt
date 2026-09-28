@@ -14,9 +14,10 @@ import com.gearui.foundation.field.FieldDescription
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.layout.Spacing
 import kotlinx.coroutines.delay
 
 @Composable
@@ -53,11 +54,11 @@ fun UploadExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "附件列表",
             description = "点 + 添加，右上角移除；每 4 个会失败一次，点失败的瓦片重试"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 Upload(
                     items = items,
                     onAdd = {
@@ -81,7 +82,7 @@ fun UploadExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "状态",
             description = "等待、上传中、失败、完成"
         ) {
@@ -98,7 +99,7 @@ fun UploadExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "只读",
             description = "enabled = false，不显示移除按钮"
         ) {

@@ -1,14 +1,14 @@
 package com.gearui.sample.examples.switch
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.switch.*
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.tencent.kuikly.compose.ui.graphics.Color
+import com.gearui.sample.pages.SectionSurface
+import com.gearui.theme.Theme
 
 /**
  * Switch component examples
@@ -20,6 +20,8 @@ fun SwitchExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
+    val colors = Theme.colors
+
     // Component type state
     var baseSwitch by remember { mutableStateOf(false) }
     var textSwitch by remember { mutableStateOf(true) }
@@ -35,13 +37,14 @@ fun SwitchExample(
         component = component,
         onBack = onBack
     ) {
-        ExampleSection(title = "SwitchGroup", description = "一组独立设置，整行可点，支持副说明", useCardContainer = false) {
+        // SwitchGroup is a set of loose field rows, so it sits on the section card.
+        ExampleSection(title = "SwitchGroup", description = "一组独立设置，整行可点，支持副说明") {
             var enabledKeys by remember { mutableStateOf(setOf("push")) }
-            com.gearui.components.switch.SwitchGroup(
+            SwitchGroup(
                 items = listOf(
-                    com.gearui.components.switch.SwitchGroupItem("push", "推送通知", "接收新消息提醒"),
-                    com.gearui.components.switch.SwitchGroupItem("sound", "声音", "消息到达时播放提示音"),
-                    com.gearui.components.switch.SwitchGroupItem("night", "免打扰", "22:00 - 08:00 静音", enabled = false),
+                    SwitchGroupItem("push", "推送通知", "接收新消息提醒"),
+                    SwitchGroupItem("sound", "声音", "消息到达时播放提示音"),
+                    SwitchGroupItem("night", "免打扰", "22:00 - 08:00 静音", enabled = false),
                 ),
                 checkedKeys = enabledKeys,
                 onCheckedChange = { key, checked ->
@@ -53,143 +56,136 @@ fun SwitchExample(
         }
 
         // Component types
-        ExampleSection(title = "组件类型") {
-            // Basic switch
-            Cell(
-                title = "基础开关",
-                trailing = {
-                    Switch(
-                        checked = baseSwitch,
-                        onCheckedChange = { baseSwitch = it }
+        ExampleSection(
+            title = "开关类型",
+            description = "SwitchType 基础、文字、图标，以及 trackOnColor 自定义颜色",
+            surface = SectionSurface.Plain
+        ) {
+            CellGroup(items = listOf(0, 1, 2, 3)) { index ->
+                when (index) {
+                    0 -> Cell(
+                        title = "基础开关",
+                        trailing = {
+                            Switch(
+                                checked = baseSwitch,
+                                onCheckedChange = { baseSwitch = it }
+                            )
+                        }
+                    )
+                    1 -> Cell(
+                        title = "带文字开关",
+                        trailing = {
+                            Switch(
+                                checked = textSwitch,
+                                onCheckedChange = { textSwitch = it },
+                                type = SwitchType.TEXT
+                            )
+                        }
+                    )
+                    2 -> Cell(
+                        title = "带图标开关",
+                        trailing = {
+                            Switch(
+                                checked = iconSwitch,
+                                onCheckedChange = { iconSwitch = it },
+                                type = SwitchType.ICON
+                            )
+                        }
+                    )
+                    else -> Cell(
+                        title = "自定义颜色开关",
+                        trailing = {
+                            Switch(
+                                checked = colorSwitch,
+                                onCheckedChange = { colorSwitch = it },
+                                trackOnColor = colors.success
+                            )
+                        }
                     )
                 }
-            )
-
-            // Switch with text
-            Cell(
-                title = "带文字开关",
-                trailing = {
-                    Switch(
-                        checked = textSwitch,
-                        onCheckedChange = { textSwitch = it },
-                        type = SwitchType.TEXT
-                    )
-                }
-            )
-
-            // Switch with icons
-            Cell(
-                title = "带图标开关",
-                trailing = {
-                    Switch(
-                        checked = iconSwitch,
-                        onCheckedChange = { iconSwitch = it },
-                        type = SwitchType.ICON
-                    )
-                }
-            )
-
-            // Switch with custom colours
-            Cell(
-                title = "自定义颜色开关",
-                trailing = {
-                    Switch(
-                        checked = colorSwitch,
-                        onCheckedChange = { colorSwitch = it },
-                        trackOnColor = Color(0xFF00A870)  // 绿色
-                    )
-                }
-            )
+            }
         }
 
-        // Component states
-        ExampleSection(title = "组件状态") {
-            // Loading state - off
-            Cell(
-                title = "加载状态",
-                trailing = {
-                    Switch(
-                        checked = false,
-                        onCheckedChange = {},
-                        type = SwitchType.LOADING
-                    )
-                }
-            )
-
-            // Loading state - on
-            Cell(
-                title = "加载状态",
-                trailing = {
-                    Switch(
-                        checked = true,
-                        onCheckedChange = {},
-                        type = SwitchType.LOADING
-                    )
-                }
-            )
-
-            // Disabled state - off
-            Cell(
-                title = "禁用状态",
-                trailing = {
-                    Switch(
-                        checked = false,
-                        onCheckedChange = {},
-                        enabled = false
-                    )
-                }
-            )
-
-            // Disabled state - on
-            Cell(
-                title = "禁用状态",
-                trailing = {
-                    Switch(
-                        checked = true,
-                        onCheckedChange = {},
-                        enabled = false
-                    )
-                }
-            )
+        // Loading state
+        ExampleSection(
+            title = "加载状态",
+            description = "SwitchType.LOADING，关闭与开启两种",
+            surface = SectionSurface.Plain
+        ) {
+            CellGroup(items = listOf(false, true)) { checked ->
+                Cell(
+                    title = if (checked) "加载中（开）" else "加载中（关）",
+                    trailing = {
+                        Switch(
+                            checked = checked,
+                            onCheckedChange = {},
+                            type = SwitchType.LOADING
+                        )
+                    }
+                )
+            }
         }
 
-        // Component styles
-        ExampleSection(title = "组件样式") {
-            // Large track, 28 logical pixels high.
-            Cell(
-                title = "大尺寸28",
-                trailing = {
-                    Switch(
-                        checked = sizeLarge,
-                        onCheckedChange = { sizeLarge = it },
-                        size = SwitchSize.LARGE
-                    )
-                }
-            )
+        // Disabled state
+        ExampleSection(
+            title = "禁用状态",
+            description = "enabled = false，关闭与开启两种",
+            surface = SectionSurface.Plain
+        ) {
+            CellGroup(items = listOf(false, true)) { checked ->
+                Cell(
+                    title = if (checked) "禁用（开）" else "禁用（关）",
+                    trailing = {
+                        Switch(
+                            checked = checked,
+                            onCheckedChange = {},
+                            enabled = false
+                        )
+                    }
+                )
+            }
+        }
 
-            // Default track, 24 logical pixels high.
-            Cell(
-                title = "中尺寸24",
-                trailing = {
-                    Switch(
-                        checked = sizeMedium,
-                        onCheckedChange = { sizeMedium = it },
-                        size = SwitchSize.MEDIUM
+        // Sizes
+        ExampleSection(
+            title = "开关尺寸",
+            description = "SwitchSize 大、中、小三档",
+            surface = SectionSurface.Plain
+        ) {
+            CellGroup(items = listOf(SwitchSize.LARGE, SwitchSize.MEDIUM, SwitchSize.SMALL)) { size ->
+                when (size) {
+                    SwitchSize.LARGE -> Cell(
+                        title = "大尺寸",
+                        trailing = {
+                            Switch(
+                                checked = sizeLarge,
+                                onCheckedChange = { sizeLarge = it },
+                                size = SwitchSize.LARGE
+                            )
+                        }
+                    )
+                    SwitchSize.MEDIUM -> Cell(
+                        title = "中尺寸",
+                        trailing = {
+                            Switch(
+                                checked = sizeMedium,
+                                onCheckedChange = { sizeMedium = it },
+                                size = SwitchSize.MEDIUM
+                            )
+                        }
+                    )
+                    else -> Cell(
+                        title = "小尺寸",
+                        trailing = {
+                            Switch(
+                                checked = sizeSmall,
+                                onCheckedChange = { sizeSmall = it },
+                                size = SwitchSize.SMALL
+                            )
+                        }
                     )
                 }
-            )
-
-            // Compact track, 20 logical pixels high.
-            Cell(
-                title = "小尺寸20",
-                trailing = {
-                    Switch(
-                        checked = sizeSmall,
-                        onCheckedChange = { sizeSmall = it },
-                        size = SwitchSize.SMALL
-                    )
-                }
-            )
+            }
         }
     }
 }

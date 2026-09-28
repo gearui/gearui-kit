@@ -1,14 +1,18 @@
 package com.gearui.sample.examples.avatar
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.primitives.Avatar
+import androidx.compose.runtime.Composable
+import com.gearui.components.image.AvatarGroup
+import com.gearui.components.image.AvatarGroupItem
 import com.gearui.foundation.avatar.AvatarSizeTokens
+import com.gearui.foundation.layout.Radius
+import com.gearui.foundation.layout.Spacing
+import com.gearui.primitives.Avatar
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.ui.Alignment
 
 /**
  * Avatar component examples
@@ -23,110 +27,66 @@ fun AvatarExample(
         onBack = onBack
     ) {
         ExampleSection(
-            title = "AvatarGroup",
-            description = "重叠展示成员，超出部分折叠为 +N"
+            title = "文字头像",
+            description = "无图片时显示姓名首字，最多两个字符"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                com.gearui.components.image.AvatarGroup(
-                    items = listOf("赵", "钱", "孙").map { com.gearui.components.image.AvatarGroupItem(fallbackText = it) },
-                )
-                com.gearui.components.image.AvatarGroup(
-                    items = listOf("A", "B", "C", "D", "E", "F", "G").map {
-                        com.gearui.components.image.AvatarGroupItem(fallbackText = it)
-                    },
-                    max = 4,
-                )
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                Avatar(text = "A")
+                Avatar(text = "用")
+                Avatar(text = "AB")
             }
         }
 
-        // Avatar types
-        ExampleSection(
-            title = "头像类型",
-            description = "图片、文字、图标头像"
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Avatar(
-                    text = "A",
-                    size = AvatarSizeTokens.Medium.size
-                )
-                Avatar(
-                    text = "用",
-                    size = AvatarSizeTokens.Medium.size
-                )
-                Avatar(
-                    text = "AB",
-                    size = AvatarSizeTokens.Medium.size
-                )
-            }
-        }
-
-        // Avatar sizes
         ExampleSection(
             title = "头像尺寸",
-            description = "提供多种尺寸的头像"
+            description = "AvatarSizeTokens 提供 XSmall 到 XLarge 五档"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = com.tencent.kuikly.compose.ui.Alignment.CenterVertically
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Avatar(
-                    text = "L",
-                    size = AvatarSizeTokens.Large.size
-                )
-                Avatar(
-                    text = "M",
-                    size = AvatarSizeTokens.Medium.size
-                )
-                Avatar(
-                    text = "S",
-                    size = AvatarSizeTokens.Small.size
-                )
-                Avatar(
-                    text = "XS",
-                    size = 32.dp
-                )
+                Avatar(text = "XL", size = AvatarSizeTokens.XLarge.size)
+                Avatar(text = "L", size = AvatarSizeTokens.Large.size)
+                Avatar(text = "M", size = AvatarSizeTokens.Medium.size)
+                Avatar(text = "S", size = AvatarSizeTokens.Small.size)
+                Avatar(text = "XS", size = AvatarSizeTokens.XSmall.size)
             }
         }
 
-        // Avatar shapes
         ExampleSection(
             title = "头像形状",
-            description = "圆形和方形头像"
+            description = "默认圆形；radius 可改为圆角方形"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Avatar(
-                    text = "圆",
-                    size = AvatarSizeTokens.Medium.size,
-                    radius = AvatarSizeTokens.Medium.radius  // 圆形
-                )
-                Avatar(
-                    text = "方",
-                    size = AvatarSizeTokens.Medium.size,
-                    radius = 8.dp  // 圆角矩形
-                )
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                Avatar(text = "圆")
+                Avatar(text = "方", radius = Radius.lg)
             }
         }
 
-        // Avatar with a badge
         ExampleSection(
-            title = "带徽标的头像",
-            description = "头像右上角显示徽标"
+            title = "带徽标",
+            description = "badgeDot 显示红点，badgeCount 显示数字"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                Avatar(
-                    text = "U",
-                    size = AvatarSizeTokens.Medium.size,
-                    badgeDot = true
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xl)) {
+                Avatar(text = "U", badgeDot = true)
+                Avatar(text = "U", badgeCount = 5)
+                Avatar(text = "U", badgeCount = 99)
+            }
+        }
+
+        ExampleSection(
+            title = "AvatarGroup",
+            description = "成员头像重叠排列，超出 max 的部分折叠为 +N"
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xl)) {
+                AvatarGroup(
+                    items = listOf("赵", "钱", "孙").map { AvatarGroupItem(fallbackText = it) }
                 )
-                Avatar(
-                    text = "U",
-                    size = AvatarSizeTokens.Medium.size,
-                    badgeCount = 5
-                )
-                Avatar(
-                    text = "U",
-                    size = AvatarSizeTokens.Medium.size,
-                    badgeCount = 99
+                AvatarGroup(
+                    items = listOf("A", "B", "C", "D", "E", "F", "G").map {
+                        AvatarGroupItem(fallbackText = it)
+                    },
+                    max = 4
                 )
             }
         }

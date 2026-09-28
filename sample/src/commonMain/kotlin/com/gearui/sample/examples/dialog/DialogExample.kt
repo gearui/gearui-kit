@@ -3,30 +3,32 @@ package com.gearui.sample.examples.dialog
 import com.gearui.components.input.Input
 import com.gearui.components.dialog.DialogActionLayout
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
 import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.dialog.AlertDialog
 import com.gearui.components.dialog.ConfirmDialog
 import com.gearui.components.dialog.Dialog
 import com.gearui.components.dialog.DialogAction
 import com.gearui.components.dialog.DialogActionRole
 import com.gearui.components.dialog.DialogContent
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.sample.pages.LocalSettingsState
 import com.gearui.sample.pages.ThemeStyle
 import com.gearui.sample.pages.BrandAccent
 import com.gearui.theme.Theme
 
+private class DialogRow(val title: String, val description: String? = null, val onClick: () -> Unit)
+
 /**
- * Dialog component examples
- *
+ * Dialog: a modal that asks for a decision or shows something that must be read.
  */
 @Composable
 fun DialogExample(
@@ -54,25 +56,27 @@ fun DialogExample(
         component = component,
         onBack = onBack
     ) {
-        // Feedback dialog - with a title
+        // Feedback dialogs: confirm, no title, alert, destructive
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "反馈对话框",
-            description = "带标题和内容的确认对话框"
+            description = "点击任一行打开对应的对话框"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    text = "带标题对话框",
-                    onClick = { showConfirmDialog = true },
-                    size = ButtonSize.MEDIUM
+            DialogRows(
+                listOf(
+                    DialogRow("带标题对话框", "带标题和内容的确认对话框") { showConfirmDialog = true },
+                    DialogRow("无标题对话框", "仅有内容的简洁对话框") { showConfirmNoTitle = true },
+                    DialogRow("警告对话框", "单按钮提示对话框") { showAlertDialog = true },
+                    DialogRow("删除确认", "destructive = true，需要用户确认的危险操作") { showDangerDialog = true },
                 )
+            )
 
-                if (resultText.isNotEmpty()) {
-                    Text(
-                        text = resultText,
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+            if (resultText.isNotEmpty()) {
+                Text(
+                    text = resultText,
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
+                )
             }
 
             ConfirmDialog(
@@ -90,18 +94,6 @@ fun DialogExample(
                     showConfirmDialog = false
                 }
             )
-        }
-
-        // Feedback dialog - without a title
-        ExampleSection(
-            title = "无标题对话框",
-            description = "仅有内容的简洁对话框"
-        ) {
-            Button(
-                text = "无标题对话框",
-                onClick = { showConfirmNoTitle = true },
-                size = ButtonSize.MEDIUM
-            )
 
             ConfirmDialog(
                 visible = showConfirmNoTitle,
@@ -112,18 +104,6 @@ fun DialogExample(
                 onConfirm = { showConfirmNoTitle = false },
                 onCancel = { showConfirmNoTitle = false }
             )
-        }
-
-        // Alert dialog
-        ExampleSection(
-            title = "警告对话框",
-            description = "单按钮提示对话框"
-        ) {
-            Button(
-                text = "警告对话框",
-                onClick = { showAlertDialog = true },
-                size = ButtonSize.MEDIUM
-            )
 
             AlertDialog(
                 visible = showAlertDialog,
@@ -131,19 +111,6 @@ fun DialogExample(
                 message = "此操作不可逆，请谨慎操作。",
                 buttonText = "我知道了",
                 onConfirm = { showAlertDialog = false }
-            )
-        }
-
-        // Destructive action confirmation
-        ExampleSection(
-            title = "危险操作",
-            description = "需要用户确认的危险操作"
-        ) {
-            Button(
-                text = "删除确认",
-                onClick = { showDangerDialog = true },
-                size = ButtonSize.MEDIUM,
-                theme = ButtonTheme.DANGER
             )
 
             ConfirmDialog(
@@ -161,15 +128,21 @@ fun DialogExample(
             )
         }
 
-        // Three choices: the policy stacks them, cancel last.
+        // Action layouts and custom content
         ExampleSection(
-            title = "三个动作",
-            description = "三个及以上动作纵向通栏排列，取消永远在最后"
+            surface = SectionSurface.Plain,
+            title = "动作与内容",
+            description = "动作排列方式与自定义 content"
         ) {
-            Button(
-                text = "三个动作",
-                onClick = { showThreeWay = true },
-                size = ButtonSize.MEDIUM
+            DialogRows(
+                listOf(
+                    // Three choices: the policy stacks them, cancel last.
+                    DialogRow("三个动作", "三个及以上动作纵向通栏排列，取消永远在最后") { showThreeWay = true },
+                    // A form in a dialog: the buttons only close it, so the caller names the
+                    // reference's trailing row — the one layout the policy never picks itself.
+                    DialogRow("表单对话框", "DialogActionLayout.TRAILING：按钮右对齐紧凑排列") { showFormDialog = true },
+                    DialogRow("自定义对话框", "content 放任意组件，打开时内容和主题可实时更新") { showCustomDialog = true },
+                )
             )
 
             Dialog.Host(
@@ -198,19 +171,6 @@ fun DialogExample(
                     ),
                 )
             }
-        }
-
-        // A form in a dialog: the buttons only close it, so the caller names the
-        // reference's trailing row — the one layout the policy never picks itself.
-        ExampleSection(
-            title = "表单对话框（显式 TRAILING）",
-            description = "正文是重点、按钮只负责关闭时，由调用方指定右对齐紧凑布局"
-        ) {
-            Button(
-                text = "表单对话框",
-                onClick = { showFormDialog = true },
-                size = ButtonSize.MEDIUM
-            )
 
             Dialog.Host(
                 visible = showFormDialog,
@@ -241,18 +201,6 @@ fun DialogExample(
                     ),
                 )
             }
-        }
-
-        // Dialog with custom content
-        ExampleSection(
-            title = "自定义内容",
-            description = "支持自定义对话框内容"
-        ) {
-            Button(
-                text = "自定义对话框",
-                onClick = { showCustomDialog = true },
-                size = ButtonSize.MEDIUM
-            )
 
             Dialog.Host(
                 visible = showCustomDialog,
@@ -262,39 +210,22 @@ fun DialogExample(
                     title = "自定义内容",
                     content = {
                         Column(
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                            verticalArrangement = Arrangement.spacedBy(Spacing.md)
                         ) {
                             Text(
                                 text = "内容版本：$contentVersion",
                                 style = Theme.typography.bodyMedium,
                                 color = colors.mutedForeground
                             )
-                            Button(text = "更新内容", onClick = { contentVersion++ })
-                            Button(text = "切换明暗", onClick = {
+                            Button(text = "更新内容", block = true, onClick = { contentVersion++ })
+                            Button(text = "切换明暗", block = true, onClick = {
                                 settings.themeStyle = if (settings.themeStyle == ThemeStyle.DARK)
                                     ThemeStyle.LIGHT else ThemeStyle.DARK
                             })
-                            Button(text = "切换关键色", onClick = {
+                            Button(text = "切换关键色", block = true, onClick = {
                                 settings.brandAccent = if (settings.brandAccent == BrandAccent.GREEN)
                                     BrandAccent.DEFAULT else BrandAccent.GREEN
                             })
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                repeat(3) { index ->
-                                    Box(
-                                        modifier = Modifier
-                                            .size(60.dp)
-                                            .padding(4.dp)
-                                    ) {
-                                        Text(
-                                            text = "项目${index + 1}",
-                                            style = Theme.typography.bodySmall,
-                                            color = colors.foreground
-                                        )
-                                    }
-                                }
-                            }
                         }
                     },
                     actions = listOf(
@@ -307,34 +238,18 @@ fun DialogExample(
                 )
             }
         }
+    }
+}
 
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Dialog 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. ConfirmDialog: 带确认/取消的对话框",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. AlertDialog: 单按钮警告对话框",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. Dialog.Host: 自定义内容对话框",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. 模态遮罩，点击外部可关闭",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+// One arrow row per trigger (non-anchored overlay entries, see COMPONENT_SPEC §6).
+@Composable
+private fun DialogRows(rows: List<DialogRow>) {
+    CellGroup(items = rows) { row ->
+        Cell(
+            title = row.title,
+            description = row.description,
+            arrow = true,
+            onClick = row.onClick
+        )
     }
 }

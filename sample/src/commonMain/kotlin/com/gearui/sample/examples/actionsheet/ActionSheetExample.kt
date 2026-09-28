@@ -2,24 +2,23 @@ package com.gearui.sample.examples.actionsheet
 
 import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.actionsheet.*
-import com.gearui.components.button.*
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
 
+private class SheetRow(val title: String, val description: String? = null, val onClick: () -> Unit)
+
 /**
- * ActionSheet component examples
- *
- * A modal panel raised by a user action, offering two or more options relevant to the current context.
+ * ActionSheet: a modal panel raised by a user action, offering two or more options relevant to the current context.
  */
 @Composable
 fun ActionSheetExample(
@@ -53,164 +52,68 @@ fun ActionSheetExample(
 
             // List-style action sheet
             ExampleSection(
-                title = "列表型动作面板",
-                description = "常规列表、带描述、带图标、带徽标"
+                surface = SectionSurface.Plain,
+                title = "列表型",
+                description = "常规、带面板描述、带图标、带徽标、带选项描述"
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // Plain list
-                    Button(
-                        text = "常规列表",
-                        onClick = { showBasicList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
+                SheetRows(
+                    listOf(
+                        SheetRow("常规列表") { showBasicList = true },
+                        SheetRow("带描述列表", "面板顶部带描述文字") { showDescList = true },
+                        SheetRow("带图标列表") { showIconList = true },
+                        SheetRow("带徽标列表") { showBadgeList = true },
+                        SheetRow("带选项描述列表", "每个选项下方带描述") { showItemDescList = true },
                     )
-
-                    // List with descriptions
-                    Button(
-                        text = "带描述列表",
-                        onClick = { showDescList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // List with icons
-                    Button(
-                        text = "带图标列表",
-                        onClick = { showIconList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // List with badges
-                    Button(
-                        text = "带徽标列表",
-                        onClick = { showBadgeList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // List with Cell descriptions
-                    Button(
-                        text = "带Cell描述列表",
-                        onClick = { showItemDescList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-                }
+                )
             }
 
             // Grid-style action sheet
             ExampleSection(
-                title = "宫格型动作面板",
-                description = "常规宫格、带描述、带徽标"
+                surface = SectionSurface.Plain,
+                title = "宫格型",
+                description = "ActionSheetTheme.GRID：常规、带面板描述、带徽标"
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // Plain grid
-                    Button(
-                        text = "常规宫格",
-                        onClick = { showBasicGrid = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
+                SheetRows(
+                    listOf(
+                        SheetRow("常规宫格") { showBasicGrid = true },
+                        SheetRow("带描述宫格", "面板顶部带描述文字") { showDescGrid = true },
+                        SheetRow("带徽标宫格") { showBadgeGrid = true },
                     )
-
-                    // Grid with descriptions
-                    Button(
-                        text = "带描述宫格",
-                        onClick = { showDescGrid = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // Grid with badges
-                    Button(
-                        text = "带徽标宫格",
-                        onClick = { showBadgeGrid = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-                }
+                )
             }
 
             // ==================== Component states ====================
 
             // List option states
             ExampleSection(
-                title = "列表型选项状态",
+                surface = SectionSurface.Plain,
+                title = "选项状态",
                 description = "默认、自定义颜色、禁用、警告"
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // List option states
-                    Button(
-                        text = "列表型选项状态",
-                        onClick = { showStateList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
+                SheetRows(
+                    listOf(
+                        SheetRow("列表型选项状态") { showStateList = true },
+                        SheetRow("列表型带图标状态") { showIconStateList = true },
                     )
-
-                    // List option states with icons
-                    Button(
-                        text = "列表型带图标状态",
-                        onClick = { showIconStateList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-                }
+                )
             }
 
             // ==================== Component styles ====================
 
             // List alignment
             ExampleSection(
-                title = "列表型对齐方式",
-                description = "居中对齐、左对齐"
+                surface = SectionSurface.Plain,
+                title = "对齐方式",
+                description = "ActionSheetAlign：CENTER 居中、LEFT 左对齐"
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    // Centred list with badges
-                    Button(
-                        text = "居中带徽标列表",
-                        onClick = { showCenterBadgeList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
+                SheetRows(
+                    listOf(
+                        SheetRow("居中带徽标列表", "ActionSheetAlign.CENTER") { showCenterBadgeList = true },
+                        SheetRow("居中带图标列表", "ActionSheetAlign.CENTER") { showCenterIconList = true },
+                        SheetRow("左对齐带徽标列表", "ActionSheetAlign.LEFT") { showLeftBadgeList = true },
+                        SheetRow("左对齐带图标列表", "ActionSheetAlign.LEFT") { showLeftIconList = true },
                     )
-
-                    // Centred list with icons
-                    Button(
-                        text = "居中带图标列表",
-                        onClick = { showCenterIconList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // Leading-aligned list with badges
-                    Button(
-                        text = "左对齐带徽标列表",
-                        onClick = { showLeftBadgeList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-
-                    // Leading-aligned list with icons
-                    Button(
-                        text = "左对齐带图标列表",
-                        onClick = { showLeftIconList = true },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        block = true
-                    )
-                }
+                )
             }
         }
 
@@ -505,5 +408,18 @@ fun ActionSheetExample(
                 onDismiss = { showLeftIconList = false }
             )
         }
+    }
+}
+
+// One arrow row per trigger (non-anchored overlay entries, see COMPONENT_SPEC §6).
+@Composable
+private fun SheetRows(rows: List<SheetRow>) {
+    CellGroup(items = rows) { row ->
+        Cell(
+            title = row.title,
+            description = row.description,
+            arrow = true,
+            onClick = row.onClick
+        )
     }
 }

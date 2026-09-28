@@ -2,13 +2,12 @@ package com.gearui.sample.examples.timeline
 
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.timeline.Timeline
 import com.gearui.components.timeline.TimelineColor
 import com.gearui.components.timeline.TimelineCustom
 import com.gearui.components.timeline.TimelineItem
 import com.gearui.components.timeline.TimelineMode
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -32,7 +31,7 @@ fun TimelineExample(
         // Basic timeline
         ExampleSection(
             title = "基础用法",
-            description = "展示时间流程的基础时间轴"
+            description = "按时间先后列出事件与时间戳"
         ) {
             Timeline(
                 items = listOf(
@@ -62,8 +61,8 @@ fun TimelineExample(
 
         // Colours
         ExampleSection(
-            title = "颜色主题",
-            description = "支持多种颜色表示不同状态"
+            title = "节点颜色",
+            description = "color 区分默认、主色、成功、警告、错误"
         ) {
             Timeline(
                 items = listOf(
@@ -99,7 +98,7 @@ fun TimelineExample(
         // Right-hand mode
         ExampleSection(
             title = "右侧模式",
-            description = "内容显示在右侧"
+            description = "mode = RIGHT，内容排在轴的右侧"
         ) {
             Timeline(
                 mode = TimelineMode.RIGHT,
@@ -127,7 +126,7 @@ fun TimelineExample(
         // Alternating mode
         ExampleSection(
             title = "交替模式",
-            description = "内容左右交替显示"
+            description = "mode = ALTERNATE，内容左右交替"
         ) {
             Timeline(
                 mode = TimelineMode.ALTERNATE,
@@ -164,7 +163,7 @@ fun TimelineExample(
         // Reverse order
         ExampleSection(
             title = "倒序显示",
-            description = "时间轴倒序排列"
+            description = "reverse 让最新的事件排在最前"
         ) {
             Timeline(
                 reverse = true,
@@ -189,7 +188,7 @@ fun TimelineExample(
         // Custom content
         ExampleSection(
             title = "自定义内容",
-            description = "使用 TimelineCustom 自定义内容"
+            description = "TimelineCustom 自定义每个节点的内容与圆点颜色"
         ) {
             TimelineCustom(
                 itemCount = 3,
@@ -204,7 +203,7 @@ fun TimelineExample(
             ) { index ->
                 when (index) {
                     0 -> {
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                             Text(
                                 text = "任务完成",
                                 style = Theme.typography.titleMedium,
@@ -218,7 +217,7 @@ fun TimelineExample(
                         }
                     }
                     1 -> {
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                             Text(
                                 text = "代码审查中",
                                 style = Theme.typography.titleMedium,
@@ -232,7 +231,7 @@ fun TimelineExample(
                         }
                     }
                     else -> {
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                             Text(
                                 text = "待处理",
                                 style = Theme.typography.titleMedium,
@@ -246,72 +245,6 @@ fun TimelineExample(
                         }
                     }
                 }
-            }
-        }
-
-        // Real use case: parcel tracking
-        ExampleSection(
-            title = "物流追踪",
-            description = "实际应用场景示例"
-        ) {
-            Timeline(
-                items = listOf(
-                    TimelineItem(
-                        content = "快件已签收，签收人：本人",
-                        timestamp = "01-17 15:20",
-                        color = TimelineColor.SUCCESS
-                    ),
-                    TimelineItem(
-                        content = "派送中，快递员：张师傅 138****1234",
-                        timestamp = "01-17 09:30",
-                        color = TimelineColor.PRIMARY
-                    ),
-                    TimelineItem(
-                        content = "快件已到达【北京朝阳营业部】",
-                        timestamp = "01-17 06:00"
-                    ),
-                    TimelineItem(
-                        content = "快件已发出，下一站【北京转运中心】",
-                        timestamp = "01-16 18:00"
-                    ),
-                    TimelineItem(
-                        content = "快件已发出，下一站【上海转运中心】",
-                        timestamp = "01-15 20:00"
-                    ),
-                    TimelineItem(
-                        content = "商家已发货",
-                        timestamp = "01-15 14:30"
-                    )
-                )
-            )
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Timeline 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 支持三种模式: LEFT, RIGHT, ALTERNATE",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. 支持五种颜色: DEFAULT, PRIMARY, SUCCESS, WARNING, ERROR",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. 支持倒序显示 (reverse)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. TimelineCustom 支持完全自定义内容",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
             }
         }
     }

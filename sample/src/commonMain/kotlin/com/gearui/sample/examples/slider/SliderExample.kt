@@ -2,11 +2,10 @@ package com.gearui.sample.examples.slider
 
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.slider.Slider
 import com.gearui.components.slider.RangeSlider
+import com.gearui.components.slider.SliderStyle
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -14,6 +13,9 @@ import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
 import kotlin.math.roundToInt
+
+// Four inner stops split 0..100 into 20-point ticks.
+private const val TICK_STEPS = 4
 
 /**
  * Slider component examples
@@ -31,13 +33,11 @@ fun SliderExample(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
         // Single-thumb slider
         var singleValue by remember { mutableStateOf(10f) }
         ExampleSection(
             title = "单游标滑块",
-            description = "基础单滑块"
+            description = "拖动或点击轨道取值"
         ) {
             Slider(
                 value = singleValue,
@@ -48,23 +48,25 @@ fun SliderExample(
         }
 
         // Two-thumb slider
+        var rangeValue by remember { mutableStateOf(10f..60f) }
         ExampleSection(
             title = "双游标滑块",
-            description = "选择数值范围"
+            description = "RangeSlider 选择一个数值区间"
         ) {
             RangeSlider(
-                values = 10f..60f,
-                onValuesChange = { },
+                values = rangeValue,
+                onValuesChange = { rangeValue = it },
                 valueRange = 0f..100f,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
-        // Single-thumb slider with a value
+        // Labels and thumb value
         var singleWithNumberValue by remember { mutableStateOf(10f) }
+        var rangeWithNumberValue by remember { mutableStateOf(40f..60f) }
         ExampleSection(
-            title = "带数值单游标滑块",
-            description = "显示左右标签"
+            title = "显示数值",
+            description = "leftLabel / rightLabel 两端标签，showThumbValue 游标上显示当前值"
         ) {
             Slider(
                 value = singleWithNumberValue,
@@ -75,115 +77,46 @@ fun SliderExample(
                 showThumbValue = true,
                 modifier = Modifier.fillMaxWidth()
             )
+            RangeSlider(
+                values = rangeWithNumberValue,
+                onValuesChange = { rangeWithNumberValue = it },
+                valueRange = 0f..100f,
+                leftLabel = "0",
+                rightLabel = "100",
+                showThumbValue = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Two-thumb slider with values
-        ExampleSection(
-            title = "带数值双游标滑块",
-            description = "显示左右标签和当前值"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "0",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Text(
-                        text = "40 - 60",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Text(
-                        text = "100",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
-                RangeSlider(
-                    values = 40f..60f,
-                    onValuesChange = { },
-                    valueRange = 0f..100f,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-
-        // Single-thumb slider with ticks
+        // Steps with scale values
         var scaleValue by remember { mutableStateOf(60f) }
+        var scaleRange by remember { mutableStateOf(40f..80f) }
         ExampleSection(
-            title = "带刻度单游标滑块",
-            description = "显示刻度值"
+            title = "刻度步进",
+            description = "steps 吸附到刻度，showScaleValue 显示刻度值"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                Slider(
-                    value = scaleValue,
-                    onValueChange = { scaleValue = it },
-                    valueRange = 0f..100f,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                // Tick labels
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
-                        Text(
-                            text = tick.toString(),
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-            }
+            Slider(
+                value = scaleValue,
+                onValueChange = { scaleValue = it },
+                valueRange = 0f..100f,
+                steps = TICK_STEPS,
+                showScaleValue = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+            RangeSlider(
+                values = scaleRange,
+                onValuesChange = { scaleRange = it },
+                valueRange = 0f..100f,
+                steps = TICK_STEPS,
+                showScaleValue = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-
-        // Two-thumb slider with ticks
-        ExampleSection(
-            title = "带刻度双游标滑块",
-            description = "显示刻度值"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                RangeSlider(
-                    values = 40f..70f,
-                    onValuesChange = { },
-                    valueRange = 0f..100f,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                // Tick labels
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
-                        Text(
-                            text = tick.toString(),
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-            }
-        }
-
-        // ========== Component states ==========
 
         // Disabled state
         ExampleSection(
             title = "禁用状态",
-            description = "单游标禁用"
+            description = "enabled = false，单游标与双游标"
         ) {
             Slider(
                 value = 40f,
@@ -194,143 +127,48 @@ fun SliderExample(
                 rightLabel = "100",
                 modifier = Modifier.fillMaxWidth()
             )
+            RangeSlider(
+                values = 20f..60f,
+                onValuesChange = { },
+                valueRange = 0f..100f,
+                enabled = false,
+                steps = TICK_STEPS,
+                showScaleValue = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Disabled state - two thumbs with values
-        ExampleSection(
-            title = "",
-            description = "带数值双游标禁用"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "0",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.mutedForeground
-                    )
-                    Text(
-                        text = "20 - 60",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Text(
-                        text = "100",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.mutedForeground
-                    )
-                }
-                RangeSlider(
-                    values = 20f..60f,
-                    onValuesChange = { },
-                    valueRange = 0f..100f,
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-
-        // Disabled state - two thumbs with ticks
-        ExampleSection(
-            title = "",
-            description = "带刻度双游标禁用"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-            ) {
-                RangeSlider(
-                    values = 20f..60f,
-                    onValuesChange = { },
-                    valueRange = 0f..100f,
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                // Tick labels
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    listOf(0, 20, 40, 60, 80, 100).forEach { tick ->
-                        Text(
-                            text = tick.toString(),
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-            }
-        }
-
-        // ========== Special styles ==========
-
-        // Pill-shaped slider
+        // Capsule style
         var capsuleValue by remember { mutableStateOf(40f) }
         ExampleSection(
             title = "胶囊型滑块",
-            description = "圆角胶囊样式"
+            description = "SliderStyle.CAPSULE 加粗的胶囊轨道"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
-            ) {
-                // With a value
-                Slider(
-                    value = capsuleValue,
-                    onValueChange = { capsuleValue = it },
-                    valueRange = 0f..100f,
-                    showThumbValue = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                // With a label
-                var capsuleValue2 by remember { mutableStateOf(40f) }
-                Slider(
-                    value = capsuleValue2,
-                    onValueChange = { capsuleValue2 = it },
-                    valueRange = 0f..100f,
-                    leftLabel = "0",
-                    rightLabel = "100",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            Slider(
+                value = capsuleValue,
+                onValueChange = { capsuleValue = it },
+                valueRange = 0f..100f,
+                style = SliderStyle.CAPSULE,
+                showThumbValue = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // ========== Real use cases ==========
-
+        // Real use cases
         ExampleSection(
             title = "应用场景",
-            description = "实际使用示例"
+            description = "标题行显示当前值，自定义值域"
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
-                // Volume control
                 var volumeValue by remember { mutableStateOf(70f) }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
+                LabeledSlider(
+                    title = "音量",
+                    valueText = "${volumeValue.roundToInt()}%",
+                    valueColor = colors.mutedForeground
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "音量",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "${volumeValue.roundToInt()}%",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
                     Slider(
                         value = volumeValue,
                         onValueChange = { volumeValue = it },
@@ -341,56 +179,12 @@ fun SliderExample(
                     )
                 }
 
-                // Brightness control
-                var brightnessValue by remember { mutableStateOf(80f) }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "亮度",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "${brightnessValue.roundToInt()}%",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                    Slider(
-                        value = brightnessValue,
-                        onValueChange = { brightnessValue = it },
-                        valueRange = 0f..100f,
-                        leftLabel = "暗",
-                        rightLabel = "亮",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Price filter
                 var priceValue by remember { mutableStateOf(500f) }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
+                LabeledSlider(
+                    title = "价格筛选",
+                    valueText = "¥${priceValue.roundToInt()}",
+                    valueColor = colors.destructive
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "价格筛选",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "¥${priceValue.roundToInt()}",
-                            style = Theme.typography.bodySmall,
-                            color = colors.destructive
-                        )
-                    }
                     Slider(
                         value = priceValue,
                         onValueChange = { priceValue = it },
@@ -401,26 +195,12 @@ fun SliderExample(
                     )
                 }
 
-                // Temperature control
                 var temperatureValue by remember { mutableStateOf(24f) }
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
+                LabeledSlider(
+                    title = "空调温度",
+                    valueText = "${temperatureValue.roundToInt()}°C",
+                    valueColor = colors.primary
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "空调温度",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "${temperatureValue.roundToInt()}°C",
-                            style = Theme.typography.bodySmall,
-                            color = colors.primary
-                        )
-                    }
                     Slider(
                         value = temperatureValue,
                         onValueChange = { temperatureValue = it },
@@ -432,5 +212,33 @@ fun SliderExample(
                 }
             }
         }
+    }
+}
+
+/** A title row with the live value above a slider. */
+@Composable
+private fun LabeledSlider(
+    title: String,
+    valueText: String,
+    valueColor: com.tencent.kuikly.compose.ui.graphics.Color,
+    slider: @Composable () -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = title,
+                style = Theme.typography.bodyMedium,
+                color = Theme.colors.foreground
+            )
+            Text(
+                text = valueText,
+                style = Theme.typography.bodySmall,
+                color = valueColor
+            )
+        }
+        slider()
     }
 }

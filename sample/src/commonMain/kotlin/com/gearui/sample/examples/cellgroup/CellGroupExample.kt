@@ -13,6 +13,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
 
 /**
@@ -30,6 +31,7 @@ fun CellGroupExample(
         onBack = onBack
     ) {
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "基础用法",
             description = "分组标题与行文字左对齐；行间有分隔线，最后一行没有"
         ) {
@@ -42,6 +44,7 @@ fun CellGroupExample(
         }
 
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "标题尾部插槽",
             description = "计数或操作放在标题行的尾端，仍与行内容对齐"
         ) {
@@ -62,8 +65,9 @@ fun CellGroupExample(
         }
 
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "带前置元素时的缩进",
-            description = "分隔线要对齐文字，而不是卡片边缘。分组量不到子节点，所以由调用方传入更大的缩进"
+            description = "有前置图标时，用 separatorInset 让分隔线对齐文字而非卡片边缘"
         ) {
             CellGroup(
                 items = listOf("消息通知", "声音", "免打扰"),
@@ -86,6 +90,7 @@ fun CellGroupExample(
         }
 
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "单行分组",
             description = "只有一行时不画任何分隔线——它没有需要被分开的对象"
         ) {

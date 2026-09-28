@@ -5,18 +5,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.components.actionsheet.ActionSheet
 import com.gearui.components.actionsheet.ActionSheetItem
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
-import com.gearui.components.button.ButtonType
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.imageviewer.ImageViewer
 import com.gearui.components.imageviewer.rememberImageViewerState
 import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.tencent.kuikly.compose.ui.unit.dp
+
+// Demo dimensions: the constrained viewer sizes that mimic very wide or very tall images.
+private val UltraWideHeight = 140.dp
+private val UltraTallWidth = 180.dp
 
 /**
  * ImageViewer component examples
@@ -58,70 +61,27 @@ fun ImageViewerExample(
         component = component,
         onBack = onBack
     ) {
-        ExampleSection(title = "基础图片预览", description = "点击按钮打开图片预览") {
-            Button(
-                text = "基础图片预览",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { basicViewerState.show(0) }
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "预览方式",
+            description = "点击任一行打开对应配置的 ImageViewer"
+        ) {
+            val entries = listOf<Triple<String, String, () -> Unit>>(
+                Triple("基础预览", "只显示图片", { basicViewerState.show(0) }),
+                Triple("带操作", "显示页码和删除按钮", { actionViewerState.show(0) }),
+                Triple("长按操作", "长按图片打开操作面板", { longPressViewerState.show(0) }),
+                Triple("超宽图片", "限制预览高度", { ultraWidthViewerState.show(0) }),
+                Triple("超高图片", "限制预览宽度", { ultraHeightViewerState.show(0) }),
+                Triple("带图片标题", "每张图下方显示标题", { labelViewerState.show(0) })
             )
-        }
-
-        ExampleSection(title = "带操作图片预览", description = "显示页码和删除按钮") {
-            Button(
-                text = "带操作图片预览",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { actionViewerState.show(0) }
-            )
-        }
-
-        ExampleSection(title = "长按图片", description = "长按图片打开操作面板") {
-            Button(
-                text = "长按图片",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { longPressViewerState.show(0) }
-            )
-        }
-
-        ExampleSection(title = "图片超宽情况", description = "限制预览高度，模拟超宽图观感") {
-            Button(
-                text = "图片超宽情况",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { ultraWidthViewerState.show(0) }
-            )
-        }
-
-        ExampleSection(title = "图片超高情况", description = "限制预览宽度，模拟超高图观感") {
-            Button(
-                text = "图片超高情况",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { ultraHeightViewerState.show(0) }
-            )
-        }
-
-        ExampleSection(title = "带图片标题", description = "显示图片标题") {
-            Button(
-                text = "带图片标题",
-                theme = ButtonTheme.PRIMARY,
-                type = ButtonType.TEXT,
-                size = ButtonSize.LARGE,
-                block = true,
-                onClick = { labelViewerState.show(0) }
-            )
+            CellGroup(items = entries) { (title, description, open) ->
+                Cell(
+                    title = title,
+                    description = description,
+                    arrow = true,
+                    onClick = open
+                )
+            }
         }
     }
 
@@ -159,7 +119,7 @@ fun ImageViewerExample(
             images = images,
             state = ultraWidthViewerState,
             showIndex = true,
-            height = 140.dp,
+            height = UltraWideHeight,
             onLongPress = openImageActionSheet
         )
     }
@@ -169,7 +129,7 @@ fun ImageViewerExample(
             images = images,
             state = ultraHeightViewerState,
             showIndex = true,
-            width = 180.dp,
+            width = UltraTallWidth,
             onLongPress = openImageActionSheet
         )
     }

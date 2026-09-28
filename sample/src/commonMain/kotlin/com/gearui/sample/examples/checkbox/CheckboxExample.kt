@@ -2,8 +2,8 @@ package com.gearui.sample.examples.checkbox
 
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.tencent.kuikly.compose.ui.Alignment
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.checkbox.*
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -26,9 +26,9 @@ fun CheckboxExample(
         var checked2 by remember { mutableStateOf(true) }
         ExampleSection(
             title = "基础复选框",
-            description = "选中和未选中状态"
+            description = "未选中、选中与半选（indeterminate）"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xl)) {
                 Checkbox(
                     checked = checked1,
                     onCheckedChange = { checked1 = it }
@@ -36,6 +36,11 @@ fun CheckboxExample(
                 Checkbox(
                     checked = checked2,
                     onCheckedChange = { checked2 = it }
+                )
+                Checkbox(
+                    checked = false,
+                    onCheckedChange = {},
+                    indeterminate = true
                 )
             }
         }
@@ -47,7 +52,7 @@ fun CheckboxExample(
             title = "带标签的复选框",
             description = "复选框配合文字标签"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 CheckboxWithLabel(
                     checked = labelChecked1,
                     onCheckedChange = { labelChecked1 = it },
@@ -65,11 +70,11 @@ fun CheckboxExample(
         var sizeChecked by remember { mutableStateOf(true) }
         ExampleSection(
             title = "复选框尺寸",
-            description = "提供大、中、小三种尺寸"
+            description = "CheckboxSize 大、中、小三档"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalAlignment = com.tencent.kuikly.compose.ui.Alignment.CenterVertically
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xl),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
                     checked = sizeChecked,
@@ -92,9 +97,9 @@ fun CheckboxExample(
         // Disabled state
         ExampleSection(
             title = "禁用状态",
-            description = "不可操作的复选框"
+            description = "enabled = false，点击无响应"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xl)) {
                 Checkbox(
                     checked = false,
                     onCheckedChange = {},
@@ -114,7 +119,7 @@ fun CheckboxExample(
         }
         ExampleSection(
             title = "复选框组",
-            description = "一组相关的复选框"
+            description = "CheckboxGroup 管理一组多选值"
         ) {
             CheckboxGroup(
                 options = listOf("选项1", "选项2", "选项3", "选项4"),

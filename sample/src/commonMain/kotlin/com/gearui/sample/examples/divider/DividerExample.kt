@@ -1,10 +1,10 @@
 package com.gearui.sample.examples.divider
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.primitives.Divider
 import com.gearui.primitives.DividerFull
@@ -36,7 +36,7 @@ fun DividerExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = "上方内容",
@@ -59,7 +59,7 @@ fun DividerExample(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 Text(
                     text = "列表项 1",
@@ -84,51 +84,38 @@ fun DividerExample(
         // Section separator
         ExampleSection(
             title = "章节分隔",
-            description = "用于分隔不同章节的粗分割线"
+            description = "分隔不同章节的灰色色块"
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "章节 1 内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
+                Text(
+                    text = "章节 1 内容",
+                    style = Theme.typography.bodyMedium,
+                    color = colors.foreground
+                )
                 DividerSection()
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "章节 2 内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
+                Text(
+                    text = "章节 2 内容",
+                    style = Theme.typography.bodyMedium,
+                    color = colors.foreground
+                )
             }
         }
 
         // Custom divider
         ExampleSection(
             title = "自定义分割线",
-            description = "自定义粗细和缩进的分割线"
+            description = "thickness 与 insetStart / insetEnd"
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
-                Divider(thickness = 1.dp)
-                Divider(thickness = 2.dp)
-                Divider(insetStart = 32.dp, insetEnd = 32.dp)
+                Divider(thickness = BorderWidth.thin)
+                Divider(thickness = BorderWidth.thick)
+                Divider(insetStart = Spacing.xxl, insetEnd = Spacing.xxl)
             }
         }
     }

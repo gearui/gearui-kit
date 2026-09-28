@@ -14,14 +14,19 @@ import com.gearui.primitives.composite.ListItem
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
+import com.gearui.foundation.layout.Spacing
+import com.gearui.primitives.composite.Card
+import com.tencent.kuikly.compose.foundation.layout.PaddingValues
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
+
+/** Fixed viewport height, so the List demo actually scrolls. */
+private val ScrollViewportHeight = 220.dp
 
 private data class Entry(val title: String, val icon: String, val value: String? = null)
 
@@ -41,7 +46,7 @@ fun ListExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "三者的分工",
             description = "Cell 是一行；CellGroup 是一张卡片的行；List 是会滚动的容器"
         ) {
@@ -62,7 +67,7 @@ fun ListExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "ListItem",
             description = "同一个 Cell 的语义封装:标题 / 副标题 / 右侧值，箭头自动"
         ) {
@@ -76,39 +81,41 @@ fun ListExample(
         }
 
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "List:滚动容器",
             description = "ListTokens.Settings 时行之间有分隔线，最后一行没有"
         ) {
-            List(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp)
-                    .clip(Theme.shapes.xl)
-                    .background(colors.surface),
-                tokens = ListTokens.Settings,
-            ) {
-                section(header = {
-                    Text(
-                        text = "常用",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    )
-                }) {
-                    items(3) { index ->
-                        Cell(title = "常用项 ${index + 1}", arrow = true, onClick = { Toast.show("常用项 ${index + 1}") })
+            // The List scrolls inside a Card: the Card is the surface, the List only scrolls.
+            Card(modifier = Modifier.fillMaxWidth(), padding = PaddingValues(Spacing.none)) {
+                List(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(ScrollViewportHeight),
+                    tokens = ListTokens.Settings,
+                ) {
+                    section(header = {
+                        Text(
+                            text = "常用",
+                            style = Theme.typography.bodySmall,
+                            color = colors.mutedForeground,
+                            modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                        )
+                    }) {
+                        items(3) { index ->
+                            Cell(title = "常用项 ${index + 1}", arrow = true, onClick = { Toast.show("常用项 ${index + 1}") })
+                        }
                     }
-                }
-                section(header = {
-                    Text(
-                        text = "更多",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    )
-                }) {
-                    items(6) { index ->
-                        Cell(title = "更多项 ${index + 1}", arrow = true, onClick = { Toast.show("更多项 ${index + 1}") })
+                    section(header = {
+                        Text(
+                            text = "更多",
+                            style = Theme.typography.bodySmall,
+                            color = colors.mutedForeground,
+                            modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                        )
+                    }) {
+                        items(6) { index ->
+                            Cell(title = "更多项 ${index + 1}", arrow = true, onClick = { Toast.show("更多项 ${index + 1}") })
+                        }
                     }
                 }
             }

@@ -8,12 +8,13 @@ import androidx.compose.runtime.setValue
 import com.gearui.components.combobox.ComboBox
 import com.gearui.components.select.SelectOption
 import com.gearui.foundation.field.FieldDescription
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.ui.unit.dp
 
 private val CITIES = listOf(
     "北京", "上海", "广州", "深圳", "杭州", "成都", "南京", "武汉", "西安", "重庆", "苏州", "长沙",
@@ -38,11 +39,11 @@ fun ComboBoxExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "输入筛选",
             description = "聚焦即展示候选，输入实时过滤；无匹配时不弹面板"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 ComboBox(
                     query = city,
                     onQueryChange = { city = it },
@@ -60,7 +61,7 @@ fun ComboBoxExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "自定义过滤",
             description = "按代码或名称匹配，例如输入 usd"
         ) {
@@ -80,7 +81,7 @@ fun ComboBoxExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "禁用",
             description = "enabled = false"
         ) {

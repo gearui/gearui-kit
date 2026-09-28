@@ -9,6 +9,7 @@ import com.gearui.components.numberfield.NumberField
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 
 @Composable
 fun NumberFieldExample(
@@ -21,7 +22,7 @@ fun NumberFieldExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "数量",
             description = "可直接输入，也可用两侧按钮增减；到达上下限时按钮置灰"
         ) {
@@ -37,7 +38,7 @@ fun NumberFieldExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "小数步进",
             description = "step = 0.1，保留输入中的半成品文本"
         ) {
@@ -51,7 +52,7 @@ fun NumberFieldExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "负数与校验",
             description = "允许负值；超出范围时显示错误"
         ) {

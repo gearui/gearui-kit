@@ -1,28 +1,99 @@
 package com.gearui.sample.examples.progress
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.progress.LinearProgress
-import com.gearui.components.progress.CircularProgress
-import com.gearui.components.progress.ProgressStatus
-import com.gearui.components.progress.ProgressLabelPosition
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.progress.CircularProgress
+import com.gearui.components.progress.LinearProgress
+import com.gearui.components.progress.ProgressLabelPosition
+import com.gearui.components.progress.ProgressStatus
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.width
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.unit.Dp
+import com.tencent.kuikly.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+
+// Demo dimensions: the bar heights, ring sizes and stroke widths being shown off.
+private val RowLabelWidth = 40.dp
+private val InsideLabelBarHeight = 24.dp
+private val BarHeightThin = 4.dp
+private val BarHeightMedium = 8.dp
+private val BarHeightThick = 16.dp
+private val RingSmall = 36.dp
+private val RingMedium = 56.dp
+private val RingLarge = 80.dp
+private val StrokeSmall = 3.dp
+private val StrokeMedium = 4.dp
+private val StrokeLarge = 6.dp
+private val RingInline = 48.dp
+
+/** A caption on the left and a progress bar filling the rest of the row. */
+@Composable
+private fun LabeledBar(label: String, bar: @Composable (Modifier) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
+    ) {
+        Text(
+            text = label,
+            style = Theme.typography.bodySmall,
+            color = Theme.colors.mutedForeground,
+            modifier = Modifier.width(RowLabelWidth)
+        )
+        bar(Modifier.weight(1f))
+    }
+}
+
+/** A titled bar with a value on the right, as in an upload or storage row. */
+@Composable
+private fun UsageBar(title: String, value: String, progress: Float, status: ProgressStatus) {
+    val colors = Theme.colors
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = title, style = Theme.typography.bodySmall, color = colors.foreground)
+            Text(
+                text = value,
+                style = Theme.typography.bodySmall,
+                color = if (status == ProgressStatus.WARNING) colors.warning else colors.mutedForeground
+            )
+        }
+        LinearProgress(
+            progress = progress,
+            status = status,
+            showLabel = false,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+private fun statusFor(progress: Float): ProgressStatus = when {
+    progress >= 1f -> ProgressStatus.SUCCESS
+    progress >= 0.7f -> ProgressStatus.WARNING
+    else -> ProgressStatus.PRIMARY
+}
 
 /**
  * Progress component examples
- *
- * Shows progress, linear or circular
  */
 @Composable
 fun ProgressExample(
@@ -31,11 +102,9 @@ fun ProgressExample(
 ) {
     val colors = Theme.colors
 
-    // Dynamic progress
     var dynamicProgress by remember { mutableStateOf(0f) }
     var isRunning by remember { mutableStateOf(false) }
 
-    // Automatic progress animation
     LaunchedEffect(isRunning) {
         if (isRunning) {
             while (dynamicProgress < 1f) {
@@ -50,218 +119,73 @@ fun ProgressExample(
         component = component,
         onBack = onBack
     ) {
-        // Basic linear progress bar
         ExampleSection(
             title = "基础进度条",
-            description = "不同进度值的展示"
+            description = "LinearProgress 按 progress 填充"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                LinearProgress(
-                    progress = 0.3f,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                LinearProgress(
-                    progress = 0.6f,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                LinearProgress(
-                    progress = 1f,
-                    modifier = Modifier.fillMaxWidth()
-                )
+            listOf(0.3f, 0.6f, 1f).forEach {
+                LinearProgress(progress = it, modifier = Modifier.fillMaxWidth())
             }
         }
 
-        // States
         ExampleSection(
-            title = "不同状态",
-            description = "主色、成功、警告、危险状态"
+            title = "状态",
+            description = "主色、成功、警告、危险"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "主色",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 0.7f,
-                        status = ProgressStatus.PRIMARY,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "成功",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 1f,
-                        status = ProgressStatus.SUCCESS,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "警告",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 0.5f,
-                        status = ProgressStatus.WARNING,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "危险",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 0.2f,
-                        status = ProgressStatus.DANGER,
-                        modifier = Modifier.weight(1f)
-                    )
+            listOf(
+                Triple("主色", 0.7f, ProgressStatus.PRIMARY),
+                Triple("成功", 1f, ProgressStatus.SUCCESS),
+                Triple("警告", 0.5f, ProgressStatus.WARNING),
+                Triple("危险", 0.2f, ProgressStatus.DANGER)
+            ).forEach { (label, value, status) ->
+                LabeledBar(label) { modifier ->
+                    LinearProgress(progress = value, status = status, modifier = modifier)
                 }
             }
         }
 
-        // Label position
         ExampleSection(
             title = "标签位置",
-            description = "右侧显示和内部显示"
+            description = "百分比显示在右侧或条内"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Text(
-                    text = "右侧显示百分比",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-                LinearProgress(
-                    progress = 0.65f,
-                    showLabel = true,
-                    labelPosition = ProgressLabelPosition.RIGHT,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "内部显示百分比",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-                LinearProgress(
-                    progress = 0.75f,
-                    showLabel = true,
-                    labelPosition = ProgressLabelPosition.INSIDE,
-                    height = 24.dp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            LinearProgress(
+                progress = 0.65f,
+                showLabel = true,
+                labelPosition = ProgressLabelPosition.RIGHT,
+                modifier = Modifier.fillMaxWidth()
+            )
+            LinearProgress(
+                progress = 0.75f,
+                showLabel = true,
+                labelPosition = ProgressLabelPosition.INSIDE,
+                height = InsideLabelBarHeight,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Heights
         ExampleSection(
-            title = "不同高度",
-            description = "自定义进度条高度"
+            title = "高度",
+            description = "height 自定义进度条粗细"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "4dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
+            listOf<Pair<String, Dp>>(
+                "细" to BarHeightThin,
+                "中" to BarHeightMedium,
+                "粗" to BarHeightThick
+            ).forEach { (label, height) ->
+                LabeledBar(label) { modifier ->
                     LinearProgress(
                         progress = 0.6f,
-                        height = 4.dp,
+                        height = height,
                         showLabel = false,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "8dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 0.6f,
-                        height = 8.dp,
-                        showLabel = false,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "16dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground,
-                        modifier = Modifier.width(40.dp)
-                    )
-                    LinearProgress(
-                        progress = 0.6f,
-                        height = 16.dp,
-                        showLabel = false,
-                        modifier = Modifier.weight(1f)
+                        modifier = modifier
                     )
                 }
             }
         }
 
-        // Circular progress
         ExampleSection(
-            title = "环形进度条",
-            description = "圆形进度展示"
+            title = "环形进度",
+            description = "CircularProgress 的尺寸与线宽可调"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -270,266 +194,92 @@ fun ProgressExample(
             ) {
                 CircularProgress(
                     progress = 0.25f,
-                    size = 48.dp,
-                    status = ProgressStatus.PRIMARY
+                    size = RingSmall,
+                    strokeWidth = StrokeSmall,
+                    showLabel = false
                 )
-
                 CircularProgress(
-                    progress = 0.5f,
-                    size = 56.dp,
+                    progress = 0.6f,
+                    size = RingMedium,
+                    strokeWidth = StrokeMedium,
                     status = ProgressStatus.SUCCESS
                 )
-
                 CircularProgress(
                     progress = 0.75f,
-                    size = 64.dp,
+                    size = RingLarge,
+                    strokeWidth = StrokeLarge,
                     status = ProgressStatus.WARNING
                 )
-
-                CircularProgress(
-                    progress = 1f,
-                    size = 72.dp,
-                    status = ProgressStatus.PRIMARY
-                )
             }
         }
 
-        // Circular progress sizes
-        ExampleSection(
-            title = "环形进度尺寸",
-            description = "自定义环形进度条大小"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgress(
-                        progress = 0.6f,
-                        size = 36.dp,
-                        strokeWidth = 3.dp,
-                        showLabel = false
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "小",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgress(
-                        progress = 0.6f,
-                        size = 56.dp,
-                        strokeWidth = 4.dp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "中",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgress(
-                        progress = 0.6f,
-                        size = 80.dp,
-                        strokeWidth = 6.dp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "大",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-            }
-        }
-
-        // Dynamic progress
         ExampleSection(
             title = "动态进度",
-            description = "带动画的进度变化"
+            description = "进度变化时条和环同步过渡，状态随进度切换"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Button(
-                        text = "开始",
-                        size = ButtonSize.SMALL,
-                        onClick = {
-                            dynamicProgress = 0f
-                            isRunning = true
-                        }
-                    )
-                    Button(
-                        text = "重置",
-                        size = ButtonSize.SMALL,
-                        onClick = {
-                            isRunning = false
-                            dynamicProgress = 0f
-                        }
-                    )
-                }
-
-                LinearProgress(
-                    progress = dynamicProgress,
-                    status = when {
-                        dynamicProgress >= 1f -> ProgressStatus.SUCCESS
-                        dynamicProgress >= 0.7f -> ProgressStatus.WARNING
-                        else -> ProgressStatus.PRIMARY
-                    },
-                    modifier = Modifier.fillMaxWidth()
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                Button(
+                    text = "开始",
+                    size = ButtonSize.SMALL,
+                    onClick = {
+                        dynamicProgress = 0f
+                        isRunning = true
+                    }
                 )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CircularProgress(
-                        progress = dynamicProgress,
-                        size = 80.dp,
-                        status = when {
-                            dynamicProgress >= 1f -> ProgressStatus.SUCCESS
-                            dynamicProgress >= 0.7f -> ProgressStatus.WARNING
-                            else -> ProgressStatus.PRIMARY
-                        }
-                    )
-                }
+                Button(
+                    text = "重置",
+                    size = ButtonSize.SMALL,
+                    theme = ButtonTheme.DEFAULT,
+                    onClick = {
+                        isRunning = false
+                        dynamicProgress = 0f
+                    }
+                )
+            }
+            LinearProgress(
+                progress = dynamicProgress,
+                status = statusFor(dynamicProgress),
+                modifier = Modifier.fillMaxWidth()
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                CircularProgress(
+                    progress = dynamicProgress,
+                    size = RingLarge,
+                    status = statusFor(dynamicProgress)
+                )
             }
         }
 
-        // Use cases
         ExampleSection(
             title = "应用场景",
-            description = "实际使用中的进度展示"
+            description = "上传、存储占用、任务完成度"
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+            UsageBar("文件上传中…", "2.5MB / 5MB", 0.5f, ProgressStatus.PRIMARY)
+            UsageBar("存储空间", "85GB / 100GB", 0.85f, ProgressStatus.WARNING)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
-                // File upload
+                CircularProgress(
+                    progress = 0.8f,
+                    size = RingInline,
+                    status = ProgressStatus.SUCCESS
+                )
                 Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "文件上传中...",
-                            style = Theme.typography.bodySmall,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "2.5MB / 5MB",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(4.dp))
-                    LinearProgress(
-                        progress = 0.5f,
-                        showLabel = false,
-                        modifier = Modifier.fillMaxWidth()
+                    Text(
+                        text = "今日任务",
+                        style = Theme.typography.bodyMedium,
+                        color = colors.foreground
+                    )
+                    Text(
+                        text = "已完成 8/10 项任务",
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground
                     )
                 }
-
-                // Storage space
-                Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "存储空间",
-                            style = Theme.typography.bodySmall,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "85GB / 100GB",
-                            style = Theme.typography.bodySmall,
-                            color = colors.warning
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(4.dp))
-                    LinearProgress(
-                        progress = 0.85f,
-                        status = ProgressStatus.WARNING,
-                        showLabel = false,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Task completion
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CircularProgress(
-                        progress = 0.8f,
-                        size = 48.dp,
-                        status = ProgressStatus.SUCCESS
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column {
-                        Text(
-                            text = "今日任务",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                        Text(
-                            text = "已完成 8/10 项任务",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Progress 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. LinearProgress: 线性进度条",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. CircularProgress: 环形进度条",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. ProgressStatus: PRIMARY/SUCCESS/WARNING/DANGER",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. showLabel: 显示百分比标签",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. animated: 开启动画过渡效果",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
             }
         }
     }

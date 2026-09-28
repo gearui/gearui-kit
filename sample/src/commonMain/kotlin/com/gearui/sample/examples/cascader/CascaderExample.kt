@@ -6,11 +6,16 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.cascader.Cascader
 import com.gearui.components.cascader.CascaderOption
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+
+/** Height of the option panel, sized to the demo data. */
+private val DropdownHeight = 240.dp
 
 /**
  * Cascader component examples
@@ -30,7 +35,7 @@ fun CascaderExample(
     ) {
         // Basic cascading select
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "基础用法",
             description = "点击展开下一级选项"
         ) {
@@ -86,13 +91,13 @@ fun CascaderExample(
                 )
             }
 
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 Cascader(
                     options = options,
                     selectedPath = selectedPath,
                     onSelect = { selectedPath = it },
                     placeholder = "请选择地区",
-                    dropdownHeight = 250.dp
+                    dropdownHeight = DropdownHeight
                 )
 
                 Text(
@@ -105,7 +110,7 @@ fun CascaderExample(
 
         // Default value
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "默认值",
             description = "设置初始选中值"
         ) {
@@ -148,13 +153,13 @@ fun CascaderExample(
                 selectedPath = selectedPath,
                 onSelect = { selectedPath = it },
                 placeholder = "请选择地区",
-                dropdownHeight = 200.dp
+                dropdownHeight = DropdownHeight
             )
         }
 
         // Custom separator
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "自定义分隔符",
             description = "使用自定义分隔符显示选中值"
         ) {
@@ -208,13 +213,13 @@ fun CascaderExample(
                 onSelect = { selectedPath = it },
                 placeholder = "请选择分类",
                 separator = " - ",
-                dropdownHeight = 200.dp
+                dropdownHeight = DropdownHeight
             )
         }
 
         // Disabled options
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "禁用选项",
             description = "部分选项可设置为禁用状态"
         ) {
@@ -256,43 +261,8 @@ fun CascaderExample(
                 selectedPath = selectedPath,
                 onSelect = { selectedPath = it },
                 placeholder = "请选择部门",
-                dropdownHeight = 200.dp
+                dropdownHeight = DropdownHeight
             )
-        }
-
-        // Usage notes
-        ExampleSection(
-            useCardContainer = false,
-            title = "使用说明",
-            description = "Cascader 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. options: 级联选项数据，支持多级嵌套",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. selectedPath: 当前选中路径 (value 列表)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. separator: 显示文本的分隔符",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. disabled: 禁用某些选项",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 基于 Overlay 实现真正的浮层",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
         }
     }
 }

@@ -4,25 +4,27 @@ import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.button.ButtonType
 import com.gearui.components.drawer.Drawer
 import com.gearui.components.drawer.DrawerItem
 import com.gearui.components.drawer.DrawerPlacement
-import com.gearui.components.drawer.DrawerWithHeader
 import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
+import com.gearui.sample.pages.SectionSurface
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.theme.Theme
+
+private class DrawerRow(val title: String, val description: String? = null, val onClick: () -> Unit)
 
 /**
  * Drawer component examples
- *
  */
 @Composable
 fun DrawerExample(
@@ -47,9 +49,10 @@ fun DrawerExample(
         DrawerItem(
             title = "菜单${index + 1}",
             icon = {
-                Text(
-                    text = icons[index % icons.size],
-                    style = Theme.typography.titleMedium
+                Icon(
+                    name = icons[index % icons.size],
+                    size = IconSizes.Default.xl,
+                    tint = colors.foreground
                 )
             }
         )
@@ -68,18 +71,16 @@ fun DrawerExample(
     ) {
         // ==================== Component types ====================
 
-        // Basic drawer
         ExampleSection(
-            title = "基础抽屉",
-            description = "最基本的抽屉，仅包含文本菜单项"
+            surface = SectionSurface.Plain,
+            title = "抽屉类型",
+            description = "从右侧滑出的菜单抽屉"
         ) {
-            Button(
-                text = "基础抽屉",
-                onClick = { showBaseDrawer = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                theme = ButtonTheme.PRIMARY,
-                modifier = Modifier.fillMaxWidth()
+            DrawerRows(
+                listOf(
+                    DrawerRow("基础抽屉", "仅含文本菜单项") { showBaseDrawer = true },
+                    DrawerRow("带图标抽屉", "每个菜单项带有图标") { showIconDrawer = true },
+                )
             )
 
             Drawer(
@@ -90,21 +91,6 @@ fun DrawerExample(
                 onItemClick = { index, item ->
                     Toast.show("点击了: ${item.title}")
                 }
-            )
-        }
-
-        // Drawer with icons
-        ExampleSection(
-            title = "带图标抽屉",
-            description = "每个菜单项带有图标"
-        ) {
-            Button(
-                text = "带图标抽屉",
-                onClick = { showIconDrawer = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                theme = ButtonTheme.PRIMARY,
-                modifier = Modifier.fillMaxWidth()
             )
 
             Drawer(
@@ -120,18 +106,17 @@ fun DrawerExample(
 
         // ==================== Component styles ====================
 
-        // Drawer with a title
         ExampleSection(
-            title = "带标题抽屉",
-            description = "抽屉顶部显示标题"
+            surface = SectionSurface.Plain,
+            title = "抽屉样式",
+            description = "标题、底部操作与自定义底色"
         ) {
-            Button(
-                text = "带标题抽屉",
-                onClick = { showTitleDrawer = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                theme = ButtonTheme.PRIMARY,
-                modifier = Modifier.fillMaxWidth()
+            DrawerRows(
+                listOf(
+                    DrawerRow("带标题抽屉", "从左侧滑出，顶部显示 title") { showTitleDrawer = true },
+                    DrawerRow("带底部操作抽屉", "footer 插槽放置底部操作按钮") { showFooterDrawer = true },
+                    DrawerRow("自定义背景色抽屉", "backgroundColor 自定义抽屉底色") { showCustomDrawer = true },
+                )
             )
 
             Drawer(
@@ -143,21 +128,6 @@ fun DrawerExample(
                 onItemClick = { index, item ->
                     Toast.show("点击了: ${item.title}")
                 }
-            )
-        }
-
-        // Drawer with footer actions
-        ExampleSection(
-            title = "带底部操作抽屉",
-            description = "抽屉底部显示操作按钮"
-        ) {
-            Button(
-                text = "带底部操作抽屉",
-                onClick = { showFooterDrawer = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                theme = ButtonTheme.PRIMARY,
-                modifier = Modifier.fillMaxWidth()
             )
 
             Drawer(
@@ -182,21 +152,6 @@ fun DrawerExample(
                     Toast.show("点击了: ${item.title}")
                 }
             )
-        }
-
-        // Custom style drawer
-        ExampleSection(
-            title = "自定义背景色抽屉",
-            description = "可自定义抽屉的背景颜色"
-        ) {
-            Button(
-                text = "自定义背景色抽屉",
-                onClick = { showCustomDrawer = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                theme = ButtonTheme.PRIMARY,
-                modifier = Modifier.fillMaxWidth()
-            )
 
             Drawer(
                 visible = showCustomDrawer,
@@ -210,94 +165,18 @@ fun DrawerExample(
                 }
             )
         }
+    }
+}
 
-        // ==================== Usage notes ====================
-
-        ExampleSection(
-            title = "API 说明",
-            description = "Drawer 组件的主要属性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "placement: 抽屉方向 (LEFT / RIGHT)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "title: 抽屉标题",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "items: 列表项集合 (List<DrawerItem>)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "footer: 底部内容插槽",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "content: 完全自定义内容",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "showOverlay: 是否显示遮罩层",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "closeOnOverlayClick: 点击遮罩是否关闭",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "width: 抽屉宽度 (默认 280.dp)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "backgroundColor: 背景颜色",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "bordered: 是否显示分割线",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "onItemClick: 列表项点击回调",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
-        }
-
-        // DrawerItem notes
-        ExampleSection(
-            title = "DrawerItem 说明",
-            description = "列表项数据结构"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "title: 菜单项标题",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "icon: 菜单项图标 (Composable)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "content: 完全自定义内容 (Composable)",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+// One arrow row per trigger (non-anchored overlay entries, see COMPONENT_SPEC §6).
+@Composable
+private fun DrawerRows(rows: List<DrawerRow>) {
+    CellGroup(items = rows) { row ->
+        Cell(
+            title = row.title,
+            description = row.description,
+            arrow = true,
+            onClick = row.onClick
+        )
     }
 }

@@ -1,18 +1,13 @@
 package com.gearui.sample.examples.select
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.select.Select
 import com.gearui.components.select.SelectOption
 import com.gearui.components.select.MultiSelect
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.Typography
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
 
 /**
  * Select component examples
@@ -22,8 +17,6 @@ fun SelectExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     var selectedCity by remember { mutableStateOf<String?>(null) }
     var selectedFruit by remember { mutableStateOf<String?>(null) }
     var selectedHobbies by remember { mutableStateOf<Set<String>>(emptySet()) }
@@ -41,21 +34,21 @@ fun SelectExample(
 
     // Fruit options (with a disabled one)
     val fruitOptions = listOf(
-        SelectOption("apple", "苹果 🍎"),
-        SelectOption("banana", "香蕉 🍌"),
-        SelectOption("orange", "橙子 🍊", disabled = true),
-        SelectOption("grape", "葡萄 🍇"),
-        SelectOption("watermelon", "西瓜 🍉")
+        SelectOption("apple", "苹果"),
+        SelectOption("banana", "香蕉"),
+        SelectOption("orange", "橙子", disabled = true),
+        SelectOption("grape", "葡萄"),
+        SelectOption("watermelon", "西瓜")
     )
 
     // Hobby options
     val hobbyOptions = listOf(
-        SelectOption("reading", "阅读 📚"),
-        SelectOption("music", "音乐 🎵"),
-        SelectOption("sports", "运动 ⚽"),
-        SelectOption("travel", "旅行 ✈️"),
-        SelectOption("cooking", "烹饪 🍳"),
-        SelectOption("photography", "摄影 📷")
+        SelectOption("reading", "阅读"),
+        SelectOption("music", "音乐"),
+        SelectOption("sports", "运动"),
+        SelectOption("travel", "旅行"),
+        SelectOption("cooking", "烹饪"),
+        SelectOption("photography", "摄影")
     )
 
     ExamplePage(
@@ -64,9 +57,9 @@ fun SelectExample(
     ) {
         // Basic single select
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "基础单选",
-            description = "单选下拉选择"
+            description = "点击展开选项面板，选中后收起"
         ) {
             Select(
                 value = selectedCity,
@@ -78,9 +71,9 @@ fun SelectExample(
 
         // With a label
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带标签",
-            description = "显示字段标签"
+            description = "label 字段标签；「橙子」为 disabled 选项"
         ) {
             Select(
                 value = selectedFruit,
@@ -93,9 +86,9 @@ fun SelectExample(
 
         // Multi-select mode
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "多选模式",
-            description = "支持选择多个选项"
+            description = "MultiSelect 可勾选多项"
         ) {
             MultiSelect(
                 values = selectedHobbies,
@@ -108,9 +101,9 @@ fun SelectExample(
 
         // Disabled state
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "禁用状态",
-            description = "不可交互"
+            description = "enabled = false"
         ) {
             Select(
                 value = "beijing",
@@ -123,9 +116,9 @@ fun SelectExample(
 
         // Error state
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "错误状态",
-            description = "显示错误提示"
+            description = "未选择时 error 显示错误提示"
         ) {
             Select(
                 value = requiredCity,

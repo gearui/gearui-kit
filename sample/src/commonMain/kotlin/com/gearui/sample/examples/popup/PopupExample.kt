@@ -1,11 +1,6 @@
 package com.gearui.sample.examples.popup
 
-import com.gearui.components.icon.Icons
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
@@ -15,20 +10,35 @@ import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.closebutton.CloseButton
 import com.gearui.components.popup.Popup
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
 
+// Demo content dimensions: the sizes of the placeholder panels shown in the popups.
+private val AnchoredPanelWidth = 200.dp
+private val AnchoredPanelHeight = 120.dp
+private val CenterPanelSize = 240.dp
+private val DialogPanelWidth = 300.dp
+private val DialogBodyHeight = 200.dp
+
+private class PopupRow(val title: String, val description: String, val onClick: () -> Unit)
+
 /**
- * Popup component examples
+ * Popup component examples.
  *
- * - component types: from the top, left, centre, bottom and right
- * - component examples: variants with titles and close buttons
+ * Popup.Host already draws the overlay surface, so the content passed to it is only
+ * padding and text — never a second background.
  */
 @Composable
 fun PopupExample(
@@ -37,120 +47,57 @@ fun PopupExample(
 ) {
     val colors = Theme.colors
 
-    // ========== Component type state ==========
-    var showTopPopup by remember { mutableStateOf(false) }
-    var showLeftPopup by remember { mutableStateOf(false) }
     var showCenterPopup by remember { mutableStateOf(false) }
-    var showBottomPopup by remember { mutableStateOf(false) }
-    var showRightPopup by remember { mutableStateOf(false) }
-
-    // ========== Component example state ==========
-    var showBottomWithTitleAndOp by remember { mutableStateOf(false) }
-    var showBottomWithOp by remember { mutableStateOf(false) }
-    var showBottomWithTitleAndClose by remember { mutableStateOf(false) }
-    var showBottomWithClose by remember { mutableStateOf(false) }
-    var showBottomWithTitle by remember { mutableStateOf(false) }
-    var showCenterWithClose by remember { mutableStateOf(false) }
-    var showCenterWithUnderClose by remember { mutableStateOf(false) }
-
-    // Anchor position
-    var topAnchor by remember { mutableStateOf<Rect?>(null) }
-    var leftAnchor by remember { mutableStateOf<Rect?>(null) }
-    var bottomAnchor by remember { mutableStateOf<Rect?>(null) }
-    var rightAnchor by remember { mutableStateOf<Rect?>(null) }
+    var showTitleWithActions by remember { mutableStateOf(false) }
+    var showTitleWithClose by remember { mutableStateOf(false) }
+    var showModalWithClose by remember { mutableStateOf(false) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
-        // From the top
         ExampleSection(
-            title = "顶部弹出",
-            description = "从锚点上方弹出"
+            title = "锚点弹出",
+            description = "placement 决定弹层相对触发按钮的方向，空间不足时自动翻转"
         ) {
-            Button(
-                text = "顶部弹出",
-                onClick = { showTopPopup = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { topAnchor = it.boundsInRoot() }
-            )
-
-            Popup.Host(
-                visible = showTopPopup,
-                anchorBounds = topAnchor,
-                placement = OverlayPlacement.TopLeft,
-                onDismiss = { showTopPopup = false }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "顶部弹出内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
-            }
-        }
-
-        // From the left
-        ExampleSection(
-            title = "左侧弹出",
-            description = "从锚点左侧弹出"
-        ) {
-            Button(
-                text = "左侧弹出",
-                onClick = { showLeftPopup = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { leftAnchor = it.boundsInRoot() }
-            )
-
-            Popup.Host(
-                visible = showLeftPopup,
-                anchorBounds = leftAnchor,
-                placement = OverlayPlacement.LeftTop,
-                onDismiss = { showLeftPopup = false }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(120.dp)
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "左侧弹出内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
-            }
-        }
-
-        // Centred
-        ExampleSection(
-            title = "居中弹出",
-            description = "屏幕居中弹出"
-        ) {
-            Button(
-                text = "居中弹出",
-                onClick = { showCenterPopup = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
+            Column(
+                verticalArrangement = Arrangement.spacedBy(Spacing.lg),
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
-            )
+            ) {
+                AnchoredPopupButton("顶部", "顶部弹出内容", OverlayPlacement.TopLeft)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.huge),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AnchoredPopupButton("左侧", "左侧弹出内容", OverlayPlacement.LeftTop)
+                    AnchoredPopupButton("右侧", "右侧弹出内容", OverlayPlacement.RightTop)
+                }
+                AnchoredPopupButton("底部", "底部弹出内容", OverlayPlacement.BottomLeft)
+            }
+        }
+
+        // Centred popups need no anchor, so their entries are arrow rows
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "居中弹出",
+            description = "placement = Center，无需锚点"
+        ) {
+            CellGroup(
+                items = listOf(
+                    PopupRow("居中弹出", "只有内容的居中弹层") { showCenterPopup = true },
+                    PopupRow("标题与操作", "标题栏两侧放取消 / 确定") { showTitleWithActions = true },
+                    PopupRow("标题与关闭", "标题居中，右侧 CloseButton") { showTitleWithClose = true },
+                    PopupRow("禁止点击外部关闭", "dismissOnOutside = false，只能通过关闭按钮关闭") { showModalWithClose = true },
+                )
+            ) { row ->
+                Cell(
+                    title = row.title,
+                    description = row.description,
+                    arrow = true,
+                    onClick = row.onClick
+                )
+            }
 
             Popup.Host(
                 visible = showCenterPopup,
@@ -159,11 +106,7 @@ fun PopupExample(
                 onDismiss = { showCenterPopup = false }
             ) {
                 Box(
-                    modifier = Modifier
-                        .width(240.dp)
-                        .height(240.dp)
-                        .background(colors.surface)
-                        .padding(16.dp),
+                    modifier = Modifier.size(CenterPanelSize),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -173,230 +116,55 @@ fun PopupExample(
                     )
                 }
             }
-        }
-
-        // From the bottom
-        ExampleSection(
-            title = "底部弹出",
-            description = "从锚点下方弹出"
-        ) {
-            Button(
-                text = "底部弹出",
-                onClick = { showBottomPopup = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { bottomAnchor = it.boundsInRoot() }
-            )
 
             Popup.Host(
-                visible = showBottomPopup,
-                anchorBounds = bottomAnchor,
-                placement = OverlayPlacement.BottomLeft,
-                onDismiss = { showBottomPopup = false }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "底部弹出内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
-            }
-        }
-
-        // From the right
-        ExampleSection(
-            title = "右侧弹出",
-            description = "从锚点右侧弹出"
-        ) {
-            Button(
-                text = "右侧弹出",
-                onClick = { showRightPopup = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { rightAnchor = it.boundsInRoot() }
-            )
-
-            Popup.Host(
-                visible = showRightPopup,
-                anchorBounds = rightAnchor,
-                placement = OverlayPlacement.RightTop,
-                onDismiss = { showRightPopup = false }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(120.dp)
-                        .background(colors.surface)
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = "右侧弹出内容",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                }
-            }
-        }
-
-        // ========== Component examples ==========
-
-        // Bottom sheet - title and actions
-        ExampleSection(
-            title = "底部弹出层-带标题及操作",
-            description = "包含标题栏和取消/确定操作按钮"
-        ) {
-            Button(
-                text = "底部弹出层-带标题及操作",
-                onClick = { showBottomWithTitleAndOp = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Popup.Host(
-                visible = showBottomWithTitleAndOp,
+                visible = showTitleWithActions,
                 anchorBounds = null,
                 placement = OverlayPlacement.Center,
-                onDismiss = { showBottomWithTitleAndOp = false }
+                onDismiss = { showTitleWithActions = false }
             ) {
-                Column(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .background(colors.surface)
-                ) {
-                    // Title bar
+                Column(modifier = Modifier.width(DialogPanelWidth)) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                            .padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
+                        Button(
                             text = "取消",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.mutedForeground,
-                            modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
+                            onClick = { showTitleWithActions = false },
+                            type = ButtonType.TEXT,
+                            theme = ButtonTheme.DEFAULT,
+                            size = ButtonSize.SMALL
                         )
                         Text(
                             text = "标题文字",
                             style = Theme.typography.titleMedium,
                             color = colors.foreground
                         )
-                        Text(
+                        Button(
                             text = "确定",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.primary,
-                            modifier = Modifier.clickable { showBottomWithTitleAndOp = false }
+                            onClick = { showTitleWithActions = false },
+                            type = ButtonType.TEXT,
+                            size = ButtonSize.SMALL
                         )
                     }
-                    // Content area
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(colors.background)
-                    )
+                    DialogBody()
                 }
             }
-        }
-
-        // Bottom sheet - actions
-        ExampleSection(
-            title = "底部弹出层-带操作",
-            description = "只有取消/确定操作按钮，无标题"
-        ) {
-            Button(
-                text = "底部弹出层-带操作",
-                onClick = { showBottomWithOp = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
 
             Popup.Host(
-                visible = showBottomWithOp,
+                visible = showTitleWithClose,
                 anchorBounds = null,
                 placement = OverlayPlacement.Center,
-                onDismiss = { showBottomWithOp = false }
+                onDismiss = { showTitleWithClose = false }
             ) {
-                Column(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .background(colors.surface)
-                ) {
-                    // Action bar
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "取消",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.mutedForeground,
-                            modifier = Modifier.clickable { showBottomWithOp = false }
-                        )
-                        Text(
-                            text = "确定",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.primary,
-                            modifier = Modifier.clickable { showBottomWithOp = false }
-                        )
-                    }
-                    // Content area
+                Column(modifier = Modifier.width(DialogPanelWidth)) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .background(colors.background)
-                    )
-                }
-            }
-        }
-
-        // Bottom sheet - title and close
-        ExampleSection(
-            title = "底部弹出层-带标题及关闭",
-            description = "包含居中标题和关闭按钮"
-        ) {
-            Button(
-                text = "底部弹出层-带标题及关闭",
-                onClick = { showBottomWithTitleAndClose = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Popup.Host(
-                visible = showBottomWithTitleAndClose,
-                anchorBounds = null,
-                placement = OverlayPlacement.Center,
-                onDismiss = { showBottomWithTitleAndClose = false }
-            ) {
-                Column(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .background(colors.surface)
-                ) {
-                    // Title bar
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .padding(horizontal = Spacing.sm, vertical = Spacing.xs)
                     ) {
                         Text(
                             text = "标题文字",
@@ -404,204 +172,97 @@ fun PopupExample(
                             color = colors.foreground,
                             modifier = Modifier.align(Alignment.Center)
                         )
-                        Icon(
-                            name = Icons.x,
-                            size = IconSizes.Default.md,
-                            tint = colors.mutedForeground,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .clickable { showBottomWithTitleAndClose = false }
+                        CloseButton(
+                            onClick = { showTitleWithClose = false },
+                            modifier = Modifier.align(Alignment.CenterEnd)
                         )
                     }
-                    // Content area
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(colors.background)
-                    )
+                    DialogBody()
                 }
             }
-        }
-
-        // Bottom sheet - close only
-        ExampleSection(
-            title = "底部弹出层-带关闭",
-            description = "只有关闭按钮，无标题"
-        ) {
-            Button(
-                text = "底部弹出层-带关闭",
-                onClick = { showBottomWithClose = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
 
             Popup.Host(
-                visible = showBottomWithClose,
-                anchorBounds = null,
-                placement = OverlayPlacement.Center,
-                onDismiss = { showBottomWithClose = false }
-            ) {
-                Column(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .background(colors.surface)
-                ) {
-                    // Close button
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
-                    ) {
-                        Icon(
-                            name = Icons.x,
-                            size = IconSizes.Default.md,
-                            tint = colors.mutedForeground,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .clickable { showBottomWithClose = false }
-                        )
-                    }
-                    // Content area
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(colors.background)
-                    )
-                }
-            }
-        }
-
-        // Bottom sheet - title only
-        ExampleSection(
-            title = "底部弹出层-仅标题",
-            description = "只有标题，无关闭按钮"
-        ) {
-            Button(
-                text = "底部弹出层-仅标题",
-                onClick = { showBottomWithTitle = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Popup.Host(
-                visible = showBottomWithTitle,
-                anchorBounds = null,
-                placement = OverlayPlacement.Center,
-                onDismiss = { showBottomWithTitle = false }
-            ) {
-                Column(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .background(colors.surface)
-                ) {
-                    // Title bar
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "标题文字",
-                            style = Theme.typography.titleMedium,
-                            color = colors.foreground
-                        )
-                    }
-                    // Content area
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(colors.background)
-                    )
-                }
-            }
-        }
-
-        // Centred popup - with close
-        ExampleSection(
-            title = "居中弹出层-带关闭",
-            description = "居中显示，右上角关闭按钮"
-        ) {
-            Button(
-                text = "居中弹出层-带关闭",
-                onClick = { showCenterWithClose = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Popup.Host(
-                visible = showCenterWithClose,
+                visible = showModalWithClose,
                 anchorBounds = null,
                 placement = OverlayPlacement.Center,
                 dismissOnOutside = false,
-                onDismiss = { showCenterWithClose = false }
+                onDismiss = { showModalWithClose = false }
             ) {
-                Box(
-                    modifier = Modifier
-                        .width(240.dp)
-                        .height(240.dp)
-                        .background(colors.surface)
-                ) {
-                    // Close button
-                    Icon(
-                        name = Icons.x,
-                        size = IconSizes.Default.md,
-                        tint = colors.mutedForeground,
+                Box(modifier = Modifier.size(CenterPanelSize)) {
+                    Text(
+                        text = "点击外部不会关闭",
+                        style = Theme.typography.bodyMedium,
+                        color = colors.foreground,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                    CloseButton(
+                        onClick = { showModalWithClose = false },
                         modifier = Modifier
                             .align(Alignment.TopEnd)
-                            .padding(12.dp)
-                            .clickable { showCenterWithClose = false }
+                            .padding(Spacing.xs)
                     )
                 }
             }
         }
+    }
+}
 
-        // Centred popup - close below
-        ExampleSection(
-            title = "居中弹出层-关闭在下方",
-            description = "居中显示，关闭按钮在弹层下方"
+/**
+ * A Button that opens an anchored Popup on the given [placement]. It records its own
+ * bounds, which the popup is positioned against.
+ */
+@Composable
+private fun AnchoredPopupButton(
+    label: String,
+    message: String,
+    placement: OverlayPlacement
+) {
+    val colors = Theme.colors
+    var visible by remember { mutableStateOf(false) }
+    var anchor by remember { mutableStateOf<Rect?>(null) }
+
+    Button(
+        text = label,
+        onClick = { visible = true },
+        modifier = Modifier.onGloballyPositioned { anchor = it.boundsInRoot() }
+    )
+
+    Popup.Host(
+        visible = visible,
+        anchorBounds = anchor,
+        placement = placement,
+        onDismiss = { visible = false }
+    ) {
+        Box(
+            modifier = Modifier
+                .width(AnchoredPanelWidth)
+                .height(AnchoredPanelHeight)
+                .padding(Spacing.lg)
         ) {
-            Button(
-                text = "居中弹出层-关闭在下方",
-                onClick = { showCenterWithUnderClose = true },
-                size = ButtonSize.LARGE,
-                type = ButtonType.OUTLINE,
-                modifier = Modifier.fillMaxWidth()
+            Text(
+                text = message,
+                style = Theme.typography.bodyMedium,
+                color = colors.foreground
             )
-
-            Popup.Host(
-                visible = showCenterWithUnderClose,
-                anchorBounds = null,
-                placement = OverlayPlacement.Center,
-                dismissOnOutside = false,
-                onDismiss = { showCenterWithUnderClose = false }
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // Content area
-                    Box(
-                        modifier = Modifier
-                            .width(240.dp)
-                            .height(240.dp)
-                            .background(colors.surface)
-                    )
-                    // Close button
-                    Icon(
-                        name = Icons.x,
-                        size = IconSizes.Default.lg,
-                        tint = colors.primaryForeground,
-                        modifier = Modifier.clickable { showCenterWithUnderClose = false }
-                    )
-                }
-            }
         }
+    }
+}
+
+/** Placeholder body under a popup's header. */
+@Composable
+private fun DialogBody() {
+    val colors = Theme.colors
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(DialogBodyHeight)
+            .padding(Spacing.lg),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "内容区域",
+            style = Theme.typography.bodyMedium,
+            color = colors.mutedForeground
+        )
     }
 }

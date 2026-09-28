@@ -15,6 +15,7 @@ import com.gearui.components.toast.Toast
 import com.gearui.components.togglebutton.ToggleButton
 import com.gearui.components.togglebutton.ToggleButtonGroup
 import com.gearui.components.togglebutton.ToggleButtonItem
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -25,7 +26,6 @@ import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 
 @Composable
 fun ToggleButtonExample(
@@ -41,7 +41,7 @@ fun ToggleButtonExample(
             title = "ToggleButton",
             description = "选中为实心，未选中为描边；状态留在按钮上"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 ToggleButton(bold, { bold = it }, text = "收藏", icon = Icons.heart)
                 ToggleButton(false, {}, text = "禁用", enabled = false)
             }
@@ -51,7 +51,7 @@ fun ToggleButtonExample(
             title = "单选组",
             description = "同一时间只有一个选中，再次点击可取消"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 ToggleButtonGroup(
                     items = listOf(
                         ToggleButtonItem("day", "日"),

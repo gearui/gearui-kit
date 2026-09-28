@@ -2,62 +2,51 @@ package com.gearui.sample.examples.contextmenu
 
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonType
 import com.gearui.components.contextmenu.ContextMenu
 import com.gearui.components.contextmenu.ContextMenuItem
+import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
-import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.Box
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 
+/**
+ * ContextMenu: a list of actions hanging off its trigger.
+ */
 @Composable
 fun ContextMenuExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-    val menuItems = listOf(
-        ContextMenuItem("Copy") { Toast.show("Copy") },
-        ContextMenuItem("Share") { Toast.show("Share") },
-        ContextMenuItem("Delete", danger = true) { Toast.show("Delete") }
+    val basicItems = listOf(
+        ContextMenuItem("复制") { Toast.show("复制") },
+        ContextMenuItem("分享") { Toast.show("分享") },
+        ContextMenuItem("删除", danger = true) { Toast.show("删除") }
+    )
+    val iconItems = listOf(
+        ContextMenuItem("复制", icon = Icons.copy) { Toast.show("复制") },
+        ContextMenuItem("分享", icon = Icons.share_network) { Toast.show("分享") },
+        ContextMenuItem("编辑", icon = Icons.pencil_simple, disabled = true) { },
+        ContextMenuItem("删除", icon = Icons.trash, danger = true) { Toast.show("删除") }
     )
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            title = "Basic Usage",
-            description = "Tap trigger to open a context action menu."
+            title = "基础用法",
+            description = "点击触发元素弹出操作菜单，danger 项为危险色"
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.muted, shapes.lg)
-                    .padding(vertical = 20.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                ContextMenu(items = menuItems) { onOpen ->
-                    Button(
-                        text = "Open Context Menu",
-                        type = ButtonType.OUTLINE,
-                        onClick = onOpen
-                    )
-                }
+            ContextMenu(items = basicItems) { onOpen ->
+                Button(text = "打开菜单", onClick = onOpen)
             }
+        }
 
-            Text(
-                text = "Actions: Copy / Share / Delete",
-                style = Theme.typography.bodySmall,
-                color = colors.mutedForeground
-            )
+        ExampleSection(
+            title = "图标与禁用",
+            description = "icon 设置前置图标，disabled 项不可点击"
+        ) {
+            ContextMenu(items = iconItems) { onOpen ->
+                Button(text = "打开菜单", onClick = onOpen)
+            }
         }
     }
 }

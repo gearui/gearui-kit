@@ -1,218 +1,92 @@
 package com.gearui.sample.examples.toast
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
+import androidx.compose.runtime.Composable
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.toast.Toast
-import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
+
+private class ToastRow(val title: String, val description: String? = null, val onClick: () -> Unit)
 
 /**
- * Toast component examples
- *
+ * Toast: a brief, non-blocking message that goes away on its own.
  */
 @Composable
 fun ToastExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
-    ExamplePage(
-        component = component,
-        onBack = onBack
-    ) {
-        // Text-only message
+    ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "纯文字",
-            description = "最基础的 Toast，仅显示文字"
+            description = "Toast.show()，长文本自动换行"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    text = "纯文字提示",
-                    onClick = {
-                        Toast.show("这是一条提示消息")
-                    },
-                    size = ButtonSize.MEDIUM
+            ToastRows(
+                listOf(
+                    ToastRow("纯文字提示") { Toast.show("这是一条提示消息") },
+                    ToastRow("长文本提示") { Toast.show("这是一条较长的提示消息，用于测试多行文本的显示效果") },
                 )
-                Button(
-                    text = "长文本提示",
-                    onClick = {
-                        Toast.show("这是一条较长的提示消息，用于测试多行文本的显示效果")
-                    },
-                    size = ButtonSize.MEDIUM
-                )
-            }
-        }
-
-        // Success message
-        ExampleSection(
-            title = "成功提示",
-            description = "操作成功后的反馈"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    text = "成功提示",
-                    onClick = {
-                        Toast.success("操作成功")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.SUCCESS
-                )
-                Button(
-                    text = "保存成功",
-                    onClick = {
-                        Toast.success("保存成功")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.SUCCESS
-                )
-            }
-        }
-
-        // Error message
-        ExampleSection(
-            title = "错误提示",
-            description = "操作失败后的反馈"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    text = "错误提示",
-                    onClick = {
-                        Toast.error("操作失败")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.DANGER
-                )
-                Button(
-                    text = "网络错误",
-                    onClick = {
-                        Toast.error("网络连接失败，请检查网络")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.DANGER
-                )
-            }
-        }
-
-        // Warning message
-        ExampleSection(
-            title = "警告提示",
-            description = "需要用户注意的信息"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    text = "警告提示",
-                    onClick = {
-                        Toast.warning("请注意检查输入")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.WARNING
-                )
-                Button(
-                    text = "余额不足",
-                    onClick = {
-                        Toast.warning("账户余额不足")
-                    },
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.WARNING
-                )
-            }
-        }
-
-        // Custom duration
-        ExampleSection(
-            title = "自定义时长",
-            description = "控制 Toast 显示时间"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    text = "短时提示 (1秒)",
-                    onClick = {
-                        Toast.show("短时提示", duration = 1000L)
-                    },
-                    size = ButtonSize.MEDIUM
-                )
-                Button(
-                    text = "长时提示 (4秒)",
-                    onClick = {
-                        Toast.show("长时提示", duration = 4000L)
-                    },
-                    size = ButtonSize.MEDIUM
-                )
-            }
-        }
-
-        // Consecutive messages
-        ExampleSection(
-            title = "连续提示",
-            description = "多个 Toast 排队显示"
-        ) {
-            Button(
-                text = "连续3条提示",
-                onClick = {
-                    Toast.show("第一条提示")
-                    Toast.success("第二条提示")
-                    Toast.warning("第三条提示")
-                },
-                size = ButtonSize.MEDIUM
             )
         }
 
-        // Usage notes
         ExampleSection(
-            title = "使用说明",
-            description = "Toast 组件特性"
+            surface = SectionSurface.Plain,
+            title = "状态",
+            description = "Toast.success()、Toast.error()、Toast.warning() 带状态图标"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. Toast.show(): 纯文字提示",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            ToastRows(
+                listOf(
+                    ToastRow("成功提示", "Toast.success()") { Toast.success("操作成功") },
+                    ToastRow("错误提示", "Toast.error()") { Toast.error("网络连接失败，请检查网络") },
+                    ToastRow("警告提示", "Toast.warning()") { Toast.warning("账户余额不足") },
                 )
-                Text(
-                    text = "2. Toast.success(): 成功提示",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. Toast.error(): 错误提示",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. Toast.warning(): 警告提示",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 队列管理：多个 Toast 按顺序显示",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "6. 自动消失：默认 2 秒后消失",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-            }
+            )
         }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "显示时长",
+            description = "duration 控制停留时间，默认 2 秒"
+        ) {
+            ToastRows(
+                listOf(
+                    ToastRow("1 秒") { Toast.show("1 秒后消失", duration = 1000L) },
+                    ToastRow("4 秒") { Toast.show("4 秒后消失", duration = 4000L) },
+                )
+            )
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "连续提示",
+            description = "多个 Toast 按顺序排队显示"
+        ) {
+            ToastRows(
+                listOf(
+                    ToastRow("连续 3 条提示") {
+                        Toast.show("第一条提示")
+                        Toast.success("第二条提示")
+                        Toast.warning("第三条提示")
+                    },
+                )
+            )
+        }
+    }
+}
+
+// One arrow row per trigger (non-anchored overlay entries, see COMPONENT_SPEC §6).
+@Composable
+private fun ToastRows(rows: List<ToastRow>) {
+    CellGroup(items = rows) { row ->
+        Cell(
+            title = row.title,
+            description = row.description,
+            arrow = true,
+            onClick = row.onClick
+        )
     }
 }

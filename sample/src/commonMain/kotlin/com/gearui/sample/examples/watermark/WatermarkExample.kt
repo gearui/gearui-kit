@@ -2,34 +2,34 @@ package com.gearui.sample.examples.watermark
 
 import androidx.compose.runtime.Composable
 import com.gearui.components.watermark.Watermark
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
-import com.tencent.kuikly.compose.foundation.layout.Spacer
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.height
-import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
+
+// Demo dimensions: the watermarked area and the custom tiling being shown off.
+private val DemoAreaHeight = 180.dp
+private val CompactGapX = 28.dp
+private val CompactGapY = 20.dp
+private val ShiftedOffsetX = 40.dp
+private val ShiftedOffsetY = 8.dp
 
 @Composable
 fun WatermarkExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     ExamplePage(
         component = component,
         onBack = onBack
@@ -38,104 +38,82 @@ fun WatermarkExample(
             title = "基础水印",
             description = "默认旋转角度与平铺间距"
         ) {
-            DemoCard {
-                Watermark(
-                    content = "GearUI",
-                    modifier = Modifier.fillMaxSize()
-                )
-                CenterText("基础文字水印")
+            DemoArea("基础文字水印") {
+                Watermark(content = "GearUI", modifier = Modifier.fillMaxSize())
             }
         }
 
         ExampleSection(
             title = "多行水印",
-            description = "支持换行文本（常见样式）"
+            description = "content 中的换行拆成多行"
         ) {
-            DemoCard {
+            DemoArea("多行文本水印") {
                 Watermark(
-                    content = "GearUI Kit\\nConfidential",
+                    content = "GearUI Kit\nConfidential",
                     modifier = Modifier.fillMaxSize(),
                     alpha = 0.12f,
                     rotate = -18f
                 )
-                CenterText("多行文本水印")
             }
         }
 
         ExampleSection(
             title = "间距与旋转",
-            description = "可调节 gapX / gapY / rotate"
+            description = "gapX / gapY 调节平铺间距，rotate 调节角度"
         ) {
-            DemoCard {
+            DemoArea("紧凑排布 / 旋转 -30°") {
                 Watermark(
                     content = "Internal Use",
                     modifier = Modifier.fillMaxSize(),
                     alpha = 0.18f,
                     rotate = -30f,
-                    gapX = 28.dp,
-                    gapY = 20.dp
+                    gapX = CompactGapX,
+                    gapY = CompactGapY
                 )
-                CenterText("紧凑排布 / 旋转 -30°")
             }
         }
 
         ExampleSection(
             title = "偏移与透明度",
-            description = "可调节 offsetX / offsetY / alpha"
+            description = "offsetX / offsetY 调节起点，alpha 调节浓淡"
         ) {
-            DemoCard {
+            DemoArea("偏移起点 + 更高透明度") {
                 Watermark(
                     content = "DO NOT SHARE",
                     modifier = Modifier.fillMaxSize(),
                     alpha = 0.22f,
-                    offsetX = 40.dp,
-                    offsetY = 8.dp,
+                    offsetX = ShiftedOffsetX,
+                    offsetY = ShiftedOffsetY,
                     rows = 4,
                     columns = 2
                 )
-                CenterText("偏移起点 + 更高透明度")
             }
         }
     }
 }
 
+/** A fixed-height content area with a watermark layered over it. */
 @Composable
-private fun DemoCard(content: @Composable () -> Unit) {
+private fun DemoArea(title: String, watermark: @Composable () -> Unit) {
     val colors = Theme.colors
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, colors.border, RoundedCornerShape(8.dp))
-            .background(colors.surface)
-    ) {
-        content()
-    }
-}
-
-@Composable
-private fun CenterText(text: String) {
-    val colors = Theme.colors
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = text,
-            style = Theme.typography.titleMedium,
-            color = colors.foreground
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Watermark 覆盖在内容层上方",
-            style = Theme.typography.bodySmall,
-            color = colors.mutedForeground
-        )
+    Box(modifier = Modifier.fillMaxWidth().height(DemoAreaHeight)) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = title,
+                style = Theme.typography.titleMedium,
+                color = colors.foreground
+            )
+            Text(
+                text = "Watermark 覆盖在内容层上方",
+                style = Theme.typography.bodySmall,
+                color = colors.mutedForeground
+            )
+        }
+        watermark()
     }
 }

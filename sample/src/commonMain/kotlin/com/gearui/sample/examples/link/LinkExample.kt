@@ -14,7 +14,7 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.layout.Spacing
 
 @Composable
 fun LinkExample(
@@ -26,9 +26,9 @@ fun LinkExample(
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
             title = "Link",
-            description = "行内跳转：前景色 + 分隔线色下划线，按压缩放"
+            description = "行内跳转链接，可带图标、可去掉下划线"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Link("查看详情", onClick = { Toast.show("查看详情") })
                 Link("帮助中心", onClick = { Toast.show("帮助中心") }, endIcon = Icons.arrow_square_out)
                 Link("复制链接", onClick = { Toast.show("复制链接") }, startIcon = Icons.link, underline = false)
@@ -41,25 +41,25 @@ fun LinkExample(
 
         ExampleSection(
             title = "尺寸与状态",
-            description = "SMALL / MEDIUM / LARGE，禁用态"
+            description = "SMALL / MEDIUM / LARGE 与禁用态"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Link("Small", onClick = {}, size = LinkSize.SMALL)
-                Link("Medium", onClick = {})
-                Link("Large", onClick = {}, size = LinkSize.LARGE)
+                Link("小号", onClick = {}, size = LinkSize.SMALL)
+                Link("中号", onClick = {})
+                Link("大号", onClick = {}, size = LinkSize.LARGE)
                 Link("禁用", onClick = {}, enabled = false)
             }
         }
 
         ExampleSection(
             title = "LinkButton",
-            description = "无内边距、无高亮的 ghost 按钮，用于「忘记密码」「服务条款」等"
+            description = "无内边距的文字按钮，用于「忘记密码」等次要操作"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 LinkButton("忘记密码？", onClick = { Toast.show("忘记密码") })

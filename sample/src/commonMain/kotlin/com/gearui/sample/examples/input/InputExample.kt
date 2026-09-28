@@ -1,37 +1,40 @@
 package com.gearui.sample.examples.input
 
-import com.gearui.foundation.interaction.PressableFeedback
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.gearui.components.icon.Icons
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.typography.IconSizes
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.text.style.TextAlign
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.components.input.Input
-import com.gearui.components.input.InputSize
+import androidx.compose.runtime.setValue
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
+import com.gearui.components.icon.Icons
+import com.gearui.components.input.Input
 import com.gearui.components.toast.Toast
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldDescription
+import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.field.FieldLabel
+import com.gearui.foundation.interaction.PressableFeedback
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.ui.text.style.TextAlign
 
 /**
- * Input component examples
+ * Input component examples.
  *
- * Lets the user type text and shows the result.
+ * Every field sits on a white Card section, so it uses the filled variant
+ * (`cardStyle = true`); the shadowed default variant is shown once, on the page
+ * background, where it belongs.
  */
 @Composable
 fun InputExample(
@@ -44,437 +47,89 @@ fun InputExample(
         component = component,
         onBack = onBack
     ) {
-        // ==================== Field anatomy ====================
         ExampleSection(
-            useCardContainer = false,
             title = "字段结构 Label / Description / FieldError",
-            description = "自定义组合时用同一套字段文字：标签中粗、必填星号在后、说明灰色、错误红色"
+            description = "自定义组合时用同一套字段文字：标签、必填星号、说明与错误"
         ) {
             var email by remember { mutableStateOf("") }
             val emailError = if (email.isNotEmpty() && !email.contains("@")) "邮箱格式不正确" else null
-            Column(verticalArrangement = Arrangement.spacedBy(com.gearui.foundation.field.FieldDefaults.labelGap)) {
-                com.gearui.foundation.field.FieldLabel("邮箱", required = true, invalid = emailError != null)
-                Input(value = email, onValueChange = { email = it }, placeholder = "name@example.com")
+            Column(verticalArrangement = Arrangement.spacedBy(FieldDefaults.labelGap)) {
+                FieldLabel("邮箱", required = true, invalid = emailError != null)
+                Input(
+                    value = email,
+                    onValueChange = { email = it },
+                    placeholder = "name@example.com",
+                    cardStyle = true
+                )
                 if (emailError != null) {
-                    com.gearui.foundation.field.FieldErrorText(emailError)
+                    FieldErrorText(emailError)
                 } else {
-                    com.gearui.foundation.field.FieldDescription("仅用于找回密码，不会公开")
+                    FieldDescription("仅用于找回密码，不会公开")
                 }
             }
-            Spacer(Modifier.height(16.dp))
-            com.gearui.foundation.field.FieldLabel("禁用字段", required = true, enabled = false)
+            FieldLabel("禁用字段", required = true, enabled = false)
         }
 
-        // ==================== Component types ====================
-
-        // Basic input
         ExampleSection(
-            useCardContainer = false,
             title = "基础输入框",
-            description = "标准文本输入框"
+            description = "标签、必填、无标签与辅助说明"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // With a label
-                var value1 by remember { mutableStateOf("") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "Label Text",
-                    placeholder = "Please enter text"
-                )
+            var value1 by remember { mutableStateOf("") }
+            Input(
+                value = value1,
+                onValueChange = { value1 = it },
+                label = "标签文字",
+                required = true,
+                placeholder = "请输入文字",
+                cardStyle = true
+            )
 
-                // Required
-                var value2 by remember { mutableStateOf("") }
-                Input(
-                    value = value2,
-                    onValueChange = { value2 = it },
-                    label = "标签文字",
-                    required = true,
-                    placeholder = "请输入文字"
-                )
+            var value2 by remember { mutableStateOf("") }
+            Input(
+                value = value2,
+                onValueChange = { value2 = it },
+                placeholder = "请输入文字（无标签）",
+                cardStyle = true
+            )
 
-                // Optional
-                var value3 by remember { mutableStateOf("") }
-                Input(
-                    value = value3,
-                    onValueChange = { value3 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字(选填)"
-                )
-
-                // Bare input (no label)
-                var value4 by remember { mutableStateOf("") }
-                Input(
-                    value = value4,
-                    onValueChange = { value4 = it },
-                    placeholder = "请输入文字"
-                )
-
-                // With helper text
-                var value5 by remember { mutableStateOf("") }
-                Input(
-                    value = value5,
-                    onValueChange = { value5 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    helperText = "辅助说明"
-                )
-            }
+            var value3 by remember { mutableStateOf("") }
+            Input(
+                value = value3,
+                onValueChange = { value3 = it },
+                label = "标签文字",
+                placeholder = "请输入文字（选填）",
+                helperText = "辅助说明",
+                cardStyle = true
+            )
         }
 
-        // Input with a character limit
         ExampleSection(
-            useCardContainer = false,
-            title = "带字数限制输入框",
-            description = "限制最大输入字符数"
+            title = "标签位置",
+            description = "labelPosition：标签在上方或左侧"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                var value1 by remember { mutableStateOf("") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    maxLength = 10,
-                    showCounter = true,
-                    helperText = "最大输入10个字符"
-                )
-
-                var value2 by remember { mutableStateOf("") }
-                Input(
-                    value = value2,
-                    onValueChange = { value2 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    maxLength = 10,
-                    showCounter = true,
-                    helperText = "最大输入10个字符，汉字同样按一个字符计数"
-                )
-            }
+            var top by remember { mutableStateOf("") }
+            Input(
+                value = top,
+                onValueChange = { top = it },
+                label = "上方标签",
+                labelPosition = "top",
+                placeholder = "请输入文字",
+                cardStyle = true
+            )
+            var left by remember { mutableStateOf("") }
+            Input(
+                value = left,
+                onValueChange = { left = it },
+                label = "左侧标签",
+                labelPosition = "left",
+                placeholder = "请输入文字",
+                cardStyle = true
+            )
         }
 
-        // Input with actions
         ExampleSection(
-            useCardContainer = false,
-            title = "带操作输入框",
-            description = "输入框右侧带操作按钮或图标"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // With a clear icon
-                var value1 by remember { mutableStateOf("可清除的内容") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    clearable = true,
-                    onClear = { value1 = "" }
-                )
-
-                // With an action button
-                var value2 by remember { mutableStateOf("") }
-                Input(
-                    value = value2,
-                    onValueChange = { value2 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    suffix = {
-                        Button(
-                            text = "操作按钮",
-                            size = ButtonSize.SMALL,
-                            theme = ButtonTheme.PRIMARY,
-                            onClick = { Toast.show("点击操作按钮") }
-                        )
-                    }
-                )
-
-                // With an icon button
-                var value3 by remember { mutableStateOf("") }
-
-                Input(
-                    value = value3,
-                    onValueChange = { value3 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    suffix = {
-                        PressableFeedback(onClick = { Toast.show("点击图标") }) {
-                            Icon(
-                                name = Icons.user,
-                                size = IconSizes.Default.md,
-                                tint = Theme.colors.foreground,
-                            )
-                        }
-                    }
-                )
-            }
-        }
-
-        // Input with an icon
-        ExampleSection(
-            useCardContainer = false,
-            title = "带图标输入框",
-            description = "输入框左侧带图标"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                var value1 by remember { mutableStateOf("") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    prefix = {
-                        Icon(
-                            name = Icons.phone,
-                            size = IconSizes.Default.sm,
-                            tint = Theme.colors.foreground,
-                        )
-                    }
-                )
-
-                var value2 by remember { mutableStateOf("") }
-                Input(
-                    value = value2,
-                    onValueChange = { value2 = it },
-                    placeholder = "请输入文字",
-                    prefix = {
-                        Icon(
-                            name = Icons.magnifying_glass,
-                            size = IconSizes.Default.sm,
-                            tint = Theme.colors.foreground,
-                        )
-                    }
-                )
-            }
-        }
-
-        // Specific input types
-        ExampleSection(
-            useCardContainer = false,
-            title = "特定类型输入框",
-            description = "密码、验证码、手机号、价格等"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Password
-                var password by remember { mutableStateOf("") }
-                var showPassword by remember { mutableStateOf(false) }
-
-                Input(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = "输入密码",
-                    placeholder = "请输入密码",
-                    isPassword = !showPassword,
-                    suffix = {
-                        PressableFeedback(onClick = { showPassword = !showPassword }) {
-                            Icon(
-                                name = if (showPassword) Icons.eye else Icons.eye_slash,
-                                size = IconSizes.Default.md,
-                            )
-                        }
-                    }
-                )
-
-                // Verification code
-                var verifyCode by remember { mutableStateOf("") }
-                Input(
-                    value = verifyCode,
-                    onValueChange = { verifyCode = it },
-                    label = "验证码",
-                    placeholder = "输入验证码",
-                    suffix = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .width(1.dp)
-                                    .height(24.dp)
-                                    .background(colors.border)
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .width(72.dp)
-                                    .height(36.dp)
-                                    .clip(Theme.shapes.sm)
-                                    .background(colors.muted)
-                                    .clickable { Toast.show("点击更换验证码") },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "ABCD",
-                                    style = Theme.typography.titleSmall,
-                                    color = colors.primary
-                                )
-                            }
-                        }
-                    }
-                )
-
-                // Phone number
-                var phone by remember { mutableStateOf("") }
-                var countdown by remember { mutableStateOf(0) }
-                Input(
-                    value = phone,
-                    onValueChange = { phone = it },
-                    label = "手机号",
-                    placeholder = "输入手机号",
-                    suffix = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .width(1.dp)
-                                    .height(24.dp)
-                                    .background(colors.border)
-                            )
-                            PressableFeedback(
-                                onClick = { Toast.show("发送验证码") },
-                                enabled = countdown == 0,
-                            ) {
-                                Text(
-                                    text = if (countdown > 0) "重发(${countdown}秒)" else "发送验证码",
-                                    style = Theme.typography.bodyMedium,
-                                    color = if (countdown > 0) colors.mutedForeground else colors.primary,
-                                )
-                            }
-                        }
-                    }
-                )
-
-                // Price
-                var price by remember { mutableStateOf("") }
-                Input(
-                    value = price,
-                    onValueChange = { price = it },
-                    label = "价格",
-                    placeholder = "0.00",
-                    textAlign = TextAlign.End,
-                    suffix = {
-                        Text(
-                            text = "元",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                    }
-                )
-
-                // Quantity
-                var quantity by remember { mutableStateOf("") }
-                Input(
-                    value = quantity,
-                    onValueChange = { quantity = it },
-                    label = "数量",
-                    placeholder = "填写个数",
-                    textAlign = TextAlign.End,
-                    suffix = {
-                        Text(
-                            text = "个",
-                            style = Theme.typography.bodyMedium,
-                            color = colors.foreground
-                        )
-                    }
-                )
-            }
-        }
-
-        // ==================== Component states ====================
-
-        // Input states
-        ExampleSection(
-            useCardContainer = false,
-            title = "输入框状态",
-            description = "错误提示、只读状态"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Error state
-                var errorValue by remember { mutableStateOf("错误的输入内容") }
-                Input(
-                    value = errorValue,
-                    onValueChange = { errorValue = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    error = "错误提示说明"
-                )
-
-                // Read-only state
-                Input(
-                    value = "不可编辑文字",
-                    onValueChange = {},
-                    label = "标签文字",
-                    readOnly = true
-                )
-            }
-        }
-
-        // Overlong content
-        ExampleSection(
-            useCardContainer = false,
-            title = "信息超长状态",
-            description = "标签超长、输入超长"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Overlong label
-                var value1 by remember { mutableStateOf("") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "标签超长时最多十个字",
-                    placeholder = "请输入文字"
-                )
-
-                // Overlong input
-                Input(
-                    value = "输入文字超长不超过两行输入文字超长不超过两行",
-                    onValueChange = {},
-                    label = "标签文字",
-                    maxLines = 2
-                )
-            }
-        }
-
-        // ==================== Component styles ====================
-
-        // Content alignment
-        ExampleSection(
-            useCardContainer = false,
-            title = "内容位置",
-            description = "左对齐、居中、右对齐"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                var value1 by remember { mutableStateOf("左对齐内容") }
-                Input(
-                    value = value1,
-                    onValueChange = { value1 = it },
-                    label = "左对齐",
-                    textAlign = TextAlign.Start
-                )
-
-                var value2 by remember { mutableStateOf("居中内容") }
-                Input(
-                    value = value2,
-                    onValueChange = { value2 = it },
-                    label = "居中",
-                    textAlign = TextAlign.Center
-                )
-
-                var value3 by remember { mutableStateOf("右对齐内容") }
-                Input(
-                    value = value3,
-                    onValueChange = { value3 = it },
-                    label = "右对齐",
-                    textAlign = TextAlign.End
-                )
-            }
-        }
-
-        // Stacked style
-        ExampleSection(
-            useCardContainer = false,
-            title = "竖排样式",
-            description = "标签在输入框上方"
+            title = "字数限制",
+            description = "maxLength + showCounter，汉字按一个字符计数"
         ) {
             var value by remember { mutableStateOf("") }
             Input(
@@ -482,84 +137,255 @@ fun InputExample(
                 onValueChange = { value = it },
                 label = "标签文字",
                 placeholder = "请输入文字",
-                labelPosition = "top",
+                maxLength = 10,
+                showCounter = true,
+                helperText = "最多输入 10 个字符",
+                cardStyle = true
+            )
+        }
+
+        ExampleSection(
+            title = "前后缀",
+            description = "清除按钮、后缀按钮与图标、前缀图标"
+        ) {
+            var value1 by remember { mutableStateOf("可清除的内容") }
+            Input(
+                value = value1,
+                onValueChange = { value1 = it },
+                label = "可清除",
+                placeholder = "请输入文字",
+                clearable = true,
+                onClear = { value1 = "" },
+                cardStyle = true
+            )
+
+            var value2 by remember { mutableStateOf("") }
+            Input(
+                value = value2,
+                onValueChange = { value2 = it },
+                label = "后缀按钮",
+                placeholder = "请输入文字",
+                cardStyle = true,
                 suffix = {
+                    Button(
+                        text = "操作按钮",
+                        size = ButtonSize.SMALL,
+                        theme = ButtonTheme.PRIMARY,
+                        onClick = { Toast.show("点击操作按钮") }
+                    )
+                }
+            )
+
+            var value3 by remember { mutableStateOf("") }
+            Input(
+                value = value3,
+                onValueChange = { value3 = it },
+                label = "后缀图标",
+                placeholder = "请输入文字",
+                cardStyle = true,
+                suffix = {
+                    PressableFeedback(onClick = { Toast.show("点击图标") }) {
+                        Icon(
+                            name = Icons.user,
+                            size = IconSizes.Default.md,
+                            tint = colors.foreground,
+                        )
+                    }
+                }
+            )
+
+            var value4 by remember { mutableStateOf("") }
+            Input(
+                value = value4,
+                onValueChange = { value4 = it },
+                placeholder = "搜索",
+                cardStyle = true,
+                prefix = {
                     Icon(
-                        name = Icons.warning,
+                        name = Icons.magnifying_glass,
                         size = IconSizes.Default.md,
-                        tint = Theme.colors.foreground,
-                        modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
+                        tint = colors.mutedForeground,
                     )
                 }
             )
         }
 
-        // Inset style
         ExampleSection(
-            useCardContainer = false,
-            title = "非通栏样式",
-            description = "卡片式输入框"
+            title = "特定类型",
+            description = "密码、验证码、手机号、价格与数量"
         ) {
-            var value by remember { mutableStateOf("") }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Input(
-                    value = value,
-                    onValueChange = { value = it },
-                    label = "标签文字",
-                    placeholder = "请输入文字",
-                    cardStyle = true
-                )
-            }
-        }
-
-        // Label outside style
-        ExampleSection(
-            useCardContainer = false,
-            title = "标签外置样式",
-            description = "标签在输入框外部上方"
-        ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = "标签文字",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
-                )
-                var value by remember { mutableStateOf("") }
-                Input(
-                    value = value,
-                    onValueChange = { value = it },
-                    placeholder = "请输入文字",
-                    cardStyle = true,
-                    suffix = {
+            var password by remember { mutableStateOf("") }
+            var showPassword by remember { mutableStateOf(false) }
+            Input(
+                value = password,
+                onValueChange = { password = it },
+                label = "密码",
+                placeholder = "请输入密码",
+                isPassword = !showPassword,
+                cardStyle = true,
+                suffix = {
+                    PressableFeedback(onClick = { showPassword = !showPassword }) {
                         Icon(
-                            name = Icons.warning,
+                            name = if (showPassword) Icons.eye else Icons.eye_slash,
                             size = IconSizes.Default.md,
-                            tint = Theme.colors.foreground,
-                            modifier = Modifier.clickable { Toast.show("点击右侧按钮") }
+                            tint = colors.mutedForeground,
                         )
                     }
-                )
-            }
+                }
+            )
+
+            var verifyCode by remember { mutableStateOf("") }
+            Input(
+                value = verifyCode,
+                onValueChange = { verifyCode = it },
+                label = "验证码",
+                placeholder = "输入验证码",
+                cardStyle = true,
+                suffix = {
+                    Button(
+                        text = "ABCD",
+                        size = ButtonSize.SMALL,
+                        theme = ButtonTheme.LIGHT,
+                        onClick = { Toast.show("点击更换验证码") }
+                    )
+                }
+            )
+
+            var phone by remember { mutableStateOf("") }
+            Input(
+                value = phone,
+                onValueChange = { phone = it },
+                label = "手机号",
+                placeholder = "输入手机号",
+                cardStyle = true,
+                suffix = {
+                    Button(
+                        text = "发送验证码",
+                        size = ButtonSize.SMALL,
+                        type = ButtonType.TEXT,
+                        onClick = { Toast.show("发送验证码") }
+                    )
+                }
+            )
+
+            var price by remember { mutableStateOf("") }
+            Input(
+                value = price,
+                onValueChange = { price = it },
+                label = "价格",
+                placeholder = "0.00",
+                textAlign = TextAlign.End,
+                cardStyle = true,
+                suffix = {
+                    Text(text = "元", style = Theme.typography.bodyMedium, color = colors.foreground)
+                }
+            )
+
+            var quantity by remember { mutableStateOf("") }
+            Input(
+                value = quantity,
+                onValueChange = { quantity = it },
+                label = "数量",
+                placeholder = "填写个数",
+                textAlign = TextAlign.End,
+                cardStyle = true,
+                suffix = {
+                    Text(text = "个", style = Theme.typography.bodyMedium, color = colors.foreground)
+                }
+            )
         }
 
-        // Disabled state
         ExampleSection(
-            useCardContainer = false,
-            title = "禁用状态",
-            description = "输入框不可交互"
+            title = "状态",
+            description = "错误、只读与禁用"
         ) {
+            var errorValue by remember { mutableStateOf("错误的输入内容") }
+            Input(
+                value = errorValue,
+                onValueChange = { errorValue = it },
+                label = "错误",
+                placeholder = "请输入文字",
+                error = "错误提示说明",
+                cardStyle = true
+            )
+            Input(
+                value = "不可编辑文字",
+                onValueChange = {},
+                label = "只读",
+                readOnly = true,
+                cardStyle = true
+            )
             Input(
                 value = "禁用状态的内容",
                 onValueChange = {},
+                label = "禁用",
+                enabled = false,
+                cardStyle = true
+            )
+        }
+
+        ExampleSection(
+            title = "内容超长",
+            description = "长标签与最多两行的长内容"
+        ) {
+            var value by remember { mutableStateOf("") }
+            Input(
+                value = value,
+                onValueChange = { value = it },
+                label = "标签超长时最多十个字",
+                placeholder = "请输入文字",
+                cardStyle = true
+            )
+            Input(
+                value = "输入文字超长不超过两行输入文字超长不超过两行",
+                onValueChange = {},
                 label = "标签文字",
-                enabled = false
+                maxLines = 2,
+                cardStyle = true
+            )
+        }
+
+        ExampleSection(
+            title = "内容对齐",
+            description = "textAlign：左对齐、居中、右对齐"
+        ) {
+            var value1 by remember { mutableStateOf("左对齐内容") }
+            Input(
+                value = value1,
+                onValueChange = { value1 = it },
+                label = "左对齐",
+                textAlign = TextAlign.Start,
+                cardStyle = true
+            )
+            var value2 by remember { mutableStateOf("居中内容") }
+            Input(
+                value = value2,
+                onValueChange = { value2 = it },
+                label = "居中",
+                textAlign = TextAlign.Center,
+                cardStyle = true
+            )
+            var value3 by remember { mutableStateOf("右对齐内容") }
+            Input(
+                value = value3,
+                onValueChange = { value3 = it },
+                label = "右对齐",
+                textAlign = TextAlign.End,
+                cardStyle = true
+            )
+        }
+
+        ExampleSection(
+            title = "页面背景上的默认样式",
+            description = "cardStyle = false：直接放在页面背景上时用带阴影的默认样式",
+            surface = SectionSurface.Plain
+        ) {
+            var value by remember { mutableStateOf("") }
+            Input(
+                value = value,
+                onValueChange = { value = it },
+                label = "标签文字",
+                placeholder = "请输入文字"
             )
         }
     }

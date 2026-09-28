@@ -1,293 +1,192 @@
 package com.gearui.sample.examples.textarea
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.foundation.text.BasicTextField as KuiklyBasicTextField
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.graphics.SolidColor
-import com.tencent.kuikly.compose.ui.text.TextStyle
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.components.textarea.Textarea
 import com.gearui.components.textarea.TextareaLayout
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
+
+private const val MAX_LENGTH = 500
 
 /**
  * Textarea component examples
  *
+ * The default field carries its own surface and shadow, so it sits on a plain section;
+ * the filled `cardStyle` variant is shown on a card, where it belongs.
  */
 @Composable
 fun TextareaExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
-    // Component types
     var basicText by remember { mutableStateOf("") }
     var basicTitleText by remember { mutableStateOf("") }
     var autoHeightText by remember { mutableStateOf("") }
     var maxLengthText by remember { mutableStateOf("") }
-
-    // Component states
-    var disabledText by remember { mutableStateOf("") }
-
-    // Component styles
-    var verticalText by remember { mutableStateOf("") }
-    var cardText by remember { mutableStateOf("") }
-
-    // Special styles
-    var borderedText by remember { mutableStateOf("") }
-    var labelIconText by remember { mutableStateOf("") }
     var requiredText by remember { mutableStateOf("") }
-
-    // Control test against the raw Kuikly BasicTextField
-    var rawText by remember { mutableStateOf("") }
+    var errorText by remember { mutableStateOf("") }
+    var horizontalText by remember { mutableStateOf("") }
+    var cardText by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // Component types
         ExampleSection(
-            title = "组件类型",
-            description = "",
-            useCardContainer = false
+            title = "基础用法",
+            description = "固定 4 行高度的多行输入",
+            surface = SectionSurface.Plain
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Basic multi-line input
-                Column {
-                    SectionTitle("基础多文本输入框")
-                    Textarea(
-                        value = basicText,
-                        onValueChange = { basicText = it },
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Multi-line input with a title
-                Column {
-                    SectionTitle("带标题多文本输入框")
-                    Textarea(
-                        value = basicTitleText,
-                        onValueChange = { basicTitleText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Self-growing multi-line input
-                Column {
-                    SectionTitle("自动增高多文本输入框")
-                    Textarea(
-                        value = autoHeightText,
-                        onValueChange = { autoHeightText = it },
-                        placeholder = "请输入文字",
-                        minLines = 1,
-                        autosize = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // With a character limit
-                Column {
-                    SectionTitle("设置字符数限制")
-                    Textarea(
-                        value = maxLengthText,
-                        onValueChange = { maxLengthText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
+            Textarea(
+                value = basicText,
+                onValueChange = { basicText = it },
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Component states
         ExampleSection(
-            title = "组件状态",
-            description = "",
-            useCardContainer = false
+            title = "带标签",
+            description = "label 显示在输入框上方",
+            surface = SectionSurface.Plain
         ) {
-            Column {
-                SectionTitle("禁用状态")
-                Textarea(
-                    value = disabledText,
-                    onValueChange = { disabledText = it },
-                    label = "标签文字",
-                    placeholder = "不可编辑文字",
-                    minLines = 4,
-                    maxLines = 4,
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            Textarea(
+                value = basicTitleText,
+                onValueChange = { basicTitleText = it },
+                label = "标签文字",
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Component styles
         ExampleSection(
-            title = "组件样式",
-            description = "",
-            useCardContainer = false
+            title = "自动增高",
+            description = "autosize = true，从一行开始随内容增高",
+            surface = SectionSurface.Plain
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Stacked style
-                Column {
-                    SectionTitle("横排标签（显式变体）")
-                    Textarea(
-                        value = verticalText,
-                        onValueChange = { verticalText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        layout = TextareaLayout.HORIZONTAL,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Card style
-                Column {
-                    SectionTitle("卡片样式")
-                    Textarea(
-                        value = cardText,
-                        onValueChange = { cardText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        cardStyle = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
+            Textarea(
+                value = autoHeightText,
+                onValueChange = { autoHeightText = it },
+                placeholder = "请输入文字",
+                minLines = 1,
+                autosize = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        // Special styles
         ExampleSection(
-            title = "特殊样式",
-            description = "",
-            useCardContainer = false
+            title = "字数限制",
+            description = "maxLength 配合 indicator 显示已输入字数",
+            surface = SectionSurface.Plain
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Label outside the input
-                Column {
-                    SectionTitle("标签外置输入框")
-                    Textarea(
-                        value = borderedText,
-                        onValueChange = { borderedText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        layout = TextareaLayout.VERTICAL,
-                        bordered = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Custom title
-                Column {
-                    SectionTitle("自定义标题")
-                    Textarea(
-                        value = labelIconText,
-                        onValueChange = { labelIconText = it },
-                        label = "地址信息",
-                        labelIcon = "location",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                // Required, with helper text
-                Column {
-                    SectionTitle("必填和辅助说明")
-                    Textarea(
-                        value = requiredText,
-                        onValueChange = { requiredText = it },
-                        label = "标签文字",
-                        placeholder = "请输入文字",
-                        minLines = 4,
-                        maxLines = 4,
-                        maxLength = 500,
-                        indicator = true,
-                        layout = TextareaLayout.VERTICAL,
-                        required = true,
-                        additionInfo = "辅助说明",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-        // Raw Kuikly BasicTextField (no gearui-kit wrapper)
-        ExampleSection(
-            title = "原始 BasicTextField（对照组）",
-            description = "仅用于输入行为排障，不代表 GearUI 默认样式",
-            useCardContainer = false
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Theme.colors.border, RoundedCornerShape(8.dp))
-                    .padding(12.dp)
-            ) {
-                KuiklyBasicTextField(
-                    value = rawText,
-                    onValueChange = { rawText = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    textStyle = TextStyle(
-                        fontSize = 16.sp,
-                        color = Theme.colors.foreground
-                    ),
-                    cursorBrush = SolidColor(Theme.colors.primary),
-                    singleLine = false,
-                    minLines = 3,
-                )
-            }
+            Textarea(
+                value = maxLengthText,
+                onValueChange = { maxLengthText = it },
+                label = "标签文字",
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                maxLength = MAX_LENGTH,
+                indicator = true,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
+        ExampleSection(
+            title = "必填与辅助说明",
+            description = "required 标星，additionInfo 显示在下方",
+            surface = SectionSurface.Plain
+        ) {
+            Textarea(
+                value = requiredText,
+                onValueChange = { requiredText = it },
+                label = "标签文字",
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                required = true,
+                additionInfo = "辅助说明",
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
 
+        ExampleSection(
+            title = "错误状态",
+            description = "内容为空时 error 显示错误提示",
+            surface = SectionSurface.Plain
+        ) {
+            Textarea(
+                value = errorText,
+                onValueChange = { errorText = it },
+                label = "反馈内容",
+                placeholder = "请输入反馈内容",
+                minLines = 4,
+                maxLines = 4,
+                error = if (errorText.isBlank()) "反馈内容不能为空" else null,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        ExampleSection(
+            title = "禁用状态",
+            description = "enabled = false",
+            surface = SectionSurface.Plain
+        ) {
+            Textarea(
+                value = "",
+                onValueChange = {},
+                label = "标签文字",
+                placeholder = "不可编辑文字",
+                minLines = 4,
+                maxLines = 4,
+                enabled = false,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        ExampleSection(
+            title = "横排标签",
+            description = "TextareaLayout.HORIZONTAL，标签与输入框同一行",
+            surface = SectionSurface.Plain
+        ) {
+            Textarea(
+                value = horizontalText,
+                onValueChange = { horizontalText = it },
+                label = "标签文字",
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                maxLength = MAX_LENGTH,
+                indicator = true,
+                layout = TextareaLayout.HORIZONTAL,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        ExampleSection(
+            title = "卡片上使用",
+            description = "cardStyle = true 填充底，放在白色卡片上"
+        ) {
+            Textarea(
+                value = cardText,
+                onValueChange = { cardText = it },
+                label = "标签文字",
+                placeholder = "请输入文字",
+                minLines = 4,
+                maxLines = 4,
+                maxLength = MAX_LENGTH,
+                indicator = true,
+                cardStyle = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
-}
-
-/**
- * Section title
- */
-@Composable
-private fun SectionTitle(title: String) {
-    val colors = Theme.colors
-    val typography = Theme.typography
-
-    com.gearui.foundation.primitives.Text(
-        text = title,
-        style = Theme.typography.bodySmall,
-        color = colors.mutedForeground,
-        modifier = Modifier.padding(bottom = 8.dp)
-    )
 }

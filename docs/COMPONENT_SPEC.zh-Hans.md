@@ -86,6 +86,25 @@ fun MyComponent(
 - Insets、主题、i18n、Overlay 与消费方使用同一套运行时。
 - 诊断夹具必须具名、可选进入，绝不是正常发布入口。
 
+**页面标准。** Sample 是别人照抄的代码，所以页面与组件遵守同一套规则：
+
+- **框架。** `ExamplePage` 加若干 `ExampleSection`。零散控件（按钮、输入框、
+  开关）用 `Card`；本身就是表面的组件（CellGroup、Card、List、Collapse、
+  Alert、NoticeBar、Calendar、Table、Result……）用 `Plain`。绝不卡片套卡片。
+- **只用 token。** 间距、形状、描边宽度、图标尺寸、字体与颜色都来自主题和
+  标度——不写 `Color(0x…)`，不写裸 `dp`。本身就是演示内容的尺寸（图片占位
+  高度、被展示的自定义尺寸）在文件顶部定义为具名常量。
+- **只用真实组件。** 按钮就是 `Button`，行就是 `Cell`，图标就是 `Icons.*`。
+  不手搭仿制品，不用字母或 emoji 冒充图标，不写没有按压反馈的裸 `clickable`。
+- **卡片上的输入框**用填充变体（`cardStyle = true`），视觉规范如此要求。
+- **浮层触发入口。** 打开非锚定浮层（Dialog、ActionSheet、BottomSheet、Toast、
+  Notification、Snackbar、Drawer、Tour、全屏 Loading）的一组入口，是 `Plain`
+  区块里的一个 `CellGroup`，每种变体一行、带箭头——平台 Catalog 的做法。锚定
+  浮层（Tooltip、Popover、ContextMenu、锚点 Popup）需要一个真实的触发元素来
+  指向，所以保留默认宽度的 `Button`。
+- **文案。** 标题与说明用简体中文（sample 的默认语言），API 与组件名原样保留。
+  每个区块只演示一项能力；说明用一句话讲清要看什么，而不是代码怎么写。
+
 ## 7. 迁移说明
 
 公开 API 变更必须附迁移说明：源码、二进制、行为变更分开列，必要时给出

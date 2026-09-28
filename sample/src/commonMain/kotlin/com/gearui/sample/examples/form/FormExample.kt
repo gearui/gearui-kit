@@ -1,43 +1,48 @@
 package com.gearui.sample.examples.form
 
-import com.gearui.foundation.interaction.PressableFeedback
-import com.gearui.components.segmented.SegmentedControl
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.cell.Cell
+import com.gearui.components.form.Form
+import com.gearui.components.form.FormScope
 import com.gearui.components.input.Input
 import com.gearui.components.input.InputSize
 import com.gearui.components.picker.DatePickerInput
-import com.gearui.components.radio.RadioButton
+import com.gearui.components.radio.RadioGroup
 import com.gearui.components.rate.Rate
+import com.gearui.components.segmented.SegmentedControl
+import com.gearui.components.select.Select
+import com.gearui.components.select.SelectOption
 import com.gearui.components.stepper.Stepper
 import com.gearui.components.stepper.StepperSize
 import com.gearui.components.switch.Switch
 import com.gearui.components.textarea.Textarea
-import com.gearui.components.textarea.TextareaLayout
+import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.field.FieldLabel
+import com.gearui.foundation.interaction.disabledAppearance
+import com.gearui.foundation.layout.Spacing
+import com.gearui.primitives.Divider
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.interaction.disabledAppearance
-import com.gearui.foundation.field.FieldDefaults
-import com.gearui.foundation.field.FieldSizeTokens
-import com.gearui.theme.Theme
-import com.gearui.overlay.OverlayDefaults
-import com.tencent.kuikly.compose.foundation.shape.CircleShape
+
+/** Label column width for the horizontal layout: fits a four-character label plus the asterisk. */
+private val FormLabelWidth = 80.dp
+
+private val GENDER_LABELS = mapOf("0" to "男", "1" to "女", "2" to "保密")
+
+private val PLACE_OPTIONS = listOf(
+    "北京市/北京市/东城区",
+    "北京市/北京市/西城区",
+    "北京市/北京市/朝阳区",
+    "天津市/天津市/和平区",
+    "天津市/天津市/河东区"
+).map { SelectOption(value = it, label = it) }
 
 /**
  * Form component examples
@@ -47,9 +52,6 @@ fun FormExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
     // Form layout: horizontal / vertical
     var isHorizontal by remember { mutableStateOf(true) }
 
@@ -61,7 +63,7 @@ fun FormExample(
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf<String?>(null) }
     var birthday by remember { mutableStateOf("") }
-    var place by remember { mutableStateOf("") }
+    var place by remember { mutableStateOf<String?>(null) }
     var years by remember { mutableStateOf(2) }
     var selfEvaluation by remember { mutableStateOf(2f) }
     var resume by remember { mutableStateOf("") }
@@ -76,102 +78,28 @@ fun FormExample(
     var rateError by remember { mutableStateOf<String?>(null) }
     var resumeError by remember { mutableStateOf<String?>(null) }
 
-    // Gender options
-    val genderOptions = listOf(
-        "男" to "0",
-        "女" to "1",
-        "保密" to "2"
-    )
-
-    // Place of origin options (shortened)
-    val placeOptions = listOf(
-        "北京市/北京市/东城区",
-        "北京市/北京市/西城区",
-        "北京市/北京市/朝阳区",
-        "天津市/天津市/和平区",
-        "天津市/天津市/河东区"
-    )
-    var showPlacePicker by remember { mutableStateOf(false) }
-
-    // Validation
     fun validate(): Boolean {
-        var valid = true
-
-        // Username
-        if (username.isBlank()) {
-            usernameError = "输入不能为空"
-            valid = false
-        } else {
-            usernameError = null
-        }
-
-        // Password - exactly 8 latin characters
-        val passwordRegex = Regex("^[a-zA-Z]{8}$")
-        if (!passwordRegex.matches(password)) {
-            passwordError = "只能输入8个字符英文"
-            valid = false
-        } else {
-            passwordError = null
-        }
-
-        // Gender
-        if (gender == null) {
-            genderError = "不能为空"
-            valid = false
-        } else {
-            genderError = null
-        }
-
-        // Date of birth
-        if (birthday.isBlank()) {
-            birthdayError = "不能为空"
-            valid = false
-        } else {
-            birthdayError = null
-        }
-
-        // Place of origin
-        if (place.isBlank()) {
-            placeError = "不能为空"
-            valid = false
-        } else {
-            placeError = null
-        }
-
-        // Years of experience
-        if (years < 3) {
-            yearsError = "输入的数字不能大于用户所填生日对应的年龄"
-            valid = false
-        } else {
-            yearsError = null
-        }
-
-        // Self assessment
-        if (selfEvaluation < 4) {
-            rateError = "分数过低会影响整体评价"
-            valid = false
-        } else {
-            rateError = null
-        }
-
-        // Bio
-        if (resume.isBlank()) {
-            resumeError = "不能为空"
-            valid = false
-        } else {
-            resumeError = null
-        }
-
-        return valid
+        usernameError = if (username.isBlank()) "输入不能为空" else null
+        // Password: exactly 8 latin letters
+        passwordError = if (!Regex("^[a-zA-Z]{8}$").matches(password)) "只能输入8个字符英文" else null
+        genderError = if (gender == null) "不能为空" else null
+        birthdayError = if (birthday.isBlank()) "不能为空" else null
+        placeError = if (place == null) "不能为空" else null
+        yearsError = if (years < 3) "工作年限不能少于 3 年" else null
+        rateError = if (selfEvaluation < 4) "分数过低会影响整体评价" else null
+        resumeError = if (resume.isBlank()) "不能为空" else null
+        return listOf(
+            usernameError, passwordError, genderError, birthdayError,
+            placeError, yearsError, rateError, resumeError
+        ).all { it == null }
     }
 
-    // Reset
     fun reset() {
         username = ""
         password = ""
         gender = null
         birthday = ""
-        place = ""
+        place = null
         years = 0
         selfEvaluation = 2f
         resume = ""
@@ -190,14 +118,10 @@ fun FormExample(
         component = component,
         onBack = onBack
     ) {
-        // Basic types
         ExampleSection(
-            title = "基础类型",
-            description = "基础表单"
+            title = "布局与状态",
+            description = "切换下方表单的水平 / 竖直排布，或整体禁用"
         ) {
-            // Layout toggle buttons
-            // The kit's own control for a two-way choice, instead of two hand-built
-            // boxes: it carries the selection animation and the press response.
             SegmentedControl(
                 options = listOf(true, false),
                 selectedOption = isHorizontal,
@@ -206,10 +130,6 @@ fun FormExample(
                 enabled = !formDisabled,
                 labelProvider = { if (it) "水平排布" else "竖直排布" },
             )
-
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-            // Disabled toggle
             Cell(
                 title = "禁用态",
                 trailing = {
@@ -219,96 +139,50 @@ fun FormExample(
                     )
                 }
             )
+        }
 
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-            // Form content
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shapes.md)
-                    .background(colors.surface)
-            ) {
-                // Username
-                FormItem(
-                    label = "用户名",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = usernameError
-                ) {
+        ExampleSection(
+            title = "表单校验",
+            description = "点提交逐项校验，错误显示在字段下方"
+        ) {
+            Form(labelWidth = FormLabelWidth) {
+                FormRow("用户名", required = true, isHorizontal = isHorizontal, error = usernameError) {
                     Input(
                         value = username,
                         onValueChange = { username = it },
                         placeholder = "请输入用户名",
                         size = InputSize.MEDIUM,
-                        enabled = !formDisabled
+                        enabled = !formDisabled,
+                        cardStyle = true
                     )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Password
-                FormItem(
-                    label = "密码",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = passwordError
-                ) {
+                FormRow("密码", required = true, isHorizontal = isHorizontal, error = passwordError) {
                     Input(
                         value = password,
                         onValueChange = { password = it },
                         placeholder = "请输入密码",
                         size = InputSize.MEDIUM,
-                        enabled = !formDisabled
+                        enabled = !formDisabled,
+                        cardStyle = true
                     )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Gender
-                FormItem(
-                    label = "性别",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = genderError
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        genderOptions.forEach { (label, value) ->
-                            PressableFeedback(
-                                onClick = { gender = value },
-                                enabled = !formDisabled,
-                            ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                RadioButton(
-                                    selected = gender == value,
-                                    onClick = { gender = value },
-                                    enabled = !formDisabled
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = label,
-                                    style = Theme.typography.bodyMedium,
-                                    color = colors.foreground,
-                                    modifier = Modifier.disabledAppearance(formDisabled)
-                                )
-                            }
-                            }
-                        }
-                    }
+                // Options stack vertically: three radios side by side do not fit next to the label column.
+                FormRow("性别", required = true, isHorizontal = isHorizontal, error = genderError) {
+                    RadioGroup(
+                        options = GENDER_LABELS.keys.toList(),
+                        selectedOption = gender,
+                        onOptionSelected = { gender = it },
+                        enabled = !formDisabled,
+                        labelProvider = { GENDER_LABELS[it] ?: it }
+                    )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Date of birth
-                FormItem(
-                    label = "生日",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = birthdayError
-                ) {
+                FormRow("生日", required = true, isHorizontal = isHorizontal, error = birthdayError) {
                     DatePickerInput(
                         value = birthday,
                         onValueChange = { birthday = it },
@@ -316,48 +190,20 @@ fun FormExample(
                         enabled = !formDisabled
                     )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Place of origin
-                FormItem(
-                    label = "籍贯",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = placeError
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(FieldSizeTokens.Medium.height)
-                            .disabledAppearance(formDisabled)
-                            .clip(FieldDefaults.shape)
-                            .border(FieldSizeTokens.Medium.borderWidth, colors.input, FieldDefaults.shape)
-                            .background(colors.surface)
-                            .padding(horizontal = 12.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Text(
-                            text = place.ifEmpty { "请选择籍贯" },
-                            style = Theme.typography.bodyMedium,
-                            color = if (place.isNotEmpty()) {
-                                colors.foreground
-                            } else {
-                                colors.mutedForeground
-                            }
-                        )
-                    }
+                FormRow("籍贯", required = true, isHorizontal = isHorizontal, error = placeError) {
+                    Select(
+                        value = place,
+                        options = PLACE_OPTIONS,
+                        onValueChange = { place = it },
+                        placeholder = "请选择籍贯",
+                        enabled = !formDisabled
+                    )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Years of experience
-                FormItem(
-                    label = "年限",
-                    required = false,
-                    isHorizontal = isHorizontal,
-                    error = yearsError
-                ) {
+                FormRow("年限", required = false, isHorizontal = isHorizontal, error = yearsError) {
                     Stepper(
                         value = years,
                         onValueChange = { years = it },
@@ -367,16 +213,9 @@ fun FormExample(
                         size = StepperSize.MEDIUM
                     )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Self assessment
-                FormItem(
-                    label = "自我评价",
-                    required = false,
-                    isHorizontal = isHorizontal,
-                    error = rateError
-                ) {
+                FormRow("自我评价", required = false, isHorizontal = isHorizontal, error = rateError) {
                     Rate(
                         modifier = Modifier.disabledAppearance(formDisabled),
                         value = selfEvaluation,
@@ -386,16 +225,9 @@ fun FormExample(
                         readonly = formDisabled
                     )
                 }
+                Divider()
 
-                FormDivider()
-
-                // Bio
-                FormItem(
-                    label = "个人简介",
-                    required = true,
-                    isHorizontal = isHorizontal,
-                    error = resumeError
-                ) {
+                FormRow("个人简介", required = true, isHorizontal = isHorizontal, error = resumeError) {
                     Textarea(
                         value = resume,
                         onValueChange = { resume = it },
@@ -403,16 +235,13 @@ fun FormExample(
                         maxLength = 500,
                         indicator = true,
                         minLines = 3,
-                        layout = if (isHorizontal) TextareaLayout.HORIZONTAL else TextareaLayout.VERTICAL,
                         enabled = !formDisabled,
-                        readOnly = formDisabled
+                        readOnly = formDisabled,
+                        cardStyle = true
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-                // Submit / reset buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
@@ -425,7 +254,6 @@ fun FormExample(
                     disabled = formDisabled,
                     modifier = Modifier.weight(1f)
                 )
-
                 Button(
                     text = "提交",
                     onClick = { validate() },
@@ -437,221 +265,38 @@ fun FormExample(
             }
         }
     }
-
-    // Place of origin picker dialog
-    if (showPlacePicker) {
-        PlacePickerDialog(
-            options = placeOptions,
-            selectedPlace = place,
-            onSelect = {
-                place = it
-                showPlacePicker = false
-            },
-            onDismiss = { showPlacePicker = false }
-        )
-    }
 }
 
 /**
- * Form field component
+ * One form row. Horizontal rows use the kit's [FormScope.FormItem]; it has no stacked
+ * variant, so the vertical layout composes the same field parts (label, content, error)
+ * in a column.
  */
 @Composable
-private fun FormItem(
+private fun FormScope.FormRow(
     label: String,
     required: Boolean,
     isHorizontal: Boolean,
-    error: String? = null,
-    help: String? = null,
+    error: String?,
     content: @Composable () -> Unit
 ) {
-    val colors = Theme.colors
-
     if (isHorizontal) {
-        // Horizontal layout
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md),
-            verticalAlignment = Alignment.Top
-        ) {
-            // Label
-            Row(
-                modifier = Modifier.width(82.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = label,
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
-                )
-                if (required) {
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(
-                        text = "*",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.destructive
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.width(Spacing.lg))
-
-            // Content
-            Column(modifier = Modifier.weight(1f)) {
-                content()
-
-                // Helper text
-                if (help != null && error == null) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = help,
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Error message
-                if (error != null) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = error,
-                        style = Theme.typography.bodySmall,
-                        color = colors.destructive
-                    )
-                }
-            }
+        FormItem(label = label, required = required) {
+            content()
+            FieldErrorText(error)
         }
     } else {
-        // Vertical layout
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.lg, vertical = Spacing.md)
+                .padding(vertical = Spacing.md),
+            verticalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
-            // Label
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = label,
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
-                )
-                if (required) {
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(
-                        text = "*",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.destructive
-                    )
-                }
+            FieldLabel(text = label, required = required, invalid = error != null)
+            Column(modifier = Modifier.fillMaxWidth()) {
+                content()
+                FieldErrorText(error)
             }
-
-            Spacer(modifier = Modifier.height(Spacing.sm))
-
-            // Content
-            content()
-
-            // Helper text
-            if (help != null && error == null) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = help,
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-            }
-
-            // Error message
-            if (error != null) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = error,
-                    style = Theme.typography.bodySmall,
-                    color = colors.destructive
-                )
-            }
-        }
-    }
-}
-
-/**
- * Form divider
- */
-@Composable
-private fun FormDivider() {
-    val colors = Theme.colors
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = Spacing.lg)
-            .height(1.dp)
-            .background(colors.border)
-    )
-}
-
-/**
- * Place of origin picker dialog
- */
-@Composable
-private fun PlacePickerDialog(
-    options: List<String>,
-    selectedPlace: String,
-    onSelect: (String) -> Unit,
-    onDismiss: () -> Unit
-) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    // A simple dialog implementation
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(OverlayDefaults.scrimColor)
-            .clickable { onDismiss() },
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .clip(shapes.lg)
-                .background(colors.surface)
-                .clickable { /* 阻止点击穿透 */ }
-                .padding(Spacing.lg)
-        ) {
-            Text(
-                text = "选择籍贯",
-                style = Theme.typography.titleMedium,
-                color = colors.foreground
-            )
-
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-            options.forEach { option ->
-                val isSelected = option == selectedPlace
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shapes.sm)
-                        .background(if (isSelected) colors.muted else colors.surface)
-                        .clickable { onSelect(option) }
-                        .padding(Spacing.md)
-                ) {
-                    Text(
-                        text = option,
-                        style = Theme.typography.bodyMedium,
-                        color = if (isSelected) colors.primary else colors.foreground
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-            Button(
-                text = "取消",
-                onClick = onDismiss,
-                size = ButtonSize.MEDIUM,
-                theme = ButtonTheme.DEFAULT,
-                modifier = Modifier.fillMaxWidth()
-            )
         }
     }
 }

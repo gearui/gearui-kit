@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
 import com.gearui.components.icon.Icons
 import com.gearui.components.link.LinkButton
 import com.gearui.components.noticebar.NoticeBar
@@ -15,13 +14,17 @@ import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
+import com.gearui.foundation.layout.Spacing
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
 
+/**
+ * NoticeBar: a one-line announcement strip, scrolling when the text overflows.
+ */
 @Composable
 fun NoticeBarExample(
     component: ComponentInfo,
@@ -31,7 +34,7 @@ fun NoticeBarExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "滚动公告",
             description = "文字超出宽度才滚动，循环之间留空隙"
         ) {
@@ -42,11 +45,11 @@ fun NoticeBarExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "语气",
             description = "用 soft 底色与 soft 前景，与 Alert 同一套状态色"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 NoticeBar("新版本已发布，去看看更新了什么", tone = NoticeBarTone.INFO, modifier = Modifier.clip(Theme.shapes.lg))
                 NoticeBar("实名认证已通过", tone = NoticeBarTone.SUCCESS, modifier = Modifier.clip(Theme.shapes.lg))
                 NoticeBar("账户余额不足，请及时充值", tone = NoticeBarTone.WARNING, modifier = Modifier.clip(Theme.shapes.lg))
@@ -56,11 +59,11 @@ fun NoticeBarExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "操作与关闭",
             description = "action 放入口，onClose 可关闭"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 NoticeBar(
                     text = "您有 2 笔待支付订单",
                     tone = NoticeBarTone.WARNING,
@@ -75,13 +78,13 @@ fun NoticeBarExample(
                         onClick = { Toast.show("点击了公告") },
                     )
                 } else {
-                    Button(text = "重新显示", size = ButtonSize.SMALL, onClick = { visible = true })
+                    Button(text = "重新显示", block = true, onClick = { visible = true })
                 }
             }
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "不滚动",
             description = "scroll = false 时超长文字省略"
         ) {

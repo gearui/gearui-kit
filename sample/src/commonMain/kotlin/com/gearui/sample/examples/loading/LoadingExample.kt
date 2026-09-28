@@ -1,29 +1,45 @@
 package com.gearui.sample.examples.loading
 
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.gearui.components.button.Button
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.loading.FullScreenLoading
 import com.gearui.components.loading.Loading
-import com.gearui.components.loading.LoadingSize
 import com.gearui.components.loading.LoadingIcon
 import com.gearui.components.loading.LoadingLayout
-import com.gearui.components.loading.FullScreenLoading
-import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
-import com.gearui.components.button.ButtonTheme
+import com.gearui.components.loading.LoadingSize
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+
+// Height of the area standing in for a list that is still loading.
+private val ListAreaHeight = 120.dp
+private const val SubmitMillis = 2000L
+private const val FullScreenMillis = 3000L
 
 /**
- * Loading component examples
- *
- * Shows that a page or an action is loading, giving feedback and easing the wait
+ * Loading: shows that a page, an area or an action is in progress.
  */
 @Composable
 fun LoadingExample(
@@ -31,431 +47,146 @@ fun LoadingExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
-
-    // Fullscreen loading state
     var showFullScreen by remember { mutableStateOf(false) }
+    var submitting by remember { mutableStateOf(false) }
 
-    ExamplePage(
-        component = component,
-        onBack = onBack
-    ) {
-        // ==================== Component types ====================
-
-        // Icon only
+    ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            title = "纯图标",
-            description = "三种图标类型：圆形、菊花状、点状"
+            title = "图标类型",
+            description = "LoadingIcon：CIRCLE 圆形、ACTIVITY 菊花、POINT 点状"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.SMALL,
-                        icon = LoadingIcon.CIRCLE
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "圆形",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.SMALL,
-                        icon = LoadingIcon.ACTIVITY
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "菊花状",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.SMALL,
-                        icon = LoadingIcon.POINT,
-                        color = colors.primary
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "点状",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
+                LabeledLoading(label = "圆形") { Loading(icon = LoadingIcon.CIRCLE) }
+                LabeledLoading(label = "菊花") { Loading(icon = LoadingIcon.ACTIVITY) }
+                LabeledLoading(label = "点状") { Loading(icon = LoadingIcon.POINT) }
             }
         }
 
-        // Icon and text, horizontal
         ExampleSection(
-            title = "图标加文字横向",
-            description = "图标在左，文字在右"
+            title = "图标加文字",
+            description = "LoadingLayout.HORIZONTAL 文字在右，VERTICAL 文字在下"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Loading(
-                    size = LoadingSize.SMALL,
-                    icon = LoadingIcon.CIRCLE,
-                    text = "加载中…",
-                    layout = LoadingLayout.HORIZONTAL
-                )
-
-                Loading(
-                    size = LoadingSize.SMALL,
-                    icon = LoadingIcon.ACTIVITY,
-                    text = "加载中…",
-                    layout = LoadingLayout.HORIZONTAL
-                )
+                Loading(text = "加载中…", layout = LoadingLayout.HORIZONTAL)
+                Loading(text = "加载中…", layout = LoadingLayout.VERTICAL)
             }
         }
 
-        // Icon and text, vertical
         ExampleSection(
-            title = "图标加文字竖向",
-            description = "图标在上，文字在下"
+            title = "尺寸",
+            description = "LoadingSize：SMALL、MEDIUM（默认）、LARGE"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Loading(
-                    size = LoadingSize.SMALL,
-                    icon = LoadingIcon.CIRCLE,
-                    text = "加载中…",
-                    layout = LoadingLayout.VERTICAL
-                )
-
-                Loading(
-                    size = LoadingSize.SMALL,
-                    icon = LoadingIcon.ACTIVITY,
-                    text = "加载中…",
-                    layout = LoadingLayout.VERTICAL
-                )
+                LabeledLoading(label = "SMALL") { Loading(size = LoadingSize.SMALL) }
+                LabeledLoading(label = "MEDIUM") { Loading(size = LoadingSize.MEDIUM) }
+                LabeledLoading(label = "LARGE") { Loading(size = LoadingSize.LARGE) }
             }
         }
 
-        // Text only
         ExampleSection(
-            title = "纯文字",
-            description = "不显示图标，仅显示文字"
+            title = "颜色",
+            description = "color 使用主题语义色"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "加载中…",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-
-                Text(
-                    text = "加载失败",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "加载失败",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.mutedForeground
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "刷新",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.primary
-                    )
-                }
+                ColoredLoading(label = "主色", color = colors.primary)
+                ColoredLoading(label = "成功", color = colors.success)
+                ColoredLoading(label = "警告", color = colors.warning)
+                ColoredLoading(label = "危险", color = colors.destructive)
             }
         }
 
-        // ==================== Component sizes ====================
-
-        // Large
         ExampleSection(
-            title = "大尺寸",
-            description = "LoadingSize.LARGE"
+            title = "按钮加载",
+            description = "Button 的 loading 状态，点击后提交 2 秒"
+        ) {
+            Button(
+                text = if (submitting) "提交中…" else "提交",
+                loading = submitting,
+                block = true,
+                onClick = { submitting = true }
+            )
+        }
+
+        ExampleSection(
+            title = "区域加载",
+            description = "列表等内容区域在数据到达前居中显示"
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(ListAreaHeight),
                 contentAlignment = Alignment.Center
             ) {
-                Loading(
-                    size = LoadingSize.LARGE,
-                    icon = LoadingIcon.CIRCLE,
-                    text = "加载中…",
-                    layout = LoadingLayout.HORIZONTAL
-                )
+                Loading(size = LoadingSize.LARGE, text = "加载列表数据…")
             }
         }
 
-        // Medium
+        // Full-screen loading is a non-anchored overlay, so its entry is an arrow row
         ExampleSection(
-            title = "中尺寸",
-            description = "LoadingSize.MEDIUM（默认）"
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Loading(
-                    size = LoadingSize.MEDIUM,
-                    icon = LoadingIcon.CIRCLE,
-                    text = "加载中…",
-                    layout = LoadingLayout.HORIZONTAL
-                )
-            }
-        }
-
-        // Small
-        ExampleSection(
-            title = "小尺寸",
-            description = "LoadingSize.SMALL"
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Loading(
-                    size = LoadingSize.SMALL,
-                    icon = LoadingIcon.CIRCLE,
-                    text = "加载中…",
-                    layout = LoadingLayout.HORIZONTAL
-                )
-            }
-        }
-
-        // ==================== Custom colours ====================
-
-        ExampleSection(
-            title = "自定义颜色",
-            description = "使用主题中的不同颜色"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.MEDIUM,
-                        icon = LoadingIcon.CIRCLE,
-                        color = colors.primary
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "主色",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.MEDIUM,
-                        icon = LoadingIcon.CIRCLE,
-                        color = colors.success
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "成功",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.MEDIUM,
-                        icon = LoadingIcon.CIRCLE,
-                        color = colors.warning
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "警告",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Loading(
-                        size = LoadingSize.MEDIUM,
-                        icon = LoadingIcon.CIRCLE,
-                        color = colors.destructive
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "危险",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-            }
-        }
-
-        // ==================== Fullscreen loading ====================
-
-        ExampleSection(
+            surface = SectionSurface.Plain,
             title = "全屏加载",
-            description = "展示/隐藏全屏Loading"
+            description = "FullScreenLoading 遮住整页，3 秒后自动关闭"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Button(
-                    text = "展示Loading",
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.PRIMARY,
-                    onClick = { showFullScreen = true },
-                    modifier = Modifier.weight(1f)
-                )
-
-                Button(
-                    text = "隐藏Loading",
-                    size = ButtonSize.MEDIUM,
-                    theme = ButtonTheme.PRIMARY,
-                    onClick = { showFullScreen = false },
-                    modifier = Modifier.weight(1f)
-                )
-            }
-        }
-
-        // ==================== Loading scenarios ====================
-
-        ExampleSection(
-            title = "加载场景",
-            description = "常见的使用场景"
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                // Button loading state
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(44.dp)
-                        .background(colors.primary),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Loading(
-                        size = LoadingSize.SMALL,
-                        icon = LoadingIcon.CIRCLE,
-                        text = "提交中...",
-                        layout = LoadingLayout.HORIZONTAL,
-                        color = colors.primaryForeground
-                    )
-                }
-
-                // List loading
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .background(colors.muted),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Loading(
-                        size = LoadingSize.LARGE,
-                        icon = LoadingIcon.CIRCLE,
-                        text = "加载列表数据...",
-                        layout = LoadingLayout.VERTICAL
-                    )
-                }
-
-                // Centring check (several Loadings side by side)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Loading(
-                        size = LoadingSize.LARGE,
-                        icon = LoadingIcon.CIRCLE,
-                        text = "加载中…",
-                        layout = LoadingLayout.VERTICAL
-                    )
-                    Spacer(modifier = Modifier.width(36.dp))
-                    Loading(
-                        size = LoadingSize.LARGE,
-                        icon = LoadingIcon.ACTIVITY,
-                        text = "加载中…",
-                        layout = LoadingLayout.VERTICAL
-                    )
-                }
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Loading 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. LoadingSize: SMALL/MEDIUM/LARGE 三种尺寸",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. LoadingIcon: CIRCLE/ACTIVITY/POINT 三种图标",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. LoadingLayout: VERTICAL/HORIZONTAL 布局方向",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. text: 可选的文字说明",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. color: 自定义加载指示器颜色",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "6. duration: 动画周期（毫秒）",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "7. FullScreenLoading: 全屏遮罩加载",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
+            CellGroup(items = listOf("展示全屏加载")) { title ->
+                Cell(
+                    title = title,
+                    arrow = true,
+                    onClick = { showFullScreen = true }
                 )
             }
         }
     }
 
-    // Fullscreen loading layer
     FullScreenLoading(
         visible = showFullScreen,
-        text = "加载中，请稍候..."
+        text = "加载中，请稍候…"
     )
 
-    // Dismiss the fullscreen loading automatically (after 3 seconds)
     LaunchedEffect(showFullScreen) {
         if (showFullScreen) {
-            kotlinx.coroutines.delay(3000)
+            delay(FullScreenMillis)
             showFullScreen = false
         }
     }
+
+    LaunchedEffect(submitting) {
+        if (submitting) {
+            delay(SubmitMillis)
+            submitting = false
+        }
+    }
+}
+
+@Composable
+private fun LabeledLoading(label: String, indicator: @Composable () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
+    ) {
+        indicator()
+        Text(
+            text = label,
+            style = Theme.typography.bodySmall,
+            color = Theme.colors.mutedForeground
+        )
+    }
+}
+
+@Composable
+private fun ColoredLoading(label: String, color: Color) {
+    LabeledLoading(label = label) { Loading(color = color) }
 }

@@ -1,404 +1,159 @@
 package com.gearui.sample.examples.swipecell
 
-import com.gearui.components.icon.Icons
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.gearui.components.button.Button
 import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.icon.Icons
 import com.gearui.components.swipecell.SwipeCell
 import com.gearui.components.swipecell.SwipeCellAction
 import com.gearui.components.swipecell.SwipeCellActionTheme
-import com.gearui.components.swipecell.SwipeCellGroup
 import com.gearui.components.swipecell.SwipeCellIconPosition
 import com.gearui.components.swipecell.rememberSwipeCellGroupState
-import com.gearui.components.swipecell.rememberSwipeCellState
+import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
-import com.gearui.theme.Theme
+import com.gearui.sample.pages.SectionSurface
+
+private val InitialDeleteList = listOf("可删除项 1", "可删除项 2", "可删除项 3")
 
 /**
- * SwipeCell component examples
+ * SwipeCell: a row that reveals actions when swiped sideways.
  */
 @Composable
 fun SwipeCellExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
-    // Result message
-    var actionResult by remember { mutableStateOf("") }
-
-    // Deletable list items
-    var deleteList by remember { mutableStateOf(listOf("可删除项 1", "可删除项 2", "可删除项 3")) }
-
-    // Group state - keeps them mutually exclusive
+    // Rows sharing a group state are mutually exclusive: opening one closes the others.
     val groupState = rememberSwipeCellGroupState()
+    val deleteGroupState = rememberSwipeCellGroupState()
+    var deleteList by remember { mutableStateOf(InitialDeleteList) }
 
-    ExamplePage(
-        component = component,
-        onBack = onBack
-    ) {
-        // Swipe left, one action
+    fun action(label: String, theme: SwipeCellActionTheme) =
+        SwipeCellAction(label = label, theme = theme, onClick = { Toast.show("点击了$label") })
+
+    fun iconAction(
+        label: String,
+        icon: String,
+        theme: SwipeCellActionTheme,
+        position: SwipeCellIconPosition = SwipeCellIconPosition.LEFT
+    ) = SwipeCellAction(
+        label = label,
+        icon = icon,
+        iconPosition = position,
+        theme = theme,
+        onClick = { Toast.show(if (label.isEmpty()) "点击了图标操作" else "点击了$label") }
+    )
+
+    val edit = action("编辑", SwipeCellActionTheme.WARNING)
+    val delete = action("删除", SwipeCellActionTheme.DANGER)
+    val save = action("保存", SwipeCellActionTheme.PRIMARY)
+    val select = action("选择", SwipeCellActionTheme.PRIMARY)
+
+    ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            title = "左滑单操作",
-            description = "向左滑动显示单个操作按钮"
+            title = "左滑操作",
+            description = "rightActions 放一到三个操作，同组内只展开一行",
+            surface = SectionSurface.Plain
         ) {
-            SwipeCellGroup(state = groupState) { group ->
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(1.dp),
-                    modifier = Modifier.background(colors.border)
-                ) {
-                    SwipeCell(
-                        groupState = group,
-                        rightActions = listOf(
-                            SwipeCellAction(
-                                label = "删除",
-                                theme = SwipeCellActionTheme.DANGER,
-                                onClick = { actionResult = "点击了删除" }
-                            )
-                        )
-                    ) {
-                        Cell(
-                            title = "左滑单操作",
-                            note = "辅助信息"
-                        )
-                    }
+            val rows = listOf(
+                "单操作" to listOf(delete),
+                "双操作" to listOf(edit, delete),
+                "三操作" to listOf(save, edit, delete)
+            )
+            CellGroup(items = rows) { (title, actions) ->
+                SwipeCell(groupState = groupState, rightActions = actions) {
+                    Cell(title = title, note = "左滑")
+                }
+            }
+        }
 
+        ExampleSection(
+            title = "右滑与双向",
+            description = "leftActions 右滑展开，两侧可同时设置",
+            surface = SectionSurface.Plain
+        ) {
+            CellGroup(items = listOf(0, 1)) { index ->
+                if (index == 0) {
+                    SwipeCell(groupState = groupState, leftActions = listOf(select)) {
+                        Cell(title = "右滑操作", note = "右滑")
+                    }
+                } else {
                     SwipeCell(
-                        groupState = group,
-                        rightActions = listOf(
-                            SwipeCellAction(
-                                label = "删除",
-                                theme = SwipeCellActionTheme.DANGER,
-                                onClick = { actionResult = "点击了删除" }
-                            )
-                        )
+                        groupState = groupState,
+                        leftActions = listOf(select),
+                        rightActions = listOf(edit, delete)
                     ) {
-                        Cell(
-                            title = "左滑单操作",
-                            note = "辅助信息",
-                            description = "一段很长很长的内容文字"
-                        )
+                        Cell(title = "双向操作", note = "左滑或右滑")
                     }
                 }
             }
         }
 
-        // Swipe left, two actions
         ExampleSection(
-            title = "左滑双操作",
-            description = "向左滑动显示两个操作按钮"
+            title = "带图标",
+            description = "图标在文字左侧、仅图标、图标在文字上方",
+            surface = SectionSurface.Plain
         ) {
-            SwipeCell(
-                groupState = groupState,
-                rightActions = listOf(
-                    SwipeCellAction(
-                        label = "编辑",
-                        theme = SwipeCellActionTheme.WARNING,
-                        onClick = { actionResult = "点击了编辑" }
-                    ),
-                    SwipeCellAction(
-                        label = "删除",
-                        theme = SwipeCellActionTheme.DANGER,
-                        onClick = { actionResult = "点击了删除" }
-                    )
-                )
-            ) {
-                Cell(
-                    title = "左滑双操作",
-                    note = "辅助信息"
-                )
-            }
-        }
-
-        // Swipe left, three actions
-        ExampleSection(
-            title = "左滑三操作",
-            description = "向左滑动显示三个操作按钮"
-        ) {
-            SwipeCell(
-                groupState = groupState,
-                rightActions = listOf(
-                    SwipeCellAction(
-                        label = "保存",
-                        theme = SwipeCellActionTheme.PRIMARY,
-                        onClick = { actionResult = "点击了保存" }
-                    ),
-                    SwipeCellAction(
-                        label = "编辑",
-                        theme = SwipeCellActionTheme.WARNING,
-                        onClick = { actionResult = "点击了编辑" }
-                    ),
-                    SwipeCellAction(
-                        label = "删除",
-                        theme = SwipeCellActionTheme.DANGER,
-                        onClick = { actionResult = "点击了删除" }
-                    )
-                )
-            ) {
-                Cell(
-                    title = "左滑三操作",
-                    note = "辅助信息"
-                )
-            }
-        }
-
-        // Swipe right, one action
-        ExampleSection(
-            title = "右滑单操作",
-            description = "向右滑动显示操作按钮"
-        ) {
-            SwipeCell(
-                groupState = groupState,
-                leftActions = listOf(
-                    SwipeCellAction(
-                        label = "选择",
-                        theme = SwipeCellActionTheme.PRIMARY,
-                        onClick = { actionResult = "点击了选择" }
-                    )
-                )
-            ) {
-                Cell(
-                    title = "右滑操作",
-                    note = "辅助信息"
-                )
-            }
-        }
-
-        // Swipe both ways
-        ExampleSection(
-            title = "左右滑操作",
-            description = "支持左右两个方向滑动"
-        ) {
-            SwipeCell(
-                groupState = groupState,
-                leftActions = listOf(
-                    SwipeCellAction(
-                        label = "选择",
-                        theme = SwipeCellActionTheme.PRIMARY,
-                        onClick = { actionResult = "点击了选择" }
-                    )
+            val rows = listOf(
+                "图标加文字（横向）" to listOf(
+                    iconAction("编辑", Icons.pencil_simple, SwipeCellActionTheme.WARNING),
+                    iconAction("删除", Icons.trash, SwipeCellActionTheme.DANGER)
                 ),
-                rightActions = listOf(
-                    SwipeCellAction(
-                        label = "编辑",
-                        theme = SwipeCellActionTheme.WARNING,
-                        onClick = { actionResult = "点击了编辑" }
-                    ),
-                    SwipeCellAction(
-                        label = "删除",
-                        theme = SwipeCellActionTheme.DANGER,
-                        onClick = { actionResult = "点击了删除" }
-                    )
+                "仅图标" to listOf(
+                    iconAction("", Icons.pencil_simple, SwipeCellActionTheme.WARNING),
+                    iconAction("", Icons.trash, SwipeCellActionTheme.DANGER)
+                ),
+                "图标加文字（纵向）" to listOf(
+                    iconAction("编辑", Icons.pencil_simple, SwipeCellActionTheme.WARNING, SwipeCellIconPosition.TOP),
+                    iconAction("删除", Icons.trash, SwipeCellActionTheme.DANGER, SwipeCellIconPosition.TOP)
                 )
-            ) {
-                Cell(
-                    title = "左右滑操作",
-                    note = "辅助信息"
-                )
-            }
-        }
-
-        // Swipe actions with icons
-        ExampleSection(
-            title = "带图标的滑动操作",
-            description = "操作按钮支持图标+文字"
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                // Icon + text (horizontal)
-                SwipeCell(
-                    groupState = groupState,
-                    rightActions = listOf(
-                        SwipeCellAction(
-                            label = "编辑",
-                            icon = Icons.pencil_simple,
-                            iconPosition = SwipeCellIconPosition.LEFT,
-                            theme = SwipeCellActionTheme.WARNING,
-                            onClick = { actionResult = "点击了编辑" }
-                        ),
-                        SwipeCellAction(
-                            label = "删除",
-                            icon = Icons.trash,
-                            iconPosition = SwipeCellIconPosition.LEFT,
-                            theme = SwipeCellActionTheme.DANGER,
-                            onClick = { actionResult = "点击了删除" }
-                        )
-                    )
-                ) {
-                    Cell(
-                        title = "左滑操作",
-                        note = "图标+文字（横向）"
-                    )
-                }
-
-                // Icon only
-                SwipeCell(
-                    groupState = groupState,
-                    rightActions = listOf(
-                        SwipeCellAction(
-                            label = "",
-                            icon = Icons.pencil_simple,
-                            theme = SwipeCellActionTheme.WARNING,
-                            onClick = { actionResult = "点击了编辑" }
-                        ),
-                        SwipeCellAction(
-                            label = "",
-                            icon = Icons.trash,
-                            theme = SwipeCellActionTheme.DANGER,
-                            onClick = { actionResult = "点击了删除" }
-                        )
-                    )
-                ) {
-                    Cell(
-                        title = "左滑操作",
-                        note = "仅图标"
-                    )
-                }
-
-                // Icon + text (vertical)
-                SwipeCell(
-                    groupState = groupState,
-                    rightActions = listOf(
-                        SwipeCellAction(
-                            label = "编辑",
-                            icon = Icons.pencil_simple,
-                            iconPosition = SwipeCellIconPosition.TOP,
-                            theme = SwipeCellActionTheme.WARNING,
-                            onClick = { actionResult = "点击了编辑" }
-                        ),
-                        SwipeCellAction(
-                            label = "删除",
-                            icon = Icons.trash,
-                            iconPosition = SwipeCellIconPosition.TOP,
-                            theme = SwipeCellActionTheme.DANGER,
-                            onClick = { actionResult = "点击了删除" }
-                        )
-                    )
-                ) {
-                    Cell(
-                        title = "左滑操作",
-                        note = "图标+文字（纵向）",
-                        description = "一段很长很长的内容文字"
-                    )
+            )
+            CellGroup(items = rows) { (title, actions) ->
+                SwipeCell(groupState = groupState, rightActions = actions) {
+                    Cell(title = title, note = "左滑")
                 }
             }
         }
 
-        // Swipe-to-delete list
         ExampleSection(
-            title = "滑动删除列表",
-            description = "常见的滑动删除交互场景（同组互斥）"
+            title = "滑动删除",
+            description = "点击删除后行从列表移除",
+            surface = SectionSurface.Plain
         ) {
-            val deleteGroupState = rememberSwipeCellGroupState()
-
-            SwipeCellGroup(state = deleteGroupState) { group ->
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(1.dp),
-                    modifier = Modifier.background(colors.border)
-                ) {
-                    deleteList.forEachIndexed { index, item ->
-                        key(item) {
-                            SwipeCell(
-                                groupState = group,
-                                rightActions = listOf(
-                                    SwipeCellAction(
-                                        label = "删除",
-                                        theme = SwipeCellActionTheme.DANGER,
-                                        onClick = {
-                                            deleteList = deleteList.toMutableList().apply { removeAt(index) }
-                                            actionResult = "删除了: $item"
-                                        }
-                                    )
+            if (deleteList.isNotEmpty()) {
+                CellGroup(items = deleteList) { item ->
+                    // Keyed so a removed row does not hand its swipe state to the next one.
+                    key(item) {
+                        SwipeCell(
+                            groupState = deleteGroupState,
+                            rightActions = listOf(
+                                SwipeCellAction(
+                                    label = "删除",
+                                    theme = SwipeCellActionTheme.DANGER,
+                                    onClick = {
+                                        deleteList = deleteList - item
+                                        Toast.show("删除了：$item")
+                                    }
                                 )
-                            ) {
-                                Cell(
-                                    title = item,
-                                    note = "左滑删除"
-                                )
-                            }
-                        }
-                    }
-
-                    if (deleteList.isEmpty()) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(colors.surface)
-                                .padding(32.dp)
-                        ) {
-                            Text(
-                                text = "列表已清空",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.mutedForeground
                             )
+                        ) {
+                            Cell(title = item, note = "左滑删除")
                         }
                     }
                 }
-            }
-        }
-
-        // Result
-        if (actionResult.isNotEmpty()) {
-            ExampleSection(
-                title = "操作结果",
-                description = "显示最近一次操作"
-            ) {
-                Text(
-                    text = actionResult,
-                    style = Theme.typography.bodyMedium,
-                    color = colors.primary
-                )
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "SwipeCell 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "手感优化:",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "• 弹性动画 (Spring Animation)\n• 阻尼感滑动\n• 快速滑动判断\n• 组内互斥关闭",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "滑动方向:",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "左滑 (rightActions) / 右滑 (leftActions)",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "操作按钮主题:",
-                    style = Theme.typography.label,
-                    color = colors.foreground
-                )
-                Text(
-                    text = "PRIMARY / DANGER / WARNING / SUCCESS",
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
+            } else {
+                Button(
+                    text = "恢复列表",
+                    block = true,
+                    onClick = { deleteList = InitialDeleteList }
                 )
             }
         }

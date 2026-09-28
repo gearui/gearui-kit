@@ -3,11 +3,11 @@ package com.gearui.sample.examples.steps
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.steps.StepItem
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.steps.StepStatus
 import com.gearui.components.steps.Steps
 import com.gearui.components.steps.StepsDirection
@@ -85,9 +85,9 @@ fun StepsExample(
         // Interactive steps
         ExampleSection(
             title = "可交互",
-            description = "点击按钮切换步骤"
+            description = "current 随按钮前进或后退"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Steps(
                     current = currentStep,
                     items = listOf(
@@ -99,14 +99,14 @@ fun StepsExample(
                 )
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Button(
                         text = "上一步",
                         onClick = { if (currentStep > 0) currentStep-- },
                         size = ButtonSize.SMALL,
-                        theme = ButtonTheme.PRIMARY,
+                        theme = ButtonTheme.DEFAULT,
                         modifier = Modifier.weight(1f)
                     )
                     Button(
@@ -153,7 +153,7 @@ fun StepsExample(
             title = "点状主题",
             description = "简洁的点状步骤指示器"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xl)) {
                 // Horizontal dots
                 Steps(
                     current = 2,
@@ -209,40 +209,12 @@ fun StepsExample(
             )
         }
 
-        // Custom icons
-        ExampleSection(
-            title = "自定义图标",
-            description = "每个步骤可以使用自定义图标"
-        ) {
-            Steps(
-                current = 1,
-                direction = StepsDirection.VERTICAL,
-                items = listOf(
-                    StepItem(
-                        title = "编辑文档",
-                        description = "创建并编辑内容",
-                        icon = "E"
-                    ),
-                    StepItem(
-                        title = "审核",
-                        description = "内容审核中",
-                        icon = "R"
-                    ),
-                    StepItem(
-                        title = "发布",
-                        description = "发布到平台",
-                        icon = "P"
-                    )
-                )
-            )
-        }
-
         // Real use case: a form wizard
         ExampleSection(
             title = "表单向导",
-            description = "实际应用场景示例"
+            description = "Steps 与按钮配合完成分步表单"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.lg)) {
                 Steps(
                     current = formStep,
                     items = listOf(
@@ -261,16 +233,15 @@ fun StepsExample(
                     )
                 )
 
-                // Mock form content
+                // Content of the current step
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)
-                        .padding(16.dp)
+                        .padding(vertical = Spacing.sm)
                 ) {
                     when (formStep) {
                         0 -> {
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                                 Text(
                                     text = "第一步：基本信息",
                                     style = Theme.typography.titleMedium,
@@ -284,7 +255,7 @@ fun StepsExample(
                             }
                         }
                         1 -> {
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                                 Text(
                                     text = "第二步：详细信息",
                                     style = Theme.typography.titleMedium,
@@ -298,7 +269,7 @@ fun StepsExample(
                             }
                         }
                         else -> {
-                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                                 Text(
                                     text = "第三步：确认信息",
                                     style = Theme.typography.titleMedium,
@@ -315,7 +286,7 @@ fun StepsExample(
                 }
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     if (formStep > 0) {
@@ -323,7 +294,7 @@ fun StepsExample(
                             text = "上一步",
                             onClick = { formStep-- },
                             size = ButtonSize.MEDIUM,
-                            theme = ButtonTheme.PRIMARY,
+                            theme = ButtonTheme.DEFAULT,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -341,35 +312,6 @@ fun StepsExample(
                         modifier = Modifier.weight(1f)
                     )
                 }
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Steps 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 支持水平/垂直两种布局",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. 支持默认/点状两种主题",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. 支持四种状态: WAITING, PROCESS, FINISH, ERROR",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. 支持自定义图标和描述",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
             }
         }
     }

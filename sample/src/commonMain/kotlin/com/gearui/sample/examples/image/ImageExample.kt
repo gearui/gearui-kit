@@ -1,629 +1,222 @@
 package com.gearui.sample.examples.image
 
-import com.gearui.components.icon.Icons
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.CircleShape
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
 import com.gearui.components.image.GearImage
-import com.gearui.components.image.Avatar
+import com.gearui.components.image.ImageFit
+import com.gearui.components.image.ImageLoadState
 import com.gearui.components.image.ImagePlaceholder
 import com.gearui.components.image.ImageShape
-import com.gearui.components.image.ImageFit
 import com.gearui.components.image.ImageWithState
-import com.gearui.components.image.ImageLoadState
+import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.layout.Radius
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.aspectRatio
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.foundation.layout.size
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.unit.dp
+
+// Demo dimensions: the size of the image slots being shown.
+private val ImageSize = 72.dp
+private val PlaceholderHeight = 100.dp
+
+/** An image slot with its caption underneath. */
+@Composable
+private fun LabeledImage(label: String, content: @Composable () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
+    ) {
+        content()
+        Text(
+            text = label,
+            style = Theme.typography.bodySmall,
+            color = Theme.colors.mutedForeground
+        )
+    }
+}
 
 /**
  * Image component examples
- *
- * Shows how images are cropped to the centre, stretched, tiled and so on
  */
 @Composable
 fun ImageExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
-    val colors = Theme.colors
-
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
-        // Crop and stretch
         ExampleSection(
-            title = "组件类型",
-            description = "不同的图片填充模式"
+            title = "填充模式",
+            description = "fit 决定图片如何填入容器：裁剪、拉伸或完整显示"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Crop
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "裁剪",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    GearImage(
-                        painter = null,
-                        fit = ImageFit.COVER,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 6.dp,
-                        placeholderText = "COVER",
-                        modifier = Modifier.size(72.dp)
-                    )
-                }
-
-                // Stretch
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "拉伸",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(width = 121.dp, height = 72.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                listOf(
+                    "裁剪" to ImageFit.COVER,
+                    "拉伸" to ImageFit.FILL,
+                    "适应" to ImageFit.CONTAIN
+                ).forEach { (label, fit) ->
+                    LabeledImage(label) {
                         GearImage(
                             painter = null,
-                            fit = ImageFit.FILL,
-                            placeholderText = "FILL",
-                            modifier = Modifier.size(width = 121.dp, height = 50.dp)
+                            fit = fit,
+                            shape = ImageShape.ROUNDED,
+                            cornerRadius = Radius.md,
+                            placeholderText = fit.name,
+                            modifier = Modifier.size(ImageSize)
                         )
                     }
                 }
             }
         }
 
-        // Fit height and fit width
-        ExampleSection(
-            title = "适应模式",
-            description = "适应高度或宽度"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Fit height
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "适应高",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(width = 89.dp, height = 72.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        GearImage(
-                            painter = null,
-                            fit = ImageFit.CONTAIN,
-                            placeholderText = "FIT\nHEIGHT",
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                }
-
-                // Fit width
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "适应宽",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(width = 72.dp, height = 89.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        GearImage(
-                            painter = null,
-                            fit = ImageFit.CONTAIN,
-                            placeholderText = "FIT\nWIDTH",
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                }
-            }
-        }
-
-        // Image shapes
         ExampleSection(
             title = "图片形状",
             description = "方形、圆角方形、圆形"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Square
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "方形",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.SQUARE,
-                        placeholderText = "方形",
-                        modifier = Modifier.size(72.dp)
-                    )
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                listOf(
+                    "方形" to ImageShape.SQUARE,
+                    "圆角" to ImageShape.ROUNDED,
+                    "圆形" to ImageShape.CIRCLE
+                ).forEach { (label, shape) ->
+                    LabeledImage(label) {
+                        GearImage(
+                            painter = null,
+                            shape = shape,
+                            cornerRadius = Radius.md,
+                            placeholderText = label,
+                            modifier = Modifier.size(ImageSize)
+                        )
+                    }
                 }
+            }
+        }
 
-                // Rounded square
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "圆角方形",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    GearImage(
+        ExampleSection(
+            title = "加载状态",
+            description = "ImageWithState 按 loadState 显示加载中或加载失败"
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                LabeledImage("加载中") {
+                    ImageWithState(
                         painter = null,
+                        loadState = ImageLoadState.Loading,
                         shape = ImageShape.ROUNDED,
-                        cornerRadius = 6.dp,
-                        placeholderText = "圆角",
-                        modifier = Modifier.size(72.dp)
+                        cornerRadius = Radius.md,
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
-
-                // Circle
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "圆形",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.CIRCLE,
-                        placeholderText = "圆形",
-                        modifier = Modifier.size(72.dp)
-                    )
-                }
-            }
-        }
-
-        // ========== Component states ==========
-
-        // Loading state
-        ExampleSection(
-            title = "组件状态 - 加载中",
-            description = "默认提示和自定义提示"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Default loading message
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "加载默认提示",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(72.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "...",
-                            style = Theme.typography.titleLarge,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-
-                // Custom loading message
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "加载自定义提示",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(72.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        // Custom loading indicator (a circle standing in for one)
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .border(3.dp, colors.primary, CircleShape)
-                        )
-                    }
-                }
-            }
-        }
-
-        // Failure state
-        ExampleSection(
-            title = "组件状态 - 加载失败",
-            description = "默认提示和自定义提示"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Default failure message
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "失败默认提示",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                LabeledImage("加载失败") {
                     ImageWithState(
                         painter = null,
                         loadState = ImageLoadState.Error(""),
                         shape = ImageShape.ROUNDED,
-                        cornerRadius = 6.dp,
-                        modifier = Modifier.size(72.dp)
+                        cornerRadius = Radius.md,
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
-
-                // Custom failure message
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "失败自定义提示",
-                        style = Theme.typography.bodyMedium,
-                        color = colors.foreground
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(72.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(colors.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "加载失败",
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
-                }
-            }
-        }
-
-        // ========== Avatar ==========
-
-        ExampleSection(
-            title = "头像组件",
-            description = "不同尺寸的头像"
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Avatar(
+                LabeledImage("自定义失败文案") {
+                    ImageWithState(
                         painter = null,
-                        size = 32.dp,
-                        fallbackText = "小"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "32dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Avatar(
-                        painter = null,
-                        size = 48.dp,
-                        fallbackText = "中"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "48dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Avatar(
-                        painter = null,
-                        size = 64.dp,
-                        fallbackText = "大"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "64dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Avatar(
-                        painter = null,
-                        size = 80.dp,
-                        fallbackText = "张三"
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "80dp",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
+                        loadState = ImageLoadState.Error("加载失败"),
+                        shape = ImageShape.ROUNDED,
+                        cornerRadius = Radius.md,
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
             }
         }
 
-        // ========== With a border ==========
-
         ExampleSection(
-            title = "带边框图片",
-            description = "不同形状的边框样式"
+            title = "带边框",
+            description = "showBorder 描边，borderWidth 控制粗细"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+                LabeledImage("方形") {
                     GearImage(
                         painter = null,
                         shape = ImageShape.SQUARE,
                         showBorder = true,
-                        borderWidth = 1.dp,
+                        borderWidth = BorderWidth.thin,
                         placeholderText = "边框",
-                        modifier = Modifier.size(72.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "方形",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                LabeledImage("圆角") {
                     GearImage(
                         painter = null,
                         shape = ImageShape.ROUNDED,
                         showBorder = true,
-                        borderWidth = 2.dp,
-                        cornerRadius = 6.dp,
+                        borderWidth = BorderWidth.thick,
+                        cornerRadius = Radius.md,
                         placeholderText = "边框",
-                        modifier = Modifier.size(72.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "圆角",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                LabeledImage("圆形") {
                     GearImage(
                         painter = null,
                         shape = ImageShape.CIRCLE,
                         showBorder = true,
-                        borderWidth = 2.dp,
+                        borderWidth = BorderWidth.thick,
                         placeholderText = "边框",
-                        modifier = Modifier.size(72.dp)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "圆形",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
+                        modifier = Modifier.size(ImageSize)
                     )
                 }
             }
         }
-
-        // ========== Image placeholder ==========
 
         ExampleSection(
             title = "图片占位符",
-            description = "自定义占位符样式"
+            description = "ImagePlaceholder 用于无图或待上传的位置"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ImagePlaceholder(
-                    text = "暂无图片",
-                    icon = Icons.image,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(100.dp)
+                    modifier = Modifier.weight(1f).height(PlaceholderHeight)
                 )
                 ImagePlaceholder(
                     text = "点击上传",
-                    icon = "+",
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(100.dp)
+                    modifier = Modifier.weight(1f).height(PlaceholderHeight)
                 )
             }
         }
 
-        // ========== Image gallery ==========
-
         ExampleSection(
-            title = "图片画廊",
-            description = "九宫格图片展示"
+            title = "九宫格",
+            description = "等宽正方形格子排成三列"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "1",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "2",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "3",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "4",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "5",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "6",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "7",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "8",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
-                    GearImage(
-                        painter = null,
-                        shape = ImageShape.ROUNDED,
-                        cornerRadius = 4.dp,
-                        placeholderText = "9",
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                (1..9).chunked(3).forEach { row ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        row.forEach { number ->
+                            GearImage(
+                                painter = null,
+                                shape = ImageShape.ROUNDED,
+                                cornerRadius = Radius.sm,
+                                placeholderText = "$number",
+                                modifier = Modifier.weight(1f).aspectRatio(1f)
+                            )
+                        }
+                    }
                 }
             }
         }

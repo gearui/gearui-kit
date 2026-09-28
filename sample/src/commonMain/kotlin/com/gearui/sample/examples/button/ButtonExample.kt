@@ -5,13 +5,15 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.tencent.kuikly.compose.ui.draw.clip
 import com.gearui.components.button.*
 import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
+import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
 
 /**
@@ -25,436 +27,152 @@ fun ButtonExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
+    val clicked = { Toast.show("点击了按钮") }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ==================== Component types ====================
-
-        // Basic buttons
         ExampleSection(
-            title = "基础按钮",
-            description = "填充、浅色填充、默认、描边、文字按钮"
+            title = "按钮类型",
+            description = "填充、描边、文字三种类型"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                // Filled button - Primary
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    type = ButtonType.FILL
-                )
-                // Filled button - Light
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.LIGHT,
-                    type = ButtonType.FILL
-                )
-                // Filled button - Default
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.DEFAULT,
-                    type = ButtonType.FILL
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                // Outlined button
-                Button(
-                    text = "描边按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    type = ButtonType.OUTLINE
-                )
-                // Text button
-                Button(
-                    text = "文字按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    type = ButtonType.TEXT
-                )
+            ButtonRow {
+                Button(text = "填充按钮", onClick = clicked, type = ButtonType.FILL)
+                Button(text = "描边按钮", onClick = clicked, type = ButtonType.OUTLINE)
+                Button(text = "文字按钮", onClick = clicked, type = ButtonType.TEXT)
             }
         }
 
-        // Icon buttons
         ExampleSection(
-            title = "图标按钮",
-            description = "带图标的按钮、纯图标按钮、加载按钮"
+            title = "按钮主题",
+            description = "每种主题下的填充、描边、文字按钮"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                // Filled button with an icon
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    icon = Icons.phone
-                )
-                // Icon-only square button
-                Button(
-                    text = "",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.SQUARE,
-                    icon = Icons.phone
-                )
-                // Loading button
-                Button(
-                    text = "加载中",
-                    onClick = {},
-                    theme = ButtonTheme.PRIMARY,
-                    loading = true
-                )
-            }
-        }
-
-        // Text buttons on a dark surface
-        ExampleSection(
-            title = "深色背景叠加",
-            description = "文字按钮叠加在深色背景上"
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.foreground)
-                    .padding(16.dp)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Button(
-                        text = "文字按钮",
-                        onClick = { Toast.show("点击了按钮") },
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.TEXT
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = { Toast.show("点击了按钮") },
-                        theme = ButtonTheme.DANGER,
-                        type = ButtonType.TEXT
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = { Toast.show("点击了按钮") },
-                        theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.TEXT
-                    )
+            listOf(
+                ButtonTheme.PRIMARY,
+                ButtonTheme.DEFAULT,
+                ButtonTheme.LIGHT,
+                ButtonTheme.DANGER,
+                ButtonTheme.WARNING,
+                ButtonTheme.SUCCESS,
+            ).forEach { theme ->
+                ButtonRow {
+                    Button(text = "填充按钮", onClick = {}, theme = theme, type = ButtonType.FILL)
+                    Button(text = "描边按钮", onClick = {}, theme = theme, type = ButtonType.OUTLINE)
+                    Button(text = "文字按钮", onClick = {}, theme = theme, type = ButtonType.TEXT)
                 }
             }
         }
 
-        // Button groups
         ExampleSection(
-            title = "组合按钮",
-            description = "多个按钮并排使用"
+            title = "图标与加载",
+            description = "带图标、纯图标与加载中"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.LIGHT,
-                    modifier = Modifier.weight(1f),
-                    block = true
-                )
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    modifier = Modifier.weight(1f),
-                    block = true
-                )
+            ButtonRow {
+                Button(text = "拨打电话", onClick = clicked, icon = Icons.phone)
+                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.phone)
+                Button(text = "加载中", onClick = {}, loading = true)
             }
         }
 
-        // Full-width buttons
-        ExampleSection(
-            title = "通栏按钮",
-            description = "占据整行宽度的按钮"
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(horizontal = 16.dp)
-            ) {
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("点击了按钮") },
-                    theme = ButtonTheme.PRIMARY,
-                    block = true,
-                    icon = Icons.paper_plane_tilt
-                )
-            }
-        }
-
-        // ==================== Component states ====================
-
-        // Disabled state
-        ExampleSection(
-            title = "按钮禁用状态",
-            description = "不可点击的按钮"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        disabled = true
-                    )
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.LIGHT,
-                        disabled = true
-                    )
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DEFAULT,
-                        disabled = true
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "描边按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE,
-                        disabled = true
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.TEXT,
-                        disabled = true
-                    )
-                }
-            }
-        }
-
-        // ==================== Component themes ====================
-
-        // Button sizes
         ExampleSection(
             title = "按钮尺寸",
-            description = "Large(48)、Medium(40)、Small(32)、ExtraSmall(28)"
+            description = "LARGE / MEDIUM / SMALL / EXTRA_SMALL"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                Button(
-                    text = "按钮48",
-                    onClick = { Toast.show("Large") },
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.LARGE
-                )
-                Button(
-                    text = "按钮40",
-                    onClick = { Toast.show("Medium") },
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.MEDIUM
-                )
-                Button(
-                    text = "按钮32",
-                    onClick = { Toast.show("Small") },
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.SMALL
-                )
-                Button(
-                    text = "按钮28",
-                    onClick = { Toast.show("ExtraSmall") },
-                    theme = ButtonTheme.PRIMARY,
-                    size = ButtonSize.EXTRA_SMALL
-                )
+            ButtonRow {
+                Button(text = "大", onClick = clicked, size = ButtonSize.LARGE)
+                Button(text = "中", onClick = clicked, size = ButtonSize.MEDIUM)
+                Button(text = "小", onClick = clicked, size = ButtonSize.SMALL)
+                Button(text = "超小", onClick = clicked, size = ButtonSize.EXTRA_SMALL)
             }
         }
 
-        // Button shapes
         ExampleSection(
             title = "按钮形状",
             description = "矩形、方形、圆角、圆形、胶囊"
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                // Rectangle
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("Rectangle") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.RECTANGLE
-                )
-                // Square
-                Button(
-                    text = "",
-                    onClick = { Toast.show("Square") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.SQUARE,
-                    icon = Icons.star_fill
-                )
-                // Rounded
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("Round") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.ROUND
-                )
-                // Circle
-                Button(
-                    text = "",
-                    onClick = { Toast.show("Circle") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.CIRCLE,
-                    icon = Icons.star_fill
-                )
+            ButtonRow {
+                Button(text = "矩形", onClick = clicked, shape = ButtonShape.RECTANGLE)
+                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.star_fill)
+                Button(text = "圆角", onClick = clicked, shape = ButtonShape.ROUND)
+                Button(onClick = clicked, shape = ButtonShape.CIRCLE, icon = Icons.star_fill)
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.padding(start = 16.dp)
-            ) {
-                // Pill / filled radius
-                Button(
-                    text = "填充按钮",
-                    onClick = { Toast.show("Filled") },
-                    theme = ButtonTheme.PRIMARY,
-                    shape = ButtonShape.FILLED
-                )
+            ButtonRow {
+                Button(text = "胶囊", onClick = clicked, shape = ButtonShape.FILLED)
             }
         }
 
-        // Button themes
         ExampleSection(
-            title = "按钮主题",
-            description = "Default、Primary、Danger、Light 主题"
+            title = "禁用状态",
+            description = "各类型与主题的禁用样式"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Default theme
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.FILL
-                    )
-                    Button(
-                        text = "描边按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.OUTLINE
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DEFAULT,
-                        type = ButtonType.TEXT
-                    )
-                }
+            ButtonRow {
+                Button(text = "填充按钮", onClick = {}, disabled = true)
+                Button(text = "浅色按钮", onClick = {}, theme = ButtonTheme.LIGHT, disabled = true)
+                Button(text = "默认按钮", onClick = {}, theme = ButtonTheme.DEFAULT, disabled = true)
+            }
+            ButtonRow {
+                Button(text = "描边按钮", onClick = {}, type = ButtonType.OUTLINE, disabled = true)
+                Button(text = "文字按钮", onClick = {}, type = ButtonType.TEXT, disabled = true)
+            }
+        }
 
-                // Primary theme
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.FILL
-                    )
-                    Button(
-                        text = "描边按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.OUTLINE
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = {},
-                        theme = ButtonTheme.PRIMARY,
-                        type = ButtonType.TEXT
-                    )
-                }
+        ExampleSection(
+            title = "组合与通栏",
+            description = "并排等分的按钮组与占满整行的 block 按钮"
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    text = "取消",
+                    onClick = clicked,
+                    theme = ButtonTheme.LIGHT,
+                    modifier = Modifier.weight(1f),
+                    block = true
+                )
+                Button(
+                    text = "确定",
+                    onClick = clicked,
+                    modifier = Modifier.weight(1f),
+                    block = true
+                )
+            }
+            Button(
+                text = "发送",
+                onClick = clicked,
+                block = true,
+                icon = Icons.paper_plane_tilt
+            )
+        }
 
-                // Danger theme
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DANGER,
-                        type = ButtonType.FILL
-                    )
-                    Button(
-                        text = "描边按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DANGER,
-                        type = ButtonType.OUTLINE
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = {},
-                        theme = ButtonTheme.DANGER,
-                        type = ButtonType.TEXT
-                    )
-                }
-
-                // Light theme
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Button(
-                        text = "填充按钮",
-                        onClick = {},
-                        theme = ButtonTheme.LIGHT,
-                        type = ButtonType.FILL
-                    )
-                    Button(
-                        text = "描边按钮",
-                        onClick = {},
-                        theme = ButtonTheme.LIGHT,
-                        type = ButtonType.OUTLINE
-                    )
-                    Button(
-                        text = "文字按钮",
-                        onClick = {},
-                        theme = ButtonTheme.LIGHT,
-                        type = ButtonType.TEXT
-                    )
-                }
+        ExampleSection(
+            title = "深色背景叠加",
+            description = "文字按钮放在深色背景上",
+            surface = SectionSurface.Plain
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(Theme.shapes.xl)
+                    .background(colors.foreground)
+                    .padding(Spacing.lg)
+            ) {
+                Button(text = "文字按钮", onClick = clicked, theme = ButtonTheme.PRIMARY, type = ButtonType.TEXT)
+                Button(text = "文字按钮", onClick = clicked, theme = ButtonTheme.DANGER, type = ButtonType.TEXT)
+                Button(text = "文字按钮", onClick = clicked, theme = ButtonTheme.DEFAULT, type = ButtonType.TEXT)
             }
         }
     }
+}
+
+@Composable
+private fun ButtonRow(content: @Composable RowScope.() -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content
+    )
 }

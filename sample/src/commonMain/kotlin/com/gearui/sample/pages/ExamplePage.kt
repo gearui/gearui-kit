@@ -1,28 +1,30 @@
 package com.gearui.sample.pages
 
-import com.gearui.runtime.LocalRuntimeEnvironment
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import com.gearui.components.navbar.NavBar
 import com.gearui.components.scaffold.PageScaffold
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
+import com.gearui.primitives.composite.Card
+import com.gearui.runtime.LocalRuntimeEnvironment
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.PaddingValues
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
+import com.tencent.kuikly.compose.ui.Modifier
 
 /**
- * ExamplePage - shared wrapper for component example pages
+ * The frame every component page uses: a NavBar with a back button over a scrolling
+ * column of [ExampleSection]s, on the grouped page background.
  *
- * Gives every component the same container:
- * - a top navigation bar (NavBar, with a back button)
- * - a scrollable content area (GearLazyColumn, dismissing floating layers on scroll)
- * - consistent styling and layout
+ * Everything here reads tokens, as the pages built on it must: the sample is the code
+ * people copy, so it follows the same rules as the components it shows.
  */
 @Composable
 fun ExamplePage(
@@ -31,82 +33,82 @@ fun ExamplePage(
     content: @Composable () -> Unit
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-    val settingsState = LocalSettingsState.current
     val listState = rememberLazyListState()
-    val navBarColor = colors.surface
 
     PageScaffold(
         backgroundColor = colors.background,
-        topSafeAreaColor = navBarColor,
+        topSafeAreaColor = colors.surface,
         consumeBottomSafeArea = false
     ) {
-        // The list runs under the home indicator (edge to edge) and reserves the inset at its
-        // end instead: consuming it in PageScaffold painted a solid strip over the indicator.
+        // The list runs under the home indicator (edge to edge) and reserves the inset at
+        // its end instead: consuming it in PageScaffold painted a solid strip over it.
         val safeBottom = LocalRuntimeEnvironment.current.safeArea.bottom
-        Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-    ) {
-        // Top navigation bar - NavBar
-        NavBar(
-            title = component.nameEn,
-            centerTitle = true,
-            useDefaultBack = true,
-            onBackClick = onBack,
-            backgroundColor = navBarColor
-        )
-
-        // Example content area - GearLazyColumn (dismisses floating layers on scroll)
-        GearLazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colors.background),
-            state = listState,
-            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp + safeBottom)
-        ) {
-            item {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    content()
+        Column(modifier = Modifier.fillMaxSize()) {
+            NavBar(
+                title = component.nameEn,
+                centerTitle = true,
+                useDefaultBack = true,
+                onBackClick = onBack,
+                backgroundColor = colors.surface
+            )
+            // GearLazyColumn dismisses anchored overlays when the page scrolls.
+            GearLazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState,
+                contentPadding = PaddingValues(
+                    start = Spacing.lg,
+                    top = Spacing.lg,
+                    end = Spacing.lg,
+                    bottom = Spacing.xxl + safeBottom
+                )
+            ) {
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xxl)
+                    ) {
+                        content()
+                    }
                 }
             }
-        }
         }
     }
 }
 
 /**
- * ExampleSection - example block
+ * Where a section's examples sit.
  *
- * Groups the different examples of one component
+ * [Card] for loose controls — buttons, fields, switches — which need a surface to read
+ * as a group. [Plain] for a component that is a surface itself — CellGroup, Card, List,
+ * Collapse, Alert, a calendar — so it is shown as it will look on a page, not inside a
+ * second card.
+ */
+enum class SectionSurface { Card, Plain }
+
+/**
+ * One capability of the component: a title, an optional one-line description, and the
+ * examples, on a [SectionSurface].
  */
 @Composable
 fun ExampleSection(
     title: String,
     description: String = "",
-    useCardContainer: Boolean = true,
+    surface: SectionSurface = SectionSurface.Card,
     content: @Composable () -> Unit
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
-        // Title and description
         if (title.isNotEmpty()) {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 Text(
                     text = title,
                     style = Theme.typography.titleMedium,
                     color = colors.foreground
                 )
-
                 if (description.isNotEmpty()) {
                     Text(
                         text = description,
@@ -117,21 +119,21 @@ fun ExampleSection(
             }
         }
 
-        if (useCardContainer) {
-            // Example content
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shapes.lg)
-                    .background(colors.surface)
-                    .border(1.dp, colors.border, shapes.lg)
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+        when (surface) {
+            SectionSurface.Card -> Card(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.md)
+                ) {
+                    content()
+                }
+            }
+            SectionSurface.Plain -> Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 content()
             }
-        } else {
-            content()
         }
     }
 }

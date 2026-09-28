@@ -11,6 +11,7 @@ import com.gearui.components.navbar.NavBar
 import com.gearui.components.refresh.pullRefreshItem
 import com.gearui.components.refresh.rememberPullRefreshState
 import com.gearui.components.scaffold.PageScaffold
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.GearLazyColumn
 import com.gearui.foundation.primitives.Text
 import com.gearui.runtime.LocalRuntimeEnvironment
@@ -24,7 +25,6 @@ import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 /**
@@ -82,7 +82,7 @@ fun RefreshExample(
                         text = "下拉试试：超过阈值提示松手，刷新中转圈，完成后列表换一批。已刷新 $round 次",
                         style = Theme.typography.bodySmall,
                         color = colors.mutedForeground,
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        modifier = Modifier.fillMaxWidth().padding(Spacing.lg),
                     )
                 }
                 items(20) { index ->

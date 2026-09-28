@@ -2,25 +2,27 @@ package com.gearui.sample.examples.navbar
 
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.typography.IconSizes
-import com.tencent.kuikly.compose.foundation.layout.Row
-import com.tencent.kuikly.compose.foundation.layout.Spacer
-import com.tencent.kuikly.compose.foundation.layout.width
 import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.navbar.NavBar
 import com.gearui.components.navbar.NavBarItem
+import com.gearui.components.searchbar.SearchBar
+import com.gearui.components.searchbar.SearchBarCancel
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
+
+/** Taller bar for the large-title demo: the height is what is being shown. */
+private val LargeTitleBarHeight = 56.dp
 
 /**
  * NavBar component examples
@@ -33,6 +35,7 @@ fun NavbarExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
+    var keyword by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
@@ -42,9 +45,9 @@ fun NavbarExample(
 
         // Basic navigation bar
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "基础导航栏",
-            description = "高度48，标题字体加粗，启用默认返回按钮"
+            description = "标题加默认返回按钮"
         ) {
             NavBar(
                 title = "标题文字",
@@ -55,7 +58,7 @@ fun NavbarExample(
 
         // With a trailing action button
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "超长标题",
             description = "标题必须单行省略，不能在固定高度的导航栏里换行"
         ) {
@@ -67,7 +70,7 @@ fun NavbarExample(
         }
 
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带右侧操作按钮",
             description = "支持右侧添加图标按钮"
         ) {
@@ -86,7 +89,7 @@ fun NavbarExample(
 
         // With a leading close button
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带左侧关闭按钮",
             description = "可自定义左侧按钮图标"
         ) {
@@ -105,7 +108,7 @@ fun NavbarExample(
 
         // Several action buttons
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "多操作按钮",
             description = "支持左右两侧添加多个图标按钮"
         ) {
@@ -128,7 +131,7 @@ fun NavbarExample(
 
         // With a search field
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带搜索导航栏",
             description = "集成搜索组件的导航栏"
         ) {
@@ -136,39 +139,20 @@ fun NavbarExample(
                 useDefaultBack = true,
                 onBackClick = { Toast.show("返回") },
                 titleWidget = {
-                    // Search box style
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(32.dp)
-                            .background(
-                                colors.muted,
-                                RoundedCornerShape(16.dp)
-                            )
-                            .padding(horizontal = 12.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                name = Icons.magnifying_glass,
-                                size = IconSizes.Default.md,
-                                tint = colors.mutedForeground
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "搜索",
-                                style = Theme.typography.bodyMedium,
-                                color = colors.mutedForeground
-                            )
-                        }
-                    }
+                    SearchBar(
+                        value = keyword,
+                        onValueChange = { keyword = it },
+                        placeholder = "搜索",
+                        cancel = SearchBarCancel.Never,
+                        onSearch = { Toast.show("搜索:$it") }
+                    )
                 }
             )
         }
 
         // With an image
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "带图片导航栏",
             description = "使用图片或Logo作为标题"
         ) {
@@ -176,19 +160,13 @@ fun NavbarExample(
                 useDefaultBack = true,
                 onBackClick = { Toast.show("返回") },
                 titleWidget = {
-                    // Mock logo image
-                    Box(
-                        modifier = Modifier
-                            .width(80.dp)
-                            .height(24.dp)
-                            .background(colors.primary, RoundedCornerShape(4.dp)),
-                        contentAlignment = Alignment.Center
+                    // A brand mark: icon plus product name.
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
-                        Text(
-                            text = "LOGO",
-                            style = Theme.typography.label,
-                            color = colors.primaryForeground
-                        )
+                        Icon(name = Icons.star_fill, size = IconSizes.Default.xl, tint = colors.primary)
+                        Text(text = "GearUI", style = Theme.typography.titleMedium, color = colors.foreground)
                     }
                 }
             )
@@ -196,14 +174,14 @@ fun NavbarExample(
 
         // ==================== Component styles ====================
 
-        // Centred title
+        // Title alignment
         ExampleSection(
-            useCardContainer = false,
-            title = "标题居中",
-            description = "默认标题居中显示"
+            surface = SectionSurface.Plain,
+            title = "标题对齐",
+            description = "centerTitle 控制标题居中(默认)或居左"
         ) {
             NavBar(
-                title = "标题文字",
+                title = "标题居中",
                 centerTitle = true,
                 useDefaultBack = true,
                 onBackClick = { Toast.show("返回") },
@@ -214,16 +192,8 @@ fun NavbarExample(
                     )
                 )
             )
-        }
-
-        // Leading title
-        ExampleSection(
-            useCardContainer = false,
-            title = "标题居左",
-            description = "标题左对齐显示"
-        ) {
             NavBar(
-                title = "标题文字",
+                title = "标题居左",
                 centerTitle = false,
                 useDefaultBack = true,
                 onBackClick = { Toast.show("返回") },
@@ -238,13 +208,13 @@ fun NavbarExample(
 
         // Large title
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "大标题尺寸",
-            description = "扩展高度(104)，带副标题区域"
+            description = "belowTitleWidget 在导航栏下方放一行大标题"
         ) {
             NavBar(
                 title = "标题文字",
-                height = 56.dp,
+                height = LargeTitleBarHeight,
                 useDefaultBack = true,
                 onBackClick = { Toast.show("返回") },
                 rightItems = listOf(
@@ -257,7 +227,7 @@ fun NavbarExample(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .padding(horizontal = Spacing.lg, vertical = Spacing.sm)
                     ) {
                         Text(
                             text = "大标题文字",
@@ -271,12 +241,12 @@ fun NavbarExample(
 
         // Custom colours
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "自定义颜色",
             description = "支持自定义背景色、文字色"
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(Spacing.md),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 // Dark background
@@ -311,7 +281,7 @@ fun NavbarExample(
                     )
                 )
 
-                // Mock gradient - a tinted background
+                // Muted background
                 NavBar(
                     title = "淡色背景",
                     backgroundColor = colors.muted,
@@ -329,7 +299,7 @@ fun NavbarExample(
 
         // Without a back button
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "无返回按钮",
             description = "不显示左侧返回按钮"
         ) {

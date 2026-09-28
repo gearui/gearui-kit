@@ -3,13 +3,14 @@ package com.gearui.sample.examples.datepicker
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.picker.DatePickerInput
+import com.gearui.foundation.layout.Spacing
 import com.gearui.components.picker.TimePickerInput
 import com.gearui.components.picker.DateTimePickerInput
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
@@ -31,13 +32,13 @@ fun DatePickerExample(
     ) {
         // Date picker
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "日期选择器",
             description = "选择年月日"
         ) {
             var dateValue by remember { mutableStateOf("") }
 
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 DatePickerInput(
                     value = dateValue,
                     onValueChange = { dateValue = it },
@@ -53,31 +54,15 @@ fun DatePickerExample(
             }
         }
 
-        // With a default value
-        ExampleSection(
-            useCardContainer = false,
-            title = "带默认值",
-            description = "设置初始日期值"
-        ) {
-            var dateValue by remember { mutableStateOf("2024-01-15") }
-
-            DatePickerInput(
-                value = dateValue,
-                onValueChange = { dateValue = it },
-                placeholder = "请选择日期",
-                label = "活动日期"
-            )
-        }
-
         // Time picker
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "时间选择器",
             description = "选择时分"
         ) {
             var timeValue by remember { mutableStateOf("") }
 
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 TimePickerInput(
                     value = timeValue,
                     onValueChange = { timeValue = it },
@@ -93,14 +78,21 @@ fun DatePickerExample(
             }
         }
 
-        // Time with a default value
+        // Default values
         ExampleSection(
-            useCardContainer = false,
-            title = "时间默认值",
-            description = "设置初始时间值"
+            surface = SectionSurface.Plain,
+            title = "默认值",
+            description = "value 传入初始日期或时间"
         ) {
+            var dateValue by remember { mutableStateOf("2024-01-15") }
             var timeValue by remember { mutableStateOf("09:30") }
 
+            DatePickerInput(
+                value = dateValue,
+                onValueChange = { dateValue = it },
+                placeholder = "请选择日期",
+                label = "活动日期"
+            )
             TimePickerInput(
                 value = timeValue,
                 onValueChange = { timeValue = it },
@@ -111,14 +103,14 @@ fun DatePickerExample(
 
         // Date and time picker
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "日期时间选择器",
             description = "同时选择日期和时间"
         ) {
             var dateValue by remember { mutableStateOf("") }
             var timeValue by remember { mutableStateOf("") }
 
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 DateTimePickerInput(
                     dateValue = dateValue,
                     timeValue = timeValue,
@@ -137,11 +129,11 @@ fun DatePickerExample(
 
         // Disabled state
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "禁用状态",
             description = "不可交互的选择器"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 DatePickerInput(
                     value = "2024-06-01",
                     onValueChange = {},
@@ -162,13 +154,13 @@ fun DatePickerExample(
 
         // Without a label
         ExampleSection(
-            useCardContainer = false,
+            surface = SectionSurface.Plain,
             title = "无标签样式",
             description = "不显示标签的选择器"
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 var dateValue by remember { mutableStateOf("") }
                 var timeValue by remember { mutableStateOf("") }
@@ -185,41 +177,6 @@ fun DatePickerExample(
                     onValueChange = { timeValue = it },
                     placeholder = "选择时间",
                     modifier = Modifier.weight(1f)
-                )
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            useCardContainer = false,
-            title = "使用说明",
-            description = "DatePicker 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. DatePickerInput: 日期选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. TimePickerInput: 时间选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. DateTimePickerInput: 日期时间组合选择器",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. label: 可选的标签文字",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. enabled: 控制是否可交互",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
                 )
             }
         }

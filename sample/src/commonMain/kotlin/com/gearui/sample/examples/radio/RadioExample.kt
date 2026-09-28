@@ -1,23 +1,18 @@
 package com.gearui.sample.examples.radio
 
-import com.gearui.foundation.interaction.PressableFeedback
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.radio.*
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
 
 /**
@@ -40,9 +35,9 @@ fun RadioExample(
         var verticalSelected by remember { mutableStateOf("0") }
         ExampleSection(
             title = "纵向单选框",
-            description = "垂直排列的单选框组"
+            description = "RadioButtonWithLabel 纵向排列"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
+            Column {
                 RadioButtonWithLabel(
                     selected = verticalSelected == "0",
                     onClick = { verticalSelected = "0" },
@@ -65,10 +60,10 @@ fun RadioExample(
         var horizontalSelected by remember { mutableStateOf("1") }
         ExampleSection(
             title = "横向单选框",
-            description = "水平排列的单选框组"
+            description = "RadioButtonWithLabel 横向排列"
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xl),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButtonWithLabel(
@@ -96,7 +91,7 @@ fun RadioExample(
             title = "单选框状态",
             description = "禁用状态下的选中与未选中"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
+            Column {
                 RadioButtonWithLabel(
                     selected = true,
                     onClick = { },
@@ -118,9 +113,9 @@ fun RadioExample(
         var sizeSelected by remember { mutableStateOf("medium") }
         ExampleSection(
             title = "单选框尺寸",
-            description = "大、中、小三种尺寸"
+            description = "RadioSize 大、中、小三档"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -172,101 +167,46 @@ fun RadioExample(
             }
         }
 
-        // Marker position
-        var positionSelected1 by remember { mutableStateOf(true) }
-        var positionSelected2 by remember { mutableStateOf(true) }
+        // Radio in list rows: the mark trails, each row carries a description
+        var rowSelected by remember { mutableStateOf(1) }
         ExampleSection(
-            title = "勾选显示位置",
-            description = "单选框在左侧或右侧"
+            title = "列表单选",
+            description = "Cell 整行可点，RadioButton 放在 trailing",
+            surface = SectionSurface.Plain
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
-                // Radio on the right (default)
-                RadioButtonWithLabel(
-                    selected = positionSelected1,
-                    onClick = { positionSelected1 = !positionSelected1 },
-                    label = "单选框在右侧"
+            CellGroup(items = listOf(0, 1, 2)) { index ->
+                Cell(
+                    title = "方案 ${index + 1}",
+                    description = "描述信息",
+                    onClick = { rowSelected = index },
+                    trailing = {
+                        RadioButton(
+                            selected = rowSelected == index,
+                            onClick = { rowSelected = index }
+                        )
+                    }
                 )
-                // Radio on the left
-                PressableFeedback(
-                    onClick = { positionSelected2 = !positionSelected2 },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "单选框在左侧",
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
-                    )
-                    RadioButton(
-                        selected = positionSelected2,
-                        onClick = { positionSelected2 = !positionSelected2 }
-                    )
-                }
-                }
             }
         }
 
-        // ========== Special styles ==========
-
-        // Vertical card radio buttons
-        var cardVerticalSelected by remember { mutableStateOf("1") }
+        // Marker position: the mark leads the row
+        var leadingSelected by remember { mutableStateOf(0) }
         ExampleSection(
-            title = "纵向卡片单选框",
-            description = "带边框的卡片样式"
+            title = "勾选在左侧",
+            description = "RadioButton 放在 Cell 的 leading",
+            surface = SectionSurface.Plain
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                listOf("0", "1", "2", "3").forEach { id ->
-                    RadioCardItem(
-                        selected = cardVerticalSelected == id,
-                        onClick = { cardVerticalSelected = id },
-                        title = "单选",
-                        description = "描述信息"
-                    )
-                }
-            }
-        }
-
-        // Horizontal card radio buttons
-        var cardHorizontalSelected by remember { mutableStateOf("1") }
-        ExampleSection(
-            title = "横向卡片单选框",
-            description = "横向排列的卡片样式"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    RadioCardItemCompact(
-                        selected = cardHorizontalSelected == "0",
-                        onClick = { cardHorizontalSelected = "0" },
-                        title = "单选",
-                        modifier = Modifier.weight(1f)
-                    )
-                    RadioCardItemCompact(
-                        selected = cardHorizontalSelected == "1",
-                        onClick = { cardHorizontalSelected = "1" },
-                        title = "单选",
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    RadioCardItemCompact(
-                        selected = cardHorizontalSelected == "2",
-                        onClick = { cardHorizontalSelected = "2" },
-                        title = "单选",
-                        modifier = Modifier.weight(1f)
-                    )
-                    RadioCardItemCompact(
-                        selected = cardHorizontalSelected == "3",
-                        onClick = { cardHorizontalSelected = "3" },
-                        title = "单选",
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+            CellGroup(items = listOf(0, 1)) { index ->
+                Cell(
+                    title = if (index == 0) "按时间排序" else "按热度排序",
+                    onClick = { leadingSelected = index },
+                    leading = {
+                        RadioButton(
+                            selected = leadingSelected == index,
+                            onClick = { leadingSelected = index }
+                        )
+                    }
+                )
             }
         }
 
@@ -274,7 +214,7 @@ fun RadioExample(
         var groupSelected by remember { mutableStateOf("选项B") }
         ExampleSection(
             title = "单选框组",
-            description = "使用 RadioGroup 组件"
+            description = "RadioGroup 由选项列表生成一组单选"
         ) {
             RadioGroup(
                 options = listOf("选项A", "选项B", "选项C", "选项D"),
@@ -282,98 +222,5 @@ fun RadioExample(
                 onOptionSelected = { groupSelected = it }
             )
         }
-    }
-}
-
-/**
- * Card-style radio option (vertical, with a description)
- */
-@Composable
-private fun RadioCardItem(
-    selected: Boolean,
-    onClick: () -> Unit,
-    title: String,
-    description: String,
-    modifier: Modifier = Modifier
-) {
-    val colors = Theme.colors
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(colors.surface)
-            .border(
-                width = if (selected) 1.5.dp else 1.dp,
-                color = if (selected) colors.primary else colors.border,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = title,
-                style = Theme.typography.bodyLarge,
-                color = colors.foreground
-            )
-            Text(
-                text = description,
-                style = Theme.typography.bodySmall,
-                color = colors.mutedForeground
-            )
-        }
-        RadioButton(
-            selected = selected,
-            onClick = onClick
-        )
-    }
-}
-
-/**
- * Card-style radio option (horizontal, compact)
- */
-@Composable
-private fun RadioCardItemCompact(
-    selected: Boolean,
-    onClick: () -> Unit,
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    val colors = Theme.colors
-
-    PressableFeedback(
-        onClick = onClick,
-        modifier = modifier,
-        shape = RoundedCornerShape(8.dp),
-    ) {
-    Row(
-        modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(colors.surface)
-            .border(
-                width = if (selected) 1.5.dp else 1.dp,
-                color = if (selected) colors.primary else colors.border,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            style = Theme.typography.bodyMedium,
-            color = colors.foreground
-        )
-        RadioButton(
-            selected = selected,
-            onClick = onClick,
-            size = RadioSize.SMALL
-        )
-    }
     }
 }

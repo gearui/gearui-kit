@@ -3,7 +3,6 @@ package com.gearui.sample.examples.swiper
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
@@ -14,11 +13,18 @@ import com.gearui.components.swiper.SwiperIndicatorPosition
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
+// Demo content dimensions: the banner heights the swipers are shown at.
+private val BannerHeight = 180.dp
+private val CompactBannerHeight = 140.dp
+
 /**
- * Swiper component examples
+ * Swiper component examples.
+ *
+ * A swiper is a full-width surface of its own, so every section is Plain.
  */
 @Composable
 fun SwiperExample(
@@ -26,361 +32,178 @@ fun SwiperExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
-
-    // Carousel colours
-    val slideColors = listOf(
-        colors.primary,
-        colors.success,
-        colors.warning,
-        colors.destructive,
-        colors.info,
-        colors.primary
-    )
+    var currentIndex by remember { mutableStateOf(0) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
-        // Dots
         ExampleSection(
-            title = "点状 (dots)",
-            description = "默认点状指示器"
+            surface = SectionSurface.Plain,
+            title = "点状指示器",
+            description = "默认 navigation = DOTS，指示器位于轮播内部底部"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 autoPlayInterval = 3000L,
                 navigation = SwiperNavigation.DOTS,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Slide ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "Slide ${index + 1}") }
         }
 
-        // Dots bar
         ExampleSection(
-            title = "点条状 (dots-bar)",
-            description = "选中时指示器变为长条"
+            surface = SectionSurface.Plain,
+            title = "点条指示器",
+            description = "DOTS_BAR：选中项变为长条"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 navigation = SwiperNavigation.DOTS_BAR,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Slide ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "Slide ${index + 1}") }
         }
 
-        // Fraction
         ExampleSection(
-            title = "分式 (fraction)",
-            description = "显示当前页码/总页数"
+            surface = SectionSurface.Plain,
+            title = "分式指示器",
+            description = "FRACTION：显示当前页码 / 总页数"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 navigation = SwiperNavigation.FRACTION,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Slide ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "Slide ${index + 1}") }
         }
 
-        // Controls
         ExampleSection(
-            title = "切换按钮 (controls)",
-            description = "显示左右切换箭头"
-        ) {
-            Swiper(
-                itemCount = 6,
-                loop = false,
-                showArrows = true,
-                navigation = SwiperNavigation.DOTS,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Slide ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
-        }
-
-        // No indicator
-        ExampleSection(
+            surface = SectionSurface.Plain,
             title = "无指示器",
-            description = "隐藏指示器，仅支持手势滑动"
+            description = "NONE：隐藏指示器，仅手势滑动"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 navigation = SwiperNavigation.NONE,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Slide ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "Slide ${index + 1}") }
         }
 
-        // ========== Component styles ==========
-
-        // Inner indicator
         ExampleSection(
-            title = "内部指示器",
-            description = "指示器显示在轮播图内部底部"
+            surface = SectionSurface.Plain,
+            title = "切换箭头",
+            description = "showArrows 显示左右切换箭头"
         ) {
             Swiper(
                 itemCount = 6,
-                autoPlay = true,
-                indicatorPosition = SwiperIndicatorPosition.BOTTOM,
-                height = 180.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "内部 ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                showArrows = true,
+                height = BannerHeight
+            ) { index -> Slide(index, "Slide ${index + 1}") }
         }
 
-        // Outer indicator
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "外部指示器",
-            description = "指示器显示在轮播图下方"
+            description = "OUTSIDE_BOTTOM：指示器位于轮播下方"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 indicatorPosition = SwiperIndicatorPosition.OUTSIDE_BOTTOM,
-                height = 160.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "外部 ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "外部 ${index + 1}") }
         }
 
-        // Top indicator
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "顶部指示器",
-            description = "指示器显示在轮播图上方"
+            description = "TOP：指示器位于轮播内部顶部"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 indicatorPosition = SwiperIndicatorPosition.TOP,
-                height = 160.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "顶部 ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = BannerHeight
+            ) { index -> Slide(index, "顶部 ${index + 1}") }
         }
 
-        // ========== Other configuration ==========
-
-        // Non-looping mode
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "非循环模式",
-            description = "滑动到边界时停止"
+            description = "loop = false，滑到首尾页时停止"
         ) {
             Swiper(
                 itemCount = 4,
                 loop = false,
                 showArrows = true,
-                height = 160.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "第 ${index + 1} 页",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = CompactBannerHeight
+            ) { index -> Slide(index, "第 ${index + 1} 页") }
         }
 
-        // Reacting to index changes
-        var currentIndex by remember { mutableStateOf(0) }
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "监听索引变化",
-            description = "通过 onIndexChanged 获取当前索引"
+            description = "onIndexChanged 回调当前索引：$currentIndex"
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Swiper(
-                    itemCount = 6,
-                    height = 140.dp,
-                    onIndexChanged = { index ->
-                        currentIndex = index
-                    }
-                ) { index ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(slideColors[index % slideColors.size]),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Index ${index + 1}",
-                            style = Theme.typography.headlineMedium,
-                            color = colors.primaryForeground
-                        )
-                    }
-                }
-
-                Text(
-                    text = "当前索引: $currentIndex",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.primary
-                )
-            }
+            Swiper(
+                itemCount = 6,
+                height = CompactBannerHeight,
+                onIndexChanged = { index -> currentIndex = index }
+            ) { index -> Slide(index, "Index ${index + 1}") }
         }
 
-        // Custom autoplay interval
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "快速轮播",
-            description = "自动播放间隔 1.5 秒"
+            description = "autoPlayInterval = 1500，自动播放间隔 1.5 秒"
         ) {
             Swiper(
                 itemCount = 6,
                 autoPlay = true,
                 autoPlayInterval = 1500L,
-                height = 140.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Fast ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = CompactBannerHeight
+            ) { index -> Slide(index, "Fast ${index + 1}") }
         }
 
-        // Few pages
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "少量页面",
-            description = "只有 2 张的轮播图"
+            description = "只有 2 页时的循环轮播"
         ) {
             Swiper(
                 itemCount = 2,
                 autoPlay = true,
                 loop = true,
-                height = 140.dp
-            ) { index ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(slideColors[index % slideColors.size]),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Page ${index + 1}",
-                        style = Theme.typography.headlineMedium,
-                        color = colors.primaryForeground
-                    )
-                }
-            }
+                height = CompactBannerHeight
+            ) { index -> Slide(index, "Page ${index + 1}") }
         }
+    }
+}
+
+/** A coloured placeholder slide; the colour cycles through the theme's status colours. */
+@Composable
+private fun Slide(index: Int, label: String) {
+    val colors = Theme.colors
+    val slideColors = listOf(
+        colors.primary,
+        colors.success,
+        colors.warning,
+        colors.destructive,
+        colors.info
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(Theme.shapes.lg)
+            .background(slideColors[index % slideColors.size]),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            style = Theme.typography.headlineMedium,
+            color = colors.primaryForeground
+        )
     }
 }

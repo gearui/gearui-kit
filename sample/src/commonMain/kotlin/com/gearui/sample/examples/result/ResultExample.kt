@@ -1,12 +1,9 @@
 package com.gearui.sample.examples.result
 
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
-import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
 import com.gearui.components.result.Result
 import com.gearui.components.result.ResultStatus
 import com.gearui.components.result.SuccessResult
@@ -18,13 +15,14 @@ import com.gearui.components.result.NetworkErrorResult
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
 /**
- * Result component examples
+ * Result component examples: feedback shown after an action.
  *
- * A result page, for feedback after an action
+ * Result is a page-level block rather than a control, so every section is Plain.
  */
 @Composable
 fun ResultExample(
@@ -42,6 +40,7 @@ fun ResultExample(
     ) {
         // Success
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "成功结果",
             description = "操作成功的反馈页面"
         ) {
@@ -51,16 +50,14 @@ fun ResultExample(
                 primaryAction = {
                     Button(
                         text = "返回首页",
-                        onClick = { actionResult = "点击了返回首页" },
-                        size = ButtonSize.MEDIUM
+                        onClick = { actionResult = "点击了返回首页" }
                     )
                 },
                 secondaryAction = {
                     Button(
                         text = "查看详情",
                         onClick = { actionResult = "点击了查看详情" },
-                        size = ButtonSize.MEDIUM,
-                        theme = ButtonTheme.PRIMARY
+                        type = ButtonType.OUTLINE
                     )
                 }
             )
@@ -68,6 +65,7 @@ fun ResultExample(
 
         // Error
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "错误结果",
             description = "操作失败的反馈页面"
         ) {
@@ -78,7 +76,6 @@ fun ResultExample(
                     Button(
                         text = "重新提交",
                         onClick = { actionResult = "点击了重新提交" },
-                        size = ButtonSize.MEDIUM,
                         theme = ButtonTheme.DANGER
                     )
                 }
@@ -87,6 +84,7 @@ fun ResultExample(
 
         // Warning
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "警告结果",
             description = "警告提示的反馈页面"
         ) {
@@ -97,8 +95,7 @@ fun ResultExample(
                 primaryAction = {
                     Button(
                         text = "立即修改",
-                        onClick = { actionResult = "点击了立即修改" },
-                        size = ButtonSize.MEDIUM
+                        onClick = { actionResult = "点击了立即修改" }
                     )
                 }
             )
@@ -106,6 +103,7 @@ fun ResultExample(
 
         // Information
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "信息提示",
             description = "普通信息的反馈页面"
         ) {
@@ -118,6 +116,7 @@ fun ResultExample(
 
         // 404 page
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "404 页面",
             description = "页面不存在的反馈"
         ) {
@@ -125,8 +124,7 @@ fun ResultExample(
                 primaryAction = {
                     Button(
                         text = "返回首页",
-                        onClick = { actionResult = "点击了返回首页" },
-                        size = ButtonSize.MEDIUM
+                        onClick = { actionResult = "点击了返回首页" }
                     )
                 }
             )
@@ -134,6 +132,7 @@ fun ResultExample(
 
         // 403, no permission
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "403 无权限",
             description = "无权访问的反馈页面"
         ) {
@@ -141,8 +140,7 @@ fun ResultExample(
                 primaryAction = {
                     Button(
                         text = "申请权限",
-                        onClick = { actionResult = "点击了申请权限" },
-                        size = ButtonSize.MEDIUM
+                        onClick = { actionResult = "点击了申请权限" }
                     )
                 }
             )
@@ -150,6 +148,7 @@ fun ResultExample(
 
         // Empty data
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "空数据状态",
             description = "暂无数据的反馈页面"
         ) {
@@ -159,8 +158,7 @@ fun ResultExample(
                 primaryAction = {
                     Button(
                         text = "立即创建",
-                        onClick = { actionResult = "点击了立即创建" },
-                        size = ButtonSize.MEDIUM
+                        onClick = { actionResult = "点击了立即创建" }
                     )
                 }
             )
@@ -168,6 +166,7 @@ fun ResultExample(
 
         // Network error
         ExampleSection(
+            surface = SectionSurface.Plain,
             title = "网络错误",
             description = "网络异常的反馈页面"
         ) {
@@ -186,40 +185,6 @@ fun ResultExample(
                     text = actionResult,
                     style = Theme.typography.bodyMedium,
                     color = colors.primary
-                )
-            }
-        }
-
-        // Usage notes
-        ExampleSection(
-            title = "使用说明",
-            description = "Result 组件特性"
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "1. 支持多种状态: SUCCESS, ERROR, WARNING, INFO 等",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "2. 提供便捷方法: SuccessResult, ErrorResult 等",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "3. 支持自定义图标和描述",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "4. 支持主操作和次操作按钮",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
-                )
-                Text(
-                    text = "5. 支持额外内容插槽",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.mutedForeground
                 )
             }
         }

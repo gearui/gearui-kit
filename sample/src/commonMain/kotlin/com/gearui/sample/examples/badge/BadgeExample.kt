@@ -1,32 +1,33 @@
 package com.gearui.sample.examples.badge
 
-import com.gearui.components.icon.Icons
-import com.gearui.foundation.primitives.Icon
-import com.gearui.foundation.typography.IconSizes
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.shape.CircleShape
-import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.foundation.primitives.Text
-import com.gearui.primitives.Badge
-import com.gearui.primitives.BadgeType
-import com.gearui.primitives.BadgeTheme
-import com.gearui.primitives.BadgeSize
-import com.gearui.primitives.BadgeBorder
+import com.tencent.kuikly.compose.ui.unit.Dp
 import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.cell.Cell
+import com.gearui.components.cellgroup.CellGroup
+import com.gearui.components.icon.Icons
+import com.gearui.foundation.avatar.AvatarSizeTokens
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.Icon
+import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.primitives.Avatar
+import com.gearui.primitives.Badge
+import com.gearui.primitives.BadgeBorder
+import com.gearui.primitives.BadgeSize
+import com.gearui.primitives.BadgeTheme
+import com.gearui.primitives.BadgeType
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
+import com.gearui.sample.pages.SectionSurface
 import com.gearui.theme.Theme
-import com.gearui.foundation.layout.Spacing
 
 /**
  * Badge component examples
@@ -39,766 +40,210 @@ fun BadgeExample(
     onBack: () -> Unit
 ) {
     val colors = Theme.colors
-
-    // Dynamic count
     var messageCount by remember { mutableStateOf(8) }
 
     ExamplePage(
         component = component,
         onBack = onBack
     ) {
-        // ========== Component types ==========
-
-        // Dot badge
         ExampleSection(
             title = "红点徽标",
-            description = "用于消息提醒，无具体数值"
+            description = "RedPoint：只提示有新内容，不显示数量"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(32.dp)
-            ) {
-                // Text + dot
-                Badge(
-                    type = BadgeType.RedPoint,
-                    theme = BadgeTheme.Error
-                ) {
-                    Text(
-                        text = "消息",
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
-                    )
+            BadgeRow {
+                Badge(type = BadgeType.RedPoint) {
+                    Text(text = "消息", style = Theme.typography.bodyLarge, color = colors.foreground)
                 }
-
-                // Icon + dot
-                Badge(
-                    type = BadgeType.RedPoint,
-                    theme = BadgeTheme.Error
-                ) {
-                    IconBox()
-                }
-
-                // Button + dot
-                Badge(
-                    type = BadgeType.RedPoint,
-                    theme = BadgeTheme.Error
-                ) {
-                    Button(
-                        text = "按钮",
-                        size = ButtonSize.SMALL,
-                        onClick = {}
-                    )
+                Badge(type = BadgeType.RedPoint) { BellIcon() }
+                Badge(type = BadgeType.RedPoint) {
+                    Button(text = "按钮", size = ButtonSize.SMALL, onClick = {})
                 }
             }
         }
 
-        // Number badge
         ExampleSection(
             title = "数字徽标",
-            description = "显示具体消息数量"
+            description = "Message：显示数量，超过 maxCount 显示 max+"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(32.dp)
-            ) {
-                // Text + number
-                Badge(
-                    type = BadgeType.Message,
-                    count = messageCount,
-                    theme = BadgeTheme.Error
-                ) {
-                    Text(
-                        text = "消息",
-                        style = Theme.typography.bodyLarge,
-                        color = colors.foreground
-                    )
+            BadgeRow {
+                Badge(type = BadgeType.Message, count = messageCount) {
+                    Text(text = "消息", style = Theme.typography.bodyLarge, color = colors.foreground)
                 }
-
-                // Icon + number
-                Badge(
-                    type = BadgeType.Message,
-                    count = messageCount,
-                    theme = BadgeTheme.Error
-                ) {
-                    IconBox()
-                }
-
-                // Button + number
-                Badge(
-                    type = BadgeType.Message,
-                    count = messageCount,
-                    theme = BadgeTheme.Error
-                ) {
-                    Button(
-                        text = "按钮",
-                        size = ButtonSize.SMALL,
-                        onClick = {}
-                    )
+                Badge(type = BadgeType.Message, count = 16) { BellIcon() }
+                Badge(type = BadgeType.Message, count = 128, maxCount = 99) { BellIcon() }
+                Badge(type = BadgeType.Message, count = messageCount) {
+                    Button(text = "按钮", size = ButtonSize.SMALL, onClick = {})
                 }
             }
         }
 
-        // Custom badge
         ExampleSection(
-            title = "自定义徽标",
-            description = "自定义显示内容和样式"
+            title = "零值",
+            description = "showZero = true 显示 0，false 时隐藏"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                // Showing a number
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = messageCount,
-                        theme = BadgeTheme.Error
-                    ) {
-                        LargeIconBox()
-                    }
-                    Text(
-                        text = "数字$messageCount",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
+            BadgeRow {
+                Labeled("显示 0") {
+                    Badge(type = BadgeType.Message, count = 0, showZero = true) { Anchor() }
                 }
-
-                // Showing zero
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 0,
-                        theme = BadgeTheme.Error,
-                        showZero = true
-                    ) {
-                        LargeIconBox()
-                    }
-                    Text(
-                        text = "显示0",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Hiding zero
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 0,
-                        theme = BadgeTheme.Error,
-                        showZero = false
-                    ) {
-                        LargeIconBox()
-                    }
-                    Text(
-                        text = "隐藏0",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
+                Labeled("隐藏 0") {
+                    Badge(type = BadgeType.Message, count = 0, showZero = false) { Anchor() }
                 }
             }
         }
 
-        // ========== Component styles ==========
-
-        // Round badge (Message type)
         ExampleSection(
-            title = "圆形徽标",
-            description = "Message 类型，默认圆形样式"
+            title = "方形与气泡",
+            description = "Square 的两种圆角，Bubble 的文字气泡"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                Badge(
-                    type = BadgeType.Message,
-                    count = 1,
-                    theme = BadgeTheme.Error
-                ) {
-                    IconBox()
+            BadgeRow {
+                Labeled("大圆角") {
+                    Badge(type = BadgeType.Square, count = messageCount, border = BadgeBorder.Large) { Anchor() }
                 }
-                Badge(
-                    type = BadgeType.Message,
-                    count = 16,
-                    theme = BadgeTheme.Error
-                ) {
-                    IconBox()
+                Labeled("小圆角") {
+                    Badge(type = BadgeType.Square, count = messageCount, border = BadgeBorder.Small) { Anchor() }
                 }
-                Badge(
-                    type = BadgeType.Message,
-                    count = 128,
-                    maxCount = 99,
-                    theme = BadgeTheme.Error
-                ) {
-                    IconBox()
-                }
+            }
+            BadgeRow {
+                Badge(type = BadgeType.Bubble, message = "领积分") { Anchor() }
+                Badge(type = BadgeType.Bubble, message = "NEW", theme = BadgeTheme.Primary) { Anchor() }
+                Badge(type = BadgeType.Bubble, message = "HOT", theme = BadgeTheme.Warning) { Anchor() }
             }
         }
 
-        // Square badge (Square type)
-        ExampleSection(
-            title = "方形徽标",
-            description = "Square 类型，带圆角"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                // Large radius
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Square,
-                        count = messageCount,
-                        border = BadgeBorder.Large,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "大圆角",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Small radius
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Square,
-                        count = messageCount,
-                        border = BadgeBorder.Small,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "小圆角",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-            }
-        }
-
-        // Bubble badge (Bubble type)
-        ExampleSection(
-            title = "气泡徽标",
-            description = "Bubble 类型，左下角小尖角"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                // Claim points
-                Badge(
-                    type = BadgeType.Bubble,
-                    message = "领积分",
-                    theme = BadgeTheme.Error
-                ) {
-                    LargeIconBox(showShopIcon = true)
-                }
-
-                // NEW
-                Badge(
-                    type = BadgeType.Bubble,
-                    message = "NEW",
-                    theme = BadgeTheme.Primary
-                ) {
-                    LargeIconBox()
-                }
-
-                // HOT
-                Badge(
-                    type = BadgeType.Bubble,
-                    message = "HOT",
-                    theme = BadgeTheme.Warning
-                ) {
-                    LargeIconBox()
-                }
-            }
-        }
-
-        // Corner badge (Subscript type)
         ExampleSection(
             title = "角标",
-            description = "Subscript 类型，用于列表项"
+            description = "Subscript：列表行右上角的斜角标签",
+            surface = SectionSurface.Plain
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(colors.surface)
-            ) {
+            val rows = listOf(
+                Triple("单行标题", null, "NEW" to BadgeTheme.Error),
+                Triple("单行标题", "带描述的列表项", "HOT" to BadgeTheme.Warning),
+            )
+            CellGroup(items = rows) { (title, description, badge) ->
                 Box {
-                    Cell(
-                        title = "单行标题",
-                        arrow = true,
-                        onClick = {}
-                    )
-                    // Corner badge
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(end = 40.dp)
-                    ) {
-                        Badge(
-                            type = BadgeType.Subscript,
-                            message = "NEW",
-                            theme = BadgeTheme.Error
-                        )
-                    }
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Spacing.lg)
-                        .height(1.dp)
-                        .background(colors.border)
-                )
-
-                Box {
-                    Cell(
-                        title = "单行标题",
-                        description = "带描述的列表项",
-                        arrow = true,
-                        onClick = {}
-                    )
-                    // Corner badge
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(end = 40.dp)
-                    ) {
-                        Badge(
-                            type = BadgeType.Subscript,
-                            message = "HOT",
-                            theme = BadgeTheme.Warning
-                        )
-                    }
-                }
-            }
-        }
-
-        // ========== Component sizes ==========
-
-        // Size comparison
-        ExampleSection(
-            title = "组件尺寸",
-            description = "Large / Small 两种尺寸"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(32.dp),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                // Large
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
+                    Cell(title = title, description = description, arrow = true, onClick = {})
                     Badge(
-                        type = BadgeType.Message,
-                        count = messageCount,
-                        size = BadgeSize.Large,
-                        theme = BadgeTheme.Error
-                    ) {
-                        AvatarBox(size = 56)
-                    }
-                    Text(
-                        text = "Large",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Small (default)
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = messageCount,
-                        size = BadgeSize.Small,
-                        theme = BadgeTheme.Error
-                    ) {
-                        AvatarBox(size = 48)
-                    }
-                    Text(
-                        text = "Small",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Red Point
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.RedPoint,
-                        theme = BadgeTheme.Error
-                    ) {
-                        AvatarBox(size = 40)
-                    }
-                    Text(
-                        text = "RedPoint",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
+                        modifier = Modifier.align(Alignment.TopEnd).padding(end = Spacing.xxxl),
+                        type = BadgeType.Subscript,
+                        message = badge.first,
+                        theme = badge.second
                     )
                 }
             }
         }
 
-        // ========== Badge colours ==========
-
-        // Badge themes
         ExampleSection(
-            title = "徽标颜色",
-            description = "不同语义的徽标颜色主题"
+            title = "尺寸",
+            description = "BadgeSize.Large 与 BadgeSize.Small（默认）"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                // Error - red
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 8,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
+            BadgeRow {
+                Labeled("Large") {
+                    Badge(type = BadgeType.Message, count = messageCount, size = BadgeSize.Large) {
+                        Anchor(size = AvatarSizeTokens.Large.size)
                     }
-                    Text(
-                        text = "Error",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
                 }
-
-                // Primary - theme colour
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 8,
-                        theme = BadgeTheme.Primary
-                    ) {
-                        IconBox()
+                Labeled("Small") {
+                    Badge(type = BadgeType.Message, count = messageCount, size = BadgeSize.Small) {
+                        Anchor(size = AvatarSizeTokens.Medium.size)
                     }
-                    Text(
-                        text = "Primary",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
                 }
-
-                // Success - green
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 8,
-                        theme = BadgeTheme.Success
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "Success",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Warning - orange
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 8,
-                        theme = BadgeTheme.Warning
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "Warning",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Neutral - grey
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 8,
-                        theme = BadgeTheme.Neutral
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "Neutral",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-            }
-        }
-
-        // ========== Maximum count ==========
-
-        // Overflowing the maximum
-        ExampleSection(
-            title = "数量上限",
-            description = "超过最大数量显示 max+"
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                // Under the limit
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 50,
-                        maxCount = 99,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "50",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Exactly 99
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 99,
-                        maxCount = 99,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "99",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Over 99
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Badge(
-                        type = BadgeType.Message,
-                        count = 100,
-                        maxCount = 99,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "99+",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                }
-
-                // Custom limit of 999
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
+                Labeled("方形 · 大") {
                     Badge(
                         type = BadgeType.Square,
                         count = 8888,
                         maxCount = 9000,
-                        size = BadgeSize.Large,
-                        border = BadgeBorder.Large,
-                        theme = BadgeTheme.Error
-                    ) {
-                        IconBox()
-                    }
-                    Text(
-                        text = "8888",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
+                        size = BadgeSize.Large
+                    ) { Anchor(size = AvatarSizeTokens.Medium.size) }
                 }
             }
         }
 
-        // ========== Standalone badge ==========
+        ExampleSection(
+            title = "颜色主题",
+            description = "Error / Primary / Success / Warning / Neutral"
+        ) {
+            BadgeRow {
+                listOf(
+                    BadgeTheme.Error,
+                    BadgeTheme.Primary,
+                    BadgeTheme.Success,
+                    BadgeTheme.Warning,
+                    BadgeTheme.Neutral,
+                ).forEach { theme ->
+                    Badge(type = BadgeType.Message, count = 8, theme = theme) { BellIcon() }
+                }
+            }
+        }
 
-        // Standalone usage
         ExampleSection(
             title = "独立徽标",
-            description = "不依附于其他元素的徽标"
+            description = "不传 content 时单独显示"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Badge(type = BadgeType.Message, count = 1, theme = BadgeTheme.Error)
+            BadgeRow {
+                Badge(type = BadgeType.Message, count = 1)
                 Badge(type = BadgeType.Message, count = 12, theme = BadgeTheme.Primary)
                 Badge(type = BadgeType.Square, count = 99, theme = BadgeTheme.Success)
-                Badge(type = BadgeType.Message, count = 100, maxCount = 99, theme = BadgeTheme.Error)
-                Badge(type = BadgeType.RedPoint, theme = BadgeTheme.Error)
+                Badge(type = BadgeType.Message, count = 100, maxCount = 99)
+                Badge(type = BadgeType.RedPoint)
                 Badge(type = BadgeType.Bubble, message = "气泡", theme = BadgeTheme.Warning)
             }
         }
 
-        // ========== Interactive demo ==========
-
-        // Dynamic count
         ExampleSection(
             title = "动态计数",
             description = "点击按钮改变徽标数字"
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Badge display
-                Badge(
-                    type = BadgeType.Message,
-                    count = messageCount,
-                    maxCount = 99,
-                    theme = BadgeTheme.Error
-                ) {
-                    LargeIconBox()
-                }
-
-                // Action buttons
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Button(
-                        text = "-",
-                        size = ButtonSize.SMALL,
-                        onClick = {
-                            if (messageCount > 0) messageCount--
-                        }
-                    )
-                    Text(
-                        text = "$messageCount",
-                        style = Theme.typography.titleMedium,
-                        color = colors.foreground
-                    )
-                    Button(
-                        text = "+",
-                        size = ButtonSize.SMALL,
-                        theme = ButtonTheme.PRIMARY,
-                        onClick = {
-                            messageCount++
-                        }
-                    )
-                }
+            BadgeRow {
+                Badge(type = BadgeType.Message, count = messageCount, maxCount = 99) { Anchor() }
+                Button(
+                    onClick = { if (messageCount > 0) messageCount-- },
+                    size = ButtonSize.SMALL,
+                    theme = ButtonTheme.LIGHT,
+                    shape = ButtonShape.SQUARE,
+                    icon = Icons.minus
+                )
+                Text(text = "$messageCount", style = Theme.typography.titleMedium, color = colors.foreground)
+                Button(
+                    onClick = { messageCount++ },
+                    size = ButtonSize.SMALL,
+                    shape = ButtonShape.SQUARE,
+                    icon = Icons.plus
+                )
             }
         }
     }
 }
 
-/**
- * Small icon box
- */
 @Composable
-private fun IconBox() {
-    val colors = Theme.colors
-    Box(
-        modifier = Modifier
-            .size(24.dp)
-            .clip(RoundedCornerShape(4.dp))
-            .background(colors.muted),
-        contentAlignment = Alignment.Center
+private fun BadgeRow(content: @Composable RowScope.() -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xl),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content
+    )
+}
+
+/** A badged element with a caption under it. */
+@Composable
+private fun Labeled(label: String, content: @Composable () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
-        Icon(
-            name = Icons.bell,
-            size = IconSizes.Default.sm
-        )
+        content()
+        Text(text = label, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
     }
 }
 
-/**
- * Large icon box
- */
+/** A small anchor for inline badges. */
 @Composable
-private fun LargeIconBox(showShopIcon: Boolean = false) {
-    val colors = Theme.colors
-    Box(
-        modifier = Modifier
-            .size(48.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(colors.muted),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            name = if (showShopIcon) Icons.bookmark_simple else Icons.bell,
-            size = IconSizes.Default.md
-        )
-    }
+private fun BellIcon() {
+    Icon(name = Icons.bell, size = IconSizes.Default.xl, tint = Theme.colors.foreground)
 }
 
-/**
- * Avatar box
- */
+/** A larger anchor: a real Avatar, as badges usually sit on one. */
 @Composable
-private fun AvatarBox(size: Int) {
-    val colors = Theme.colors
-    Box(
-        modifier = Modifier
-            .size(size.dp)
-            .clip(CircleShape)
-            .background(colors.primary.copy(alpha = 0.2f)),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            name = Icons.user,
-            size = if (size >= 48) IconSizes.Default.xl else IconSizes.Default.md
-        )
-    }
+private fun Anchor(size: Dp = AvatarSizeTokens.Medium.size) {
+    Avatar(text = "张", size = size)
 }

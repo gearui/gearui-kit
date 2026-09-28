@@ -11,7 +11,7 @@ Build beautiful, iOS-inspired UI across iOS, Android, Web, and HarmonyOS with Ge
 - Published artifacts: Android, iOS (arm64 / simulator arm64 / x64), JS (browser)
 - Also builds for HarmonyOS (`ohosArm64`) through a separate configuration; not published to Maven Central
 - Website: [https://gearui.com](https://gearui.com)
-- License: BSD 3-Clause License
+- License: Apache License 2.0
 
 ## Author Information
 
@@ -327,4 +327,7 @@ for f in scripts/ci/check_*.sh; do "$f"; done
 
 ## License
 
-BSD 3-Clause License — see [LICENSE](./LICENSE).
+Apache License 2.0 — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
+
+Copyright 2026 Shanghai Boyu Information Technology Co., Ltd.
+Developed by zoujiaqing (<zoujiaqing@gmail.com>) · [netonstream.com](https://netonstream.com)

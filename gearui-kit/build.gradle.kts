@@ -124,13 +124,22 @@ val hasSigningKey = !providers
     .orNull
     .isNullOrBlank()
 
-// vanniktech.maven.publish auto-reads POM_* properties from gradle.properties
+// vanniktech.maven.publish auto-reads most POM_* properties from gradle.properties
 // (POM_GROUP_ID, POM_ARTIFACT_ID, POM_VERSION, POM_NAME, POM_DESCRIPTION, POM_URL,
-//  POM_LICENSE_*, POM_DEVELOPER_*, POM_SCM_*, POM_ORGANIZATION_*).
-// No explicit pom { } block is needed; redundant configuration would duplicate
-// license / developer entries in the generated POM.
+//  POM_LICENSE_*, POM_DEVELOPER_*, POM_SCM_*). Do not repeat those in pom { } — a
+// second declaration duplicates the license and developer entries.
+//
+// It does NOT read POM_ORGANIZATION_*: the generated POM had no <organization> at
+// all, so every release through 1.0.0-beta4 shipped without the company's name.
+// That one element is set here from the same properties.
 mavenPublishing {
     publishToMavenCentral(automaticRelease = false)
+    pom {
+        organization {
+            name.set(providers.gradleProperty("POM_ORGANIZATION_NAME"))
+            url.set(providers.gradleProperty("POM_ORGANIZATION_URL"))
+        }
+    }
     // Sign only when a GPG key is configured. publishToMavenLocal must work without one.
     if (hasSigningKey) {
         signAllPublications()

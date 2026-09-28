@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### License
+
+- **GearUI Kit is now licensed under the Apache License 2.0** (was BSD 3-Clause).
+  Releases up to and including 1.0.0-beta4 remain under BSD 3-Clause. Copyright
+  Shanghai Boyu Information Technology Co., Ltd.; a `NOTICE` file carries the
+  attribution. The POM's organisation and developer URLs point to netonstream.com.
+
 ### Added
 
 - **Every control value records where it comes from.** Control tokens carry

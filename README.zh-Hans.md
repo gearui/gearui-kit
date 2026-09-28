@@ -11,7 +11,7 @@
 - 已发布产物：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）
 - 另可通过独立配置构建鸿蒙（`ohosArm64`）；**未**发布到 Maven Central
 - 官网：[https://gearui.com](https://gearui.com)
-- License：BSD 3-Clause License
+- License：Apache License 2.0
 
 ## 作者信息
 
@@ -321,4 +321,7 @@ for f in scripts/ci/check_*.sh; do "$f"; done
 
 ## 许可证
 
-BSD 3-Clause License，详见 [LICENSE](./LICENSE)。
+Apache License 2.0，详见 [LICENSE](./LICENSE) 与 [NOTICE](./NOTICE)。
+
+Copyright 2026 Shanghai Boyu Information Technology Co., Ltd.
+开发者：zoujiaqing（<zoujiaqing@gmail.com>）· [netonstream.com](https://netonstream.com)

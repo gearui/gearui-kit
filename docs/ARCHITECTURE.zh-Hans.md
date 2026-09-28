@@ -4,7 +4,7 @@
 
 GearUI Kit 是构建在 Kuikly Compose 之上的 Kotlin Multiplatform UI 框架：一套
 代码在 iOS、Android、Web（JS）和 HarmonyOS 上渲染为原生视图。以
-`com.gearui:gearui-kit`（当前 `1.0.0-beta4`）发布，由 `privchat-ui` 等产品层
+`com.gearui:gearui-kit`（当前 `1.0.0-beta5`）发布，由 `privchat-ui` 等产品层
 消费。
 
 ## 分层结构

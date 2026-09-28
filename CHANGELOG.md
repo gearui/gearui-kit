@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.0.0-beta5] - 2026-09-28
+
+Published to Maven Central. Binary-compatible with 1.0.0-beta4: the public API dump is
+unchanged. What an unchanged screen draws does change — see "Changed" — and the license
+is now Apache-2.0. Verification record and open limits:
+[quality status](docs/QUALITY_STATUS.md).
+
 ### License
 
 - **GearUI Kit is now licensed under the Apache License 2.0** (was BSD 3-Clause).

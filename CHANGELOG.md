@@ -2,7 +2,12 @@
 
 ## [Unreleased]
 
-Not binary-compatible with 1.0.0-beta5: components are removed (see "Removed").
+## [1.0.0-beta6] - 2026-09-28
+
+Published to Maven Central. Not binary- or source-compatible with 1.0.0-beta5:
+components and parameters are removed (see "Removed" and "Removed (API)", which
+include the migrations). KuiklyUI 2.x resolves from Tencent's Maven mirror, not
+Maven Central; the README's install section now lists it.
 
 ### Removed
 

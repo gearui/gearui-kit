@@ -6,7 +6,7 @@
 
 ## 发布信息
 
-- 坐标：`com.gearui:gearui-kit:1.0.0-beta5`
+- 坐标：`com.gearui:gearui-kit:1.0.0-beta6`
 - 可从 Maven Central 获取；首个公开版本 `1.0.0-beta1` 发布于 2026-08-15
 - 已发布产物：Android、iOS（arm64 / 模拟器 arm64 / x64）、JS（浏览器）
 - 另可通过独立配置构建鸿蒙（`ohosArm64`）；**未**发布到 Maven Central
@@ -160,15 +160,18 @@
 按当前编译目标自动解析到对应平台包（`-android`、`-js`、`-iosarm64` …）。
 那些带后缀的坐标不要手写。
 
+GearUI Kit 依赖 KuiklyUI，而 KuiklyUI 2.x 发布在腾讯 Maven 镜像而不是 Maven Central，所以还要加上这个仓库，否则依赖解析不到。
+
 ```kotlin
 repositories {
     mavenCentral()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent/")  // KuiklyUI 2.x
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta5")
+            implementation("com.gearui:gearui-kit:1.0.0-beta6")
         }
     }
 }
@@ -188,12 +191,13 @@ kotlin {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent/")  // KuiklyUI 2.x
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta5")
+            implementation("com.gearui:gearui-kit:1.0.0-beta6")
         }
     }
 }

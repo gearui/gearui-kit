@@ -3,7 +3,7 @@
 [English](./QUALITY_STATUS.md) | [简体中文](./QUALITY_STATUS.zh-Hans.md)
 
 对照 1.0.0 目标的当前位置：哪些已验证、由哪个门禁验证、哪些仍然开放。
-当前版本：`1.0.0-beta5`，2026-09-28 从 tag `v1.0.0-beta5` 发布至
+当前版本：`1.0.0-beta6`，2026-09-28 从 tag `v1.0.0-beta6` 发布至
 Maven Central。
 
 ## 1. 1.0.0 目标

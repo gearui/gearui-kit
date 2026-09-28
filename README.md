@@ -6,7 +6,7 @@ Build beautiful, iOS-inspired UI across iOS, Android, Web, and HarmonyOS with Ge
 
 ## Release Information
 
-- Coordinates: `com.gearui:gearui-kit:1.0.0-beta5`
+- Coordinates: `com.gearui:gearui-kit:1.0.0-beta6`
 - Available on Maven Central; `1.0.0-beta1` was the first public release (2026-08-15)
 - Published artifacts: Android, iOS (arm64 / simulator arm64 / x64), JS (browser)
 - Also builds for HarmonyOS (`ohosArm64`) through a separate configuration; not published to Maven Central
@@ -161,15 +161,20 @@ Released on Maven Central. Declare the single root coordinate — Gradle reads t
 module metadata and resolves the per-target artifact (`-android`, `-js`,
 `-iosarm64`, …) for whatever you are compiling. Never depend on those directly.
 
+GearUI Kit depends on KuiklyUI, and KuiklyUI 2.x is published to Tencent's Maven
+mirror rather than Maven Central, so add that repository too — without it the
+dependency does not resolve.
+
 ```kotlin
 repositories {
     mavenCentral()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent/")  // KuiklyUI 2.x
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta5")
+            implementation("com.gearui:gearui-kit:1.0.0-beta6")
         }
     }
 }
@@ -189,12 +194,13 @@ Then add it in your app project:
 repositories {
     mavenLocal()
     mavenCentral()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent/")  // KuiklyUI 2.x
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta5")
+            implementation("com.gearui:gearui-kit:1.0.0-beta6")
         }
     }
 }

@@ -79,13 +79,12 @@ fun NoticeBar(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = ControlGeometry.noticeBarHeight)
-            .background(noticeBarFill(colors, tone))
             .then(
                 if (onClick != null) {
                     Modifier
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false, base = noticeBarFill(colors, tone))
                         .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-                } else Modifier
+                } else Modifier.background(noticeBarFill(colors, tone))
             )
             .padding(horizontal = ControlGeometry.noticeBarPaddingInline),
         horizontalArrangement = Arrangement.spacedBy(ControlGeometry.noticeBarGap),

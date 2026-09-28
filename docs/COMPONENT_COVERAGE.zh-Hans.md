@@ -7,17 +7,16 @@ GearUI 组件的完整清单，按分类组织，并逐条标注与 HeroUI Nativ
 （`ComponentConfig.kt` → `gen_component_index.py`，CI 校验），所以两者永不
 脱节。
 
-当前规模：**70 个组件目录**、一组 foundation 原语（Text、Icon、Surface、
+当前规模：**64 个组件目录**、一组 foundation 原语（Text、Icon、Surface、
 BasicTextField、LoadingIndicator、List、ScrollView、GearLazyColumn）与
 **4 个运行时件**（Navigator、TabHost、PageScaffold、SwipeBack）。公开索引
-共 **六大分类、82 个条目**。
+共 **六大分类、71 个条目**。
 
-覆盖概览：82 个条目中，**36 个 HeroUI Native 也有**、**41 个是 GearUI
-独有**（HeroUI 不提供的移动优先能力）、**5 个是仅 sample** 的组合，待升级
-或移除。GearUI 在组件数量上超过 HeroUI Native（43 个包），在能力覆盖上与
-HeroUI v3（85 个包）持平。
+覆盖概览：71 个条目中，**36 个 HeroUI Native 也有**、**35 个是 GearUI
+独有**（HeroUI 不提供的移动端能力）。每个条目都是库组件，索引里没有只存在
+于 sample 的东西。
 
-图例：✅ HeroUI Native 也有 · ◆ GearUI 独有 · ○ 仅 sample。
+图例：✅ HeroUI Native 也有 · ◆ GearUI 独有。
 
 ## 1. 组件完整清单
 
@@ -35,7 +34,7 @@ HeroUI v3（85 个包）持平。
 | `Badge` | 消息计数指示 | ◆ |
 | `Divider` | 内容分隔 | ✅ |
 
-### 表单（22）
+### 表单（19）
 
 | 组件 | 用途 | 覆盖 |
 | --- | --- | --- |
@@ -55,31 +54,22 @@ HeroUI v3（85 个包）持平。
 | `Select` | 下拉选择 | ✅ |
 | `Picker` | 多列滚轮选择器 | ◆ |
 | `DatePicker` | 日期与时间选择 | ◆ |
-| `DropdownMenu` | 过滤下拉菜单 | ○ |
 | `Upload` | 文件上传（展示层） | ◆ |
 | `Form` | 表单容器 | ◆ |
 | `Cascader` | 级联选择 | ◆ |
-| `Transfer` | 数据穿梭 | ◆ |
-| `TreeSelect` | 树形选择 | ◆ |
 
-### 导航（12）
+### 导航（6）
 
 | 组件 | 用途 | 覆盖 |
 | --- | --- | --- |
 | `NavBar` | 页面导航栏 | ◆ |
 | `BottomNavBar` | 应用底部导航 | ◆ |
 | `Tabs` | 内容切换 | ✅ |
-| `NavigationMenu` | 顶部导航菜单 | ◆ |
-| `Sidebar` | 侧边导航 | ○ |
 | `Drawer` | 抽屉 | ◆ |
 | `Steps` | 步骤指示 | ◆ |
-| `Pagination` | 分页导航 | ◆ |
-| `Breadcrumb` | 路径导航 | ○ |
-| `Anchor` | 页面锚点导航 | ◆ |
 | `Segmented` | 分段控件 | ✅ |
-| `FAB` | 悬浮动作按钮 | ○ |
 
-### 数据展示（17）
+### 数据展示（16）
 
 | 组件 | 用途 | 覆盖 |
 | --- | --- | --- |
@@ -97,11 +87,10 @@ HeroUI v3（85 个包）持平。
 | `Empty` | 空状态 | ◆ |
 | `Skeleton` | 加载占位 | ✅ |
 | `Timeline` | 时间轴 | ◆ |
-| `Tree` | 树结构 | ◆ |
 | `Calendar` | 日历展示 | ◆ |
 | `Watermark` | 页面水印 | ◆ |
 
-### 反馈（16）
+### 反馈（15）
 
 | 组件 | 用途 | 覆盖 |
 | --- | --- | --- |
@@ -112,7 +101,6 @@ HeroUI v3（85 个包）持平。
 | `Tooltip` | 文字提示 | ◆ |
 | `ContextMenu` | 上下文菜单 | ✅ |
 | `Loading` | 加载态 / spinner | ✅ |
-| `Message` | 全局消息 | ○ |
 | `Alert` | 内联状态消息 | ✅ |
 | `NoticeBar` | 滚动公告 | ◆ |
 | `Notification` | 全局通知 | ✅ |
@@ -135,24 +123,27 @@ HeroUI v3（85 个包）持平。
 
 ## 2. GearUI 独有强项
 
-41 个 GearUI 独有条目是 kit 的移动优先深度——两套 HeroUI 库都不提供、
+35 个 GearUI 独有条目是 kit 的移动优先深度——两套 HeroUI 库都不提供、
 全部基于 GearUI token 渲染的能力：
 
 - **导航运行时**：Navigator（真实页面栈）、SwipeBack、PageScaffold、带
-  keep-alive 的 TabHost、NavBar、BottomNavBar、NavigationMenu、Steps、
-  Anchor、BackTop、Drawer、Pagination。HeroUI 依赖外部路由，没有栈式导航
+  keep-alive 的 TabHost、NavBar、BottomNavBar、Steps、BackTop、Drawer。
+  HeroUI 依赖外部路由，没有栈式导航
   运行时。
-- **选择器与字段**：Picker（滚轮）、Cascader、TreeSelect、Transfer、
+- **选择器与字段**：Picker（滚轮）、Cascader、
   DatePicker、NumberField、Rate、Stepper、ComboBox、Upload、Form。
 - **浮层**：ActionSheet、Popup、Tooltip、Tour。
-- **数据展示与反馈**：Table、Image、ImageViewer、Timeline、Tree、Grid、
+- **数据展示与反馈**：Table、Image、ImageViewer、Timeline、Grid、
   Swiper、Watermark、SwipeCell、Badge、Empty、Result、Progress、
   NoticeBar、PullRefresh。
 - **图标集**：完整的 Phosphor 图标注册表；HeroUI Native 一个都不带。
 
-**仅 sample 的组合（○）。** Sidebar、Breadcrumb、FAB、Message 与
-DropdownMenu 目前只存在于 sample。它们要么升级为库组件，要么从索引中
-移除——不允许出现看起来可用但实际不可用的东西。
+**1.0 前移除的组件。** Transfer、Tree、TreeSelect、Pagination、Anchor、
+NavigationMenu 与 RadioCardGroup 都是桌面/Web 交互——双栏穿梭、文档树、
+页码、文档站锚点栏、顶部菜单栏——HeroUI Native 与 iOS 都没有对应物，基于
+kit 的产品里也没有使用者。Breadcrumb 与 Sidebar 从来只存在于 sample；FAB、
+Message、DropdownMenu 只是换了名字的 Button、Snackbar、Select；这五个都已
+移出索引。一组达标的少量组件，胜过一张不达标的长清单。
 
 ## 3. 缺口与优先级
 
@@ -166,12 +157,11 @@ ToggleButton/ButtonGroup、AvatarGroup）。
 | 独立暴露 List box | P2 | 选项列表目前内嵌于 Select |
 | 年份选择器 | P2 | |
 | 日期/时间分段字段、本地化格式 | P2 | 目前仅滚轮输入 |
-| Breadcrumbs | P2 | 目前仅存在于 sample |
 | Toolbar | P2 | NavBar 动作区部分覆盖 |
 | Sub-menu | P2 | 未提供嵌套菜单 |
 | Kbd | P3 | 桌面/Web 用途 |
 | 颜色选择器家族 | P3 | 移动产品使用率低 |
-| Sidebar、Meter、User、Code/Snippet | P3 | 按需 |
+| Meter、User、Code/Snippet | P3 | 按需 |
 | 日期格式国际化 | 1.0 轨道 | 目前公历优先 |
 | 无障碍状态模型追赶 | 1.0 轨道 | 剩余最大缺口 |
 | RTL | 未验证 | 类型化语言包已有；布局方向未验收 |

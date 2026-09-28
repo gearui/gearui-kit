@@ -41,7 +41,7 @@ Do not mechanically reorder existing APIs merely for uniformity. The
 enabled/disabled polarity is a frozen semantic boundary, enforced by
 `check_state_param_naming.sh`:
 
-- **Field family** (Input, Textarea, Select/MultiSelect, Cascader, TreeSelect,
+- **Field family** (Input, Textarea, Select/MultiSelect, Cascader,
   date/time input triggers): `enabled: Boolean = true` plus `error: String?`.
 - **SearchBar**: `enabled`, no invented validation-error parameter.
 - **Action family** (Button, Tag, SwipeCell actions, sheet items) deliberately

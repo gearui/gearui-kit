@@ -150,7 +150,7 @@ fun ThemeStrings.merge(patch: ThemeStringsPatch?): ThemeStrings {
 
 // ============================ field ============================
 
-/** Input and selection controls: Select, Cascader, TreeSelect, SearchBar, Switch, Transfer, Table. */
+/** Input and selection controls: Select, Cascader, SearchBar, Switch, Table. */
 @Immutable
 data class FieldStrings(
     val selectPlaceholder: String,
@@ -159,8 +159,6 @@ data class FieldStrings(
     val selectedCountFormat: String,
     val switchOn: String,
     val switchOff: String,
-    val transferSourceTitle: String,
-    val transferTargetTitle: String,
     val tableEmpty: String,
     /** Accessibility label of a rating star; placeholder `{value}`. */
     val ratingValueFormat: String,
@@ -172,8 +170,6 @@ data class FieldStringsPatch(
     val selectedCountFormat: String? = null,
     val switchOn: String? = null,
     val switchOff: String? = null,
-    val transferSourceTitle: String? = null,
-    val transferTargetTitle: String? = null,
     val tableEmpty: String? = null,
     val ratingValueFormat: String? = null,
 )
@@ -184,8 +180,6 @@ val FieldStringsPatch.isEmpty: Boolean
         selectedCountFormat == null &&
         switchOn == null &&
         switchOff == null &&
-        transferSourceTitle == null &&
-        transferTargetTitle == null &&
         tableEmpty == null &&
         ratingValueFormat == null
 
@@ -197,8 +191,6 @@ fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
         selectedCountFormat = patch.selectedCountFormat ?: selectedCountFormat,
         switchOn = patch.switchOn ?: switchOn,
         switchOff = patch.switchOff ?: switchOff,
-        transferSourceTitle = patch.transferSourceTitle ?: transferSourceTitle,
-        transferTargetTitle = patch.transferTargetTitle ?: transferTargetTitle,
         tableEmpty = patch.tableEmpty ?: tableEmpty,
         ratingValueFormat = patch.ratingValueFormat ?: ratingValueFormat,
     )

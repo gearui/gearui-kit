@@ -32,15 +32,15 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**82 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**71 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (22) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
-| Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
-| Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
-| Feedback (16) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Message`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
+| Form (19) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
+| Navigation (6) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `Segmented` |
+| Data display (16) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Watermark` |
+| Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (6) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `BottomSheet`, `BackTop` |
 
 <details>
@@ -80,12 +80,9 @@ component follows both without any per-screen wiring.
 | `Select` | Dropdown selector |
 | `Picker` | Multi-column picker |
 | `DatePicker` | Date & time picker |
-| `DropdownMenu` | Filter dropdown menu |
 | `Upload` | File upload |
 | `Form` | Form container |
 | `Cascader` | Cascade selector |
-| `Transfer` | Data transfer |
-| `TreeSelect` | Tree selector |
 
 **Navigation**
 
@@ -94,15 +91,9 @@ component follows both without any per-screen wiring.
 | `NavBar` | Page navigation bar |
 | `BottomNavBar` | App bottom navigation |
 | `Tabs` | Content switching |
-| `NavigationMenu` | Top navigation menu |
-| `Sidebar` | Side navigation |
 | `Drawer` | Slide drawer |
 | `Steps` | Step indicator |
-| `Pagination` | Pagination navigation |
-| `Breadcrumb` | Path navigation |
-| `Anchor` | Page anchor navigation |
 | `Segmented` | Segmented control |
-| `FAB` | Floating action button |
 
 **Data display**
 
@@ -122,7 +113,6 @@ component follows both without any per-screen wiring.
 | `Empty` | Empty state |
 | `Skeleton` | Loading placeholder |
 | `Timeline` | Timeline display |
-| `Tree` | Tree structure |
 | `Calendar` | Calendar display |
 | `Watermark` | Page watermark |
 
@@ -137,7 +127,6 @@ component follows both without any per-screen wiring.
 | `Tooltip` | Tooltip |
 | `ContextMenu` | Context menu |
 | `Loading` | Loading state |
-| `Message` | Global message |
 | `Alert` | Inline status message |
 | `NoticeBar` | Scrolling announcement |
 | `Notification` | Global notification |

@@ -88,10 +88,28 @@ class OverlayComputeOffsetTest {
 
     @Test
     fun verticalPlacementClampsXInsideTheScreen() {
-        // Anchor hugs the right edge; the popup must be pulled back on-screen.
+        // Anchor hugs the right edge; the popup must be pulled back on-screen and keep
+        // the screen margin (12) from the glass.
         val anchor = Rect(380f, 300f, 395f, 340f)
-        // x = anchor left (380) clamped to 400 - 80 = 320.
-        assertEquals(IntOffset(320, 340), compute(anchor, OverlayPlacement.BottomLeft))
+        // x = anchor left (380) clamped to 400 - 80 - 12 = 308.
+        assertEquals(IntOffset(308, 340), compute(anchor, OverlayPlacement.BottomLeft))
+    }
+
+    @Test
+    fun centredPanelNearTheLeftEdgeKeepsTheScreenMargin() {
+        // A panel wider than a small trigger at the left edge — the tooltip case —
+        // would centre off-screen; it stops 12 from the edge instead of flush with it.
+        val anchor = Rect(16f, 300f, 56f, 340f)
+        assertEquals(12, compute(anchor, OverlayPlacement.TopCenter).x)
+    }
+
+    @Test
+    fun panelWiderThanScreenMinusMarginsFallsBackToTheEdge() {
+        val wide = computeOffset(
+            Rect(0f, 300f, 40f, 340f), IntSize(390, 40), screenSize,
+            options(OverlayPlacement.BottomLeft), unitDensity,
+        )
+        assertEquals(0, wide.x)
     }
 
     @Test

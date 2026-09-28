@@ -93,8 +93,7 @@ fun EmptyState(
             Box(
                 modifier = Modifier
                     .clip(shapes.sm)
-                    .background(colors.primary)
-                    .rowPressFeedback(interaction = actionInteraction, shape = shapes.sm)
+                    .rowPressFeedback(interaction = actionInteraction, shape = shapes.sm, base = colors.primary)
                     .clickable(interactionSource = actionInteraction, indication = null, onClick = onAction)
                     .padding(horizontal = Spacing.xl, vertical = 10.dp)
             ) {

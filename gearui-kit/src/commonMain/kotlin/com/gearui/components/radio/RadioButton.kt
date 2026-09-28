@@ -1,5 +1,6 @@
 package com.gearui.components.radio
 
+import com.gearui.foundation.control.selectionOutline
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -78,7 +79,7 @@ private fun RadioMark(selected: Boolean, enabled: Boolean, pressed: Boolean, siz
         }
         .clip(CircleShape).background(if (selected) colors.primary else colors.surface)
         // Semantic outline is the fallback for the reference's field shadow.
-        .border(BorderWidth.thin, if (selected) colors.primary else colors.border, CircleShape), contentAlignment = Alignment.Center) {
+        .border(BorderWidth.thin, if (selected) colors.primary else selectionOutline(), CircleShape), contentAlignment = Alignment.Center) {
         Box(Modifier.size(ControlGeometry.radioThumb * (outer / ControlGeometry.selectionMedium))
             .graphicsLayer { alpha = if (selected) 1f else 0f; scaleX = scale; scaleY = scale }
             .clip(CircleShape).background(colors.primaryForeground))
@@ -143,89 +144,6 @@ fun <T> RadioGroup(
                 label = labelProvider(option),
                 enabled = enabled,
             )
-        }
-    }
-}
-
-/**
- * RadioCardGroup - card-style radio group (laid out horizontally)
- *
- * @param options the options
- * @param selectedOption currently selected option
- * @param onOptionSelected selection change callback
- * @param iconProvider optional icon provider
- */
-@Composable
-fun <T> RadioCardGroup(
-    options: List<T>,
-    selectedOption: T?,
-    onOptionSelected: (T) -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    labelProvider: (T) -> String = { it.toString() },
-    iconProvider: ((T) -> String)? = null
-) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
-    Row(
-        modifier = modifier.fillMaxWidth().disabledAppearance(!enabled),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
-    ) {
-        options.forEach { option ->
-            val isSelected = option == selectedOption
-
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(shapes.md)
-                    .background(
-                        if (isSelected) colors.primary.copy(alpha = 0.1f)
-                        else colors.muted
-                    )
-                    .border(
-                        width = if (isSelected) BorderWidth.thick else BorderWidth.thin,
-                        color = if (isSelected) colors.primary else colors.border,
-                        shape = shapes.md
-                    )
-                    .then(
-                        if (enabled) {
-                            Modifier.clickable { onOptionSelected(option) }
-                        } else Modifier
-                    )
-                    .padding(vertical = Spacing.lg, horizontal = Spacing.md),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(Spacing.sm)
-                ) {
-                    // Icon
-                    iconProvider?.let { provider ->
-                        Text(
-                            text = provider(option),
-                            color = if (isSelected) colors.primary else colors.mutedForeground
-                        )
-                    }
-
-                    // Label
-                    Text(
-                        text = labelProvider(option),
-                        color = if (isSelected) colors.primary
-                        else colors.foreground
-                    )
-
-                    // Selected indicator
-                    if (isSelected) {
-                        Box(
-                            modifier = Modifier
-                                .size(6.dp)
-                                .clip(CircleShape)
-                                .background(colors.primary)
-                        )
-                    }
-                }
-            }
         }
     }
 }

@@ -186,6 +186,7 @@
   colors.darkPrimaryForeground = {"$type":"color","$value":"{reference.dark.accent-foreground}"}
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
   colors.darkSegment = {"$type":"color","$value":"{reference.dark.segment}"}
+  colors.darkSelectionOutline = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.388235,0.388235,0.4]}}
   colors.darkSeparator = {"$type":"color","$value":"{reference.dark.separator}"}
   colors.darkSeparatorSecondary = {"$type":"color","$value":"{reference.dark.separator-secondary}"}
   colors.darkSuccess = {"$type":"color","$value":"{reference.dark.success}"}
@@ -228,6 +229,7 @@
   colors.lightPrimaryForeground = {"$type":"color","$value":"{reference.light.accent-foreground}"}
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
   colors.lightSegment = {"$type":"color","$value":"{reference.light.segment}"}
+  colors.lightSelectionOutline = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.556863,0.556863,0.576471]}}
   colors.lightSeparator = {"$type":"color","$value":"{reference.light.separator}"}
   colors.lightSeparatorSecondary = {"$type":"color","$value":"{reference.light.separator-secondary}"}
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
@@ -437,7 +439,6 @@
   geometry.tabsListGap = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.tabsListPadding = {"$type":"dimension","$value":{"unit":"px","value":3}}
   geometry.tabsTriggerPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":6}}
-  geometry.tabsTriggerPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.tagGroupGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.tagGroupLargePaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":6}}
   geometry.tagGroupLargePaddingInline = {"$type":"dimension","$value":{"unit":"px","value":12}}
@@ -458,7 +459,6 @@
   geometry.textareaMinHeight = {"$type":"dimension","$value":{"unit":"px","value":128}}
   geometry.textareaPaddingVertical = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.toastPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
-  geometry.treeIndent = {"$type":"dimension","$value":{"unit":"px","value":16}}
   geometry.uploadRemoveIcon = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.uploadRemoveSize = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.uploadTileGap = {"$type":"dimension","$value":{"unit":"px","value":8}}

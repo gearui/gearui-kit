@@ -566,6 +566,13 @@ internal fun computeOffset(
 
     val offsetX = with(density) { options.offsetX.roundToPx() }
     val offsetY = with(density) { options.offsetY.roundToPx() }
+    val edge = with(density) { OverlayDefaults.screenEdgeMargin.roundToPx() }
+    // Horizontal room for a panel, keeping [edge] from both sides when it fits.
+    fun clampX(x: Int): Int {
+        val min = if (popupSize.width + 2 * edge <= screenSize.width) edge else 0
+        val max = (screenSize.width - popupSize.width - min).coerceAtLeast(min)
+        return x.coerceIn(min, max)
+    }
 
     // Available space in each direction (Float)
     val spaceBelow = screenSize.height - anchor.bottom
@@ -723,8 +730,8 @@ internal fun computeOffset(
     val constrainedY: Int
 
     if (isVerticalPlacement) {
-        // Vertical: clamp X normally; Y has to respect the anchor.
-        constrainedX = x.coerceIn(0, (screenSize.width - popupSize.width).coerceAtLeast(0))
+        // Vertical: clamp X with the screen margin; Y has to respect the anchor.
+        constrainedX = clampX(x)
 
         constrainedY = if (actuallyAbove) {
             // Above: the bottom must not pass anchor.top.

@@ -121,7 +121,6 @@ fun Tag(
             .disabledAppearance(disabled)
             .height(tokens.height)
             .clip(shape)
-            .background(backgroundColor)
             .then(
                 if (variant == TagVariant.OUTLINE) {
                     Modifier.border(BorderWidth.thin, borderColor, shape)
@@ -130,14 +129,14 @@ fun Tag(
             .then(
                 if (onClick != null) {
                     Modifier
-                        .rowPressFeedback(interaction = interaction, shape = shape, enabled = !disabled)
+                        .rowPressFeedback(interaction = interaction, shape = shape, enabled = !disabled, base = backgroundColor)
                         .clickable(
                             enabled = !disabled,
                             interactionSource = interaction,
                             indication = null,
                             onClick = onClick
                         )
-                } else Modifier
+                } else Modifier.background(backgroundColor)
             )
             .padding(horizontal = tokens.paddingHorizontal),
         contentAlignment = Alignment.Center

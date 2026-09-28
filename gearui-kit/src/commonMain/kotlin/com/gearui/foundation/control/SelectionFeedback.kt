@@ -5,6 +5,11 @@ import com.gearui.foundation.motion.Motion
 import com.gearui.foundation.motion.Motions
 import kotlin.math.sqrt
 import com.tencent.kuikly.compose.animation.core.Easing
+import com.tencent.kuikly.compose.ui.graphics.luminance
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.gearui.theme.DefaultPalette
+import com.gearui.theme.Theme
+import androidx.compose.runtime.Composable
 
 // Reanimated withTiming's default curve, used by the reference selection controls.
 internal val selectionTimingEasing = Easing { fraction ->
@@ -23,3 +28,13 @@ internal fun switchSpringStiffness(motion: Motion): Float {
 
 internal fun switchThumbPosition(progress: Float, width: Float, thumb: Float, inset: Float): Float =
     inset + (width - thumb - inset * 2).coerceAtLeast(0f) * progress.coerceIn(0f, 1f)
+
+/**
+ * The outline of an unselected checkbox or radio: its only visible boundary, so it
+ * must clear 3:1 against the surface. Resolved from background luminance, the way the
+ * switch's off track is, so the public colour roles stay as they are.
+ */
+@Composable
+internal fun selectionOutline(): Color =
+    if (Theme.colors.background.luminance() < 0.5f) DefaultPalette.darkSelectionOutline
+    else DefaultPalette.lightSelectionOutline

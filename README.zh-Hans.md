@@ -31,15 +31,15 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**82 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**71 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（22） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
-| 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
-| 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
-| 反馈（16） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
+| 表单（19） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
+| 导航（6） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`Segmented` |
+| 数据展示（16） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Watermark` |
+| 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（6） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`BottomSheet`、`BackTop` |
 
 <details>
@@ -79,12 +79,9 @@
 | `Select` | 下拉选择 | 下拉选择器 |
 | `Picker` | 选择器 | 多列选择 |
 | `DatePicker` | 日期选择 | 日期时间选择 |
-| `DropdownMenu` | 下拉菜单 | 筛选下拉菜单 |
 | `Upload` | 上传 | 文件上传 |
 | `Form` | 表单 | 表单容器 |
 | `Cascader` | 级联选择 | 级联选择器 |
-| `Transfer` | 穿梭框 | 数据穿梭选择 |
-| `TreeSelect` | 树选择 | 树形选择器 |
 
 **导航**
 
@@ -93,15 +90,9 @@
 | `NavBar` | 导航栏 | 通用页面导航栏 |
 | `BottomNavBar` | 底部导航栏 | 应用底部主导航 |
 | `Tabs` | 选项卡 | 内容切换 |
-| `NavigationMenu` | 导航菜单 | 顶部导航菜单 |
-| `Sidebar` | 侧边栏 | 侧边导航 |
 | `Drawer` | 抽屉 | 侧滑抽屉 |
 | `Steps` | 步骤条 | 步骤指示 |
-| `Pagination` | 分页 | 页码导航 |
-| `Breadcrumb` | 面包屑 | 路径导航 |
-| `Anchor` | 锚点 | 页面锚点导航 |
 | `Segmented` | 分段控制 | 分段选择 |
-| `FAB` | 悬浮按钮 | 浮动操作按钮 |
 
 **数据展示**
 
@@ -121,7 +112,6 @@
 | `Empty` | 空状态 | 空数据提示 |
 | `Skeleton` | 骨架屏 | 加载占位 |
 | `Timeline` | 时间轴 | 时间线展示 |
-| `Tree` | 树 | 树形结构 |
 | `Calendar` | 日历 | 日历展示 |
 | `Watermark` | 水印 | 页面水印 |
 
@@ -136,7 +126,6 @@
 | `Tooltip` | 文字提示 | 文字提示 |
 | `ContextMenu` | 上下文菜单 | 上下文菜单 |
 | `Loading` | 加载 | 加载状态 |
-| `Message` | 消息提醒 | 全局消息提示 |
 | `Alert` | 警示框 | 页面内状态提示 |
 | `NoticeBar` | 公告栏 | 滚动公告栏 |
 | `Notification` | 通知 | 全局通知 |

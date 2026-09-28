@@ -70,7 +70,7 @@ cards/surfaces use the filled variant (`cardStyle = true`).
 surface with clear selected/disabled states, aligned indicators, bounded
 scrolling and safe placement. Popover is the default presentation; sheet and
 dialog are explicit alternatives, not automatic phone substitutions.
-TreeSelect/Cascader preserve hierarchy, expansion and selection semantics for
+Cascader preserves hierarchy, expansion and selection semantics for
 touch rather than imitating a desktop tree.
 
 **Cards and lists.** A card owns one surface, shape, padding and optional

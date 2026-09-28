@@ -111,7 +111,6 @@ internal object ControlGeometry {
     val tabsListGap = 4.dp
     val tabsListPadding = 3.dp
     val tabsTriggerPaddingBlock = 6.dp
-    val tabsTriggerPaddingInline = 12.dp
     val tagGroupGap = 8.dp
     val tagGroupLargePaddingBlock = 6.dp
     val tagGroupLargePaddingInline = 12.dp
@@ -132,7 +131,6 @@ internal object ControlGeometry {
     val textareaMinHeight = 128.dp
     val textareaPaddingVertical = 8.dp
     val toastPadding = 16.dp
-    val treeIndent = 16.dp
     val uploadRemoveIcon = 12.dp
     val uploadRemoveSize = 20.dp
     val uploadTileGap = 8.dp

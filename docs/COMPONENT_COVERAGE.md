@@ -8,18 +8,16 @@ authoritative list of what the kit ships; the same list drives the generated
 README index (`ComponentConfig.kt` → `gen_component_index.py`, CI-checked), so
 the two never drift.
 
-Scale today: **70 component directories**, a set of foundation primitives
+Scale today: **64 component directories**, a set of foundation primitives
 (Text, Icon, Surface, BasicTextField, LoadingIndicator, List, ScrollView,
 GearLazyColumn) and **4 runtime pieces** (Navigator, TabHost, PageScaffold,
-SwipeBack). The public index lists **82 entries across six categories**.
+SwipeBack). The public index lists **71 entries across six categories**.
 
-Coverage at a glance: of the 82 entries, **36 also exist in HeroUI Native**,
-**41 are GearUI-only** (mobile-first capabilities HeroUI does not ship) and
-**5 are sample-only** compositions awaiting promotion or removal. GearUI
-exceeds HeroUI Native (43 packages) in component count and is on par with
-HeroUI v3 (85 packages) in capability coverage.
+Coverage at a glance: of the 71 entries, **36 also exist in HeroUI Native**
+and **35 are GearUI-only** (mobile capabilities HeroUI does not ship). Every
+entry is a library component; nothing in the index exists only in the sample.
 
-Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
+Legend: ✅ also in HeroUI Native · ◆ GearUI-only.
 
 ## 1. Full Component Inventory
 
@@ -37,7 +35,7 @@ Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
 | `Badge` | Message count indicator | ◆ |
 | `Divider` | Content separator | ✅ |
 
-### Form (22)
+### Form (19)
 
 | Component | Purpose | Coverage |
 | --- | --- | --- |
@@ -57,31 +55,22 @@ Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
 | `Select` | Dropdown selector | ✅ |
 | `Picker` | Multi-column wheel picker | ◆ |
 | `DatePicker` | Date and time picker | ◆ |
-| `DropdownMenu` | Filter dropdown menu | ○ |
 | `Upload` | File upload (presentation) | ◆ |
 | `Form` | Form container | ◆ |
 | `Cascader` | Cascade selector | ◆ |
-| `Transfer` | Data transfer | ◆ |
-| `TreeSelect` | Tree selector | ◆ |
 
-### Navigation (12)
+### Navigation (6)
 
 | Component | Purpose | Coverage |
 | --- | --- | --- |
 | `NavBar` | Page navigation bar | ◆ |
 | `BottomNavBar` | App bottom navigation | ◆ |
 | `Tabs` | Content switching | ✅ |
-| `NavigationMenu` | Top navigation menu | ◆ |
-| `Sidebar` | Side navigation | ○ |
 | `Drawer` | Slide drawer | ◆ |
 | `Steps` | Step indicator | ◆ |
-| `Pagination` | Pagination navigation | ◆ |
-| `Breadcrumb` | Path navigation | ○ |
-| `Anchor` | Page anchor navigation | ◆ |
 | `Segmented` | Segmented control | ✅ |
-| `FAB` | Floating action button | ○ |
 
-### Data display (17)
+### Data display (16)
 
 | Component | Purpose | Coverage |
 | --- | --- | --- |
@@ -99,11 +88,10 @@ Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
 | `Empty` | Empty state | ◆ |
 | `Skeleton` | Loading placeholder | ✅ |
 | `Timeline` | Timeline display | ◆ |
-| `Tree` | Tree structure | ◆ |
 | `Calendar` | Calendar display | ◆ |
 | `Watermark` | Page watermark | ◆ |
 
-### Feedback (16)
+### Feedback (15)
 
 | Component | Purpose | Coverage |
 | --- | --- | --- |
@@ -114,7 +102,6 @@ Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
 | `Tooltip` | Tooltip | ◆ |
 | `ContextMenu` | Context menu | ✅ |
 | `Loading` | Loading state / spinner | ✅ |
-| `Message` | Global message | ○ |
 | `Alert` | Inline status message | ✅ |
 | `NoticeBar` | Scrolling announcement | ◆ |
 | `Notification` | Global notification | ✅ |
@@ -137,24 +124,29 @@ Legend: ✅ also in HeroUI Native · ◆ GearUI-only · ○ sample-only.
 
 ## 2. GearUI-Only Strengths
 
-The 41 GearUI-only entries are the kit's mobile-first depth — capabilities
+The 35 GearUI-only entries are the kit's mobile-first depth — capabilities
 neither HeroUI library ships, all rendered on GearUI tokens:
 
 - **Navigation runtime**: Navigator (a real page stack), SwipeBack,
-  PageScaffold, TabHost with keep-alive, NavBar, BottomNavBar,
-  NavigationMenu, Steps, Anchor, BackTop, Drawer, Pagination. HeroUI relies on
+  PageScaffold, TabHost with keep-alive, NavBar, BottomNavBar, Steps,
+  BackTop, Drawer. HeroUI relies on
   external routers and has no stacked-navigation runtime.
-- **Pickers and fields**: Picker (wheel), Cascader, TreeSelect, Transfer,
+- **Pickers and fields**: Picker (wheel), Cascader,
   DatePicker, NumberField, Rate, Stepper, ComboBox, Upload, Form.
 - **Overlays**: ActionSheet, Popup, Tooltip, Tour.
-- **Data display and feedback**: Table, Image, ImageViewer, Timeline, Tree,
+- **Data display and feedback**: Table, Image, ImageViewer, Timeline,
   Grid, Swiper, Watermark, SwipeCell, Badge, Empty, Result, Progress,
   NoticeBar, PullRefresh.
 - **Icon set**: a complete Phosphor icon registry; HeroUI Native ships none.
 
-**Sample-only compositions (○).** Sidebar, Breadcrumb, FAB, Message and
-DropdownMenu live only in the sample today. Each either becomes a library
-component or leaves the index — nothing may look available that is not.
+**Removed before 1.0.** Transfer, Tree, TreeSelect, Pagination, Anchor,
+NavigationMenu and RadioCardGroup were desktop and web patterns — a dual-list
+transfer, a document tree, page numbers, a doc-site anchor rail, a top menu
+bar — with no counterpart in HeroUI Native or iOS and no user in the products
+built on the kit. Breadcrumb and Sidebar only ever existed in the sample, and
+FAB, Message and DropdownMenu were Button, Snackbar and Select under another
+name; all five left the index. A smaller set held to the standard beats a
+longer list that is not.
 
 ## 3. Gaps And Priorities
 
@@ -168,12 +160,11 @@ ToggleButton/ButtonGroup, AvatarGroup).
 | List box exposed standalone | P2 | Option list currently internal to Select |
 | Year picker | P2 | |
 | Date/time segmented fields, localized formats | P2 | Wheel entry only today |
-| Breadcrumbs | P2 | Sample-only today |
 | Toolbar | P2 | NavBar actions partially cover |
 | Sub-menu | P2 | Nested menu not shipped |
 | Kbd | P3 | Desktop/Web use |
 | Color picker family | P3 | Low use in mobile products |
-| Sidebar, Meter, User, Code/Snippet | P3 | On demand |
+| Meter, User, Code/Snippet | P3 | On demand |
 | Internationalized date formats | 1.0 track | Gregorian-first today |
 | Accessibility state model catch-up | 1.0 track | Largest remaining gap |
 | RTL | unverified | Typed packs exist; layout direction not accepted |

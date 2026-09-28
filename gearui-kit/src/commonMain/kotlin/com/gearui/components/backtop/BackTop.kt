@@ -134,9 +134,8 @@ fun BackTop(
                         .shadow(Theme.elevation.raised, CircleShape)
                         .size(circleSize)
                         .clip(CircleShape)
-                        .background(backgroundColor)
                         .border(BorderWidth.thin, borderColor, CircleShape)
-                        .rowPressFeedback(interaction = interaction, shape = CircleShape)
+                        .rowPressFeedback(interaction = interaction, shape = CircleShape, base = backgroundColor)
                         .clickable(interactionSource = interaction, indication = null, onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {
@@ -183,9 +182,8 @@ fun BackTop(
                         .width(halfCircleWidth)
                         .height(halfCircleHeight)
                         .clip(halfCircleShape)
-                        .background(backgroundColor)
                         .border(BorderWidth.thin, borderColor, halfCircleShape)
-                        .rowPressFeedback(interaction = interaction, shape = halfCircleShape)
+                        .rowPressFeedback(interaction = interaction, shape = halfCircleShape, base = backgroundColor)
                         .clickable(interactionSource = interaction, indication = null, onClick = onClick),
                     contentAlignment = Alignment.Center
                 ) {

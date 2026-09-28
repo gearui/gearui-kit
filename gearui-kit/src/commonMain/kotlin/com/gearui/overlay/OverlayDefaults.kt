@@ -74,6 +74,13 @@ object OverlayDefaults {
 
     /** Distance from the trigger for anchored panels (menu and popover `offset`). */
     val anchorOffset: Dp = ControlGeometry.overlayOffset
+
+    /**
+     * The closest an anchored panel comes to the side of the screen. A tooltip wider
+     * than its trigger, centred on a trigger near the edge, used to be pushed flush
+     * against the glass; this keeps the same breathing room the page content has.
+     */
+    val screenEdgeMargin: Dp = Spacing.md
 }
 
 /**

@@ -37,7 +37,7 @@ fun MyComponent(
 既有 API。enabled/disabled 极性是冻结的语义边界，由
 `check_state_param_naming.sh` 强制：
 
-- **字段家族**（Input、Textarea、Select/MultiSelect、Cascader、TreeSelect、
+- **字段家族**（Input、Textarea、Select/MultiSelect、Cascader、
   日期/时间输入触发器）：`enabled: Boolean = true` 加 `error: String?`。
 - **SearchBar**：`enabled`，不发明校验错误参数。
 - **动作家族**（Button、Tag、SwipeCell 动作、面板条目）刻意保留

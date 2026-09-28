@@ -249,13 +249,12 @@ private fun CascaderDropdown(
                                 .fillMaxWidth()
                                 .heightIn(min = FieldSizeTokens.Medium.height)
                                 .clip(shapes.sm)
-                                .background(
-                                    when {
-                                        isSelected -> colors.muted
-                                        else -> Color.Transparent
-                                    }
+                                .rowPressFeedback(
+                                    interaction = optionInteraction,
+                                    shape = RectangleShape,
+                                    enabled = !option.disabled,
+                                    base = if (isSelected) colors.muted else Color.Transparent,
                                 )
-                                .rowPressFeedback(interaction = optionInteraction, shape = RectangleShape, enabled = !option.disabled)
                                 .clickable(enabled = !option.disabled, interactionSource = optionInteraction, indication = null) {
                                     val newPath = selectedPath.take(levelIndex) + option.value
                                     onSelect(newPath)

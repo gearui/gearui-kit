@@ -35,8 +35,6 @@ val StringsEnUs = Strings(
         selectedCountFormat = "{count} selected",
         switchOn = "ON",
         switchOff = "OFF",
-        transferSourceTitle = "Source",
-        transferTargetTitle = "Target",
         tableEmpty = "No data",
         ratingValueFormat = "{value} stars",
     ),

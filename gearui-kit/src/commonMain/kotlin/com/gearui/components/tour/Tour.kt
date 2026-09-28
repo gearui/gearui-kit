@@ -70,10 +70,17 @@ fun Tour(
     val currentStep = state.currentStep
     val isVisible = state.isActive && currentStep != null
 
+    // Closes the step on screen as part of our own flow (next step, finish, skip).
+    // Clearing `overlayId` first tells that overlay's onDismiss it was not BACK.
+    fun closeCurrent() {
+        val id = overlayId ?: return
+        overlayId = null
+        controller.dismiss(id)
+    }
+
     LaunchedEffect(isVisible, state.currentIndex) {
         if (isVisible) {
-            // Dismiss the previous one first
-            overlayId?.let { controller.dismiss(it) }
+            closeCurrent()
 
             // Capture the current value; the state referenced in the lambda may become null
             val stepSnapshot = currentStep
@@ -82,14 +89,24 @@ fun Tour(
             val hasPrevious = state.hasPrevious()
             val hasNext = state.hasNext()
 
-            overlayId = controller.show(
+            var shownId = -1L
+            shownId = controller.show(
                 anchorBounds = null,
                 options = OverlayOptions(
                     placement = OverlayPlacement.Center,
                     modal = true,
                     maskColor = Color.Black.copy(alpha = 0.5f),
-                    dismissPolicy = OverlayDismissPolicy.Manual
-                )
+                    // BACK leaves the tour, the way Skip does; it must not fall through
+                    // to the page underneath and pop it with the tour still running.
+                    dismissPolicy = OverlayDismissPolicy.Manual.copy(backPress = true),
+                ),
+                onDismiss = {
+                    if (overlayId == shownId) {
+                        overlayId = null
+                        state.finish()
+                        onSkip?.invoke()
+                    }
+                },
             ) {
                 TourContent(
                     step = stepSnapshot,
@@ -98,32 +115,27 @@ fun Tour(
                     onPrevious = if (hasPrevious) ({ state.previous() }) else null,
                     onNext = if (hasNext) ({ state.next() }) else null,
                     onFinish = {
-                        // Dismiss the overlay first, then fire the callback
-                        overlayId?.let { controller.dismiss(it) }
-                        overlayId = null
+                        closeCurrent()
                         state.finish()
                         onFinish()
                     },
                     onSkip = onSkip?.let { skip ->
                         {
-                            overlayId?.let { controller.dismiss(it) }
-                            overlayId = null
+                            closeCurrent()
                             state.finish()
                             skip()
                         }
                     }
                 )
             }
+            overlayId = shownId
         } else {
-            overlayId?.let { controller.dismiss(it) }
-            overlayId = null
+            closeCurrent()
         }
     }
 
     DisposableEffect(Unit) {
-        onDispose {
-            overlayId?.let { controller.dismiss(it) }
-        }
+        onDispose { closeCurrent() }
     }
 }
 

@@ -367,6 +367,56 @@
           "why": "The thumb was the brand's primary foreground in both states, so a brand with a dark foreground drew a black thumb even when off. The switch follows iOS, whose thumb is white in every state and theme."
         }
       }
+    },
+    "lightSelectionOutline": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.556863,
+          0.556863,
+          0.576471
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "var(--field) + var(--shadow-field)",
+            "ref": "heroui-native 1.0.9 checkbox.css / radio.css unselected indicator, light"
+          },
+          "ios": {
+            "value": "rgb(142,142,147)",
+            "ref": "Apple HIG system colours, systemGray, light"
+          },
+          "basis": "ios",
+          "why": "An unselected checkbox or radio is the control's only boundary, so it needs 3:1 against the surface (WCAG 1.4.11). HeroUI draws it as a field fill plus a shadow and GearUI drew it in the divider colour; both measured about 1.3:1 on a card. The iOS system grey is the nearest platform value that clears 3:1."
+        }
+      }
+    },
+    "darkSelectionOutline": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.388235,
+          0.388235,
+          0.4
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "var(--field) + var(--shadow-field)",
+            "ref": "heroui-native 1.0.9 checkbox.css / radio.css unselected indicator, dark"
+          },
+          "ios": {
+            "value": "rgb(99,99,102)",
+            "ref": "Apple HIG system colours, systemGray2, dark"
+          },
+          "basis": "ios",
+          "why": "An unselected checkbox or radio is the control's only boundary, so it needs 3:1 against the surface (WCAG 1.4.11). HeroUI draws it as a field fill plus a shadow and GearUI drew it in the divider colour; both measured about 1.3:1 on a card. The iOS system grey is the nearest platform value that clears 3:1."
+        }
+      }
     }
   },
   "reference": {

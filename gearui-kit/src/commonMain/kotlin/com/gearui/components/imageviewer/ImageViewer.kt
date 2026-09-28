@@ -31,6 +31,10 @@ import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
+import com.gearui.overlay.LocalOverlayController
+import com.gearui.overlay.OverlayDismissPolicy
+import com.gearui.overlay.OverlayOptions
+import com.gearui.overlay.OverlayPlacement
 import kotlinx.coroutines.launch
 import com.gearui.i18n.I18n
 import com.gearui.i18n.formatArgs
@@ -105,14 +109,77 @@ fun ImageViewer(
     showIndex: Boolean = true,
     showCloseBtn: Boolean = true,
     showDeleteBtn: Boolean = false,
-    backgroundColor: Color = Color.Black.copy(alpha = 0.9f),
+    backgroundColor: Color = Color.Black,
     onClose: ((Int) -> Unit)? = null,
     onDelete: ((Int) -> Unit)? = null,
     onIndexChange: ((Int) -> Unit)? = null,
     onLongPress: ((Int) -> Unit)? = null,
     onTap: ((Int) -> Unit)? = null
 ) {
-    if (!state.isVisible || images.isEmpty()) return
+    // Hosted by the overlay runtime like every other full-screen layer: it covers the
+    // navigation bar wherever the caller declares it, and BACK closes the viewer
+    // instead of popping the page underneath. It was a plain full-size Box before,
+    // so both depended on where in the tree the caller happened to put it.
+    val controller = LocalOverlayController.current
+    var overlayId by remember { mutableStateOf<Long?>(null) }
+    val visible = state.isVisible && images.isNotEmpty()
+    val currentOnClose by rememberUpdatedState(onClose)
+    val surface by rememberUpdatedState<@Composable () -> Unit> {
+        ImageViewerSurface(
+            images = images, state = state, modifier = modifier, labels = labels,
+            width = width, height = height, showIndex = showIndex, showCloseBtn = showCloseBtn,
+            showDeleteBtn = showDeleteBtn, backgroundColor = backgroundColor, onClose = onClose,
+            onDelete = onDelete, onIndexChange = onIndexChange, onLongPress = onLongPress, onTap = onTap,
+        )
+    }
+
+    LaunchedEffect(visible) {
+        if (visible) {
+            overlayId = controller.show(
+                anchorBounds = null,
+                options = OverlayOptions(
+                    placement = OverlayPlacement.Fullscreen,
+                    modal = true,
+                    maskColor = Color.Transparent,
+                    dismissPolicy = OverlayDismissPolicy.Modal.copy(outsideClick = false),
+                ),
+                // Only BACK reaches here while the viewer still counts as open.
+                onDismiss = {
+                    if (state.isVisible) {
+                        state.hide()
+                        currentOnClose?.invoke(state.currentIndex)
+                    }
+                },
+            ) { surface() }
+        } else {
+            overlayId?.let { controller.dismiss(it) }
+            overlayId = null
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { overlayId?.let { controller.dismiss(it) } }
+    }
+}
+
+@Composable
+private fun ImageViewerSurface(
+    images: List<Painter?>,
+    state: ImageViewerState,
+    modifier: Modifier,
+    labels: List<String>?,
+    width: Dp?,
+    height: Dp?,
+    showIndex: Boolean,
+    showCloseBtn: Boolean,
+    showDeleteBtn: Boolean,
+    backgroundColor: Color,
+    onClose: ((Int) -> Unit)?,
+    onDelete: ((Int) -> Unit)?,
+    onIndexChange: ((Int) -> Unit)?,
+    onLongPress: ((Int) -> Unit)?,
+    onTap: ((Int) -> Unit)?
+) {
     require(labels == null || labels.size == images.size) {
         "labels.size must equal images.size"
     }

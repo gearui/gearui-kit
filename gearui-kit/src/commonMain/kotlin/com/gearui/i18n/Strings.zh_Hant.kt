@@ -35,8 +35,6 @@ val StringsZhHant = Strings(
         selectedCountFormat = "已選擇 {count} 項",
         switchOn = "開",
         switchOff = "關",
-        transferSourceTitle = "來源列表",
-        transferTargetTitle = "目標列表",
         tableEmpty = "暫無資料",
         ratingValueFormat = "{value} 星",
     ),

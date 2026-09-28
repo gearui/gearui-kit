@@ -2,6 +2,41 @@
 
 ## [Unreleased]
 
+Not binary-compatible with 1.0.0-beta5: components are removed (see "Removed").
+
+### Removed
+
+- `Transfer`, `Tree`, `TreeSelect`, `Pagination`, `Anchor`, `NavigationMenu` and
+  `RadioCardGroup`. Desktop and web patterns with no counterpart in HeroUI Native or iOS
+  and no user in the products built on the kit. `FieldStrings.transferSourceTitle` /
+  `transferTargetTitle` and the unused `treeIndent` / `tabsTriggerPaddingInline` tokens
+  go with them.
+- Breadcrumb, Sidebar, FAB, Message and DropdownMenu leave the component index. The
+  first two only ever existed in the sample; the other three were Button, Snackbar and
+  Select demos under another name. The index now lists 71 components, all real.
+
+### Fixed
+
+- A tappable row lost its own background. Kuikly gives a view one background colour, and
+  the press-feedback modifier's transparent idle fill replaced it: the current page in
+  Pagination was white text on white, a clickable Tag lost its fill, an interactive Cell,
+  a clickable Notification or NoticeBar, BackTop, the Empty action and the Stepper
+  buttons went transparent. `rowPressFeedback` now paints the row's `base` colour itself
+  with the press fill composited over it.
+- BACK during a `Tour` popped the page with the tour still running; it now leaves the
+  tour, as Skip does.
+- `ImageViewer` was a translucent box the caller had to place at the root, and BACK
+  popped the page under it. It is now hosted by the overlay runtime on an opaque black
+  backdrop, and BACK closes the viewer.
+- Anchored panels (Tooltip, Popover, menus) near the screen edge were pushed flush
+  against the glass; they keep `OverlayDefaults.screenEdgeMargin` (12) from it.
+- Horizontal `Steps` gave its connector a third of every column and centred it on the
+  labels, so four-character titles wrapped. Steps now take equal columns with the
+  connector at the icon's centre line and the labels on the full width.
+- An unselected Checkbox or Radio was outlined in the divider colour, about 1.3:1 on a
+  card. It now uses the iOS system grey (`lightSelectionOutline` /
+  `darkSelectionOutline`), which clears the 3:1 non-text contrast minimum.
+
 ## [1.0.0-beta5] - 2026-09-28
 
 Published to Maven Central. Binary-compatible with 1.0.0-beta4: the public API dump is

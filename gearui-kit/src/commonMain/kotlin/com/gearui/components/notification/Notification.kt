@@ -164,15 +164,14 @@ internal fun NotificationContent(
             .fillMaxWidth()
             .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
             .clip(OverlayDefaults.panelShape)
-            .background(colors.surface)
             // Whole-card click, attached when onClick != null. The action and close
             // buttons consume their own clicks — Compose pointerInput does not bubble
             .let { base ->
                 if (onClick != null) {
                     base
-                        .rowPressFeedback(interaction = cardInteraction, shape = OverlayDefaults.panelShape)
+                        .rowPressFeedback(interaction = cardInteraction, shape = OverlayDefaults.panelShape, base = colors.surface)
                         .clickable(interactionSource = cardInteraction, indication = null) { onClick(); onDismiss() }
-                } else base
+                } else base.background(colors.surface)
             }
             .padding(Spacing.lg),
         horizontalArrangement = Arrangement.spacedBy(Spacing.md),

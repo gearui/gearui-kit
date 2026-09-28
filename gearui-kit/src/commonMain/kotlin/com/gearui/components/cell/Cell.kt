@@ -73,7 +73,6 @@ fun Cell(
             .fillMaxWidth()
             .heightIn(min = tokens.minHeight)
             .graphicsLayer { alpha = if (enabled) 1f else tokens.disabledAlpha }
-            .background(colors.surface)
             .then(
                 // A row that does something has to answer the finger. Cell was a bare
                 // clickable: it ran the action with nothing on screen acknowledging the
@@ -84,10 +83,10 @@ fun Cell(
                         // edge the way the platform's own lists do. The corners come from
                         // the card's own clip, so the first and last rows round with it
                         // and the rows between them stay square.
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
+                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false, base = colors.surface)
                         .clickable(interactionSource = interaction, indication = null) { onClick!!() }
                 } else {
-                    Modifier
+                    Modifier.background(colors.surface)
                 }
             )
             // Vertical padding belongs to the leading and text blocks, not to the

@@ -14,6 +14,8 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.tencent.kuikly.compose.ui.text.style.TextAlign
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 
 import com.gearui.theme.Theme
 import com.gearui.foundation.layout.Spacing
@@ -127,70 +129,76 @@ private fun HorizontalSteps(
 ) {
     val colors = Theme.colors
 
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
+    // Every step takes an equal column. The connector is two half-segments on either
+    // side of the icon, at the icon's centre line, so it meets the next icon however
+    // long the labels are; the labels get the full column width below it. The old
+    // layout gave the connector a third of each column and centred it on the labels,
+    // which squeezed four-character titles onto two lines.
+    Row(modifier = modifier.fillMaxWidth()) {
         items.forEachIndexed { index, item ->
             val stepStatus = getStepStatus(index, current, status)
-
-            Row(
+            Column(
                 modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // Step content
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.weight(1f)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // Icon/Number
-                    StepIcon(
-                        index = index,
-                        item = item,
-                        status = stepStatus,
-                        theme = theme
-                    )
-
-                    Spacer(modifier = Modifier.height(Spacing.sm))
-
-                    // Title
-                    Text(
-                        text = item.title,
-                        style = Theme.typography.bodyMedium,
-                        color = when (stepStatus) {
-                            StepStatus.FINISH -> colors.success
-                            StepStatus.PROCESS -> colors.primary
-                            StepStatus.ERROR -> colors.destructive
-                            StepStatus.WAITING -> colors.mutedForeground
-                        }
-                    )
-
-                    // Description
-                    item.description?.let { desc ->
-                        Spacer(modifier = Modifier.height(Spacing.xs))
-                        Text(
-                            text = desc,
-                            style = Theme.typography.bodySmall,
-                            color = colors.mutedForeground
-                        )
-                    }
+                    StepConnector(visible = index > 0, done = index <= current, modifier = Modifier.weight(1f))
+                    StepIcon(index = index, item = item, status = stepStatus, theme = theme)
+                    StepConnector(visible = index < items.size - 1, done = index < current, modifier = Modifier.weight(1f))
                 }
 
-                // Connector line
-                if (index < items.size - 1) {
-                    Box(
-                        modifier = Modifier
-                            .weight(0.5f)
-                            .height(BorderWidth.thick)
-                            .background(
-                                if (index < current) colors.success
-                                else colors.border
-                            )
+                Spacer(modifier = Modifier.height(Spacing.sm))
+
+                Text(
+                    text = item.title,
+                    style = Theme.typography.bodySmall,
+                    color = when (stepStatus) {
+                        StepStatus.FINISH -> colors.success
+                        StepStatus.PROCESS -> colors.primary
+                        StepStatus.ERROR -> colors.destructive
+                        StepStatus.WAITING -> colors.mutedForeground
+                    },
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = Spacing.xs),
+                )
+
+                item.description?.let { desc ->
+                    Spacer(modifier = Modifier.height(Spacing.xs))
+                    Text(
+                        text = desc,
+                        style = Theme.typography.caption,
+                        color = colors.mutedForeground,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = Spacing.xs),
                     )
                 }
             }
         }
     }
+}
+
+/** One half of the line between two step icons; [done] once the step before it is. */
+@Composable
+private fun StepConnector(visible: Boolean, done: Boolean, modifier: Modifier) {
+    val colors = Theme.colors
+    Box(
+        modifier = modifier
+            .height(BorderWidth.thick)
+            .background(
+                when {
+                    !visible -> Color.Transparent
+                    done -> colors.success
+                    else -> colors.border
+                }
+            )
+    )
 }
 
 @Composable

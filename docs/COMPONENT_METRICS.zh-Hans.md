@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**93 / 133** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**92 / 131** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -262,7 +262,6 @@
 | `tabsListGap` | 4 | 4 | — | HeroUI |  |
 | `tabsListPadding` | 3 | 3 | — | HeroUI |  |
 | `tabsTriggerPaddingBlock` | 6 | 6 | — | HeroUI |  |
-| `tabsTriggerPaddingInline` | 12 | 12 | — | HeroUI |  |
 
 ## tag
 
@@ -298,12 +297,6 @@
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
 | `toastPadding` | 16 | | | _尚未标注_ | |
-
-## tree
-
-| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
-| --- | ---: | ---: | ---: | --- | --- |
-| `treeIndent` | 16 | | | _尚未标注_ | |
 
 ## upload
 
@@ -390,7 +383,6 @@
 - heroui-native 1.0.9 tabs.css list gap
 - heroui-native 1.0.9 tabs.css list primary padding
 - heroui-native 1.0.9 tabs.css trigger padding-block
-- heroui-native 1.0.9 tabs.css trigger padding-inline
 - heroui-native 1.0.9 tag-group.css list gap
 - heroui-native 1.0.9 tag-group.css tag size-lg padding
 - heroui-native 1.0.9 tag-group.css tag size-lg padding-inline

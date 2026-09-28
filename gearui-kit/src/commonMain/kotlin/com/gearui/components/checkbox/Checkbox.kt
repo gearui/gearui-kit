@@ -1,5 +1,6 @@
 package com.gearui.components.checkbox
 
+import com.gearui.foundation.control.selectionOutline
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
@@ -83,8 +84,8 @@ private fun CheckboxMark(checked: Boolean, indeterminate: Boolean, enabled: Bool
         alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
         scaleX = scale; scaleY = scale
     }.clip(shape).background(colors.surface)
-        // Until field shadows are portable, keep an unselected mark visible on a surface.
-        .border(BorderWidth.thin, if (active) colors.primary else colors.border, shape), contentAlignment = Alignment.Center) {
+        // The unselected outline is the control's only boundary; see selectionOutline().
+        .border(BorderWidth.thin, if (active) colors.primary else selectionOutline(), shape), contentAlignment = Alignment.Center) {
         Box(Modifier.fillMaxSize().graphicsLayer {
                 alpha = reveal
                 scaleX = FeedbackDefaults.selectionRevealScale + (1f - FeedbackDefaults.selectionRevealScale) * reveal

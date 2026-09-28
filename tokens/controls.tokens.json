@@ -1385,21 +1385,6 @@
         }
       }
     },
-    "tabsTriggerPaddingInline": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      },
-      "$extensions": {
-        "com.gearui.source": {
-          "heroui": {
-            "value": 12,
-            "ref": "heroui-native 1.0.9 tabs.css trigger padding-inline"
-          },
-          "basis": "heroui"
-        }
-      }
-    },
     "tagGroupGap": {
       "$value": {
         "value": 8,
@@ -1633,13 +1618,6 @@
       }
     },
     "toastPadding": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "treeIndent": {
-      "$description": "GearUI tree depth increment; extension of the selection row contract.",
       "$value": {
         "value": 16,
         "unit": "px"

@@ -45,8 +45,6 @@ kotlin {
             // GearUI-KuiklyUI depends ONLY on KuiklyUI Runtime
             api("com.tencent.kuikly-open:compose:$kuiklyVersion")
             implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.ui)
         }
 
         commonTest.dependencies {

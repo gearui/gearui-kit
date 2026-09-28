@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The kit no longer depends on JetBrains `compose.foundation` or `compose.ui`. It never
+  used them — every UI import is KuiklyUI's own — but on Android they pulled the whole
+  androidx Compose UI and foundation stack into every consumer, and pinned its version
+  against the consumer's own. Only `compose.runtime` remains. An app that uses androidx
+  Compose directly declares it itself.
+
 ## [1.0.0-beta6] - 2026-09-28
 
 Published to Maven Central. Not binary- or source-compatible with 1.0.0-beta5:

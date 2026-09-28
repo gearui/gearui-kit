@@ -31,13 +31,13 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**83 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**82 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
 | 表单（22） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`DropdownMenu`、`Upload`、`Form`、`Cascader`、`Transfer`、`TreeSelect` |
-| 导航（13） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB`、`Performance` |
+| 导航（12） | `NavBar`、`BottomNavBar`、`Tabs`、`NavigationMenu`、`Sidebar`、`Drawer`、`Steps`、`Pagination`、`Breadcrumb`、`Anchor`、`Segmented`、`FAB` |
 | 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Tree`、`Calendar`、`Watermark` |
 | 反馈（16） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Message`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（6） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`BottomSheet`、`BackTop` |
@@ -102,7 +102,6 @@
 | `Anchor` | 锚点 | 页面锚点导航 |
 | `Segmented` | 分段控制 | 分段选择 |
 | `FAB` | 悬浮按钮 | 浮动操作按钮 |
-| `Performance` | 性能基准 | 主题切换耗时与长列表掉帧 |
 
 **数据展示**
 

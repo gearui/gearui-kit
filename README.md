@@ -32,13 +32,13 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**83 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**82 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (22) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `DropdownMenu`, `Upload`, `Form`, `Cascader`, `Transfer`, `TreeSelect` |
-| Navigation (13) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB`, `Performance` |
+| Navigation (12) | `NavBar`, `BottomNavBar`, `Tabs`, `NavigationMenu`, `Sidebar`, `Drawer`, `Steps`, `Pagination`, `Breadcrumb`, `Anchor`, `Segmented`, `FAB` |
 | Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Tree`, `Calendar`, `Watermark` |
 | Feedback (16) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Message`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (6) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `BottomSheet`, `BackTop` |
@@ -103,7 +103,6 @@ component follows both without any per-screen wiring.
 | `Anchor` | Page anchor navigation |
 | `Segmented` | Segmented control |
 | `FAB` | Floating action button |
-| `Performance` | Theme switch time and long-list jank |
 
 **Data display**
 

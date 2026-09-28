@@ -28,14 +28,22 @@ REGISTRY = ROOT / "sample/src/commonMain/kotlin/com/gearui/sample/config/Compone
 # Registered routes that exist to exercise the runtime rather than to ship a
 # component. They stay in the sample index because they are useful there, but
 # they are not "components" and must not inflate the count.
+#
+# Any id starting with "runtime-" is a probe by convention and is excluded without
+# being listed: a list that has to be extended by hand was extended for the frosted
+# glass and TabHost probes and then missed the Performance page, which the README
+# counted as a navigation component. Only the older ids that predate the prefix are
+# named here. gearui.github.io's scripts/sync-gearui-kit.mjs applies the same rule.
+RUNTIME_PREFIX = "runtime-"
 NON_COMPONENT_IDS = {
     "icon-render",             # PNG/SVG rendering check
-    "runtime-insets",          # safe-area snapshot for debugging
     "navigator-kuikly-spike",  # Phase 0 runtime spike
     "navigator-v1-demo",       # Navigator demo page, Navigator is not a widget
-    "runtime-material",        # frosted-glass capability probe
-    "runtime-tabhost",         # keep-alive vs rebuild frame probe
 }
+
+
+def is_component(entry_id: str) -> bool:
+    return not entry_id.startswith(RUNTIME_PREFIX) and entry_id not in NON_COMPONENT_IDS
 
 CATEGORY_ORDER = ["BASIC", "FORM", "NAVIGATION", "DATA_DISPLAY", "FEEDBACK", "LAYOUT"]
 CATEGORY_LABEL = {
@@ -68,7 +76,7 @@ def load_registry() -> list[dict]:
 
 
 def render(entries: list[dict], lang: str) -> str:
-    comps = [e for e in entries if e["id"] not in NON_COMPONENT_IDS]
+    comps = [e for e in entries if is_component(e["id"])]
     by_cat: dict[str, list[dict]] = {c: [] for c in CATEGORY_ORDER}
     for e in comps:
         by_cat.setdefault(e["cat"], []).append(e)
@@ -162,7 +170,7 @@ def main() -> int:
         print("run scripts/gen_component_index.py and commit the result")
         return 1
     if check:
-        total = len([e for e in entries if e["id"] not in NON_COMPONENT_IDS])
+        total = len([e for e in entries if is_component(e["id"])])
         print(f"README component index is current. components={total}")
     return 0
 

@@ -42,3 +42,7 @@ kotlin-js-store/
 # Token compiler Python caches
 __pycache__/
 *.pyc
+
+# Xcode
+.build/
+xcuserdata/

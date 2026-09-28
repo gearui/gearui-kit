@@ -1,5 +1,7 @@
 package com.gearui.foundation.primitives
 
+import kotlinx.coroutines.flow.drop
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.*
@@ -16,7 +18,6 @@ import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.gearui.foundation.list.CellDefaults
 import com.gearui.primitives.Divider
 import com.gearui.overlay.OverlayManager
-import kotlinx.coroutines.delay
 
 /**
  * ListScope — the DSL of [List].
@@ -174,21 +175,16 @@ fun List(
     physics: ScrollPhysics = ScrollPhysics.Platform,
     content: ListScope.() -> Unit
 ) {
-    var lastOffset by remember { mutableStateOf(0) }
     val pressedRow = remember { mutableStateOf(NO_ROW) }
 
-    // Polls for scroll offset changes
+    // Anchored overlays close when the list under them scrolls. This used to poll the
+    // offset every 16 ms for as long as the list was on screen — sixty wake-ups a
+    // second on the main thread for a list that was not moving. The scroll position
+    // is snapshot state, so observe it instead: nothing runs until it changes.
     LaunchedEffect(state) {
-        while (true) {
-            val offset = state.firstVisibleItemIndex * 10000 + state.firstVisibleItemScrollOffset
-
-            if (offset != lastOffset) {
-                lastOffset = offset
-                OverlayManager.notifyScroll()
-            }
-
-            delay(16) // 60fps
-        }
+        snapshotFlow { state.firstVisibleItemIndex to state.firstVisibleItemScrollOffset }
+            .drop(1) // the position the list opened at is not a scroll
+            .collect { OverlayManager.notifyScroll() }
     }
 
     LazyColumn(

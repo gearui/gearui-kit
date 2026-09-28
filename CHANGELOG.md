@@ -11,8 +11,16 @@
   token without provenance. Unsourced tokens sit in a baseline that may only shrink.
   `docs/COMPONENT_METRICS.md` is generated from the same data. 54 of 133 sourced.
 
+- **Performance page and scripts.** The sample's Performance page benchmarks a whole-app
+  theme switch (with ~200 components on the page) and records frame intervals while a 1000-row `List` is
+  flung; `scripts/perf/ios_perf.py` and `scripts/perf/android_perf.sh` drive it and add
+  cold start and `dumpsys gfxinfo`.
+
 ### Changed
 
+- **`List` no longer polls its scroll position.** It woke every 16 ms for as long as it
+  was on screen, moving or not, to tell anchored overlays to close; it now observes the
+  scroll state and runs only when the position changes.
 - **Switch takes iOS 26's geometry**, measured on the simulator: 63×28 track, 37×24
   thumb, inset 2 (was HeroUI's 48×24 / 28×20).
 - **List rows follow the iOS rhythm**: text starts 20 in and rows are 52 tall

@@ -1,5 +1,6 @@
 package com.gearui.sample.navigation
 
+import com.gearui.sample.examples.runtime.PerformanceExample
 import androidx.compose.runtime.Composable
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.examples.button.ButtonExample
@@ -165,6 +166,7 @@ object NavigationManager {
             "runtime-insets" -> InsetsDebugExample(component, onBack)
             "runtime-material" -> MaterialExample(component, onBack)
             "runtime-tabhost" -> TabHostExample(component, onBack)
+            "runtime-performance" -> PerformanceExample(component, onBack)
             "navigator-kuikly-spike" -> NavigatorKuiklySpikeExample(component, onBack)
             "navigator-v1-demo" -> NavigatorV1DemoExample(component, onBack)
 

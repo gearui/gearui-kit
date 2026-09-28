@@ -69,12 +69,26 @@ evidence).
   Verified in the sample on iPhone 17 Pro: single-action alert, two-action
   confirm, destructive confirm, three-action stack, explicit trailing form.
 
+**Performance** (2026-09-28, sample Performance page, `scripts/perf/`):
+
+| Measure | iOS 26.2 simulator, Debug build | Budget |
+| --- | --- | --- |
+| Theme switch, whole app with ~200 components on the page, 20 flips (state change → second frame after it); two runs | median 89.4–91.6 ms, p90 93.3–99.4, max 94.5–101.6 | ≤ 120 ms |
+| 1000-row `List` flung for 5 s (in-app frame intervals); two runs | 299–300 frames, period 16.6 ms, p95 19.5, janky 0.0–0.3 % | < 3 % |
+| Cold start | not measured: the idb poll alone takes ~750 ms | ≤ 1000 ms |
+
+A simulator runs on the Mac's CPU and a Debug Kotlin/Native build is slower
+than Release, so these are regression baselines, not budget evidence. Android
+device numbers (`am start -W` TTID, `dumpsys gfxinfo`) come from
+`scripts/perf/android_perf.sh` on a connected device.
+
 ## 3. Open Risks And Limits
 
 - **Screen reader and focus traversal**: unaccepted globally. Semantics are
   implemented and inspectable, but no screen-reader pass has been recorded.
-- **Performance**: no measured numbers yet; nightly performance automation
-  is not implemented.
+- **Performance**: an iOS simulator baseline exists (above); Android device
+  numbers, Release-build numbers and an in-app cold-start marker for iOS are
+  still to come. Nothing runs nightly yet.
 - **Web**: development builds pass; live viewport-resize behavior and full
   browser interaction acceptance are open.
 - **HarmonyOS**: no connected device for visual acceptance; build evidence

@@ -1646,6 +1646,954 @@
         "value": 80,
         "unit": "px"
       }
+    },
+    "navBarHeight": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The 48 medium control row, so the back and action buttons get a full touch target and line up with a 48 field below the bar."
+        }
+      }
+    },
+    "navBarActionSlot": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "One 24 icon with 16 either side; both slots take it, so a one-sided bar still centres its title."
+        }
+      }
+    },
+    "drawerWidth": {
+      "$value": {
+        "value": 280,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Leaves 80 of a 360-wide phone showing, so the page underneath stays visible as the way back."
+        }
+      }
+    },
+    "sheetMaxListHeight": {
+      "$value": {
+        "value": 400,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "About eight 48 rows; a longer list scrolls inside the sheet instead of covering the page."
+        }
+      }
+    },
+    "swiperHeight": {
+      "$value": {
+        "value": 200,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A banner at roughly 16:9 on a 360-wide phone."
+        }
+      }
+    },
+    "swiperArrowSize": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The close-button size: a compact round control that sits over media."
+        }
+      }
+    },
+    "swiperDot": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Indicator dot; small enough for ten to fit on a banner without crowding it."
+        }
+      }
+    },
+    "swiperDotActive": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The current dot grows by one step so position reads without colour."
+        }
+      }
+    },
+    "swiperBarActive": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The current indicator stretched into a bar, about three dots wide."
+        }
+      }
+    },
+    "swiperDotGap": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "One dot's width between dots."
+        }
+      }
+    },
+    "swiperIndicatorPaddingBlock": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "One dot's height above and below the indicator row."
+        }
+      }
+    },
+    "calendarCellHeight": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The 44 touch minimum; seven columns on a phone leave no room for a taller cell."
+        }
+      }
+    },
+    "calendarNavButton": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The close-button size, for the month arrows beside the title."
+        }
+      }
+    },
+    "calendarCellGap": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A hairline of air between day cells so a selected range reads as separate days."
+        }
+      }
+    },
+    "tabsHeightSmall": {
+      "$value": {
+        "value": 36,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The dense tier for toolbars and filters, below the 44 touch minimum only where the whole row is tappable."
+        }
+      }
+    },
+    "tabsHeightMedium": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The 44 touch minimum."
+        }
+      }
+    },
+    "tabsHeightLarge": {
+      "$value": {
+        "value": 52,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The list row height, for tabs that head a list."
+        }
+      }
+    },
+    "formLabelWidth": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Four CJK characters at body size plus a gap; longer labels belong in the vertical layout."
+        }
+      }
+    },
+    "inputClearSize": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Smaller than the search field's 24 so the clear button does not crowd the text of a 48 field."
+        }
+      }
+    },
+    "pickerWheelHeight": {
+      "$value": {
+        "value": 200,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Five 40 rows: the selection with two above and two below."
+        }
+      }
+    },
+    "pickerItemHeight": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Row pitch of the wheel; five fill the viewport."
+        }
+      }
+    },
+    "pickerFadeHeight": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Two rows of fade above and below the selection band."
+        }
+      }
+    },
+    "cascaderDropdownHeight": {
+      "$value": {
+        "value": 300,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "About six 48 option rows before a level scrolls."
+        }
+      }
+    },
+    "textareaCompactPaddingInline": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The chat composer's inset, tighter than a form field's 12 so a bar keeps more text visible."
+        }
+      }
+    },
+    "tableSelectionColumn": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A 24 checkbox with 16 either side."
+        }
+      }
+    },
+    "tableCellWidth": {
+      "$value": {
+        "value": 100,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Four CJK characters at body size with cell padding; wider columns set their own width."
+        }
+      }
+    },
+    "loadingSizeSmall": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Inline with body text."
+        }
+      }
+    },
+    "loadingSizeMedium": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The standalone default, the size of a toolbar icon."
+        }
+      }
+    },
+    "loadingSizeLarge": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A section or page placeholder."
+        }
+      }
+    },
+    "loadingStrokeSmall": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "About an eighth of the spinner's diameter at every size."
+        }
+      }
+    },
+    "loadingStrokeMedium": {
+      "$value": {
+        "value": 3,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "About an eighth of the spinner's diameter at every size."
+        }
+      }
+    },
+    "loadingStrokeLarge": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "About an eighth of the spinner's diameter at every size."
+        }
+      }
+    },
+    "loadingDotSmall": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Three dots fill the spinner's width with a dot's gap between them."
+        }
+      }
+    },
+    "loadingDotMedium": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Three dots fill the spinner's width with a dot's gap between them."
+        }
+      }
+    },
+    "loadingDotLarge": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Three dots fill the spinner's width with a dot's gap between them."
+        }
+      }
+    },
+    "progressHeight": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A track thick enough to read at a glance without looking like a control."
+        }
+      }
+    },
+    "progressLabelMinHeight": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Room for an inline percentage label at caption size."
+        }
+      }
+    },
+    "progressCircleSize": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The medium control size, so a ring sits in a list row."
+        }
+      }
+    },
+    "progressCircleStroke": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A twelfth of the ring's diameter."
+        }
+      }
+    },
+    "skeletonBlock": {
+      "$value": {
+        "value": 100,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Default square placeholder."
+        }
+      }
+    },
+    "skeletonCardImage": {
+      "$value": {
+        "value": 200,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Card cover placeholder, the Swiper banner height."
+        }
+      }
+    },
+    "skeletonLine": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Body line placeholder, a little under the body line height so lines read as separate."
+        }
+      }
+    },
+    "skeletonTitleLine": {
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Title line placeholder, a step above the body line."
+        }
+      }
+    },
+    "skeletonAvatar": {
+      "$value": {
+        "value": 60,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "List-item avatar placeholder."
+        }
+      }
+    },
+    "skeletonArticleImage": {
+      "$value": {
+        "value": 150,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Article illustration placeholder."
+        }
+      }
+    },
+    "skeletonButtonWidth": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A short button placeholder."
+        }
+      }
+    },
+    "skeletonListItemHeight": {
+      "$value": {
+        "value": 120,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A list item with avatar, two lines and an image."
+        }
+      }
+    },
+    "toastMinWidth": {
+      "$value": {
+        "value": 120,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Keeps a one-word toast from shrinking to a pill around the text."
+        }
+      }
+    },
+    "toastMaxWidth": {
+      "$value": {
+        "value": 280,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Leaves 40 either side on a 360-wide phone; longer text wraps."
+        }
+      }
+    },
+    "menuMinWidth": {
+      "$value": {
+        "value": 160,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Room for an icon and a four-character action; shared by ContextMenu and Popover menus, which disagreed (140 and 160)."
+        }
+      }
+    },
+    "menuMaxWidth": {
+      "$value": {
+        "value": 260,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Leaves the page visible beside the menu on a 360-wide phone."
+        }
+      }
+    },
+    "stepperSizeSmall": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Button size of the compact stepper."
+        }
+      }
+    },
+    "stepperSizeMedium": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Button size of the default stepper, the close-button size."
+        }
+      }
+    },
+    "stepperSizeLarge": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The small control height."
+        }
+      }
+    },
+    "stepperFieldWidth": {
+      "$value": {
+        "value": 180,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Two buttons and a five-digit value."
+        }
+      }
+    },
+    "imageGalleryHeight": {
+      "$value": {
+        "value": 100,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Thumbnail height in a three-column gallery on a phone."
+        }
+      }
+    },
+    "sliderValueLabelHeight": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Room above the track for the thumb's value label."
+        }
+      }
+    },
+    "sliderScaleDot": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Tick mark on a stepped slider, the swiper's active dot size."
+        }
+      }
+    },
+    "dialogMaxHeight": {
+      "$value": {
+        "value": 560,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Leaves the status bar and some page visible on the shortest supported phones."
+        }
+      }
+    },
+    "dialogBodyMaxHeight": {
+      "$value": {
+        "value": 360,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Scrolling body inside the dialog, so title and actions stay in view."
+        }
+      }
+    },
+    "popoverArrowSize": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Arrow depth; the arrow's base is twice this."
+        }
+      }
+    },
+    "stepsConnectorMinHeight": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Vertical connector between steps, the medium control height."
+        }
+      }
+    },
+    "stepsDotSize": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The dot style's marker."
+        }
+      }
+    },
+    "stepsIconSize": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The numbered marker, the close-button size."
+        }
+      }
+    },
+    "buttonIconLarge": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Icon beside a large button's label."
+        }
+      }
+    },
+    "buttonIconMedium": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Icon beside a medium button's label, the body icon size."
+        }
+      }
+    },
+    "buttonIconSmall": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Icon beside a small button's label."
+        }
+      }
+    },
+    "buttonIconExtraSmall": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Icon beside an extra-small button's label."
+        }
+      }
+    },
+    "tourProgressHeight": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Step progress under the tour card's text."
+        }
+      }
+    },
+    "timelineAxisWidth": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The column that holds the dot and the line."
+        }
+      }
+    },
+    "timelineDot": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The event marker."
+        }
+      }
+    },
+    "timelineConnectorMinHeight": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Line between two events, the medium control height."
+        }
+      }
+    },
+    "gridMinColumnWidth": {
+      "$value": {
+        "value": 120,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Three columns on a 360-wide phone for the responsive grid."
+        }
+      }
+    },
+    "backTopHalfWidth": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The half-circle tab that hugs the screen edge."
+        }
+      }
+    },
+    "backTopHalfHeight": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The half-circle tab that hugs the screen edge."
+        }
+      }
+    },
+    "bottomNavHeight": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The large control height, the same as a tab bar with labels on Android."
+        }
+      }
+    },
+    "bottomNavBadgeReserveWidth": {
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Width of the widest small badge (99+), reserved so a badge never moves the icon."
+        }
+      }
+    },
+    "bottomNavBadgeReserveHeight": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Height of a small badge, reserved so a badge never moves the icon."
+        }
+      }
+    },
+    "bottomNavPillPaddingBlock": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Vertical inset of the selected pill around icon and label."
+        }
+      }
     }
   }
 }

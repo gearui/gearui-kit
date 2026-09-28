@@ -1,5 +1,6 @@
 package com.gearui.components.bottomnavbar
 
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -88,7 +89,7 @@ fun BottomNavBar(
     modifier: Modifier = Modifier,
     safeAreaExtraBottom: Dp = 0.dp,
     showTopDivider: Boolean = true,
-    height: Dp = 56.dp,
+    height: Dp = ControlGeometry.bottomNavHeight,
     backgroundColor: Color? = null,
     activeColor: Color? = null,
     inactiveColor: Color? = null,
@@ -185,16 +186,16 @@ fun BottomNavBar(
                         // The clip/background modifiers on the pill stay in the chain permanently
                         // (transparent when unselected): conditionally removing them leaves a
                         // stale background view behind on Kuikly when selection moves.
-                        val reservedBadgeW = 30.dp  // widest case ("99+") at BadgeSize.Small
-                        val reservedBadgeH = 16.dp  // BadgeSize.Small height
-                        val pillPadTop = 2.dp
+                        val reservedBadgeW = ControlGeometry.bottomNavBadgeReserveWidth  // widest case ("99+") at BadgeSize.Small
+                        val reservedBadgeH = ControlGeometry.bottomNavBadgeReserveHeight  // BadgeSize.Small height
+                        val pillPadTop = ControlGeometry.bottomNavPillPaddingBlock
                         com.tencent.kuikly.compose.ui.layout.Layout(
                             content = {
                                 Column(
                                     modifier = Modifier
                                         .clip(Theme.shapes.full)
                                         .background(if (isSelected && capsule) selectedColor else Color.Transparent)
-                                        .padding(start = Spacing.sm, end = Spacing.sm, top = pillPadTop, bottom = 2.dp),
+                                        .padding(start = Spacing.sm, end = Spacing.sm, top = pillPadTop, bottom = ControlGeometry.bottomNavPillPaddingBlock),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Box {

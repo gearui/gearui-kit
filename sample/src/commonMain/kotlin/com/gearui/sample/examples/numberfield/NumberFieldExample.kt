@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.gearui.components.numberfield.NumberField
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.sample.pages.SectionSurface
 
 @Composable
 fun NumberFieldExample(
@@ -22,7 +22,6 @@ fun NumberFieldExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "数量",
             description = "可直接输入，也可用两侧按钮增减；到达上下限时按钮置灰"
         ) {
@@ -34,11 +33,11 @@ fun NumberFieldExample(
                 min = 1.0,
                 max = 10.0,
                 required = true,
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "小数步进",
             description = "step = 0.1，保留输入中的半成品文本"
         ) {
@@ -48,11 +47,11 @@ fun NumberFieldExample(
                 label = "单价",
                 step = 0.1,
                 min = 0.0,
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "负数与校验",
             description = "允许负值；超出范围时显示错误"
         ) {
@@ -63,6 +62,7 @@ fun NumberFieldExample(
                 min = -12.0,
                 max = 14.0,
                 error = if ((offset ?: 0.0) != 0.0) "当前设备时区为 UTC+8" else null,
+                variant = FieldVariant.SECONDARY,
             )
         }
     }

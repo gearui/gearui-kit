@@ -13,6 +13,7 @@ import com.gearui.components.calendar.DateRangePickerInput
 import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -70,6 +71,7 @@ fun CalendarExample(
                     },
                     label = "统计区间",
                     required = true,
+                    variant = FieldVariant.SECONDARY,
                 )
                 Text(
                     text = if (rangeFrom != null && rangeTo != null) {

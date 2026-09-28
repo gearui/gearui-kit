@@ -64,7 +64,7 @@ is generated from those sources.
 form layouts remain supported. The editor owns its surface and focus
 treatment; helper/error and count text sit below it. Limit counters are not
 errors. Fields are borderless with a field shadow by default — on white
-cards/surfaces use the filled variant (`cardStyle = true`).
+cards/surfaces use the filled variant (`variant = FieldVariant.SECONDARY`).
 
 **Select and hierarchical selection.** A field trigger plus a layered option
 surface with clear selected/disabled states, aligned indicators, bounded

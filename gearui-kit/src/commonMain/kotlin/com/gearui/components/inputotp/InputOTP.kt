@@ -11,6 +11,8 @@ import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fill
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Text
@@ -71,9 +73,10 @@ fun InputOTP(
     groupSize: Int? = null,
     enabled: Boolean = true,
     invalid: Boolean = false,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     numeric: Boolean = true,
     placeholder: String? = null,
-    variant: FieldVariant = FieldVariant.PRIMARY,
     autoFocus: Boolean = false,
     focusRequester: FocusRequester? = null,
     onComplete: ((String) -> Unit)? = null,
@@ -142,13 +145,13 @@ private fun OtpSlot(
     FieldSurface(
         modifier = Modifier.size(ControlGeometry.otpSlotWidth, ControlGeometry.otpSlotHeight),
         shape = shape,
-        shadowed = variant == FieldVariant.PRIMARY,
+        shadowed = variant.shadowed,
     ) {
         Box(
             modifier = Modifier
                 .matchParentSize()
                 .clip(shape)
-                .background(if (variant == FieldVariant.PRIMARY) inputColors.background else colors.muted),
+                .background(variant.fill(inputColors.background)),
             contentAlignment = Alignment.Center,
         ) {
             when {

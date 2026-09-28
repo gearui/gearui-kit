@@ -1,5 +1,6 @@
 package com.gearui.components.picker
 
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -18,7 +19,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.gearui.foundation.material.MaterialDefaults
 import com.gearui.foundation.material.tintedMask
 import com.gearui.foundation.material.verticalBrush
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import com.gearui.components.bottomsheet.BottomSheet
@@ -112,7 +112,7 @@ object Picker {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(ControlGeometry.pickerWheelHeight)
                 ) {
                 // Selection band background
                     Box(
@@ -120,7 +120,7 @@ object Picker {
                             .align(Alignment.Center)
                             .fillMaxWidth()
                             .padding(horizontal = Spacing.lg)
-                            .height(40.dp)
+                            .height(ControlGeometry.pickerItemHeight)
                             .clip(shapes.md)
                             .background(colors.muted)
                     )
@@ -156,7 +156,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .fillMaxWidth()
-                            .height(80.dp)
+                            .height(ControlGeometry.pickerFadeHeight)
                             .background(
                                 brush = MaterialDefaults.pickerTopMask
                                     .tintedMask(Theme.colors.surface)
@@ -169,7 +169,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .fillMaxWidth()
-                            .height(80.dp)
+                            .height(ControlGeometry.pickerFadeHeight)
                             .background(
                                 brush = MaterialDefaults.pickerBottomMask
                                     .tintedMask(Theme.colors.surface)
@@ -178,8 +178,6 @@ object Picker {
                     )
                 }
 
-                // Bottom safe area
-                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
@@ -229,7 +227,7 @@ object Picker {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(ControlGeometry.pickerWheelHeight)
                 ) {
                 // Selection band background
                     Box(
@@ -237,7 +235,7 @@ object Picker {
                             .align(Alignment.Center)
                             .fillMaxWidth()
                             .padding(horizontal = Spacing.lg)
-                            .height(40.dp)
+                            .height(ControlGeometry.pickerItemHeight)
                             .clip(shapes.md)
                             .background(colors.muted)
                     )
@@ -279,7 +277,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .fillMaxWidth()
-                            .height(80.dp)
+                            .height(ControlGeometry.pickerFadeHeight)
                             .background(
                                 brush = MaterialDefaults.pickerTopMask
                                     .tintedMask(Theme.colors.surface)
@@ -292,7 +290,7 @@ object Picker {
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .fillMaxWidth()
-                            .height(80.dp)
+                            .height(ControlGeometry.pickerFadeHeight)
                             .background(
                                 brush = MaterialDefaults.pickerBottomMask
                                     .tintedMask(Theme.colors.surface)
@@ -301,7 +299,6 @@ object Picker {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
@@ -321,7 +318,7 @@ private fun PickerHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(ControlGeometry.controlLarge)
             .padding(horizontal = Spacing.lg),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -376,7 +373,7 @@ private fun WheelPickerColumn(
     modifier: Modifier = Modifier
 ) {
     val colors = Theme.colors
-    val itemHeight = 40.dp
+    val itemHeight = ControlGeometry.pickerItemHeight
     val visibleItems = 5
     val centerOffset = visibleItems / 2
 

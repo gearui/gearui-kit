@@ -1,5 +1,6 @@
 package com.gearui.components.navbar
 
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -44,7 +45,7 @@ fun NavBar(
     title: String = "",
     titleColor: Color? = null,
     centerTitle: Boolean = true,
-    height: Dp = 48.dp,
+    height: Dp = ControlGeometry.navBarHeight,
     backgroundColor: Color? = null,
     useDefaultBack: Boolean = false,
     onBackClick: (() -> Unit)? = null,
@@ -328,7 +329,7 @@ private fun NavBarIconButton(
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier
         .fillMaxHeight()
-        .widthIn(min = 56.dp)
+        .widthIn(min = ControlGeometry.navBarActionSlot)
 ) {
     Box(
         modifier = modifier
@@ -367,7 +368,7 @@ private fun NavBarIconButton(
  */
 object NavBarDefaults {
     /** Width of one action slot; matches an icon-only button. */
-    val actionSlotWidth = 56.dp
+    val actionSlotWidth = ControlGeometry.navBarActionSlot
 
     /** Icon size inside an action slot. */
     val actionIconSize = IconSizes.Default.xl

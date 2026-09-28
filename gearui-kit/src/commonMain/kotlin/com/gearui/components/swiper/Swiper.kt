@@ -1,5 +1,6 @@
 package com.gearui.components.swiper
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.animation.core.animateDpAsState
 import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
@@ -16,7 +17,6 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import kotlinx.coroutines.delay
@@ -78,7 +78,7 @@ fun Swiper(
     navigation: SwiperNavigation = SwiperNavigation.DOTS,
     indicatorPosition: SwiperIndicatorPosition = SwiperIndicatorPosition.BOTTOM,
     showArrows: Boolean = false,
-    height: Dp = 200.dp,
+    height: Dp = ControlGeometry.swiperHeight,
     onIndexChanged: ((Int) -> Unit)? = null,
     content: @Composable BoxScope.(index: Int) -> Unit
 ) {
@@ -197,7 +197,7 @@ fun Swiper(
                     if (showLeftArrow) {
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
+                                .size(ControlGeometry.swiperArrowSize)
                                 .clip(CircleShape)
                                 .background(colors.surface.copy(alpha = 0.7f))
                                 .clickable {
@@ -214,7 +214,7 @@ fun Swiper(
                             )
                         }
                     } else {
-                        Spacer(modifier = Modifier.size(32.dp))
+                        Spacer(modifier = Modifier.size(ControlGeometry.swiperArrowSize))
                     }
 
                     // Right arrow
@@ -222,7 +222,7 @@ fun Swiper(
                     if (showRightArrow) {
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
+                                .size(ControlGeometry.swiperArrowSize)
                                 .clip(CircleShape)
                                 .background(colors.surface.copy(alpha = 0.7f))
                                 .clickable {
@@ -239,7 +239,7 @@ fun Swiper(
                             )
                         }
                     } else {
-                        Spacer(modifier = Modifier.size(32.dp))
+                        Spacer(modifier = Modifier.size(ControlGeometry.swiperArrowSize))
                     }
                 }
             }
@@ -305,13 +305,13 @@ private fun SwiperIndicator(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
                         )
-                        .padding(horizontal = Spacing.md, vertical = 6.dp)
+                        .padding(horizontal = Spacing.md, vertical = ControlGeometry.swiperIndicatorPaddingBlock)
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
                         // Animated size
                         val size by animateDpAsState(
-                            targetValue = if (isActive) 8.dp else 6.dp,
+                            targetValue = if (isActive) ControlGeometry.swiperDotActive else ControlGeometry.swiperDot,
                             animationSpec = tween(durationMillis = 150)
                         )
                         Box(
@@ -327,26 +327,26 @@ private fun SwiperIndicator(
             SwiperNavigation.DOTS_BAR -> {
                 // Bar indicator (the selected dot stretches into a bar)
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(ControlGeometry.swiperDotGap),
                     modifier = Modifier
                         .clip(Theme.shapes.full)
                         .background(
                             if (isOuter) colors.surface.copy(alpha = 0f)
                             else colors.surface.copy(alpha = 0.3f)
                         )
-                        .padding(horizontal = Spacing.md, vertical = 6.dp)
+                        .padding(horizontal = Spacing.md, vertical = ControlGeometry.swiperIndicatorPaddingBlock)
                 ) {
                     repeat(itemCount) { index ->
                         val isActive = index == currentIndex
                         // Animated width
                         val width by animateDpAsState(
-                            targetValue = if (isActive) 20.dp else 6.dp,
+                            targetValue = if (isActive) ControlGeometry.swiperBarActive else ControlGeometry.swiperDot,
                             animationSpec = tween(durationMillis = 200)
                         )
                         Box(
                             modifier = Modifier
                                 .width(width)
-                                .height(6.dp)
+                                .height(ControlGeometry.swiperDot)
                                 .clip(Theme.shapes.sm)
                                 .background(if (isActive) activeColor else inactiveColor)
                         )

@@ -1,5 +1,6 @@
 package com.gearui.components.progress
 
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.Canvas
@@ -13,7 +14,6 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.StrokeCap
 import com.tencent.kuikly.compose.ui.graphics.drawscope.Stroke
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import kotlin.math.roundToInt
 import com.gearui.foundation.layout.Spacing
@@ -38,7 +38,7 @@ fun LinearProgress(
     status: ProgressStatus = ProgressStatus.PRIMARY,
     showLabel: Boolean = true,
     labelPosition: ProgressLabelPosition = ProgressLabelPosition.RIGHT,
-    height: Dp = 8.dp,
+    height: Dp = ControlGeometry.progressHeight,
     animated: Boolean = true
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
@@ -104,7 +104,7 @@ fun LinearProgress(
         ProgressLabelPosition.INSIDE -> {
             Box(
                 modifier = modifier
-                    .height(height.coerceAtLeast(24.dp))
+                    .height(height.coerceAtLeast(ControlGeometry.progressLabelMinHeight))
                     .clip(shapes.sm)
                     .background(colors.muted),
                 contentAlignment = Alignment.Center
@@ -139,8 +139,8 @@ fun CircularProgress(
     progress: Float,
     modifier: Modifier = Modifier,
     status: ProgressStatus = ProgressStatus.PRIMARY,
-    size: Dp = 48.dp,
-    strokeWidth: Dp = 4.dp,
+    size: Dp = ControlGeometry.progressCircleSize,
+    strokeWidth: Dp = ControlGeometry.progressCircleStroke,
     showLabel: Boolean = true,
     animated: Boolean = true
 ) {

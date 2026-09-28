@@ -3,7 +3,9 @@ package com.gearui.components.segmented
 import androidx.compose.runtime.*
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
+import com.gearui.foundation.typography.IconSizes
 import com.gearui.foundation.motion.Motion
 import com.gearui.i18n.I18n
 import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
@@ -85,15 +87,19 @@ fun <T> IconSegmentedControl(
         onSelect = { onOptionSelected(options[it].value) },
     ) { index, selected ->
         val option = options[index]
+        // Icon and label share one colour, so the icon follows the selection with the text.
+        val contentColor = if (selected) colors.foreground else colors.mutedForeground
         Row(
             horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsTriggerPaddingBlock),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            option.icon?.invoke()
+            if (option.icon != null) {
+                Icon(name = option.icon, size = IconSizes.Default.md, tint = contentColor)
+            }
             Text(
                 text = option.label,
                 style = Theme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                color = if (selected) colors.foreground else colors.mutedForeground,
+                color = contentColor,
                 maxLines = 1,
             )
         }
@@ -198,10 +204,13 @@ internal fun SegmentedTrack(
 }
 
 /**
- * SegmentedOption - segment option data class
+ * SegmentedOption - one option of an [IconSegmentedControl].
+ *
+ * @param icon an icon name from `com.gearui.components.icon.Icons`. The control draws
+ *   and tints it itself with the label's colour, so it follows the selection.
  */
 data class SegmentedOption<T>(
     val value: T,
     val label: String,
-    val icon: (@Composable () -> Unit)? = null
+    val icon: String? = null
 )

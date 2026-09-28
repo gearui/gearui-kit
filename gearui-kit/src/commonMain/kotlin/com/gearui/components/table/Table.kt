@@ -1,5 +1,6 @@
 package com.gearui.components.table
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
@@ -11,9 +12,10 @@ import com.tencent.kuikly.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.checkbox.Checkbox
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
@@ -95,8 +97,20 @@ fun <T> rememberTableSelectionState(): TableSelectionState<T> {
  *
  *
  * Rules:
- * - plain table: generated row by row, scrolls vertically
+ * - plain table: generated row by row
  * - pinned-column table: generated column by column; the left and right pinned columns stay put, the middle scrolls horizontally, and all rows move together
+ *
+ * Height and scrolling (plain table):
+ * - with a bounded height (an explicit `Modifier.height`, `weight(1f)`, or a parent that
+ *   caps it) the rows are a lazy list that scrolls vertically inside the table;
+ * - with an unbounded height — the table placed in a scrolling page without a height —
+ *   the rows are laid out eagerly at their full height and the page does the scrolling.
+ *   A lazy list cannot be measured against an infinite height, so this is what keeps the
+ *   table from crashing there. Keep eager tables short; give long ones a height.
+ * The pinned-column table always takes its full height and never scrolls vertically.
+ *
+ * @param shape corner shape; the whole table (header and rows) is clipped to it, and the
+ *   border follows it when [bordered].
  */
 @Composable
 fun <T> Table(
@@ -108,9 +122,10 @@ fun <T> Table(
     striped: Boolean = false,
     bordered: Boolean = false,
     hoverable: Boolean = true,
-    rowHeight: Dp = 48.dp,
+    rowHeight: Dp = ControlGeometry.controlMedium,
     emptyText: String = I18n.strings.field.tableEmpty,
-    onRowClick: ((T, Int) -> Unit)? = null
+    onRowClick: ((T, Int) -> Unit)? = null,
+    shape: Shape = Theme.shapes.lg,
 ) {
     val colors = Theme.colors
     val actualSelectionState = selectionState ?: rememberTableSelectionState()
@@ -123,46 +138,53 @@ fun <T> Table(
     // Check whether any column is pinned
     val hasFixedCols = fixedLeftCols.isNotEmpty() || fixedRightCols.isNotEmpty()
 
-    Column(
+    // BoxWithConstraints only to learn whether the height is bounded; see the KDoc.
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
+            .clip(shape)
             .then(
-                if (bordered) Modifier.border(BorderWidth.thin, colors.border, Theme.shapes.lg)
+                if (bordered) Modifier.border(BorderWidth.thin, colors.border, shape)
                 else Modifier
             )
     ) {
-        if (hasFixedCols) {
-            // Has pinned columns: generate by column, middle area scrolls horizontally
-            FixedColumnTable(
-                data = data,
-                fixedLeftCols = fixedLeftCols,
-                nonFixedCols = nonFixedCols,
-                fixedRightCols = fixedRightCols,
-                selectable = selectable,
-                selectionState = actualSelectionState,
-                striped = striped,
-                rowHeight = rowHeight,
-                emptyText = emptyText,
-                onRowClick = onRowClick
-            )
-        } else {
-            // Plain table: generate by row, vertical scrolling only
-            NormalTable(
-                data = data,
-                columns = columns,
-                selectable = selectable,
-                selectionState = actualSelectionState,
-                striped = striped,
-                rowHeight = rowHeight,
-                emptyText = emptyText,
-                onRowClick = onRowClick
-            )
+        val lazyRows = constraints.hasBoundedHeight
+        Column(modifier = Modifier.fillMaxWidth()) {
+            if (hasFixedCols) {
+                // Has pinned columns: generate by column, middle area scrolls horizontally
+                FixedColumnTable(
+                    data = data,
+                    fixedLeftCols = fixedLeftCols,
+                    nonFixedCols = nonFixedCols,
+                    fixedRightCols = fixedRightCols,
+                    selectable = selectable,
+                    selectionState = actualSelectionState,
+                    striped = striped,
+                    rowHeight = rowHeight,
+                    emptyText = emptyText,
+                    onRowClick = onRowClick
+                )
+            } else {
+                // Plain table: generate by row
+                NormalTable(
+                    data = data,
+                    columns = columns,
+                    selectable = selectable,
+                    selectionState = actualSelectionState,
+                    striped = striped,
+                    rowHeight = rowHeight,
+                    emptyText = emptyText,
+                    onRowClick = onRowClick,
+                    lazyRows = lazyRows
+                )
+            }
         }
     }
 }
 
 /**
- * Plain table - generated row by row, vertical scrolling only
+ * Plain table - generated row by row. [lazyRows] picks a vertically scrolling lazy list
+ * (bounded height) or an eager column (unbounded height, the page scrolls).
  */
 @Composable
 private fun <T> NormalTable(
@@ -173,7 +195,8 @@ private fun <T> NormalTable(
     striped: Boolean,
     rowHeight: Dp,
     emptyText: String,
-    onRowClick: ((T, Int) -> Unit)?
+    onRowClick: ((T, Int) -> Unit)?,
+    lazyRows: Boolean
 ) {
     val colors = Theme.colors
 
@@ -188,7 +211,7 @@ private fun <T> NormalTable(
         if (selectable) {
             Box(
                 modifier = Modifier
-                    .width(56.dp)
+                    .width(ControlGeometry.tableSelectionColumn)
                     .fillMaxHeight()
                     .padding(horizontal = Spacing.lg),
                 contentAlignment = Alignment.Center
@@ -243,67 +266,92 @@ private fun <T> NormalTable(
             )
         }
     } else {
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            itemsIndexed(data) { index, item ->
-                val isSelected = selectionState.isSelected(item)
-                val backgroundColor = when {
-                    isSelected -> colors.primary.copy(alpha = 0.1f)
-                    striped && index % 2 == 1 -> colors.muted
-                    else -> colors.surface
+        if (lazyRows) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                itemsIndexed(data) { index, item ->
+                    NormalTableRow(item, index, data.size, columns, selectable, selectionState, striped, rowHeight, onRowClick)
                 }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(rowHeight)
-                        .background(backgroundColor)
-                        .then(
-                            if (onRowClick != null) Modifier.clickable { onRowClick(item, index) }
-                            else Modifier
-                        ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (selectable) {
-                        Box(
-                            modifier = Modifier
-                                .width(56.dp)
-                                .fillMaxHeight()
-                                .padding(horizontal = Spacing.lg),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Checkbox(
-                                checked = isSelected,
-                                onCheckedChange = { selectionState.toggleItem(item) }
-                            )
-                        }
-                    }
-                    columns.forEach { column ->
-                        Box(
-                            modifier = Modifier
-                                .then(
-                                    if (column.width != null) Modifier.width(column.width)
-                                    else Modifier.weight(1f)
-                                )
-                                .fillMaxHeight()
-                                .padding(horizontal = Spacing.lg),
-                            contentAlignment = getAlignment(column.align)
-                        ) {
-                            column.render(item, index)
-                        }
-                    }
-                }
-
-                // Row divider
-                if (index < data.size - 1) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(BorderWidth.hairline)
-                            .background(colors.border)
-                    )
+            }
+        } else {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                data.forEachIndexed { index, item ->
+                    NormalTableRow(item, index, data.size, columns, selectable, selectionState, striped, rowHeight, onRowClick)
                 }
             }
         }
+    }
+}
+
+/** One data row of the plain table, followed by its divider unless it is the last. */
+@Composable
+private fun <T> NormalTableRow(
+    item: T,
+    index: Int,
+    rowCount: Int,
+    columns: List<TableColumn<T>>,
+    selectable: Boolean,
+    selectionState: TableSelectionState<T>,
+    striped: Boolean,
+    rowHeight: Dp,
+    onRowClick: ((T, Int) -> Unit)?
+) {
+    val colors = Theme.colors
+    val isSelected = selectionState.isSelected(item)
+    val backgroundColor = when {
+        isSelected -> colors.primary.copy(alpha = 0.1f)
+        striped && index % 2 == 1 -> colors.muted
+        else -> colors.surface
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(rowHeight)
+            .background(backgroundColor)
+            .then(
+                if (onRowClick != null) Modifier.clickable { onRowClick(item, index) }
+                else Modifier
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (selectable) {
+            Box(
+                modifier = Modifier
+                    .width(ControlGeometry.tableSelectionColumn)
+                    .fillMaxHeight()
+                    .padding(horizontal = Spacing.lg),
+                contentAlignment = Alignment.Center
+            ) {
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { selectionState.toggleItem(item) }
+                )
+            }
+        }
+        columns.forEach { column ->
+            Box(
+                modifier = Modifier
+                    .then(
+                        if (column.width != null) Modifier.width(column.width)
+                        else Modifier.weight(1f)
+                    )
+                    .fillMaxHeight()
+                    .padding(horizontal = Spacing.lg),
+                contentAlignment = getAlignment(column.align)
+            ) {
+                column.render(item, index)
+            }
+        }
+    }
+
+    // Row divider
+    if (index < rowCount - 1) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(BorderWidth.hairline)
+                .background(colors.border)
+        )
     }
 }
 
@@ -329,12 +377,12 @@ private fun <T> FixedColumnTable(
     onRowClick: ((T, Int) -> Unit)?
 ) {
     val colors = Theme.colors
-    val defaultCellWidth = 100.dp
+    val defaultCellWidth = ControlGeometry.tableCellWidth
 
     // Total height
-    val headerHeight = rowHeight + 0.5.dp
+    val headerHeight = rowHeight + BorderWidth.hairline
     val dataHeight = if (data.isNotEmpty()) {
-        rowHeight * data.size + 0.5.dp * (data.size - 1)
+        rowHeight * data.size + BorderWidth.hairline * (data.size - 1)
     } else {
         rowHeight * 3 // empty-state height
     }
@@ -532,7 +580,8 @@ fun SimpleTable(
     rows: List<List<String>>,
     modifier: Modifier = Modifier,
     striped: Boolean = false,
-    bordered: Boolean = false
+    bordered: Boolean = false,
+    shape: Shape = Theme.shapes.lg,
 ) {
     val colors = Theme.colors
 
@@ -555,6 +604,7 @@ fun SimpleTable(
         columns = columns,
         modifier = modifier,
         striped = striped,
-        bordered = bordered
+        bordered = bordered,
+        shape = shape
     )
 }

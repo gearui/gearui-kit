@@ -1,5 +1,6 @@
 package com.gearui.components.backtop
 
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.foundation.primitives.Icon
 import com.gearui.components.icon.Icons
@@ -92,7 +93,7 @@ fun BackTop(
      */
     icon: String = Icons.caret_up,
     text: String = I18n.strings.common.backToTop,
-    offset: Pair<Dp, Dp> = 16.dp to 16.dp // (right, bottom)
+    offset: Pair<Dp, Dp> = Spacing.lg to Spacing.lg // (right, bottom)
 ) {
     val colors = Theme.colors
 
@@ -115,9 +116,9 @@ fun BackTop(
     val interaction = remember { MutableInteractionSource() }
 
     // Size and shape from the style
-    val circleSize = 48.dp
-    val halfCircleWidth = 24.dp
-    val halfCircleHeight = 40.dp
+    val circleSize = ControlGeometry.controlMedium
+    val halfCircleWidth = ControlGeometry.backTopHalfWidth
+    val halfCircleHeight = ControlGeometry.backTopHalfHeight
 
     AnimatedVisibility(
         visible = visible,
@@ -227,7 +228,7 @@ fun BackTopCustom(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     theme: BackTopTheme = BackTopTheme.LIGHT,
-    offset: Pair<Dp, Dp> = 16.dp to 16.dp,
+    offset: Pair<Dp, Dp> = Spacing.lg to Spacing.lg,
     content: @Composable BoxScope.() -> Unit
 ) {
     val colors = Theme.colors

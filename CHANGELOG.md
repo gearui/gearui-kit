@@ -51,10 +51,60 @@ Not binary-compatible with 1.0.0-beta5: components are removed (see "Removed").
 - `Radius` still carried the pre-beta5 4 / 6 / 8 / 12 while `Theme.shapes` had moved
   to 8 / 12 / 14 / 24. It is now read from the same generated geometry.
 
+- `Table` crashed ("vertically scrollable component was measured with an infinity
+  maximum height") inside a scrolling page without an explicit height. With an
+  unbounded height it now lays its rows out in place; with a bounded one it scrolls.
+- `Tour`'s card had a fixed width of 400, wider than a 360 phone; it now fills the
+  width with the overlay margin, capped at the dialog width.
+- `Picker` added a fixed 20 of fake bottom safe area; `BottomSheet.Host` now applies
+  the real bottom inset, as the other sheets do.
+- `ActionSheet` drew its badges by hand; they are the kit's `Badge`.
+### Added
+
+- `Form(layout = FormLayout.VERTICAL | HORIZONTAL)` drives every `FormItem`, and
+  `FormItem` takes `error`, `description`, `required` and `enabled`: label above the
+  control (the mobile default) or beside it, with the error under the control in both.
+  `Form.scrollable`, `Form.formState`, `FormScope`, `FormField` and `FormItem.name`,
+  none of which did anything, are removed; `help` is now `description`.
+- `Tab(badge = …, dot = …)`: a count or red dot. Underline tabs raise it at the label's
+  top-end without moving the label; capsule and card tabs, which clip their pill, put
+  it beside the label.
+- `SegmentedOption.icon` is an `Icons` name the control draws in the label's colour,
+  so it follows the selection (it was a slot that could not know it was selected).
+- `NoticeBar(shape = …)` and `Table(shape = …)` / `SimpleTable(shape = …)`, default
+  `Theme.shapes.lg`; pass `RectangleShape` for a full-bleed bar.
+
+### Changed
+
+- The component layer carries no bare `dp` design values any more. Spacing reads
+  `Spacing.*`; every size, width, stroke and indicator reads a `ControlGeometry` token
+  whose source is recorded in `tokens/controls.tokens.json` (79 new tokens, all
+  GearUI-basis with their reason). The spacing guard, a per-file debt freeze with 56
+  entries, is now a hard gate with no baseline.
+- Values that moved while being tokenised: `Popup` anchor offset 4 → 9 (the overlay
+  offset every other anchored panel uses); `ContextMenu` minimum width 140 → 160 (the
+  Popover menu's); Watermark offsets 20 → 16 (`Spacing.lg`); ImageViewer and Image
+  corner radius 4 → 8 (`Radius.sm`).
+
 ### Removed (API)
 
 - `TourStep.targetKey` and `Textarea(labelIcon = …)`: neither was ever read. A
   parameter that silently does nothing is worse than none.
+- `Input(cardStyle = …)`, `Textarea(cardStyle = …)` and `Textarea(bordered = …)`. Every
+  field-family component now takes `variant: FieldVariant` (default `PRIMARY`: field
+  colour with the field shadow, for the page background; `SECONDARY`: `muted` fill, no
+  shadow, for a card, sheet or header). Source migration:
+  `Input(cardStyle = true)` → `Input(variant = FieldVariant.SECONDARY)`;
+  `Textarea(cardStyle = true)` and `Textarea(bordered = false)` →
+  `Textarea(variant = FieldVariant.SECONDARY)`. Behaviour: Textarea's `cardStyle`
+  wrapper (label and field inside a padded grey box) is gone, and `bordered = false`
+  no longer switches to the compact 16sp metrics; SECONDARY is the standard field with
+  the filled look, and keeps the border, error outline and focus ring.
+- `variant` is new on ComboBox, NumberField, Select, MultiSelect, Cascader,
+  DatePickerInput, TimePickerInput, DateTimePickerInput, DateRangePickerInput,
+  InputGroup and AutoResizeTextarea (the last defaults to `SECONDARY`, like SearchBar,
+  which is what it drew before). `InputOTP.variant` moved to sit after `invalid`;
+  positional callers past `invalid` must name their arguments.
 
 ## [1.0.0-beta5] - 2026-09-28
 

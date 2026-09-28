@@ -1,5 +1,6 @@
 package com.gearui.components.calendar
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
@@ -11,7 +12,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
@@ -102,7 +102,7 @@ fun Calendar(
     firstDayOfWeek: Int = 0,
     title: String? = null,
     showTitle: Boolean = true,
-    cellHeight: Dp = 44.dp
+    cellHeight: Dp = ControlGeometry.calendarCellHeight
 ) {
     val colors = Theme.colors
 
@@ -210,7 +210,7 @@ private fun CalendarHeader(
     ) {
         Box(
             modifier = Modifier
-                .size(32.dp)
+                .size(ControlGeometry.calendarNavButton)
                 .clip(CircleShape)
                 .background(colors.muted)
                 .clickable { onPreviousMonth() },
@@ -232,7 +232,7 @@ private fun CalendarHeader(
 
         Box(
             modifier = Modifier
-                .size(32.dp)
+                .size(ControlGeometry.calendarNavButton)
                 .clip(CircleShape)
                 .background(colors.muted)
                 .clickable { onNextMonth() },
@@ -301,7 +301,7 @@ private fun CalendarGrid(
     val adjustedFirstDay = CalendarMath.leadingBlanks(year, month, firstDayOfWeek)
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(2.dp)
+        verticalArrangement = Arrangement.spacedBy(ControlGeometry.calendarCellGap)
     ) {
         var dayCounter = 1 - adjustedFirstDay
 
@@ -415,7 +415,7 @@ private fun CalendarCell(
     Box(
         modifier = modifier
             .height(cellHeight)
-            .padding(horizontal = 2.dp, vertical = 2.dp)
+            .padding(ControlGeometry.calendarCellGap)
             .clip(shape)
             .background(if (needBackground) backgroundColor else Color.Transparent)
             .then(

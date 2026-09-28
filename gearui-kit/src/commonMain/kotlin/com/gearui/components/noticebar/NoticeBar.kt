@@ -18,7 +18,8 @@ import com.tencent.kuikly.compose.animation.core.LinearEasing
 import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.tencent.kuikly.compose.ui.graphics.Shape
+import com.tencent.kuikly.compose.ui.draw.clip
 import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
@@ -59,6 +60,10 @@ enum class NoticeBarTone { NEUTRAL, INFO, SUCCESS, WARNING, DANGER }
  * ```kotlin
  * NoticeBar("Maintenance tonight at 23:00, about an hour", tone = NoticeBarTone.WARNING, onClose = { … })
  * ```
+ *
+ * @param shape corner shape of the fill, the press feedback and the clip. Rounded by
+ *   default, for a banner that sits inside content; a bar running edge to edge under a
+ *   top bar passes `RectangleShape`.
  */
 @Composable
 fun NoticeBar(
@@ -71,6 +76,7 @@ fun NoticeBar(
     onClick: (() -> Unit)? = null,
     onClose: (() -> Unit)? = null,
     action: (@Composable () -> Unit)? = null,
+    shape: Shape = Theme.shapes.lg,
 ) {
     val colors = Theme.colors
     val content = noticeBarForeground(colors, tone)
@@ -79,12 +85,13 @@ fun NoticeBar(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = ControlGeometry.noticeBarHeight)
+            .clip(shape)
             .then(
                 if (onClick != null) {
                     Modifier
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false, base = noticeBarFill(colors, tone))
+                        .rowPressFeedback(interaction = interaction, shape = shape, scale = false, base = noticeBarFill(colors, tone))
                         .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-                } else Modifier.background(noticeBarFill(colors, tone))
+                } else Modifier.background(noticeBarFill(colors, tone), shape)
             )
             .padding(horizontal = ControlGeometry.noticeBarPaddingInline),
         horizontalArrangement = Arrangement.spacedBy(ControlGeometry.noticeBarGap),

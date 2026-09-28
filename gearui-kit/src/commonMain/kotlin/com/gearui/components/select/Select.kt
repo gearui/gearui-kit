@@ -1,6 +1,8 @@
 package com.gearui.components.select
 
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.shadowed
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -56,6 +58,8 @@ fun <T> Select(
     placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
     val colors = Theme.colors
@@ -164,7 +168,7 @@ fun <T> Select(
         }
 
         // Trigger
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -174,7 +178,7 @@ fun <T> Select(
                             anchorBounds = coordinates.boundsInRoot()
                         }
                     }
-                    .then(fieldTriggerModifier(enabled, error) {
+                    .then(fieldTriggerModifier(enabled, error, variant) {
                         if (expanded) {
                             closeDropdown()
                         } else {
@@ -225,6 +229,8 @@ fun <T> MultiSelect(
     placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     maxSelection: Int? = null,
     panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
@@ -329,7 +335,7 @@ fun <T> MultiSelect(
             )
         }
 
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -339,7 +345,7 @@ fun <T> MultiSelect(
                             anchorBounds = coordinates.boundsInRoot()
                         }
                     }
-                    .then(fieldTriggerModifier(enabled, error) {
+                    .then(fieldTriggerModifier(enabled, error, variant) {
                         if (expanded) closeDropdown() else openDropdown()
                     })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),

@@ -13,11 +13,11 @@ import com.gearui.components.inputgroup.InputGroupDivider
 import com.gearui.components.toast.Toast
 import com.gearui.foundation.field.FieldDescription
 import com.gearui.foundation.field.FieldLabel
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.layout.Spacing
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.sample.pages.SectionSurface
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.ui.Modifier
@@ -36,13 +36,12 @@ fun InputGroupExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "前置附加块",
             description = "区号这类固定前缀，和输入框共用一个外框"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 FieldLabel("手机号", required = true)
-                InputGroup {
+                InputGroup(variant = FieldVariant.SECONDARY) {
                     InputGroupAddon(text = "+86")
                     InputGroupDivider()
                     Input(
@@ -58,12 +57,11 @@ fun InputGroupExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "后置附加块",
             description = "单位、域名后缀"
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                InputGroup {
+                InputGroup(variant = FieldVariant.SECONDARY) {
                     Input(
                         value = amount,
                         onValueChange = { amount = it },
@@ -74,7 +72,7 @@ fun InputGroupExample(
                     InputGroupDivider()
                     InputGroupAddon(text = "元")
                 }
-                InputGroup {
+                InputGroup(variant = FieldVariant.SECONDARY) {
                     InputGroupAddon(text = "https://")
                     InputGroupDivider()
                     Input(
@@ -88,11 +86,10 @@ fun InputGroupExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "图标附加块",
             description = "InputGroupAddon(icon) 放前置图标"
         ) {
-            InputGroup {
+            InputGroup(variant = FieldVariant.SECONDARY) {
                 InputGroupAddon(icon = Icons.magnifying_glass)
                 Input(
                     value = query,
@@ -104,11 +101,10 @@ fun InputGroupExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "可点击的附加块",
             description = "附加块带 onClick，例如获取验证码"
         ) {
-            InputGroup {
+            InputGroup(variant = FieldVariant.SECONDARY) {
                 Input(
                     value = code,
                     onValueChange = { code = it },
@@ -122,11 +118,10 @@ fun InputGroupExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "禁用",
             description = "InputGroup(enabled = false) 整组置灰"
         ) {
-            InputGroup(enabled = false) {
+            InputGroup(enabled = false, variant = FieldVariant.SECONDARY) {
                 InputGroupAddon(text = "+86")
                 InputGroupDivider()
                 Input(

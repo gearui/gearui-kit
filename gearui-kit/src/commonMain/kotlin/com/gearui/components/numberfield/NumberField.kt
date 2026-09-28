@@ -12,6 +12,7 @@ import com.gearui.foundation.field.FieldDescription
 import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.FieldLabel
 import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.components.input.Input
 import com.gearui.components.input.InputSize
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
@@ -46,6 +47,8 @@ fun NumberField(
     label: String? = null,
     description: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     placeholder: String = "",
     min: Double = Double.NEGATIVE_INFINITY,
     max: Double = Double.POSITIVE_INFINITY,
@@ -89,6 +92,7 @@ fun NumberField(
                 },
                 modifier = Modifier.weight(1f),
                 enabled = enabled,
+                variant = variant,
                 placeholder = placeholder,
                 size = InputSize.MEDIUM,
                 keyboardType = KeyboardType.Number,

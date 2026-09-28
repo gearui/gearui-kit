@@ -9,9 +9,7 @@ import com.gearui.components.segmented.SegmentedControl
 import com.gearui.components.segmented.IconSegmentedControl
 import com.gearui.components.segmented.SegmentedOption
 import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.foundation.typography.IconSizes
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -147,21 +145,11 @@ fun SegmentedExample(
         ) {
             var selectedView by remember { mutableStateOf("card") }
 
-            // The icon slot does not receive the selected state, so the tint follows it here.
-            @Composable
-            fun viewIcon(value: String, name: String) {
-                Icon(
-                    name = name,
-                    size = IconSizes.Default.md,
-                    tint = if (selectedView == value) colors.foreground else colors.mutedForeground
-                )
-            }
-
             IconSegmentedControl(
                 options = listOf(
-                    SegmentedOption(value = "card", label = "卡片", icon = { viewIcon("card", Icons.square) }),
-                    SegmentedOption(value = "list", label = "列表", icon = { viewIcon("list", Icons.list) }),
-                    SegmentedOption(value = "image", label = "图片", icon = { viewIcon("image", Icons.image) })
+                    SegmentedOption(value = "card", label = "卡片", icon = Icons.square),
+                    SegmentedOption(value = "list", label = "列表", icon = Icons.list),
+                    SegmentedOption(value = "image", label = "图片", icon = Icons.image)
                 ),
                 selectedOption = selectedView,
                 onOptionSelected = { selectedView = it },

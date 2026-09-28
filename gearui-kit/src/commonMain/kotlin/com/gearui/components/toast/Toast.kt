@@ -345,7 +345,7 @@ fun LocalToast(
         MaterialSurface(
             material = Materials.Popover,
             shape = OverlayDefaults.panelShape,
-                modifier = Modifier.widthIn(min = 120.dp, max = 280.dp),
+                modifier = Modifier.widthIn(min = ControlGeometry.toastMinWidth, max = ControlGeometry.toastMaxWidth),
         ) {
         Box(
             modifier = Modifier.padding(ControlGeometry.toastPadding),

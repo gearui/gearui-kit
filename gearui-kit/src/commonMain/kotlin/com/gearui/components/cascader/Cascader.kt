@@ -1,6 +1,8 @@
 package com.gearui.components.cascader
 
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.shadowed
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -24,7 +26,6 @@ import com.tencent.kuikly.compose.ui.layout.boundsInRoot
 import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
@@ -73,8 +74,10 @@ fun Cascader(
     placeholder: String = I18n.strings.field.selectPlaceholder,
     enabled: Boolean = true,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     separator: String = " / ",
-    dropdownHeight: Dp = 300.dp
+    dropdownHeight: Dp = ControlGeometry.cascaderDropdownHeight
 ) {
     val colors = Theme.colors
     val shapes = Theme.shapes
@@ -156,7 +159,7 @@ fun Cascader(
 
     Column(modifier = modifier) {
         // Trigger
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -164,7 +167,7 @@ fun Cascader(
                     .onGloballyPositioned { coordinates ->
                         anchorBounds = coordinates.boundsInRoot()
                     }
-                    .then(fieldTriggerModifier(enabled, error) {
+                    .then(fieldTriggerModifier(enabled, error, variant) {
                         if (expanded) closeDropdown() else openDropdown()
                     })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),

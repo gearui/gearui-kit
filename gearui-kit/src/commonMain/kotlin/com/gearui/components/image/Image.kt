@@ -1,5 +1,8 @@
 package com.gearui.components.image
 
+import com.gearui.foundation.avatar.AvatarSizeTokens
+import com.gearui.foundation.layout.Radius
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.interaction.pressScale
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
@@ -20,7 +23,6 @@ import com.tencent.kuikly.compose.ui.graphics.ColorFilter
 import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.tencent.kuikly.compose.ui.layout.ContentScale
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 
@@ -90,9 +92,9 @@ fun GearImage(
     contentDescription: String? = null,
     shape: ImageShape = ImageShape.SQUARE,
     fit: ImageFit = ImageFit.COVER,
-    cornerRadius: Dp = 8.dp,
+    cornerRadius: Dp = Radius.sm,
     showBorder: Boolean = false,
-    borderWidth: Dp = 1.dp,
+    borderWidth: Dp = BorderWidth.thin,
     placeholderText: String = I18n.strings.common.loading,
     errorText: String = I18n.strings.common.loadFailed,
     onClick: (() -> Unit)? = null
@@ -171,7 +173,7 @@ fun ImageWithState(
     contentDescription: String? = null,
     shape: ImageShape = ImageShape.SQUARE,
     fit: ImageFit = ImageFit.COVER,
-    cornerRadius: Dp = 8.dp,
+    cornerRadius: Dp = Radius.sm,
     onClick: (() -> Unit)? = null
 ) {
     val colors = Theme.colors
@@ -248,7 +250,7 @@ fun ImageWithState(
 fun Avatar(
     painter: Painter?,
     modifier: Modifier = Modifier,
-    size: Dp = 40.dp,
+    size: Dp = AvatarSizeTokens.Medium.size,
     fallbackText: String = "",
     contentDescription: String? = null,
     onClick: (() -> Unit)? = null
@@ -293,8 +295,8 @@ fun ImageGallery(
     painters: List<Painter?>,
     modifier: Modifier = Modifier,
     columns: Int = 3,
-    spacing: Dp = 8.dp,
-    imageHeight: Dp = 100.dp,
+    spacing: Dp = Spacing.sm,
+    imageHeight: Dp = ControlGeometry.imageGalleryHeight,
     shape: ImageShape = ImageShape.ROUNDED,
     onImageClick: ((Int) -> Unit)? = null
 ) {

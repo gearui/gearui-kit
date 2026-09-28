@@ -1,5 +1,6 @@
 package com.gearui.components.steps
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -10,7 +11,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -238,7 +238,7 @@ private fun VerticalSteps(
                         Box(
                             modifier = Modifier
                                 .width(BorderWidth.thick)
-                                .height(48.dp)
+                                .height(ControlGeometry.stepsConnectorMinHeight)
                                 .background(
                                     if (index < current) colors.success
                                     else colors.border
@@ -253,7 +253,7 @@ private fun VerticalSteps(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(bottom = if (index < items.size - 1) 24.dp else 0.dp)
+                        .padding(bottom = if (index < items.size - 1) Spacing.xl else Spacing.none)
                 ) {
                     Text(
                         text = item.title,
@@ -289,7 +289,7 @@ private fun StepIcon(
 ) {
     val colors = Theme.colors
 
-    val iconSize = if (theme == StepsTheme.DOT) 12.dp else 32.dp
+    val iconSize = if (theme == StepsTheme.DOT) ControlGeometry.stepsDotSize else ControlGeometry.stepsIconSize
     val backgroundColor = when (status) {
         StepStatus.FINISH -> colors.success
         StepStatus.PROCESS -> colors.primary

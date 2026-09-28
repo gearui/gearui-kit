@@ -3,6 +3,8 @@ import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.gearui.foundation.motion.iconPressFeedback
 import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fill
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.typography.resolveFontFamily
 
@@ -33,7 +35,6 @@ import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.keyboard.keyboardDismissExempt
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -125,11 +126,7 @@ fun SearchBar(
     alignment: SearchBarAlignment = SearchBarAlignment.LEFT,
     /** Focus and raise the keyboard on entry (the right behaviour for a search page — the user came to type). */
     autoFocus: Boolean = false,
-    /**
-     * Fill of the field. Defaults to [FieldVariant.SECONDARY]: a search bar almost
-     * always sits in a header or on a card, where the white primary field would
-     * disappear into the surface. Pass PRIMARY on the page background.
-     */
+    /** PRIMARY on the page background; SECONDARY (the default, where a search bar usually sits) on a card, sheet or header. */
     variant: FieldVariant = FieldVariant.SECONDARY,
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
@@ -192,14 +189,14 @@ fun SearchBar(
         FieldSurface(
             Modifier.weight(1f).fillMaxHeight(),
             shape = shapeModifier,
-            shadowed = variant == FieldVariant.PRIMARY,
+            shadowed = variant.shadowed,
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .then(feedback)
                     .clip(shapeModifier)
-                    .background(if (variant == FieldVariant.PRIMARY) inputColors.background else colors.muted)
+                    .background(variant.fill(inputColors.background))
                     .border(BorderWidth.thin, inputColors.border, shapeModifier)
                     .pointerInput(enabled) {
                         if (enabled) {

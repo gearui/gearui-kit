@@ -80,6 +80,26 @@ fun TabsExample(
         }
 
         ExampleSection(
+            title = "徽标",
+            description = "badge 显示数字，超过 99 显示 99+；dot 显示红点；下划线样式为角标，胶囊与卡片样式放在文字右侧"
+        ) {
+            val badgeItems = listOf(
+                Tab("badge-1", "消息", badge = 8),
+                Tab("badge-2", "通知", badge = 120),
+                Tab("badge-3", "动态", dot = true),
+                Tab("badge-4", "我的")
+            )
+            TabsDemoItemsRow(items = badgeItems)
+            TabsDemoItemsRow(items = badgeItems, outlineType = TabsOutlineType.CAPSULE, showDivider = false)
+            TabsDemoItemsRow(
+                items = badgeItems + List(4) { Tab("badge-more-$it", "选项${it + 5}") },
+                isScrollable = true,
+                outlineType = TabsOutlineType.CARD,
+                showDivider = false
+            )
+        }
+
+        ExampleSection(
             title = "切换内容",
             description = "选中的标签决定下方显示的内容"
         ) {

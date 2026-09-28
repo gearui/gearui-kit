@@ -118,10 +118,10 @@ fun Button(
     }
 
     val loadingSize: Dp = when (size) {
-        ButtonSize.LARGE -> 20.dp
-        ButtonSize.MEDIUM -> 16.dp
-        ButtonSize.SMALL -> 14.dp
-        ButtonSize.EXTRA_SMALL -> 12.dp
+        ButtonSize.LARGE -> ControlGeometry.buttonIconLarge
+        ButtonSize.MEDIUM -> ControlGeometry.buttonIconMedium
+        ButtonSize.SMALL -> ControlGeometry.buttonIconSmall
+        ButtonSize.EXTRA_SMALL -> ControlGeometry.buttonIconExtraSmall
     }
 
     val textStyle = when (size) {
@@ -263,7 +263,7 @@ fun Button(
                 LoadingIndicator(
                     size = loadingSize,
                     color = contentColor,
-                    strokeWidth = 2.dp
+                    strokeWidth = ControlGeometry.loadingStrokeSmall
                 )
                 if (text.isNotEmpty()) {
                     Spacer(modifier = Modifier.width(Spacing.sm))

@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**92 / 131** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**171 / 210** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -39,6 +39,22 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `avatarGroupSize` | 32 | | | _尚未标注_ | |
 
+## back
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `backTopHalfHeight` | 40 | — | — | GearUI | The half-circle tab that hugs the screen edge. |
+| `backTopHalfWidth` | 24 | — | — | GearUI | The half-circle tab that hugs the screen edge. |
+
+## bottom
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `bottomNavBadgeReserveHeight` | 16 | — | — | GearUI | Height of a small badge, reserved so a badge never moves the icon. |
+| `bottomNavBadgeReserveWidth` | 30 | — | — | GearUI | Width of the widest small badge (99+), reserved so a badge never moves the icon. |
+| `bottomNavHeight` | 56 | — | — | GearUI | The large control height, the same as a tab bar with labels on Android. |
+| `bottomNavPillPaddingBlock` | 2 | — | — | GearUI | Vertical inset of the selected pill around icon and label. |
+
 ## button
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
@@ -47,16 +63,34 @@
 | `buttonGapLarge` | 10 | 10 | — | HeroUI |  |
 | `buttonGapMedium` | 8 | 8 | — | HeroUI |  |
 | `buttonGapSmall` | 6 | 6 | — | HeroUI |  |
+| `buttonIconExtraSmall` | 12 | — | — | GearUI | Icon beside an extra-small button's label. |
+| `buttonIconLarge` | 20 | — | — | GearUI | Icon beside a large button's label. |
+| `buttonIconMedium` | 16 | — | — | GearUI | Icon beside a medium button's label, the body icon size. |
+| `buttonIconSmall` | 14 | — | — | GearUI | Icon beside a small button's label. |
 | `buttonPaddingExtraSmall` | 7 | — | — | GearUI | Half a step below sm for the 28 compact tier, which HeroUI does not have. |
 | `buttonPaddingLarge` | 20 | 20 | — | HeroUI |  |
 | `buttonPaddingMedium` | 16 | 16 | — | HeroUI |  |
 | `buttonPaddingSmall` | 14 | 14 | — | HeroUI |  |
+
+## calendar
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `calendarCellGap` | 2 | — | — | GearUI | A hairline of air between day cells so a selected range reads as separate days. |
+| `calendarCellHeight` | 44 | — | — | GearUI | The 44 touch minimum; seven columns on a phone leave no room for a taller cell. |
+| `calendarNavButton` | 32 | — | — | GearUI | The close-button size, for the month arrows beside the title. |
 
 ## card
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
 | `cardPadding` | 16 | | | _尚未标注_ | |
+
+## cascader
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `cascaderDropdownHeight` | 300 | — | — | GearUI | About six 48 option rows before a level scrolls. |
 
 ## checkbox
 
@@ -86,8 +120,16 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `dialogActionGap` | 12 | 12 | — | HeroUI |  |
 | `dialogActionsTop` | 20 | 20 | — | HeroUI |  |
+| `dialogBodyMaxHeight` | 360 | — | — | GearUI | Scrolling body inside the dialog, so title and actions stay in view. |
+| `dialogMaxHeight` | 560 | — | — | GearUI | Leaves the status bar and some page visible on the shortest supported phones. |
 | `dialogMaxWidth` | 384 | — | — | GearUI | The reference sizes a dialog by the portal's 20 padding only; a cap keeps a tablet or wide window from stretching a card across the screen. |
 | `dialogTextGap` | 6 | 6 | — | HeroUI |  |
+
+## drawer
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `drawerWidth` | 280 | — | — | GearUI | Leaves 80 of a 360-wide phone showing, so the page underneath stays visible as the way back. |
 
 ## field
 
@@ -97,6 +139,30 @@
 | `fieldPaddingLarge` | 12 | | | _尚未标注_ | |
 | `fieldPaddingMedium` | 12 | 12 | — | HeroUI |  |
 | `fieldPaddingSmall` | 12 | | | _尚未标注_ | |
+
+## form
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `formLabelWidth` | 80 | — | — | GearUI | Four CJK characters at body size plus a gap; longer labels belong in the vertical layout. |
+
+## grid
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `gridMinColumnWidth` | 120 | — | — | GearUI | Three columns on a 360-wide phone for the responsive grid. |
+
+## image
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `imageGalleryHeight` | 100 | — | — | GearUI | Thumbnail height in a three-column gallery on a phone. |
+
+## input
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `inputClearSize` | 20 | — | — | GearUI | Smaller than the search field's 24 so the clear button does not crowd the text of a 48 field. |
 
 ## list
 
@@ -109,6 +175,20 @@
 | `listPaddingBlock` | 14 | 16 | 14 | iOS | HeroUI's 16 on both axes makes a 56pt row; iOS rows are 52. Splitting the axes keeps iOS's height and leading. |
 | `listPaddingInline` | 20 | 16 | 20 | iOS | List rhythm follows the platform: text starts where iOS starts it, and the separator starts with the text. |
 
+## loading
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `loadingDotLarge` | 10 | — | — | GearUI | Three dots fill the spinner's width with a dot's gap between them. |
+| `loadingDotMedium` | 8 | — | — | GearUI | Three dots fill the spinner's width with a dot's gap between them. |
+| `loadingDotSmall` | 6 | — | — | GearUI | Three dots fill the spinner's width with a dot's gap between them. |
+| `loadingSizeLarge` | 32 | — | — | GearUI | A section or page placeholder. |
+| `loadingSizeMedium` | 24 | — | — | GearUI | The standalone default, the size of a toolbar icon. |
+| `loadingSizeSmall` | 16 | — | — | GearUI | Inline with body text. |
+| `loadingStrokeLarge` | 4 | — | — | GearUI | About an eighth of the spinner's diameter at every size. |
+| `loadingStrokeMedium` | 3 | — | — | GearUI | About an eighth of the spinner's diameter at every size. |
+| `loadingStrokeSmall` | 2 | — | — | GearUI | About an eighth of the spinner's diameter at every size. |
+
 ## menu
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
@@ -116,8 +196,17 @@
 | `menuItemGap` | 10 | 10 | — | HeroUI |  |
 | `menuItemPaddingBlock` | 8 | 8 | — | HeroUI |  |
 | `menuItemPaddingInline` | 10 | 10 | — | HeroUI |  |
+| `menuMaxWidth` | 260 | — | — | GearUI | Leaves the page visible beside the menu on a 360-wide phone. |
+| `menuMinWidth` | 160 | — | — | GearUI | Room for an icon and a four-character action; shared by ContextMenu and Popover menus, which disagreed (140 and 160). |
 | `menuPaddingBlock` | 12 | 12 | — | HeroUI |  |
 | `menuPaddingInline` | 6 | 6 | — | HeroUI |  |
+
+## nav
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `navBarActionSlot` | 56 | — | — | GearUI | One 24 icon with 16 either side; both slots take it, so a one-sided bar still centres its title. |
+| `navBarHeight` | 48 | — | — | GearUI | The 48 medium control row, so the back and action buttons get a full touch target and line up with a 48 field below the bar. |
 
 ## notice
 
@@ -149,12 +238,30 @@
 | `overlayOffset` | 9 | 9 | — | HeroUI |  |
 | `overlayPadding` | 20 | 20 | — | HeroUI |  |
 
+## picker
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `pickerFadeHeight` | 80 | — | — | GearUI | Two rows of fade above and below the selection band. |
+| `pickerItemHeight` | 40 | — | — | GearUI | Row pitch of the wheel; five fill the viewport. |
+| `pickerWheelHeight` | 200 | — | — | GearUI | Five 40 rows: the selection with two above and two below. |
+
 ## popover
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `popoverArrowSize` | 8 | — | — | GearUI | Arrow depth; the arrow's base is twice this. |
 | `popoverPaddingBlock` | 12 | 12 | — | HeroUI |  |
 | `popoverPaddingInline` | 16 | 16 | — | HeroUI |  |
+
+## progress
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `progressCircleSize` | 48 | — | — | GearUI | The medium control size, so a ring sits in a list row. |
+| `progressCircleStroke` | 4 | — | — | GearUI | A twelfth of the ring's diameter. |
+| `progressHeight` | 8 | — | — | GearUI | A track thick enough to read at a glance without looking like a control. |
+| `progressLabelMinHeight` | 24 | — | — | GearUI | Room for an inline percentage label at caption size. |
 
 ## pull
 
@@ -230,8 +337,22 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `sheetMaxListHeight` | 400 | — | — | GearUI | About eight 48 rows; a longer list scrolls inside the sheet instead of covering the page. |
 | `sheetMenuPaddingInline` | 12 | | | _尚未标注_ | |
 | `sheetMenuRowGap` | 8 | | | _尚未标注_ | |
+
+## skeleton
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `skeletonArticleImage` | 150 | — | — | GearUI | Article illustration placeholder. |
+| `skeletonAvatar` | 60 | — | — | GearUI | List-item avatar placeholder. |
+| `skeletonBlock` | 100 | — | — | GearUI | Default square placeholder. |
+| `skeletonButtonWidth` | 80 | — | — | GearUI | A short button placeholder. |
+| `skeletonCardImage` | 200 | — | — | GearUI | Card cover placeholder, the Swiper banner height. |
+| `skeletonLine` | 14 | — | — | GearUI | Body line placeholder, a little under the body line height so lines read as separate. |
+| `skeletonListItemHeight` | 120 | — | — | GearUI | A list item with avatar, two lines and an image. |
+| `skeletonTitleLine` | 18 | — | — | GearUI | Title line placeholder, a step above the body line. |
 
 ## slider
 
@@ -239,10 +360,41 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `sliderCapsuleHeight` | 24 | | | _尚未标注_ | |
 | `sliderCapsuleInset` | 3 | | | _尚未标注_ | |
+| `sliderScaleDot` | 8 | — | — | GearUI | Tick mark on a stepped slider, the swiper's active dot size. |
 | `sliderThumbHeight` | 20 | 20 | — | HeroUI |  |
 | `sliderThumbInset` | 2 | 2 | — | HeroUI |  |
 | `sliderThumbWidth` | 28 | 28 | — | HeroUI |  |
 | `sliderTrackHeight` | 20 | 20 | — | HeroUI |  |
+| `sliderValueLabelHeight` | 20 | — | — | GearUI | Room above the track for the thumb's value label. |
+
+## stepper
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `stepperFieldWidth` | 180 | — | — | GearUI | Two buttons and a five-digit value. |
+| `stepperSizeLarge` | 40 | — | — | GearUI | The small control height. |
+| `stepperSizeMedium` | 32 | — | — | GearUI | Button size of the default stepper, the close-button size. |
+| `stepperSizeSmall` | 24 | — | — | GearUI | Button size of the compact stepper. |
+
+## steps
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `stepsConnectorMinHeight` | 48 | — | — | GearUI | Vertical connector between steps, the medium control height. |
+| `stepsDotSize` | 12 | — | — | GearUI | The dot style's marker. |
+| `stepsIconSize` | 32 | — | — | GearUI | The numbered marker, the close-button size. |
+
+## swiper
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `swiperArrowSize` | 32 | — | — | GearUI | The close-button size: a compact round control that sits over media. |
+| `swiperBarActive` | 20 | — | — | GearUI | The current indicator stretched into a bar, about three dots wide. |
+| `swiperDot` | 6 | — | — | GearUI | Indicator dot; small enough for ten to fit on a banner without crowding it. |
+| `swiperDotActive` | 8 | — | — | GearUI | The current dot grows by one step so position reads without colour. |
+| `swiperDotGap` | 6 | — | — | GearUI | One dot's width between dots. |
+| `swiperHeight` | 200 | — | — | GearUI | A banner at roughly 16:9 on a 360-wide phone. |
+| `swiperIndicatorPaddingBlock` | 6 | — | — | GearUI | One dot's height above and below the indicator row. |
 
 ## switch
 
@@ -254,10 +406,20 @@
 | `switchThumbWidth` | 37 | 28 | 37 | iOS | The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves. |
 | `switchWidth` | 63 | 48 | 63 | iOS | The switch is the platform's signature control; next to iOS lists a 48pt switch reads as a web toggle. HeroUI's own switch is already the wide-thumb shape, so only the size moves. |
 
+## table
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `tableCellWidth` | 100 | — | — | GearUI | Four CJK characters at body size with cell padding; wider columns set their own width. |
+| `tableSelectionColumn` | 56 | — | — | GearUI | A 24 checkbox with 16 either side. |
+
 ## tabs
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `tabsHeightLarge` | 52 | — | — | GearUI | The list row height, for tabs that head a list. |
+| `tabsHeightMedium` | 44 | — | — | GearUI | The 44 touch minimum. |
+| `tabsHeightSmall` | 36 | — | — | GearUI | The dense tier for toolbars and filters, below the 44 touch minimum only where the whole row is tappable. |
 | `tabsIndicatorHeight` | 2 | 2 | — | HeroUI |  |
 | `tabsListGap` | 4 | 4 | — | HeroUI |  |
 | `tabsListPadding` | 3 | 3 | — | HeroUI |  |
@@ -289,14 +451,31 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `textareaCompactPaddingInline` | 10 | — | — | GearUI | The chat composer's inset, tighter than a form field's 12 so a bar keeps more text visible. |
 | `textareaMinHeight` | 128 | 128 | — | HeroUI |  |
 | `textareaPaddingVertical` | 8 | 8 | — | HeroUI |  |
+
+## timeline
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `timelineAxisWidth` | 32 | — | — | GearUI | The column that holds the dot and the line. |
+| `timelineConnectorMinHeight` | 48 | — | — | GearUI | Line between two events, the medium control height. |
+| `timelineDot` | 12 | — | — | GearUI | The event marker. |
 
 ## toast
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `toastMaxWidth` | 280 | — | — | GearUI | Leaves 40 either side on a 360-wide phone; longer text wraps. |
+| `toastMinWidth` | 120 | — | — | GearUI | Keeps a one-word toast from shrinking to a pill around the text. |
 | `toastPadding` | 16 | | | _尚未标注_ | |
+
+## tour
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `tourProgressHeight` | 4 | — | — | GearUI | Step progress under the tour card's text. |
 
 ## upload
 

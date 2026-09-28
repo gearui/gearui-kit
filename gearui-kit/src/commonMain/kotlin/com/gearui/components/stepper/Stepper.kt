@@ -1,5 +1,7 @@
 package com.gearui.components.stepper
 
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -13,7 +15,6 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.gearui.theme.Theme
@@ -54,9 +55,9 @@ fun Stepper(
     val canIncrease = enabled && value < max
 
     val height = when (size) {
-        StepperSize.SMALL -> 24.dp
-        StepperSize.MEDIUM -> 32.dp
-        StepperSize.LARGE -> 40.dp
+        StepperSize.SMALL -> ControlGeometry.stepperSizeSmall
+        StepperSize.MEDIUM -> ControlGeometry.stepperSizeMedium
+        StepperSize.LARGE -> ControlGeometry.stepperSizeLarge
     }
 
     val textStyle = when (size) {
@@ -172,8 +173,8 @@ fun StepperWithLabel(
     max: Int = 100,
     step: Int = 1,
     size: StepperSize = StepperSize.MEDIUM,
-    stepperWidth: Dp = 180.dp,
-    labelGap: Dp = 12.dp
+    stepperWidth: Dp = ControlGeometry.stepperFieldWidth,
+    labelGap: Dp = Spacing.md
 ) {
     val colors = Theme.colors
 

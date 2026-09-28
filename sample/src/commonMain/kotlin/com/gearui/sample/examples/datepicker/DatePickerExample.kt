@@ -7,10 +7,10 @@ import com.gearui.components.picker.DatePickerInput
 import com.gearui.foundation.layout.Spacing
 import com.gearui.components.picker.TimePickerInput
 import com.gearui.components.picker.DateTimePickerInput
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
@@ -32,7 +32,6 @@ fun DatePickerExample(
     ) {
         // Date picker
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "日期选择器",
             description = "选择年月日"
         ) {
@@ -43,7 +42,8 @@ fun DatePickerExample(
                     value = dateValue,
                     onValueChange = { dateValue = it },
                     placeholder = "请选择日期",
-                    label = "出生日期"
+                    label = "出生日期",
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 Text(
@@ -56,7 +56,6 @@ fun DatePickerExample(
 
         // Time picker
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "时间选择器",
             description = "选择时分"
         ) {
@@ -67,7 +66,8 @@ fun DatePickerExample(
                     value = timeValue,
                     onValueChange = { timeValue = it },
                     placeholder = "请选择时间",
-                    label = "开始时间"
+                    label = "开始时间",
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 Text(
@@ -80,7 +80,6 @@ fun DatePickerExample(
 
         // Default values
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "默认值",
             description = "value 传入初始日期或时间"
         ) {
@@ -91,19 +90,20 @@ fun DatePickerExample(
                 value = dateValue,
                 onValueChange = { dateValue = it },
                 placeholder = "请选择日期",
-                label = "活动日期"
+                label = "活动日期",
+                variant = FieldVariant.SECONDARY,
             )
             TimePickerInput(
                 value = timeValue,
                 onValueChange = { timeValue = it },
                 placeholder = "请选择时间",
-                label = "会议时间"
+                label = "会议时间",
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         // Date and time picker
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "日期时间选择器",
             description = "同时选择日期和时间"
         ) {
@@ -116,7 +116,8 @@ fun DatePickerExample(
                     timeValue = timeValue,
                     onDateChange = { dateValue = it },
                     onTimeChange = { timeValue = it },
-                    label = "预约时间"
+                    label = "预约时间",
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 Text(
@@ -129,7 +130,6 @@ fun DatePickerExample(
 
         // Disabled state
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "禁用状态",
             description = "不可交互的选择器"
         ) {
@@ -139,7 +139,8 @@ fun DatePickerExample(
                     onValueChange = {},
                     placeholder = "请选择日期",
                     label = "锁定日期",
-                    enabled = false
+                    enabled = false,
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 TimePickerInput(
@@ -147,14 +148,14 @@ fun DatePickerExample(
                     onValueChange = {},
                     placeholder = "请选择时间",
                     label = "锁定时间",
-                    enabled = false
+                    enabled = false,
+                    variant = FieldVariant.SECONDARY,
                 )
             }
         }
 
         // Without a label
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "无标签样式",
             description = "不显示标签的选择器"
         ) {
@@ -169,14 +170,16 @@ fun DatePickerExample(
                     value = dateValue,
                     onValueChange = { dateValue = it },
                     placeholder = "选择日期",
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 TimePickerInput(
                     value = timeValue,
                     onValueChange = { timeValue = it },
                     placeholder = "选择时间",
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    variant = FieldVariant.SECONDARY,
                 )
             }
         }

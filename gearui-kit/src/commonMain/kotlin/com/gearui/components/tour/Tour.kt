@@ -1,5 +1,6 @@
 package com.gearui.components.tour
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
@@ -9,7 +10,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.button.Button
 import com.gearui.foundation.primitives.Text
 import com.gearui.overlay.OverlayOptions
@@ -152,7 +152,9 @@ private fun TourContent(
 
     Box(
         modifier = Modifier
-            .width(400.dp)
+            .fillMaxWidth()
+            .padding(horizontal = ControlGeometry.overlayPadding)
+            .widthIn(max = ControlGeometry.dialogMaxWidth)
             .shadow(Theme.elevation.modal, OverlayDefaults.modalShape)
             .clip(OverlayDefaults.modalShape)
             .background(colors.surface)
@@ -195,7 +197,7 @@ private fun TourContent(
                     Box(
                         modifier = Modifier
                             .weight(1f)
-                            .height(4.dp)
+                            .height(ControlGeometry.tourProgressHeight)
                             .clip(Theme.shapes.sm)
                             .background(
                                 if (index <= currentIndex) colors.primary

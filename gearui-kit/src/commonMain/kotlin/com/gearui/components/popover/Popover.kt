@@ -246,7 +246,7 @@ private fun PopoverContent(
     showArrow: Boolean,
     content: @Composable () -> Unit
 ) {
-    val arrowSize = 8.dp
+    val arrowSize = ControlGeometry.popoverArrowSize
 
     // Arrow position follows the placement
     val isTop = placement in listOf(PopoverPlacement.TOP, PopoverPlacement.TOP_LEFT, PopoverPlacement.TOP_RIGHT)
@@ -412,23 +412,19 @@ private fun PopoverArrow(
 private fun TriangleShape(direction: ArrowDirection) = when (direction) {
     // shape-exempt: arrow tip geometry
     ArrowDirection.UP -> RoundedCornerShape(
-        topStart = 0.dp, topEnd = 0.dp,
-        bottomStart = 50.dp, bottomEnd = 50.dp
+        topStartPercent = 0, topEndPercent = 0, bottomEndPercent = 50, bottomStartPercent = 50
     )
     // shape-exempt: arrow tip geometry
     ArrowDirection.DOWN -> RoundedCornerShape(
-        topStart = 50.dp, topEnd = 50.dp,
-        bottomStart = 0.dp, bottomEnd = 0.dp
+        topStartPercent = 50, topEndPercent = 50, bottomEndPercent = 0, bottomStartPercent = 0
     )
     // shape-exempt: arrow tip geometry
     ArrowDirection.LEFT -> RoundedCornerShape(
-        topStart = 0.dp, topEnd = 50.dp,
-        bottomStart = 0.dp, bottomEnd = 50.dp
+        topStartPercent = 0, topEndPercent = 50, bottomEndPercent = 50, bottomStartPercent = 0
     )
     // shape-exempt: arrow tip geometry
     ArrowDirection.RIGHT -> RoundedCornerShape(
-        topStart = 50.dp, topEnd = 0.dp,
-        bottomStart = 50.dp, bottomEnd = 0.dp
+        topStartPercent = 50, topEndPercent = 0, bottomEndPercent = 0, bottomStartPercent = 50
     )
 }
 
@@ -557,7 +553,7 @@ fun PopoverMenu(
         content = {
             val itemShape = RoundedCornerShape(ControlGeometry.radiusMenuItem)
             Column(
-                modifier = Modifier.widthIn(min = 160.dp)
+                modifier = Modifier.widthIn(min = ControlGeometry.menuMinWidth)
             ) {
                 items.forEach { item ->
                     val interaction = remember(item) { MutableInteractionSource() }

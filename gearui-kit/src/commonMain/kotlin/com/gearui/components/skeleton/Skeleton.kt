@@ -1,5 +1,6 @@
 package com.gearui.components.skeleton
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -12,7 +13,6 @@ import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Brush
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.typography.Typography
 
 import com.gearui.foundation.primitives.Text
@@ -54,7 +54,7 @@ enum class SkeletonVariant {
  * Skeleton(
  *     variant = SkeletonVariant.TEXT,
  *     animation = SkeletonAnimation.PULSE,
- *     modifier = Modifier.fillMaxWidth().height(20.dp)
+ *     modifier = Modifier.fillMaxWidth().height(Spacing.lg)
  * )
  * ```
  */
@@ -175,8 +175,8 @@ fun SkeletonAvatar(
 @Composable
 fun SkeletonImage(
     modifier: Modifier = Modifier,
-    width: Dp = 100.dp,
-    height: Dp = 100.dp,
+    width: Dp = ControlGeometry.skeletonBlock,
+    height: Dp = ControlGeometry.skeletonBlock,
     cornerRadius: Dp = Spacing.sm,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {
@@ -213,7 +213,7 @@ fun SkeletonArticle(
         if (showImage) {
             SkeletonImage(
                 width = Dp.Infinity,
-                height = 200.dp,
+                height = ControlGeometry.skeletonCardImage,
                 animation = animation,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -264,7 +264,7 @@ fun SkeletonListItem(
             )
             SkeletonText(
                 lines = 1,
-                lineHeight = 14.dp,
+                lineHeight = ControlGeometry.skeletonLine,
                 animation = animation,
                 modifier = Modifier.fillMaxWidth(0.6f)
             )
@@ -273,8 +273,8 @@ fun SkeletonListItem(
         // Thumbnail
         if (showThumbnail) {
             SkeletonImage(
-                width = 60.dp,
-                height = 60.dp,
+                width = ControlGeometry.skeletonAvatar,
+                height = ControlGeometry.skeletonAvatar,
                 animation = animation
             )
         }
@@ -288,7 +288,7 @@ fun SkeletonListItem(
 fun SkeletonCard(
     modifier: Modifier = Modifier,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE,
-    imageHeight: Dp = 150.dp
+    imageHeight: Dp = ControlGeometry.skeletonArticleImage
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -309,13 +309,13 @@ fun SkeletonCard(
         ) {
             SkeletonText(
                 lines = 1,
-                lineHeight = 18.dp,
+                lineHeight = ControlGeometry.skeletonTitleLine,
                 animation = animation,
                 modifier = Modifier.fillMaxWidth(0.7f)
             )
             SkeletonText(
                 lines = 2,
-                lineHeight = 14.dp,
+                lineHeight = ControlGeometry.skeletonLine,
                 animation = animation
             )
 
@@ -326,11 +326,11 @@ fun SkeletonCard(
             ) {
                 Skeleton(
                     animation = animation,
-                    modifier = Modifier.size(80.dp, Spacing.xxl)
+                    modifier = Modifier.size(ControlGeometry.skeletonButtonWidth, Spacing.xxl)
                 )
                 Skeleton(
                     animation = animation,
-                    modifier = Modifier.size(80.dp, Spacing.xxl)
+                    modifier = Modifier.size(ControlGeometry.skeletonButtonWidth, Spacing.xxl)
                 )
             }
         }
@@ -345,7 +345,7 @@ fun SkeletonGrid(
     modifier: Modifier = Modifier,
     columns: Int = 2,
     rows: Int = 2,
-    itemHeight: Dp = 120.dp,
+    itemHeight: Dp = ControlGeometry.skeletonListItemHeight,
     spacing: Dp = Spacing.md,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {

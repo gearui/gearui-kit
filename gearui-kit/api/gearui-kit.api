@@ -386,7 +386,7 @@ public final class com/gearui/components/calendar/CalendarType : java/lang/Enum 
 }
 
 public final class com/gearui/components/calendar/DateRangePickerInputKt {
-	public static final fun DateRangePickerInput (Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;ZLjava/lang/String;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun DateRangePickerInput (Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;ZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 	public static final fun formatCalendarDate (Lcom/gearui/components/calendar/CalendarDate;)Ljava/lang/String;
 }
 
@@ -403,7 +403,7 @@ public final class com/gearui/components/calendar/DateSelectType : java/lang/Enu
 }
 
 public final class com/gearui/components/cascader/CascaderKt {
-	public static final fun Cascader-s-Mmlew (Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;FLandroidx/compose/runtime/Composer;II)V
+	public static final fun Cascader-yQNosyE (Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;FLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/cascader/CascaderOption {
@@ -515,7 +515,7 @@ public final class com/gearui/components/collapse/CollapseStyle : java/lang/Enum
 }
 
 public final class com/gearui/components/combobox/ComboBoxKt {
-	public static final fun ComboBox (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
+	public static final fun ComboBox (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/contextmenu/ContextMenuItem {
@@ -675,15 +675,23 @@ public final class com/gearui/components/form/FormFieldState {
 	public final fun setTouched (Z)V
 	public final fun setValue (Ljava/lang/String;)V
 	public final fun touch ()V
+	public final fun update (Ljava/lang/String;)V
 	public final fun validate ()Z
 }
 
 public final class com/gearui/components/form/FormKt {
-	public static final fun Form-aDbNxCU (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/form/FormState;FZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun FormField (Lcom/gearui/components/form/FormFieldState;Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
-	public static final fun rememberFormFieldState (Ljava/lang/String;Ljava/util/List;Landroidx/compose/runtime/Composer;II)Lcom/gearui/components/form/FormFieldState;
+	public static final fun Form-0-7o_3Y (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/form/FormLayout;FLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FormItem (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/form/FormLayout;ZLjava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun rememberFormFieldState (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lcom/gearui/components/form/FormState;Landroidx/compose/runtime/Composer;II)Lcom/gearui/components/form/FormFieldState;
 	public static final fun rememberFormState (Landroidx/compose/runtime/Composer;I)Lcom/gearui/components/form/FormState;
+}
+
+public final class com/gearui/components/form/FormLayout : java/lang/Enum {
+	public static final field HORIZONTAL Lcom/gearui/components/form/FormLayout;
+	public static final field VERTICAL Lcom/gearui/components/form/FormLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/form/FormLayout;
+	public static fun values ()[Lcom/gearui/components/form/FormLayout;
 }
 
 public final class com/gearui/components/form/FormMessages {
@@ -721,16 +729,6 @@ public final class com/gearui/components/form/FormRule {
 	public final fun getValidator ()Lkotlin/jvm/functions/Function1;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public abstract interface class com/gearui/components/form/FormScope {
-	public abstract fun FormItem (Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
-	public abstract fun getFormState ()Lcom/gearui/components/form/FormState;
-	public abstract fun getLabelWidth-UdJoRJA ()F
-}
-
-public final class com/gearui/components/form/FormScope$ComposeDefaultImpls {
-	public static final fun FormItem$default (Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lcom/gearui/components/form/FormScope;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/form/FormState {
@@ -955,7 +953,7 @@ public final class com/gearui/components/imageviewer/ImageViewerState {
 }
 
 public final class com/gearui/components/input/InputKt {
-	public static final fun Input-Jq9oT1k (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;ZZLjava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ZILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
+	public static final fun Input-7w_aGHY (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;ZZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class com/gearui/components/input/InputSize : java/lang/Enum {
@@ -968,13 +966,13 @@ public final class com/gearui/components/input/InputSize : java/lang/Enum {
 }
 
 public final class com/gearui/components/inputgroup/InputGroupKt {
-	public static final fun InputGroup (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/tencent/kuikly/compose/ui/graphics/Shape;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun InputGroup (Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/foundation/field/FieldVariant;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun InputGroupAddon (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun InputGroupDivider (Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class com/gearui/components/inputotp/InputOTPKt {
-	public static final fun InputOTP (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ILjava/lang/Integer;ZZZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun InputOTP (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ILjava/lang/Integer;ZZLcom/gearui/foundation/field/FieldVariant;ZLjava/lang/String;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/link/LinkKt {
@@ -1052,7 +1050,7 @@ public final class com/gearui/components/navbar/NavBarKt {
 }
 
 public final class com/gearui/components/noticebar/NoticeBarKt {
-	public static final fun NoticeBar (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/noticebar/NoticeBarTone;Ljava/lang/String;ZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun NoticeBar (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/noticebar/NoticeBarTone;Ljava/lang/String;ZZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/noticebar/NoticeBarTone : java/lang/Enum {
@@ -1135,13 +1133,13 @@ public final class com/gearui/components/notification/NotificationType : java/la
 }
 
 public final class com/gearui/components/numberfield/NumberFieldKt {
-	public static final fun NumberField (Ljava/lang/Double;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;DDDZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun NumberField (Ljava/lang/Double;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;DDDZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/picker/DatePickerKt {
-	public static final fun DatePickerInput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
-	public static final fun DateTimePickerInput (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Landroidx/compose/runtime/Composer;II)V
-	public static final fun TimePickerInput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DatePickerInput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DateTimePickerInput (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TimePickerInput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/picker/Picker {
@@ -1374,15 +1372,15 @@ public final class com/gearui/components/segmented/SegmentedControlKt {
 
 public final class com/gearui/components/segmented/SegmentedOption {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)V
-	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/Object;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lkotlin/jvm/functions/Function2;
-	public final fun copy (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/gearui/components/segmented/SegmentedOption;
-	public static synthetic fun copy$default (Lcom/gearui/components/segmented/SegmentedOption;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/gearui/components/segmented/SegmentedOption;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/components/segmented/SegmentedOption;
+	public static synthetic fun copy$default (Lcom/gearui/components/segmented/SegmentedOption;Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/components/segmented/SegmentedOption;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIcon ()Lkotlin/jvm/functions/Function2;
+	public final fun getIcon ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/Object;
 	public fun hashCode ()I
@@ -1390,8 +1388,8 @@ public final class com/gearui/components/segmented/SegmentedOption {
 }
 
 public final class com/gearui/components/select/SelectKt {
-	public static final fun MultiSelect (Ljava/util/Set;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Lcom/gearui/components/select/SelectPanelMode;Landroidx/compose/runtime/Composer;II)V
-	public static final fun Select (Ljava/lang/Object;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/select/SelectPanelMode;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MultiSelect (Ljava/util/Set;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;Lcom/gearui/components/select/SelectPanelMode;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Select (Ljava/lang/Object;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Lcom/gearui/components/select/SelectPanelMode;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/select/SelectOption {
@@ -1794,8 +1792,8 @@ public final class com/gearui/components/table/TableColumn {
 }
 
 public final class com/gearui/components/table/TableKt {
-	public static final fun SimpleTable (Ljava/util/List;Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLandroidx/compose/runtime/Composer;II)V
-	public static final fun Table-o7AcLY0 (Ljava/util/List;Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/table/TableSelectionState;ZZZFLjava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
+	public static final fun SimpleTable (Ljava/util/List;Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLcom/tencent/kuikly/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Table-FCODIsc (Ljava/util/List;Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/table/TableSelectionState;ZZZFLjava/lang/String;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/graphics/Shape;Landroidx/compose/runtime/Composer;III)V
 	public static final fun rememberTableSelectionState (Landroidx/compose/runtime/Composer;I)Lcom/gearui/components/table/TableSelectionState;
 }
 
@@ -1812,16 +1810,20 @@ public final class com/gearui/components/table/TableSelectionState {
 
 public final class com/gearui/components/tabs/Tab {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/Integer;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/Integer;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lcom/gearui/components/tabs/Tab;
-	public static synthetic fun copy$default (Lcom/gearui/components/tabs/Tab;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lcom/gearui/components/tabs/Tab;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/Integer;Z)Lcom/gearui/components/tabs/Tab;
+	public static synthetic fun copy$default (Lcom/gearui/components/tabs/Tab;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/Integer;ZILjava/lang/Object;)Lcom/gearui/components/tabs/Tab;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBadge ()Ljava/lang/Integer;
 	public final fun getDisabled ()Z
+	public final fun getDot ()Z
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getId ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
@@ -1938,8 +1940,8 @@ public final class com/gearui/components/tag/TagVariant : java/lang/Enum {
 }
 
 public final class com/gearui/components/textarea/TextareaKt {
-	public static final fun AutoResizeTextarea-cDZVdZA (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;FJZLandroidx/compose/runtime/Composer;III)V
-	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
+	public static final fun AutoResizeTextarea-oe6m7SA (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Lcom/gearui/foundation/field/FieldVariant;FJZLandroidx/compose/runtime/Composer;III)V
+	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/textarea/TextareaLayout : java/lang/Enum {

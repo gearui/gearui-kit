@@ -26,7 +26,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.material.MaterialSurface
 import com.gearui.foundation.material.Materials
 import com.gearui.foundation.sheet.SheetGrabber
@@ -89,7 +88,7 @@ fun BottomSheet(
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
     closeOnClickOutside: Boolean = true,
-    maxListHeight: Dp = 400.dp,
+    maxListHeight: Dp = ControlGeometry.sheetMaxListHeight,
     onItemClick: (BottomSheetItem, Int) -> Unit
 ) {
     val colors = Theme.colors
@@ -233,7 +232,7 @@ internal fun BottomSheetSurface(
     items: List<BottomSheetItem>,
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
-    maxListHeight: Dp = 400.dp,
+    maxListHeight: Dp = ControlGeometry.sheetMaxListHeight,
     onDismiss: () -> Unit,
     onItemClick: (BottomSheetItem, Int) -> Unit
 ) {
@@ -610,6 +609,13 @@ private fun BottomSheetHostSurface(
     content: @Composable () -> Unit
 ) {
     val colors = Theme.colors
+    // The same bottom inset BottomSheet gives its own surface; callers used to pad for
+    // the home indicator themselves (Picker added a fixed 20).
+    val bottomInset = rememberSafeAreaInset(
+        edge = SafeAreaEdge.Bottom,
+        consume = LocalRuntimeFlags.current.bottomSheetConsumesBottomSafeArea,
+        minimum = Spacing.lg,
+    )
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -624,6 +630,7 @@ private fun BottomSheetHostSurface(
                     // Stop events passing through to the background
                     detectTapGestures { }
                 }
+                .padding(bottom = bottomInset)
         ) {
             content()
         }

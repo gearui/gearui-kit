@@ -113,7 +113,7 @@ same rules as a component:
 - **Real components only.** A button is a `Button`, a row is a `Cell`, an icon
   is `Icons.*`. No hand-built lookalikes, no letters or emoji standing in for
   icons, no bare `clickable` without press feedback.
-- **Fields on cards** use the filled variant (`cardStyle = true`), as the
+- **Fields on cards** use the filled variant (`variant = FieldVariant.SECONDARY`), as the
   visual spec requires.
 - **Overlay triggers.** A set of entries that open a non-anchored overlay
   (Dialog, ActionSheet, BottomSheet, Toast, Notification, Snackbar, Drawer,

@@ -137,6 +137,17 @@ fun TableExample(
 
         ExampleSection(
             surface = SectionSurface.Plain,
+            title = "自适应高度",
+            description = "不设高度时按行数完整展开，随页面一起滚动"
+        ) {
+            Table(
+                data = generateData(3),
+                columns = defaultKeys.map { textColumn(it) }
+            )
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
             title = "操作列",
             description = "行内操作用文字按钮或图标按钮"
         ) {

@@ -1,5 +1,7 @@
 package com.gearui.components.grid
 
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -7,7 +9,6 @@ import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 
 /**
@@ -26,8 +27,8 @@ import com.gearui.theme.Theme
 fun Grid(
     columns: Int,
     modifier: Modifier = Modifier,
-    horizontalSpacing: Dp = 8.dp,
-    verticalSpacing: Dp = 8.dp,
+    horizontalSpacing: Dp = Spacing.sm,
+    verticalSpacing: Dp = Spacing.sm,
     content: @Composable GridScope.() -> Unit
 ) {
     // ⭐ Framework Rule #1: these three are always the first lines
@@ -81,10 +82,10 @@ private class GridScopeImpl : GridScope {
  */
 @Composable
 fun ResponsiveGrid(
-    minColumnWidth: Dp = 120.dp,
+    minColumnWidth: Dp = ControlGeometry.gridMinColumnWidth,
     modifier: Modifier = Modifier,
-    horizontalSpacing: Dp = 8.dp,
-    verticalSpacing: Dp = 8.dp,
+    horizontalSpacing: Dp = Spacing.sm,
+    verticalSpacing: Dp = Spacing.sm,
     content: @Composable GridScope.() -> Unit
 ) {
     val density = LocalDensity.current

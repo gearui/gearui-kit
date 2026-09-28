@@ -14,6 +14,7 @@ import com.gearui.components.select.SelectPanel
 import com.gearui.components.select.selectPanelLayout
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldSizeTokens
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.layout.Spacing
 import com.gearui.i18n.I18n
 import com.gearui.overlay.LocalOverlayViewportSize
@@ -62,6 +63,8 @@ fun <T> ComboBox(
     placeholder: String = I18n.strings.field.selectPlaceholder,
     label: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     autoFocus: Boolean = false,
     filter: (SelectOption<T>, String) -> Boolean = { option, text ->
         text.isBlank() || option.label.contains(text, ignoreCase = true)
@@ -148,6 +151,7 @@ fun <T> ComboBox(
             placeholder = placeholder,
             label = label,
             error = error,
+            variant = variant,
             clearable = true,
             autoFocus = autoFocus,
             onFocusChanged = { focused = it },

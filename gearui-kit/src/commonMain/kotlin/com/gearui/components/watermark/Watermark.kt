@@ -1,11 +1,11 @@
 package com.gearui.components.watermark
 
+import com.gearui.foundation.layout.Spacing
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.draw.rotate
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.TextStyle
 import com.gearui.theme.Theme
@@ -21,10 +21,10 @@ fun Watermark(
     modifier: Modifier = Modifier,
     alpha: Float = 0.15f,
     rotate: Float = -22f,
-    gapX: Dp = 48.dp,
-    gapY: Dp = 32.dp,
-    offsetX: Dp = 20.dp,
-    offsetY: Dp = 20.dp,
+    gapX: Dp = Spacing.huge,
+    gapY: Dp = Spacing.xxl,
+    offsetX: Dp = Spacing.lg,
+    offsetY: Dp = Spacing.lg,
     rows: Int = 5,
     columns: Int = 3,
     textStyle: TextStyle = Theme.typography.bodyMedium

@@ -1,5 +1,6 @@
 package com.gearui.components.timeline
 
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -10,7 +11,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 
 import com.gearui.theme.Theme
@@ -143,12 +143,12 @@ private fun TimelineItemView(
         // Dot and line
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.width(32.dp)
+            modifier = Modifier.width(ControlGeometry.timelineAxisWidth)
         ) {
             // Dot
             Box(
                 modifier = Modifier
-                    .size(12.dp)
+                    .size(ControlGeometry.timelineDot)
                     .clip(CircleShape)
                     .background(dotColor)
                     .border(BorderWidth.thick, colors.surface, CircleShape),
@@ -168,7 +168,7 @@ private fun TimelineItemView(
                 Box(
                     modifier = Modifier
                         .width(BorderWidth.thick)
-                        .height(48.dp)
+                        .height(ControlGeometry.timelineConnectorMinHeight)
                         .background(colors.border)
                 )
             }
@@ -181,7 +181,7 @@ private fun TimelineItemView(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = if (!isLast) 24.dp else 0.dp)
+                    .padding(bottom = if (!isLast) Spacing.xl else Spacing.none)
             ) {
                 Text(
                     text = item.content,
@@ -205,7 +205,7 @@ private fun TimelineItemView(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = if (!isLast) 24.dp else 0.dp),
+                    .padding(bottom = if (!isLast) Spacing.xl else Spacing.none),
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
@@ -266,11 +266,11 @@ fun TimelineCustom(
                 // Dot and line
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.width(32.dp)
+                    modifier = Modifier.width(ControlGeometry.timelineAxisWidth)
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(12.dp)
+                            .size(ControlGeometry.timelineDot)
                             .clip(CircleShape)
                             .background(dotColor(index))
                             .border(BorderWidth.thick, colors.surface, CircleShape)
@@ -280,7 +280,7 @@ fun TimelineCustom(
                         Box(
                             modifier = Modifier
                                 .width(BorderWidth.thick)
-                                .height(48.dp)
+                                .height(ControlGeometry.timelineConnectorMinHeight)
                                 .background(colors.border)
                         )
                     }
@@ -291,7 +291,7 @@ fun TimelineCustom(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(bottom = if (!isLast) 24.dp else 0.dp),
+                        .padding(bottom = if (!isLast) Spacing.xl else Spacing.none),
                     horizontalAlignment = if (position == TimelinePosition.RIGHT) {
                         Alignment.End
                     } else {

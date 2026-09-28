@@ -102,7 +102,7 @@ fun Slider(
     Column(modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
         // Current value, shown above the thumb
         if (showThumbValue) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(ControlGeometry.sliderValueLabelHeight))
         }
 
         Row(
@@ -309,7 +309,7 @@ private fun NormalTrack(
                     val isActive = stepNormalized <= normalizedValue
                     Box(
                         modifier = Modifier
-                            .size(8.dp)
+                            .size(ControlGeometry.sliderScaleDot)
                             .clip(CircleShape)
                             .background(
                                 if (enabled) {
@@ -430,7 +430,7 @@ fun RangeSlider(
 
     Column(modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
         if (showThumbValue) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(ControlGeometry.sliderValueLabelHeight))
         }
 
         Row(

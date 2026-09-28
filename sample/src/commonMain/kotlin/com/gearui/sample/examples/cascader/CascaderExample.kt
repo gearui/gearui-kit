@@ -7,10 +7,10 @@ import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.components.cascader.Cascader
 import com.gearui.components.cascader.CascaderOption
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.sample.pages.SectionSurface
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 
@@ -35,7 +35,6 @@ fun CascaderExample(
     ) {
         // Basic cascading select
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "基础用法",
             description = "点击展开下一级选项"
         ) {
@@ -97,7 +96,8 @@ fun CascaderExample(
                     selectedPath = selectedPath,
                     onSelect = { selectedPath = it },
                     placeholder = "请选择地区",
-                    dropdownHeight = DropdownHeight
+                    dropdownHeight = DropdownHeight,
+                    variant = FieldVariant.SECONDARY,
                 )
 
                 Text(
@@ -110,7 +110,6 @@ fun CascaderExample(
 
         // Default value
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "默认值",
             description = "设置初始选中值"
         ) {
@@ -153,13 +152,13 @@ fun CascaderExample(
                 selectedPath = selectedPath,
                 onSelect = { selectedPath = it },
                 placeholder = "请选择地区",
-                dropdownHeight = DropdownHeight
+                dropdownHeight = DropdownHeight,
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         // Custom separator
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "自定义分隔符",
             description = "使用自定义分隔符显示选中值"
         ) {
@@ -213,13 +212,13 @@ fun CascaderExample(
                 onSelect = { selectedPath = it },
                 placeholder = "请选择分类",
                 separator = " - ",
-                dropdownHeight = DropdownHeight
+                dropdownHeight = DropdownHeight,
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         // Disabled options
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "禁用选项",
             description = "部分选项可设置为禁用状态"
         ) {
@@ -261,7 +260,8 @@ fun CascaderExample(
                 selectedPath = selectedPath,
                 onSelect = { selectedPath = it },
                 placeholder = "请选择部门",
-                dropdownHeight = DropdownHeight
+                dropdownHeight = DropdownHeight,
+                variant = FieldVariant.SECONDARY,
             )
         }
     }

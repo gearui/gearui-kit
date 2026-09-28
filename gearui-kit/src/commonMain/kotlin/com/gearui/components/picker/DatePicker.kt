@@ -1,6 +1,9 @@
 package com.gearui.components.picker
 
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.shadowed
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
@@ -15,7 +18,6 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.theme.Theme
 import com.gearui.theme.LocalInputColors
 import com.gearui.components.dialog.Dialog
@@ -44,6 +46,8 @@ fun DatePickerInput(
     placeholder: String = I18n.strings.dateTime.datePlaceholder,
     label: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     format: String = "YYYY-MM-DD"
 ) {
     val colors = Theme.colors
@@ -69,12 +73,12 @@ fun DatePickerInput(
         }
 
         // Input trigger
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
-                    .then(fieldTriggerModifier(enabled, error) { showPicker = true })
+                    .then(fieldTriggerModifier(enabled, error, variant) { showPicker = true })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -153,7 +157,7 @@ private fun DatePickerDialogContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(ControlGeometry.pickerWheelHeight),
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             // Year
@@ -199,7 +203,7 @@ private fun DatePickerDialogContent(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(40.dp)
+                    .height(ControlGeometry.pickerItemHeight)
                     .clip(shapes.sm)
                     .border(BorderWidth.thin, colors.border, shapes.sm)
                     .clickable { onCancel() },
@@ -215,7 +219,7 @@ private fun DatePickerDialogContent(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(40.dp)
+                    .height(ControlGeometry.pickerItemHeight)
                     .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable { onConfirm() },
@@ -243,6 +247,8 @@ fun TimePickerInput(
     placeholder: String = I18n.strings.dateTime.timePlaceholder,
     label: String? = null,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     format: String = "HH:mm"
 ) {
     val colors = Theme.colors
@@ -265,12 +271,12 @@ fun TimePickerInput(
             )
         }
 
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
-                    .then(fieldTriggerModifier(enabled, error) { showPicker = true })
+                    .then(fieldTriggerModifier(enabled, error, variant) { showPicker = true })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -340,7 +346,7 @@ private fun TimePickerDialogContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(ControlGeometry.pickerWheelHeight),
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
             // Hour
@@ -374,7 +380,7 @@ private fun TimePickerDialogContent(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(40.dp)
+                    .height(ControlGeometry.pickerItemHeight)
                     .clip(shapes.sm)
                     .border(BorderWidth.thin, colors.border, shapes.sm)
                     .clickable { onCancel() },
@@ -390,7 +396,7 @@ private fun TimePickerDialogContent(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(40.dp)
+                    .height(ControlGeometry.pickerItemHeight)
                     .clip(shapes.sm)
                     .background(colors.primary)
                     .clickable { onConfirm() },
@@ -423,7 +429,7 @@ private fun IntPickerColumn(
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     val density = LocalDensity.current
-    val itemHeight = 40.dp
+    val itemHeight = ControlGeometry.pickerItemHeight
     val itemHeightPx = with(density) { itemHeight.toPx() }
     val centerPadding = itemHeight * 2
 
@@ -512,6 +518,8 @@ fun DateTimePickerInput(
     onTimeChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     label: String? = null
 ) {
     Column(modifier = modifier) {
@@ -532,6 +540,7 @@ fun DateTimePickerInput(
                 value = dateValue,
                 onValueChange = onDateChange,
                 enabled = enabled,
+                variant = variant,
                 modifier = Modifier.weight(1f)
             )
 
@@ -539,6 +548,7 @@ fun DateTimePickerInput(
                 value = timeValue,
                 onValueChange = onTimeChange,
                 enabled = enabled,
+                variant = variant,
                 modifier = Modifier.weight(1f)
             )
         }

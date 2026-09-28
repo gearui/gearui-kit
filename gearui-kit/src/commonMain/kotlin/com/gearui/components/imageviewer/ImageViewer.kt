@@ -1,5 +1,7 @@
 package com.gearui.components.imageviewer
 
+import com.gearui.foundation.layout.Radius
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -320,7 +322,7 @@ private fun ImageViewerSurface(
             if (showDeleteBtn) {
                 Box(
                     modifier = Modifier
-                        .size(32.dp)
+                        .size(ControlGeometry.closeButtonSize)
                         .clip(CircleShape)
                         .background(Color.White.copy(alpha = 0.2f))
                         .pressScale(deletePressed)
@@ -352,7 +354,7 @@ private fun ImageViewerSurface(
                     Box(
                         modifier = Modifier
                             .padding(horizontal = Spacing.xs)
-                            .size(if (index == state.currentIndex) 8.dp else 6.dp)
+                            .size(if (index == state.currentIndex) ControlGeometry.swiperDotActive else ControlGeometry.swiperDot)
                             .clip(CircleShape)
                             .background(
                                 if (index == state.currentIndex)
@@ -433,7 +435,7 @@ fun ImageViewerTrigger(
                                 painter = painter,
                                 fit = ImageFit.COVER,
                                 shape = ImageShape.ROUNDED,
-                                cornerRadius = 4.dp,
+                                cornerRadius = Radius.sm,
                                 modifier = Modifier.fillMaxSize()
                             )
                         } else {

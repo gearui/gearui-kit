@@ -1,5 +1,8 @@
 package com.gearui.components.textarea
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fill
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.typography.resolveFontFamily
 
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
@@ -22,7 +25,6 @@ import com.tencent.kuikly.compose.ui.focus.focusRequester
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.text.TextStyle
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
@@ -72,6 +74,8 @@ fun Textarea(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     placeholder: String = "",
     label: String? = null,
     maxLength: Int? = null,
@@ -80,67 +84,30 @@ fun Textarea(
     indicator: Boolean = false,
     layout: TextareaLayout = TextareaLayout.VERTICAL,
     autosize: Boolean = false,
-    bordered: Boolean = true,
-    cardStyle: Boolean = false,
     required: Boolean = false,
     additionInfo: String? = null
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
     val isVertical = layout == TextareaLayout.VERTICAL
 
-    // Outer container
     Column(modifier = modifier) {
-        if (cardStyle) {
-            // Card style
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shapes.lg)
-                    .background(colors.muted)
-                    .padding(Spacing.lg)
-            ) {
-                TextareaContent(
-                    value = value,
-                    onValueChange = onValueChange,
-                    enabled = enabled,
-                    readOnly = readOnly,
-                    placeholder = placeholder,
-                    label = label,
-                    maxLength = maxLength,
-                    minLines = minLines,
-                    maxLines = maxLines,
-                    indicator = indicator,
-                    isVertical = isVertical,
-                    bordered = false,
-                    error = error,
-                    required = required,
-                    additionInfo = additionInfo,
-                    autosize = autosize
-                )
-            }
-        } else {
-            // Plain style
-            TextareaContent(
-                value = value,
-                onValueChange = onValueChange,
-                enabled = enabled,
-                readOnly = readOnly,
-                placeholder = placeholder,
-                label = label,
-                maxLength = maxLength,
-                minLines = minLines,
-                maxLines = maxLines,
-                indicator = indicator,
-                isVertical = isVertical,
-                bordered = bordered,
-                error = error,
-                required = required,
-                additionInfo = additionInfo,
-                autosize = autosize
-            )
-        }
+        TextareaContent(
+            value = value,
+            onValueChange = onValueChange,
+            enabled = enabled,
+            readOnly = readOnly,
+            placeholder = placeholder,
+            label = label,
+            maxLength = maxLength,
+            minLines = minLines,
+            maxLines = maxLines,
+            indicator = indicator,
+            isVertical = isVertical,
+            variant = variant,
+            error = error,
+            required = required,
+            additionInfo = additionInfo,
+            autosize = autosize
+        )
 
         FieldErrorText(error)
     }
@@ -159,7 +126,7 @@ private fun TextareaContent(
     maxLines: Int?,
     indicator: Boolean,
     isVertical: Boolean,
-    bordered: Boolean,
+    variant: FieldVariant,
     error: String? = null,
     required: Boolean,
     additionInfo: String?,
@@ -193,7 +160,7 @@ private fun TextareaContent(
                 minLines = minLines,
                 maxLines = maxLines,
                 indicator = indicator,
-                bordered = bordered,
+                variant = variant,
                 error = error,
                 additionInfo = additionInfo,
                 autosize = autosize
@@ -229,7 +196,7 @@ private fun TextareaContent(
                         minLines = minLines,
                         maxLines = maxLines,
                         indicator = indicator,
-                        bordered = bordered,
+                        variant = variant,
                         error = error,
                         additionInfo = additionInfo,
                         autosize = autosize
@@ -275,7 +242,7 @@ private fun TextareaInputArea(
     minLines: Int,
     maxLines: Int?,
     indicator: Boolean,
-    bordered: Boolean,
+    variant: FieldVariant,
     error: String? = null,
     additionInfo: String?,
     autosize: Boolean,
@@ -284,13 +251,16 @@ private fun TextareaInputArea(
     verticalPadding: Dp = Spacing.sm,
     lineHeight: TextUnit = 24.sp,
     /**
-     * Draw a hairline around the **compact** (`bordered = false`) field.
-     *
-     * `bordered = true` is a different thing: it switches the whole field to the
-     * standalone form-control look — surface background and uniform [Spacing.md]
-     * padding, which fixes a single line near 48dp. A field that has to sit flush
-     * with 32dp controls beside it cannot use that, but it may still need an
-     * outline to read as an input rather than as a patch of background.
+     * Compact metrics for [AutoResizeTextarea]: [verticalPadding], [lineHeight] and a
+     * 16sp body, so a single line can sit flush with 32dp controls. Off, the field uses
+     * the standalone form-control metrics (uniform padding, a single line near 48dp),
+     * the shared field border and the focus ring.
+     */
+    compact: Boolean = false,
+    /**
+     * Draw a hairline around the **compact** field. A compact field that sits beside
+     * 32dp controls may still need an outline to read as an input rather than as a
+     * patch of background.
      */
     outlined: Boolean = false,
     modifier: Modifier = Modifier,
@@ -336,18 +306,21 @@ private fun TextareaInputArea(
     Column(modifier = modifier.graphicsLayer {
         alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
     }) {
-        // Field container
-        FieldSurface(Modifier.fillMaxWidth(), shape = fieldShape, shadowed = bordered) {
+        // Field container. Fill and shadow come from the variant; the compact and
+        // standalone metrics are independent of it.
+        val fieldFill = variant.fill(inputColors.background)
+        val containerShape = if (compact) Theme.shapes.lg else fieldShape
+        FieldSurface(Modifier.fillMaxWidth(), shape = containerShape, shadowed = variant.shadowed) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .then(if (bordered) feedback else Modifier)
-                    .hoverable(hoverSource, enabled = enabled && bordered)
+                    .then(if (!compact) feedback else Modifier)
+                    .hoverable(hoverSource, enabled = enabled && !compact)
                     .clickable(interactionSource = hoverSource, indication = null, enabled = canFocus) {
                         requestInputFocus()
                     }
                     .then(
-                        if (bordered) {
+                        if (!compact) {
                             Modifier
                                 .heightIn(min = standaloneMinHeight)
                                 .clip(fieldShape)
@@ -356,40 +329,40 @@ private fun TextareaInputArea(
                                     if (error != null) colors.destructive else inputColors.border,
                                     fieldShape,
                                 )
-                                .background(inputColors.background)
+                                .background(fieldFill)
 
                         } else {
                             Modifier
-                                .clip(Theme.shapes.lg)
-                                .background(colors.muted)
+                                .clip(containerShape)
+                                .background(fieldFill)
                                 .then(
                                     if (outlined) {
                                         Modifier.border(
                                             BorderWidth.thin,
                                             fieldBorderColor(error = error, enabled = enabled),
-                                            Theme.shapes.lg,
+                                            containerShape,
                                         )
                                     } else {
                                         Modifier
                                     }
                                 )
-                                .padding(horizontal = 10.dp, vertical = verticalPadding)
+                                .padding(horizontal = ControlGeometry.textareaCompactPaddingInline, vertical = verticalPadding)
                         }
                     )
             ) {
-                Column(modifier = if (bordered) Modifier.padding(
+                Column(modifier = if (!compact) Modifier.padding(
                     horizontal = FieldSizeTokens.Medium.paddingHorizontal,
                     vertical = ControlGeometry.textareaPaddingVertical,
                 ) else Modifier) {
-                    val fontSize = if (bordered) Theme.typography.bodyMedium.fontSize else 16.sp
-                    val resolvedLineHeight = if (bordered) Theme.typography.bodyMedium.lineHeight else lineHeight
+                    val fontSize = if (!compact) Theme.typography.bodyMedium.fontSize else 16.sp
+                    val resolvedLineHeight = if (!compact) Theme.typography.bodyMedium.lineHeight else lineHeight
                     // The placeholder and body share metrics to prevent first-character layout jumps.
                     val inputTextStyle = TextStyle(
                         fontSize = fontSize,
                         lineHeight = resolvedLineHeight,
                         fontFamily = Theme.typography.bodyMedium.resolveFontFamily(),
                         letterSpacing = Theme.typography.bodyMedium.letterSpacing,
-                        color = if (bordered) inputColors.foreground else if (enabled) colors.foreground else colors.mutedForeground,
+                        color = if (!compact) inputColors.foreground else if (enabled) colors.foreground else colors.mutedForeground,
                     )
                     // The same metrics, converted to the token types the kit Text needs.
                     val placeholderTextStyle = com.gearui.foundation.typography.TextStyle(
@@ -447,7 +420,7 @@ private fun TextareaInputArea(
                                     Text(
                                         text = placeholder,
                                         style = placeholderTextStyle,
-                                        color = if (bordered) inputColors.placeholder else colors.mutedForeground,
+                                        color = if (!compact) inputColors.placeholder else colors.mutedForeground,
                                     )
                                 }
                                 innerTextField()
@@ -455,7 +428,7 @@ private fun TextareaInputArea(
                         }
                     )
                 }
-                if (bordered) FieldFocusOverlay(inputColors, fieldShape, focusedState, enabled,
+                if (!compact) FieldFocusOverlay(inputColors, fieldShape, focusedState, enabled,
                     if (error != null) colors.destructive else null)
             }
         }
@@ -504,6 +477,8 @@ fun AutoResizeTextarea(
     autoFocus: Boolean = false,
     focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.SECONDARY,
     /**
      * Vertical padding inside the field. A single line is `2 * verticalPadding + 24dp`,
      * so this is how a caller matches the field's collapsed height to the controls
@@ -526,7 +501,7 @@ fun AutoResizeTextarea(
      * fill — without an outline the two blend and the input stops looking tappable.
      *
      * This keeps the compact metrics; it is not the same as the standalone
-     * `bordered` form-control look, which fixes a single line near 48dp.
+     * [Textarea] form-control look, which fixes a single line near 48dp.
      */
     outlined: Boolean = false,
 ) {
@@ -548,13 +523,14 @@ fun AutoResizeTextarea(
         minLines = 1,
         maxLines = maxLines,
         indicator = false,
-        bordered = false,
+        variant = variant,
         additionInfo = null,
         autosize = true,
         focusRequester = inputFocusRequester,
         onFocusChanged = onFocusChanged,
         verticalPadding = verticalPadding,
         lineHeight = lineHeight,
+        compact = true,
         outlined = outlined,
         modifier = modifier,
     )

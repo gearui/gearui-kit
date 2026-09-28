@@ -8,7 +8,6 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.shadow
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
 import com.tencent.kuikly.compose.ui.unit.Dp
@@ -140,7 +139,7 @@ internal fun DialogSurface(
             // the actions off screen. A modal card must not grow without bound
             // because one child wants to.
             .wrapContentHeight()
-            .heightIn(max = 560.dp),
+            .heightIn(max = ControlGeometry.dialogMaxHeight),
     ) {
         content()
     }
@@ -212,7 +211,7 @@ fun DialogContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     // Leaves room for title and actions within the outer 560 cap.
-                    .heightIn(max = 360.dp)
+                    .heightIn(max = ControlGeometry.dialogBodyMaxHeight)
             ) {
                 content()
             }

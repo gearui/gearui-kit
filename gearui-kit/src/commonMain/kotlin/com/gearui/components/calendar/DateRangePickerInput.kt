@@ -11,6 +11,8 @@ import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.FieldLabel
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -56,6 +58,8 @@ fun DateRangePickerInput(
     label: String? = null,
     required: Boolean = false,
     error: String? = null,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     minDate: CalendarDate? = null,
     maxDate: CalendarDate? = null,
     clearable: Boolean = true,
@@ -79,12 +83,12 @@ fun DateRangePickerInput(
             )
         }
 
-        FieldSurface(Modifier.fillMaxWidth()) {
+        FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
-                    .then(fieldTriggerModifier(enabled, error) { open = true })
+                    .then(fieldTriggerModifier(enabled, error, variant) { open = true })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(FieldDefaults.labelGap),

@@ -5,6 +5,7 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.components.textarea.Textarea
 import com.gearui.components.textarea.TextareaLayout
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -15,8 +16,9 @@ private const val MAX_LENGTH = 500
 /**
  * Textarea component examples
  *
- * The default field carries its own surface and shadow, so it sits on a plain section;
- * the filled `cardStyle` variant is shown on a card, where it belongs.
+ * Every field sits on a white Card section, so it uses the filled variant
+ * (`variant = FieldVariant.SECONDARY`); the shadowed PRIMARY variant is shown once,
+ * on the page background, where it belongs.
  */
 @Composable
 fun TextareaExample(
@@ -30,7 +32,7 @@ fun TextareaExample(
     var requiredText by remember { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
     var horizontalText by remember { mutableStateOf("") }
-    var cardText by remember { mutableStateOf("") }
+    var pageText by remember { mutableStateOf("") }
 
     ExamplePage(
         component = component,
@@ -38,8 +40,7 @@ fun TextareaExample(
     ) {
         ExampleSection(
             title = "基础用法",
-            description = "固定 4 行高度的多行输入",
-            surface = SectionSurface.Plain
+            description = "固定 4 行高度的多行输入"
         ) {
             Textarea(
                 value = basicText,
@@ -47,14 +48,14 @@ fun TextareaExample(
                 placeholder = "请输入文字",
                 minLines = 4,
                 maxLines = 4,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "带标签",
-            description = "label 显示在输入框上方",
-            surface = SectionSurface.Plain
+            description = "label 显示在输入框上方"
         ) {
             Textarea(
                 value = basicTitleText,
@@ -63,14 +64,14 @@ fun TextareaExample(
                 placeholder = "请输入文字",
                 minLines = 4,
                 maxLines = 4,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "自动增高",
-            description = "autosize = true，从一行开始随内容增高",
-            surface = SectionSurface.Plain
+            description = "autosize = true，从一行开始随内容增高"
         ) {
             Textarea(
                 value = autoHeightText,
@@ -78,14 +79,14 @@ fun TextareaExample(
                 placeholder = "请输入文字",
                 minLines = 1,
                 autosize = true,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "字数限制",
-            description = "maxLength 配合 indicator 显示已输入字数",
-            surface = SectionSurface.Plain
+            description = "maxLength 配合 indicator 显示已输入字数"
         ) {
             Textarea(
                 value = maxLengthText,
@@ -96,14 +97,14 @@ fun TextareaExample(
                 maxLines = 4,
                 maxLength = MAX_LENGTH,
                 indicator = true,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "必填与辅助说明",
-            description = "required 标星，additionInfo 显示在下方",
-            surface = SectionSurface.Plain
+            description = "required 标星，additionInfo 显示在下方"
         ) {
             Textarea(
                 value = requiredText,
@@ -114,14 +115,14 @@ fun TextareaExample(
                 maxLines = 4,
                 required = true,
                 additionInfo = "辅助说明",
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "错误状态",
-            description = "内容为空时 error 显示错误提示",
-            surface = SectionSurface.Plain
+            description = "内容为空时 error 显示错误提示"
         ) {
             Textarea(
                 value = errorText,
@@ -131,14 +132,14 @@ fun TextareaExample(
                 minLines = 4,
                 maxLines = 4,
                 error = if (errorText.isBlank()) "反馈内容不能为空" else null,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "禁用状态",
-            description = "enabled = false",
-            surface = SectionSurface.Plain
+            description = "enabled = false"
         ) {
             Textarea(
                 value = "",
@@ -148,14 +149,14 @@ fun TextareaExample(
                 minLines = 4,
                 maxLines = 4,
                 enabled = false,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
             title = "横排标签",
-            description = "TextareaLayout.HORIZONTAL，标签与输入框同一行",
-            surface = SectionSurface.Plain
+            description = "TextareaLayout.HORIZONTAL，标签与输入框同一行"
         ) {
             Textarea(
                 value = horizontalText,
@@ -167,24 +168,23 @@ fun TextareaExample(
                 maxLength = MAX_LENGTH,
                 indicator = true,
                 layout = TextareaLayout.HORIZONTAL,
+                variant = FieldVariant.SECONDARY,
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         ExampleSection(
-            title = "卡片上使用",
-            description = "cardStyle = true 填充底，放在白色卡片上"
+            title = "页面背景上的默认样式",
+            description = "FieldVariant.PRIMARY：直接放在页面背景上时用带阴影的默认样式",
+            surface = SectionSurface.Plain
         ) {
             Textarea(
-                value = cardText,
-                onValueChange = { cardText = it },
+                value = pageText,
+                onValueChange = { pageText = it },
                 label = "标签文字",
                 placeholder = "请输入文字",
                 minLines = 4,
                 maxLines = 4,
-                maxLength = MAX_LENGTH,
-                indicator = true,
-                cardStyle = true,
                 modifier = Modifier.fillMaxWidth()
             )
         }

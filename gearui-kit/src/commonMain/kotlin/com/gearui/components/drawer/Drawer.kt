@@ -1,5 +1,7 @@
 package com.gearui.components.drawer
 
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.animateFloatAsState
 import com.tencent.kuikly.compose.animation.core.tween
@@ -15,7 +17,6 @@ import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.primitives.Text
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
@@ -80,7 +81,7 @@ fun Drawer(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     placement: DrawerPlacement = DrawerPlacement.RIGHT,
-    width: Dp = 280.dp,
+    width: Dp = ControlGeometry.drawerWidth,
     title: String? = null,
     titleWidget: (@Composable () -> Unit)? = null,
     items: List<DrawerItem>? = null,
@@ -335,7 +336,7 @@ private fun DrawerContent(
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
+                    .height(ControlGeometry.controlMedium)
             )
             if (bordered) {
                 Box(
@@ -354,7 +355,7 @@ private fun DrawerContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
+                    .height(ControlGeometry.controlMedium)
                     .padding(horizontal = Spacing.lg),
                 contentAlignment = Alignment.CenterStart
             ) {
@@ -450,7 +451,7 @@ private fun DrawerListItem(
                 // Icon
                 if (item.icon != null) {
                     Box(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(IconSizes.Default.xl),
                         contentAlignment = Alignment.Center
                     ) {
                         item.icon.invoke()
@@ -469,7 +470,7 @@ private fun DrawerListItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = if (item.icon != null) 52.dp else 16.dp)
+                    .padding(start = if (item.icon != null) Spacing.lg + IconSizes.Default.xl + Spacing.md else Spacing.lg)
                     .height(BorderWidth.hairline)
                     .background(colors.border)
             )
@@ -487,7 +488,7 @@ fun DrawerWithHeader(
     title: String,
     modifier: Modifier = Modifier,
     placement: DrawerPlacement = DrawerPlacement.LEFT,
-    width: Dp = 280.dp,
+    width: Dp = ControlGeometry.drawerWidth,
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit

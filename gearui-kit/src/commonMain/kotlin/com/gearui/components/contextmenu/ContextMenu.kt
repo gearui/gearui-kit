@@ -142,7 +142,7 @@ fun ContextMenu(
                         // width(IntrinsicSize.Max): the column width is the intrinsic width of the longest item,
                         // with widthIn keeping very short or very long content in check, so short text does not bloat out to max.
                         .width(IntrinsicSize.Max)
-                        .widthIn(min = 140.dp, max = 260.dp)
+                        .widthIn(min = ControlGeometry.menuMinWidth, max = ControlGeometry.menuMaxWidth)
                 ) {
                 // MaterialSurface owns the token shadow stack outside its content clip.
                 MaterialSurface(

@@ -20,7 +20,12 @@ import com.gearui.foundation.motion.FeedbackDefaults
 
 /** Opening a list is not a validation state or a keyboard focus ring. */
 @Composable
-internal fun fieldTriggerModifier(enabled: Boolean, error: String?, onClick: () -> Unit): Modifier {
+internal fun fieldTriggerModifier(
+    enabled: Boolean,
+    error: String?,
+    variant: FieldVariant = FieldVariant.PRIMARY,
+    onClick: () -> Unit,
+): Modifier {
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
     val pressed by interaction.collectIsPressedAsState()
@@ -33,7 +38,7 @@ internal fun fieldTriggerModifier(enabled: Boolean, error: String?, onClick: () 
         .border(FieldSizeTokens.Medium.borderWidth,
             inputBorderColor(palette, enabled, false, hovered || pressed,
                 if (error != null) colors.destructive else null), shape)
-        .background(if (enabled && pressed) colors.muted else palette.background)
+        .background(if (enabled && pressed) variant.pressedFill(palette.background) else variant.fill(palette.background))
         .hoverable(interaction, enabled)
         .clickable(interactionSource = interaction, indication = null, enabled = enabled, onClick = onClick)
 }

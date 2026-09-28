@@ -29,7 +29,6 @@ fun InputOTPExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "基础",
             description = "6 位数字验证码，点任意格子都会聚焦"
         ) {
@@ -37,6 +36,7 @@ fun InputOTPExample(
                 InputOTP(
                     value = code,
                     onValueChange = { code = it },
+                    variant = FieldVariant.SECONDARY,
                     onComplete = { Toast.show("验证码:$it") },
                 )
                 FieldDescription("已输入 ${code.length} / 6")
@@ -44,7 +44,6 @@ fun InputOTPExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "分组与占位",
             description = "groupSize 分隔，placeholder 逐位显示"
         ) {
@@ -53,11 +52,11 @@ fun InputOTPExample(
                 onValueChange = { grouped = it },
                 groupSize = 3,
                 placeholder = "000000",
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "校验",
             description = "输入 4 位且不是 1234 时 invalid 红色描边"
         ) {
@@ -68,29 +67,35 @@ fun InputOTPExample(
                     onValueChange = { checked = it },
                     length = 4,
                     invalid = invalid,
+                    variant = FieldVariant.SECONDARY,
                 )
                 if (invalid) FieldErrorText("验证码不正确")
             }
         }
 
         ExampleSection(
-            title = "卡片上使用",
-            description = "FieldVariant.SECONDARY 中性填充底，适合白色卡片"
+            title = "禁用",
+            description = "enabled = false"
         ) {
             InputOTP(
-                value = "8642",
+                value = "12",
                 onValueChange = {},
                 length = 4,
+                enabled = false,
                 variant = FieldVariant.SECONDARY,
             )
         }
 
         ExampleSection(
             surface = SectionSurface.Plain,
-            title = "禁用",
-            description = "enabled = false"
+            title = "页面背景上的默认样式",
+            description = "FieldVariant.PRIMARY：直接放在页面背景上时用带阴影的默认样式"
         ) {
-            InputOTP(value = "12", onValueChange = {}, length = 4, enabled = false)
+            InputOTP(
+                value = "8642",
+                onValueChange = {},
+                length = 4,
+            )
         }
     }
 }

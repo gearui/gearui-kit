@@ -96,7 +96,7 @@ fun MyComponent(
   高度、被展示的自定义尺寸）在文件顶部定义为具名常量。
 - **只用真实组件。** 按钮就是 `Button`，行就是 `Cell`，图标就是 `Icons.*`。
   不手搭仿制品，不用字母或 emoji 冒充图标，不写没有按压反馈的裸 `clickable`。
-- **卡片上的输入框**用填充变体（`cardStyle = true`），视觉规范如此要求。
+- **卡片上的输入框**用填充变体（`variant = FieldVariant.SECONDARY`），视觉规范如此要求。
 - **浮层触发入口。** 打开非锚定浮层（Dialog、ActionSheet、BottomSheet、Toast、
   Notification、Snackbar、Drawer、Tour、全屏 Loading）的一组入口，是 `Plain`
   区块里的一个 `CellGroup`，每种变体一行、带箭头——平台 Catalog 的做法。锚定

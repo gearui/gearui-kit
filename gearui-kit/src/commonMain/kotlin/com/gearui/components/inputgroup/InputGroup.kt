@@ -7,6 +7,9 @@ import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldSurface
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fill
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.field.LocalFieldEmbedded
 import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.motion.FeedbackDefaults
@@ -56,17 +59,19 @@ import com.tencent.kuikly.compose.ui.text.font.FontWeight
 fun InputGroup(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     shape: Shape = FieldDefaults.shape,
     content: @Composable RowScope.() -> Unit,
 ) {
     val inputColors = LocalInputColors.current
-    FieldSurface(modifier = modifier.fillMaxWidth(), shape = shape) {
+    FieldSurface(modifier = modifier.fillMaxWidth(), shape = shape, shadowed = variant.shadowed) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FieldSizeTokens.Medium.height)
                 .clip(shape)
-                .background(inputColors.background)
+                .background(variant.fill(inputColors.background))
                 .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity),
             verticalAlignment = Alignment.CenterVertically,
         ) {

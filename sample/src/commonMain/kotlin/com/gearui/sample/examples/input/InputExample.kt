@@ -16,6 +16,7 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldDescription
 import com.gearui.foundation.field.FieldErrorText
 import com.gearui.foundation.field.FieldLabel
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
@@ -33,7 +34,7 @@ import com.tencent.kuikly.compose.ui.text.style.TextAlign
  * Input component examples.
  *
  * Every field sits on a white Card section, so it uses the filled variant
- * (`cardStyle = true`); the shadowed default variant is shown once, on the page
+ * (`variant = FieldVariant.SECONDARY`); the shadowed default variant is shown once, on the page
  * background, where it belongs.
  */
 @Composable
@@ -59,7 +60,7 @@ fun InputExample(
                     value = email,
                     onValueChange = { email = it },
                     placeholder = "name@example.com",
-                    cardStyle = true
+                    variant = FieldVariant.SECONDARY
                 )
                 if (emailError != null) {
                     FieldErrorText(emailError)
@@ -81,7 +82,7 @@ fun InputExample(
                 label = "标签文字",
                 required = true,
                 placeholder = "请输入文字",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
 
             var value2 by remember { mutableStateOf("") }
@@ -89,7 +90,7 @@ fun InputExample(
                 value = value2,
                 onValueChange = { value2 = it },
                 placeholder = "请输入文字（无标签）",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
 
             var value3 by remember { mutableStateOf("") }
@@ -99,7 +100,7 @@ fun InputExample(
                 label = "标签文字",
                 placeholder = "请输入文字（选填）",
                 helperText = "辅助说明",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
@@ -114,7 +115,7 @@ fun InputExample(
                 label = "上方标签",
                 labelPosition = "top",
                 placeholder = "请输入文字",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             var left by remember { mutableStateOf("") }
             Input(
@@ -123,7 +124,7 @@ fun InputExample(
                 label = "左侧标签",
                 labelPosition = "left",
                 placeholder = "请输入文字",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
@@ -140,7 +141,7 @@ fun InputExample(
                 maxLength = 10,
                 showCounter = true,
                 helperText = "最多输入 10 个字符",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
@@ -156,7 +157,7 @@ fun InputExample(
                 placeholder = "请输入文字",
                 clearable = true,
                 onClear = { value1 = "" },
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
 
             var value2 by remember { mutableStateOf("") }
@@ -165,7 +166,7 @@ fun InputExample(
                 onValueChange = { value2 = it },
                 label = "后缀按钮",
                 placeholder = "请输入文字",
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     Button(
                         text = "操作按钮",
@@ -182,7 +183,7 @@ fun InputExample(
                 onValueChange = { value3 = it },
                 label = "后缀图标",
                 placeholder = "请输入文字",
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     PressableFeedback(onClick = { Toast.show("点击图标") }) {
                         Icon(
@@ -199,7 +200,7 @@ fun InputExample(
                 value = value4,
                 onValueChange = { value4 = it },
                 placeholder = "搜索",
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 prefix = {
                     Icon(
                         name = Icons.magnifying_glass,
@@ -222,7 +223,7 @@ fun InputExample(
                 label = "密码",
                 placeholder = "请输入密码",
                 isPassword = !showPassword,
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     PressableFeedback(onClick = { showPassword = !showPassword }) {
                         Icon(
@@ -240,7 +241,7 @@ fun InputExample(
                 onValueChange = { verifyCode = it },
                 label = "验证码",
                 placeholder = "输入验证码",
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     Button(
                         text = "ABCD",
@@ -257,7 +258,7 @@ fun InputExample(
                 onValueChange = { phone = it },
                 label = "手机号",
                 placeholder = "输入手机号",
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     Button(
                         text = "发送验证码",
@@ -275,7 +276,7 @@ fun InputExample(
                 label = "价格",
                 placeholder = "0.00",
                 textAlign = TextAlign.End,
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     Text(text = "元", style = Theme.typography.bodyMedium, color = colors.foreground)
                 }
@@ -288,7 +289,7 @@ fun InputExample(
                 label = "数量",
                 placeholder = "填写个数",
                 textAlign = TextAlign.End,
-                cardStyle = true,
+                variant = FieldVariant.SECONDARY,
                 suffix = {
                     Text(text = "个", style = Theme.typography.bodyMedium, color = colors.foreground)
                 }
@@ -306,21 +307,21 @@ fun InputExample(
                 label = "错误",
                 placeholder = "请输入文字",
                 error = "错误提示说明",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             Input(
                 value = "不可编辑文字",
                 onValueChange = {},
                 label = "只读",
                 readOnly = true,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             Input(
                 value = "禁用状态的内容",
                 onValueChange = {},
                 label = "禁用",
                 enabled = false,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
@@ -334,14 +335,14 @@ fun InputExample(
                 onValueChange = { value = it },
                 label = "标签超长时最多十个字",
                 placeholder = "请输入文字",
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             Input(
                 value = "输入文字超长不超过两行输入文字超长不超过两行",
                 onValueChange = {},
                 label = "标签文字",
                 maxLines = 2,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
@@ -355,7 +356,7 @@ fun InputExample(
                 onValueChange = { value1 = it },
                 label = "左对齐",
                 textAlign = TextAlign.Start,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             var value2 by remember { mutableStateOf("居中内容") }
             Input(
@@ -363,7 +364,7 @@ fun InputExample(
                 onValueChange = { value2 = it },
                 label = "居中",
                 textAlign = TextAlign.Center,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
             var value3 by remember { mutableStateOf("右对齐内容") }
             Input(
@@ -371,13 +372,13 @@ fun InputExample(
                 onValueChange = { value3 = it },
                 label = "右对齐",
                 textAlign = TextAlign.End,
-                cardStyle = true
+                variant = FieldVariant.SECONDARY
             )
         }
 
         ExampleSection(
             title = "页面背景上的默认样式",
-            description = "cardStyle = false：直接放在页面背景上时用带阴影的默认样式",
+            description = "FieldVariant.PRIMARY：直接放在页面背景上时用带阴影的默认样式",
             surface = SectionSurface.Plain
         ) {
             var value by remember { mutableStateOf("") }

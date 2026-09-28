@@ -9,10 +9,10 @@ import com.gearui.components.combobox.ComboBox
 import com.gearui.components.select.SelectOption
 import com.gearui.foundation.field.FieldDescription
 import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
-import com.gearui.sample.pages.SectionSurface
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
 
@@ -39,7 +39,6 @@ fun ComboBoxExample(
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "输入筛选",
             description = "聚焦即展示候选，输入实时过滤；无匹配时不弹面板"
         ) {
@@ -55,13 +54,13 @@ fun ComboBoxExample(
                     label = "城市",
                     placeholder = "输入城市名",
                     autoFocus = true,
+                    variant = FieldVariant.SECONDARY,
                 )
                 FieldDescription(if (picked != null) "已选择:$picked" else "尚未选择")
             }
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "自定义过滤",
             description = "按代码或名称匹配，例如输入 usd"
         ) {
@@ -77,11 +76,11 @@ fun ComboBoxExample(
                         option.label.contains(text, ignoreCase = true) ||
                         option.value.contains(text, ignoreCase = true)
                 },
+                variant = FieldVariant.SECONDARY,
             )
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
             title = "禁用",
             description = "enabled = false"
         ) {
@@ -92,6 +91,7 @@ fun ComboBoxExample(
                 onSelect = {},
                 label = "城市",
                 enabled = false,
+                variant = FieldVariant.SECONDARY,
             )
         }
     }

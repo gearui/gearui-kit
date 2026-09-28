@@ -1,4 +1,5 @@
 package com.gearui.components.input
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -46,7 +47,6 @@ import com.tencent.kuikly.compose.ui.text.input.KeyboardType
 import com.tencent.kuikly.compose.ui.text.input.PasswordVisualTransformation
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.interaction.*
 import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.theme.Theme
@@ -55,6 +55,9 @@ import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldFocusOverlay
 import com.gearui.foundation.field.LocalFieldEmbedded
 import com.gearui.foundation.field.FieldFrame
+import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fill
+import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.field.rememberInputFeedback
 import com.gearui.theme.LocalInputColors
 import com.tencent.kuikly.compose.foundation.hoverable
@@ -77,7 +80,7 @@ import com.gearui.foundation.typography.IconSizes
  * - character limit
  * - password mode
  * - multiline
- * - card style
+ * - field variant (primary / secondary)
  * - text alignment
  * - states: normal, error, disabled, read-only
  */
@@ -95,6 +98,8 @@ fun Input(
     error: String? = null,
     enabled: Boolean = true,
     readOnly: Boolean = false,
+    /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.PRIMARY,
     maxLength: Int? = null,
     showCounter: Boolean = false,
     maxLines: Int = 1,
@@ -103,7 +108,6 @@ fun Input(
     textAlign: TextAlign = TextAlign.Start,
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
-    cardStyle: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     onSend: (() -> Unit)? = null,
     prefix: (@Composable () -> Unit)? = null,
@@ -176,10 +180,7 @@ fun Input(
     // Keep border width stable to avoid layout jump when focus/error changes.
     val borderWidth = tokens.borderWidth
 
-    val backgroundColor = when {
-        cardStyle -> colors.muted
-        else -> inputColors.background
-    }
+    val backgroundColor = variant.fill(inputColors.background)
 
     val inputTextStyle = when (size) {
         InputSize.LARGE -> Theme.typography.bodyLarge
@@ -213,7 +214,7 @@ fun Input(
         // conditional. It was already constant-true before (borderWidth = 1f).
         val borderModifier = Modifier.border(borderWidth, borderColor, shape)
 
-        // Only multi-line fields grow. A single-line card-style field used to take just a
+        // Only multi-line fields grow. A single-line filled field used to take just a
         // minimum height; with the parent's height unbounded, the weighted content row
         // below then measured to zero and the text, placeholder, prefix and suffix all
         // vanished, leaving an empty gray pill.
@@ -244,9 +245,9 @@ fun Input(
         // clickable — that only covers taps on the padding, and cannot compensate
         // for Kuikly's intermittent focus loss inside the EditText. pointerInput
         // Reference `.input__input--variant-primary`: field colour, no border, and the
-        // field shadow stack (`ios:shadow-field`). cardStyle is the secondary variant
-        // (default fill for use on surfaces) and has no shadow.
-        FieldFrame(embedded = embedded, shape = shape, shadowed = !cardStyle) {
+        // field shadow stack (`ios:shadow-field`). The secondary variant (muted fill for
+        // use on surfaces) has no shadow.
+        FieldFrame(embedded = embedded, shape = shape, shadowed = variant.shadowed) {
             Box(
                 modifier = feedback.then(containerModifier)
                     .onGloballyPositioned { if (it.size.width > 0) positioned = true }
@@ -273,7 +274,7 @@ fun Input(
                         .fillMaxWidth()
                         .padding(
                             horizontal = tokens.paddingHorizontal,
-                            vertical = if (cardStyle && maxLines > 1) 12.dp else 0.dp
+                            vertical = if (variant == FieldVariant.SECONDARY && maxLines > 1) Spacing.md else Spacing.none
                         ),
                     verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
                 ) {
@@ -410,8 +411,8 @@ fun Input(
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
                             modifier = Modifier
-                                .size(20.dp)
-                                .iconPressFeedback(clearPressed, 20.dp, CircleShape)
+                                .size(ControlGeometry.inputClearSize)
+                                .iconPressFeedback(clearPressed, ControlGeometry.inputClearSize, CircleShape)
                                 .pointerInput(Unit) {
                                     awaitEachGesture {
                                         val down = awaitFirstDown(

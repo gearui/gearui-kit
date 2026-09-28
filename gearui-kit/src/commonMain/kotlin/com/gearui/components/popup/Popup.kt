@@ -1,5 +1,6 @@
 package com.gearui.components.popup
 
+import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.material.Materials
 import com.gearui.foundation.material.MaterialSurface
 import androidx.compose.runtime.*
@@ -56,7 +57,7 @@ object Popup {
         anchorBounds: Rect?,
         placement: OverlayPlacement = OverlayPlacement.BottomLeft,
         offsetX: Dp = 0.dp,
-        offsetY: Dp = 4.dp,
+        offsetY: Dp = ControlGeometry.overlayOffset,
         dismissOnOutside: Boolean = true,
         autoFlip: Boolean = true,
         onDismiss: () -> Unit = {},

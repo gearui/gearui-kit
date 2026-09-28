@@ -1,5 +1,7 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.primitives.BadgeType
+import com.gearui.primitives.Badge
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.motion.rowPressFeedback
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
@@ -231,7 +233,7 @@ fun ActionSheetContent(
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
     gridColumns: Int = 4,
-    maxListHeight: Dp = 400.dp,
+    maxListHeight: Dp = ControlGeometry.sheetMaxListHeight,
     onSelected: ((ActionSheetItem, Int) -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
     onDismiss: () -> Unit = {}
@@ -475,18 +477,7 @@ private fun ActionSheetListItem(
 
                 if (item.badge != null) {
                     Spacer(modifier = Modifier.width(Spacing.sm))
-                    Box(
-                        modifier = Modifier
-                            .clip(shapes.lg)
-                            .background(colors.destructive)
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = item.badge,
-                            style = Theme.typography.bodyExtraSmall,
-                            color = colors.destructiveForeground
-                        )
-                    }
+                    Badge(type = BadgeType.Message, message = item.badge)
                 }
 
                 if (item.showRedPoint && item.badge == null) {
@@ -651,20 +642,13 @@ private fun ActionSheetGridItem(
 
             // Badge
             if (item.badge != null) {
-                Box(
+                Badge(
+                    type = BadgeType.Message,
+                    message = item.badge,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .offset(x = Spacing.xs, y = -Spacing.xs)
-                        .clip(shapes.lg)
-                        .background(colors.destructive)
-                        .padding(horizontal = Spacing.xs, vertical = 1.dp)
-                ) {
-                    Text(
-                        text = item.badge,
-                        style = Theme.typography.bodyExtraSmall,
-                        color = colors.primaryForeground
-                    )
-                }
+                        .offset(x = Spacing.xs, y = -Spacing.xs),
+                )
             }
 
             // Red dot

@@ -1,5 +1,6 @@
 package com.gearui.components.loading
 
+import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.Canvas
@@ -12,7 +13,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.StrokeCap
 import com.tencent.kuikly.compose.ui.unit.Dp
-import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.geometry.Offset
 import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
@@ -51,14 +51,14 @@ fun Loading(
     val indicatorColor = color ?: colors.primary
     val indicatorSize = when (size) {
         // Reference `.spinner__root--size-*`: 16 / 24 / 32.
-        LoadingSize.SMALL -> 16.dp
-        LoadingSize.MEDIUM -> 24.dp
-        LoadingSize.LARGE -> 32.dp
+        LoadingSize.SMALL -> ControlGeometry.loadingSizeSmall
+        LoadingSize.MEDIUM -> ControlGeometry.loadingSizeMedium
+        LoadingSize.LARGE -> ControlGeometry.loadingSizeLarge
     }
     val strokeWidth = when (size) {
-        LoadingSize.SMALL -> 2.dp
-        LoadingSize.MEDIUM -> 3.dp
-        LoadingSize.LARGE -> 4.dp
+        LoadingSize.SMALL -> ControlGeometry.loadingStrokeSmall
+        LoadingSize.MEDIUM -> ControlGeometry.loadingStrokeMedium
+        LoadingSize.LARGE -> ControlGeometry.loadingStrokeLarge
     }
 
     val content: @Composable () -> Unit = {
@@ -91,9 +91,9 @@ fun Loading(
         // Text
         if (text != null) {
             val spacing = when (size) {
-                LoadingSize.SMALL -> 6.dp
-                LoadingSize.MEDIUM -> 8.dp
-                LoadingSize.LARGE -> 10.dp
+                LoadingSize.SMALL -> ControlGeometry.loadingDotSmall
+                LoadingSize.MEDIUM -> ControlGeometry.loadingDotMedium
+                LoadingSize.LARGE -> ControlGeometry.loadingDotLarge
             }
 
             Spacer(

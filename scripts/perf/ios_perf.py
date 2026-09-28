@@ -8,9 +8,9 @@ installed on the simulator. Prints one JSON object.
 
 What each number is — and is not:
 
-* cold_start_ms: terminate → launch → the home list appears in the accessibility
-  tree. Coarse: it includes the idb poll latency, reported as poll_ms, so compare
-  runs, do not quote it as device TTI. A simulator runs on the Mac's CPU.
+* startup_content: process start → first frame of the home screen's content, taken
+  in-app from the kernel's process start time, one cold start per run. A simulator
+  runs on the Mac's CPU, so compare runs; it is not device TTI.
 * theme: the in-app benchmark on the Performance page (state change → second
   frame after it), 20 flips of ~200 components.
 * frames: the in-app frame-interval recorder while the script flings the
@@ -89,19 +89,30 @@ def wait_for(sim, pred, timeout=30.0):
     return None
 
 
-def cold_start(sim, runs):
-    # idb latency, so the start figure can be read with its error bar
-    t = time.monotonic(); sim.tree(); poll_ms = (time.monotonic() - t) * 1000
-    samples = []
+def startup(sim, runs):
+    """Process start → first frame of the home screen's content, marked in-app.
+
+    Each run is a cold start; the Performance page then shows the mark that process
+    took. Unlike timing a launch from outside, this includes no tool latency.
+    """
+    samples, pages = [], []
     for _ in range(runs):
-        sim.terminate(); time.sleep(1.5)
-        t0 = time.monotonic()
-        sim.launch()
-        hit = wait_for(sim, lambda l, t: l.startswith("GearUI Kit"))
-        if hit:
-            samples.append((time.monotonic() - t0) * 1000)
-    return {"runs": len(samples), "median_ms": round(statistics.median(samples)) if samples else None,
-            "min_ms": round(min(samples)) if samples else None, "poll_ms": round(poll_ms)}
+        open_performance(sim)                 # terminates, launches, navigates
+        hit = wait_for(sim, lambda l, t: l.startswith("PERF startup"), 10)
+        value = parse(hit[0], "content") if hit else None
+        if value is not None:
+            samples.append(value)
+            page = parse(hit[0], "page")
+            if page is not None:
+                pages.append(page)
+    if not samples:
+        return {"runs": 0}
+    out = {"runs": len(samples), "median_ms": statistics.median(samples),
+           "min_ms": min(samples), "max_ms": max(samples)}
+    if pages:
+        out["page_created_median_ms"] = statistics.median(pages)
+        out["page_to_content_median_ms"] = statistics.median([c - p for c, p in zip(samples, pages)])
+    return out
 
 
 def open_performance(sim):
@@ -172,8 +183,7 @@ def main():
     udid = sys.argv[1]
     runs = int(sys.argv[sys.argv.index("--runs") + 1]) if "--runs" in sys.argv else 5
     sim = Sim(udid)
-    result = {"platform": "ios-simulator", "udid": udid, "cold_start": cold_start(sim, runs)}
-    open_performance(sim)
+    result = {"platform": "ios-simulator", "udid": udid, "startup_content": startup(sim, runs)}
     result["theme"] = theme(sim)
     result["frames"] = frames(sim)
     print(json.dumps(result, ensure_ascii=False, indent=2))

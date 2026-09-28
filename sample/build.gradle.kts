@@ -108,6 +108,14 @@ android {
         release {
             isMinifyEnabled = false
         }
+        // For scripts/perf only: release's code, installable. A debuggable build runs
+        // with ART optimisations off and measures the debugger, not the kit.
+        create("benchmark") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
+            matchingFallbacks += listOf("release")
+        }
     }
 
     compileOptions {

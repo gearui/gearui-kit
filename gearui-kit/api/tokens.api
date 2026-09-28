@@ -194,6 +194,7 @@
   colors.darkSuccessSoftForeground = {"$type":"color","$value":"{reference.dark.success-soft-foreground}"}
   colors.darkSurface = {"$type":"color","$value":"{reference.dark.surface}"}
   colors.darkSurfaceForeground = {"$type":"color","$value":"{reference.dark.surface-foreground}"}
+  colors.darkSwitchTrackOff = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.352941,0.352941,0.368627]}}
   colors.darkWarning = {"$type":"color","$value":"{reference.dark.warning}"}
   colors.darkWarningForeground = {"$type":"color","$value":"{reference.dark.warning-foreground}"}
   colors.darkWarningSoft = {"$type":"color","$value":"{reference.dark.warning-soft}"}
@@ -234,6 +235,7 @@
   colors.lightSuccessSoftForeground = {"$type":"color","$value":"{reference.light.success-soft-foreground}"}
   colors.lightSurface = {"$type":"color","$value":"{reference.light.surface}"}
   colors.lightSurfaceForeground = {"$type":"color","$value":"{reference.light.surface-foreground}"}
+  colors.lightSwitchTrackOff = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.772549,0.772549,0.780392]}}
   colors.lightWarning = {"$type":"color","$value":"{reference.light.warning}"}
   colors.lightWarningForeground = {"$type":"color","$value":"{reference.light.warning-foreground}"}
   colors.lightWarningSoft = {"$type":"color","$value":"{reference.light.warning-soft}"}
@@ -441,7 +443,7 @@
   geometry.tagGroupMediumPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.tagGroupMediumPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.tagGroupMediumRadius = {"$type":"dimension","$value":{"unit":"px","value":16}}
-  geometry.tagGroupRemoveIcon = {"$type":"dimension","$value":{"unit":"px","value":14}}
+  geometry.tagGroupRemoveIcon = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.tagGroupSmallPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":2}}
   geometry.tagGroupSmallPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.tagGroupSmallRadius = {"$type":"dimension","$value":{"unit":"px","value":12}}

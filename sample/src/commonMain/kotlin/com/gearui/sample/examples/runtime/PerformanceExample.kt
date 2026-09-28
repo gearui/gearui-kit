@@ -24,6 +24,7 @@ import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
 import com.gearui.sample.pages.LocalSettingsState
 import com.gearui.sample.pages.ThemeStyle
+import com.gearui.sample.perf.StartupMark
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
@@ -74,6 +75,18 @@ fun PerformanceExample(
     val scope = rememberCoroutineScope()
 
     ExamplePage(component = component, onBack = onBack) {
+        ExampleSection(
+            title = "冷启动",
+            description = "从进程启动到首页内容第一帧画完。每个进程只记一次，冷启动后进入本页读取。预算 ≤ 1200 ms（Android）/ 1000 ms（iOS）。",
+        ) {
+            Text(
+                text = StartupMark.contentMillis?.let { "PERF startup page=${StartupMark.pageMillis} content=$it" }
+                    ?: "PERF startup n/a",
+                style = Theme.typography.bodyMedium,
+                color = colors.foreground,
+            )
+        }
+
         ExampleSection(
             title = "主题切换",
             description = "整个 App 深浅色连切 20 次（本页约 200 个组件）；每次计到状态改变后的第二帧开始。预算 ≤ 120 ms。",

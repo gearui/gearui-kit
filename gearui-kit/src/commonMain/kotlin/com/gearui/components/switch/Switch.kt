@@ -1,5 +1,7 @@
 package com.gearui.components.switch
 
+import com.tencent.kuikly.compose.ui.graphics.luminance
+import com.gearui.theme.DefaultPalette
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
@@ -113,7 +115,7 @@ internal fun SwitchVisual(
     Box(Modifier.width(width).height(height).graphicsLayer {
         alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
         scaleX = scale; scaleY = scale
-    }.clip(Theme.shapes.full).background(lerp(trackOffColor ?: colors.muted, trackOnColor ?: colors.primary, colorProgress)),
+    }.clip(Theme.shapes.full).background(lerp(trackOffColor ?: switchTrackOff(), trackOnColor ?: colors.primary, colorProgress)),
         contentAlignment = Alignment.CenterStart) {
         Box(Modifier.offset(x = offset).width(thumbWidth).height(thumbHeight).clip(Theme.shapes.full)
             .background(colors.primaryForeground), contentAlignment = Alignment.Center) {
@@ -157,3 +159,15 @@ fun SwitchWithLabel(
         SwitchVisual(checked, enabled, pressed, type, size, null, null, I18n.strings.field.switchOn, I18n.strings.field.switchOff)
     }
 }
+
+/**
+ * The off track, from iOS 26 measured on the simulator: (197,197,199) light and
+ * (90,90,94) dark. `colors.muted` — HeroUI's default fill — sat twelve levels from the
+ * grouped background and the off switch vanished on it. Chosen by the theme's
+ * luminance, the way surface shadow styles are, so the public colour roles stay as
+ * they are.
+ */
+@Composable
+private fun switchTrackOff(): Color =
+    if (Theme.colors.background.luminance() < 0.5f) DefaultPalette.darkSwitchTrackOff
+    else DefaultPalette.lightSwitchTrackOff

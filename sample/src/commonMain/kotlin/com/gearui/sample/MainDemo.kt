@@ -1,5 +1,7 @@
 package com.gearui.sample
 
+import com.gearui.sample.perf.StartupMark
+import com.gearui.sample.perf.MarkStartupContent
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.BackHandler
 import com.tencent.kuikly.compose.animation.core.Animatable
@@ -57,6 +59,12 @@ enum class AppPage {
  */
 @Page("MainDemo")
 class MainDemo : View() {
+
+    init {
+        // Splits startup: everything before this is loading, the host and the Kuikly
+        // runtime; everything after it, up to the home content, is the page and the kit.
+        StartupMark.pageCreated()
+    }
 
     // MainDemoContent mounts the one App itself (it owns theme, brand and language).
     // Leaving the base class's wrapper on nests a second, light-themed App around it:
@@ -177,6 +185,7 @@ private fun MainDemoContentInner(settingsState: SettingsState) {
 
     when (currentPage) {
         AppPage.HOME -> {
+            MarkStartupContent()
             HomePage(
                 listState = homeListState,
                 onComponentClick = { component ->

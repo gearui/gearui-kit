@@ -119,7 +119,7 @@ internal object ControlGeometry {
     val tagGroupMediumPaddingBlock = 4.dp
     val tagGroupMediumPaddingInline = 10.dp
     val tagGroupMediumRadius = 16.dp
-    val tagGroupRemoveIcon = 14.dp
+    val tagGroupRemoveIcon = 12.dp
     val tagGroupSmallPaddingBlock = 2.dp
     val tagGroupSmallPaddingInline = 8.dp
     val tagGroupSmallRadius = 12.dp

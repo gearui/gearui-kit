@@ -267,6 +267,56 @@
     },
     "darkSeparatorSecondary": {
       "$value": "{reference.dark.separator-secondary}"
+    },
+    "lightSwitchTrackOff": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.772549,
+          0.772549,
+          0.780392
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "var(--default)",
+            "ref": "heroui-native 1.0.9 switch.animation.ts unselected track, light"
+          },
+          "ios": {
+            "value": "rgb(197,197,199)",
+            "ref": "iOS 26.2 Settings > Accessibility > Motion, off switch track, measured on simulator, light"
+          },
+          "basis": "ios",
+          "why": "The off track has to read against the page. HeroUI's default fill sits 12 levels from GearUI's grouped background and disappears; the switch is iOS's signature control and takes its track."
+        }
+      }
+    },
+    "darkSwitchTrackOff": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.352941,
+          0.352941,
+          0.368627
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "var(--default)",
+            "ref": "heroui-native 1.0.9 switch.animation.ts unselected track, dark"
+          },
+          "ios": {
+            "value": "rgb(90,90,94)",
+            "ref": "iOS 26.2 Settings > Accessibility > Motion, off switch track, measured on simulator, dark"
+          },
+          "basis": "ios",
+          "why": "The off track has to read against the page. HeroUI's default fill sits 12 levels from GearUI's grouped background and disappears; the switch is iOS's signature control and takes its track."
+        }
+      }
     }
   },
   "reference": {

@@ -4,16 +4,16 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**54 / 133** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**93 / 133** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `accordionPadding` | 12 | | | _尚未标注_ | |
-| `accordionSurfacePadding` | 20 | | | _尚未标注_ | |
-| `accordionTriggerGap` | 16 | | | _尚未标注_ | |
-| `accordionVerticalPadding` | 16 | | | _尚未标注_ | |
+| `accordionPadding` | 12 | 12 | — | HeroUI |  |
+| `accordionSurfacePadding` | 20 | 20 | — | HeroUI |  |
+| `accordionTriggerGap` | 16 | 16 | — | HeroUI |  |
+| `accordionVerticalPadding` | 16 | 16 | — | HeroUI |  |
 
 ## action
 
@@ -28,10 +28,10 @@
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
 | `alertActionTop` | 8 | | | _尚未标注_ | |
-| `alertGap` | 12 | | | _尚未标注_ | |
-| `alertIcon` | 18 | | | _尚未标注_ | |
-| `alertIndicatorOffset` | 3.5 | | | _尚未标注_ | |
-| `alertPadding` | 12 | | | _尚未标注_ | |
+| `alertGap` | 12 | 12 | — | HeroUI |  |
+| `alertIcon` | 18 | 18 | — | HeroUI |  |
+| `alertIndicatorOffset` | 3.5 | 3.5 | — | HeroUI |  |
+| `alertPadding` | 12 | 12 | — | HeroUI |  |
 
 ## avatar
 
@@ -93,7 +93,7 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `fieldLabelGap` | 6 | | | _尚未标注_ | |
+| `fieldLabelGap` | 6 | 6 | — | HeroUI |  |
 | `fieldPaddingLarge` | 12 | | | _尚未标注_ | |
 | `fieldPaddingMedium` | 12 | 12 | — | HeroUI |  |
 | `fieldPaddingSmall` | 12 | | | _尚未标注_ | |
@@ -135,12 +135,12 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `otpCaretMax` | 18 | | | _尚未标注_ | |
 | `otpCaretMin` | 16 | | | _尚未标注_ | |
-| `otpCaretWidth` | 2 | | | _尚未标注_ | |
-| `otpGap` | 8 | | | _尚未标注_ | |
-| `otpSeparatorHeight` | 2 | | | _尚未标注_ | |
-| `otpSeparatorWidth` | 8 | | | _尚未标注_ | |
-| `otpSlotHeight` | 48 | | | _尚未标注_ | |
-| `otpSlotWidth` | 44 | | | _尚未标注_ | |
+| `otpCaretWidth` | 2 | 2 | — | HeroUI |  |
+| `otpGap` | 8 | 8 | — | HeroUI |  |
+| `otpSeparatorHeight` | 2 | 2 | — | HeroUI |  |
+| `otpSeparatorWidth` | 8 | 8 | — | HeroUI |  |
+| `otpSlotHeight` | 48 | 48 | — | HeroUI |  |
+| `otpSlotWidth` | 44 | 44 | — | HeroUI |  |
 
 ## overlay
 
@@ -166,7 +166,7 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `radioThumb` | 10 | | | _尚未标注_ | |
+| `radioThumb` | 10 | 10 | — | HeroUI |  |
 
 ## radius
 
@@ -194,31 +194,31 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `scrollShadowSize` | 50 | | | _尚未标注_ | |
+| `scrollShadowSize` | 50 | 50 | — | HeroUI |  |
 
 ## search
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `searchClearSize` | 24 | | | _尚未标注_ | |
+| `searchClearSize` | 24 | 24 | — | HeroUI |  |
 
 ## select
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `selectContentPadding` | 12 | | | _尚未标注_ | |
+| `selectContentPadding` | 12 | 12 | — | HeroUI |  |
 | `selectIndicatorSlot` | 20 | | | _尚未标注_ | |
-| `selectItemPadding` | 8 | | | _尚未标注_ | |
+| `selectItemPadding` | 8 | 8 | — | HeroUI |  |
 | `selectPanelOffset` | 8 | | | _尚未标注_ | |
 
 ## selection
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `selectionLarge` | 28 | | | _尚未标注_ | |
-| `selectionMedium` | 24 | | | _尚未标注_ | |
-| `selectionSmall` | 20 | | | _尚未标注_ | |
-| `selectionTouchTarget` | 44 | | | _尚未标注_ | |
+| `selectionLarge` | 28 | — | — | GearUI | HeroUI's checkbox and radio ship one size (24); the small and large tiers step 4 either side so they sit with the 20/28 text and control tiers. |
+| `selectionMedium` | 24 | 24 | — | HeroUI |  |
+| `selectionSmall` | 20 | — | — | GearUI | HeroUI's checkbox and radio ship one size (24); the small and large tiers step 4 either side so they sit with the 20/28 text and control tiers. |
+| `selectionTouchTarget` | 44 | — | 44 | iOS |  |
 
 ## separator
 
@@ -239,10 +239,10 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `sliderCapsuleHeight` | 24 | | | _尚未标注_ | |
 | `sliderCapsuleInset` | 3 | | | _尚未标注_ | |
-| `sliderThumbHeight` | 20 | | | _尚未标注_ | |
-| `sliderThumbInset` | 2 | | | _尚未标注_ | |
-| `sliderThumbWidth` | 28 | | | _尚未标注_ | |
-| `sliderTrackHeight` | 20 | | | _尚未标注_ | |
+| `sliderThumbHeight` | 20 | 20 | — | HeroUI |  |
+| `sliderThumbInset` | 2 | 2 | — | HeroUI |  |
+| `sliderThumbWidth` | 28 | 28 | — | HeroUI |  |
+| `sliderTrackHeight` | 20 | 20 | — | HeroUI |  |
 
 ## switch
 
@@ -268,17 +268,17 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `tagGroupGap` | 8 | | | _尚未标注_ | |
-| `tagGroupLargePaddingBlock` | 6 | | | _尚未标注_ | |
-| `tagGroupLargePaddingInline` | 12 | | | _尚未标注_ | |
-| `tagGroupLargeRadius` | 24 | | | _尚未标注_ | |
-| `tagGroupMediumPaddingBlock` | 4 | | | _尚未标注_ | |
-| `tagGroupMediumPaddingInline` | 10 | | | _尚未标注_ | |
-| `tagGroupMediumRadius` | 16 | | | _尚未标注_ | |
-| `tagGroupRemoveIcon` | 14 | | | _尚未标注_ | |
-| `tagGroupSmallPaddingBlock` | 2 | | | _尚未标注_ | |
-| `tagGroupSmallPaddingInline` | 8 | | | _尚未标注_ | |
-| `tagGroupSmallRadius` | 12 | | | _尚未标注_ | |
+| `tagGroupGap` | 8 | 8 | — | HeroUI |  |
+| `tagGroupLargePaddingBlock` | 6 | 6 | — | HeroUI |  |
+| `tagGroupLargePaddingInline` | 12 | 12 | — | HeroUI |  |
+| `tagGroupLargeRadius` | 24 | 24 | — | HeroUI |  |
+| `tagGroupMediumPaddingBlock` | 4 | 4 | — | HeroUI |  |
+| `tagGroupMediumPaddingInline` | 10 | 10 | — | HeroUI |  |
+| `tagGroupMediumRadius` | 16 | 16 | — | HeroUI |  |
+| `tagGroupRemoveIcon` | 12 | 12 | — | HeroUI |  |
+| `tagGroupSmallPaddingBlock` | 2 | 2 | — | HeroUI |  |
+| `tagGroupSmallPaddingInline` | 8 | 8 | — | HeroUI |  |
+| `tagGroupSmallRadius` | 12 | 12 | — | HeroUI |  |
 | `tagHeightLarge` | 36 | | | _尚未标注_ | |
 | `tagHeightMedium` | 28 | | | _尚未标注_ | |
 | `tagHeightSmall` | 20 | | | _尚未标注_ | |
@@ -316,6 +316,14 @@
 
 ## 参考出处
 
+- heroui-native 1.0.9 accordion.css trigger padding-inline
+- heroui-native 1.0.9 accordion.css trigger surface padding-inline
+- heroui-native 1.0.9 accordion.css trigger gap
+- heroui-native 1.0.9 accordion.css trigger padding-block
+- heroui-native 1.0.9 alert.css root gap
+- heroui-native 1.0.9 alert.constants.ts DEFAULT_ICON_SIZE
+- heroui-native 1.0.9 alert.css indicator padding-top
+- heroui-native 1.0.9 alert.css root padding
 - heroui-native 1.0.9 button.css size-lg gap
 - heroui-native 1.0.9 button.css size-md gap
 - heroui-native 1.0.9 button.css size-sm gap
@@ -330,6 +338,7 @@
 - heroui-native 1.0.9 dialog.md example gap-3 between actions
 - heroui-native 1.0.9 dialog.md example mb-5 above the actions
 - heroui-native 1.0.9 dialog.md example gap-1.5 between title and description
+- heroui-native 1.0.9 text-field.css root gap
 - heroui-native 1.0.9 input.css padding-inline
 - Apple HIG minimum hit target
 - heroui-native 1.0.9 list-group.css item gap
@@ -342,10 +351,17 @@
 - heroui-native 1.0.9 menu.css item padding-inline
 - heroui-native 1.0.9 menu.css content padding-block
 - heroui-native 1.0.9 menu.css content padding-inline
+- heroui-native 1.0.9 input-otp.css slot-caret width
+- heroui-native 1.0.9 input-otp.css group gap
+- heroui-native 1.0.9 input-otp.css separator height
+- heroui-native 1.0.9 input-otp.css separator width
+- heroui-native 1.0.9 input-otp.css slot height
+- heroui-native 1.0.9 input-otp.css slot width
 - heroui-native 1.0.9 menu/popover DEFAULT_OFFSET
 - heroui-native 1.0.9 dialog.css content padding
 - heroui-native 1.0.9 popover.css content padding-block
 - heroui-native 1.0.9 popover.css content padding-inline
+- heroui-native 1.0.9 radio.css indicator size
 - heroui-native 1.0.9 switch.css border-radius 9999px
 - heroui-native 1.0.9 theme.css --radius-2xl
 - heroui-native 1.0.9 theme.css --radius-xl
@@ -353,8 +369,17 @@
 - heroui-native 1.0.9 theme.css --radius-3xl (dialog, menu, popover)
 - heroui-native 1.0.9 theme.css --radius-4xl
 - heroui-native 1.0.9 theme.css --radius-lg
+- heroui-native 1.0.9 scroll-shadow.constants.ts DEFAULT_SHADOW_SIZE
+- heroui-native 1.0.9 search-field.css clear button size
+- heroui-native 1.0.9 select.css content padding
+- heroui-native 1.0.9 select.css item padding-inline
+- heroui-native 1.0.9 checkbox.css / radio.css root size
 - heroui-native 1.0.9 separator.css hairlineWidth() at 3x
 - iOS 26.2 Settings, measured on simulator (grouped list separator)
+- heroui-native 1.0.9 slider.css thumb height (horizontal)
+- heroui-native 1.0.9 slider.css thumb-container padding
+- heroui-native 1.0.9 slider.css thumb width (horizontal)
+- heroui-native 1.0.9 slider.css track height
 - heroui-native 1.0.9 switch.css root height
 - iOS 26.2 Settings, measured on simulator
 - heroui-native 1.0.9 switch.css thumb inset
@@ -366,5 +391,16 @@
 - heroui-native 1.0.9 tabs.css list primary padding
 - heroui-native 1.0.9 tabs.css trigger padding-block
 - heroui-native 1.0.9 tabs.css trigger padding-inline
+- heroui-native 1.0.9 tag-group.css list gap
+- heroui-native 1.0.9 tag-group.css tag size-lg padding
+- heroui-native 1.0.9 tag-group.css tag size-lg padding-inline
+- heroui-native 1.0.9 tag-group.css tag size-lg --radius-3xl
+- heroui-native 1.0.9 tag-group.css tag size-md padding
+- heroui-native 1.0.9 tag-group.css tag size-md padding-inline
+- heroui-native 1.0.9 tag-group.css tag size-md --radius-2xl
+- heroui-native 1.0.9 tag-group.tsx remove icon size
+- heroui-native 1.0.9 tag-group.css tag size-sm padding
+- heroui-native 1.0.9 tag-group.css tag size-sm padding-inline
+- heroui-native 1.0.9 tag-group.css tag size-sm --radius-xl
 - heroui-native 1.0.9 text-area.css height
 - heroui-native 1.0.9 text-area.css padding-block

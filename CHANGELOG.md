@@ -9,7 +9,8 @@
   which one ships and why — and `scripts/component_spec.py --check` (in CI) rejects a
   value that drifts from its chosen side, a GearUI value without a reason, and a new
   token without provenance. Unsourced tokens sit in a baseline that may only shrink.
-  `docs/COMPONENT_METRICS.md` is generated from the same data. 54 of 133 sourced.
+  `docs/COMPONENT_METRICS.md` is generated from the same data. 93 of 133 sourced; the
+  40 left belong to components HeroUI does not have and each needs a design decision.
 
 - **Performance page and scripts.** The sample's Performance page benchmarks a whole-app
   theme switch (with ~200 components on the page) and records frame intervals while a 1000-row `List` is
@@ -27,6 +28,13 @@
   (was 16 on both axes, a 56 row). `listPadding` is split into `listPaddingInline`
   and `listPaddingBlock`; the separator inset follows the text.
 - **Dialog title-to-description gap is 6**, HeroUI's own value (was 4).
+- **The off switch reads against the page.** Its track takes iOS 26's colour, measured:
+  (197,197,199) light, (90,90,94) dark. HeroUI's default fill sat 12 levels from the
+  grouped background and the off switch disappeared on it.
+- **Tag remove icon is 12**, HeroUI's value (was 14).
+- **Performance: startup is measured to content, not to the first frame.** The sample
+  marks process start → first frame of the home list in-app on Android and iOS; a
+  `benchmark` build type (release code, not debuggable) is what `scripts/perf` measure.
 
 ## [1.0.0-beta4] - 2026-09-25
 

@@ -69,26 +69,41 @@ evidence).
   Verified in the sample on iPhone 17 Pro: single-action alert, two-action
   confirm, destructive confirm, three-action stack, explicit trailing form.
 
-**Performance** (2026-09-28, sample Performance page, `scripts/perf/`):
+**Performance** (2026-09-28, sample Performance page, `scripts/perf/`).
 
-| Measure | iOS 26.2 simulator, Debug build | Budget |
+Android — Xiaomi 12 Pro (2201122G), Android 16, 120 Hz, the `benchmark` build
+type (release code, not debuggable):
+
+| Measure | Result | Budget |
 | --- | --- | --- |
-| Theme switch, whole app with ~200 components on the page, 20 flips (state change → second frame after it); two runs | median 89.4–91.6 ms, p90 93.3–99.4, max 94.5–101.6 | ≤ 120 ms |
-| 1000-row `List` flung for 5 s (in-app frame intervals); two runs | 299–300 frames, period 16.6 ms, p95 19.5, janky 0.0–0.3 % | < 3 % |
-| Cold start | not measured: the idb poll alone takes ~750 ms | ≤ 1000 ms |
+| Startup to home content (in-app mark: process start → first frame of the home list), 5 cold starts | median 310 ms (306–357): 60 to the page, 250 page → content | ≤ 1200 ms |
+| Activity first frame, `am start -W -S` TotalTime, 10 cold starts | median 297 ms (293–304) | — |
+| Theme switch, whole app, ~200 components on the page, 20 flips (state change → second frame after it) | median 36.9 ms, p90 44.5, max 51.1 | ≤ 120 ms |
+| 1000-row `List` flung for 5 s, `dumpsys gfxinfo` | 496 frames, janky 0.20 %, p50 8 ms, p99 11 ms | < 3 % |
+| Same flings, in-app frame intervals | 589 frames, period 8.2 ms, janky 1.3 % | < 3 % |
 
-A simulator runs on the Mac's CPU and a Debug Kotlin/Native build is slower
-than Release, so these are regression baselines, not budget evidence. Android
-device numbers (`am start -W` TTID, `dumpsys gfxinfo`) come from
-`scripts/perf/android_perf.sh` on a connected device.
+The same device on a **debuggable** build read 1496 ms to first frame and a
+125 ms theme switch — five times slower at start. A debuggable build runs with
+ART's optimisations off; it measures the debugger, not the kit. Measure the
+`benchmark` build.
+
+iOS 26.2 simulator, Release build (regression baseline — a simulator runs on
+the Mac's CPU): startup to content median 1030 ms — 764 to the page, 270 page →
+content; theme switch median 36.8 ms; scroll 300 frames at 16.6 ms, 0.0 % janky.
+The kit's share of startup, page → content, is the same on both platforms
+(250–270 ms). The iOS excess is before the page exists: loading the 81 MB
+statically linked binary and the host and Kuikly start-up on the simulator. It
+needs an iOS device pass before it counts against the 1000 ms budget.
 
 ## 3. Open Risks And Limits
 
 - **Screen reader and focus traversal**: unaccepted globally. Semantics are
   implemented and inspectable, but no screen-reader pass has been recorded.
-- **Performance**: an iOS simulator baseline exists (above); Android device
-  numbers, Release-build numbers and an in-app cold-start marker for iOS are
-  still to come. Nothing runs nightly yet.
+- **Performance**: Android meets every budget on a 2022 flagship; a low-end
+  device has not been measured. iOS has simulator numbers only; startup there
+  is 1030 ms, almost all of it before the Kotlin page exists — an iOS device
+  pass decides whether that is the simulator or the binary. Nothing runs
+  nightly.
 - **Web**: development builds pass; live viewport-resize behavior and full
   browser interaction acceptance are open.
 - **HarmonyOS**: no connected device for visual acceptance; build evidence

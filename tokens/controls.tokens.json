@@ -7,6 +7,15 @@
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 accordion.css trigger padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "accordionSurfacePadding": {
@@ -14,6 +23,15 @@
       "$value": {
         "value": 20,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 accordion.css trigger surface padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "accordionTriggerGap": {
@@ -21,6 +39,15 @@
       "$value": {
         "value": 16,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 accordion.css trigger gap"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "accordionVerticalPadding": {
@@ -28,6 +55,15 @@
       "$value": {
         "value": 16,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 accordion.css trigger padding-block"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "actionSheetDescriptionRow": {
@@ -59,24 +95,60 @@
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 alert.css root gap"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "alertIcon": {
       "$value": {
         "value": 18,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 18,
+            "ref": "heroui-native 1.0.9 alert.constants.ts DEFAULT_ICON_SIZE"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "alertIndicatorOffset": {
       "$value": {
         "value": 3.5,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 3.5,
+            "ref": "heroui-native 1.0.9 alert.css indicator padding-top"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "alertPadding": {
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 alert.css root padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "avatarGroupSize": {
@@ -362,6 +434,15 @@
       "$value": {
         "value": 6,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 text-field.css root gap"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "fieldPaddingLarge": {
@@ -607,36 +688,90 @@
       "$value": {
         "value": 2,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 input-otp.css slot-caret width"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "otpGap": {
       "$value": {
         "value": 8,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 input-otp.css group gap"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "otpSeparatorHeight": {
       "$value": {
         "value": 2,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 input-otp.css separator height"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "otpSeparatorWidth": {
       "$value": {
         "value": 8,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 input-otp.css separator width"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "otpSlotHeight": {
       "$value": {
         "value": 48,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 48,
+            "ref": "heroui-native 1.0.9 input-otp.css slot height"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "otpSlotWidth": {
       "$value": {
         "value": 44,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 44,
+            "ref": "heroui-native 1.0.9 input-otp.css slot width"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "overlayOffset": {
@@ -709,6 +844,15 @@
       "$value": {
         "value": 10,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 10,
+            "ref": "heroui-native 1.0.9 radio.css indicator size"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "radiusDefault": {
@@ -856,18 +1000,45 @@
       "$value": {
         "value": 50,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 50,
+            "ref": "heroui-native 1.0.9 scroll-shadow.constants.ts DEFAULT_SHADOW_SIZE"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "searchClearSize": {
       "$value": {
         "value": 24,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 24,
+            "ref": "heroui-native 1.0.9 search-field.css clear button size"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "selectContentPadding": {
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 select.css content padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "selectIndicatorSlot": {
@@ -880,6 +1051,15 @@
       "$value": {
         "value": 8,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 select.css item padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "selectPanelOffset": {
@@ -892,24 +1072,54 @@
       "$value": {
         "value": 28,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "HeroUI's checkbox and radio ship one size (24); the small and large tiers step 4 either side so they sit with the 20/28 text and control tiers."
+        }
       }
     },
     "selectionMedium": {
       "$value": {
         "value": 24,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 24,
+            "ref": "heroui-native 1.0.9 checkbox.css / radio.css root size"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "selectionSmall": {
       "$value": {
         "value": 20,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "HeroUI's checkbox and radio ship one size (24); the small and large tiers step 4 either side so they sit with the 20/28 text and control tiers."
+        }
       }
     },
     "selectionTouchTarget": {
       "$value": {
         "value": 44,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {
+            "value": 44,
+            "ref": "Apple HIG minimum hit target"
+          },
+          "basis": "ios"
+        }
       }
     },
     "separatorThickness": {
@@ -960,24 +1170,60 @@
       "$value": {
         "value": 20,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 slider.css thumb height (horizontal)"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "sliderThumbInset": {
       "$value": {
         "value": 2,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 slider.css thumb-container padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "sliderThumbWidth": {
       "$value": {
         "value": 28,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 28,
+            "ref": "heroui-native 1.0.9 slider.css thumb width (horizontal)"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "sliderTrackHeight": {
       "$value": {
         "value": 20,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 20,
+            "ref": "heroui-native 1.0.9 slider.css track height"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "switchHeight": {
@@ -1158,66 +1404,165 @@
       "$value": {
         "value": 8,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 tag-group.css list gap"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupLargePaddingBlock": {
       "$value": {
         "value": 6,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 6,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-lg padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupLargePaddingInline": {
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-lg padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupLargeRadius": {
       "$value": {
         "value": 24,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 24,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-lg --radius-3xl"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupMediumPaddingBlock": {
       "$value": {
         "value": 4,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 4,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-md padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupMediumPaddingInline": {
       "$value": {
         "value": 10,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 10,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-md padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupMediumRadius": {
       "$value": {
         "value": 16,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 16,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-md --radius-2xl"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupRemoveIcon": {
       "$value": {
-        "value": 14,
+        "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 tag-group.tsx remove icon size"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupSmallPaddingBlock": {
       "$value": {
         "value": 2,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 2,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-sm padding"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupSmallPaddingInline": {
       "$value": {
         "value": 8,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 8,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-sm padding-inline"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagGroupSmallRadius": {
       "$value": {
         "value": 12,
         "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": 12,
+            "ref": "heroui-native 1.0.9 tag-group.css tag size-sm --radius-xl"
+          },
+          "basis": "heroui"
+        }
       }
     },
     "tagHeightLarge": {

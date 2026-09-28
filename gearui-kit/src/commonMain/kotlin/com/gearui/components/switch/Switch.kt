@@ -118,7 +118,7 @@ internal fun SwitchVisual(
     }.clip(Theme.shapes.full).background(lerp(trackOffColor ?: switchTrackOff(), trackOnColor ?: colors.primary, colorProgress)),
         contentAlignment = Alignment.CenterStart) {
         Box(Modifier.offset(x = offset).width(thumbWidth).height(thumbHeight).clip(Theme.shapes.full)
-            .background(colors.primaryForeground), contentAlignment = Alignment.Center) {
+            .background(switchThumb()), contentAlignment = Alignment.Center) {
             val contentColor = if (checked) colors.primary else colors.mutedForeground
             when (type) {
                 SwitchType.TEXT -> Text(if (checked) openText else closeText, style = Theme.typography.bodySmall, color = contentColor, maxLines = 1)
@@ -171,3 +171,13 @@ fun SwitchWithLabel(
 private fun switchTrackOff(): Color =
     if (Theme.colors.background.luminance() < 0.5f) DefaultPalette.darkSwitchTrackOff
     else DefaultPalette.lightSwitchTrackOff
+
+/**
+ * The thumb, white in every state and theme, as iOS draws it. It used to be the
+ * brand's primary foreground in both states, so a brand with a dark foreground — a
+ * yellow brand with black text — drew a black thumb even when the switch was off.
+ */
+@Composable
+private fun switchThumb(): Color =
+    if (Theme.colors.background.luminance() < 0.5f) DefaultPalette.darkSwitchThumb
+    else DefaultPalette.lightSwitchThumb

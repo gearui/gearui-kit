@@ -90,21 +90,23 @@ fun Cell(
                     Modifier
                 }
             )
-            .padding(
-                horizontal = tokens.paddingHorizontal,
-                vertical = tokens.paddingVertical
-            ),
+            // Vertical padding belongs to the leading and text blocks, not to the
+            // row. A trailing accessory — a switch with its 44 touch target, say —
+            // is centred in the row and may overlap the padding, as it does on
+            // iOS: padding the whole row made every switch row 44 + 28 = 72 tall
+            // beside 52-tall rows in the same card.
+            .padding(horizontal = tokens.paddingHorizontal),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Native ListGroup centers the prefix against the complete content block.
         // Do not constrain its height: a caller may supply an avatar instead of an icon.
         if (leading != null) {
-            leading()
+            Box(modifier = Modifier.padding(vertical = tokens.paddingVertical)) { leading() }
             Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
         }
 
         // Middle content
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.weight(1f).padding(vertical = tokens.paddingVertical)) {
             if (titleContent != null) {
                 titleContent()
             } else {

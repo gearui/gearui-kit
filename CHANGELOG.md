@@ -39,6 +39,14 @@
   (197,197,199) light, (90,90,94) dark. HeroUI's default fill sat 12 levels from the
   grouped background and the off switch disappeared on it.
 - **Tag remove icon is 12**, HeroUI's value (was 14).
+- **The switch thumb is white in every state**, as iOS draws it. It was the brand's
+  primary foreground in both states, so a brand with a dark foreground drew a black
+  thumb even when the switch was off.
+- **An accessory no longer makes its row taller.** A `Cell` padded the whole row, so a
+  switch's 44 touch target plus 28 of padding made every switch row 72 tall beside
+  52-tall rows in the same card. Padding now belongs to the leading and text blocks;
+  the accessory is centred and may overlap it, as on iOS. Text and avatar rows keep
+  their height.
 - **A `CellGroup` title lines up with the rows' content edge**, not with the separator.
   A group whose rows lead with an icon or avatar insets its separators past it, and
   the title used to move with them, out of line with every other group.

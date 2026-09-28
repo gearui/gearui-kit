@@ -317,6 +317,56 @@
           "why": "The off track has to read against the page. HeroUI's default fill sits 12 levels from GearUI's grouped background and disappears; the switch is iOS's signature control and takes its track."
         }
       }
+    },
+    "lightSwitchThumb": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "white off / var(--accent-foreground) on",
+            "ref": "heroui-native 1.0.9 switch.styles.ts thumb, light"
+          },
+          "ios": {
+            "value": "rgb(255,255,255)",
+            "ref": "iOS 26.2 Settings > Accessibility > Motion, switch thumb, measured on simulator, light"
+          },
+          "basis": "ios",
+          "why": "The thumb was the brand's primary foreground in both states, so a brand with a dark foreground drew a black thumb even when off. The switch follows iOS, whose thumb is white in every state and theme."
+        }
+      }
+    },
+    "darkSwitchThumb": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "heroui": {
+            "value": "white off / var(--accent-foreground) on",
+            "ref": "heroui-native 1.0.9 switch.styles.ts thumb, dark"
+          },
+          "ios": {
+            "value": "rgb(255,255,255)",
+            "ref": "iOS 26.2 Settings > Accessibility > Motion, switch thumb, measured on simulator, dark"
+          },
+          "basis": "ios",
+          "why": "The thumb was the brand's primary foreground in both states, so a brand with a dark foreground drew a black thumb even when off. The switch follows iOS, whose thumb is white in every state and theme."
+        }
+      }
     }
   },
   "reference": {

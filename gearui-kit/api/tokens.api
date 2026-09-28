@@ -194,6 +194,7 @@
   colors.darkSuccessSoftForeground = {"$type":"color","$value":"{reference.dark.success-soft-foreground}"}
   colors.darkSurface = {"$type":"color","$value":"{reference.dark.surface}"}
   colors.darkSurfaceForeground = {"$type":"color","$value":"{reference.dark.surface-foreground}"}
+  colors.darkSwitchThumb = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[1,1,1]}}
   colors.darkSwitchTrackOff = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.352941,0.352941,0.368627]}}
   colors.darkWarning = {"$type":"color","$value":"{reference.dark.warning}"}
   colors.darkWarningForeground = {"$type":"color","$value":"{reference.dark.warning-foreground}"}
@@ -235,6 +236,7 @@
   colors.lightSuccessSoftForeground = {"$type":"color","$value":"{reference.light.success-soft-foreground}"}
   colors.lightSurface = {"$type":"color","$value":"{reference.light.surface}"}
   colors.lightSurfaceForeground = {"$type":"color","$value":"{reference.light.surface-foreground}"}
+  colors.lightSwitchThumb = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[1,1,1]}}
   colors.lightSwitchTrackOff = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.772549,0.772549,0.780392]}}
   colors.lightWarning = {"$type":"color","$value":"{reference.light.warning}"}
   colors.lightWarningForeground = {"$type":"color","$value":"{reference.light.warning-foreground}"}

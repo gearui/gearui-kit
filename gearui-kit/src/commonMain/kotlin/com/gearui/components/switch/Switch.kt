@@ -1,6 +1,8 @@
 package com.gearui.components.switch
 
+import com.gearui.foundation.interaction.controlSemantics
 import com.tencent.kuikly.compose.ui.graphics.luminance
+import com.gearui.foundation.interaction.controlLabel
 import com.gearui.theme.DefaultPalette
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
@@ -76,13 +78,22 @@ fun Switch(
     trackOnColor: Color? = null,
     trackOffColor: Color? = null,
     openText: String = I18n.strings.field.switchOn,
-    closeText: String = I18n.strings.field.switchOff
+    closeText: String = I18n.strings.field.switchOff,
+    /**
+     * What a screen reader calls the switch. Needed when it stands beside its own text
+     * rather than inside a [com.gearui.components.cell.Cell], which labels it already.
+     */
+    contentDescription: String? = null,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
+    val interactive = enabled && type != SwitchType.LOADING
+    Box(modifier
+        .controlSemantics(controlLabel(contentDescription), switchState(checked), Role.Switch,
+            onClick = if (interactive) ({ onCheckedChange(!checked) }) else null)
+        .sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
         .toggleable(checked, interactionSource = interaction, indication = null,
-            enabled = enabled && type != SwitchType.LOADING, role = Role.Switch, onValueChange = onCheckedChange),
+            enabled = interactive, role = Role.Switch, onValueChange = onCheckedChange),
         contentAlignment = Alignment.Center) {
         SwitchVisual(checked, enabled, pressed, type, size, trackOnColor, trackOffColor, openText, closeText)
     }
@@ -134,6 +145,10 @@ internal fun SwitchVisual(
     }
 }
 
+@Composable
+internal fun switchState(checked: Boolean): String =
+    if (checked) I18n.strings.common.on else I18n.strings.common.off
+
 /**
  * SwitchWithLabel - switch with a label
  */
@@ -150,9 +165,12 @@ fun SwitchWithLabel(
     val colors = Theme.colors
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
+    val interactive = enabled && type != SwitchType.LOADING
     Row(modifier.fillMaxWidth().heightIn(min = ControlGeometry.selectionTouchTarget)
+        .controlSemantics(label, switchState(checked), Role.Switch,
+            onClick = if (interactive) ({ onCheckedChange(!checked) }) else null)
         .toggleable(checked, interactionSource = interaction, indication = null,
-            enabled = enabled && type != SwitchType.LOADING, role = Role.Switch, onValueChange = onCheckedChange)
+            enabled = interactive, role = Role.Switch, onValueChange = onCheckedChange)
         .padding(vertical = Spacing.md), horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
         Text(label, style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium), color = if (enabled) colors.foreground else colors.mutedForeground)

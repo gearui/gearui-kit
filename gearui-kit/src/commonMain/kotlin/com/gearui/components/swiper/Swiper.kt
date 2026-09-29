@@ -1,5 +1,7 @@
 package com.gearui.components.swiper
 
+import com.gearui.i18n.I18n
+import com.gearui.foundation.interaction.IconActionButton
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.animation.core.animateDpAsState
 import com.tencent.kuikly.compose.animation.core.tween
@@ -195,24 +197,15 @@ fun Swiper(
                     // Left arrow
                     val showLeftArrow = loop || currentContentIndex > 0
                     if (showLeftArrow) {
-                        Box(
-                            modifier = Modifier
-                                .size(ControlGeometry.swiperArrowSize)
-                                .clip(CircleShape)
-                                .background(colors.surface.copy(alpha = 0.7f))
-                                .clickable {
-                                    scope.launch {
-                                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                                    }
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                name = Icons.caret_left,
-                                size = IconSizes.Default.lg,
-                                tint = colors.foreground
-                            )
-                        }
+                        IconActionButton(
+                            icon = Icons.caret_left,
+                            contentDescription = I18n.strings.media.previousSlide,
+                            onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
+                            size = ControlGeometry.swiperArrowSize,
+                            iconSize = IconSizes.Default.lg,
+                            background = colors.surface.copy(alpha = 0.7f),
+                            tint = colors.foreground,
+                        )
                     } else {
                         Spacer(modifier = Modifier.size(ControlGeometry.swiperArrowSize))
                     }
@@ -220,24 +213,15 @@ fun Swiper(
                     // Right arrow
                     val showRightArrow = loop || currentContentIndex < itemCount - 1
                     if (showRightArrow) {
-                        Box(
-                            modifier = Modifier
-                                .size(ControlGeometry.swiperArrowSize)
-                                .clip(CircleShape)
-                                .background(colors.surface.copy(alpha = 0.7f))
-                                .clickable {
-                                    scope.launch {
-                                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                                    }
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                name = Icons.caret_right,
-                                size = IconSizes.Default.lg,
-                                tint = colors.foreground
-                            )
-                        }
+                        IconActionButton(
+                            icon = Icons.caret_right,
+                            contentDescription = I18n.strings.media.nextSlide,
+                            onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
+                            size = ControlGeometry.swiperArrowSize,
+                            iconSize = IconSizes.Default.lg,
+                            background = colors.surface.copy(alpha = 0.7f),
+                            tint = colors.foreground,
+                        )
                     } else {
                         Spacer(modifier = Modifier.size(ControlGeometry.swiperArrowSize))
                     }

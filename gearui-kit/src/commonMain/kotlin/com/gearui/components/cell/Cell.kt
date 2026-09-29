@@ -1,5 +1,7 @@
 package com.gearui.components.cell
 
+import com.gearui.foundation.interaction.LocalControlLabel
+import androidx.compose.runtime.CompositionLocalProvider
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -100,7 +102,9 @@ fun Cell(
         // Native ListGroup centers the prefix against the complete content block.
         // Do not constrain its height: a caller may supply an avatar instead of an icon.
         if (leading != null) {
-            Box(modifier = Modifier.padding(vertical = tokens.paddingVertical)) { leading() }
+            Box(modifier = Modifier.padding(vertical = tokens.paddingVertical)) {
+                CompositionLocalProvider(LocalControlLabel provides title) { leading() }
+            }
             Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
         }
 
@@ -141,7 +145,7 @@ fun Cell(
         // Trailing custom content
         if (trailing != null) {
             Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
-            trailing()
+            CompositionLocalProvider(LocalControlLabel provides title) { trailing() }
         }
 
         // Chevron

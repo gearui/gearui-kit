@@ -1,5 +1,8 @@
 package com.gearui.components.tag
 
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.control.ControlGeometry
@@ -134,11 +137,15 @@ private fun GroupTag(
             if (item.icon != null) Icon(name = item.icon, size = iconSize, tint = foreground)
             Text(text = item.label, style = style, color = foreground, maxLines = 1)
             if (onRemove != null) {
+                val removeLabel = "${I18n.strings.common.remove} ${item.label}"
                 Icon(
                     name = Icons.x,
                     size = ControlGeometry.tagGroupRemoveIcon,
                     tint = if (selected) foreground else colors.mutedForeground,
                     modifier = Modifier
+                        // Named for the tag it removes: several "Remove" buttons in a row
+                        // are indistinguishable to a screen reader.
+                        .semantics { contentDescription = removeLabel }
                         .clip(Theme.shapes.sm)
                         .clickable(enabled = enabled, onClick = onRemove),
                 )
@@ -155,7 +162,19 @@ private fun GroupTag(
             // The tag's own text is the label; only the state has to be added. The
             // Selected flag is left off on purpose: Kuikly's bridge appends its own
             // hardcoded, always-Chinese state for it, repeating ours and ignoring the locale.
-            modifier = Modifier.semantics { stateDescription = state },
+            // A tag with a remove button keeps its children reachable, so it cannot
+            // clear them: it keeps the state description (read before the label —
+            // Kuikly's order). Every other tag reads "label, state".
+            modifier = if (onRemove == null) {
+                Modifier.choiceSemantics(
+                    label = item.label,
+                    selected = selected,
+                    role = Role.Button,
+                    onClick = if (enabled) onClick else null,
+                )
+            } else {
+                Modifier.semantics { stateDescription = state }
+            },
         ) { body() }
     } else {
         com.tencent.kuikly.compose.foundation.layout.Box(Modifier.alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)) { body() }

@@ -1,5 +1,7 @@
 package com.gearui.components.inputotp
 
+import com.gearui.i18n.I18n
+import com.gearui.foundation.field.fieldName
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -80,6 +82,8 @@ fun InputOTP(
     autoFocus: Boolean = false,
     focusRequester: FocusRequester? = null,
     onComplete: ((String) -> Unit)? = null,
+    /** What a screen reader calls the field. Defaults to "Verification code". */
+    contentDescription: String? = null,
 ) {
     val requester = focusRequester ?: remember { FocusRequester() }
     var focused by remember { mutableStateOf(false) }
@@ -121,6 +125,7 @@ fun InputOTP(
             keyboardOptions = KeyboardOptions(keyboardType = if (numeric) KeyboardType.Number else KeyboardType.Text),
             modifier = Modifier
                 .matchParentSize()
+                .fieldName(contentDescription ?: I18n.strings.field.verificationCode)
                 .keyboardDismissExempt()
                 .maxLength(length)
                 .then(if (numeric) Modifier.setProp("keyboardType", "number") else Modifier)

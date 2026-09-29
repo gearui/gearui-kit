@@ -1,5 +1,13 @@
 package com.gearui.components.navbar
 
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.gearui.foundation.interaction.pressScale
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.gearui.i18n.I18n
 import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.foundation.background
@@ -172,6 +180,7 @@ fun NavBar(
                             icon = Icons.caret_left,
                             iconColor = textColor,
                             onClick = onBackClick,
+                            contentDescription = I18n.strings.common.back,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight()
@@ -180,6 +189,7 @@ fun NavBar(
                     leftItems.forEach { item ->
                         NavBarIconButton(
                             icon = item.icon,
+                            contentDescription = item.contentDescription,
                             iconColor = item.iconColor ?: textColor,
                             onClick = item.onClick,
                             modifier = Modifier
@@ -212,6 +222,7 @@ fun NavBar(
                         rightItems.forEach { item ->
                             NavBarIconButton(
                                 icon = item.icon,
+                                contentDescription = item.contentDescription,
                                 iconColor = item.iconColor ?: textColor,
                                 onClick = item.onClick,
                                 modifier = Modifier
@@ -236,6 +247,7 @@ fun NavBar(
                         icon = Icons.caret_left,
                         iconColor = textColor,
                         onClick = onBackClick,
+                        contentDescription = I18n.strings.common.back,
                         modifier = Modifier
                             .width(actionSlotWidth)
                             .fillMaxHeight()
@@ -244,6 +256,7 @@ fun NavBar(
                 leftItems.forEach { item ->
                     NavBarIconButton(
                         icon = item.icon,
+                        contentDescription = item.contentDescription,
                         iconColor = item.iconColor ?: textColor,
                         onClick = item.onClick,
                         modifier = Modifier
@@ -291,6 +304,7 @@ fun NavBar(
                     rightItems.forEach { item ->
                         NavBarIconButton(
                             icon = item.icon,
+                            contentDescription = item.contentDescription,
                             iconColor = item.iconColor ?: textColor,
                             onClick = item.onClick,
                             modifier = Modifier
@@ -327,15 +341,24 @@ private fun NavBarIconButton(
     icon: String,
     iconColor: Color,
     onClick: (() -> Unit)?,
+    /** What a screen reader says; an icon alone gives it nothing to read. */
+    contentDescription: String?,
     modifier: Modifier = Modifier
         .fillMaxHeight()
         .widthIn(min = ControlGeometry.navBarActionSlot)
 ) {
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier = modifier
             .then(
                 if (onClick != null) {
-                    Modifier.clickable { onClick() }
+                    Modifier
+                        .semantics {
+                            role = Role.Button
+                            if (contentDescription != null) this.contentDescription = contentDescription
+                        }
+                        .pressScale(interaction)
+                        .clickable(interactionSource = interaction, indication = null) { onClick() }
                 } else {
                     Modifier
                 }
@@ -403,5 +426,7 @@ fun NavBarActionSlot(
 data class NavBarItem(
     val icon: String,
     val iconColor: Color? = null,
-    val onClick: (() -> Unit)? = null
+    val onClick: (() -> Unit)? = null,
+    /** What a screen reader says for this icon-only action; set it for every tappable item. */
+    val contentDescription: String? = null,
 )

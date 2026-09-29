@@ -1,5 +1,6 @@
 package com.gearui.components.calendar
 
+import com.gearui.foundation.interaction.IconActionButton
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -208,20 +209,15 @@ private fun CalendarHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(ControlGeometry.calendarNavButton)
-                .clip(CircleShape)
-                .background(colors.muted)
-                .clickable { onPreviousMonth() },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                name = Icons.caret_left,
-                size = IconSizes.Default.lg,
-                tint = colors.foreground
-            )
-        }
+        IconActionButton(
+            icon = Icons.caret_left,
+            contentDescription = I18n.strings.dateTime.previousMonth,
+            onClick = { onPreviousMonth() },
+            size = ControlGeometry.calendarNavButton,
+            iconSize = IconSizes.Default.lg,
+            background = colors.muted,
+            tint = colors.foreground,
+        )
 
         Text(
             text = I18n.strings.dateTime.calendarYearMonthFormat
@@ -230,20 +226,15 @@ private fun CalendarHeader(
             color = colors.foreground
         )
 
-        Box(
-            modifier = Modifier
-                .size(ControlGeometry.calendarNavButton)
-                .clip(CircleShape)
-                .background(colors.muted)
-                .clickable { onNextMonth() },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                name = Icons.caret_right,
-                size = IconSizes.Default.lg,
-                tint = colors.foreground
-            )
-        }
+        IconActionButton(
+            icon = Icons.caret_right,
+            contentDescription = I18n.strings.dateTime.nextMonth,
+            onClick = { onNextMonth() },
+            size = ControlGeometry.calendarNavButton,
+            iconSize = IconSizes.Default.lg,
+            background = colors.muted,
+            tint = colors.foreground,
+        )
     }
 }
 

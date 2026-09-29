@@ -1,5 +1,7 @@
 package com.gearui.components.select
 
+import com.tencent.kuikly.compose.foundation.clickable
+import com.gearui.foundation.interaction.choiceSemantics
 import com.gearui.foundation.material.MaterialSurface
 import com.gearui.foundation.material.Materials
 import androidx.compose.runtime.*
@@ -22,7 +24,6 @@ import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.foundation.lazy.itemsIndexed
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
-import com.tencent.kuikly.compose.foundation.selection.selectable
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
@@ -98,8 +99,9 @@ private fun <T> SelectPanelRow(option: SelectOption<T>, selected: Boolean, enabl
         Modifier.fillMaxWidth().height(FieldSizeTokens.Medium.height)
             .background(if (enabled && (hovered || pressed)) colors.muted else colors.popover.copy(alpha = 0f))
             .hoverable(interaction, enabled)
-            .selectable(selected = selected, enabled = enabled, role = if (multiple) Role.Checkbox else Role.RadioButton,
-                interactionSource = interaction, indication = null, onClick = onClick)
+            .choiceSemantics(option.label, selected, if (multiple) Role.Checkbox else Role.RadioButton,
+                onClick = if (enabled) onClick else null)
+            .clickable(enabled = enabled, interactionSource = interaction, indication = null, onClick = onClick)
             .padding(horizontal = ControlGeometry.selectItemPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),

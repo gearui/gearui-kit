@@ -20,6 +20,7 @@ import com.gearui.components.checkbox.Checkbox
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import com.gearui.i18n.I18n
+import com.gearui.i18n.formatArgs
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 
@@ -218,7 +219,8 @@ private fun <T> NormalTable(
             ) {
                 Checkbox(
                     checked = selectionState.isAllSelected && data.isNotEmpty(),
-                    onCheckedChange = { selectionState.toggleAll(data) }
+                    onCheckedChange = { selectionState.toggleAll(data) },
+                    contentDescription = I18n.strings.field.selectAll,
                 )
             }
         }
@@ -324,7 +326,8 @@ private fun <T> NormalTableRow(
             ) {
                 Checkbox(
                     checked = isSelected,
-                    onCheckedChange = { selectionState.toggleItem(item) }
+                    onCheckedChange = { selectionState.toggleItem(item) },
+                    contentDescription = I18n.strings.field.selectRowFormat.formatArgs("index" to index + 1),
                 )
             }
         }

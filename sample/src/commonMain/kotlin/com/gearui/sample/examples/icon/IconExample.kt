@@ -139,7 +139,8 @@ fun IconExample(
                     )
                     Switch(
                         checked = showBorder,
-                        onCheckedChange = { showBorder = it }
+                        onCheckedChange = { showBorder = it },
+                        contentDescription = "显示边框"
                     )
                 }
             }

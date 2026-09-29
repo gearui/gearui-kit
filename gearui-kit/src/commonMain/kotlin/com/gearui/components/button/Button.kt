@@ -27,6 +27,8 @@ import com.tencent.kuikly.compose.ui.graphics.drawscope.translate
 import com.tencent.kuikly.compose.ui.input.InputMode
 import com.tencent.kuikly.compose.ui.platform.LocalInputModeManager
 import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.button.resolveButtonVisual
 import com.gearui.foundation.button.lightButtonColors
@@ -79,7 +81,8 @@ fun Button(
     icon: String? = null,
     iconWidget: (@Composable () -> Unit)? = null,
     iconPosition: ButtonIconPosition = ButtonIconPosition.LEFT,
-    iconTextSpacing: Dp = Dp.Unspecified
+    iconTextSpacing: Dp = Dp.Unspecified,
+    contentDescription: String? = null,
 ) {
     val colors = Theme.colors
     val interactionSource = remember { MutableInteractionSource() }
@@ -242,6 +245,7 @@ fun Button(
             if (isEnabled && highlight > 0f) drawRect(highlightColor.copy(alpha = highlightColor.alpha * highlight))
             drawContent()
         }
+        .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier)
         .clickable(
             interactionSource = interactionSource,
             indication = null,

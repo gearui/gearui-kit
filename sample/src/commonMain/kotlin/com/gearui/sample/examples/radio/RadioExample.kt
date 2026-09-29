@@ -129,7 +129,8 @@ fun RadioExample(
                     RadioButton(
                         selected = sizeSelected == "large",
                         onClick = { sizeSelected = "large" },
-                        size = RadioSize.LARGE
+                        size = RadioSize.LARGE,
+                        contentDescription = "大尺寸"
                     )
                 }
                 Row(
@@ -145,7 +146,8 @@ fun RadioExample(
                     RadioButton(
                         selected = sizeSelected == "medium",
                         onClick = { sizeSelected = "medium" },
-                        size = RadioSize.MEDIUM
+                        size = RadioSize.MEDIUM,
+                        contentDescription = "中尺寸"
                     )
                 }
                 Row(
@@ -161,7 +163,8 @@ fun RadioExample(
                     RadioButton(
                         selected = sizeSelected == "small",
                         onClick = { sizeSelected = "small" },
-                        size = RadioSize.SMALL
+                        size = RadioSize.SMALL,
+                        contentDescription = "小尺寸"
                     )
                 }
             }

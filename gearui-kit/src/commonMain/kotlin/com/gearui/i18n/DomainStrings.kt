@@ -31,6 +31,7 @@ data class CommonStrings(
     val networkError: String,
     val backToTop: String,
     /** Accessibility labels for icon-only controls. */
+    val back: String,
     val close: String,
     val remove: String,
     val add: String,
@@ -40,6 +41,12 @@ data class CommonStrings(
     val pullToRefresh: String,
     val releaseToRefresh: String,
     val refreshing: String,
+    /** Spoken state of a switch that is on. */
+    val on: String,
+    /** Spoken state of a switch that is off. */
+    val off: String,
+    /** Spoken state of a checkbox with some children selected. */
+    val partiallySelected: String,
 )
 
 data class CommonStringsPatch(
@@ -54,6 +61,7 @@ data class CommonStringsPatch(
     val noSearchResult: String? = null,
     val networkError: String? = null,
     val backToTop: String? = null,
+    val back: String? = null,
     val close: String? = null,
     val remove: String? = null,
     val add: String? = null,
@@ -62,6 +70,9 @@ data class CommonStringsPatch(
     val pullToRefresh: String? = null,
     val releaseToRefresh: String? = null,
     val refreshing: String? = null,
+    val on: String? = null,
+    val off: String? = null,
+    val partiallySelected: String? = null,
 )
 
 val CommonStringsPatch.isEmpty: Boolean
@@ -76,6 +87,7 @@ val CommonStringsPatch.isEmpty: Boolean
         noSearchResult == null &&
         networkError == null &&
         backToTop == null &&
+        back == null &&
         close == null &&
         remove == null &&
         add == null &&
@@ -83,11 +95,17 @@ val CommonStringsPatch.isEmpty: Boolean
         unselected == null &&
         pullToRefresh == null &&
         releaseToRefresh == null &&
-        refreshing == null
+        refreshing == null &&
+        on == null &&
+        off == null &&
+        partiallySelected == null
 
 fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
+        partiallySelected = patch.partiallySelected ?: partiallySelected,
+        off = patch.off ?: off,
+        on = patch.on ?: on,
         confirm = patch.confirm ?: confirm,
         ok = patch.ok ?: ok,
         cancel = patch.cancel ?: cancel,
@@ -99,6 +117,7 @@ fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
         noSearchResult = patch.noSearchResult ?: noSearchResult,
         networkError = patch.networkError ?: networkError,
         backToTop = patch.backToTop ?: backToTop,
+        back = patch.back ?: back,
         close = patch.close ?: close,
         remove = patch.remove ?: remove,
         add = patch.add ?: add,
@@ -162,6 +181,17 @@ data class FieldStrings(
     val tableEmpty: String,
     /** Accessibility label of a rating star; placeholder `{value}`. */
     val ratingValueFormat: String,
+    /** Accessibility label of the password visibility toggle. */
+    val showPassword: String,
+    val hidePassword: String,
+    /** Table header selection checkbox. */
+    val selectAll: String,
+    /** Table row selection checkbox; placeholder `{index}`. */
+    val selectRowFormat: String,
+    /** Clear-text button on fields. */
+    val clear: String,
+    /** Spoken name of a one-time-code field. */
+    val verificationCode: String,
 )
 
 data class FieldStringsPatch(
@@ -172,6 +202,12 @@ data class FieldStringsPatch(
     val switchOff: String? = null,
     val tableEmpty: String? = null,
     val ratingValueFormat: String? = null,
+    val showPassword: String? = null,
+    val hidePassword: String? = null,
+    val selectAll: String? = null,
+    val selectRowFormat: String? = null,
+    val clear: String? = null,
+    val verificationCode: String? = null,
 )
 
 val FieldStringsPatch.isEmpty: Boolean
@@ -181,11 +217,23 @@ val FieldStringsPatch.isEmpty: Boolean
         switchOn == null &&
         switchOff == null &&
         tableEmpty == null &&
-        ratingValueFormat == null
+        ratingValueFormat == null &&
+        showPassword == null &&
+        hidePassword == null &&
+        selectAll == null &&
+        selectRowFormat == null &&
+        clear == null &&
+        verificationCode == null
 
 fun FieldStrings.merge(patch: FieldStringsPatch?): FieldStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
+        verificationCode = patch.verificationCode ?: verificationCode,
+        clear = patch.clear ?: clear,
+        selectRowFormat = patch.selectRowFormat ?: selectRowFormat,
+        selectAll = patch.selectAll ?: selectAll,
+        hidePassword = patch.hidePassword ?: hidePassword,
+        showPassword = patch.showPassword ?: showPassword,
         selectPlaceholder = patch.selectPlaceholder ?: selectPlaceholder,
         searchPlaceholder = patch.searchPlaceholder ?: searchPlaceholder,
         selectedCountFormat = patch.selectedCountFormat ?: selectedCountFormat,
@@ -217,6 +265,9 @@ data class DateTimeStrings(
     val calendarYearMonthFormat: String,
     /** Weekday headings, starting Sunday. Must have exactly 7 entries. */
     val weekdaysShort: List<String>,
+    /** Calendar navigation, for screen readers. */
+    val previousMonth: String,
+    val nextMonth: String,
 )
 
 data class DateTimeStringsPatch(
@@ -234,6 +285,8 @@ data class DateTimeStringsPatch(
     val minuteSuffix: String? = null,
     val calendarYearMonthFormat: String? = null,
     val weekdaysShort: List<String>? = null,
+    val previousMonth: String? = null,
+    val nextMonth: String? = null,
 )
 
 val DateTimeStringsPatch.isEmpty: Boolean
@@ -250,11 +303,15 @@ val DateTimeStringsPatch.isEmpty: Boolean
         hourSuffix == null &&
         minuteSuffix == null &&
         calendarYearMonthFormat == null &&
-        weekdaysShort == null
+        weekdaysShort == null &&
+        previousMonth == null &&
+        nextMonth == null
 
 fun DateTimeStrings.merge(patch: DateTimeStringsPatch?): DateTimeStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
+        nextMonth = patch.nextMonth ?: nextMonth,
+        previousMonth = patch.previousMonth ?: previousMonth,
         datePlaceholder = patch.datePlaceholder ?: datePlaceholder,
         rangeStartPlaceholder = patch.rangeStartPlaceholder ?: rangeStartPlaceholder,
         rangeEndPlaceholder = patch.rangeEndPlaceholder ?: rangeEndPlaceholder,
@@ -364,19 +421,28 @@ data class MediaStrings(
     val imageEmpty: String,
     /** Image index; placeholder `{index}`. */
     val imageIndexFormat: String,
+    /** Carousel arrows, for screen readers. */
+    val previousSlide: String,
+    val nextSlide: String,
 )
 
 data class MediaStringsPatch(
     val imageEmpty: String? = null,
     val imageIndexFormat: String? = null,
+    val previousSlide: String? = null,
+    val nextSlide: String? = null,
 )
 
 val MediaStringsPatch.isEmpty: Boolean
-    get() = imageEmpty == null && imageIndexFormat == null
+    get() = imageEmpty == null && imageIndexFormat == null &&
+        previousSlide == null &&
+        nextSlide == null
 
 fun MediaStrings.merge(patch: MediaStringsPatch?): MediaStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
+        nextSlide = patch.nextSlide ?: nextSlide,
+        previousSlide = patch.previousSlide ?: previousSlide,
         imageEmpty = patch.imageEmpty ?: imageEmpty,
         imageIndexFormat = patch.imageIndexFormat ?: imageIndexFormat,
     )

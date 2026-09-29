@@ -200,14 +200,16 @@ fun BadgeExample(
                     size = ButtonSize.SMALL,
                     theme = ButtonTheme.LIGHT,
                     shape = ButtonShape.SQUARE,
-                    icon = Icons.minus
+                    icon = Icons.minus,
+                    contentDescription = "减少"
                 )
                 Text(text = "$messageCount", style = Theme.typography.titleMedium, color = colors.foreground)
                 Button(
                     onClick = { messageCount++ },
                     size = ButtonSize.SMALL,
                     shape = ButtonShape.SQUARE,
-                    icon = Icons.plus
+                    icon = Icons.plus,
+                    contentDescription = "增加"
                 )
             }
         }

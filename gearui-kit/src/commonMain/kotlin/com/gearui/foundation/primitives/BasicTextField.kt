@@ -1,6 +1,7 @@
 package com.gearui.foundation.primitives
 
 import androidx.compose.runtime.Composable
+import com.gearui.foundation.field.fieldName
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.text.KeyboardActions
@@ -24,6 +25,7 @@ import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
  * - carries no border, background or padding
  * - supplies the theme default text style and cursor colour
  * - optional placeholder
+ * - [accessibilityLabel] names the field for screen readers; defaults to [placeholder]
  */
 @Composable
 fun BasicTextField(
@@ -46,17 +48,15 @@ fun BasicTextField(
         fontSize = Theme.typography.bodyMedium.fontSize,
         fontWeight = Theme.typography.bodyMedium.fontWeight
     ),
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    accessibilityLabel: String? = null,
 ) {
     val colors = Theme.colors
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val effectiveModifier = if (focusRequester != null) {
-        modifier.focusRequester(focusRequester)
-    } else {
-        modifier
-    }
+    val named = modifier.fieldName(accessibilityLabel ?: placeholder)
+    val effectiveModifier = if (focusRequester != null) named.focusRequester(focusRequester) else named
     val effectiveTextStyle = textStyle.copy(
         color = when {
             !enabled -> colors.mutedForeground

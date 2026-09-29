@@ -1,0 +1,58 @@
+package com.gearui.foundation.interaction
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import com.gearui.foundation.primitives.Icon
+import com.gearui.unit.Dp
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.size
+import com.tencent.kuikly.compose.foundation.shape.CircleShape
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.graphics.Shape
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.semantics
+
+/**
+ * An icon-only button inside a component: a calendar's month arrows, a carousel's
+ * arrows. It carries the three things a hand-built `Box(...).clickable { }` kept
+ * leaving out — a name a screen reader can read, the button role, and a press
+ * response — so components use this instead of assembling their own.
+ */
+@Composable
+internal fun IconActionButton(
+    icon: String,
+    contentDescription: String,
+    onClick: () -> Unit,
+    size: Dp,
+    iconSize: Dp,
+    background: Color,
+    tint: Color,
+    modifier: Modifier = Modifier,
+    shape: Shape = CircleShape,
+    enabled: Boolean = true,
+) {
+    val interaction = remember { MutableInteractionSource() }
+    Box(
+        modifier = modifier
+            .semantics {
+                role = Role.Button
+                this.contentDescription = contentDescription
+            }
+            .pressScale(interaction, enabled)
+            .size(size)
+            .clip(shape)
+            .background(background)
+            .clickable(enabled = enabled, interactionSource = interaction, indication = null, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(name = icon, size = iconSize, tint = tint)
+    }
+}

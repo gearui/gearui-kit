@@ -31,16 +31,19 @@ fun CheckboxExample(
             Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xl)) {
                 Checkbox(
                     checked = checked1,
-                    onCheckedChange = { checked1 = it }
+                    onCheckedChange = { checked1 = it },
+                    contentDescription = "选项 A"
                 )
                 Checkbox(
                     checked = checked2,
-                    onCheckedChange = { checked2 = it }
+                    onCheckedChange = { checked2 = it },
+                    contentDescription = "选项 B"
                 )
                 Checkbox(
                     checked = false,
                     onCheckedChange = {},
-                    indeterminate = true
+                    indeterminate = true,
+                    contentDescription = "选项 C"
                 )
             }
         }
@@ -79,17 +82,20 @@ fun CheckboxExample(
                 Checkbox(
                     checked = sizeChecked,
                     onCheckedChange = { sizeChecked = it },
-                    size = CheckboxSize.LARGE
+                    size = CheckboxSize.LARGE,
+                    contentDescription = "大尺寸"
                 )
                 Checkbox(
                     checked = sizeChecked,
                     onCheckedChange = { sizeChecked = it },
-                    size = CheckboxSize.MEDIUM
+                    size = CheckboxSize.MEDIUM,
+                    contentDescription = "中尺寸"
                 )
                 Checkbox(
                     checked = sizeChecked,
                     onCheckedChange = { sizeChecked = it },
-                    size = CheckboxSize.SMALL
+                    size = CheckboxSize.SMALL,
+                    contentDescription = "小尺寸"
                 )
             }
         }
@@ -103,12 +109,14 @@ fun CheckboxExample(
                 Checkbox(
                     checked = false,
                     onCheckedChange = {},
-                    enabled = false
+                    enabled = false,
+                    contentDescription = "禁用选项 1"
                 )
                 Checkbox(
                     checked = true,
                     onCheckedChange = {},
-                    enabled = false
+                    enabled = false,
+                    contentDescription = "禁用选项 2"
                 )
             }
         }

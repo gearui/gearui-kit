@@ -1,5 +1,6 @@
 package com.gearui.components.segmented
 
+import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.*
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
@@ -7,14 +8,11 @@ import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.foundation.motion.Motion
-import com.gearui.i18n.I18n
 import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.gearui.foundation.interaction.pressScale
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.semantics.role
-import com.tencent.kuikly.compose.ui.semantics.semantics
-import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.spring
 import com.tencent.kuikly.compose.foundation.background
@@ -57,6 +55,7 @@ fun <T> SegmentedControl(
         enabled = enabled,
         modifier = modifier,
         onSelect = { onOptionSelected(options[it]) },
+        label = { labelProvider(options[it]) },
     ) { index, selected ->
         Text(
             text = labelProvider(options[index]),
@@ -85,6 +84,7 @@ fun <T> IconSegmentedControl(
         enabled = enabled,
         modifier = modifier,
         onSelect = { onOptionSelected(options[it].value) },
+        label = { options[it].label },
     ) { index, selected ->
         val option = options[index]
         // Icon and label share one colour, so the icon follows the selection with the text.
@@ -128,6 +128,8 @@ internal fun SegmentedTrack(
     enabled: Boolean,
     modifier: Modifier,
     onSelect: (Int) -> Unit,
+    /** Each segment's name for screen readers; the drawn segment may be an icon. */
+    label: (Int) -> String,
     segment: @Composable (index: Int, selected: Boolean) -> Unit,
 ) {
     val colors = Theme.colors
@@ -173,7 +175,6 @@ internal fun SegmentedTrack(
         Row(horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap)) {
             repeat(count) { index ->
                 val selected = index == selectedIndex
-                val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
                 val interaction = remember { MutableInteractionSource() }
                 val pressed by interaction.collectIsPressedAsState()
                 Box(
@@ -181,10 +182,13 @@ internal fun SegmentedTrack(
                         .weight(1f)
                         .pressScale(pressed && enabled)
                         .clip(pill)
-                        .semantics {
-                            role = Role.Tab
-                            stateDescription = state
-                        }
+                        .choiceSemantics(
+                            label = label(index),
+                            selected = selected,
+                            role = Role.Tab,
+                            // Still a button when selected, as the platform's segments are; tapping it is a no-op.
+                            onClick = if (enabled) ({ if (!selected) onSelect(index) }) else null,
+                        )
                         .clickable(
                             enabled = enabled && !selected,
                             interactionSource = remember { MutableInteractionSource() },

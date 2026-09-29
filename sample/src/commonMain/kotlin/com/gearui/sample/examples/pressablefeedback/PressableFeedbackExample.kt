@@ -69,8 +69,8 @@ fun PressableFeedbackExample(
             description = "高亮是前景层叠加，彩色背景上同样可见"
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-                listOf(colors.primary, colors.success, colors.destructive).forEach { fill ->
-                    PressableFeedback(shape = card, onClick = {}, modifier = Modifier.weight(1f)) {
+                listOf("主色" to colors.primary, "成功色" to colors.success, "危险色" to colors.destructive).forEach { (name, fill) ->
+                    PressableFeedback(shape = card, onClick = {}, modifier = Modifier.weight(1f), contentDescription = name) {
                         Box(Modifier.fillMaxWidth().height(SwatchHeight).background(fill))
                     }
                 }
@@ -98,7 +98,7 @@ fun PressableFeedbackExample(
                         Text("只缩放", style = Theme.typography.bodyMedium, color = colors.foreground)
                     }
                 }
-                PressableFeedback(shape = Theme.shapes.full, onClick = {}) {
+                PressableFeedback(shape = Theme.shapes.full, onClick = {}, contentDescription = "收藏") {
                     Box(Modifier.size(TileHeight).background(colors.muted), contentAlignment = Alignment.Center) {
                         Icon(name = Icons.heart, size = IconSizes.Default.xl, tint = colors.foreground)
                     }

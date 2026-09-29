@@ -72,9 +72,56 @@ inconsistency.
 
 ## 4. Accessibility
 
-Icon-only controls carry `contentDescription` from `I18n`; state goes in
-`stateDescription`; roles per VISUAL_SPEC §7. Decorative icons inside labelled
-controls pass a null description.
+**Rules.**
+
+- Every control a screen reader can reach has a name. Icon-only controls carry
+  a `contentDescription` from `I18n` (NavBar back is `common.back`; a remove
+  button names what it removes, "Remove Kotlin"). Decorative icons inside a
+  labelled control pass none.
+- A bare control (`Switch`, `Checkbox`, `RadioButton`) placed in a `Cell`'s
+  leading or trailing slot or in a `FormItem` is named by that container's
+  title or label (`LocalControlLabel`). Anywhere else it takes a
+  `contentDescription`. Buttons never inherit it: a row title is not a
+  button's name. `Button` (icon-only) and `PressableFeedback` (content with no
+  text) take a `contentDescription`.
+- A stateful control reads "label, state" through `controlSemantics`: a switch
+  "Wi-Fi, on", a checkbox "Agree, selected", and a choice in a set (tab, segment,
+  toggle, radio, selectable tag) through `choiceSemantics`. It never applies
+  `selectable`, whose flag makes Kuikly append its own state.
+- Text fields are named by their label, else the container's label (`FormItem`,
+  `Cell`), else their placeholder (`fieldName`).
+  Containers that focus a field on tap use a tap gesture, not `.clickable`.
+- Overlay hosts intercept taps with gestures, never `.clickable`: a clickable
+  container becomes one accessibility element and hides everything inside it.
+- Roles per VISUAL_SPEC §7.
+
+**How Kuikly bridges semantics** (`KuiklySemantisHandler`, KuiklyUI 2.28), and
+why the rules take this shape:
+
+- A node's native accessibility text is `stateDescription`, then
+  `contentDescription`, then its text, joined with commas. A
+  `stateDescription` therefore leads ("Unselected, Daily"), so the kit joins
+  label and state itself.
+- A node with an `onClick` action becomes one clickable accessibility element;
+  on iOS its children are no longer reachable.
+- The native side takes only text, role and clickable/focusable. There is no
+  modal flag and no way to hide a subtree.
+
+**Upstream gaps (KuiklyUI), not fixable in the kit:**
+
+| Gap | Effect | Wanted upstream |
+| --- | --- | --- |
+| `stateDescription` read before the label | State leads every stateful control | Read it after the label, or map it to the native value |
+| No modal / hide-subtree attribute | With a dialog open, the page behind it stays reachable by swipe | Map `isTraversalGroup`/modal or an explicit hide flag to `accessibilityViewIsModal` / `importantForAccessibility` |
+| `selected` semantics adds a hardcoded Chinese state | Wrong language, and doubled with the kit's own | Localised, or left to the component |
+| `toggleableState` is dropped | A switch or checkbox has no state unless the kit speaks it | Map it to the native value / selected trait |
+| `contentDescription` on a text field makes it static text | A field cannot be named that way; the kit uses a transparent native placeholder instead | Map it to the field's accessibility label, keeping its trait |
+| The iOS text area's placeholder is a child view | `Textarea` has no name on iOS | Use the placeholder as the accessibility label |
+
+**Verification.** `idb ui describe-all` on the iOS simulator lists every
+accessibility element with its label; the sample opens any page directly
+(`-route <id>`), so a scan of all pages for unlabeled buttons is scripted.
+Fixes are accepted on the AX tree, not by reading code.
 
 ## 5. Documentation
 

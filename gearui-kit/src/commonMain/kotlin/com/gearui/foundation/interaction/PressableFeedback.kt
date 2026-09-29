@@ -30,6 +30,8 @@ import com.tencent.kuikly.compose.ui.graphics.luminance
 import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.semantics
 
 /**
  * PressableFeedback — HeroUI Native `PressableFeedback`.
@@ -62,6 +64,7 @@ fun PressableFeedback(
     scale: Boolean = true,
     highlight: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
+    contentDescription: String? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val source = interactionSource ?: remember { MutableInteractionSource() }
@@ -74,6 +77,7 @@ fun PressableFeedback(
             .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)
             .pressScale(pressed = active && scale)
             .clip(shape)
+            .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier)
             .clickable(
                 enabled = enabled,
                 interactionSource = source,

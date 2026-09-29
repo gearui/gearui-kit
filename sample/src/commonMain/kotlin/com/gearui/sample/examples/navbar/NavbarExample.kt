@@ -81,7 +81,8 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.dots_three,
-                        onClick = { Toast.show("更多") }
+                        onClick = { Toast.show("更多") },
+                        contentDescription = "更多"
                     )
                 )
             )
@@ -100,7 +101,8 @@ fun NavbarExample(
                 leftItems = listOf(
                     NavBarItem(
                         icon = Icons.x,
-                        onClick = { Toast.show("关闭") }
+                        onClick = { Toast.show("关闭") },
+                        contentDescription = "关闭"
                     )
                 )
             )
@@ -119,11 +121,13 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.house,
-                        onClick = { Toast.show("主页") }
+                        onClick = { Toast.show("主页") },
+                        contentDescription = "主页"
                     ),
                     NavBarItem(
                         icon = Icons.dots_three,
-                        onClick = { Toast.show("更多") }
+                        onClick = { Toast.show("更多") },
+                        contentDescription = "更多"
                     )
                 )
             )
@@ -188,7 +192,8 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.dots_three,
-                        onClick = { Toast.show("更多") }
+                        onClick = { Toast.show("更多") },
+                        contentDescription = "更多"
                     )
                 )
             )
@@ -200,7 +205,8 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.dots_three,
-                        onClick = { Toast.show("更多") }
+                        onClick = { Toast.show("更多") },
+                        contentDescription = "更多"
                     )
                 )
             )
@@ -220,7 +226,8 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.dots_three,
-                        onClick = { Toast.show("更多") }
+                        onClick = { Toast.show("更多") },
+                        contentDescription = "更多"
                     )
                 ),
                 belowTitleWidget = {
@@ -260,7 +267,8 @@ fun NavbarExample(
                         NavBarItem(
                             icon = Icons.dots_three,
                             iconColor = colors.primaryForeground,
-                            onClick = { Toast.show("更多") }
+                            onClick = { Toast.show("更多") },
+                            contentDescription = "更多"
                         )
                     )
                 )
@@ -276,7 +284,8 @@ fun NavbarExample(
                         NavBarItem(
                             icon = Icons.dots_three,
                             iconColor = colors.primaryForeground,
-                            onClick = { Toast.show("更多") }
+                            onClick = { Toast.show("更多") },
+                            contentDescription = "更多"
                         )
                     )
                 )
@@ -290,7 +299,8 @@ fun NavbarExample(
                     rightItems = listOf(
                         NavBarItem(
                             icon = Icons.dots_three,
-                            onClick = { Toast.show("更多") }
+                            onClick = { Toast.show("更多") },
+                            contentDescription = "更多"
                         )
                     )
                 )
@@ -309,7 +319,8 @@ fun NavbarExample(
                 rightItems = listOf(
                     NavBarItem(
                         icon = Icons.list,
-                        onClick = { Toast.show("菜单") }
+                        onClick = { Toast.show("菜单") },
+                        contentDescription = "菜单"
                     )
                 )
             )

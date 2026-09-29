@@ -1,4 +1,7 @@
 package com.gearui.components.textarea
+import com.gearui.foundation.interaction.LocalControlLabel
+import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
+import com.gearui.foundation.field.fieldName
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
@@ -11,7 +14,7 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
@@ -151,6 +154,7 @@ private fun TextareaContent(
 
             // Input area
             TextareaInputArea(
+                accessibilityLabel = label,
                 value = value,
                 onValueChange = onValueChange,
                 enabled = enabled,
@@ -187,6 +191,7 @@ private fun TextareaContent(
                 // Input area
                 Column(modifier = Modifier.weight(1f)) {
                     TextareaInputArea(
+                        accessibilityLabel = label,
                         value = value,
                         onValueChange = onValueChange,
                         enabled = enabled,
@@ -257,6 +262,8 @@ private fun TextareaInputArea(
      * the shared field border and the focus ring.
      */
     compact: Boolean = false,
+    /** The screen-reader name when the field has a visible label; else the placeholder. */
+    accessibilityLabel: String? = null,
     /**
      * Draw a hairline around the **compact** field. A compact field that sits beside
      * 32dp controls may still need an outline to read as an input rather than as a
@@ -316,9 +323,9 @@ private fun TextareaInputArea(
                     .fillMaxWidth()
                     .then(if (!compact) feedback else Modifier)
                     .hoverable(hoverSource, enabled = enabled && !compact)
-                    .clickable(interactionSource = hoverSource, indication = null, enabled = canFocus) {
-                        requestInputFocus()
-                    }
+                    // A tap gesture, not a clickable: a clickable container is one accessibility
+                    // element, and it would hide the native text view inside it.
+                    .pointerInput(canFocus) { detectTapGestures { if (canFocus) requestInputFocus() } }
                     .then(
                         if (!compact) {
                             Modifier
@@ -399,7 +406,7 @@ private fun TextareaInputArea(
                         // Rejecting a value in onValueChange does not reset the native field; the
                         // platform view would keep the extra text while the counter stops at the
                         // limit. Kuikly's maxLength modifier enforces it inside the native field.
-                        modifier = Modifier.keyboardDismissExempt()
+                        modifier = Modifier.fieldName(accessibilityLabel ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
                             .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
                             .fillMaxWidth()
                             .focusRequester(inputFocusRequester)

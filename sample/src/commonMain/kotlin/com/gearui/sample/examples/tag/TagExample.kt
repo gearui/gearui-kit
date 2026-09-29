@@ -47,7 +47,7 @@ fun TagExample(component: ComponentInfo, onBack: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SubLabel("禁用")
-                Switch(checked = disabled, onCheckedChange = { disabled = it })
+                Switch(checked = disabled, onCheckedChange = { disabled = it }, contentDescription = "禁用")
             }
             Tag("点击或关闭", theme = TagTheme.PRIMARY, closable = true, disabled = disabled,
                 onClick = { clicks++ }, onClose = { closes++ })

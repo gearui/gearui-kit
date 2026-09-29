@@ -1,4 +1,8 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.field.fieldName
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.gearui.foundation.motion.iconPressFeedback
@@ -15,6 +19,7 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -175,6 +180,8 @@ fun SearchBar(
     }
 
     val feedback = rememberInputFeedback(inputColors, shapeModifier, focusedState, hoveredState, enabled, null)
+    val searchLabel = I18n.strings.common.search
+    val clearLabel = I18n.strings.field.clear
 
     val isCenter = alignment == SearchBarAlignment.CENTER
 
@@ -226,13 +233,14 @@ fun SearchBar(
                             }
                         }
                     }
-                    .clickable(enabled = enabled) { requestSearchFocus() }
             ) {
-                // Focus catcher: full bordered area inside SearchBar can request focus.
+                // Focus catcher: a tap anywhere in the bordered area focuses the field. A gesture,
+                // not a clickable, so it adds no unlabeled button to the accessibility tree; the
+                // text field itself is what assistive technology focuses.
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clickable(enabled = enabled) { requestSearchFocus() }
+                        .pointerInput(enabled) { detectTapGestures { if (enabled) requestSearchFocus() } }
                 )
 
                 Row(
@@ -243,7 +251,9 @@ fun SearchBar(
                 ) {
                     // Search icon
                     Box(
-                        modifier = if (onSearch != null && enabled) Modifier.clickable { onSearch(value) } else Modifier,
+                        modifier = if (onSearch != null && enabled) {
+                            Modifier.semantics { contentDescription = searchLabel }.clickable(role = Role.Button) { onSearch(value) }
+                        } else Modifier,
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -300,7 +310,7 @@ fun SearchBar(
                             // depend on focus. Input.kt records why that distinction
                             // matters: a chain rebuilt *because* focus changed
                             // recreates the underlying EditText.
-                            modifier = Modifier.keyboardDismissExempt()
+                            modifier = Modifier.fieldName(placeholder).keyboardDismissExempt()
                                 .fillMaxWidth()
                                 .onFocusChanged { isFocused = it.isFocused }
                                 .focusRequester(focusRequester)
@@ -318,7 +328,9 @@ fun SearchBar(
                                 .size(ControlGeometry.searchClearSize)
                                 .graphicsLayer { alpha = if (value.isNotEmpty() && enabled) 1f else 0f }
                                 .iconPressFeedback(clearPressed, ControlGeometry.searchClearSize, CircleShape)
+                                .semantics { contentDescription = clearLabel }
                                 .clickable(
+                                    role = Role.Button,
                                     enabled = enabled && value.isNotEmpty(),
                                     interactionSource = clearInteraction,
                                     indication = null,

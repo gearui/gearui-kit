@@ -1,5 +1,7 @@
 package com.gearui.components.radio
 
+import com.gearui.foundation.interaction.choiceSemantics
+import com.gearui.foundation.interaction.controlLabel
 import com.gearui.foundation.control.selectionOutline
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
@@ -24,7 +26,6 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.motion.feedbackDuration
 import com.tencent.kuikly.compose.animation.core.*
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.tencent.kuikly.compose.foundation.selection.selectable
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.semantics.Role
 
@@ -46,12 +47,14 @@ fun RadioButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    size: RadioSize = RadioSize.MEDIUM
+    size: RadioSize = RadioSize.MEDIUM,
+    contentDescription: String? = null,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
-        .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick),
+        .choiceSemantics(controlLabel(contentDescription), selected, Role.RadioButton, onClick = if (enabled) onClick else null)
+        .clickable(interactionSource = interaction, indication = null, enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center) {
         RadioMark(selected, enabled, pressed, size)
     }
@@ -110,7 +113,8 @@ fun RadioButtonWithLabel(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     Row(modifier.heightIn(min = ControlGeometry.selectionTouchTarget)
-        .selectable(selected, interactionSource = interaction, indication = null, enabled = enabled, role = Role.RadioButton, onClick = onClick)
+        .choiceSemantics(label, selected, Role.RadioButton, onClick = if (enabled) onClick else null)
+        .clickable(interactionSource = interaction, indication = null, enabled = enabled, onClick = onClick)
         .padding(vertical = Spacing.sm), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
         RadioMark(selected, enabled, pressed, size)

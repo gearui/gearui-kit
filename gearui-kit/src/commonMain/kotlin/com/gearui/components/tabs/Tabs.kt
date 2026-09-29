@@ -1,5 +1,6 @@
 package com.gearui.components.tabs
 
+import com.gearui.foundation.interaction.choiceSemantics
 import com.gearui.components.segmented.SegmentedTrack
 import com.tencent.kuikly.compose.foundation.layout.offset
 import com.gearui.foundation.control.ControlGeometry
@@ -17,12 +18,9 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.GearLazyRow
 import com.gearui.foundation.primitives.Text
-import com.gearui.i18n.I18n
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.semantics.role
-import com.tencent.kuikly.compose.ui.semantics.semantics
-import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
@@ -144,6 +142,7 @@ fun Tabs(
                     enabled = true,
                     modifier = Modifier.fillMaxWidth(),
                     onSelect = { index -> items.getOrNull(index)?.let { if (it.id != selected) onSelect(it.id) } },
+                    label = { index -> items[index].let { tab -> listOfNotNull(tab.label, tab.badge?.takeIf { it > 0 }?.toString()).joinToString(", ") } },
                 ) { index, isSelected ->
                     TabsSegmentLabel(item = items[index], selected = isSelected, size = size)
                 }
@@ -327,7 +326,6 @@ private fun TabCell(
     // The label is centred VERTICALLY in the cell with the underline overlaid on the bottom edge
     // (what Material TabRow and UIKit do). The old Column + SpaceBetween pushed the text to the top
     // edge and gave the indicator its own row — titles sat off-centre and looked squeezed by the bar.
-    val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
     val interaction = remember { MutableInteractionSource() }
     // The press scale rowPressFeedback would apply to the surface alone is applied to
     // the whole cell here, so the label and badge shrink with it as before.
@@ -344,10 +342,14 @@ private fun TabCell(
                 scaleX = pressScale
                 scaleY = pressScale
             }
-            .semantics {
-                role = Role.Tab
-                stateDescription = state
-            }
+            .choiceSemantics(
+                label = item.label,
+                selected = selected,
+                role = Role.Tab,
+                // Still a button when selected, as the platform's tabs are; tapping it is a no-op.
+                onClick = if (!item.disabled) ({ if (!selected) onSelect(item.id) }) else null,
+                extra = item.badge?.takeIf { it > 0 }?.toString(),
+            )
             .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
                 if (!selected) onSelect(item.id)
             },

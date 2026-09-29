@@ -1,5 +1,7 @@
 package com.gearui.components.form
 
+import com.gearui.foundation.interaction.LocalControlLabel
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.*
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldDefaults
@@ -263,7 +265,7 @@ fun FormItem(
         ) {
             FieldLabel(text = label, required = required, invalid = invalid, enabled = enabled)
             Column(modifier = Modifier.fillMaxWidth()) {
-                content()
+                CompositionLocalProvider(LocalControlLabel provides label) { content() }
                 FormItemSupportingText(error = error, description = description, enabled = enabled)
             }
         }
@@ -288,7 +290,7 @@ fun FormItem(
             Spacer(modifier = Modifier.width(Spacing.lg))
 
             Column(modifier = Modifier.weight(1f)) {
-                content()
+                CompositionLocalProvider(LocalControlLabel provides label) { content() }
                 FormItemSupportingText(error = error, description = description, enabled = enabled)
             }
         }

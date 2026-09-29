@@ -1,9 +1,17 @@
 package com.gearui.components.input
+import com.gearui.foundation.interaction.LocalControlLabel
+import com.gearui.foundation.field.fieldName
+import com.gearui.i18n.I18n
 import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.onClick
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.text.TextRange
 import com.tencent.kuikly.compose.ui.text.input.TextFieldValue
 import com.gearui.foundation.motion.iconPressFeedback
@@ -371,7 +379,7 @@ fun Input(
                             // field keeps whatever was typed, so a rejected keystroke leaves the platform
                             // view and the counter out of sync. Kuikly's maxLength modifier enforces the
                             // limit inside the native field itself.
-                            modifier = Modifier.keyboardDismissExempt()
+                            modifier = Modifier.fieldName(label ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
                                 .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
                                 .then(if (explicitKeyboardType != null) Modifier.setProp("keyboardType", explicitKeyboardType) else Modifier)
                                 .fillMaxWidth()
@@ -408,11 +416,17 @@ fun Input(
                     // and requestInputFocus is called afterwards as a safeguard.
                     if (clearable && value.isNotEmpty() && enabled && !readOnly) {
                         var clearPressed by remember { mutableStateOf(false) }
+                        val clearLabel = I18n.strings.field.clear
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Box(
                             modifier = Modifier
                                 .size(ControlGeometry.inputClearSize)
                                 .iconPressFeedback(clearPressed, ControlGeometry.inputClearSize, CircleShape)
+                                .semantics {
+                                    role = Role.Button
+                                    contentDescription = clearLabel
+                                    onClick { onClear?.invoke(); onValueChange(""); true }
+                                }
                                 .pointerInput(Unit) {
                                     awaitEachGesture {
                                         val down = awaitFirstDown(

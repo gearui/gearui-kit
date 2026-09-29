@@ -2,6 +2,9 @@ package com.gearui.i18n
 
 val StringsZhHans = Strings(
     common = CommonStrings(
+        partiallySelected = "部分选择",
+        off = "已关闭",
+        on = "已开启",
         confirm = "确认",
         ok = "确定",
         cancel = "取消",
@@ -13,6 +16,7 @@ val StringsZhHans = Strings(
         noSearchResult = "无搜索结果",
         networkError = "网络错误",
         backToTop = "顶部",
+        back = "返回",
         close = "关闭",
         remove = "移除",
         add = "添加",
@@ -30,6 +34,12 @@ val StringsZhHans = Strings(
         system = "跟随系统",
     ),
     field = FieldStrings(
+        verificationCode = "验证码",
+        clear = "清除",
+        selectRowFormat = "选择第 {index} 行",
+        selectAll = "全选",
+        hidePassword = "隐藏密码",
+        showPassword = "显示密码",
         selectPlaceholder = "请选择",
         searchPlaceholder = "搜索",
         selectedCountFormat = "已选择 {count} 项",
@@ -39,6 +49,8 @@ val StringsZhHans = Strings(
         ratingValueFormat = "{value} 星",
     ),
     dateTime = DateTimeStrings(
+        nextMonth = "下个月",
+        previousMonth = "上个月",
         datePlaceholder = "选择日期",
         rangeStartPlaceholder = "开始日期",
         rangeEndPlaceholder = "结束日期",
@@ -73,6 +85,8 @@ val StringsZhHans = Strings(
         fieldRequired = "此字段为必填项",
     ),
     media = MediaStrings(
+        nextSlide = "下一张",
+        previousSlide = "上一张",
         imageEmpty = "暂无图片",
         imageIndexFormat = "图片 {index}",
     ),

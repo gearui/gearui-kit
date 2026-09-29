@@ -11,7 +11,6 @@ import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.BackHandler
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.gestures.detectDragGestures
@@ -427,11 +426,17 @@ private fun OverlayItemLayout(
                     // receives an event. Tap-outside dismissal therefore has to be executed HERE rather than
                     // blindly intercepting: sheets and pickers close on any tap outside the content (iOS gesture
                     // semantics), while the real panel content (the surface) consumes its own clicks and nothing bubbles here.
-                    .clickable(onClick = {
-                        if (policy.outsideClick) {
-                            controller.dismiss(item.id)
-                        }
-                    })
+                    // A tap gesture, not `.clickable`: clickable carries click semantics, and a
+                    // full-screen accessibility element hides everything inside it from
+                    // VoiceOver and TalkBack — a dialog read as one node, its buttons out of
+                    // reach. Gesture handling is the same.
+                    .pointerInput(item.id, policy.outsideClick) {
+                        detectTapGestures(onTap = {
+                            if (policy.outsideClick) {
+                                controller.dismiss(item.id)
+                            }
+                        })
+                    }
             }
             Box(fullscreenModifier) {
                 Box(
@@ -487,10 +492,11 @@ private fun OverlayItemLayout(
                     // Two reasons to be invisible, one modifier: not yet positioned, and
                     // not yet arrived.
                     .alpha(if (isPositionReady) p else 0f)
-                    // Intercept clicks so they do not reach the backdrop.
-                    .clickable(onClick = {
-                        // Intentionally empty: interception is the point.
-                    })
+                    // Swallow taps so they do not reach the backdrop — as a gesture, not a
+                    // `.clickable`, which would make the whole panel one accessibility element.
+                    .pointerInput(item.id) {
+                        detectTapGestures(onTap = { })
+                    }
             ) {
                 CompositionLocalProvider(LocalOverlayVisible provides visible) {
                     item.content()

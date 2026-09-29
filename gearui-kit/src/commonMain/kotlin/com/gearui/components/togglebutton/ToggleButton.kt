@@ -1,14 +1,13 @@
 package com.gearui.components.togglebutton
 
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonShape
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
 import com.gearui.components.button.ButtonType
-import com.gearui.i18n.I18n
-import com.tencent.kuikly.compose.ui.semantics.semantics
-import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.ui.Alignment
@@ -34,13 +33,17 @@ fun ToggleButton(
     shape: ButtonShape = ButtonShape.ROUND,
     theme: ButtonTheme = ButtonTheme.PRIMARY,
 ) {
-    val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
     Button(
         text = text,
         onClick = { onSelectedChange(!selected) },
-        // See TagGroup: the button's text is the label, and the Selected flag would add
-        // a second, always-Chinese state on top of this one.
-        modifier = modifier.semantics { stateDescription = state },
+        // The Selected flag is left off: Kuikly's bridge adds its own always-Chinese
+        // state for it. choiceSemantics reads "text, state" instead.
+        modifier = modifier.choiceSemantics(
+            label = text,
+            selected = selected,
+            role = Role.Button,
+            onClick = if (enabled) ({ onSelectedChange(!selected) }) else null,
+        ),
         theme = if (selected) theme else ButtonTheme.DEFAULT,
         type = if (selected) ButtonType.FILL else ButtonType.OUTLINE,
         size = size,

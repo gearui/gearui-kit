@@ -219,7 +219,7 @@ private fun ThemeWorkload() {
             Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 Button(text = "按钮", size = ButtonSize.SMALL, onClick = {})
                 Tag(text = "标签 $row")
-                Switch(checked = row % 2 == 0, onCheckedChange = {})
+                Switch(checked = row % 2 == 0, onCheckedChange = {}, contentDescription = "标签 $row")
             }
         }
     }

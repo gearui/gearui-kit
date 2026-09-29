@@ -70,7 +70,7 @@ fun ButtonExample(
         ) {
             ButtonRow {
                 Button(text = "拨打电话", onClick = clicked, icon = Icons.phone)
-                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.phone)
+                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.phone, contentDescription = "拨打电话")
                 Button(text = "加载中", onClick = {}, loading = true)
             }
         }
@@ -93,9 +93,9 @@ fun ButtonExample(
         ) {
             ButtonRow {
                 Button(text = "矩形", onClick = clicked, shape = ButtonShape.RECTANGLE)
-                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.star_fill)
+                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.star_fill, contentDescription = "收藏")
                 Button(text = "圆角", onClick = clicked, shape = ButtonShape.ROUND)
-                Button(onClick = clicked, shape = ButtonShape.CIRCLE, icon = Icons.star_fill)
+                Button(onClick = clicked, shape = ButtonShape.CIRCLE, icon = Icons.star_fill, contentDescription = "收藏")
             }
             ButtonRow {
                 Button(text = "胶囊", onClick = clicked, shape = ButtonShape.FILLED)

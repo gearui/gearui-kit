@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.gearui.i18n.I18n
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonTheme
@@ -185,7 +186,7 @@ fun InputExample(
                 placeholder = "请输入文字",
                 variant = FieldVariant.SECONDARY,
                 suffix = {
-                    PressableFeedback(onClick = { Toast.show("点击图标") }) {
+                    PressableFeedback(onClick = { Toast.show("点击图标") }, contentDescription = "账号") {
                         Icon(
                             name = Icons.user,
                             size = IconSizes.Default.md,
@@ -225,7 +226,10 @@ fun InputExample(
                 isPassword = !showPassword,
                 variant = FieldVariant.SECONDARY,
                 suffix = {
-                    PressableFeedback(onClick = { showPassword = !showPassword }) {
+                    PressableFeedback(
+                        onClick = { showPassword = !showPassword },
+                        contentDescription = if (showPassword) I18n.strings.field.hidePassword else I18n.strings.field.showPassword,
+                    ) {
                         Icon(
                             name = if (showPassword) Icons.eye else Icons.eye_slash,
                             size = IconSizes.Default.md,

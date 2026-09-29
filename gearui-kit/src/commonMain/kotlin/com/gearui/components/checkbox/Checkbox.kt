@@ -1,5 +1,8 @@
 package com.gearui.components.checkbox
 
+import com.gearui.i18n.I18n
+import com.gearui.foundation.interaction.controlSemantics
+import com.gearui.foundation.interaction.controlLabel
 import com.gearui.foundation.control.selectionOutline
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.*
@@ -49,17 +52,30 @@ fun Checkbox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     indeterminate: Boolean = false,
-    size: CheckboxSize = CheckboxSize.MEDIUM
+    size: CheckboxSize = CheckboxSize.MEDIUM,
+    contentDescription: String? = null,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     Box(modifier.sizeIn(minWidth = ControlGeometry.selectionTouchTarget, minHeight = ControlGeometry.selectionTouchTarget)
+        .controlSemantics(controlLabel(contentDescription), checkboxState(checked, indeterminate), Role.Checkbox,
+            onClick = if (enabled) ({ onCheckedChange(!checked) }) else null)
         .triStateToggleable(
             state = if (indeterminate) ToggleableState.Indeterminate else if (checked) ToggleableState.On else ToggleableState.Off,
             enabled = enabled, role = Role.Checkbox, interactionSource = interaction, indication = null,
             onClick = { onCheckedChange(!checked) },
         ), contentAlignment = Alignment.Center) {
         CheckboxMark(checked, indeterminate, enabled, pressed, size)
+    }
+}
+
+@Composable
+private fun checkboxState(checked: Boolean, indeterminate: Boolean): String {
+    val strings = I18n.strings.common
+    return when {
+        indeterminate -> strings.partiallySelected
+        checked -> strings.selected
+        else -> strings.unselected
     }
 }
 
@@ -121,6 +137,8 @@ fun CheckboxWithLabel(
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     Row(modifier.heightIn(min = ControlGeometry.selectionTouchTarget)
+        .controlSemantics(label, checkboxState(checked, false), Role.Checkbox,
+            onClick = if (enabled) ({ onCheckedChange(!checked) }) else null)
         .triStateToggleable(state = if (checked) ToggleableState.On else ToggleableState.Off,
             enabled = enabled, role = Role.Checkbox, interactionSource = interaction, indication = null,
             onClick = { onCheckedChange(!checked) })

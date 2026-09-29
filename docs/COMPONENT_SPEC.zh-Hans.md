@@ -63,9 +63,49 @@ fun MyComponent(
 
 ## 4. 无障碍
 
-纯图标控件携带来自 `I18n` 的 `contentDescription`；状态放
-`stateDescription`；角色按 VISUAL_SPEC §7。带标签控件内的装饰图标传 null
-描述。
+**规则。**
+
+- 读屏能到达的每个控件都有名字。纯图标控件携带来自 `I18n` 的
+  `contentDescription`（NavBar 返回键用 `common.back`；移除按钮要说明移除的是
+  什么，如「移除 Kotlin」）。带标签控件内的装饰图标不传描述。
+- 放在 `Cell` 的 leading / trailing 槽或 `FormItem` 里的裸控件（`Switch`、
+  `Checkbox`、`RadioButton`）由容器的标题或标签命名（`LocalControlLabel`），
+  其余位置要传 `contentDescription`。按钮从不继承：行标题不是按钮的名字。
+  纯图标 `Button`、内容无文字的 `PressableFeedback` 传 `contentDescription`。
+- 有状态的控件通过 `controlSemantics` 读作「标签，状态」：开关「Wi-Fi，已开启」、
+  复选框「同意，已选择」；一组选项中的一项（Tab、分段、切换按钮、单选、可选标签）
+  走 `choiceSemantics`。绝不使用 `selectable`，它的标记会让 Kuikly 追加自己的状态。
+- 输入框以自身标签命名，其次是容器标签（`FormItem`、`Cell`），最后是 placeholder
+  （`fieldName`）。点击即聚焦输入框的
+  容器用点击手势，不用 `.clickable`。
+- 浮层宿主用手势拦截点击，绝不用 `.clickable`：可点击的容器会变成一个无障碍
+  元素，把里面的一切都藏起来。
+- 角色按 VISUAL_SPEC §7。
+
+**Kuikly 如何映射 semantics**（`KuiklySemantisHandler`，KuiklyUI 2.28），以及
+规则为什么是这个样子：
+
+- 节点的原生无障碍文本 = `stateDescription`、`contentDescription`、文字，用逗号
+  拼接。所以 `stateDescription` 永远在最前（「未选择，每日」），kit 只能自己把
+  标签和状态拼好。
+- 带 `onClick` 动作的节点会成为一个可点击的无障碍元素；在 iOS 上它的子元素就
+  再也访问不到了。
+- 原生侧只接收文本、角色和可点击/可聚焦；没有模态标记，也没法隐藏子树。
+
+**上游缺口（KuiklyUI），kit 层无法修复：**
+
+| 缺口 | 影响 | 期望上游 |
+| --- | --- | --- |
+| `stateDescription` 读在标签之前 | 所有带状态的控件都先读状态 | 读在标签之后，或映射为原生 value |
+| 没有模态 / 隐藏子树属性 | 对话框打开时，背后页面仍能被划到 | 把模态或显式隐藏标记映射到 `accessibilityViewIsModal` / `importantForAccessibility` |
+| `selected` 语义附带写死的中文状态 | 语言不对，且与 kit 自己的状态重复 | 本地化，或交给组件自己决定 |
+| `toggleableState` 被丢弃 | 开关、复选框没有状态，除非 kit 自己念出来 | 映射为原生 value / selected trait |
+| 输入框上的 `contentDescription` 会把它变成静态文本 | 无法用它给输入框命名；kit 改用透明的原生 placeholder | 映射为输入框的无障碍标签，并保留其 trait |
+| iOS 多行输入框的 placeholder 是子视图 | `Textarea` 在 iOS 上没有名字 | 用 placeholder 作为无障碍标签 |
+
+**验证。** iOS 模拟器上 `idb ui describe-all` 列出每个无障碍元素及其标签；
+sample 可用 `-route <id>` 直接打开任意页面，所以「全页面扫描无名按钮」是脚本化的。
+修复以无障碍树为准验收，不以读代码为准。
 
 ## 5. 文档
 

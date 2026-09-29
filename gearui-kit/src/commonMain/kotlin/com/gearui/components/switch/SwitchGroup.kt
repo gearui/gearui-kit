@@ -1,5 +1,6 @@
 package com.gearui.components.switch
 
+import com.gearui.foundation.interaction.controlSemantics
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -81,6 +82,8 @@ private fun SwitchGroupRow(
             .fillMaxWidth()
             .heightIn(min = ControlGeometry.selectionTouchTarget)
             .alpha(if (item.enabled) 1f else FeedbackDefaults.disabledOpacity)
+            .controlSemantics(item.label, switchState(checked), Role.Switch,
+                onClick = if (enabled) ({ onCheckedChange(!checked) }) else null, extra = item.description)
             .toggleable(
                 value = checked,
                 interactionSource = interaction,

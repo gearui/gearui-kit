@@ -2,6 +2,42 @@
 
 ## [Unreleased]
 
+### Added
+
+- Accessibility names. `Button`, `Checkbox`, `RadioButton`, `Switch` and
+  `PressableFeedback` take a `contentDescription`, for icon-only buttons and controls
+  with no text of their own. A bare switch, checkbox or radio in a `Cell`'s leading or
+  trailing slot, or in a `FormItem`, is named by the row title or field label without
+  one. `NavBarItem` takes a `contentDescription`; the NavBar back button reads "Back".
+- New strings: `common.back`, `on`, `off`, `partiallySelected`; `field.verificationCode`; `field.clear`, `showPassword`, `hidePassword`,
+  `selectAll`, `selectRowFormat`; `dateTime.previousMonth` / `nextMonth`;
+  `media.previousSlide` / `nextSlide`.
+
+### Fixed
+
+- Screen readers could not reach the contents of a dialog, sheet or popover: the
+  overlay host used `clickable` containers to catch taps, and a clickable node is one
+  accessibility element that hides its children on iOS. It uses tap gestures now.
+- Stateful controls now speak their state, after the label and in the current
+  language: switches "Wi-Fi, on" (Kuikly dropped the toggle state), checkboxes
+  "selected" / "partially selected", and radios, tabs, segments, toggle buttons,
+  selectable tags and Select options "selected" (Kuikly's own suffix was hardcoded
+  Chinese and read first). Also `SwitchWithLabel`, `CheckboxWithLabel`,
+  `RadioButtonWithLabel` and `SwitchGroup` rows.
+- Text fields have a name: `Input`, `SearchBar` and `InputOTP` ("Verification code",
+  or a new `contentDescription`) are read by their label, a `FormItem`'s label, or
+  their placeholder. `Textarea` and
+  `SearchBar` no longer wrap their field in a clickable, which hid it from screen
+  readers behind an unnamed button; on iOS a `Textarea` is still unnamed (KuiklyUI).
+- Unlabeled controls: Calendar month arrows, Swiper arrows, Table selection
+  checkboxes ("Select all", "Select row 3"), Input and SearchBar clear buttons, the
+  SearchBar search icon, and TagGroup remove buttons ("Remove Kotlin"). A disabled
+  SearchBar no longer shows up as an unnamed button.
+
+- The Android sample crashed with a `StackOverflowError` on the Form, Input, Textarea
+  and Switch pages in debug builds: Kuikly's context thread has a 1 MB stack. The
+  sample now gives it 8 MB through an `IKRThreadAdapter`; the README shows hosts how.
+
 ### Changed
 
 - The kit no longer depends on JetBrains `compose.foundation` or `compose.ui`. It never

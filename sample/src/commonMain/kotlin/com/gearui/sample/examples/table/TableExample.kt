@@ -173,7 +173,8 @@ fun TableExample(
                                     theme = ButtonTheme.DEFAULT,
                                     shape = ButtonShape.SQUARE,
                                     size = ButtonSize.EXTRA_SMALL,
-                                    onClick = { Toast.show("上传第 ${index + 1} 行") }
+                                    onClick = { Toast.show("上传第 ${index + 1} 行") },
+                                    contentDescription = "上传第 ${index + 1} 行"
                                 )
                                 Button(
                                     icon = Icons.trash,
@@ -181,7 +182,8 @@ fun TableExample(
                                     theme = ButtonTheme.DANGER,
                                     shape = ButtonShape.SQUARE,
                                     size = ButtonSize.EXTRA_SMALL,
-                                    onClick = { Toast.show("删除第 ${index + 1} 行") }
+                                    onClick = { Toast.show("删除第 ${index + 1} 行") },
+                                    contentDescription = "删除第 ${index + 1} 行"
                                 )
                             }
                         }

@@ -2,6 +2,9 @@ package com.gearui.i18n
 
 val StringsEnUs = Strings(
     common = CommonStrings(
+        partiallySelected = "Partially selected",
+        off = "Off",
+        on = "On",
         confirm = "Confirm",
         ok = "OK",
         cancel = "Cancel",
@@ -13,6 +16,7 @@ val StringsEnUs = Strings(
         noSearchResult = "No results",
         networkError = "Network error",
         backToTop = "Top",
+        back = "Back",
         close = "Close",
         remove = "Remove",
         add = "Add",
@@ -30,6 +34,12 @@ val StringsEnUs = Strings(
         system = "System",
     ),
     field = FieldStrings(
+        verificationCode = "Verification code",
+        clear = "Clear",
+        selectRowFormat = "Select row {index}",
+        selectAll = "Select all",
+        hidePassword = "Hide password",
+        showPassword = "Show password",
         selectPlaceholder = "Please select",
         searchPlaceholder = "Search",
         selectedCountFormat = "{count} selected",
@@ -39,6 +49,8 @@ val StringsEnUs = Strings(
         ratingValueFormat = "{value} stars",
     ),
     dateTime = DateTimeStrings(
+        nextMonth = "Next month",
+        previousMonth = "Previous month",
         datePlaceholder = "Select a date",
         rangeStartPlaceholder = "Start date",
         rangeEndPlaceholder = "End date",
@@ -73,6 +85,8 @@ val StringsEnUs = Strings(
         fieldRequired = "This field is required",
     ),
     media = MediaStrings(
+        nextSlide = "Next",
+        previousSlide = "Previous",
         imageEmpty = "No image",
         imageIndexFormat = "Image {index}",
     ),

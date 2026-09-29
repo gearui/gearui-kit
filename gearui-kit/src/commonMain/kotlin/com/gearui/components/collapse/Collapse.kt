@@ -24,10 +24,13 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 
 /**
- * Collapse panel style
+ * Collapse panel style — HeroUI Native Accordion's two variants.
  */
 enum class CollapseStyle {
+    /** No surface of its own, rows split by full-width dividers: for use on a card or sheet. */
     Block,
+
+    /** Its own rounded surface with inset dividers: for use on the page background. */
     Card
 }
 

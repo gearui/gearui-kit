@@ -303,7 +303,11 @@ fun rememberNotificationHostState(): NotificationHostState {
 @Composable
 fun rememberNotificationController(): NotificationController {
     val overlayController = LocalOverlayController.current
-    return remember { NotificationController(overlayController) }
+    val controller = remember { NotificationController(overlayController) }
+    // The overlay host lives at the app root, but what this controller shows belongs to
+    // the screen that owns it: leaving the screen takes it away, as Popup does.
+    DisposableEffect(controller) { onDispose { controller.dismiss() } }
+    return controller
 }
 
 /**

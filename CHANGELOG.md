@@ -40,6 +40,20 @@
 
 ### Changed
 
+- `DatePickerInput` and `TimePickerInput` open the same bottom-sheet wheels as `Picker`,
+  with one selection band across all columns, instead of a dialog whose columns each
+  drew their own. Days follow the Gregorian leap-year rule (2100 has 28 days in
+  February), years run 1900–2100 instead of 2020–2030, an empty value starts on today,
+  and Cancel discards what was scrolled.
+- `SearchBar`'s Cancel is tinted text, as on iOS and in HeroUI Native, not a filled
+  block; `SearchBarWithAction`'s button is a kit `Button` with its press feedback.
+- Notifications and snackbars shown through `rememberNotificationController` /
+  `rememberSnackbarController` are dismissed when the screen that owns the controller
+  leaves, instead of staying over the next screen.
+- `Popup.Host` takes `surface = false` for content that draws its own surface.
+- `Skeleton` and `SkeletonImage` default to `Radius.sm`, the radius of the image they
+  stand in for, instead of spacing values used as radii.
+
 - The kit no longer depends on JetBrains `compose.foundation` or `compose.ui`. It never
   used them — every UI import is KuiklyUI's own — but on Android they pulled the whole
   androidx Compose UI and foundation stack into every consumer, and pinned its version

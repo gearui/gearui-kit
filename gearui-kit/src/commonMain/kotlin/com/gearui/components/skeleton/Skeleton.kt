@@ -18,6 +18,7 @@ import com.gearui.foundation.typography.Typography
 import com.gearui.foundation.primitives.Text
 
 import com.gearui.theme.Theme
+import com.gearui.foundation.layout.Radius
 import com.gearui.foundation.layout.Spacing
 
 /**
@@ -63,7 +64,7 @@ fun Skeleton(
     modifier: Modifier = Modifier,
     variant: SkeletonVariant = SkeletonVariant.RECTANGULAR,
     animation: SkeletonAnimation = SkeletonAnimation.WAVE,
-    cornerRadius: Dp = Spacing.xs
+    cornerRadius: Dp = Radius.sm
 ) {
     val colors = Theme.colors
 
@@ -177,7 +178,7 @@ fun SkeletonImage(
     modifier: Modifier = Modifier,
     width: Dp = ControlGeometry.skeletonBlock,
     height: Dp = ControlGeometry.skeletonBlock,
-    cornerRadius: Dp = Spacing.sm,
+    cornerRadius: Dp = Radius.sm,
     animation: SkeletonAnimation = SkeletonAnimation.PULSE
 ) {
     Skeleton(

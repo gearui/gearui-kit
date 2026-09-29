@@ -75,7 +75,7 @@ fun CollapseExample(
         onBack = onBack
     ) {
         ExampleSection(
-            surface = SectionSurface.Plain,
+            surface = SectionSurface.Card,
             title = "通栏样式",
             description = "CollapseStyle.Block，各面板独立展开"
         ) {
@@ -91,7 +91,7 @@ fun CollapseExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
+            surface = SectionSurface.Card,
             title = "带操作说明",
             description = "展开图标旁显示「展开 / 收起」文案"
         ) {
@@ -102,7 +102,7 @@ fun CollapseExample(
         }
 
         ExampleSection(
-            surface = SectionSurface.Plain,
+            surface = SectionSurface.Card,
             title = "手风琴",
             description = "Collapse.Accordion 同时只展开一个面板"
         ) {

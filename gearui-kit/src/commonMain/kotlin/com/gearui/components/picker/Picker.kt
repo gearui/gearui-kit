@@ -4,7 +4,6 @@ import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.gearui.foundation.interaction.pressScale
 import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
@@ -22,7 +21,6 @@ import com.gearui.foundation.material.verticalBrush
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import com.gearui.components.bottomsheet.BottomSheet
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import com.gearui.i18n.I18n
@@ -80,9 +78,6 @@ object Picker {
         onCancel: () -> Unit,
         onDismiss: () -> Unit
     ) {
-        val colors = Theme.colors
-        val shapes = Theme.shapes
-
         // Currently selected indices
         val currentIndexes = remember(data, selectedIndexes) {
             mutableStateListOf<Int>().apply {
@@ -92,92 +87,25 @@ object Picker {
             }
         }
 
-        BottomSheet.Host(
+        PickerSheet(
             visible = visible,
-            onDismiss = onDismiss
+            title = title,
+            onCancel = onCancel,
+            onConfirm = { onConfirm(currentIndexes.toList()) },
+            onDismiss = onDismiss,
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.surface)
-            ) {
-                // Header: cancel - title - confirm
-                PickerHeader(
-                    title = title,
-                    onCancel = onCancel,
-                    onConfirm = { onConfirm(currentIndexes.toList()) }
-                )
-
-                // Picker body
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(ControlGeometry.pickerWheelHeight)
-                ) {
-                // Selection band background
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxWidth()
-                            .padding(horizontal = Spacing.lg)
-                            .height(ControlGeometry.pickerItemHeight)
-                            .clip(shapes.md)
-                            .background(colors.muted)
-                    )
-
-                    // Wheel columns
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = Spacing.xxl),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        data.forEachIndexed { colIndex, columnData ->
-                            if (columnData.isNotEmpty()) {
-                                val initialIndex = selectedIndexes.getOrElse(colIndex) { 0 }
-                                    .coerceIn(0, columnData.size - 1)
-
-                                WheelPickerColumn(
-                                    items = columnData,
-                                    initialIndex = initialIndex,
-                                    onSelectedChange = { index ->
-                                        if (colIndex < currentIndexes.size) {
-                                            currentIndexes[colIndex] = index
-                                        }
-                                    },
-                                    modifier = Modifier.weight(1f)
-                                )
-                            }
-                        }
-                    }
-
-                    // Top gradient mask
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .height(ControlGeometry.pickerFadeHeight)
-                            .background(
-                                brush = MaterialDefaults.pickerTopMask
-                                    .tintedMask(Theme.colors.surface)
-                                    .verticalBrush()
-                            )
-                    )
-
-                    // Bottom gradient mask
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .height(ControlGeometry.pickerFadeHeight)
-                            .background(
-                                brush = MaterialDefaults.pickerBottomMask
-                                    .tintedMask(Theme.colors.surface)
-                                    .verticalBrush()
-                            )
+            PickerWheels(columnCount = data.size) { colIndex ->
+                val columnData = data[colIndex]
+                if (columnData.isNotEmpty()) {
+                    WheelPickerColumn(
+                        items = columnData,
+                        initialIndex = selectedIndexes.getOrElse(colIndex) { 0 }.coerceIn(0, columnData.size - 1),
+                        onSelectedChange = { index ->
+                            if (colIndex < currentIndexes.size) currentIndexes[colIndex] = index
+                        },
+                        modifier = Modifier.weight(1f),
                     )
                 }
-
             }
         }
     }
@@ -196,9 +124,6 @@ object Picker {
         onCancel: () -> Unit,
         onDismiss: () -> Unit
     ) {
-        val colors = Theme.colors
-        val shapes = Theme.shapes
-
         // Parse the linked data
         val model = remember(data, initialData) {
             LinkedPickerModel(data, columnNum, initialData)
@@ -207,100 +132,97 @@ object Picker {
         // Counter used to force a refresh
         var refreshKey by remember { mutableStateOf(0) }
 
-        BottomSheet.Host(
+        PickerSheet(
             visible = visible,
-            onDismiss = onDismiss
+            title = title,
+            onCancel = onCancel,
+            onConfirm = { onConfirm(model.getSelectedData()) },
+            onDismiss = onDismiss,
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.surface)
-            ) {
-                // Header
-                PickerHeader(
-                    title = title,
-                    onCancel = onCancel,
-                    onConfirm = { onConfirm(model.getSelectedData()) }
-                )
-
-                // Picker body
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(ControlGeometry.pickerWheelHeight)
-                ) {
-                // Selection band background
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxWidth()
-                            .padding(horizontal = Spacing.lg)
-                            .height(ControlGeometry.pickerItemHeight)
-                            .clip(shapes.md)
-                            .background(colors.muted)
-                    )
-
-                    // Linked wheel columns, keyed to force a refresh
-                    key(refreshKey) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = Spacing.xxl),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            for (colIndex in 0 until columnNum) {
-                                val columnData = model.getColumnData(colIndex)
-                                val selectedIndex = model.getSelectedIndex(colIndex)
-
-                                if (columnData.isNotEmpty()) {
-                                    key(colIndex, columnData.hashCode()) {
-                                        WheelPickerColumn(
-                                            items = columnData,
-                                            initialIndex = selectedIndex.coerceIn(0, columnData.size - 1),
-                                            onSelectedChange = { index ->
-                                                model.onColumnSelected(colIndex, index)
-                                                // Refresh the columns after this one
-                                                if (colIndex < columnNum - 1) {
-                                                    refreshKey++
-                                                }
-                                            },
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    }
-                                }
-                            }
+            // Keyed to rebuild the columns after a parent column changes.
+            key(refreshKey) {
+                PickerWheels(columnCount = columnNum) { colIndex ->
+                    val columnData = model.getColumnData(colIndex)
+                    if (columnData.isNotEmpty()) {
+                        key(colIndex, columnData.hashCode()) {
+                            WheelPickerColumn(
+                                items = columnData,
+                                initialIndex = model.getSelectedIndex(colIndex).coerceIn(0, columnData.size - 1),
+                                onSelectedChange = { index ->
+                                    model.onColumnSelected(colIndex, index)
+                                    if (colIndex < columnNum - 1) refreshKey++
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
                         }
                     }
-
-                    // Top gradient mask
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .height(ControlGeometry.pickerFadeHeight)
-                            .background(
-                                brush = MaterialDefaults.pickerTopMask
-                                    .tintedMask(Theme.colors.surface)
-                                    .verticalBrush()
-                            )
-                    )
-
-                    // Bottom gradient mask
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .height(ControlGeometry.pickerFadeHeight)
-                            .background(
-                                brush = MaterialDefaults.pickerBottomMask
-                                    .tintedMask(Theme.colors.surface)
-                                    .verticalBrush()
-                            )
-                    )
                 }
-
             }
         }
+    }
+}
+
+/**
+ * The sheet every wheel picker opens in — Picker, DatePicker, TimePicker: a header with
+ * Cancel, the title and OK, above the wheels.
+ */
+@Composable
+internal fun PickerSheet(
+    visible: Boolean,
+    title: String?,
+    onCancel: () -> Unit,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    BottomSheet.Host(visible = visible, onDismiss = onDismiss) {
+        Column(modifier = Modifier.fillMaxWidth().background(Theme.colors.surface)) {
+            PickerHeader(title = title, onCancel = onCancel, onConfirm = onConfirm)
+            content()
+        }
+    }
+}
+
+/**
+ * The wheel area: one selection band behind all the columns, as on iOS, and the fades
+ * at top and bottom. Each column draws only its items, never a band of its own.
+ */
+@Composable
+internal fun PickerWheels(
+    columnCount: Int,
+    column: @Composable RowScope.(index: Int) -> Unit,
+) {
+    val colors = Theme.colors
+    Box(modifier = Modifier.fillMaxWidth().height(ControlGeometry.pickerWheelHeight)) {
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .padding(horizontal = Spacing.lg)
+                .height(ControlGeometry.pickerItemHeight)
+                .clip(Theme.shapes.md)
+                .background(colors.muted)
+        )
+        Row(
+            modifier = Modifier.fillMaxSize().padding(horizontal = Spacing.xxl),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            for (index in 0 until columnCount) column(index)
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .height(ControlGeometry.pickerFadeHeight)
+                .background(brush = MaterialDefaults.pickerTopMask.tintedMask(colors.surface).verticalBrush())
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(ControlGeometry.pickerFadeHeight)
+                .background(brush = MaterialDefaults.pickerBottomMask.tintedMask(colors.surface).verticalBrush())
+        )
     }
 }
 
@@ -366,7 +288,7 @@ private fun PickerHeader(
  * Wheel column, with snapping
  */
 @Composable
-private fun WheelPickerColumn(
+internal fun WheelPickerColumn(
     items: List<String>,
     initialIndex: Int,
     onSelectedChange: (Int) -> Unit,

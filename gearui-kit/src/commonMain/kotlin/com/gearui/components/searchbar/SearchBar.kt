@@ -1,4 +1,7 @@
 package com.gearui.components.searchbar
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonType
+import com.gearui.components.button.Button
 import com.gearui.foundation.field.fieldName
 import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.tencent.kuikly.compose.ui.semantics.contentDescription
@@ -41,9 +44,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
 import com.gearui.foundation.keyboard.keyboardDismissExempt
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.tencent.kuikly.compose.ui.focus.onFocusChanged
 import com.gearui.theme.Theme
 import com.gearui.theme.LocalInputColors
@@ -349,35 +350,26 @@ fun SearchBar(
             }
         }
 
-        // Cancel button — a small filled pill in the brand primary, not bare text:
-        // primary text alone can be near-invisible for low-contrast brand colors
-        // (e.g. yellow on white), while primary-surface + primaryForeground always pairs.
+        // Cancel is tinted text, as on iOS and in HeroUI Native: a filled button beside
+        // the field would read as the primary action. A brand colour too light for
+        // text fails the theme's TEXT-button contract everywhere, not only here.
         //
         // Visibility is decided by cancelVisible(), which is a function so the
         // rule can be tested — this used to be a bare `showCancel` the caller had
         // to manage, so the platform's "arrives with focus" behaviour was
         // something every host reimplemented or, more often, went without.
         if (cancelVisible(cancel, showCancel, isFocused)) {
-            Spacer(modifier = Modifier.width(Spacing.sm))
-            Box(
-                modifier = Modifier
-                    // Same radius as the field it sits next to, not a capsule.
-                    .clip(FieldDefaults.shape)
-                    .background(if (enabled) colors.primary else colors.muted)
-                    .clickable(enabled = enabled) {
-                        focusManager.clearFocus(force = true)
-                        keyboardController?.hide()
-                        onCancel?.invoke()
-                    }
-                    .padding(horizontal = Spacing.md, vertical = Spacing.xs),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = I18n.strings.common.cancel,
-                    style = Theme.typography.bodyMedium,
-                    color = if (enabled) colors.primaryForeground else colors.mutedForeground
-                )
-            }
+            Button(
+                text = I18n.strings.common.cancel,
+                type = ButtonType.TEXT,
+                size = ButtonSize.SMALL,
+                disabled = !enabled,
+                onClick = {
+                    focusManager.clearFocus(force = true)
+                    keyboardController?.hide()
+                    onCancel?.invoke()
+                },
+            )
         }
     }
 }
@@ -437,24 +429,14 @@ fun SearchBarWithAction(
 
         Spacer(modifier = Modifier.width(Spacing.sm))
 
-        Box(
-            modifier = Modifier
-                .height(FieldSizeTokens.Medium.height)
-                .clip(FieldDefaults.shape)
-                .background(if (enabled) colors.primary else colors.muted)
-                .clickable(enabled = enabled) {
-                    focusManager.clearFocus(force = true)
-                    keyboardController?.hide()
-                    onAction(value)
-                }
-                .padding(horizontal = Spacing.lg),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = actionText,
-                style = Theme.typography.bodyMedium,
-                color = if (enabled) colors.primaryForeground else colors.mutedForeground
-            )
-        }
+        Button(
+            text = actionText,
+            disabled = !enabled,
+            onClick = {
+                focusManager.clearFocus(force = true)
+                keyboardController?.hide()
+                onAction(value)
+            },
+        )
     }
 }

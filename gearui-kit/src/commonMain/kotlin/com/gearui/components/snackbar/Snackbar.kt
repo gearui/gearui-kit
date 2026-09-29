@@ -318,7 +318,11 @@ fun SnackbarHost(
 @Composable
 fun rememberSnackbarController(): SnackbarController {
     val overlayController = LocalOverlayController.current
-    return remember { SnackbarController(overlayController) }
+    val controller = remember { SnackbarController(overlayController) }
+    // The overlay host lives at the app root, but what this controller shows belongs to
+    // the screen that owns it: leaving the screen takes it away, as Popup does.
+    DisposableEffect(controller) { onDispose { controller.dismiss() } }
+    return controller
 }
 
 /**

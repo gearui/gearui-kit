@@ -4,11 +4,9 @@ import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.material.Materials
 import com.gearui.foundation.material.MaterialSurface
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -16,19 +14,13 @@ import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.theme.Theme
 import com.gearui.overlay.OverlayDefaults
-import com.gearui.foundation.border.BorderWidth
 
 /**
- * Popup - base for anchored floating layers
+ * Popup - an anchored floating layer for content the kit has no component for.
  *
- * The foundation of every anchor-positioned floating component:
- * - Dropdown
- * - Tooltip
- * - Popover
- * - SelectMenu
- * - ContextMenu
+ * For a menu, a tooltip or a popover use those components; Popup is the primitive
+ * underneath the idea, for callers building their own.
  *
  * Characteristics:
  * - non-modal (does not block interaction)
@@ -49,6 +41,8 @@ object Popup {
      * @param dismissOnOutside whether tapping outside dismisses it
      * @param autoFlip whether to flip automatically when space runs out
      * @param onDismiss dismiss callback
+     * @param surface draw the overlay surface (popover fill, radius, shadow) around
+     *   [content]. Off for content that draws its own — a bubble, an image card.
      * @param content the content
      */
     @Composable
@@ -61,6 +55,7 @@ object Popup {
         dismissOnOutside: Boolean = true,
         autoFlip: Boolean = true,
         onDismiss: () -> Unit = {},
+        surface: Boolean = true,
         content: @Composable () -> Unit
     ) {
         val controller = LocalOverlayController.current
@@ -100,7 +95,7 @@ object Popup {
                     ),
                     onDismiss = { onDismissState.value() }
                 ) {
-                    PopupSurface(content = contentState.value)
+                    if (surface) PopupSurface(content = contentState.value) else contentState.value()
                 }
                 anchorBoundsWhenOpened = anchorBounds
             } else {
@@ -140,9 +135,6 @@ internal fun PopupSurface(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-
     // Overlay surface and shadow, no border (reference overlay contract).
     MaterialSurface(
         material = Materials.Popover,

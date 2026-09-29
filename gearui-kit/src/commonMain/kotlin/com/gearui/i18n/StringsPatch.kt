@@ -17,6 +17,8 @@ data class StringsPatch(
     val feedback: FeedbackStringsPatch? = null,
     val media: MediaStringsPatch? = null,
     val guide: GuideStringsPatch? = null,
+    val format: FormatStringsPatch? = null,
+    val lunar: LunarStringsPatch? = null,
 )
 
 val StringsPatch.isEmpty: Boolean
@@ -26,7 +28,9 @@ val StringsPatch.isEmpty: Boolean
         (dateTime == null || dateTime.isEmpty) &&
         (feedback == null || feedback.isEmpty) &&
         (media == null || media.isEmpty) &&
-        (guide == null || guide.isEmpty)
+        (guide == null || guide.isEmpty) &&
+        (format == null || format.isEmpty) &&
+        (lunar == null || lunar.isEmpty)
 
 /**
  * Apply [patch] on top of base strings. Returns the receiver unchanged when
@@ -42,5 +46,7 @@ fun Strings.merge(patch: StringsPatch?): Strings {
         feedback = feedback.merge(patch.feedback),
         media = media.merge(patch.media),
         guide = guide.merge(patch.guide),
+        format = format.merge(patch.format),
+        lunar = lunar.merge(patch.lunar),
     )
 }

@@ -21,6 +21,8 @@ data class Strings(
     val feedback: FeedbackStrings,
     val media: MediaStrings,
     val guide: GuideStrings,
+    val format: FormatStrings,
+    val lunar: LunarStrings,
 ) {
     val buttonConfirm: String get() = common.confirm
     val buttonCancel: String get() = common.cancel

@@ -2,6 +2,8 @@ package com.gearui.i18n
 
 val StringsEnUs = Strings(
     common = CommonStrings(
+        noMoreData = "No more",
+        loadMoreFailed = "Couldn't load. Tap to retry.",
         partiallySelected = "Partially selected",
         off = "Off",
         on = "On",
@@ -96,5 +98,29 @@ val StringsEnUs = Strings(
         tourNext = "Next",
         tourFinish = "Done",
         rateDescriptions = listOf("Terrible", "Bad", "Okay", "Good", "Great"),
+    ),
+    format = FormatStrings(
+        firstDayOfWeek = 0,
+        compactUnits = listOf(
+            CompactUnit(1_000, "K"),
+            CompactUnit(1_000_000, "M"),
+            CompactUnit(1_000_000_000, "B"),
+        ),
+        justNow = "Just now",
+        minutesAgoFormat = "{n} min ago",
+        yesterdayFormat = "Yesterday {time}",
+        monthDayFormat = "{month}/{day}",
+        dateFormat = "{month}/{day}/{year}",
+    ),
+    lunar = LunarStrings(
+        monthNames = listOf("M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"),
+        leapPrefix = "Leap ",
+        dayNames = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"),
+        solarTerms = listOf("Minor Cold", "Major Cold", "Start of Spring", "Rain Water", "Awakening of Insects", "Spring Equinox", "Clear and Bright", "Grain Rain", "Start of Summer", "Grain Buds", "Grain in Ear", "Summer Solstice", "Minor Heat", "Major Heat", "Start of Autumn", "End of Heat", "White Dew", "Autumn Equinox", "Cold Dew", "Frost Descent", "Start of Winter", "Minor Snow", "Major Snow", "Winter Solstice"),
+        festivals = listOf("Spring Festival", "Lantern Festival", "Dragon Boat", "Qixi", "Ghost Festival", "Mid-Autumn", "Double Ninth", "Laba", "Little New Year", "New Year's Eve"),
+        stems = listOf("Jia", "Yi", "Bing", "Ding", "Wu", "Ji", "Geng", "Xin", "Ren", "Gui"),
+        branches = listOf("Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"),
+        zodiac = listOf("Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"),
+        fullDateFormat = "{ganzhi} ({zodiac}) {month} {day}",
     ),
 )

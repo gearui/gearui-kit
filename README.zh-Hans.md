@@ -31,16 +31,16 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**71 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**75 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（19） | `Input`、`Checkbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
-| 导航（6） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`Segmented` |
-| 数据展示（16） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Watermark` |
+| 表单（20） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
+| 导航（7） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented` |
+| 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
-| 布局（6） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`BottomSheet`、`BackTop` |
+| 布局（7） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`LoadMore`、`BottomSheet`、`BackTop` |
 
 <details>
 <summary>各组件用途</summary>
@@ -65,6 +65,7 @@
 | --- | --- | --- |
 | `Input` | 输入框 | 文本输入 |
 | `Checkbox` | 复选框 | 多选操作 |
+| `AgreementCheckbox` | 协议勾选 | 协议与隐私同意 |
 | `Radio` | 单选框 | 单选操作 |
 | `InputOTP` | 验证码输入 | 分格验证码输入 |
 | `ComboBox` | 输入选择器 | 输入筛选的下拉选择 |
@@ -92,6 +93,7 @@
 | `Tabs` | 选项卡 | 内容切换 |
 | `Drawer` | 抽屉 | 侧滑抽屉 |
 | `Steps` | 步骤条 | 步骤指示 |
+| `IndexBar` | 索引栏 | 通讯录字母索引 |
 | `Segmented` | 分段控制 | 分段选择 |
 
 **数据展示**
@@ -113,6 +115,7 @@
 | `Skeleton` | 骨架屏 | 加载占位 |
 | `Timeline` | 时间轴 | 时间线展示 |
 | `Calendar` | 日历 | 日历展示 |
+| `Format` | 本地化格式 | 万亿缩写、相对时间、农历 |
 | `Watermark` | 水印 | 页面水印 |
 
 **反馈**
@@ -143,6 +146,7 @@
 | `Swiper` | 轮播 | 内容轮播 |
 | `SearchBar` | 搜索栏 | 搜索输入 |
 | `PullRefresh` | 下拉刷新 | 列表下拉刷新 |
+| `LoadMore` | 加载更多 | 列表分页加载 |
 | `BottomSheet` | 底部抽屉 | 底部弹出 |
 | `BackTop` | 回到顶部 | 返回顶部 |
 

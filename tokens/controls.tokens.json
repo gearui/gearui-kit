@@ -1911,18 +1911,6 @@
         }
       }
     },
-    "cascaderDropdownHeight": {
-      "$value": {
-        "value": 300,
-        "unit": "px"
-      },
-      "$extensions": {
-        "com.gearui.source": {
-          "basis": "gearui",
-          "why": "About six 48 option rows before a level scrolls."
-        }
-      }
-    },
     "textareaCompactPaddingInline": {
       "$value": {
         "value": 10,
@@ -2592,6 +2580,78 @@
         "com.gearui.source": {
           "basis": "gearui",
           "why": "Vertical inset of the selected pill around icon and label."
+        }
+      }
+    },
+    "loadMoreHeight": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "List footer height: one row, the same as a Cell with no description, so the list does not jump when the footer swaps states."
+        }
+      }
+    },
+    "calendarLunarCellHeight": {
+      "$value": {
+        "value": 52,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A calendar day with its lunar date under it: the plain 44pt cell plus one extra-small line, as Chinese calendars set it."
+        }
+      }
+    },
+    "cascaderListHeight": {
+      "$value": {
+        "value": 360,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The list in the cascader sheet: seven 48pt rows and a partial eighth, so it reads as scrollable, with the header and level tabs still under half of an 844pt screen."
+        }
+      }
+    },
+    "indexBarItemHeight": {
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "One letter of an index bar: 27 letters (A-Z and #) fit in under 490pt, inside a small phone's list between the navigation and tab bars."
+        }
+      }
+    },
+    "indexBarWidth": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Index bar column: a letter at the extra-small size with room either side for a thumb that drags along the edge."
+        }
+      }
+    },
+    "indexBarBubbleSize": {
+      "$value": {
+        "value": 52,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "The letter bubble shown while dragging: large enough to read under the thumb, as the WeChat contact list does."
         }
       }
     }

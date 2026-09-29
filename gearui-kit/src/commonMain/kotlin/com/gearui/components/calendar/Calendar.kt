@@ -1,5 +1,7 @@
 package com.gearui.components.calendar
 
+import com.gearui.i18n.calendarLabelIsOccasion
+import com.gearui.i18n.calendarLabel
 import com.gearui.foundation.interaction.IconActionButton
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
@@ -100,10 +102,16 @@ fun Calendar(
     onMonthChange: ((CalendarDate) -> Unit)? = null,
     minDate: CalendarDate? = null,
     maxDate: CalendarDate? = null,
-    firstDayOfWeek: Int = 0,
+    /** 0 = Sunday, 1 = Monday. Defaults to the language's convention (Monday in mainland China). */
+    firstDayOfWeek: Int = I18n.strings.format.firstDayOfWeek,
     title: String? = null,
     showTitle: Boolean = true,
-    cellHeight: Dp = ControlGeometry.calendarCellHeight
+    /**
+     * Show the Chinese lunar date under each day, as calendars in China do: the festival
+     * or solar term when there is one (in the accent colour), else the lunar day.
+     */
+    lunar: Boolean = false,
+    cellHeight: Dp = if (lunar) ControlGeometry.calendarLunarCellHeight else ControlGeometry.calendarCellHeight
 ) {
     val colors = Theme.colors
 
@@ -161,6 +169,7 @@ fun Calendar(
                 minDate = minDate,
                 maxDate = maxDate,
                 firstDayOfWeek = firstDayOfWeek,
+                lunar = lunar,
                 cellHeight = cellHeight,
                 onCellClick = { date ->
                     when (type) {
@@ -282,11 +291,12 @@ private fun CalendarGrid(
     minDate: CalendarDate?,
     maxDate: CalendarDate?,
     firstDayOfWeek: Int,
+    lunar: Boolean,
     cellHeight: Dp,
     onCellClick: (CalendarDate) -> Unit
 ) {
-    val colors = Theme.colors
     val today = CalendarDate.today()
+    val lunarStrings = I18n.strings.lunar
 
     val daysInMonth = CalendarMath.daysInMonth(year, month)
     val adjustedFirstDay = CalendarMath.leadingBlanks(year, month, firstDayOfWeek)
@@ -331,6 +341,8 @@ private fun CalendarGrid(
                             key(currentDate, selectType) {
                                 CalendarCell(
                                     day = currentDay,
+                                    lunarLabel = if (lunar) lunarStrings.calendarLabel(year, month, currentDay) else null,
+                                    occasion = lunar && calendarLabelIsOccasion(year, month, currentDay),
                                     selectType = selectType,
                                     isToday = isToday,
                                     cellHeight = cellHeight,
@@ -350,6 +362,8 @@ private fun CalendarGrid(
 @Composable
 private fun CalendarCell(
     day: Int,
+    lunarLabel: String?,
+    occasion: Boolean,
     selectType: DateSelectType,
     isToday: Boolean,
     cellHeight: Dp,
@@ -391,7 +405,8 @@ private fun CalendarCell(
 
     // Shape
     val shape = when (selectType) {
-        DateSelectType.Selected -> CircleShape
+        // A lunar cell is taller than wide: a circle would become a capsule.
+        DateSelectType.Selected -> if (lunarLabel != null) Theme.shapes.md else CircleShape
         DateSelectType.Start -> RoundedCornerShape(topStart = cellHeight / 2, bottomStart = cellHeight / 2)
         DateSelectType.End -> RoundedCornerShape(topEnd = cellHeight / 2, bottomEnd = cellHeight / 2)
         else -> Theme.shapes.none
@@ -416,10 +431,21 @@ private fun CalendarCell(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = day.toString(),
-            style = Theme.typography.bodyMedium,
-            color = textColor
-        )
+        if (lunarLabel == null) {
+            Text(text = day.toString(), style = Theme.typography.bodyMedium, color = textColor)
+        } else {
+            val onFill = selectType == DateSelectType.Selected || selectType == DateSelectType.Start ||
+                selectType == DateSelectType.End
+            val lunarColor = when {
+                onFill -> textColor
+                selectType == DateSelectType.Disabled -> colors.mutedForeground
+                occasion -> colors.primary
+                else -> colors.mutedForeground
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = day.toString(), style = Theme.typography.bodyMedium, color = textColor)
+                Text(text = lunarLabel, style = Theme.typography.bodyExtraSmall, color = lunarColor, maxLines = 1)
+            }
+        }
     }
 }

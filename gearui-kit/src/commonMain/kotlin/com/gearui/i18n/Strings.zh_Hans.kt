@@ -2,6 +2,8 @@ package com.gearui.i18n
 
 val StringsZhHans = Strings(
     common = CommonStrings(
+        noMoreData = "没有更多了",
+        loadMoreFailed = "加载失败，点击重试",
         partiallySelected = "部分选择",
         off = "已关闭",
         on = "已开启",
@@ -96,5 +98,25 @@ val StringsZhHans = Strings(
         tourNext = "下一步",
         tourFinish = "完成",
         rateDescriptions = listOf("很差", "较差", "一般", "满意", "很满意"),
+    ),
+    format = FormatStrings(
+        firstDayOfWeek = 1,
+        compactUnits = listOf(CompactUnit(10_000, "万"), CompactUnit(100_000_000, "亿")),
+        justNow = "刚刚",
+        minutesAgoFormat = "{n}分钟前",
+        yesterdayFormat = "昨天 {time}",
+        monthDayFormat = "{month}月{day}日",
+        dateFormat = "{year}年{month}月{day}日",
+    ),
+    lunar = LunarStrings(
+        monthNames = listOf("正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"),
+        leapPrefix = "闰",
+        dayNames = listOf("初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"),
+        solarTerms = listOf("小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"),
+        festivals = listOf("春节", "元宵", "端午", "七夕", "中元", "中秋", "重阳", "腊八", "小年", "除夕"),
+        stems = listOf("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
+        branches = listOf("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"),
+        zodiac = listOf("鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"),
+        fullDateFormat = "{ganzhi}年（{zodiac}）{month}{day}",
     ),
 )

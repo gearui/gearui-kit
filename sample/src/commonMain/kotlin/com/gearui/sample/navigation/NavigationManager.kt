@@ -1,5 +1,9 @@
 package com.gearui.sample.navigation
 
+import com.gearui.sample.examples.refresh.LoadMoreExample
+import com.gearui.sample.examples.format.FormatExample
+import com.gearui.sample.examples.indexbar.IndexBarExample
+import com.gearui.sample.examples.agreement.AgreementExample
 import com.gearui.sample.examples.runtime.PerformanceExample
 import androidx.compose.runtime.Composable
 import com.gearui.sample.config.ComponentInfo
@@ -123,6 +127,7 @@ object NavigationManager {
             // Form components (15)
             "input" -> InputExample(component, onBack)
             "checkbox" -> CheckboxExample(component, onBack)
+            "agreement" -> AgreementExample(component, onBack)
             "radio" -> RadioExample(component, onBack)
             "switch" -> SwitchExample(component, onBack)
             "slider" -> SliderExample(component, onBack)
@@ -142,6 +147,7 @@ object NavigationManager {
             "tabs" -> TabsExample(component, onBack)
             "drawer" -> DrawerExample(component, onBack)
             "steps" -> StepsExample(component, onBack)
+            "indexbar" -> IndexBarExample(component, onBack)
             "segmented" -> SegmentedExample(component, onBack)
             "runtime-insets" -> InsetsDebugExample(component, onBack)
             "runtime-material" -> MaterialExample(component, onBack)
@@ -165,6 +171,7 @@ object NavigationManager {
             "skeleton" -> SkeletonExample(component, onBack)
             "timeline" -> TimelineExample(component, onBack)
             "calendar" -> CalendarExample(component, onBack)
+            "format" -> FormatExample(component, onBack)
             "watermark" -> WatermarkExample(component, onBack)
 
             // Feedback components (11)
@@ -188,6 +195,7 @@ object NavigationManager {
             "swiper" -> SwiperExample(component, onBack)
             "searchbar" -> SearchBarExample(component, onBack)
             "refresh" -> RefreshExample(component, onBack)
+            "loadmore" -> LoadMoreExample(component, onBack)
             "bottomsheet" -> BottomSheetExample(component, onBack)
             "backtop" -> BackTopExample(component, onBack)
 

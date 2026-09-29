@@ -117,6 +117,12 @@ fun Input(
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
+    /**
+     * Groups the input on screen — [InputFormat.ChinaMobile], [InputFormat.BankCard],
+     * [InputFormat.IdCard] or your own. [value] stays raw (no separators); the format
+     * also sets the keyboard and the length limit, so leave [maxLength] unset.
+     */
+    format: InputFormat? = null,
     onSend: (() -> Unit)? = null,
     prefix: (@Composable () -> Unit)? = null,
     suffix: (@Composable () -> Unit)? = null,
@@ -325,17 +331,24 @@ fun Input(
                         // Text comes from the caller, the caret stays local. When the text
                         // is replaced from outside, the caret goes to the end, the only
                         // place the user would want to continue from.
+                        // With a format the field shows the grouped text; the caller's
+                        // value stays raw.
+                        val shown = format?.format(value) ?: value
                         var caretState by remember {
-                            mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+                            mutableStateOf(TextFieldValue(shown, TextRange(shown.length)))
                         }
                         val fieldValue =
-                            if (caretState.text == value) caretState
-                            else TextFieldValue(value, TextRange(value.length))
+                            if (caretState.text == shown) caretState
+                            else TextFieldValue(shown, TextRange(shown.length))
                         BasicTextField(
                             value = fieldValue,
                             onValueChange = { newValue ->
                                 if (!readOnly && enabled) {
-                                    if (maxLength == null || newValue.text.length <= maxLength) {
+                                    if (format != null) {
+                                        val edit = format.edit(fieldValue.text, newValue.text, newValue.selection.end)
+                                        caretState = TextFieldValue(edit.display, TextRange(edit.caret))
+                                        if (edit.raw != value) onValueChange(edit.raw)
+                                    } else if (maxLength == null || newValue.text.length <= maxLength) {
                                         caretState = newValue
                                         if (newValue.text != value) onValueChange(newValue.text)
                                     }
@@ -354,7 +367,7 @@ fun Input(
                                 // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
                                 // channel is the native secureTextEntry (triggered by keyboardType=password),
                                 // and visualTransformation has no effect across the Kuikly bridge.
-                                keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
+                                keyboardType = if (isPassword) KeyboardType.Password else format?.keyboardType ?: keyboardType,
                                 imeAction = when {
                                     onSend != null -> ImeAction.Send
                                     maxLines == 1 -> ImeAction.Done
@@ -380,7 +393,13 @@ fun Input(
                             // view and the counter out of sync. Kuikly's maxLength modifier enforces the
                             // limit inside the native field itself.
                             modifier = Modifier.fieldName(label ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
-                                .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
+                                .then(
+                                    when {
+                                        format != null -> Modifier.maxLength(format.displayMaxLength)
+                                        maxLength != null -> Modifier.maxLength(maxLength)
+                                        else -> Modifier
+                                    }
+                                )
                                 .then(if (explicitKeyboardType != null) Modifier.setProp("keyboardType", explicitKeyboardType) else Modifier)
                                 .fillMaxWidth()
                                 .focusRequester(inputFocusRequester)

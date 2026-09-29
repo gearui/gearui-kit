@@ -37,9 +37,10 @@ internal object ControlGeometry {
     val buttonPaddingSmall = 14.dp
     val calendarCellGap = 2.dp
     val calendarCellHeight = 44.dp
+    val calendarLunarCellHeight = 52.dp
     val calendarNavButton = 32.dp
     val cardPadding = 16.dp
-    val cascaderDropdownHeight = 300.dp
+    val cascaderListHeight = 360.dp
     val checkboxIndicatorTravel = 4.dp
     val closeButtonIcon = 18.dp
     val closeButtonSize = 32.dp
@@ -61,6 +62,9 @@ internal object ControlGeometry {
     val formLabelWidth = 80.dp
     val gridMinColumnWidth = 120.dp
     val imageGalleryHeight = 100.dp
+    val indexBarBubbleSize = 52.dp
+    val indexBarItemHeight = 18.dp
+    val indexBarWidth = 24.dp
     val inputClearSize = 20.dp
     val listCompactMinHeight = 44.dp
     val listCompactPadding = 8.dp
@@ -68,6 +72,7 @@ internal object ControlGeometry {
     val listMinHeight = 52.dp
     val listPaddingBlock = 14.dp
     val listPaddingInline = 20.dp
+    val loadMoreHeight = 56.dp
     val loadingDotLarge = 10.dp
     val loadingDotMedium = 8.dp
     val loadingDotSmall = 6.dp

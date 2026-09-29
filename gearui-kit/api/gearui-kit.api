@@ -369,11 +369,11 @@ public final class com/gearui/components/calendar/CalendarDate$Companion {
 }
 
 public final class com/gearui/components/calendar/CalendarKt {
-	public static final fun Calendar-V_FU_rs (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/calendar/CalendarType;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ILjava/lang/String;ZFLandroidx/compose/runtime/Composer;III)V
+	public static final fun Calendar-ND6joW0 (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/calendar/CalendarType;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ILjava/lang/String;ZZFLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/calendar/CalendarPopupKt {
-	public static final fun CalendarPopup (ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/calendar/CalendarType;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ZLjava/lang/String;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun CalendarPopup (ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/calendar/CalendarType;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function2;Lcom/gearui/components/calendar/CalendarDate;Lcom/gearui/components/calendar/CalendarDate;ZLjava/lang/String;ZZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/calendar/CalendarType : java/lang/Enum {
@@ -403,25 +403,27 @@ public final class com/gearui/components/calendar/DateSelectType : java/lang/Enu
 }
 
 public final class com/gearui/components/cascader/CascaderKt {
-	public static final fun Cascader-yQNosyE (Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;FLandroidx/compose/runtime/Composer;II)V
+	public static final fun Cascader (Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/cascader/CascaderOption {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Z)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZZ)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Z)Lcom/gearui/components/cascader/CascaderOption;
-	public static synthetic fun copy$default (Lcom/gearui/components/cascader/CascaderOption;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZILjava/lang/Object;)Lcom/gearui/components/cascader/CascaderOption;
+	public final fun component5 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZZ)Lcom/gearui/components/cascader/CascaderOption;
+	public static synthetic fun copy$default (Lcom/gearui/components/cascader/CascaderOption;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZZILjava/lang/Object;)Lcom/gearui/components/cascader/CascaderOption;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChildren ()Ljava/util/List;
 	public final fun getDisabled ()Z
 	public final fun getLabel ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
+	public final fun isLeaf ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -431,6 +433,10 @@ public final class com/gearui/components/cell/CellKt {
 
 public final class com/gearui/components/cellgroup/CellGroupKt {
 	public static final fun CellGroup-Qc8RS9M (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;FLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/checkbox/AgreementCheckboxKt {
+	public static final fun AgreementCheckbox (ZLkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/util/Map;Lcom/tencent/kuikly/compose/ui/Modifier;ZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/checkbox/CheckboxKt {
@@ -928,8 +934,37 @@ public final class com/gearui/components/imageviewer/ImageViewerState {
 	public static synthetic fun show$default (Lcom/gearui/components/imageviewer/ImageViewerState;IILjava/lang/Object;)V
 }
 
+public final class com/gearui/components/indexbar/IndexBarKt {
+	public static final fun IndexBar (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getAlphabetIndexes ()Ljava/util/List;
+	public static final fun indexLetterOf (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class com/gearui/components/input/InputFormat {
+	public static final field $stable I
+	public static final field Companion Lcom/gearui/components/input/InputFormat$Companion;
+	public synthetic fun <init> (Ljava/util/List;ICILkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/List;ICILkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun clean (Ljava/lang/String;)Ljava/lang/String;
+	public final fun format (Ljava/lang/String;)Ljava/lang/String;
+	public final fun getAccept ()Lkotlin/jvm/functions/Function2;
+	public final fun getDisplayMaxLength ()I
+	public final fun getGroups ()Ljava/util/List;
+	public final fun getKeyboardType-vVJuqPg ()I
+	public final fun getMaxLength ()I
+	public final fun getPrepare ()Lkotlin/jvm/functions/Function1;
+	public final fun getSeparator ()C
+	public final fun isComplete ()Lkotlin/jvm/functions/Function1;
+}
+
+public final class com/gearui/components/input/InputFormat$Companion {
+	public final fun getBankCard ()Lcom/gearui/components/input/InputFormat;
+	public final fun getChinaMobile ()Lcom/gearui/components/input/InputFormat;
+	public final fun getIdCard ()Lcom/gearui/components/input/InputFormat;
+}
+
 public final class com/gearui/components/input/InputKt {
-	public static final fun Input-7w_aGHY (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;ZZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ILkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
+	public static final fun Input-MrL24kM (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;ZZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ILcom/gearui/components/input/InputFormat;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class com/gearui/components/input/InputSize : java/lang/Enum {
@@ -963,6 +998,10 @@ public final class com/gearui/components/link/LinkSize : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/link/LinkSize;
 	public static fun values ()[Lcom/gearui/components/link/LinkSize;
+}
+
+public final class com/gearui/components/link/LinkedTextKt {
+	public static final fun LinkedText-oyXQb1U (Ljava/lang/String;Ljava/util/Map;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/foundation/typography/TextStyle;JJLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/gearui/components/loading/LoadingIcon : java/lang/Enum {
@@ -1221,6 +1260,22 @@ public final class com/gearui/components/refresh/ComposableSingletons$PullRefres
 	public static final field INSTANCE Lcom/gearui/components/refresh/ComposableSingletons$PullRefreshKt;
 	public fun <init> ()V
 	public final fun getLambda$-957532145$gearui_kit_release ()Lkotlin/jvm/functions/Function5;
+}
+
+public final class com/gearui/components/refresh/LoadMoreKt {
+	public static final fun LoadMoreFooter (Lcom/gearui/components/refresh/LoadMoreStatus;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun loadMoreItem (Lcom/tencent/kuikly/compose/foundation/lazy/LazyListScope;Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;Lcom/gearui/components/refresh/LoadMoreStatus;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;)V
+	public static synthetic fun loadMoreItem$default (Lcom/tencent/kuikly/compose/foundation/lazy/LazyListScope;Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;Lcom/gearui/components/refresh/LoadMoreStatus;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;ILjava/lang/Object;)V
+}
+
+public final class com/gearui/components/refresh/LoadMoreStatus : java/lang/Enum {
+	public static final field Failed Lcom/gearui/components/refresh/LoadMoreStatus;
+	public static final field Idle Lcom/gearui/components/refresh/LoadMoreStatus;
+	public static final field Loading Lcom/gearui/components/refresh/LoadMoreStatus;
+	public static final field NoMore Lcom/gearui/components/refresh/LoadMoreStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/refresh/LoadMoreStatus;
+	public static fun values ()[Lcom/gearui/components/refresh/LoadMoreStatus;
 }
 
 public final class com/gearui/components/refresh/PullRefreshKt {
@@ -2279,6 +2334,52 @@ public final class com/gearui/foundation/button/ButtonColors {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/calendar/Lunar {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/foundation/calendar/Lunar;
+	public final fun festival (Lcom/gearui/foundation/calendar/LunarDate;)Lcom/gearui/foundation/calendar/LunarFestival;
+	public final fun fromSolar (III)Lcom/gearui/foundation/calendar/LunarDate;
+	public final fun ganzhiYear (I)Lkotlin/Pair;
+	public final fun solarTerm (III)Ljava/lang/Integer;
+	public final fun toSolar (IIIZ)Lkotlin/Triple;
+	public static synthetic fun toSolar$default (Lcom/gearui/foundation/calendar/Lunar;IIIZILjava/lang/Object;)Lkotlin/Triple;
+	public final fun zodiac (I)I
+}
+
+public final class com/gearui/foundation/calendar/LunarDate {
+	public static final field $stable I
+	public fun <init> (IIIZ)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Z
+	public final fun copy (IIIZ)Lcom/gearui/foundation/calendar/LunarDate;
+	public static synthetic fun copy$default (Lcom/gearui/foundation/calendar/LunarDate;IIIZILjava/lang/Object;)Lcom/gearui/foundation/calendar/LunarDate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDay ()I
+	public final fun getMonth ()I
+	public final fun getYear ()I
+	public fun hashCode ()I
+	public final fun isLeapMonth ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/foundation/calendar/LunarFestival : java/lang/Enum {
+	public static final field DoubleNinth Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field DragonBoat Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field Ghost Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field Laba Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field Lantern Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field LittleNewYear Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field MidAutumn Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field NewYearsEve Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field Qixi Lcom/gearui/foundation/calendar/LunarFestival;
+	public static final field SpringFestival Lcom/gearui/foundation/calendar/LunarFestival;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/foundation/calendar/LunarFestival;
+	public static fun values ()[Lcom/gearui/foundation/calendar/LunarFestival;
+}
+
 public final class com/gearui/foundation/color/ContentStyle {
 	public static final field $stable I
 	public synthetic fun <init> (JJZFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -3239,7 +3340,7 @@ public final class com/gearui/gestures/SwipeDismissKt {
 
 public final class com/gearui/i18n/CommonStrings {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()Ljava/lang/String;
@@ -3256,6 +3357,8 @@ public final class com/gearui/i18n/CommonStrings {
 	public final fun component21 ()Ljava/lang/String;
 	public final fun component22 ()Ljava/lang/String;
 	public final fun component23 ()Ljava/lang/String;
+	public final fun component24 ()Ljava/lang/String;
+	public final fun component25 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
@@ -3263,8 +3366,8 @@ public final class com/gearui/i18n/CommonStrings {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStrings;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStrings;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStrings;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStrings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAdd ()Ljava/lang/String;
 	public final fun getBack ()Ljava/lang/String;
@@ -3273,9 +3376,11 @@ public final class com/gearui/i18n/CommonStrings {
 	public final fun getClose ()Ljava/lang/String;
 	public final fun getConfirm ()Ljava/lang/String;
 	public final fun getLoadFailed ()Ljava/lang/String;
+	public final fun getLoadMoreFailed ()Ljava/lang/String;
 	public final fun getLoading ()Ljava/lang/String;
 	public final fun getNetworkError ()Ljava/lang/String;
 	public final fun getNoData ()Ljava/lang/String;
+	public final fun getNoMoreData ()Ljava/lang/String;
 	public final fun getNoSearchResult ()Ljava/lang/String;
 	public final fun getOff ()Ljava/lang/String;
 	public final fun getOk ()Ljava/lang/String;
@@ -3296,8 +3401,8 @@ public final class com/gearui/i18n/CommonStrings {
 public final class com/gearui/i18n/CommonStringsPatch {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()Ljava/lang/String;
@@ -3314,6 +3419,8 @@ public final class com/gearui/i18n/CommonStringsPatch {
 	public final fun component21 ()Ljava/lang/String;
 	public final fun component22 ()Ljava/lang/String;
 	public final fun component23 ()Ljava/lang/String;
+	public final fun component24 ()Ljava/lang/String;
+	public final fun component25 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
@@ -3321,8 +3428,8 @@ public final class com/gearui/i18n/CommonStringsPatch {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStringsPatch;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStringsPatch;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/CommonStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/CommonStringsPatch;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CommonStringsPatch;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAdd ()Ljava/lang/String;
 	public final fun getBack ()Ljava/lang/String;
@@ -3331,9 +3438,11 @@ public final class com/gearui/i18n/CommonStringsPatch {
 	public final fun getClose ()Ljava/lang/String;
 	public final fun getConfirm ()Ljava/lang/String;
 	public final fun getLoadFailed ()Ljava/lang/String;
+	public final fun getLoadMoreFailed ()Ljava/lang/String;
 	public final fun getLoading ()Ljava/lang/String;
 	public final fun getNetworkError ()Ljava/lang/String;
 	public final fun getNoData ()Ljava/lang/String;
+	public final fun getNoMoreData ()Ljava/lang/String;
 	public final fun getNoSearchResult ()Ljava/lang/String;
 	public final fun getOff ()Ljava/lang/String;
 	public final fun getOk ()Ljava/lang/String;
@@ -3347,6 +3456,20 @@ public final class com/gearui/i18n/CommonStringsPatch {
 	public final fun getSearch ()Ljava/lang/String;
 	public final fun getSelected ()Ljava/lang/String;
 	public final fun getUnselected ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/CompactUnit {
+	public static final field $stable I
+	public fun <init> (JLjava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/String;)Lcom/gearui/i18n/CompactUnit;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/CompactUnit;JLjava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/CompactUnit;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSize ()J
+	public final fun getSuffix ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -3615,6 +3738,64 @@ public final class com/gearui/i18n/FieldStringsPatch {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/i18n/FormatStrings {
+	public static final field $stable I
+	public fun <init> (ILjava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (ILjava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FormatStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FormatStrings;ILjava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FormatStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCompactUnits ()Ljava/util/List;
+	public final fun getDateFormat ()Ljava/lang/String;
+	public final fun getFirstDayOfWeek ()I
+	public final fun getJustNow ()Ljava/lang/String;
+	public final fun getMinutesAgoFormat ()Ljava/lang/String;
+	public final fun getMonthDayFormat ()Ljava/lang/String;
+	public final fun getYesterdayFormat ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/FormatStringsKt {
+	public static final fun compactNumber (Lcom/gearui/i18n/FormatStrings;J)Ljava/lang/String;
+	public static final fun isEmpty (Lcom/gearui/i18n/FormatStringsPatch;)Z
+	public static final fun merge (Lcom/gearui/i18n/FormatStrings;Lcom/gearui/i18n/FormatStringsPatch;)Lcom/gearui/i18n/FormatStrings;
+	public static final fun relativeTime (Lcom/gearui/i18n/FormatStrings;JJ)Ljava/lang/String;
+	public static synthetic fun relativeTime$default (Lcom/gearui/i18n/FormatStrings;JJILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/FormatStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/gearui/i18n/FormatStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/FormatStringsPatch;Ljava/lang/Integer;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/FormatStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCompactUnits ()Ljava/util/List;
+	public final fun getDateFormat ()Ljava/lang/String;
+	public final fun getFirstDayOfWeek ()Ljava/lang/Integer;
+	public final fun getJustNow ()Ljava/lang/String;
+	public final fun getMinutesAgoFormat ()Ljava/lang/String;
+	public final fun getMonthDayFormat ()Ljava/lang/String;
+	public final fun getYesterdayFormat ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/i18n/GuideStrings {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
@@ -3680,6 +3861,94 @@ public final class com/gearui/i18n/LanguageTagKt {
 	public static final fun resolveLanguagePack (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;)Ljava/lang/Object;
 }
 
+public final class com/gearui/i18n/LocalMoment {
+	public static final field $stable I
+	public fun <init> (IIIII)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun component5 ()I
+	public final fun copy (IIIII)Lcom/gearui/i18n/LocalMoment;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/LocalMoment;IIIIIILjava/lang/Object;)Lcom/gearui/i18n/LocalMoment;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDay ()I
+	public final fun getHour ()I
+	public final fun getMinute ()I
+	public final fun getMonth ()I
+	public final fun getYear ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/LunarStrings {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Ljava/util/List;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)Lcom/gearui/i18n/LunarStrings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/LunarStrings;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/LunarStrings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBranches ()Ljava/util/List;
+	public final fun getDayNames ()Ljava/util/List;
+	public final fun getFestivals ()Ljava/util/List;
+	public final fun getFullDateFormat ()Ljava/lang/String;
+	public final fun getLeapPrefix ()Ljava/lang/String;
+	public final fun getMonthNames ()Ljava/util/List;
+	public final fun getSolarTerms ()Ljava/util/List;
+	public final fun getStems ()Ljava/util/List;
+	public final fun getZodiac ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/LunarStringsKt {
+	public static final fun calendarLabel (Lcom/gearui/i18n/LunarStrings;III)Ljava/lang/String;
+	public static final fun calendarLabelIsOccasion (III)Z
+	public static final fun dayName (Lcom/gearui/i18n/LunarStrings;Lcom/gearui/foundation/calendar/LunarDate;)Ljava/lang/String;
+	public static final fun fullDate (Lcom/gearui/i18n/LunarStrings;Lcom/gearui/foundation/calendar/LunarDate;)Ljava/lang/String;
+	public static final fun isEmpty (Lcom/gearui/i18n/LunarStringsPatch;)Z
+	public static final fun merge (Lcom/gearui/i18n/LunarStrings;Lcom/gearui/i18n/LunarStringsPatch;)Lcom/gearui/i18n/LunarStrings;
+	public static final fun monthName (Lcom/gearui/i18n/LunarStrings;Lcom/gearui/foundation/calendar/LunarDate;)Ljava/lang/String;
+}
+
+public final class com/gearui/i18n/LunarStringsPatch {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Ljava/util/List;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)Lcom/gearui/i18n/LunarStringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/LunarStringsPatch;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/i18n/LunarStringsPatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBranches ()Ljava/util/List;
+	public final fun getDayNames ()Ljava/util/List;
+	public final fun getFestivals ()Ljava/util/List;
+	public final fun getFullDateFormat ()Ljava/lang/String;
+	public final fun getLeapPrefix ()Ljava/lang/String;
+	public final fun getMonthNames ()Ljava/util/List;
+	public final fun getSolarTerms ()Ljava/util/List;
+	public final fun getStems ()Ljava/util/List;
+	public final fun getZodiac ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gearui/i18n/MediaStrings {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
@@ -3733,7 +4002,7 @@ public final class com/gearui/i18n/StringPacks {
 
 public final class com/gearui/i18n/Strings {
 	public static final field $stable I
-	public fun <init> (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;)V
+	public fun <init> (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;Lcom/gearui/i18n/FormatStrings;Lcom/gearui/i18n/LunarStrings;)V
 	public final fun component1 ()Lcom/gearui/i18n/CommonStrings;
 	public final fun component2 ()Lcom/gearui/i18n/ThemeStrings;
 	public final fun component3 ()Lcom/gearui/i18n/FieldStrings;
@@ -3741,8 +4010,10 @@ public final class com/gearui/i18n/Strings {
 	public final fun component5 ()Lcom/gearui/i18n/FeedbackStrings;
 	public final fun component6 ()Lcom/gearui/i18n/MediaStrings;
 	public final fun component7 ()Lcom/gearui/i18n/GuideStrings;
-	public final fun copy (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;)Lcom/gearui/i18n/Strings;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/Strings;Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;ILjava/lang/Object;)Lcom/gearui/i18n/Strings;
+	public final fun component8 ()Lcom/gearui/i18n/FormatStrings;
+	public final fun component9 ()Lcom/gearui/i18n/LunarStrings;
+	public final fun copy (Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;Lcom/gearui/i18n/FormatStrings;Lcom/gearui/i18n/LunarStrings;)Lcom/gearui/i18n/Strings;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/Strings;Lcom/gearui/i18n/CommonStrings;Lcom/gearui/i18n/ThemeStrings;Lcom/gearui/i18n/FieldStrings;Lcom/gearui/i18n/DateTimeStrings;Lcom/gearui/i18n/FeedbackStrings;Lcom/gearui/i18n/MediaStrings;Lcom/gearui/i18n/GuideStrings;Lcom/gearui/i18n/FormatStrings;Lcom/gearui/i18n/LunarStrings;ILjava/lang/Object;)Lcom/gearui/i18n/Strings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getButtonCancel ()Ljava/lang/String;
 	public final fun getButtonConfirm ()Ljava/lang/String;
@@ -3751,9 +4022,11 @@ public final class com/gearui/i18n/Strings {
 	public final fun getDateTime ()Lcom/gearui/i18n/DateTimeStrings;
 	public final fun getFeedback ()Lcom/gearui/i18n/FeedbackStrings;
 	public final fun getField ()Lcom/gearui/i18n/FieldStrings;
+	public final fun getFormat ()Lcom/gearui/i18n/FormatStrings;
 	public final fun getGuide ()Lcom/gearui/i18n/GuideStrings;
 	public final fun getLanguage ()Ljava/lang/String;
 	public final fun getLight ()Ljava/lang/String;
+	public final fun getLunar ()Lcom/gearui/i18n/LunarStrings;
 	public final fun getMedia ()Lcom/gearui/i18n/MediaStrings;
 	public final fun getSystem ()Ljava/lang/String;
 	public final fun getTheme ()Ljava/lang/String;
@@ -3765,8 +4038,8 @@ public final class com/gearui/i18n/Strings {
 public final class com/gearui/i18n/StringsPatch {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;)V
-	public synthetic fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;Lcom/gearui/i18n/FormatStringsPatch;Lcom/gearui/i18n/LunarStringsPatch;)V
+	public synthetic fun <init> (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;Lcom/gearui/i18n/FormatStringsPatch;Lcom/gearui/i18n/LunarStringsPatch;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lcom/gearui/i18n/CommonStringsPatch;
 	public final fun component2 ()Lcom/gearui/i18n/ThemeStringsPatch;
 	public final fun component3 ()Lcom/gearui/i18n/FieldStringsPatch;
@@ -3774,14 +4047,18 @@ public final class com/gearui/i18n/StringsPatch {
 	public final fun component5 ()Lcom/gearui/i18n/FeedbackStringsPatch;
 	public final fun component6 ()Lcom/gearui/i18n/MediaStringsPatch;
 	public final fun component7 ()Lcom/gearui/i18n/GuideStringsPatch;
-	public final fun copy (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;)Lcom/gearui/i18n/StringsPatch;
-	public static synthetic fun copy$default (Lcom/gearui/i18n/StringsPatch;Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;ILjava/lang/Object;)Lcom/gearui/i18n/StringsPatch;
+	public final fun component8 ()Lcom/gearui/i18n/FormatStringsPatch;
+	public final fun component9 ()Lcom/gearui/i18n/LunarStringsPatch;
+	public final fun copy (Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;Lcom/gearui/i18n/FormatStringsPatch;Lcom/gearui/i18n/LunarStringsPatch;)Lcom/gearui/i18n/StringsPatch;
+	public static synthetic fun copy$default (Lcom/gearui/i18n/StringsPatch;Lcom/gearui/i18n/CommonStringsPatch;Lcom/gearui/i18n/ThemeStringsPatch;Lcom/gearui/i18n/FieldStringsPatch;Lcom/gearui/i18n/DateTimeStringsPatch;Lcom/gearui/i18n/FeedbackStringsPatch;Lcom/gearui/i18n/MediaStringsPatch;Lcom/gearui/i18n/GuideStringsPatch;Lcom/gearui/i18n/FormatStringsPatch;Lcom/gearui/i18n/LunarStringsPatch;ILjava/lang/Object;)Lcom/gearui/i18n/StringsPatch;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCommon ()Lcom/gearui/i18n/CommonStringsPatch;
 	public final fun getDateTime ()Lcom/gearui/i18n/DateTimeStringsPatch;
 	public final fun getFeedback ()Lcom/gearui/i18n/FeedbackStringsPatch;
 	public final fun getField ()Lcom/gearui/i18n/FieldStringsPatch;
+	public final fun getFormat ()Lcom/gearui/i18n/FormatStringsPatch;
 	public final fun getGuide ()Lcom/gearui/i18n/GuideStringsPatch;
+	public final fun getLunar ()Lcom/gearui/i18n/LunarStringsPatch;
 	public final fun getMedia ()Lcom/gearui/i18n/MediaStringsPatch;
 	public final fun getTheming ()Lcom/gearui/i18n/ThemeStringsPatch;
 	public fun hashCode ()I

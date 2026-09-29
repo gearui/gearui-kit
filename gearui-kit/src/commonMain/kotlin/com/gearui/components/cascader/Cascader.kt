@@ -1,69 +1,99 @@
 package com.gearui.components.cascader
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+import com.gearui.components.bottomsheet.BottomSheet
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonSize
+import com.gearui.components.button.ButtonType
+import com.gearui.components.closebutton.CloseButton
+import com.gearui.components.icon.Icons
+import com.gearui.components.loading.Loading
+import com.gearui.components.loading.LoadingSize
+import com.gearui.components.tabs.Tab
+import com.gearui.components.tabs.Tabs
+import com.gearui.components.tabs.TabsOutlineType
+import com.gearui.foundation.control.ControlGeometry
+import com.gearui.foundation.field.FieldDefaults
+import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
+import com.gearui.foundation.field.fieldTriggerModifier
 import com.gearui.foundation.field.shadowed
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.clickable
-import androidx.compose.runtime.remember
-import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.interaction.choiceSemantics
+import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.motion.rowPressFeedback
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
-import com.tencent.kuikly.compose.foundation.lazy.items
-import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.ui.Alignment
-import com.tencent.kuikly.compose.ui.text.style.TextOverflow
-import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.draw.clip
-import com.tencent.kuikly.compose.ui.draw.shadow
-import com.tencent.kuikly.compose.ui.geometry.Rect
-import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.layout.boundsInRoot
-import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
-import com.tencent.kuikly.compose.ui.platform.LocalDensity
-import com.tencent.kuikly.compose.ui.unit.Dp
-import com.gearui.foundation.control.ControlGeometry
-import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
-import com.gearui.overlay.OverlayOptions
-import com.gearui.overlay.OverlayPlacement
-import com.gearui.overlay.OverlayDismissPolicy
-import com.gearui.overlay.rememberOverlay
-import com.gearui.theme.Theme
-import com.gearui.theme.LocalInputColors
 import com.gearui.i18n.I18n
-import com.gearui.foundation.field.FieldDefaults
-import com.gearui.foundation.field.FieldSizeTokens
-import com.gearui.overlay.OverlayDefaults
-import com.gearui.foundation.layout.Spacing
-import com.gearui.foundation.border.BorderWidth
-import com.gearui.foundation.field.fieldTriggerModifier
-import com.gearui.foundation.field.FieldErrorText
+import com.gearui.theme.LocalInputColors
+import com.gearui.theme.Theme
+import com.tencent.kuikly.compose.foundation.clickable
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.foundation.layout.Column
+import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.height
+import com.tencent.kuikly.compose.foundation.layout.heightIn
+import com.tencent.kuikly.compose.foundation.layout.padding
+import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
+import com.tencent.kuikly.compose.foundation.lazy.items
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.launch
 
 /**
- * Cascader option data
+ * One node of a [Cascader]: a province, a city, a department.
+ *
+ * [value] identifies the node among its siblings; [label] is shown. Two cities may share
+ * a name — they never share a path of values.
+ *
+ * [isLeaf] says whether choosing the node completes the selection. It defaults to
+ * "has no children", which is right for a tree given in full. For a tree loaded level by
+ * level, give the nodes that have children to load `isLeaf = false` and leave
+ * [children] empty: [Cascader] asks `loadChildren` for them when they are opened.
  */
 data class CascaderOption(
     val value: String,
     val label: String,
     val children: List<CascaderOption> = emptyList(),
-    val disabled: Boolean = false
+    val disabled: Boolean = false,
+    val isLeaf: Boolean = children.isEmpty(),
 )
 
 /**
- * Cascader - cascading select
+ * Cascader — pick a path through a tree, one level at a time: province, city, district.
  *
- * Built on the Overlay system
+ * The field opens a bottom sheet in the shape Chinese address pickers take: a tab for
+ * each level chosen so far and one saying "请选择" for the next, above a full-width list of
+ * the current level. Choosing a node that has children moves to the next tab; choosing a
+ * leaf completes the path, calls [onSelect] and closes the sheet. A tab reopens its
+ * level. Closing the sheet part-way leaves [selectedPath] as it was.
  *
- * Features:
- * - multi-level selection
- * - dynamic loading
- * - a real floating layer, leaving the layout untouched
+ * [loadChildren] fetches a level on demand: it runs the first time a node with
+ * `isLeaf = false` and no [CascaderOption.children] is opened, shows a spinner, and on
+ * failure (a thrown exception) offers a retry. Results are cached for the life of the
+ * field. Region data — administrative division codes and their versions — belongs to
+ * the app; the kit ships none.
+ *
+ * @param selectedPath values from the root to a leaf; empty for no selection.
+ * @param title the sheet's title; the placeholder when null.
  */
 @Composable
 fun Cascader(
@@ -72,107 +102,33 @@ fun Cascader(
     onSelect: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.selectPlaceholder,
+    title: String? = null,
     enabled: Boolean = true,
     error: String? = null,
     /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
     variant: FieldVariant = FieldVariant.PRIMARY,
     separator: String = " / ",
-    dropdownHeight: Dp = ControlGeometry.cascaderDropdownHeight
+    loadChildren: (suspend (CascaderOption) -> List<CascaderOption>)? = null,
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
-    val overlay = rememberOverlay()
-    val density = LocalDensity.current
-    val optionsState = rememberUpdatedState(options)
-    val heightState = rememberUpdatedState(dropdownHeight)
+    var open by remember { mutableStateOf(false) }
+    // Loaded levels, keyed by the path of the node they belong to. Kept for the field's
+    // life, so the chosen labels resolve after the sheet closes.
+    val loaded = remember { mutableStateMapOf<String, LevelState>() }
 
-    var anchorBounds by remember { mutableStateOf<Rect?>(null) }
-    var expanded by remember { mutableStateOf(false) }
-    var overlayId by remember { mutableStateOf<Long?>(null) }
-
-    // Wrapped in State
-    val selectedPathState = rememberUpdatedState(selectedPath)
-    val onSelectState = rememberUpdatedState(onSelect)
-
-    val displayText = remember(selectedPath, options, placeholder, separator) {
-        if (selectedPath.isEmpty()) {
-            placeholder
-        } else {
-            getDisplayText(options, selectedPath, separator)
-        }
-    }
-
-    fun clearDropdownState() {
-        overlayId = null
-        expanded = false
-    }
-
-    fun closeDropdown() {
-        overlayId?.let { overlay.dismiss(it) }
-    }
-
-    fun openDropdown() {
-        if (anchorBounds == null) return
-
-        val bounds = anchorBounds!!
-        val anchorWidth = bounds.width
-
-        overlayId = overlay.show(
-            anchorBounds = bounds,
-            options = OverlayOptions(
-                placement = OverlayPlacement.BottomLeft,
-                offsetY = ControlGeometry.selectPanelOffset,
-                autoFlip = true,
-                dismissPolicy = OverlayDismissPolicy.Dropdown
-            ),
-            onDismiss = {
-                clearDropdownState()
-            }
-        ) {
-            val widthDp = with(density) { anchorWidth.toDp() }
-
-            CascaderDropdown(
-                options = optionsState.value,
-                selectedPath = selectedPathState.value,
-                onSelect = { path ->
-                    onSelectState.value(path)
-                    // Only close if reached leaf node
-                    val option = findOptionByPath(optionsState.value, path)
-                    if (option?.children?.isEmpty() == true) {
-                        closeDropdown()
-                    }
-                },
-                height = heightState.value,
-                width = widthDp
-            )
-        }
-        expanded = true
-    }
-
-    LaunchedEffect(enabled) { if (!enabled) closeDropdown() }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            overlayId?.let { overlay.dismiss(it) }
-        }
-    }
+    val labels = cascaderLabels(options, selectedPath) { key -> (loaded[key] as? LevelState.Loaded)?.children }
+    val displayText = if (selectedPath.isEmpty()) placeholder else labels.joinToString(separator)
 
     Column(modifier = modifier) {
-        // Trigger
         FieldSurface(Modifier.fillMaxWidth(), shadowed = variant.shadowed) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
-                    .onGloballyPositioned { coordinates ->
-                        anchorBounds = coordinates.boundsInRoot()
-                    }
-                    .then(fieldTriggerModifier(enabled, error, variant) {
-                        if (expanded) closeDropdown() else openDropdown()
-                    })
+                    .then(fieldTriggerModifier(enabled, error, variant) { open = true })
                     .padding(horizontal = FieldSizeTokens.Medium.paddingHorizontal),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = displayText,
@@ -180,178 +136,234 @@ fun Cascader(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = Theme.typography.bodyMedium,
-                    color = when {
-                        selectedPath.isNotEmpty() -> LocalInputColors.current.foreground
-                        else -> LocalInputColors.current.placeholder
-                    }
+                    color = if (selectedPath.isNotEmpty()) LocalInputColors.current.foreground
+                        else LocalInputColors.current.placeholder,
                 )
-
-                Icon(
-                    name = if (expanded) Icons.caret_up else Icons.caret_down,
-                    size = FieldDefaults.trailingIconSize,
-                    tint = colors.mutedForeground
-                )
+                Icon(name = Icons.caret_down, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
             }
         }
-
         FieldErrorText(error)
+    }
+
+    BottomSheet.Host(visible = open && enabled, onDismiss = { open = false }) {
+        CascaderSheet(
+            title = title ?: placeholder,
+            options = options,
+            initialPath = selectedPath,
+            loaded = loaded,
+            loadChildren = loadChildren,
+            onComplete = { path ->
+                open = false
+                onSelect(path)
+            },
+            onClose = { open = false },
+        )
     }
 }
 
-@Composable
-private fun CascaderDropdown(
+/** A level fetched through `loadChildren`. */
+internal sealed interface LevelState {
+    data object Loading : LevelState
+    data object Failed : LevelState
+    data class Loaded(val children: List<CascaderOption>) : LevelState
+}
+
+/** What a level of the sheet shows. */
+internal sealed interface Level {
+    data class Options(val options: List<CascaderOption>) : Level
+    data object Loading : Level
+    data object Failed : Level
+
+    /** The parent is a leaf, or its level has not been asked for yet. */
+    data object None : Level
+}
+
+internal fun pathKey(path: List<String>): String = path.joinToString("\u0000")
+
+/**
+ * The options of level [depth] under [path] (the values chosen above it). A node's own
+ * [CascaderOption.children] win; a node that is not a leaf and has none looks in [loaded].
+ */
+internal fun cascaderLevel(
     options: List<CascaderOption>,
-    selectedPath: List<String>,
-    onSelect: (List<String>) -> Unit,
-    height: Dp,
-    width: Dp
+    path: List<String>,
+    depth: Int,
+    loaded: (String) -> LevelState?,
+): Level {
+    var current = options
+    for (level in 0 until depth) {
+        val node = current.firstOrNull { it.value == path.getOrNull(level) } ?: return Level.None
+        current = when {
+            node.children.isNotEmpty() -> node.children
+            node.isLeaf -> return Level.None
+            else -> when (val state = loaded(pathKey(path.take(level + 1)))) {
+                is LevelState.Loaded -> state.children
+                LevelState.Loading -> return if (level == depth - 1) Level.Loading else Level.None
+                LevelState.Failed -> return if (level == depth - 1) Level.Failed else Level.None
+                null -> return Level.None
+            }
+        }
+    }
+    return Level.Options(current)
+}
+
+/** The labels along [path]; a value whose node cannot be found shows as itself. */
+internal fun cascaderLabels(
+    options: List<CascaderOption>,
+    path: List<String>,
+    loaded: (String) -> List<CascaderOption>?,
+): List<String> {
+    val labels = ArrayList<String>(path.size)
+    var current: List<CascaderOption>? = options
+    path.forEachIndexed { level, value ->
+        val node = current?.firstOrNull { it.value == value }
+        labels += node?.label ?: value
+        current = node?.children?.takeIf { it.isNotEmpty() } ?: loaded(pathKey(path.take(level + 1)))
+    }
+    return labels
+}
+
+@Composable
+private fun CascaderSheet(
+    title: String,
+    options: List<CascaderOption>,
+    initialPath: List<String>,
+    loaded: SnapshotStateMap<String, LevelState>,
+    loadChildren: (suspend (CascaderOption) -> List<CascaderOption>)?,
+    onComplete: (List<String>) -> Unit,
+    onClose: () -> Unit,
 ) {
     val colors = Theme.colors
-    val shapes = Theme.shapes
+    val strings = I18n.strings
+    val scope = rememberCoroutineScope()
+    val load by rememberUpdatedState(loadChildren)
+    // The path being built; committed only when a leaf is chosen.
+    var draft by remember { mutableStateOf(initialPath) }
+    var active by remember { mutableStateOf((initialPath.size - 1).coerceAtLeast(0)) }
 
-    // Build cascading levels
-    val levels = remember(options, selectedPath) {
-        buildCascaderLevels(options, selectedPath)
+    fun request(node: CascaderOption, nodePath: List<String>) {
+        val loader = load ?: return
+        val key = pathKey(nodePath)
+        if (loaded[key] is LevelState.Loaded || loaded[key] == LevelState.Loading) return
+        loaded[key] = LevelState.Loading
+        scope.launch {
+            loaded[key] = try {
+                LevelState.Loaded(loader(node))
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                LevelState.Failed
+            }
+        }
     }
 
-    Row(
-        modifier = Modifier
-            .width(width)
-            .height(height)
-            .shadow(Theme.elevation.floating, OverlayDefaults.panelShape)
-            .clip(OverlayDefaults.panelShape)
-            .background(colors.popover, OverlayDefaults.panelShape)
-    ) {
-        levels.forEachIndexed { levelIndex, levelOptions ->
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .then(
-                        if (levelIndex > 0) {
-                            Modifier.border(width = BorderWidth.thin, color = colors.border)
-                        } else {
-                            Modifier
-                        }
-                    )
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(ControlGeometry.selectItemPadding)
-                ) {
-                    items(levelOptions) { option ->
-                        val isSelected = selectedPath.getOrNull(levelIndex) == option.value
-                        val isLeafSelected = option.children.isEmpty() &&
-                            selectedPath.isNotEmpty() &&
-                            selectedPath.last() == option.value &&
-                            selectedPath.size == levelIndex + 1
-                        val optionInteraction = remember { MutableInteractionSource() }
+    fun nodeAt(depth: Int): CascaderOption? {
+        val level = cascaderLevel(options, draft, depth) { loaded[it] } as? Level.Options ?: return null
+        return level.options.firstOrNull { it.value == draft.getOrNull(depth) }
+    }
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .heightIn(min = FieldSizeTokens.Medium.height)
-                                .clip(shapes.sm)
-                                .rowPressFeedback(
-                                    interaction = optionInteraction,
-                                    shape = RectangleShape,
-                                    enabled = !option.disabled,
-                                    base = if (isSelected) colors.muted else Color.Transparent,
-                                )
-                                .clickable(enabled = !option.disabled, interactionSource = optionInteraction, indication = null) {
-                                    val newPath = selectedPath.take(levelIndex) + option.value
-                                    onSelect(newPath)
-                                }
-                                .padding(vertical = Spacing.sm, horizontal = Spacing.md),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = option.label,
-                                modifier = Modifier.weight(1f),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                style = Theme.typography.bodyMedium,
-                                color = when {
-                                    option.disabled -> colors.mutedForeground
-                                    isLeafSelected -> colors.primary
-                                    isSelected -> colors.foreground
-                                    else -> colors.foreground
-                                }
-                            )
+    val level = cascaderLevel(options, draft, active) { loaded[it] }
+    // Opening a level whose parent has children still to load asks for them.
+    LaunchedEffect(active, draft) {
+        if (active > 0 && level == Level.None) {
+            nodeAt(active - 1)?.let { parent ->
+                if (!parent.isLeaf && parent.children.isEmpty()) request(parent, draft.take(active))
+            }
+        }
+    }
 
-                            if (option.children.isNotEmpty()) {
-                                Icon(
-                                    name = Icons.caret_right,
-                                    size = FieldDefaults.trailingIconSize,
-                                    tint = if (isSelected) colors.foreground else colors.mutedForeground
-                                )
-                            } else if (isLeafSelected) {
-                                Icon(
-                                    name = Icons.check,
-                                    size = FieldDefaults.trailingIconSize,
-                                    tint = colors.primary
-                                )
-                            }
-                        }
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier.fillMaxWidth().height(ControlGeometry.controlLarge).padding(horizontal = Spacing.lg),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = title, style = Theme.typography.titleMedium, color = colors.foreground)
+            CloseButton(onClick = onClose, modifier = Modifier.align(Alignment.CenterEnd))
+        }
+
+        val chosen = cascaderLabels(options, draft) { key -> (loaded[key] as? LevelState.Loaded)?.children }
+        // A tab per level chosen, and "请选择" for the next one until a leaf ends the path.
+        val complete = draft.isNotEmpty() && nodeAt(draft.lastIndex)?.isLeaf == true
+        val tabs = chosen.mapIndexed { i, label -> Tab(id = i.toString(), label = label) } +
+            if (complete) emptyList() else listOf(Tab(id = chosen.size.toString(), label = strings.field.selectPlaceholder))
+        Tabs(
+            items = tabs,
+            selectedId = active.toString(),
+            onSelect = { active = it.toInt() },
+            // Level names start where the list's rows do.
+            modifier = Modifier.padding(horizontal = Spacing.sm),
+            isScrollable = true,
+            outlineType = TabsOutlineType.UNDERLINE,
+        )
+
+        Box(modifier = Modifier.fillMaxWidth().height(ControlGeometry.cascaderListHeight), contentAlignment = Alignment.Center) {
+            when (level) {
+                is Level.Options -> LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(level.options, key = { it.value }) { option ->
+                        CascaderRow(
+                            option = option,
+                            selected = draft.getOrNull(active) == option.value,
+                            onClick = {
+                                val path = draft.take(active) + option.value
+                                draft = path
+                                if (option.isLeaf) {
+                                    onComplete(path)
+                                } else {
+                                    active += 1
+                                    if (option.children.isEmpty()) request(option, path)
+                                }
+                            },
+                        )
                     }
+                }
+                Level.Loading, Level.None -> Loading(size = LoadingSize.MEDIUM)
+                Level.Failed -> Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
+                ) {
+                    Text(text = strings.common.loadFailed, style = Theme.typography.bodyMedium, color = colors.mutedForeground)
+                    Button(
+                        text = strings.common.retry,
+                        type = ButtonType.TEXT,
+                        size = ButtonSize.SMALL,
+                        onClick = {
+                            val parentPath = draft.take(active)
+                            loaded.remove(pathKey(parentPath))
+                            nodeAt(active - 1)?.let { request(it, parentPath) }
+                        },
+                    )
                 }
             }
         }
     }
 }
 
-private fun buildCascaderLevels(
-    options: List<CascaderOption>,
-    selectedPath: List<String>
-): List<List<CascaderOption>> {
-    val levels = mutableListOf<List<CascaderOption>>()
-    var currentOptions = options
-
-    levels.add(currentOptions)
-
-    selectedPath.forEach { value ->
-        val selected = currentOptions.find { it.value == value }
-        if (selected != null && selected.children.isNotEmpty()) {
-            currentOptions = selected.children
-            levels.add(currentOptions)
-        }
+@Composable
+private fun CascaderRow(option: CascaderOption, selected: Boolean, onClick: () -> Unit) {
+    val colors = Theme.colors
+    val interaction = remember { MutableInteractionSource() }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = FieldSizeTokens.Medium.height)
+            .choiceSemantics(option.label, selected, Role.Button, onClick = if (option.disabled) null else onClick)
+            .rowPressFeedback(interaction = interaction, shape = RectangleShape, enabled = !option.disabled, base = Color.Transparent)
+            .clickable(enabled = !option.disabled, interactionSource = interaction, indication = null, onClick = onClick)
+            .padding(horizontal = Spacing.lg),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = option.label,
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = Theme.typography.bodyMedium,
+            color = when {
+                option.disabled -> colors.mutedForeground
+                selected -> colors.primary
+                else -> colors.foreground
+            },
+        )
+        if (selected) Icon(name = Icons.check, size = FieldDefaults.trailingIconSize, tint = colors.primary)
     }
-
-    return levels
-}
-
-private fun getDisplayText(
-    options: List<CascaderOption>,
-    selectedPath: List<String>,
-    separator: String
-): String {
-    val labels = mutableListOf<String>()
-    var currentOptions = options
-
-    selectedPath.forEach { value ->
-        val option = currentOptions.find { it.value == value }
-        if (option != null) {
-            labels.add(option.label)
-            currentOptions = option.children
-        }
-    }
-
-    return labels.joinToString(separator)
-}
-
-private fun findOptionByPath(
-    options: List<CascaderOption>,
-    path: List<String>
-): CascaderOption? {
-    var current: CascaderOption? = null
-    var currentOptions = options
-
-    path.forEach { value ->
-        current = currentOptions.find { it.value == value }
-        if (current == null) return null
-        currentOptions = current!!.children
-    }
-
-    return current
 }

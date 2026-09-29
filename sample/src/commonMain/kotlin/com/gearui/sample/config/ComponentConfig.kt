@@ -40,6 +40,7 @@ object ComponentConfig {
         // Form components
         ComponentInfo("input", "输入框", "Input", ComponentCategory.FORM, "/components/input", "文本输入", "Text input"),
         ComponentInfo("checkbox", "复选框", "Checkbox", ComponentCategory.FORM, "/components/checkbox", "多选操作", "Multiple selection"),
+        ComponentInfo("agreement", "协议勾选", "AgreementCheckbox", ComponentCategory.FORM, "/components/agreement", "协议与隐私同意", "Terms and privacy consent"),
         ComponentInfo("radio", "单选框", "Radio", ComponentCategory.FORM, "/components/radio", "单选操作", "Single selection"),
         ComponentInfo("input-otp", "验证码输入", "InputOTP", ComponentCategory.FORM, "/components/input-otp", "分格验证码输入", "One-time code input"),
         ComponentInfo("combo-box", "输入选择器", "ComboBox", ComponentCategory.FORM, "/components/combo-box", "输入筛选的下拉选择", "Filterable suggestions"),
@@ -64,6 +65,7 @@ object ComponentConfig {
         ComponentInfo("tabs", "选项卡", "Tabs", ComponentCategory.NAVIGATION, "/components/tabs", "内容切换", "Content switching"),
         ComponentInfo("drawer", "抽屉", "Drawer", ComponentCategory.NAVIGATION, "/components/drawer", "侧滑抽屉", "Slide drawer"),
         ComponentInfo("steps", "步骤条", "Steps", ComponentCategory.NAVIGATION, "/components/steps", "步骤指示", "Step indicator"),
+        ComponentInfo("indexbar", "索引栏", "IndexBar", ComponentCategory.NAVIGATION, "/components/indexbar", "通讯录字母索引", "Alphabet index"),
         ComponentInfo("segmented", "分段控制", "Segmented", ComponentCategory.NAVIGATION, "/components/segmented", "分段选择", "Segmented control"),
         ComponentInfo("runtime-insets", "运行时安全区调试", "Runtime Insets", ComponentCategory.NAVIGATION, "/components/runtime-insets", "运行时安全区数据快照", "Runtime safe-area snapshot"),
         ComponentInfo("navigator-kuikly-spike", "Navigator Kuikly 验证", "Navigator Spike", ComponentCategory.NAVIGATION, "/components/navigator-kuikly-spike", "Navigator Phase 0 运行时能力验证", "Navigator Phase 0 runtime spike"),
@@ -88,6 +90,7 @@ object ComponentConfig {
         ComponentInfo("skeleton", "骨架屏", "Skeleton", ComponentCategory.DATA_DISPLAY, "/components/skeleton", "加载占位", "Loading placeholder"),
         ComponentInfo("timeline", "时间轴", "Timeline", ComponentCategory.DATA_DISPLAY, "/components/timeline", "时间线展示", "Timeline display"),
         ComponentInfo("calendar", "日历", "Calendar", ComponentCategory.DATA_DISPLAY, "/components/calendar", "日历展示", "Calendar display"),
+        ComponentInfo("format", "本地化格式", "Format", ComponentCategory.DATA_DISPLAY, "/components/format", "万亿缩写、相对时间、农历", "Compact numbers, relative time, lunar"),
         ComponentInfo("watermark", "水印", "Watermark", ComponentCategory.DATA_DISPLAY, "/components/watermark", "页面水印", "Page watermark"),
 
         // Feedback components
@@ -112,6 +115,7 @@ object ComponentConfig {
         ComponentInfo("swiper", "轮播", "Swiper", ComponentCategory.LAYOUT, "/components/swiper", "内容轮播", "Content carousel"),
         ComponentInfo("searchbar", "搜索栏", "SearchBar", ComponentCategory.LAYOUT, "/components/searchbar", "搜索输入", "Search input"),
         ComponentInfo("refresh", "下拉刷新", "PullRefresh", ComponentCategory.LAYOUT, "/components/refresh", "列表下拉刷新", "Pull to refresh a list"),
+        ComponentInfo("loadmore", "加载更多", "LoadMore", ComponentCategory.LAYOUT, "/components/loadmore", "列表分页加载", "Load the next page of a list"),
         ComponentInfo("bottomsheet", "底部抽屉", "BottomSheet", ComponentCategory.LAYOUT, "/components/bottomsheet", "底部弹出", "Bottom sheet"),
         ComponentInfo("backtop", "回到顶部", "BackTop", ComponentCategory.LAYOUT, "/components/backtop", "返回顶部", "Back to top")
     )

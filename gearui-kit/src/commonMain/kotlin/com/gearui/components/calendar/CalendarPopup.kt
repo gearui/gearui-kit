@@ -66,7 +66,9 @@ fun CalendarPopup(
     maxDate: CalendarDate? = null,
     autoClose: Boolean = true,
     confirmText: String = I18n.strings.common.confirm,
-    showConfirmButton: Boolean = true
+    showConfirmButton: Boolean = true,
+    /** Show lunar dates under the days; see [Calendar]. */
+    lunar: Boolean = false
 ) {
     if (!visible) return
 
@@ -122,6 +124,7 @@ fun CalendarPopup(
             // The calendar itself
             Calendar(
                 type = type,
+                lunar = lunar,
                 selectedDate = selectedDate,
                 onDateSelect = { date ->
                     selectedDate = date

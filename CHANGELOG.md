@@ -14,7 +14,9 @@
   `hidePassword`, `selectAll`, `selectRowFormat` and `verificationCode`;
   `DateTimeStrings` gains `previousMonth` and `nextMonth`; `MediaStrings` gains
   `previousSlide` and `nextSlide`. A pack that constructs these classes in full must
-  supply them. Packs built from `*Patch` over a shipped pack need no change.
+  supply them. `Strings` also gains the `format` and `lunar` domains, and `CommonStrings`
+  gains `loadMoreFailed` and `noMoreData`. Packs built from `*Patch` over a shipped pack
+  need no change.
 - **Removed, with their replacements.** One way to do each thing:
   - `CollapseItem`, `CollapseGroup`, `CollapseItemData` → `Collapse` with `CollapsePanel`s.
   - `DrawerWithHeader` → `Drawer`.
@@ -31,12 +33,37 @@
     `Text(color = null)` → omit it (the default is `Theme.colors.foreground`).
   - `RuntimeFlags.unifiedSafeAreaPipeline` → nothing: the stabilised safe area is the only
     path, and the configuration-inset fallback is gone.
+- **Behavioral, this release.** `Cascader` opens a bottom sheet with a tab per level and
+  calls `onSelect` once, with the full path, when a leaf is chosen (it used to report
+  every level); `dropdownHeight` is gone. `Calendar.firstDayOfWeek` defaults to the
+  language's convention, so Simplified Chinese calendars now start on Monday.
 - **Behavioral.** `DatePickerInput` / `TimePickerInput` open a bottom sheet instead of
   a dialog. `SearchBar`'s Cancel is text, not a filled button. Remembered notification
   and snackbar controllers dismiss what they showed when their screen leaves.
   `Skeleton`'s default corner radius is `Radius.sm` (8) instead of 4.
 
 ### Added
+
+- Chinese-market features, following GearUI's own design rules:
+  - `loadMoreItem` / `LoadMoreFooter`: the footer of a paged list, with the states of
+    KuiklyUI's `FooterRefresh` (idle, loading, failed with tap-to-retry, no more). It
+    asks for the next page only once the footer is really on screen.
+  - `AgreementCheckbox`: the consent line under a sign-up button — unchecked by
+    default, as the Personal Information Protection Law and app-store reviews require;
+    each 《document》 opens on its own, the rest of the sentence toggles the box.
+  - `LinkedText`: a sentence with tappable phrases, defined by the whole sentence and
+    its phrases so translators keep their word order. Lines never start with "，" or
+    end with "《".
+  - `InputFormat` for `Input(format = …)`: `ChinaMobile` (3-4-4, drops a pasted +86),
+    `BankCard` (groups of four) and `IdCard` (6-8-4, X check character, GB 11643
+    checksum in `isComplete`). The value stays raw; the caret keeps its place.
+  - `IndexBar`: the letter strip of a contact or city list, with the drag bubble.
+  - Chinese lunar calendar: `Lunar` converts dates offline for 1900–2100 and gives solar
+    terms, traditional festivals, stems, branches and zodiac. `Calendar(lunar = true)`
+    shows the lunar day, festival or solar term under each date.
+  - Language-pack conventions (`Strings.format`): `compactNumber` (1.2万, 3.5亿; 12.3K),
+    `relativeTime` (刚刚, 5分钟前, 昨天 14:30, 9月28日) and `firstDayOfWeek`. Lunar names
+    live in `Strings.lunar`.
 
 - Accessibility names. `Button`, `Checkbox`, `RadioButton`, `Switch` and
   `PressableFeedback` take a `contentDescription`, for icon-only buttons and controls

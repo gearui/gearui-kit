@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.input
 
+import com.gearui.components.input.InputFormat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -297,6 +298,44 @@ fun InputExample(
                 suffix = {
                     Text(text = "个", style = Theme.typography.bodyMedium, color = colors.foreground)
                 }
+            )
+        }
+
+        ExampleSection(
+            title = "格式化输入",
+            description = "format 分组显示，value 保持纯数字；可粘贴带 +86 或空格的号码"
+        ) {
+            var mobile by remember { mutableStateOf("") }
+            Input(
+                value = mobile,
+                onValueChange = { mobile = it },
+                label = "手机号",
+                placeholder = "请输入手机号",
+                format = InputFormat.ChinaMobile,
+                clearable = true,
+                variant = FieldVariant.SECONDARY,
+                helperText = "value：${mobile.ifEmpty { "空" }}",
+            )
+            var card by remember { mutableStateOf("") }
+            Input(
+                value = card,
+                onValueChange = { card = it },
+                label = "银行卡号",
+                placeholder = "请输入银行卡号",
+                format = InputFormat.BankCard,
+                clearable = true,
+                variant = FieldVariant.SECONDARY,
+            )
+            var idCard by remember { mutableStateOf("") }
+            Input(
+                value = idCard,
+                onValueChange = { idCard = it },
+                label = "身份证号",
+                placeholder = "请输入身份证号",
+                format = InputFormat.IdCard,
+                clearable = true,
+                variant = FieldVariant.SECONDARY,
+                error = if (idCard.length == 18 && !InputFormat.IdCard.isComplete(idCard)) "身份证号校验位不正确" else null,
             )
         }
 

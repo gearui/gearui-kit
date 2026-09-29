@@ -47,6 +47,10 @@ data class CommonStrings(
     val off: String,
     /** Spoken state of a checkbox with some children selected. */
     val partiallySelected: String,
+    /** Footer after a page failed; tapping it retries. */
+    val loadMoreFailed: String,
+    /** Footer once the list has no more pages. */
+    val noMoreData: String,
 )
 
 data class CommonStringsPatch(
@@ -73,6 +77,8 @@ data class CommonStringsPatch(
     val on: String? = null,
     val off: String? = null,
     val partiallySelected: String? = null,
+    val loadMoreFailed: String? = null,
+    val noMoreData: String? = null,
 )
 
 val CommonStringsPatch.isEmpty: Boolean
@@ -98,11 +104,15 @@ val CommonStringsPatch.isEmpty: Boolean
         refreshing == null &&
         on == null &&
         off == null &&
-        partiallySelected == null
+        partiallySelected == null &&
+        loadMoreFailed == null &&
+        noMoreData == null
 
 fun CommonStrings.merge(patch: CommonStringsPatch?): CommonStrings {
     if (patch == null || patch.isEmpty) return this
     return copy(
+        noMoreData = patch.noMoreData ?: noMoreData,
+        loadMoreFailed = patch.loadMoreFailed ?: loadMoreFailed,
         partiallySelected = patch.partiallySelected ?: partiallySelected,
         off = patch.off ?: off,
         on = patch.on ?: on,

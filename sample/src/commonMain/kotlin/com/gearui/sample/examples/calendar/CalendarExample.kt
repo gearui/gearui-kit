@@ -127,6 +127,20 @@ fun CalendarExample(
 
             ExampleSection(
                 surface = SectionSurface.Plain,
+                title = "农历",
+                description = "lunar = true：日期下显示农历，节日与节气用强调色；周起始跟随语言（简体中文从周一开始）"
+            ) {
+                var lunarDate by remember { mutableStateOf<CalendarDate?>(null) }
+                Calendar(
+                    type = CalendarType.Single,
+                    selectedDate = lunarDate,
+                    onDateSelect = { lunarDate = it },
+                    lunar = true,
+                )
+            }
+
+            ExampleSection(
+                surface = SectionSurface.Plain,
                 title = "内嵌日历",
                 description = "Calendar 直接嵌入页面，标题栏可切换月份"
             ) {

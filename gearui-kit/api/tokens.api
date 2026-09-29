@@ -365,9 +365,10 @@
   geometry.buttonPaddingSmall = {"$type":"dimension","$value":{"unit":"px","value":14}}
   geometry.calendarCellGap = {"$type":"dimension","$value":{"unit":"px","value":2}}
   geometry.calendarCellHeight = {"$type":"dimension","$value":{"unit":"px","value":44}}
+  geometry.calendarLunarCellHeight = {"$type":"dimension","$value":{"unit":"px","value":52}}
   geometry.calendarNavButton = {"$type":"dimension","$value":{"unit":"px","value":32}}
   geometry.cardPadding = {"$type":"dimension","$value":{"unit":"px","value":16}}
-  geometry.cascaderDropdownHeight = {"$type":"dimension","$value":{"unit":"px","value":300}}
+  geometry.cascaderListHeight = {"$type":"dimension","$value":{"unit":"px","value":360}}
   geometry.checkboxIndicatorTravel = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.closeButtonIcon = {"$type":"dimension","$value":{"unit":"px","value":18}}
   geometry.closeButtonSize = {"$type":"dimension","$value":{"unit":"px","value":32}}
@@ -389,6 +390,9 @@
   geometry.formLabelWidth = {"$type":"dimension","$value":{"unit":"px","value":80}}
   geometry.gridMinColumnWidth = {"$type":"dimension","$value":{"unit":"px","value":120}}
   geometry.imageGalleryHeight = {"$type":"dimension","$value":{"unit":"px","value":100}}
+  geometry.indexBarBubbleSize = {"$type":"dimension","$value":{"unit":"px","value":52}}
+  geometry.indexBarItemHeight = {"$type":"dimension","$value":{"unit":"px","value":18}}
+  geometry.indexBarWidth = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.inputClearSize = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.listCompactMinHeight = {"$type":"dimension","$value":{"unit":"px","value":44}}
   geometry.listCompactPadding = {"$type":"dimension","$value":{"unit":"px","value":8}}
@@ -396,6 +400,7 @@
   geometry.listMinHeight = {"$type":"dimension","$value":{"unit":"px","value":52}}
   geometry.listPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":14}}
   geometry.listPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":20}}
+  geometry.loadMoreHeight = {"$type":"dimension","$value":{"unit":"px","value":56}}
   geometry.loadingDotLarge = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.loadingDotMedium = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.loadingDotSmall = {"$type":"dimension","$value":{"unit":"px","value":6}}

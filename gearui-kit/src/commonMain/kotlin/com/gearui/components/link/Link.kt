@@ -55,7 +55,7 @@ fun Link(
 ) {
     val colors = Theme.colors
     val underlineColor = colors.separator
-    LinkText(
+    LinkLabel(
         text = text,
         onClick = onClick,
         modifier = modifier,
@@ -86,7 +86,7 @@ fun LinkButton(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
 ) {
-    LinkText(
+    LinkLabel(
         text = text,
         onClick = onClick,
         modifier = modifier,
@@ -107,7 +107,7 @@ private fun linkStyle(size: LinkSize): TextStyle {
 }
 
 @Composable
-private fun LinkText(
+private fun LinkLabel(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier,

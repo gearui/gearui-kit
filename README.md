@@ -32,16 +32,16 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**71 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**75 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (19) | `Input`, `Checkbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
-| Navigation (6) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `Segmented` |
-| Data display (16) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Watermark` |
+| Form (20) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
+| Navigation (7) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented` |
+| Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
-| Layout (6) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `BottomSheet`, `BackTop` |
+| Layout (7) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `LoadMore`, `BottomSheet`, `BackTop` |
 
 <details>
 <summary>What each component does</summary>
@@ -66,6 +66,7 @@ component follows both without any per-screen wiring.
 | --- | --- |
 | `Input` | Text input |
 | `Checkbox` | Multiple selection |
+| `AgreementCheckbox` | Terms and privacy consent |
 | `Radio` | Single selection |
 | `InputOTP` | One-time code input |
 | `ComboBox` | Filterable suggestions |
@@ -93,6 +94,7 @@ component follows both without any per-screen wiring.
 | `Tabs` | Content switching |
 | `Drawer` | Slide drawer |
 | `Steps` | Step indicator |
+| `IndexBar` | Alphabet index |
 | `Segmented` | Segmented control |
 
 **Data display**
@@ -114,6 +116,7 @@ component follows both without any per-screen wiring.
 | `Skeleton` | Loading placeholder |
 | `Timeline` | Timeline display |
 | `Calendar` | Calendar display |
+| `Format` | Compact numbers, relative time, lunar |
 | `Watermark` | Page watermark |
 
 **Feedback**
@@ -144,6 +147,7 @@ component follows both without any per-screen wiring.
 | `Swiper` | Content carousel |
 | `SearchBar` | Search input |
 | `PullRefresh` | Pull to refresh a list |
+| `LoadMore` | Load the next page of a list |
 | `BottomSheet` | Bottom sheet |
 | `BackTop` | Back to top |
 

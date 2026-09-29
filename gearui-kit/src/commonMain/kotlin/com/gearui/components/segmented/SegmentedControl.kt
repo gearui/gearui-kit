@@ -28,6 +28,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.IntOffset
 import com.tencent.kuikly.compose.ui.unit.IntSize
+import com.tencent.kuikly.compose.ui.zIndex
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -172,7 +173,12 @@ internal fun SegmentedTrack(
                     .background(colors.segment)
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap)) {
+        // Web mounts the indicator after measurement, so DOM insertion order
+        // alone can put its surface above the already-mounted labels.
+        Row(
+            modifier = Modifier.zIndex(1f),
+            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap),
+        ) {
             repeat(count) { index ->
                 val selected = index == selectedIndex
                 val interaction = remember { MutableInteractionSource() }

@@ -209,6 +209,9 @@ object KuiklyRouter {
 
         val params: MutableMap<String, String> = urlParams.toMutableMap()
         params[PARAM_IS_H5] = VALUE_FLAG_ON
+        if (params["lang"].isNullOrEmpty()) {
+            params["lang"] = browserSampleLanguage(window.navigator.language)
+        }
 
         val paramMap: Map<String, Any> = mapOf(
             "statusBarHeight" to DEFAULT_STATUS_BAR_HEIGHT,
@@ -227,6 +230,16 @@ object KuiklyRouter {
         delegator.resume()
         standaloneDelegator = delegator
         return delegator
+    }
+
+    private fun browserSampleLanguage(language: String): String {
+        val tag = language.lowercase()
+        return when {
+            tag.startsWith("zh-hant") || tag.startsWith("zh-tw") ||
+                tag.startsWith("zh-hk") || tag.startsWith("zh-mo") -> "zh-Hant"
+            tag.startsWith("zh") -> "zh-Hans"
+            else -> "en-US"
+        }
     }
 
     private fun createPage(key: String, url: String): PageInfo? {

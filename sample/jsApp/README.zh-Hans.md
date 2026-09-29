@@ -28,6 +28,16 @@ dev server 用 8081 而不是 webpack 默认的 8080——后者被占用的概�
 #   sample/jsApp/build/kotlin-webpack/js/developmentExecutable/jsApp.js
 ```
 
+## 语言与外观
+
+不带 `lang` 参数时，Web 宿主按 `navigator.language` 选择 sample 的初始语言：
+`zh-Hant`、`zh-TW`、`zh-HK`、`zh-MO` 使用繁体中文，其他 `zh` 使用简体中文，
+其余语言使用英文。`?lang=en-US`（或 `zh-Hans`、`zh-Hant`）可覆盖初始选择；
+进入 sample 后仍可在设置页切换。主题为「跟随系统」时，Web sample 会读取并监听
+`(prefers-color-scheme: dark)`；在设置页明确选择浅色或深色后则以手动选择为准。
+官网首页的 iframe 会传入所在页面的语言，更新方式见
+[`gearui.github.io/README.md`](https://github.com/gearui/gearui.github.io/blob/main/README.md)。
+
 ## 各部分如何拼接
 
 - `:sample` 编译成 JS 产物 `gearui_sample.js`。它只包含 sample 注册的那**一个** Kuikly 页面

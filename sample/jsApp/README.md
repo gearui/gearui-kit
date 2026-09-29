@@ -30,6 +30,18 @@ To produce a servable directory instead of running the dev server:
 #   sample/jsApp/build/kotlin-webpack/js/developmentExecutable/jsApp.js
 ```
 
+## Language and appearance
+
+Without a `lang` query parameter, the Web host selects a sample language from
+`navigator.language`: Traditional Chinese for `zh-Hant`/`zh-TW`/`zh-HK`/`zh-MO`,
+Simplified Chinese for other `zh` tags, English otherwise. `?lang=en-US` (or
+`zh-Hans`/`zh-Hant`) overrides that initial choice; the sample's Settings page
+can change it afterward. When the theme is set to **Follow system**, the Web
+sample reads and observes `(prefers-color-scheme: dark)`. An explicit theme
+choice in Settings overrides the browser preference. The website's home-page
+iframe passes its own locale; see the deployment rules in
+[`gearui.github.io/README.md`](https://github.com/gearui/gearui.github.io/blob/main/README.md).
+
 ## How the pieces fit
 
 - `:sample` builds to JS as `gearui_sample.js`. It contains the one Kuikly page

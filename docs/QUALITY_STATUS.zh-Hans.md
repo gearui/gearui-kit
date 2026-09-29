@@ -157,3 +157,68 @@ bash scripts/ios_native_tests.sh   # needs -PgearuiIosTestHostDir host
 门禁重跑或组件获得真机验收时更新 §2；发现新限制时把条目移入 §3，移出
 §3 必须有记录在案的证据。过期的里程碑报告直接删除，不堆积——git 历史
 就是档案。
+
+## 7. beta7 发布门禁（2026-09-29 立项）
+
+beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPONENT_COVERAGE.zh-Hans.md](./COMPONENT_COVERAGE.zh-Hans.md)
+§3 缺口、[ANT_DESIGN_RN_COMPARISON.zh-Hans.md](./ANT_DESIGN_RN_COMPARISON.zh-Hans.md) §5/§9 的建议，全部并入本门禁。
+每一项以证据判定完成：单测、sample 路径、真机截图或日志、脚本输出，逐项写进 §2。编译通过不算任何一项的验收。
+做不到的项写明缺什么（设备、上游、决策），标「外部阻断」，发布前由维护者逐条放行或推迟，不能静默略过。
+
+状态：☐ 未开始 · ◐ 进行中 · ☑ 完成（附证据） · ⛔ 外部阻断
+
+### A. 发布卫生
+
+| 编号 | 内容 | 验收证据 | 状态 |
+| --- | --- | --- | --- |
+| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☐ |
+| A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☐ |
+| A3 | Ant 对标文档入库，作为 B 组能力项来源 | 提交 | ☐ |
+
+### B. 能力补强（来源：Ant 对标 §5、§9）
+
+| 编号 | 内容 | 验收证据 | 状态 |
+| --- | --- | --- | --- |
+| B1 | 协议同意行：Text 支持内联可点链接片段；默认不勾选的 Checkbox；点链接只打开链接、不勾选；读屏可达 | 单测 + sample 页 + 双端真机点击验证 | ☐ |
+| B2 | LoadMore 列表尾：idle/loading/error/exhausted，停留底部不连发，失败可重试，文案进语言包 | 状态单测 + sample 订单列表 + 真机滚动 | ☐ |
+| B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ☐ |
+| B4 | Calendar 周起始由语言包决定，简体/繁体中文默认周一 | 单测 + 截图 | ☐ |
+| B5 | 数字缩写（万/亿，随语言包）与中文相对时间，放在 i18n 格式化层 | 单测（边界值、四语言） | ☐ |
+| B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ☐ |
+| B7 | DatePicker 最小/最大日期、年/月/日与时间精度、分钟步长与过滤 | 单测（闰日、月末、跨年、过滤后空列）+ 真机 | ☐ |
+| B8 | Form：类型化字段值、dirty/touched/validating、触发策略、异步校验版本保护、服务端字段错误注入 | 单测（慢请求不覆盖新值、离开组合不写回）+ sample 表单 | ☐ |
+| B9 | NumberField 精确十进制（对称 parser/formatter、暂态输入）；Stepper `disableInput` 核实并补齐 | 单测 + 真机 | ☐ |
+
+### C. 组件覆盖（来源：COMPONENT_COVERAGE §3）
+
+| 编号 | 内容 | 验收证据 | 状态 |
+| --- | --- | --- | --- |
+| C1 | P2：独立 ListBox、YearPicker、日期/时间分段字段与本地化格式、Toolbar、SubMenu、IndexBar | 每个组件：API 基线、单测、sample 页、双端真机截图 | ☐ |
+| C2 | P3：Kbd、ColorPicker 家族、Meter、User、Code/Snippet | 同上 | ☐ |
+| C3 | 注册表、README 索引、COMPONENT_COVERAGE、语言包、API 基线同步 | 守卫全绿 | ☐ |
+
+### D. 运行时验收
+
+| 编号 | 内容 | 验收证据 | 状态 |
+| --- | --- | --- | --- |
+| D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ☐ |
+| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ☐ |
+| D3 | 大字号/适老化：Android 字号 1.3 与最大、iOS 最大动态字号，全部页截断/溢出 | 截图 + 问题清单与修复 | ☐ |
+| D4 | RTL：Android 强制 RTL 布局方向逐页检查 | 截图 + 问题清单 | ☐ |
+| D5 | 性能：iOS 真机（iPhone 16 Pro Max）冷启动、切主题、滚动，对照 §1 预算 | `scripts/perf` 输出 | ☐ |
+| D6 | Web：浏览器自动化逐页交互与 viewport 缩放 | 脚本与结果 | ☐ |
+| D7 | HarmonyOS：DevEco 模拟器运行 sample 全部页；真机验收 | 模拟器截图；真机为外部阻断 | ☐ |
+| D8 | 国产 ROM 矩阵：小米已有；华为、OPPO、vivo | 各机型截图 | ⛔ 缺设备 |
+
+### E. 已知限制处置
+
+| 编号 | 内容 | 验收证据 | 状态 |
+| --- | --- | --- | --- |
+| E1 | 圆角↔直角热切换原生边框不刷新：kit 侧能规避则修，否则登记并附最小复现 | 修复提交或复现工程 | ☐ |
+| E2 | 模糊的四个上游缺口：整理成可直接提交的 Kuikly issue | issue 草稿；提交由维护者决定 | ☐ |
+| E3 | beta3 携带决策：原生字号刻度、iOS 密码可见切换、Kuikly 文本框焦点串扰——给出决策与实现，或登记为已知限制 | 决策记录与提交 | ☐ |
+
+### F. 发布
+
+F1：[COMPONENT_SPEC.zh-Hans.md §8](./COMPONENT_SPEC.zh-Hans.md) 全部门禁与远程 CI 在确切候选提交上通过；六模块 staging 检查；
+发布到 Central 并以 Portal 核对；tag `v1.0.0-beta7`；官网同步；下游切到 beta7。A–E 全部 ☑，或 ⛔ 项经维护者逐条放行。

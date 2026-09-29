@@ -185,3 +185,72 @@ Update §2 when a gate is re-run or a component gains device acceptance; move
 rows to §3 when a limit is discovered, and out of §3 only with recorded
 evidence. Superseded milestone reports are deleted, not accumulated — git
 history is the archive.
+
+## 7. beta7 Release Gate (opened 2026-09-29)
+
+beta7 is not "fix a few bugs and ship". The §1 goals, the §3 open risks, the gaps in
+[COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md) §3 and the recommendations in
+[ANT_DESIGN_RN_COMPARISON.zh-Hans.md](./ANT_DESIGN_RN_COMPARISON.zh-Hans.md) §5/§9 all fold into this gate.
+Each item is closed by evidence — unit tests, a sample path, on-device screenshots or logs, script output —
+recorded in §2. A green compile closes nothing. Items that cannot be done state what is missing (a device,
+an upstream fix, a decision) and are marked externally blocked; before release the maintainer releases or
+defers each one explicitly. Nothing is skipped silently.
+
+Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ externally blocked
+
+### A. Release hygiene
+
+| ID | Scope | Evidence | Status |
+| --- | --- | --- | --- |
+| A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☐ |
+| A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ☐ |
+| A3 | Commit the Ant Design comparison as the source of group B | Commit | ☐ |
+
+### B. Capabilities (from the Ant comparison §5, §9)
+
+| ID | Scope | Evidence | Status |
+| --- | --- | --- | --- |
+| B1 | Consent row: inline tappable link spans in Text; an unchecked-by-default Checkbox; tapping a link opens it and never ticks the box; reachable by screen readers | Unit tests + sample page + taps on both platforms | ☐ |
+| B2 | LoadMore list footer: idle/loading/error/exhausted, no repeat requests while parked at the bottom, retry on failure, strings in language packs | State tests + sample order list + on-device scrolling | ☐ |
+| B3 | Input formatting layer: raw value, display value and caret mapping kept apart; phone 3-4-4, bank-card groups of four, ID-card trailing X | Pure-function tests + on-device paste, mid-string edits, Chinese IME | ☐ |
+| B4 | Calendar first day of week from the language pack; Monday for Simplified/Traditional Chinese | Tests + screenshots | ☐ |
+| B5 | Compact numbers (万/亿 by language pack) and Chinese relative time in the i18n formatting layer | Tests: boundaries, four languages | ☐ |
+| B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ☐ |
+| B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ☐ |
+| B8 | Form: typed field values, dirty/touched/validating, trigger policy, versioned async validation, server-side field errors | Tests: slow result never overwrites a newer value, a left field never writes back + sample form | ☐ |
+| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); verify and complete Stepper `disableInput` | Tests + device | ☐ |
+
+### C. Component coverage (from COMPONENT_COVERAGE §3)
+
+| ID | Scope | Evidence | Status |
+| --- | --- | --- | --- |
+| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ☐ |
+| C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ☐ |
+| C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ☐ |
+
+### D. Runtime acceptance
+
+| ID | Scope | Evidence | Status |
+| --- | --- | --- | --- |
+| D1 | Screen readers: TalkBack on an Android device across every page with the spoken text recorded; iOS audited with XCUITest `performAccessibilityAudit` on every page, VoiceOver spot checks on a device for the key families | TalkBack logs, audit report, issue list and fixes | ☐ |
+| D2 | Visual: every sample page × light/dark × Android device and iOS, archived and judged against VISUAL_SPEC page by page | Screenshot set + per-page verdict + deviations | ☐ |
+| D3 | Large text: Android font scale 1.3 and maximum, iOS largest Dynamic Type, truncation/overflow on every page | Screenshots + issues and fixes | ☐ |
+| D4 | RTL: Android forced RTL layout direction, page by page | Screenshots + issues | ☐ |
+| D5 | Performance on an iOS device (iPhone 16 Pro Max): cold start, theme switch, scrolling against the §1 budgets | `scripts/perf` output | ☐ |
+| D6 | Web: browser automation across pages, including viewport resizing | Script and results | ☐ |
+| D7 | HarmonyOS: sample on the DevEco emulator across every page; device acceptance | Emulator screenshots; device is externally blocked | ☐ |
+| D8 | Chinese ROM matrix: Xiaomi covered; Huawei, OPPO, vivo | Screenshots per device | ⛔ no devices |
+
+### E. Known limits
+
+| ID | Scope | Evidence | Status |
+| --- | --- | --- | --- |
+| E1 | Native border not refreshed on rounded↔square hot swap: fix in the kit if it can be worked around, else record with a minimal repro | Fix commit or repro project | ☐ |
+| E2 | The four upstream blur gaps: written up as Kuikly issues ready to file | Issue drafts; filing is the maintainer's call | ☐ |
+| E3 | Decisions carried from beta3 — native type scale, iOS password visibility toggle, Kuikly text-field focus crosstalk: decide and implement, or record as known limits | Decision record and commits | ☐ |
+
+### F. Release
+
+F1: every gate in [COMPONENT_SPEC.md §8](./COMPONENT_SPEC.md) and remote CI pass on the exact candidate; all six Maven
+modules staged and inspected; published to Central and checked in the Portal; tag `v1.0.0-beta7`; website synced;
+downstream moved to beta7. All of A–E are ☑, or each ⛔ item has been released explicitly by the maintainer.

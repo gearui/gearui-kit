@@ -24,14 +24,12 @@ import com.tencent.kuikly.compose.ui.geometry.Rect
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.layout.onSizeChanged
-import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.unit.*
 import com.tencent.kuikly.compose.ui.zIndex
 import com.gearui.runtime.LocalRuntimeEnvironment
-import com.gearui.runtime.LocalRuntimeFlags
 import kotlinx.coroutines.delay
 
 /**
@@ -214,8 +212,6 @@ private fun OverlayItemLayout(
     controller: OverlayController
 ) {
     val density = LocalDensity.current
-    val configuration = LocalConfiguration.current
-    val runtimeFlags = LocalRuntimeFlags.current
     val runtimeEnvironment = LocalRuntimeEnvironment.current
     val options = item.options
     val policy = options.dismissPolicy
@@ -377,42 +373,10 @@ private fun OverlayItemLayout(
         // Content must intercept clicks, or they fall through to the backdrop and dismiss it.
         if (options.placement == OverlayPlacement.Fullscreen) {
             // Fullscreen: fills the screen, no position calculation needed.
-            val safeTop = if (options.safeAreaTop) {
-                if (runtimeFlags.unifiedSafeAreaPipeline) {
-                    runtimeEnvironment.safeArea.top
-                } else {
-                    configuration.safeAreaInsets.top.dp
-                }
-            } else {
-                0.dp
-            }
-            val safeBottom = if (options.safeAreaBottom) {
-                if (runtimeFlags.unifiedSafeAreaPipeline) {
-                    runtimeEnvironment.safeArea.bottom
-                } else {
-                    configuration.safeAreaInsets.bottom.dp
-                }
-            } else {
-                0.dp
-            }
-            val safeLeft = if (options.safeAreaLeft) {
-                if (runtimeFlags.unifiedSafeAreaPipeline) {
-                    runtimeEnvironment.safeArea.left
-                } else {
-                    configuration.safeAreaInsets.left.dp
-                }
-            } else {
-                0.dp
-            }
-            val safeRight = if (options.safeAreaRight) {
-                if (runtimeFlags.unifiedSafeAreaPipeline) {
-                    runtimeEnvironment.safeArea.right
-                } else {
-                    configuration.safeAreaInsets.right.dp
-                }
-            } else {
-                0.dp
-            }
+            val safeTop = if (options.safeAreaTop) runtimeEnvironment.safeArea.top else 0.dp
+            val safeBottom = if (options.safeAreaBottom) runtimeEnvironment.safeArea.bottom else 0.dp
+            val safeLeft = if (options.safeAreaLeft) runtimeEnvironment.safeArea.left else 0.dp
+            val safeRight = if (options.safeAreaRight) runtimeEnvironment.safeArea.right else 0.dp
             // passThroughOutside: a non-modal banner such as an in-app notification must
             // not freeze the whole screen — gestures outside its content belong to the
             // page below. The default is still to intercept, so modal and dialog

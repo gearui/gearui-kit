@@ -4,59 +4,28 @@ import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.foundation.text.BasicText
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.graphics.ColorProducer
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
-import com.tencent.kuikly.compose.ui.text.font.FontWeight
-import com.tencent.kuikly.compose.ui.unit.TextUnit
-import com.tencent.kuikly.compose.ui.unit.sp
 import com.gearui.foundation.typography.*
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.text.TextStyle as KuiklyTextStyle
 
 /**
- * Text - fully Theme-driven text primitive
+ * Text - the kit's text primitive.
  *
- * ✅ Rule: the first line is always `val colors = Theme.colors`
- * ❌ Never: Color(0x...) or hardcoded colours
- *
- * Rework notes:
- * - the TextColors dependency is gone
- * - Theme.colors is used directly
- * - primary / secondary / tertiary semantics are supported
+ * Size, weight, line height and family come from [style], a token of
+ * `Theme.typography`; colour from [color], `Theme.colors.foreground` unless given.
+ * One way to set each: a one-off size belongs in a style, not in a parameter.
  */
 @Composable
 fun Text(
     text: String,
     modifier: Modifier = Modifier,
-
-    /** text style token (semantic) */
     style: TextStyle = Theme.typography.bodyMedium,
-
-    /** text colour - set explicitly */
-    color: Color? = null,
-
-    /** whether this is secondary text (uses textSecondary) */
-    secondary: Boolean = false,
-
-    /** whether this is tertiary text (uses textTertiary) */
-    tertiary: Boolean = false,
-
-    /** maximum number of lines */
+    color: Color = Theme.colors.foreground,
     maxLines: Int = Int.MAX_VALUE,
-
-    /** overflow handling */
     overflow: TextOverflow = TextOverflow.Clip,
-
-    /** whether to wrap automatically */
     softWrap: Boolean = true,
-
-    /** font size - backwards-compatible parameter, takes precedence over style.fontSize */
-    fontSize: TextUnit? = null,
-
-    /** font weight - backwards-compatible parameter, takes precedence over style.fontWeight */
-    fontWeight: FontWeight? = null,
-
     /**
      * Horizontal alignment of each line within the text block.
      *
@@ -66,28 +35,13 @@ fun Text(
      */
     textAlign: TextAlign? = null
 ) {
-    // ⭐ Framework Rule #1: this is always the first line
-    val themeColors = Theme.colors
-
-    // Colour precedence: color > tertiary > secondary > primary
-    val finalColor = color ?: when {
-        tertiary -> themeColors.mutedForeground
-        secondary -> themeColors.mutedForeground
-        else -> themeColors.foreground
-    }
-
-    // Font size and weight can be overridden
-    val finalFontSize = fontSize ?: style.fontSize
-    val finalFontWeight = fontWeight ?: style.fontWeight
-
-    // Converts a GearUI TextStyle into a Kuikly TextStyle
     val kuiklyStyle = KuiklyTextStyle(
-        fontSize = finalFontSize,
+        fontSize = style.fontSize,
         lineHeight = style.lineHeight,
-        fontWeight = finalFontWeight,
+        fontWeight = style.fontWeight,
         fontFamily = style.resolveFontFamily(),
         letterSpacing = style.letterSpacing,
-        color = finalColor,
+        color = color,
         // Kuikly's TextStyle takes a non-null TextAlign; Start is its own default.
         textAlign = textAlign ?: TextAlign.Start
     )
@@ -99,6 +53,6 @@ fun Text(
         maxLines = maxLines,
         overflow = overflow,
         softWrap = softWrap,
-        color = { finalColor }
+        color = { color }
     )
 }

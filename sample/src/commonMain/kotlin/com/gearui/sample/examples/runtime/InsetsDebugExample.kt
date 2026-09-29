@@ -55,11 +55,6 @@ fun InsetsDebugExample(
                 color = colors.foreground
             )
             Text(
-                text = "unifiedSafeAreaPipeline=${runtimeFlags.unifiedSafeAreaPipeline}",
-                style = Theme.typography.bodyMedium,
-                color = colors.mutedForeground
-            )
-            Text(
                 text = "navBarConsumesTopSafeArea=${runtimeFlags.navBarConsumesTopSafeArea}",
                 style = Theme.typography.bodyMedium,
                 color = colors.mutedForeground

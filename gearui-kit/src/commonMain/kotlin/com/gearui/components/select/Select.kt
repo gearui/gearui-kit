@@ -45,8 +45,7 @@ import com.gearui.foundation.field.FieldErrorText
  * - automatic direction (opens upwards when there is no room below)
  * - scrollable options
  * - width follows the trigger
- * - item-aligned opening, group labels and selected-item indicators
- * - the legacy TRIGGER_OVERLAID mode opens separately above/below the trigger
+ * - group labels and selected-item indicators
  */
 @Composable
 fun <T> Select(
@@ -60,7 +59,6 @@ fun <T> Select(
     error: String? = null,
     /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
     variant: FieldVariant = FieldVariant.PRIMARY,
-    panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
     val colors = Theme.colors
     val overlay = rememberOverlay()
@@ -104,7 +102,7 @@ fun <T> Select(
                 bounds.top.toDp().value, bounds.bottom.toDp().value,
                 viewport.height.toDp().value, environment.safeArea.top.value,
                 maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value, panelMode == SelectPanelMode.ITEM_ALIGNED,
+                ControlGeometry.selectPanelOffset.value,
                 contentPadding = ControlGeometry.selectContentPadding.value,
             )
         }
@@ -232,7 +230,6 @@ fun <T> MultiSelect(
     /** PRIMARY on the page background; SECONDARY on a card, sheet or header. */
     variant: FieldVariant = FieldVariant.PRIMARY,
     maxSelection: Int? = null,
-    panelMode: SelectPanelMode = SelectPanelMode.TRIGGER_OVERLAID
 ) {
     val colors = Theme.colors
     val overlay = rememberOverlay()
@@ -272,7 +269,7 @@ fun <T> MultiSelect(
                 bounds.top.toDp().value, bounds.bottom.toDp().value,
                 viewport.height.toDp().value, environment.safeArea.top.value,
                 maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value, panelMode == SelectPanelMode.ITEM_ALIGNED,
+                ControlGeometry.selectPanelOffset.value,
                 contentPadding = ControlGeometry.selectContentPadding.value,
             )
         }
@@ -368,14 +365,4 @@ fun <T> MultiSelect(
 
         FieldErrorText(error)
     }
-}
-
-/**
- * Select panel mode
- */
-enum class SelectPanelMode {
-    /** Align the current row with the trigger where viewport bounds allow. */
-    ITEM_ALIGNED,
-    /** Legacy name: separate anchored panel, automatically choosing above/below. */
-    TRIGGER_OVERLAID
 }

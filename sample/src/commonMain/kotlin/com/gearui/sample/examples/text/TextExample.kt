@@ -51,11 +51,10 @@ fun TextExample(
 
         ExampleSection(
             title = "层级颜色",
-            description = "默认、secondary = true、tertiary = true"
+            description = "默认 foreground，次要文字用 mutedForeground"
         ) {
             Text(text = "主要文本（默认）", style = typography.bodyLarge)
-            Text(text = "次要文本 secondary", style = typography.bodyLarge, secondary = true)
-            Text(text = "三级文本 tertiary", style = typography.bodyLarge, tertiary = true)
+            Text(text = "次要文本 mutedForeground", style = typography.bodyLarge, color = colors.mutedForeground)
         }
 
         ExampleSection(

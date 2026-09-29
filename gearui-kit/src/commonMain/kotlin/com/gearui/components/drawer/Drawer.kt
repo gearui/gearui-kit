@@ -479,66 +479,6 @@ private fun DrawerListItem(
 }
 
 /**
- * DrawerWithHeader - drawer with a header (legacy API)
- */
-@Composable
-fun DrawerWithHeader(
-    visible: Boolean,
-    onDismiss: () -> Unit,
-    title: String,
-    modifier: Modifier = Modifier,
-    placement: DrawerPlacement = DrawerPlacement.LEFT,
-    width: Dp = ControlGeometry.drawerWidth,
-    header: (@Composable () -> Unit)? = null,
-    footer: (@Composable () -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    val colors = Theme.colors
-
-    Drawer(
-        visible = visible,
-        onDismiss = onDismiss,
-        placement = placement,
-        width = width,
-        modifier = modifier
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            // Title bar
-            if (header != null) {
-                header()
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Spacing.lg),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    Text(
-                        text = title,
-                        style = Theme.typography.titleLarge,
-                        color = colors.foreground
-                    )
-                }
-            }
-
-            // Content area
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            ) {
-                content()
-            }
-
-            // Footer area
-            if (footer != null) {
-                footer()
-            }
-        }
-    }
-}
-
-/**
  * DrawerState - drawer state
  */
 class DrawerState {

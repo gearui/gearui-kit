@@ -83,20 +83,12 @@ import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
  * nothing most of the time; a permanently absent one leaves no way out of a
  * search but the back gesture.
  */
-internal fun cancelVisible(
-    mode: SearchBarCancel,
-    legacyShowCancel: Boolean,
-    focused: Boolean,
-): Boolean {
-    // The deprecated flag wins when set: a caller that asked for a Cancel button
-    // keeps it, rather than having it start appearing and disappearing.
-    if (legacyShowCancel) return true
-    return when (mode) {
+internal fun cancelVisible(mode: SearchBarCancel, focused: Boolean): Boolean =
+    when (mode) {
         SearchBarCancel.Never -> false
         SearchBarCancel.Always -> true
         SearchBarCancel.WhileEditing -> focused
     }
-}
 
 enum class SearchBarCancel {
     /** Never. For a search field embedded in a page that has its own way back. */
@@ -116,15 +108,7 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     placeholder: String = I18n.strings.field.searchPlaceholder,
     enabled: Boolean = true,
-    /**
-     * Superseded by [cancel]; prefer `SearchBarCancel.Always` / `Never`.
-     *
-     * Kept, and kept winning when true, so a caller that asked for a Cancel
-     * button keeps exactly what it had rather than having the button start
-     * appearing and disappearing under it.
-     */
-    showCancel: Boolean = false,
-    /** See [SearchBarCancel]. Ignored when the deprecated [showCancel] is true. */
+    /** When Cancel shows; see [SearchBarCancel]. */
     cancel: SearchBarCancel = SearchBarCancel.WhileEditing,
     onCancel: (() -> Unit)? = null,
     onSearch: ((String) -> Unit)? = null,
@@ -355,10 +339,8 @@ fun SearchBar(
         // text fails the theme's TEXT-button contract everywhere, not only here.
         //
         // Visibility is decided by cancelVisible(), which is a function so the
-        // rule can be tested — this used to be a bare `showCancel` the caller had
-        // to manage, so the platform's "arrives with focus" behaviour was
-        // something every host reimplemented or, more often, went without.
-        if (cancelVisible(cancel, showCancel, isFocused)) {
+        // rule can be tested.
+        if (cancelVisible(cancel, isFocused)) {
             Button(
                 text = I18n.strings.common.cancel,
                 type = ButtonType.TEXT,

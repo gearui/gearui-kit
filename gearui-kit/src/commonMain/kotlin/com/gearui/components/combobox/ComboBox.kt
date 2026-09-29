@@ -97,7 +97,7 @@ fun <T> ComboBox(
                 bounds.top.toDp().value, bounds.bottom.toDp().value,
                 viewport.height.toDp().value, environment.safeArea.top.value,
                 maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value, false,
+                ControlGeometry.selectPanelOffset.value,
                 contentPadding = ControlGeometry.selectContentPadding.value,
             )
         }

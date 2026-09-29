@@ -110,7 +110,6 @@ fun HomePage(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
                         placeholder = strings.searchPlaceholder,
-                        showCancel = searchQuery.isNotEmpty(),
                         onCancel = {
                             searchQuery = ""
                         }

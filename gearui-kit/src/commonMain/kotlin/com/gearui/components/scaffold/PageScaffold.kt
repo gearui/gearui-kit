@@ -11,7 +11,6 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.runtime.LocalRuntimeEnvironment
-import com.gearui.runtime.LocalRuntimeFlags
 
 /** Retains the original entry point for hosts that use a single page background. */
 @Composable
@@ -59,11 +58,8 @@ fun PageScaffold(
     content: @Composable () -> Unit
 ) {
     val env = LocalRuntimeEnvironment.current
-    val flags = LocalRuntimeFlags.current
-    val pipelineOn = flags.unifiedSafeAreaPipeline
-
-    val topPad = if (!edgeToEdge && consumeTopSafeArea && pipelineOn) env.safeArea.top else 0.dp
-    val bottomPad = if (!edgeToEdge && consumeBottomSafeArea && pipelineOn) env.safeArea.bottom else 0.dp
+    val topPad = if (!edgeToEdge && consumeTopSafeArea) env.safeArea.top else 0.dp
+    val bottomPad = if (!edgeToEdge && consumeBottomSafeArea) env.safeArea.bottom else 0.dp
 
     val base = if (backgroundColor != null) modifier.background(backgroundColor) else modifier
     Column(modifier = base.fillMaxSize()) {

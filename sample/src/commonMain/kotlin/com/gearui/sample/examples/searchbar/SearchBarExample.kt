@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.searchbar
 
+import com.gearui.components.searchbar.SearchBarCancel
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
@@ -101,7 +102,7 @@ fun SearchBarExample(
                     value = cancelSearchValue,
                     onValueChange = { cancelSearchValue = it },
                     placeholder = "搜索",
-                    showCancel = true,
+                    cancel = SearchBarCancel.Always,
                     onCancel = {
                         cancelSearchValue = ""
                         searchResult = "已取消搜索"

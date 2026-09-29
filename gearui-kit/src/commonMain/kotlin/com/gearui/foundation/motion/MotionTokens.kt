@@ -31,25 +31,9 @@ object Motions {
     val Default = Motion()
 }
 
-/** Preserve the public Motion constructor while honoring app-level motion speed.
+/** Scales a reference duration by the theme's motion speed.
  * Setting normal to zero suppresses press animation without suppressing state feedback.
  */
 internal fun Motion.feedbackDuration(reference: Int): Int =
     (reference.toDouble() * normal.coerceAtLeast(0) / Motions.Default.normal)
         .coerceAtMost(Int.MAX_VALUE.toDouble()).toInt()
-
-/**
- * Kept as the previous spelling so existing references keep working.
- *
- * Prefer `Theme.motion`: this object cannot follow a brand's theme, and at
- * the time the scale was made themeable nothing in the library referenced it
- * — the durations were all still written inline.
- */
-@Deprecated("Use Theme.motion", ReplaceWith("Theme.motion"))
-object MotionTokens {
-    const val instant: Int = 0
-    const val fast: Int = 100
-    const val normal: Int = 150
-    const val slow: Int = 200
-    const val emphasized: Int = 250
-}

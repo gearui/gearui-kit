@@ -41,11 +41,6 @@ data class RuntimeEnvironment(
 
 @Immutable
 data class RuntimeFlags(
-    // 1.0 default: page chrome consumes the stabilised safe area through
-    // PageScaffold and the runtime helpers. The flag stays as a rollback switch
-    // while host integrations settle, but the legacy path is no longer the model
-    // anything is validated against.
-    val unifiedSafeAreaPipeline: Boolean = true,
     // Component safe-area consumption policy (runtime-owned, app-wide).
     val navBarConsumesTopSafeArea: Boolean = false,
     val bottomNavBarConsumesBottomSafeArea: Boolean = true,
@@ -215,32 +210,14 @@ internal fun rememberSafeAreaInset(
     extra: Dp = 0.dp,
     minimum: Dp = 0.dp,
 ): Dp {
-    val flags = LocalRuntimeFlags.current
     val environment = LocalRuntimeEnvironment.current
-    val configuration = LocalConfiguration.current
-
     val stable = when (edge) {
         SafeAreaEdge.Top -> environment.safeArea.top
         SafeAreaEdge.Bottom -> environment.safeArea.bottom
         SafeAreaEdge.Left -> environment.safeArea.left
         SafeAreaEdge.Right -> environment.safeArea.right
     }
-    val legacy = when (edge) {
-        SafeAreaEdge.Top -> configuration.safeAreaInsets.top.dp
-        SafeAreaEdge.Bottom -> configuration.safeAreaInsets.bottom.dp
-        SafeAreaEdge.Left -> configuration.safeAreaInsets.left.dp
-        SafeAreaEdge.Right -> configuration.safeAreaInsets.right.dp
-    }
-
-    // The legacy branch deliberately ignores [consume]; that is the pre-migration
-    // behaviour, kept only as a rollback switch for host integrations. The
-    // standard path runs with unifiedSafeAreaPipeline = true, where the
-    // per-component consumption policy actually takes effect.
-    val resolved = if (flags.unifiedSafeAreaPipeline) {
-        if (consume) stable else 0.dp
-    } else {
-        legacy
-    }
+    val resolved = if (consume) stable else 0.dp
 
     val total = resolved + extra
     return if (total > minimum) total else minimum

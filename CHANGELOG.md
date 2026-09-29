@@ -15,6 +15,22 @@
   `DateTimeStrings` gains `previousMonth` and `nextMonth`; `MediaStrings` gains
   `previousSlide` and `nextSlide`. A pack that constructs these classes in full must
   supply them. Packs built from `*Patch` over a shipped pack need no change.
+- **Removed, with their replacements.** One way to do each thing:
+  - `CollapseItem`, `CollapseGroup`, `CollapseItemData` → `Collapse` with `CollapsePanel`s.
+  - `DrawerWithHeader` → `Drawer`.
+  - `Notification(visible = …)`, `NotificationData`, `NotificationHost`,
+    `NotificationHostState`, `rememberNotificationHostState` → `rememberNotificationController()`.
+  - `SearchBar(showCancel = true)` → `cancel = SearchBarCancel.Always` (or leave the
+    default, `WhileEditing`).
+  - `Select` / `MultiSelect` `panelMode` and `SelectPanelMode` → nothing: the panel always
+    opens anchored to the trigger, below it or above when there is no room. The
+    item-aligned mode was a desktop pattern.
+  - `MotionTokens` → `Theme.motion`.
+  - `Text(fontSize = …, fontWeight = …)` → `style = Theme.typography.x.copy(fontSize = …)`;
+    `Text(secondary = true)` / `tertiary = true` → `color = Theme.colors.mutedForeground`;
+    `Text(color = null)` → omit it (the default is `Theme.colors.foreground`).
+  - `RuntimeFlags.unifiedSafeAreaPipeline` → nothing: the stabilised safe area is the only
+    path, and the configuration-inset fallback is gone.
 - **Behavioral.** `DatePickerInput` / `TimePickerInput` open a bottom sheet instead of
   a dialog. `SearchBar`'s Cancel is text, not a filled button. Remembered notification
   and snackbar controllers dismiss what they showed when their screen leaves.

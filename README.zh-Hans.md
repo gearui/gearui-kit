@@ -35,10 +35,10 @@
 
 | 分类 | 组件 |
 | --- | --- |
-| 基础（10） | `Kbd`、`Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（24） | `ListBox`、`YearPicker`、`DateField`、`ColorPicker`、`Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
-| 导航（9） | `Toolbar`、`SubMenu`、`NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented` |
-| 数据展示（20） | `Meter`、`User`、`Code`、`List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark` |
+| 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
+| 表单（24） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`YearPicker`、`DateField`、`ColorPicker` |
+| 导航（9） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar`、`SubMenu` |
+| 数据展示（21） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`Kbd` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（7） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`LoadMore`、`BottomSheet`、`BackTop` |
 
@@ -49,7 +49,6 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
-| `Kbd` | 快捷键 |  |
 | `Button` | 按钮 | 用于触发操作 |
 | `Icon` | 图标 | 图标展示 |
 | `Link` | 链接 | 文本链接与链接按钮 |
@@ -64,10 +63,6 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
-| `ListBox` | 选项列表 |  |
-| `YearPicker` | 年份选择 |  |
-| `DateField` | 分段日期时间 |  |
-| `ColorPicker` | 颜色选择 |  |
 | `Input` | 输入框 | 文本输入 |
 | `Checkbox` | 复选框 | 多选操作 |
 | `AgreementCheckbox` | 协议勾选 | 协议与隐私同意 |
@@ -88,13 +83,15 @@
 | `Upload` | 上传 | 文件上传 |
 | `Form` | 表单 | 表单容器 |
 | `Cascader` | 级联选择 | 级联选择器 |
+| `ListBox` | 选项列表 |  |
+| `YearPicker` | 年份选择 |  |
+| `DateField` | 分段日期时间 |  |
+| `ColorPicker` | 颜色选择 |  |
 
 **导航**
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
-| `Toolbar` | 工具栏 |  |
-| `SubMenu` | 多级菜单 |  |
 | `NavBar` | 导航栏 | 通用页面导航栏 |
 | `BottomNavBar` | 底部导航栏 | 应用底部主导航 |
 | `Tabs` | 选项卡 | 内容切换 |
@@ -102,14 +99,13 @@
 | `Steps` | 步骤条 | 步骤指示 |
 | `IndexBar` | 索引栏 | 通讯录字母索引 |
 | `Segmented` | 分段控制 | 分段选择 |
+| `Toolbar` | 工具栏 |  |
+| `SubMenu` | 多级菜单 |  |
 
 **数据展示**
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
-| `Meter` | 计量值 |  |
-| `User` | 用户摘要 |  |
-| `Code` | 代码块 |  |
 | `List` | 列表 | 列表展示 |
 | `Card` | 卡片 | 卡片容器 |
 | `Cell` | 单元格 | 列表单元组件 |
@@ -127,6 +123,10 @@
 | `Calendar` | 日历 | 日历展示 |
 | `Format` | 本地化格式 | 万亿缩写、相对时间、农历 |
 | `Watermark` | 水印 | 页面水印 |
+| `Meter` | 计量值 |  |
+| `User` | 用户摘要 |  |
+| `Code` | 代码块 |  |
+| `Kbd` | 快捷键标记 | Web 与外接键盘的按键提示 |
 
 **反馈**
 

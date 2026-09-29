@@ -25,17 +25,6 @@ enum class ComponentCategory {
 
 object ComponentConfig {
     val all: List<ComponentInfo> = listOf(
-        ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox"),
-        ComponentInfo("yearpicker", "年份选择", "YearPicker", ComponentCategory.FORM, "/components/yearpicker"),
-        ComponentInfo("datefield", "分段日期时间", "DateField", ComponentCategory.FORM, "/components/datefield"),
-        ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form"),
-        ComponentInfo("toolbar", "工具栏", "Toolbar", ComponentCategory.NAVIGATION, "/components/toolbar"),
-        ComponentInfo("submenu", "多级菜单", "SubMenu", ComponentCategory.NAVIGATION, "/components/submenu"),
-        ComponentInfo("kbd", "快捷键", "Kbd", ComponentCategory.BASIC, "/components/kbd"),
-        ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter"),
-        ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user"),
-        ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code"),
-        ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker"),
         // Basic components
         ComponentInfo("button", "按钮", "Button", ComponentCategory.BASIC, "/components/button", "用于触发操作", "Trigger actions"),
         ComponentInfo("icon", "图标", "Icon", ComponentCategory.BASIC, "/components/icon", "图标展示", "Icon display"),
@@ -69,6 +58,11 @@ object ComponentConfig {
         ComponentInfo("upload", "上传", "Upload", ComponentCategory.FORM, "/components/upload", "文件上传", "File upload"),
         ComponentInfo("form", "表单", "Form", ComponentCategory.FORM, "/components/form", "表单容器", "Form container"),
         ComponentInfo("cascader", "级联选择", "Cascader", ComponentCategory.FORM, "/components/cascader", "级联选择器", "Cascade selector"),
+        ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox"),
+        ComponentInfo("yearpicker", "年份选择", "YearPicker", ComponentCategory.FORM, "/components/yearpicker"),
+        ComponentInfo("datefield", "分段日期时间", "DateField", ComponentCategory.FORM, "/components/datefield"),
+        ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form"),
+        ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker"),
 
         // Navigation components
         ComponentInfo("navbar", "导航栏", "NavBar", ComponentCategory.NAVIGATION, "/components/navbar", "通用页面导航栏", "Page navigation bar"),
@@ -84,6 +78,8 @@ object ComponentConfig {
         ComponentInfo("runtime-tabhost", "TabHost 保活验证", "TabHost Probe", ComponentCategory.NAVIGATION, "/components/runtime-tabhost", "保活与重建的帧率对照", "Keep-alive vs rebuild frame cost"),
         ComponentInfo("runtime-performance", "性能基准", "Performance", ComponentCategory.NAVIGATION, "/components/runtime-performance", "主题切换耗时与长列表掉帧", "Theme switch time and long-list jank"),
         ComponentInfo("navigator-v1-demo", "Navigator v1 演示", "Navigator v1 Demo", ComponentCategory.NAVIGATION, "/components/navigator-v1-demo", "Navigator v1 栈式跳转 + 边缘滑动返回", "Navigator v1 stack + edge swipe pop"),
+        ComponentInfo("toolbar", "工具栏", "Toolbar", ComponentCategory.NAVIGATION, "/components/toolbar"),
+        ComponentInfo("submenu", "多级菜单", "SubMenu", ComponentCategory.NAVIGATION, "/components/submenu"),
 
         // Data display
         ComponentInfo("list", "列表", "List", ComponentCategory.DATA_DISPLAY, "/components/list", "列表展示", "List display"),
@@ -103,6 +99,10 @@ object ComponentConfig {
         ComponentInfo("calendar", "日历", "Calendar", ComponentCategory.DATA_DISPLAY, "/components/calendar", "日历展示", "Calendar display"),
         ComponentInfo("format", "本地化格式", "Format", ComponentCategory.DATA_DISPLAY, "/components/format", "万亿缩写、相对时间、农历", "Compact numbers, relative time, lunar"),
         ComponentInfo("watermark", "水印", "Watermark", ComponentCategory.DATA_DISPLAY, "/components/watermark", "页面水印", "Page watermark"),
+        ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter"),
+        ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user"),
+        ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code"),
+        ComponentInfo("kbd", "快捷键标记", "Kbd", ComponentCategory.DATA_DISPLAY, "/components/kbd", "Web 与外接键盘的按键提示", "Web and external-keyboard shortcut hint"),
 
         // Feedback components
         ComponentInfo("swipecell", "滑动单元格", "SwipeCell", ComponentCategory.FEEDBACK, "/components/swipecell", "滑动操作单元格", "Swipeable cell"),

@@ -36,10 +36,10 @@ component follows both without any per-screen wiring.
 
 | Category | Components |
 | --- | --- |
-| Basic (10) | `Kbd`, `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (24) | `ListBox`, `YearPicker`, `DateField`, `ColorPicker`, `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
-| Navigation (9) | `Toolbar`, `SubMenu`, `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented` |
-| Data display (20) | `Meter`, `User`, `Code`, `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark` |
+| Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
+| Form (24) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader`, `ListBox`, `YearPicker`, `DateField`, `ColorPicker` |
+| Navigation (9) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented`, `Toolbar`, `SubMenu` |
+| Data display (21) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark`, `Meter`, `User`, `Code`, `Kbd` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (7) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `LoadMore`, `BottomSheet`, `BackTop` |
 
@@ -50,7 +50,6 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
-| `Kbd` |  |
 | `Button` | Trigger actions |
 | `Icon` | Icon display |
 | `Link` | Link and LinkButton |
@@ -65,10 +64,6 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
-| `ListBox` |  |
-| `YearPicker` |  |
-| `DateField` |  |
-| `ColorPicker` |  |
 | `Input` | Text input |
 | `Checkbox` | Multiple selection |
 | `AgreementCheckbox` | Terms and privacy consent |
@@ -89,13 +84,15 @@ component follows both without any per-screen wiring.
 | `Upload` | File upload |
 | `Form` | Form container |
 | `Cascader` | Cascade selector |
+| `ListBox` |  |
+| `YearPicker` |  |
+| `DateField` |  |
+| `ColorPicker` |  |
 
 **Navigation**
 
 | Component | Purpose |
 | --- | --- |
-| `Toolbar` |  |
-| `SubMenu` |  |
 | `NavBar` | Page navigation bar |
 | `BottomNavBar` | App bottom navigation |
 | `Tabs` | Content switching |
@@ -103,14 +100,13 @@ component follows both without any per-screen wiring.
 | `Steps` | Step indicator |
 | `IndexBar` | Alphabet index |
 | `Segmented` | Segmented control |
+| `Toolbar` |  |
+| `SubMenu` |  |
 
 **Data display**
 
 | Component | Purpose |
 | --- | --- |
-| `Meter` |  |
-| `User` |  |
-| `Code` |  |
 | `List` | List display |
 | `Card` | Card container |
 | `Cell` | List cell component |
@@ -128,6 +124,10 @@ component follows both without any per-screen wiring.
 | `Calendar` | Calendar display |
 | `Format` | Compact numbers, relative time, lunar |
 | `Watermark` | Page watermark |
+| `Meter` |  |
+| `User` |  |
+| `Code` |  |
+| `Kbd` | Web and external-keyboard shortcut hint |
 
 **Feedback**
 

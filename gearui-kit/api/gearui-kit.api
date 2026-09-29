@@ -185,6 +185,31 @@ public final class com/gearui/components/alert/AlertStatus : java/lang/Enum {
 	public static fun values ()[Lcom/gearui/components/alert/AlertStatus;
 }
 
+public final class com/gearui/components/avatar/AvatarGroupItem {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;)Lcom/gearui/components/avatar/AvatarGroupItem;
+	public static synthetic fun copy$default (Lcom/gearui/components/avatar/AvatarGroupItem;Ljava/lang/String;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;ILjava/lang/Object;)Lcom/gearui/components/avatar/AvatarGroupItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFallback ()Ljava/lang/String;
+	public final fun getPainter ()Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/avatar/AvatarGroupKt {
+	public static final fun AvatarGroup-j6gQErg (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;FIFJLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/avatar/AvatarKt {
+	public static final fun Avatar-wgki-ss (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;FLcom/tencent/kuikly/compose/ui/graphics/Shape;JJLjava/lang/Integer;ZZJLjava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
+}
+
 public final class com/gearui/components/backtop/BackTopKt {
 	public static final fun BackTop (ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/backtop/BackTopStyle;Lcom/gearui/components/backtop/BackTopTheme;ZLjava/lang/String;Ljava/lang/String;Lkotlin/Pair;Landroidx/compose/runtime/Composer;II)V
 	public static final fun BackTopCustom (ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/backtop/BackTopTheme;Lkotlin/Pair;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
@@ -837,26 +862,6 @@ public final class com/gearui/components/icon/Icons {
 	public final fun png (Ljava/lang/String;)Ljava/lang/String;
 }
 
-public final class com/gearui/components/image/AvatarGroupItem {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;)V
-	public synthetic fun <init> (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;)Lcom/gearui/components/image/AvatarGroupItem;
-	public static synthetic fun copy$default (Lcom/gearui/components/image/AvatarGroupItem;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;ILjava/lang/Object;)Lcom/gearui/components/image/AvatarGroupItem;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getFallbackText ()Ljava/lang/String;
-	public final fun getPainter ()Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/gearui/components/image/AvatarGroupKt {
-	public static final fun AvatarGroup-j6gQErg (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;FIFJLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
-}
-
 public final class com/gearui/components/image/ImageFit : java/lang/Enum {
 	public static final field CONTAIN Lcom/gearui/components/image/ImageFit;
 	public static final field COVER Lcom/gearui/components/image/ImageFit;
@@ -869,7 +874,6 @@ public final class com/gearui/components/image/ImageFit : java/lang/Enum {
 }
 
 public final class com/gearui/components/image/ImageKt {
-	public static final fun Avatar-Z2F3fQw (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Lcom/tencent/kuikly/compose/ui/Modifier;FLjava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun GearImage-9tELljc (Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/image/ImageShape;Lcom/gearui/components/image/ImageFit;FZFLjava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 	public static final fun ImageGallery-pc8g2zU (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;IFFLcom/gearui/components/image/ImageShape;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ImagePlaceholder (Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
@@ -4408,10 +4412,6 @@ public final class com/gearui/overlay/OverlayTransition : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/overlay/OverlayTransition;
 	public static fun values ()[Lcom/gearui/overlay/OverlayTransition;
-}
-
-public final class com/gearui/primitives/AvatarKt {
-	public static final fun Avatar-33gABag (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/graphics/painter/Painter;FFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Ljava/lang/Integer;ZZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/primitives/BadgeBorder : java/lang/Enum {

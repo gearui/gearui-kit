@@ -17,6 +17,7 @@ internal object ControlGeometry {
     val alertIndicatorOffset = 3.5.dp
     val alertPadding = 12.dp
     val avatarGroupSize = 32.dp
+    val avatarStatusSize = 10.dp
     val backTopHalfHeight = 40.dp
     val backTopHalfWidth = 24.dp
     val bottomNavBadgeReserveHeight = 16.dp

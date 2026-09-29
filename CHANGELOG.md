@@ -37,12 +37,22 @@
   calls `onSelect` once, with the full path, when a leaf is chosen (it used to report
   every level); `dropdownHeight` is gone. `Calendar.firstDayOfWeek` defaults to the
   language's convention, so Simplified Chinese calendars now start on Monday.
+- **One `Avatar`.** `com.gearui.primitives.Avatar` and `com.gearui.components.image.Avatar`
+  are replaced by `com.gearui.components.avatar.Avatar(fallback, url, painter, size,
+  shape, …)`; `AvatarGroup` moves to the same package and `AvatarGroupItem` takes
+  `fallback` and `url`. `text` → `fallback`; `image` → `painter`, or better `url`;
+  `radius` → `shape` (`CircleShape` by default); `icon` and `badgeVisible` are gone.
 - **Behavioral.** `DatePickerInput` / `TimePickerInput` open a bottom sheet instead of
   a dialog. `SearchBar`'s Cancel is text, not a filled button. Remembered notification
   and snackbar controllers dismiss what they showed when their screen leaves.
   `Skeleton`'s default corner radius is `Radius.sm` (8) instead of 4.
 
 ### Added
+
+- `Avatar` loads a `url` itself (KuiklyUI coil3), crops it to the shape, keeps the
+  initials while it loads or when it fails and hides them once it shows, and draws the
+  unread badge and a new `online` dot above the picture. Apps no longer stack their own
+  image over it.
 
 - Chinese-market features, following GearUI's own design rules:
   - `loadMoreItem` / `LoadMoreFooter`: the footer of a paged list, with the states of

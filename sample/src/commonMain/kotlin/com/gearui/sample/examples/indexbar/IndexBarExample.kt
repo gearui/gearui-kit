@@ -5,7 +5,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.gearui.primitives.Avatar
+import com.gearui.components.avatar.Avatar
 import com.gearui.components.cell.Cell
 import com.gearui.components.indexbar.IndexBar
 import com.gearui.components.navbar.NavBar
@@ -102,7 +102,7 @@ fun IndexBarExample(
                         }
                         names.forEach { name ->
                             item(key = "$letter-$name") {
-                                Cell(title = name, leading = { Avatar(text = name.take(1)) })
+                                Cell(title = name, leading = { Avatar(fallback = name.take(1)) })
                             }
                         }
                     }

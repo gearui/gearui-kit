@@ -244,50 +244,6 @@ fun ImageWithState(
 }
 
 /**
- * Avatar image component
- */
-@Composable
-fun Avatar(
-    painter: Painter?,
-    modifier: Modifier = Modifier,
-    size: Dp = AvatarSizeTokens.Medium.size,
-    fallbackText: String = "",
-    contentDescription: String? = null,
-    onClick: (() -> Unit)? = null
-) {
-    val colors = Theme.colors
-
-    if (painter != null) {
-        GearImage(
-            painter = painter,
-            contentDescription = contentDescription,
-            shape = ImageShape.CIRCLE,
-            fit = ImageFit.COVER,
-            onClick = onClick,
-            modifier = modifier.size(size)
-        )
-    } else {
-        Box(
-            modifier = modifier
-                .size(size)
-                .clip(CircleShape)
-                .background(colors.primary)
-                .then(
-                    if (onClick != null) Modifier.clickable { onClick() }
-                    else Modifier
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = fallbackText.take(2).uppercase(),
-                style = Theme.typography.bodyMedium,
-                color = colors.primaryForeground
-            )
-        }
-    }
-}
-
-/**
  * Image gallery component
  */
 @Composable

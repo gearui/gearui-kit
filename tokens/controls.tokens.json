@@ -2654,6 +2654,18 @@
           "why": "The letter bubble shown while dragging: large enough to read under the thumb, as the WeChat contact list does."
         }
       }
+    },
+    "avatarStatusSize": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Online dot on an avatar: readable at the 40pt small size without covering the face, with a 2pt ring in the surface colour."
+        }
+      }
     }
   }
 }

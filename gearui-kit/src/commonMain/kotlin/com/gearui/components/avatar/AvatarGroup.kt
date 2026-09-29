@@ -1,4 +1,4 @@
-package com.gearui.components.image
+package com.gearui.components.avatar
 
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.border.BorderWidth
@@ -19,10 +19,11 @@ import com.tencent.kuikly.compose.ui.graphics.painter.Painter
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.Dp
 
-/** One member of an [AvatarGroup]: a picture, or initials when there is none. */
+/** One member of an [AvatarGroup]: initials, and a picture by [url] or [painter]. */
 data class AvatarGroupItem(
+    val fallback: String,
+    val url: String? = null,
     val painter: Painter? = null,
-    val fallbackText: String = "",
 )
 
 /**
@@ -59,9 +60,10 @@ fun AvatarGroup(
                 contentAlignment = Alignment.Center,
             ) {
                 Avatar(
+                    fallback = item.fallback,
+                    url = item.url,
                     painter = item.painter,
                     size = size - BorderWidth.thick * 2,
-                    fallbackText = item.fallbackText,
                     onClick = onClick,
                 )
             }

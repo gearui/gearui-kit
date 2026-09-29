@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**171 / 210** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**177 / 216** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -38,6 +38,7 @@
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
 | `avatarGroupSize` | 32 | | | _尚未标注_ | |
+| `avatarStatusSize` | 10 | — | — | GearUI | Online dot on an avatar: readable at the 40pt small size without covering the face, with a 2pt ring in the surface colour. |
 
 ## back
 
@@ -78,6 +79,7 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `calendarCellGap` | 2 | — | — | GearUI | A hairline of air between day cells so a selected range reads as separate days. |
 | `calendarCellHeight` | 44 | — | — | GearUI | The 44 touch minimum; seven columns on a phone leave no room for a taller cell. |
+| `calendarLunarCellHeight` | 52 | — | — | GearUI | A calendar day with its lunar date under it: the plain 44pt cell plus one extra-small line, as Chinese calendars set it. |
 | `calendarNavButton` | 32 | — | — | GearUI | The close-button size, for the month arrows beside the title. |
 
 ## card
@@ -90,7 +92,7 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `cascaderDropdownHeight` | 300 | — | — | GearUI | About six 48 option rows before a level scrolls. |
+| `cascaderListHeight` | 360 | — | — | GearUI | The list in the cascader sheet: seven 48pt rows and a partial eighth, so it reads as scrollable, with the header and level tabs still under half of an 844pt screen. |
 
 ## checkbox
 
@@ -158,6 +160,14 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `imageGalleryHeight` | 100 | — | — | GearUI | Thumbnail height in a three-column gallery on a phone. |
 
+## index
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `indexBarBubbleSize` | 52 | — | — | GearUI | The letter bubble shown while dragging: large enough to read under the thumb, as the WeChat contact list does. |
+| `indexBarItemHeight` | 18 | — | — | GearUI | One letter of an index bar: 27 letters (A-Z and #) fit in under 490pt, inside a small phone's list between the navigation and tab bars. |
+| `indexBarWidth` | 24 | — | — | GearUI | Index bar column: a letter at the extra-small size with room either side for a thumb that drags along the edge. |
+
 ## input
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
@@ -174,6 +184,12 @@
 | `listMinHeight` | 52 | — | 52 | iOS |  |
 | `listPaddingBlock` | 14 | 16 | 14 | iOS | HeroUI's 16 on both axes makes a 56pt row; iOS rows are 52. Splitting the axes keeps iOS's height and leading. |
 | `listPaddingInline` | 20 | 16 | 20 | iOS | List rhythm follows the platform: text starts where iOS starts it, and the separator starts with the text. |
+
+## load
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `loadMoreHeight` | 56 | — | — | GearUI | List footer height: one row, the same as a Cell with no description, so the list does not jump when the footer swaps states. |
 
 ## loading
 

@@ -345,6 +345,7 @@
   geometry.alertIndicatorOffset = {"$type":"dimension","$value":{"unit":"px","value":3.5}}
   geometry.alertPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.avatarGroupSize = {"$type":"dimension","$value":{"unit":"px","value":32}}
+  geometry.avatarStatusSize = {"$type":"dimension","$value":{"unit":"px","value":10}}
   geometry.backTopHalfHeight = {"$type":"dimension","$value":{"unit":"px","value":40}}
   geometry.backTopHalfWidth = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.bottomNavBadgeReserveHeight = {"$type":"dimension","$value":{"unit":"px","value":16}}

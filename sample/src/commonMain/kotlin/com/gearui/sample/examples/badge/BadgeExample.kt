@@ -17,7 +17,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.IconSizes
-import com.gearui.primitives.Avatar
+import com.gearui.components.avatar.Avatar
 import com.gearui.primitives.Badge
 import com.gearui.primitives.BadgeBorder
 import com.gearui.primitives.BadgeSize
@@ -247,5 +247,5 @@ private fun BellIcon() {
 /** A larger anchor: a real Avatar, as badges usually sit on one. */
 @Composable
 private fun Anchor(size: Dp = AvatarSizeTokens.Medium.size) {
-    Avatar(text = "张", size = size)
+    Avatar(fallback = "张", size = size)
 }

@@ -161,7 +161,7 @@ bash scripts/ios_native_tests.sh   # needs -PgearuiIosTestHostDir host
 ## 7. beta7 发布门禁（2026-09-29 立项）
 
 beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPONENT_COVERAGE.zh-Hans.md](./COMPONENT_COVERAGE.zh-Hans.md)
-§3 缺口、[ANT_DESIGN_RN_COMPARISON.zh-Hans.md](./ANT_DESIGN_RN_COMPARISON.zh-Hans.md) §5/§9 的建议，全部并入本门禁。
+§3 缺口和已采纳的移动业务能力，全部并入本门禁。历史竞品对照已完成决策并删除，以本表为唯一验收依据。
 每一项以证据判定完成：单测、sample 路径、真机截图或日志、脚本输出，逐项写进 §2。编译通过不算任何一项的验收。
 做不到的项写明缺什么（设备、上游、决策），标「外部阻断」，发布前由维护者逐条放行或推迟，不能静默略过。
 
@@ -173,9 +173,9 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | --- | --- | --- | --- |
 | A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☐ |
 | A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ◐ 下游 Android 编译通过；iOS 缺 Rust 静态库，详见 BETA7_ACCEPTANCE |
-| A3 | Ant 对标文档入库，作为 B 组能力项来源 | 提交 | ☑ ca32b70；§9.1 实施状态随 1abe521 后续提交补充 |
+| A3 | 历史竞品对照的已采纳事项归入 B/C 组，删除过时对照文档 | B/C 门禁与文档清理提交 | ☑ B/C 条目已列全；历史比较留在 git 历史，不再作为发布规范 |
 
-### B. 能力补强（来源：Ant 对标 §5、§9）
+### B. 移动业务能力补强
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |

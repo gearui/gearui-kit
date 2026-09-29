@@ -189,8 +189,9 @@ history is the archive.
 ## 7. beta7 Release Gate (opened 2026-09-29)
 
 beta7 is not "fix a few bugs and ship". The §1 goals, the §3 open risks, the gaps in
-[COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md) §3 and the recommendations in
-[ANT_DESIGN_RN_COMPARISON.zh-Hans.md](./ANT_DESIGN_RN_COMPARISON.zh-Hans.md) §5/§9 all fold into this gate.
+[COMPONENT_COVERAGE.md](./COMPONENT_COVERAGE.md) §3, and accepted mobile-business capabilities
+all fold into this gate. The historical competitor comparison was retired after its decisions
+were incorporated; this table is the sole acceptance source.
 Each item is closed by evidence — unit tests, a sample path, on-device screenshots or logs, script output —
 recorded in §2. A green compile closes nothing. Items that cannot be done state what is missing (a device,
 an upstream fix, a decision) and are marked externally blocked; before release the maintainer releases or
@@ -204,9 +205,9 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 | --- | --- | --- | --- |
 | A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☐ |
 | A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ◐ Android downstream compiles passed; iOS requires missing Rust static archives (see BETA7_ACCEPTANCE) |
-| A3 | Commit the Ant Design comparison as the source of group B | Commit | ☑ ca32b70; §9.1 implementation status added after 1abe521 |
+| A3 | Incorporate accepted items from the historical comparison into groups B/C and retire the outdated document | B/C gates and documentation cleanup commit | ☑ B/C entries recorded; comparison remains in git history, not the release specification |
 
-### B. Capabilities (from the Ant comparison §5, §9)
+### B. Mobile-business capabilities
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |

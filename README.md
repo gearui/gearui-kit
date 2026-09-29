@@ -246,6 +246,23 @@ private fun MainPageContent() {
 }
 ```
 
+### Android host: render thread stack
+
+Kuikly runs composition, measure and layout on its own context thread, created with
+the platform default stack (about 1 MB). Placement recurses once per layout level, so
+deep screens can overflow it — debuggable builds first, since ART runs them without
+optimisations. Give the thread the main thread's 8 MB before the first page opens:
+
+```kotlin
+KuiklyRenderAdapterManager.krThreadAdapter = object : IKRThreadAdapter {
+    private val executor = Executors.newCachedThreadPool()
+    override fun executeOnSubThread(task: () -> Unit) = executor.execute(task)
+    override fun stackSize(): Long = 8L * 1024 * 1024
+}
+```
+
+The sample does this in `SampleThreadAdapter`.
+
 ## Supported Platforms
 
 | Platform | Library | Sample | CI |

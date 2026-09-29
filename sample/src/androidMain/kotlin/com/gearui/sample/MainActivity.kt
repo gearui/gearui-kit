@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.gearui.sample.adapter.SampleImageAdapter
+import com.gearui.sample.adapter.SampleThreadAdapter
 import com.tencent.kuikly.core.render.android.adapter.KuiklyRenderAdapterManager
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
 
         if (KuiklyRenderAdapterManager.krImageAdapter == null) {
             KuiklyRenderAdapterManager.krImageAdapter = SampleImageAdapter(applicationContext)
+        }
+        // Before the first page: Kuikly creates its context thread once, lazily.
+        if (KuiklyRenderAdapterManager.krThreadAdapter == null) {
+            KuiklyRenderAdapterManager.krThreadAdapter = SampleThreadAdapter()
         }
 
         // Initialise the KuiklyUI delegate

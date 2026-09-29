@@ -243,6 +243,22 @@ private fun MainPageContent() {
 }
 ```
 
+### Android 宿主：渲染线程栈
+
+Kuikly 在自己的 context 线程上做组合、测量与布局，该线程用平台默认栈（约 1 MB）。
+布局放置每一层递归一次，页面层级深时会栈溢出——debuggable 构建最先出现，因为 ART
+对它关闭了优化。在第一个页面打开前把它设成与主线程相同的 8 MB：
+
+```kotlin
+KuiklyRenderAdapterManager.krThreadAdapter = object : IKRThreadAdapter {
+    private val executor = Executors.newCachedThreadPool()
+    override fun executeOnSubThread(task: () -> Unit) = executor.execute(task)
+    override fun stackSize(): Long = 8L * 1024 * 1024
+}
+```
+
+sample 的做法见 `SampleThreadAdapter`。
+
 ## 平台支持
 
 | 平台 | 库 | Sample | CI |

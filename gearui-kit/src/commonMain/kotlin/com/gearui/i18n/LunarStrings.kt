@@ -9,9 +9,9 @@ import com.gearui.foundation.calendar.LunarFestival
  * Names for the Chinese lunar calendar computed by [Lunar]. The algorithm only yields
  * indices; every name is here, so a pack can write them in its own script.
  *
- * @property monthNames 12, 正月 … 腊月.
- * @property dayNames 30, 初一 … 三十.
- * @property solarTerms 24, starting at 小寒, in [Lunar.solarTerm] order.
+ * @property monthNames 12, "正月" to "腊月".
+ * @property dayNames 30, "初一" to "三十".
+ * @property solarTerms 24, starting at "小寒", in [Lunar.solarTerm] order.
  * @property festivals one per [LunarFestival], in declaration order.
  * @property stems 10 heavenly stems; [branches] 12 earthly branches; [zodiac] 12 animals.
  */
@@ -25,7 +25,7 @@ data class LunarStrings(
     val stems: List<String>,
     val branches: List<String>,
     val zodiac: List<String>,
-    /** `{ganzhi}`, `{zodiac}`, `{month}` and `{day}`: 丙午年（马）八月十五. */
+    /** `{ganzhi}`, `{zodiac}`, `{month}` and `{day}`: "丙午年（马）八月十五". */
     val fullDateFormat: String,
 )
 
@@ -62,14 +62,14 @@ fun LunarStrings.merge(patch: LunarStringsPatch?): LunarStrings {
     )
 }
 
-/** 八月 or 闰六月. */
+/** "八月", or "闰六月" for a leap month. */
 fun LunarStrings.monthName(date: LunarDate): String =
     (if (date.isLeapMonth) leapPrefix else "") + monthNames[date.month - 1]
 
-/** 十五. */
+/** "十五". */
 fun LunarStrings.dayName(date: LunarDate): String = dayNames[date.day - 1]
 
-/** 丙午年（马）八月十五. */
+/** "丙午年（马）八月十五". */
 fun LunarStrings.fullDate(date: LunarDate): String {
     val (stem, branch) = Lunar.ganzhiYear(date.year)
     return fullDateFormat.formatArgs(
@@ -83,7 +83,7 @@ fun LunarStrings.fullDate(date: LunarDate): String {
 /**
  * What a calendar cell shows under the Gregorian day, as Chinese calendars do: a
  * festival first, then a solar term, then the month name on the 1st of a lunar month,
- * otherwise the day — 中秋, 秋分, 九月, 十六. Null outside 1900–2100.
+ * otherwise the day: "中秋", "秋分", "九月", "十六". Null outside 1900–2100.
  */
 fun LunarStrings.calendarLabel(year: Int, month: Int, day: Int): String? {
     val lunar = Lunar.fromSolar(year, month, day) ?: return null

@@ -65,13 +65,13 @@ val copySampleJsBundle by tasks.registering(Copy::class) {
 }
 
 /**
- * Icons resolve as `assets://icons/<name>.png`, which the web renderer turns
- * into `/assets/icons/<name>.png`. Both gearui-kit and sample contribute
+ * Icons resolve as `assets://icons/<name>.png`, which the host image processor
+ * resolves relative to its own page. Both gearui-kit and sample contribute
  * assets, and gearui-kit's are the ones that matter — that is where the 101
  * icon PNGs live.
  */
 val copySampleAssets by tasks.registering(Copy::class) {
-    description = "Stages gearui-kit and sample assets under /assets."
+    description = "Stages gearui-kit and sample assets under the host page's assets directory."
     from(project(":gearui-kit").layout.projectDirectory.dir("src/commonMain/assets"))
     from(project(":sample").layout.projectDirectory.dir("src/commonMain/assets"))
     into(stagedWebResources.map { it.dir("assets") })

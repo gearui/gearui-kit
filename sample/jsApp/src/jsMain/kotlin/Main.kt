@@ -37,8 +37,7 @@ fun main() {
     // Create and initialize the page delegator using shared logic
     val delegator = KuiklyRouter.createDelegator(window.location.href)
 
-    // modify image cdn
-//    KuiklyProcessor.imageProcessor = CustomImageProcessor
+    KuiklyProcessor.imageProcessor = CustomImageProcessor
 
     // Register visibility event
     document.addEventListener("visibilitychange", {

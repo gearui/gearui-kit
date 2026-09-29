@@ -5,6 +5,8 @@ import com.tencent.kuikly.core.render.web.ktx.KuiklyRenderCallback
 import com.tencent.kuikly.core.render.web.nvi.serialization.json.JSONException
 import com.tencent.kuikly.core.render.web.nvi.serialization.json.JSONObject
 import kotlinx.browser.window
+import kotlinx.browser.document
+import org.w3c.dom.url.URL
 import com.tencent.kuikly.h5app.utils.Ui
 import kotlin.js.Date
 
@@ -34,7 +36,7 @@ class KRBridgeModule : KuiklyRenderBaseModule() {
 
             "readAssetFile" -> {
                 val path = js("JSON").parse(params).assetPath
-                val url = window.location.protocol + "//" +  window.location.host + "/assets/" + path
+                val url = URL("assets/$path", document.baseURI).href
                 window.fetch(url).then {
                     it.json().then { data->
                         callback?.invoke((mapOf(
@@ -100,4 +102,3 @@ class KRBridgeModule : KuiklyRenderBaseModule() {
         const val MODULE_NAME = "HRBridgeModule"
     }
 }
-

@@ -32,14 +32,14 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**75 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**85 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
-| Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
-| Form (20) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
-| Navigation (7) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented` |
-| Data display (17) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark` |
+| Basic (10) | `Kbd`, `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
+| Form (24) | `ListBox`, `YearPicker`, `DateField`, `ColorPicker`, `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader` |
+| Navigation (9) | `Toolbar`, `SubMenu`, `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented` |
+| Data display (20) | `Meter`, `User`, `Code`, `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (7) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `LoadMore`, `BottomSheet`, `BackTop` |
 
@@ -50,6 +50,7 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
+| `Kbd` |  |
 | `Button` | Trigger actions |
 | `Icon` | Icon display |
 | `Link` | Link and LinkButton |
@@ -64,6 +65,10 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
+| `ListBox` |  |
+| `YearPicker` |  |
+| `DateField` |  |
+| `ColorPicker` |  |
 | `Input` | Text input |
 | `Checkbox` | Multiple selection |
 | `AgreementCheckbox` | Terms and privacy consent |
@@ -89,6 +94,8 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
+| `Toolbar` |  |
+| `SubMenu` |  |
 | `NavBar` | Page navigation bar |
 | `BottomNavBar` | App bottom navigation |
 | `Tabs` | Content switching |
@@ -101,6 +108,9 @@ component follows both without any per-screen wiring.
 
 | Component | Purpose |
 | --- | --- |
+| `Meter` |  |
+| `User` |  |
+| `Code` |  |
 | `List` | List display |
 | `Card` | Card container |
 | `Cell` | List cell component |

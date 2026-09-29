@@ -31,14 +31,14 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**75 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**85 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
-| 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（20） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
-| 导航（7） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented` |
-| 数据展示（17） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark` |
+| 基础（10） | `Kbd`、`Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
+| 表单（24） | `ListBox`、`YearPicker`、`DateField`、`ColorPicker`、`Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader` |
+| 导航（9） | `Toolbar`、`SubMenu`、`NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented` |
+| 数据展示（20） | `Meter`、`User`、`Code`、`List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（7） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`LoadMore`、`BottomSheet`、`BackTop` |
 
@@ -49,6 +49,7 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
+| `Kbd` | 快捷键 |  |
 | `Button` | 按钮 | 用于触发操作 |
 | `Icon` | 图标 | 图标展示 |
 | `Link` | 链接 | 文本链接与链接按钮 |
@@ -63,6 +64,10 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
+| `ListBox` | 选项列表 |  |
+| `YearPicker` | 年份选择 |  |
+| `DateField` | 分段日期时间 |  |
+| `ColorPicker` | 颜色选择 |  |
 | `Input` | 输入框 | 文本输入 |
 | `Checkbox` | 复选框 | 多选操作 |
 | `AgreementCheckbox` | 协议勾选 | 协议与隐私同意 |
@@ -88,6 +93,8 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
+| `Toolbar` | 工具栏 |  |
+| `SubMenu` | 多级菜单 |  |
 | `NavBar` | 导航栏 | 通用页面导航栏 |
 | `BottomNavBar` | 底部导航栏 | 应用底部主导航 |
 | `Tabs` | 选项卡 | 内容切换 |
@@ -100,6 +107,9 @@
 
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
+| `Meter` | 计量值 |  |
+| `User` | 用户摘要 |  |
+| `Code` | 代码块 |  |
 | `List` | 列表 | 列表展示 |
 | `Card` | 卡片 | 卡片容器 |
 | `Cell` | 单元格 | 列表单元组件 |

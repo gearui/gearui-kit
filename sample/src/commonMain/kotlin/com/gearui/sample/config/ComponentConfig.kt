@@ -25,6 +25,17 @@ enum class ComponentCategory {
 
 object ComponentConfig {
     val all: List<ComponentInfo> = listOf(
+        ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox"),
+        ComponentInfo("yearpicker", "年份选择", "YearPicker", ComponentCategory.FORM, "/components/yearpicker"),
+        ComponentInfo("datefield", "分段日期时间", "DateField", ComponentCategory.FORM, "/components/datefield"),
+        ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form"),
+        ComponentInfo("toolbar", "工具栏", "Toolbar", ComponentCategory.NAVIGATION, "/components/toolbar"),
+        ComponentInfo("submenu", "多级菜单", "SubMenu", ComponentCategory.NAVIGATION, "/components/submenu"),
+        ComponentInfo("kbd", "快捷键", "Kbd", ComponentCategory.BASIC, "/components/kbd"),
+        ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter"),
+        ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user"),
+        ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code"),
+        ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker"),
         // Basic components
         ComponentInfo("button", "按钮", "Button", ComponentCategory.BASIC, "/components/button", "用于触发操作", "Trigger actions"),
         ComponentInfo("icon", "图标", "Icon", ComponentCategory.BASIC, "/components/icon", "图标展示", "Icon display"),

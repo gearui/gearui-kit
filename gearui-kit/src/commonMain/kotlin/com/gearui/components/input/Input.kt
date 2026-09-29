@@ -62,6 +62,10 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.field.FieldFocusOverlay
 import com.gearui.foundation.field.LocalFieldEmbedded
+import com.gearui.foundation.field.LocalFieldGroupEnabled
+import com.gearui.foundation.field.LocalFieldDisabledAppearanceOwned
+import com.gearui.foundation.field.LocalFieldErrorOwned
+import com.gearui.foundation.field.fieldSupportingText
 import com.gearui.foundation.field.FieldFrame
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
@@ -129,6 +133,8 @@ fun Input(
     onFocusChanged: ((Boolean) -> Unit)? = null,
     autoFocus: Boolean = false,
 ) {
+    val enabled = enabled && LocalFieldGroupEnabled.current
+    val parentDims = LocalFieldDisabledAppearanceOwned.current
     val colors = Theme.colors
     val inputColors = LocalInputColors.current
     val shapes = Theme.shapes
@@ -146,7 +152,7 @@ fun Input(
     if (isPassword) passwordCapable = true
     val explicitKeyboardType = if (!passwordCapable) null else when {
         isPassword -> "password"
-        keyboardType == KeyboardType.Number -> "number"
+        keyboardType == KeyboardType.Number -> if (numericKeyboardType() == KeyboardType.Number) "number" else "text"
         keyboardType == KeyboardType.Email -> "email"
         else -> "text"
     }
@@ -338,16 +344,16 @@ fun Input(
                             mutableStateOf(TextFieldValue(shown, TextRange(shown.length)))
                         }
                         val fieldValue =
-                            if (caretState.text == shown) caretState
+                            if (caretState.composition != null || caretState.text == shown) caretState
                             else TextFieldValue(shown, TextRange(shown.length))
                         BasicTextField(
                             value = fieldValue,
                             onValueChange = { newValue ->
                                 if (!readOnly && enabled) {
                                     if (format != null) {
-                                        val edit = format.edit(fieldValue.text, newValue.text, newValue.selection.end)
-                                        caretState = TextFieldValue(edit.display, TextRange(edit.caret))
-                                        if (edit.raw != value) onValueChange(edit.raw)
+                                        val edit = formattedInputEdit(format, fieldValue.text, newValue)
+                                        caretState = edit.fieldValue
+                                        edit.raw?.let { if (it != value) onValueChange(it) }
                                     } else if (maxLength == null || newValue.text.length <= maxLength) {
                                         caretState = newValue
                                         if (newValue.text != value) onValueChange(newValue.text)
@@ -367,7 +373,9 @@ fun Input(
                                 // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
                                 // channel is the native secureTextEntry (triggered by keyboardType=password),
                                 // and visualTransformation has no effect across the Kuikly bridge.
-                                keyboardType = if (isPassword) KeyboardType.Password else format?.keyboardType ?: keyboardType,
+                                keyboardType = if (isPassword) KeyboardType.Password else (format?.keyboardType ?: keyboardType).let {
+                                    if (it == KeyboardType.Number) numericKeyboardType() else it
+                                },
                                 imeAction = when {
                                     onSend != null -> ImeAction.Send
                                     maxLines == 1 -> ImeAction.Done
@@ -395,7 +403,9 @@ fun Input(
                             modifier = Modifier.fieldName(label ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
                                 .then(
                                     when {
-                                        format != null -> Modifier.maxLength(format.displayMaxLength)
+                                        // Accept the entire paste before stripping a country code or separators.
+                                        // InputFormat.edit enforces the raw length after normalization.
+                                        format != null -> Modifier
                                         maxLength != null -> Modifier.maxLength(maxLength)
                                         else -> Modifier
                                     }
@@ -493,7 +503,7 @@ fun Input(
 
     // Main layout
     Column(modifier = modifier.then(com.tencent.kuikly.compose.ui.Modifier.graphicsLayer {
-        alpha = if (enabled) 1f else com.gearui.foundation.motion.FeedbackDefaults.disabledOpacity
+        alpha = if (enabled || parentDims) 1f else com.gearui.foundation.motion.FeedbackDefaults.disabledOpacity
     })) {
         // Top label (when labelPosition == "top")
         if (label != null && labelPosition == "top") {
@@ -508,7 +518,7 @@ fun Input(
         InputField()
 
         // Metadata never competes with the editable line for horizontal space.
-        val bottomText = error ?: helperText
+        val bottomText = fieldSupportingText(error, helperText, LocalFieldErrorOwned.current)
         if (bottomText != null || (showCounter && maxLength != null)) {
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = Spacing.xs),

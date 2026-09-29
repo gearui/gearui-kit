@@ -32,7 +32,7 @@ class InputFormat(
     val maxLength: Int,
     val separator: Char = ' ',
     val keyboardType: KeyboardType = KeyboardType.Number,
-    val accept: (char: Char, index: Int) -> Char? = { c, _ -> c.takeIf { it.isDigit() } },
+    val accept: (char: Char, index: Int) -> Char? = { c, _ -> c.takeIf { it in '0'..'9' } },
     val isComplete: (raw: String) -> Boolean = { it.length == maxLength },
     val prepare: (text: String) -> String = { it },
 ) {
@@ -41,7 +41,7 @@ class InputFormat(
         require(maxLength > 0) { "maxLength must be positive" }
     }
 
-    /** Length of a full value as shown, separators included: the native field's limit. */
+    /** Length of a full value as shown, separators included; not a native paste limit. */
     val displayMaxLength: Int get() = format("0".repeat(maxLength)).length
 
     /** The raw value as shown, with separators. */
@@ -75,7 +75,7 @@ class InputFormat(
             isComplete = { it.length == 11 && it.first() == '1' },
             // A number pasted from contacts often carries the country code: +86 or 0086.
             prepare = { text ->
-                val digits = text.filter { it.isDigit() }
+                val digits = text.filter { it in '0'..'9' }
                 val national = listOf("0086", "86").firstNotNullOfOrNull { code ->
                     digits.removePrefix(code).takeIf { digits.startsWith(code) && it.length == 11 && it.first() == '1' }
                 }
@@ -101,7 +101,7 @@ class InputFormat(
             keyboardType = KeyboardType.Text,
             accept = { c, index ->
                 when {
-                    c.isDigit() -> c
+                    c in '0'..'9' -> c
                     index == 17 && (c == 'x' || c == 'X') -> 'X'
                     else -> null
                 }
@@ -155,7 +155,7 @@ internal fun InputFormat.displayOffset(display: String, rawCount: Int): Int {
 
 /** GB 11643-1999 check character over the first 17 digits. */
 internal fun isValidIdCard(raw: String): Boolean {
-    if (raw.length != 18 || !raw.substring(0, 17).all { it.isDigit() }) return false
+    if (raw.length != 18 || !raw.substring(0, 17).all { it in '0'..'9' }) return false
     val weights = intArrayOf(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
     val sum = (0 until 17).sumOf { (raw[it] - '0') * weights[it] }
     val check = "10X98765432"[sum % 11]

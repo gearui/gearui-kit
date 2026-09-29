@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.gearui.components.numberfield.NumberField
+import com.gearui.components.numberfield.DecimalValue
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
@@ -17,7 +18,7 @@ fun NumberFieldExample(
     onBack: () -> Unit
 ) {
     var quantity by remember { mutableStateOf<Double?>(1.0) }
-    var price by remember { mutableStateOf<Double?>(19.9) }
+    var price by remember { mutableStateOf<DecimalValue?>(DecimalValue.parse("19.9")) }
     var offset by remember { mutableStateOf<Double?>(0.0) }
 
     ExamplePage(component = component, onBack = onBack) {
@@ -45,8 +46,10 @@ fun NumberFieldExample(
                 value = price,
                 onValueChange = { price = it },
                 label = "单价",
-                step = 0.1,
-                min = 0.0,
+                step = DecimalValue.parse("0.1")!!,
+                min = DecimalValue.Zero,
+                format = { "¥$it" },
+                parser = { DecimalValue.parse(it.removePrefix("¥")) },
                 variant = FieldVariant.SECONDARY,
             )
         }

@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### beta7 candidate (not released)
+
+- Added stable-value `PickerOption` wheel entry points; cancellable, revision-keyed
+  Cascader loading with explicit empty and failure states; inclusive Gregorian
+  date/time bounds, precision, filters and time steps. Legacy Picker entry points
+  remain available.
+- Added typed asynchronous form fields, validation generations and server errors;
+  exact `DecimalValue`-based `NumberField` with matching formatter/parser and
+  editable integer Stepper. The existing `Double` overload remains source-compatible.
+- Added ListBox, YearPicker, DateField/TimeField, Toolbar, SubMenu, Kbd,
+  ColorPicker family, Meter, User and Code/Snippet, with sample entries.
+- `InputFormat` now defers formatting while the native IME reports active
+  composition; formatted input no longer uses the rendered length as a native
+  paste limit. `Avatar` load/failure fallbacks and `AvatarGroup` overlap were
+  corrected.
+- **Custom language packs:** `DateTimeStrings.secondSuffix` is a trailing
+  defaulted field. Source callers using named/default arguments can recompile;
+  precompiled packs must be rebuilt against the new binary API.
+- No beta7 artifact has been uploaded and no version tag has been created.
+
 ### Migration from 1.0.0-beta6
 
 - **Source-compatible, binary-incompatible.** New trailing parameters with defaults:

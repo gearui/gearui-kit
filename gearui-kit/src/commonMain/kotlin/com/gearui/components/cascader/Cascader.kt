@@ -109,12 +109,14 @@ fun Cascader(
     variant: FieldVariant = FieldVariant.PRIMARY,
     separator: String = " / ",
     loadChildren: (suspend (CascaderOption) -> List<CascaderOption>)? = null,
+    /** Change this when the app replaces the asynchronous data behind the same root options. */
+    dataVersion: String? = null,
 ) {
     val colors = Theme.colors
     var open by remember { mutableStateOf(false) }
     // Loaded levels, keyed by the path of the node they belong to. Kept for the field's
     // life, so the chosen labels resolve after the sheet closes.
-    val loaded = remember { mutableStateMapOf<String, LevelState>() }
+    val loaded = remember(options, dataVersion) { mutableStateMapOf<String, LevelState>() }
 
     val labels = cascaderLabels(options, selectedPath) { key -> (loaded[key] as? LevelState.Loaded)?.children }
     val displayText = if (selectedPath.isEmpty()) placeholder else labels.joinToString(separator)
@@ -166,6 +168,21 @@ internal sealed interface LevelState {
     data object Loading : LevelState
     data object Failed : LevelState
     data class Loaded(val children: List<CascaderOption>) : LevelState
+}
+
+internal suspend fun fetchCascaderLevel(
+    loaded: MutableMap<String, LevelState>,
+    key: String,
+    loader: suspend () -> List<CascaderOption>,
+) {
+    try {
+        loaded[key] = LevelState.Loaded(loader())
+    } catch (e: kotlinx.coroutines.CancellationException) {
+        loaded.remove(key)
+        throw e
+    } catch (e: Exception) {
+        loaded[key] = LevelState.Failed
+    }
 }
 
 /** What a level of the sheet shows. */
@@ -242,17 +259,12 @@ private fun CascaderSheet(
     var active by remember { mutableStateOf((initialPath.size - 1).coerceAtLeast(0)) }
 
     fun request(node: CascaderOption, nodePath: List<String>) {
-        val loader = load ?: return
         val key = pathKey(nodePath)
+        val loader = load ?: run { loaded[key] = LevelState.Failed; return }
         if (loaded[key] is LevelState.Loaded || loaded[key] == LevelState.Loading) return
         loaded[key] = LevelState.Loading
         scope.launch {
-            loaded[key] = try {
-                LevelState.Loaded(loader(node))
-            } catch (e: Exception) {
-                if (e is kotlinx.coroutines.CancellationException) throw e
-                LevelState.Failed
-            }
+            fetchCascaderLevel(loaded, key) { loader(node) }
         }
     }
 
@@ -297,7 +309,9 @@ private fun CascaderSheet(
 
         Box(modifier = Modifier.fillMaxWidth().height(ControlGeometry.cascaderListHeight), contentAlignment = Alignment.Center) {
             when (level) {
-                is Level.Options -> LazyColumn(modifier = Modifier.fillMaxSize()) {
+                is Level.Options -> if (level.options.isEmpty()) {
+                    Text(text = strings.common.noData, style = Theme.typography.bodyMedium, color = colors.mutedForeground)
+                } else LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(level.options, key = { it.value }) { option ->
                         CascaderRow(
                             option = option,

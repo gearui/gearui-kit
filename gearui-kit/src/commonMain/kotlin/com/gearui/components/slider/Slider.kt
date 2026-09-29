@@ -25,6 +25,7 @@ import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
+import com.tencent.kuikly.compose.ui.semantics.*
 
 /**
  * Slider style
@@ -99,7 +100,21 @@ fun Slider(
         return SliderMath.valueAt(ratio, valueRange, steps)
     }
 
-    Column(modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
+    Column(modifier = modifier.semantics {
+        progressBarRangeInfo = ProgressBarRangeInfo(value.coerceIn(valueRange), valueRange, steps)
+        if (!enabled) disabled()
+        else setProgress { requested ->
+            if (!requested.isFinite()) false else {
+                val next = SliderMath.snap(requested, valueRange, steps)
+                if (next == value) false else {
+                    onChangeStart?.invoke(value)
+                    onValueChange(next)
+                    onChangeEnd?.invoke(next)
+                    true
+                }
+            }
+        }
+    }.graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }) {
         // Current value, shown above the thumb
         if (showThumbValue) {
             Spacer(modifier = Modifier.height(ControlGeometry.sliderValueLabelHeight))

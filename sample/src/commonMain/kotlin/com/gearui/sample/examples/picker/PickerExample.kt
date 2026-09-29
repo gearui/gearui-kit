@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
 import com.gearui.components.picker.Picker
+import com.gearui.components.picker.PickerOption
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -21,6 +22,15 @@ fun PickerExample(
     component: ComponentInfo,
     onBack: () -> Unit
 ) {
+    var stableOpen by remember { mutableStateOf(false) }
+    var stableValues by remember { mutableStateOf(listOf("zj", "hz", "xh")) }
+    val stableOptions = listOf(
+        PickerOption("zj", "浙江省", listOf(PickerOption("hz", "杭州市", listOf(PickerOption("xh", "西湖区"))))),
+        PickerOption("fj", "福建省", listOf(PickerOption("fz", "福州市", listOf(PickerOption("xh2", "西湖区")))))
+    )
+    Picker.Linked(stableOpen, options = stableOptions, selectedValues = stableValues, title = "按稳定值选择",
+        onConfirm = { stableValues = it.map { node -> node.value }; stableOpen = false },
+        onCancel = { stableOpen = false }, onDismiss = { stableOpen = false })
     // Basic picker data
     val cityData = listOf("广州市", "韶关市", "深圳市", "珠海市", "汕头市")
 
@@ -67,6 +77,9 @@ fun PickerExample(
         component = component,
         onBack = onBack
     ) {
+        ExampleSection("稳定值与同名标签", "两省均有西湖区，提交值不会使用显示文字", surface = SectionSurface.Plain) {
+            Cell(title = "省市区", note = stableValues.joinToString(" / "), arrow = true, onClick = { stableOpen = true })
+        }
         // Each row opens a picker from the bottom sheet; the note shows the result.
         ExampleSection(
             surface = SectionSurface.Plain,

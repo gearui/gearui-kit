@@ -11,6 +11,8 @@ import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
 import com.gearui.foundation.field.shadowed
 import com.gearui.foundation.field.LocalFieldEmbedded
+import com.gearui.foundation.field.LocalFieldGroupEnabled
+import com.gearui.foundation.field.LocalFieldDisabledAppearanceOwned
 import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Icon
@@ -33,6 +35,10 @@ import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.semantics.disabled
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.semantics
 
 /**
  * InputGroup — a field with attached blocks, for the constant part of a value: the
@@ -64,6 +70,8 @@ fun InputGroup(
     shape: Shape = FieldDefaults.shape,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val enabled = enabled && LocalFieldGroupEnabled.current
+    val parentDims = LocalFieldDisabledAppearanceOwned.current
     val inputColors = LocalInputColors.current
     FieldSurface(modifier = modifier.fillMaxWidth(), shape = shape, shadowed = variant.shadowed) {
         Row(
@@ -72,10 +80,12 @@ fun InputGroup(
                 .height(FieldSizeTokens.Medium.height)
                 .clip(shape)
                 .background(variant.fill(inputColors.background))
-                .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity),
+                .alpha(if (enabled || parentDims) 1f else FeedbackDefaults.disabledOpacity),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            CompositionLocalProvider(LocalFieldEmbedded provides true) {
+            CompositionLocalProvider(LocalFieldEmbedded provides true,
+                LocalFieldGroupEnabled provides enabled,
+                LocalFieldDisabledAppearanceOwned provides (parentDims || !enabled)) {
                 content()
             }
         }
@@ -96,7 +106,9 @@ fun InputGroupAddon(
     onClick: (() -> Unit)? = null,
     content: (@Composable () -> Unit)? = null,
 ) {
+    val enabled = enabled && LocalFieldGroupEnabled.current
     val colors = Theme.colors
+    val parentDims = LocalFieldDisabledAppearanceOwned.current
     val body: @Composable () -> Unit = {
         Row(
             modifier = Modifier
@@ -121,14 +133,16 @@ fun InputGroupAddon(
             }
         }
     }
-    if (onClick != null) {
+    if (onClick != null && enabled) {
         PressableFeedback(
             onClick = onClick,
             modifier = modifier.fillMaxHeight(),
             enabled = enabled,
         ) { body() }
     } else {
-        Box(modifier = modifier.fillMaxHeight().alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)) { body() }
+        Box(modifier = modifier.fillMaxHeight()
+            .alpha(if (enabled || parentDims) 1f else FeedbackDefaults.disabledOpacity)
+            .semantics { if (onClick != null) { role = Role.Button; disabled() } }) { body() }
     }
 }
 

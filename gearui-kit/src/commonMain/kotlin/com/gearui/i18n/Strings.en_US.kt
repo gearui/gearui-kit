@@ -65,6 +65,7 @@ val StringsEnUs = Strings(
         daySuffix = "",
         hourSuffix = "",
         minuteSuffix = "",
+        secondSuffix = "s",
         calendarYearMonthFormat = "{month}/{year}",
         weekdaysShort = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
     ),

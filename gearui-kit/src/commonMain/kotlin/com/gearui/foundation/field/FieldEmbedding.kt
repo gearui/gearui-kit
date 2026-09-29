@@ -12,3 +12,5 @@ import androidx.compose.runtime.staticCompositionLocalOf
  * lined up.
  */
 internal val LocalFieldEmbedded = staticCompositionLocalOf { false }
+internal val LocalFieldGroupEnabled = staticCompositionLocalOf { true }
+internal val LocalFieldDisabledAppearanceOwned = staticCompositionLocalOf { false }

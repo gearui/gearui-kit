@@ -45,6 +45,9 @@ internal object ControlGeometry {
     val checkboxIndicatorTravel = 4.dp
     val closeButtonIcon = 18.dp
     val closeButtonSize = 32.dp
+    val colorAreaHeight = 192.dp
+    val colorSwatchSize = 40.dp
+    val colorThumbSize = 20.dp
     val controlExtraSmall = 28.dp
     val controlLarge = 56.dp
     val controlMedium = 48.dp

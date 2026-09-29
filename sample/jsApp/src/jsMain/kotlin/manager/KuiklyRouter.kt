@@ -14,6 +14,12 @@ import kotlin.math.floor
 import kotlin.random.Random
 
 object KuiklyRouter {
+    private var standaloneDelegator: KuiklyWebRenderViewDelegator? = null
+
+    fun updateViewportSize(width: Int, height: Int) {
+        val target = pageCache[currentKey]?.delegator ?: standaloneDelegator
+        target?.getKuiklyRenderContext()?.kuiklyRenderRootView?.updateRootViewSize(width, height)
+    }
     private const val CONTAINER_ID = "root"
     private const val SCROLL_KEY_PREFIX = "kr_scroll_"
     
@@ -219,6 +225,7 @@ object KuiklyRouter {
             SizeI(containerWidth, containerHeight)
         )
         delegator.resume()
+        standaloneDelegator = delegator
         return delegator
     }
 

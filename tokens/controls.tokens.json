@@ -2666,6 +2666,42 @@
           "why": "Online dot on an avatar: readable at the 40pt small size without covering the face, with a 2pt ring in the surface colour."
         }
       }
+    },
+    "colorAreaHeight": {
+      "$value": {
+        "value": 192,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Square saturation/value surface leaves room for hue and alpha controls on a phone."
+        }
+      }
+    },
+    "colorSwatchSize": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "A color choice reuses the small control height and fits a wrapping row."
+        }
+      }
+    },
+    "colorThumbSize": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "basis": "gearui",
+          "why": "Color-area thumb remains readable without obscuring a large part of the selected color."
+        }
+      }
     }
   }
 }

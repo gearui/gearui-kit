@@ -82,7 +82,7 @@ fun Avatar(
     val source = url?.trim()?.takeIf { it.isNotEmpty() }
     // The initials give way once a picture is showing, so a picture with transparent
     // parts does not show them through; the fill stays behind it.
-    var pictureShown by remember(source, painter) { mutableStateOf(source == null && painter != null) }
+    val imageState = remember(source, painter) { AvatarImageState(source == null && painter != null) }
 
     Box(
         modifier = modifier
@@ -106,7 +106,7 @@ fun Avatar(
             modifier = Modifier.size(size).clip(shape).background(backgroundColor),
             contentAlignment = Alignment.Center,
         ) {
-            if (!pictureShown) {
+            if (!imageState.shown) {
                 Text(
                     text = fallback.take(2).uppercase(),
                     // Reference `.avatar__fallback-text`: xs/sm/base by size, medium weight.
@@ -114,7 +114,7 @@ fun Avatar(
                     color = contentColor,
                 )
             }
-            AvatarPicture(source = source, painter = painter, size = size, shape = shape, onShown = { pictureShown = it })
+            AvatarPicture(source = source, painter = painter, size = size, shape = shape, state = imageState)
         }
 
         if (badgeCount != null || badgeDot) {
@@ -139,20 +139,17 @@ fun Avatar(
 }
 
 @Composable
-private fun AvatarPicture(source: String?, painter: Painter?, size: Dp, shape: Shape, onShown: (Boolean) -> Unit) {
+private fun AvatarPicture(source: String?, painter: Painter?, size: Dp, shape: Shape, state: AvatarImageState) {
     when {
         source != null -> {
             // Keyed by the address: a new picture gets a fresh attempt.
-            var failed by remember(source) { mutableStateOf(false) }
-            if (!failed) {
+            if (!state.failed) {
                 Image(
                     painter = rememberAsyncImagePainter(
                         model = source,
-                        onSuccess = { onShown(true) },
-                        onError = {
-                            failed = true
-                            onShown(false)
-                        },
+                        onLoading = { state.loading() },
+                        onSuccess = { state.success() },
+                        onError = { state.failure() },
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
@@ -174,4 +171,15 @@ private fun fallbackStyle(size: Dp) = when {
     size.value <= AvatarSizeTokens.Small.size.value -> Theme.typography.bodyExtraSmall
     size.value <= AvatarSizeTokens.Medium.size.value -> Theme.typography.bodySmall
     else -> Theme.typography.bodyMedium
+}
+
+/** Each source owns its callback state; late callbacks cannot change a replacement source. */
+internal class AvatarImageState(hasPainter: Boolean = false) {
+    var shown by mutableStateOf(hasPainter)
+        private set
+    var failed by mutableStateOf(false)
+        private set
+    fun loading() { shown = false; failed = false }
+    fun success() { shown = true; failed = false }
+    fun failure() { shown = false; failed = true }
 }

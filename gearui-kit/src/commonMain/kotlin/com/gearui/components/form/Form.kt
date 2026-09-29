@@ -7,6 +7,7 @@ import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldDescription
 import com.gearui.foundation.field.FieldErrorText
+import com.gearui.foundation.field.LocalFieldErrorOwned
 import com.gearui.foundation.field.FieldLabel
 import com.gearui.foundation.interaction.disabledAppearance
 import com.gearui.foundation.layout.Spacing
@@ -131,6 +132,27 @@ class FormFieldState(
  */
 class FormState {
     private val fields = mutableStateMapOf<String, FormFieldState>()
+    private val typedFields = mutableStateMapOf<String, TypedFormFieldState<*>>()
+
+    fun registerField(name: String, state: TypedFormFieldState<*>) { typedFields[name] = state }
+    internal fun unregisterTypedField(name: String, state: TypedFormFieldState<*>) {
+        if (typedFields[name] === state) typedFields.remove(name)
+    }
+    suspend fun validateAll(): Boolean {
+        var valid = validate()
+        val registered = typedFields.toMap()
+        val revisions = registered.mapValues { it.value.revision }
+        val legacyValues = fields.mapValues { it.value.value }
+        registered.values.forEach { if (!it.validate()) valid = false }
+        // A submit must validate one coherent version, not a mixture across awaits.
+        return valid && registered == typedFields.toMap() &&
+            revisions.all { (name, revision) -> registered.getValue(name).revision == revision } &&
+            legacyValues == fields.mapValues { it.value.value }
+    }
+    fun getTypedValues(): Map<String, Any?> = fields.mapValues { it.value.value } + typedFields.mapValues { it.value.value }
+    fun setFieldErrors(errors: Map<String, String?>) {
+        errors.forEach { (name, error) -> typedFields[name]?.setServerError(error) ?: fields[name]?.let { it.error = error } }
+    }
 
     fun registerField(name: String, state: FormFieldState) {
         fields[name] = state
@@ -154,6 +176,7 @@ class FormState {
 
     fun reset() {
         fields.values.forEach { it.reset() }
+        typedFields.values.forEach { it.reset() }
     }
 
     fun getValues(): Map<String, String> {
@@ -265,7 +288,7 @@ fun FormItem(
         ) {
             FieldLabel(text = label, required = required, invalid = invalid, enabled = enabled)
             Column(modifier = Modifier.fillMaxWidth()) {
-                CompositionLocalProvider(LocalControlLabel provides label) { content() }
+                CompositionLocalProvider(LocalControlLabel provides label, LocalFieldErrorOwned provides (error != null)) { content() }
                 FormItemSupportingText(error = error, description = description, enabled = enabled)
             }
         }
@@ -290,7 +313,7 @@ fun FormItem(
             Spacer(modifier = Modifier.width(Spacing.lg))
 
             Column(modifier = Modifier.weight(1f)) {
-                CompositionLocalProvider(LocalControlLabel provides label) { content() }
+                CompositionLocalProvider(LocalControlLabel provides label, LocalFieldErrorOwned provides (error != null)) { content() }
                 FormItemSupportingText(error = error, description = description, enabled = enabled)
             }
         }

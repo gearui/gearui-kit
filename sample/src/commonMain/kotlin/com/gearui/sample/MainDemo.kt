@@ -51,7 +51,7 @@ enum class AppPage {
  * GearUI sample main page
  *
  * - HomePage: the component index
- * - ExamplePages: 62 standalone component pages
+ * - ExamplePages: standalone pages from the component registry
  * - SettingsPage: settings
  * - NavigationManager: navigation
  *

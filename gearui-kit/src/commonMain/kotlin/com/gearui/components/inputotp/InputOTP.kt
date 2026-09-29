@@ -1,6 +1,7 @@
 package com.gearui.components.inputotp
 
 import com.gearui.i18n.I18n
+import com.gearui.components.input.numericKeyboardType
 import com.gearui.foundation.field.fieldName
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -122,13 +123,13 @@ fun InputOTP(
             singleLine = true,
             textStyle = TextStyle(color = Color.Transparent),
             cursorBrush = SolidColor(Color.Transparent),
-            keyboardOptions = KeyboardOptions(keyboardType = if (numeric) KeyboardType.Number else KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(keyboardType = if (numeric) numericKeyboardType() else KeyboardType.Text),
             modifier = Modifier
                 .matchParentSize()
                 .fieldName(contentDescription ?: I18n.strings.field.verificationCode)
                 .keyboardDismissExempt()
                 .maxLength(length)
-                .then(if (numeric) Modifier.setProp("keyboardType", "number") else Modifier)
+                .then(if (numeric) Modifier.setProp("keyboardType", if (numericKeyboardType() == KeyboardType.Number) "number" else "text") else Modifier)
                 .focusRequester(requester)
                 .onFocusChanged { focused = it.isFocused },
         )

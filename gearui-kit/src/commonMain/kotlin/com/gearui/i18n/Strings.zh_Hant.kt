@@ -65,6 +65,7 @@ val StringsZhHant = Strings(
         daySuffix = "日",
         hourSuffix = "時",
         minuteSuffix = "分",
+        secondSuffix = "秒",
         calendarYearMonthFormat = "{year}年{month}月",
         weekdaysShort = listOf("日", "一", "二", "三", "四", "五", "六"),
     ),

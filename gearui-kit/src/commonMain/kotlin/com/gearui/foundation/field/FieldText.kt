@@ -1,6 +1,7 @@
 package com.gearui.foundation.field
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
@@ -9,6 +10,12 @@ import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.alpha
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
+
+/** A composing field can own the one error line without removing the child's invalid appearance. */
+internal val LocalFieldErrorOwned = compositionLocalOf { false }
+
+internal fun fieldSupportingText(error: String?, helper: String?, parentOwnsError: Boolean): String? =
+    if (error != null && parentOwnsError) null else error ?: helper
 
 /**
  * The text parts of a field, after HeroUI Native `Label`, `Description` and `FieldError`.

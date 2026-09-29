@@ -3,6 +3,8 @@ package com.gearui.sample.examples.datepicker
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier
+import com.gearui.components.calendar.CalendarDate
+import com.gearui.components.picker.*
 import com.gearui.components.picker.DatePickerInput
 import com.gearui.foundation.layout.Spacing
 import com.gearui.components.picker.TimePickerInput
@@ -30,6 +32,16 @@ fun DatePickerExample(
         component = component,
         onBack = onBack
     ) {
+        ExampleSection("范围与过滤", "闰日、跨月、只允许工作日；空结果不可确认") {
+            var constrained by remember { mutableStateOf("2024-02-29") }
+            val bounds = remember { DatePickerConstraints(CalendarDate(2024, 2, 28), CalendarDate(2024, 3, 5), filter = { it.day != 2 && it.day != 3 }) }
+            DatePickerInput(constrained, { constrained = it }, label = "允许的日期", constraints = bounds, variant = FieldVariant.SECONDARY)
+            val empty = remember { DatePickerConstraints(filter = { false }) }
+            DatePickerInput("", {}, label = "过滤后无结果", constraints = empty, variant = FieldVariant.SECONDARY)
+            var stepped by remember { mutableStateOf("09:30") }
+            val clock = remember { TimePickerConstraints(PickerTime(9, 10), PickerTime(10), minuteStep = 15) }
+            TimePickerInput(stepped, { stepped = it }, label = "十五分钟间隔", constraints = clock, variant = FieldVariant.SECONDARY)
+        }
         // Date picker
         ExampleSection(
             title = "日期选择器",

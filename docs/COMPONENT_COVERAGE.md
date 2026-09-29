@@ -2,172 +2,134 @@
 
 [English](./COMPONENT_COVERAGE.md) | [简体中文](./COMPONENT_COVERAGE.zh-Hans.md)
 
-The complete GearUI component inventory, organized by category, with coverage
-against the HeroUI Native component set noted per entry. This is the
-authoritative list of what the kit ships; the same list drives the generated
-README index (`ComponentConfig.kt` → `gen_component_index.py`, CI-checked), so
-the two never drift.
+Updated 2026-09-30. **85 public index entries**, **76 component directories**, **93 sample routes**. Runtime/diagnostic pages and the typed-form demo are not extra components. Multiple entry points in a family are not separate directories.
 
-Scale today: **64 component directories**, a set of foundation primitives
-(Text, Icon, Surface, BasicTextField, LoadingIndicator, List, ScrollView,
-GearLazyColumn) and **4 runtime pieces** (Navigator, TabHost, PageScaffold,
-SwipeBack). The public index lists **71 entries across six categories**.
+The registry is the inventory source; README generation is CI-checked. This document records current coverage, not visual or interaction acceptance. The reference column means an open-source HeroUI Native family exists, not API or pixel equivalence. Some GearUI families deliberately extend the reference.
 
-Coverage at a glance: of the 71 entries, **36 also exist in HeroUI Native**
-and **35 are GearUI-only** (mobile capabilities HeroUI does not ship). Every
-entry is a library component; nothing in the index exists only in the sample.
+## 1. Current Inventory
 
-Legend: ✅ also in HeroUI Native · ◆ GearUI-only.
+### Basic (10)
 
-## 1. Full Component Inventory
-
-### Basic (9)
-
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `Button` | Trigger actions | ✅ |
-| `Icon` | Icon display (Phosphor registry) | ◆ |
-| `Link` | Link and LinkButton | ✅ |
-| `CloseButton` | Unified dismiss button | ✅ |
-| `PressableFeedback` | Scale and highlight for any tappable area | ✅ |
-| `Text` | Text display | ✅ |
-| `Tag` | Marking and classification | ✅ |
-| `Badge` | Message count indicator | ◆ |
-| `Divider` | Content separator | ✅ |
+| `Kbd` | Kbd | GearUI extension |
+| `Button` | Trigger actions | HeroUI Native |
+| `Icon` | Icon display | GearUI extension |
+| `Link` | Link and LinkButton | GearUI extension |
+| `CloseButton` | Unified dismiss button | HeroUI Native |
+| `PressableFeedback` | Scale and highlight for any tappable area | HeroUI Native |
+| `Text` | Text display | HeroUI Native |
+| `Tag` | Marking and classification | HeroUI Native |
+| `Badge` | Message count indicator | GearUI extension |
+| `Divider` | Content separator | HeroUI Native |
 
-### Form (19)
+### Form (24)
 
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `Input` | Text input | ✅ |
-| `Checkbox` | Multiple selection | ✅ |
-| `Radio` | Single selection | ✅ |
-| `InputOTP` | One-time code input | ✅ |
-| `ComboBox` | Filterable suggestions | ◆ |
-| `NumberField` | Typed and stepped number | ◆ |
-| `ToggleButton` | Toggle and button group | ◆ |
-| `InputGroup` | Field with attached blocks | ✅ |
-| `Switch` | Toggle switch | ✅ |
-| `Slider` | Value selection | ✅ |
-| `Stepper` | Number stepper | ◆ |
-| `Textarea` | Multiline text input | ✅ |
-| `Rate` | Rating | ◆ |
-| `Select` | Dropdown selector | ✅ |
-| `Picker` | Multi-column wheel picker | ◆ |
-| `DatePicker` | Date and time picker | ◆ |
-| `Upload` | File upload (presentation) | ◆ |
-| `Form` | Form container | ◆ |
-| `Cascader` | Cascade selector | ◆ |
+| `ListBox` | ListBox | GearUI extension |
+| `YearPicker` | YearPicker | GearUI extension |
+| `DateField` | DateField | GearUI extension |
+| `ColorPicker` | ColorPicker | GearUI extension |
+| `Input` | Text input | HeroUI Native |
+| `Checkbox` | Multiple selection | HeroUI Native |
+| `AgreementCheckbox` | Terms and privacy consent | HeroUI Native |
+| `Radio` | Single selection | HeroUI Native |
+| `InputOTP` | One-time code input | HeroUI Native |
+| `ComboBox` | Filterable suggestions | GearUI extension |
+| `NumberField` | Typed and stepped number | GearUI extension |
+| `ToggleButton` | Toggle and button group | HeroUI Native |
+| `InputGroup` | Field with attached blocks | HeroUI Native |
+| `Switch` | Toggle switch | HeroUI Native |
+| `Slider` | Value selection | HeroUI Native |
+| `Stepper` | Number stepper | GearUI extension |
+| `Textarea` | Multiline text input | HeroUI Native |
+| `Rate` | Rating | GearUI extension |
+| `Select` | Dropdown selector | HeroUI Native |
+| `Picker` | Multi-column picker | GearUI extension |
+| `DatePicker` | Date & time picker | GearUI extension |
+| `Upload` | File upload | GearUI extension |
+| `Form` | Form container | HeroUI Native |
+| `Cascader` | Cascade selector | GearUI extension |
 
-### Navigation (6)
+### Navigation (9)
 
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `NavBar` | Page navigation bar | ◆ |
-| `BottomNavBar` | App bottom navigation | ◆ |
-| `Tabs` | Content switching | ✅ |
-| `Drawer` | Slide drawer | ◆ |
-| `Steps` | Step indicator | ◆ |
-| `Segmented` | Segmented control | ✅ |
+| `Toolbar` | Toolbar | GearUI extension |
+| `SubMenu` | SubMenu | GearUI extension |
+| `NavBar` | Page navigation bar | GearUI extension |
+| `BottomNavBar` | App bottom navigation | GearUI extension |
+| `Tabs` | Content switching | HeroUI Native |
+| `Drawer` | Slide drawer | GearUI extension |
+| `Steps` | Step indicator | GearUI extension |
+| `IndexBar` | Alphabet index | GearUI extension |
+| `Segmented` | Segmented control | GearUI extension |
 
-### Data display (16)
+### Data Display (20)
 
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `List` | List display | ✅ |
-| `Card` | Card container | ✅ |
-| `Cell` | List cell component | ✅ |
-| `CellGroup` | Grouped list rows | ✅ |
-| `Table` | Data table | ◆ |
-| `Image` | Image display | ◆ |
-| `ImageViewer` | Image preview | ◆ |
-| `Avatar` | User avatar | ✅ |
-| `ScrollShadow` | Fades scrollable edges | ✅ |
-| `Collapse` | Content collapse / accordion | ✅ |
-| `Progress` | Linear and circular progress | ◆ |
-| `Empty` | Empty state | ◆ |
-| `Skeleton` | Loading placeholder | ✅ |
-| `Timeline` | Timeline display | ◆ |
-| `Calendar` | Calendar display | ◆ |
-| `Watermark` | Page watermark | ◆ |
+| `Meter` | Meter | GearUI extension |
+| `User` | User | GearUI extension |
+| `Code` | Code | GearUI extension |
+| `List` | List display | GearUI extension |
+| `Card` | Card container | HeroUI Native |
+| `Cell` | List cell component | HeroUI Native |
+| `CellGroup` | Grouped list rows | GearUI extension |
+| `Table` | Data table | GearUI extension |
+| `Image` | Image display | GearUI extension |
+| `ImageViewer` | Image preview | GearUI extension |
+| `Avatar` | User avatar | HeroUI Native |
+| `ScrollShadow` | Fades scrollable edges | HeroUI Native |
+| `Collapse` | Content collapse | HeroUI Native |
+| `Progress` | Progress display | GearUI extension |
+| `Empty` | Empty state | GearUI extension |
+| `Skeleton` | Loading placeholder | HeroUI Native |
+| `Timeline` | Timeline display | GearUI extension |
+| `Calendar` | Calendar display | GearUI extension |
+| `Format` | Compact numbers, relative time, lunar | GearUI extension |
+| `Watermark` | Page watermark | GearUI extension |
 
 ### Feedback (15)
 
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `SwipeCell` | Swipeable cell | ◆ |
-| `ActionSheet` | Bottom action sheet | ◆ |
-| `Toast` | Message toast | ✅ |
-| `Dialog` | Modal dialog | ✅ |
-| `Tooltip` | Tooltip | ◆ |
-| `ContextMenu` | Context menu | ✅ |
-| `Loading` | Loading state / spinner | ✅ |
-| `Alert` | Inline status message | ✅ |
-| `NoticeBar` | Scrolling announcement | ◆ |
-| `Notification` | Global notification | ✅ |
-| `Snackbar` | Bottom message | ✅ |
-| `Popup` | Popup content | ◆ |
-| `Popover` | Popover tooltip | ✅ |
-| `Result` | Operation result | ◆ |
-| `Tour` | Feature guide | ◆ |
+| `SwipeCell` | Swipeable cell | GearUI extension |
+| `ActionSheet` | Bottom action sheet | GearUI extension |
+| `Toast` | Message toast | HeroUI Native |
+| `Dialog` | Modal dialog | HeroUI Native |
+| `Tooltip` | Tooltip | GearUI extension |
+| `ContextMenu` | Context menu | GearUI extension |
+| `Loading` | Loading state | HeroUI Native |
+| `Alert` | Inline status message | HeroUI Native |
+| `NoticeBar` | Scrolling announcement | GearUI extension |
+| `Notification` | Global notification | HeroUI Native |
+| `Snackbar` | Bottom message | GearUI extension |
+| `Popup` | Popup content | GearUI extension |
+| `Popover` | Popover tooltip | HeroUI Native |
+| `Result` | Operation result | GearUI extension |
+| `Tour` | Feature guide | GearUI extension |
 
-### Layout (6)
+### Layout (7)
 
-| Component | Purpose | Coverage |
+| Entry | Purpose | Reference |
 | --- | --- | --- |
-| `Grid` | Grid layout | ◆ |
-| `Swiper` | Content carousel | ◆ |
-| `SearchBar` | Search input | ✅ |
-| `PullRefresh` | Pull to refresh a list | ◆ |
-| `BottomSheet` | Bottom sheet | ✅ |
-| `BackTop` | Back to top | ◆ |
+| `Grid` | Grid layout | GearUI extension |
+| `Swiper` | Content carousel | GearUI extension |
+| `SearchBar` | Search input | GearUI extension |
+| `PullRefresh` | Pull to refresh a list | GearUI extension |
+| `LoadMore` | Load the next page of a list | GearUI extension |
+| `BottomSheet` | Bottom sheet | HeroUI Native |
+| `BackTop` | Back to top | GearUI extension |
 
-## 2. GearUI-Only Strengths
+## 2. beta7 Implementation Status
 
-The 35 GearUI-only entries are the kit's mobile-first depth — capabilities
-neither HeroUI library ships, all rendered on GearUI tokens:
+Stable-value Picker, cancellable Cascader loading, constrained DatePicker/TimePicker, typed async forms, exact-decimal NumberField and editable Stepper are implemented with production-wired tests. ListBox, YearPicker, DateField/TimeField, Toolbar, SubMenu, Kbd, ColorPicker family, Meter, User and Code/Snippet have public APIs and sample routes. IndexBar, AgreementCheckbox, LoadMore and locale formatting were introduced in the preceding beta7 work.
 
-- **Navigation runtime**: Navigator (a real page stack), SwipeBack,
-  PageScaffold, TabHost with keep-alive, NavBar, BottomNavBar, Steps,
-  BackTop, Drawer. HeroUI relies on
-  external routers and has no stacked-navigation runtime.
-- **Pickers and fields**: Picker (wheel), Cascader,
-  DatePicker, NumberField, Rate, Stepper, ComboBox, Upload, Form.
-- **Overlays**: ActionSheet, Popup, Tooltip, Tour.
-- **Data display and feedback**: Table, Image, ImageViewer, Timeline,
-  Grid, Swiper, Watermark, SwipeCell, Badge, Empty, Result, Progress,
-  NoticeBar, PullRefresh.
-- **Icon set**: a complete Phosphor icon registry; HeroUI Native ships none.
+## 3. Acceptance Still Required
 
-**Removed before 1.0.** Transfer, Tree, TreeSelect, Pagination, Anchor,
-NavigationMenu and RadioCardGroup were desktop and web patterns — a dual-list
-transfer, a document tree, page numbers, a doc-site anchor rail, a top menu
-bar — with no counterpart in HeroUI Native or iOS and no user in the products
-built on the kit. Breadcrumb and Sidebar only ever existed in the sample, and
-FAB, Message and DropdownMenu were Button, Snackbar and Select under another
-name; all five left the index. A smaller set held to the standard beats a
-longer list that is not.
-
-## 3. Gaps And Priorities
-
-All P1 gaps were filled on 2026-09-20 (PressableFeedback, CloseButton,
-Link/LinkButton, field text primitives, Alert, InputOTP, ComboBox,
-PullRefresh, SwitchGroup, TagGroup, ScrollShadow, NumberField,
-ToggleButton/ButtonGroup, AvatarGroup).
-
-| Capability | Priority | Note |
-| --- | --- | --- |
-| List box exposed standalone | P2 | Option list currently internal to Select |
-| Year picker | P2 | |
-| Date/time segmented fields, localized formats | P2 | Wheel entry only today |
-| Toolbar | P2 | NavBar actions partially cover |
-| Sub-menu | P2 | Nested menu not shipped |
-| Kbd | P3 | Desktop/Web use |
-| Color picker family | P3 | Low use in mobile products |
-| Meter, User, Code/Snippet | P3 | On demand |
-| Internationalized date formats | 1.0 track | Gregorian-first today |
-| Accessibility state model catch-up | 1.0 track | Largest remaining gap |
-| RTL | unverified | Typed packs exist; layout direction not accepted |
+Implementation is not release approval. Full device accessibility, all-page visual review, maximum font size, RTL, real-device iOS performance and HarmonyOS runtime remain gates in [QUALITY_STATUS.md §7](./QUALITY_STATUS.md). [BETA7_ACCEPTANCE.md](./BETA7_ACCEPTANCE.md) records evidence and limitations. No feature from the approved plan is silently dropped.
 
 ## 4. Convergence Rules
 

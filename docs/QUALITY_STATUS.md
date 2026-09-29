@@ -203,7 +203,7 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
 | A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☐ |
-| A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ☐ |
+| A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ◐ Android downstream compiles passed; iOS requires missing Rust static archives (see BETA7_ACCEPTANCE) |
 | A3 | Commit the Ant Design comparison as the source of group B | Commit | ☑ ca32b70; §9.1 implementation status added after 1abe521 |
 
 ### B. Capabilities (from the Ant comparison §5, §9)
@@ -212,33 +212,33 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 | --- | --- | --- | --- |
 | B1 | Consent row: inline tappable link spans in Text; an unchecked-by-default Checkbox; tapping a link opens it and never ticks the box; reachable by screen readers | Unit tests + sample page + taps on both platforms | ☑ `LinkPiecesTest` (7); sample `agreement`; tapped on iOS and an Android device: a link only opens its document, the rest of the sentence toggles the box; iOS screen reader reads the checkbox as the sentence plus state and each link as its own button. Kuikly delivers no `LinkAnnotation` taps and no character positions, so `LinkedText` lays the sentence out per character |
 | B2 | LoadMore list footer: idle/loading/error/exhausted, no repeat requests while parked at the bottom, retry on failure, strings in language packs | State tests + sample order list + on-device scrolling | ☑ `LoadMoreTest` (6: loads only when idle and the footer is visible, no repeat while loading, a failure waits for the user, an appended page that pushes the footer off screen does not chain); sample `loadmore`; failed state on iOS; retry loads page 3 on an Android device |
-| B3 | Input formatting layer: raw value, display value and caret mapping kept apart; phone 3-4-4, bank-card groups of four, ID-card trailing X | Pure-function tests + on-device paste, mid-string edits, Chinese IME | ◐ `InputFormatTest` (11: grouping, pasted +86/0086, backspace over a separator, caret after a middle insert, leading zeros, ID-card X and checksum); 11 digits typed key by key on iOS. To do: paste and middle edits under a Chinese IME on devices. Known limit: a scripted burst of keys can drop characters across Kuikly's asynchronous bridge; human typing, paste and autofill do not |
-| B4 | Calendar first day of week from the language pack; Monday for Simplified/Traditional Chinese | Tests + screenshots | ☑ `FormatStringsTest`; the iOS calendar starts on Monday in Simplified Chinese. Maintainer decision (2026-09-29): Traditional Chinese follows Hong Kong and starts on Sunday (`Strings.zh_Hant.format.firstDayOfWeek = 0`) |
+| B3 | Input formatting layer: raw value, display value and caret mapping kept apart; phone 3-4-4, bank-card groups of four, ID-card trailing X | Pure-function tests + on-device paste, mid-string edits, Chinese IME | ◐ IME draft handling wired in; physical-device Chinese IME and paste acceptance pending |
+| B4 | Calendar first day of week from the language pack; Monday for Simplified Chinese; Sunday for Traditional Chinese (Hong Kong) | Tests + screenshots | ☑ Simplified Monday, Traditional Chinese Sunday per Hong Kong convention; FormatStringsTest and iOS calendar evidence |
 | B5 | Compact numbers (万/亿 by language pack) and Chinese relative time in the i18n formatting layer | Tests: boundaries, four languages | ☑ `FormatStringsTest` (万/亿 boundaries, rounding down, negatives, K/M/B, six relative-time cases including a year boundary and a fast clock); the kit ships three packs (Simplified, Traditional, English), not four |
-| B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ◐ Cascader done: `CascaderLevelTest` (6: leaves, unloaded/loading/failed, same-named nodes told apart by value, labels through loaded levels); on iOS a district fills in 浙江省 / 杭州市 / 西湖区, and an async level fails once then loads on retry. Not done: Picker with stable IDs separate from labels |
-| B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ☐ |
-| B8 | Form: typed field values, dirty/touched/validating, trigger policy, versioned async validation, server-side field errors | Tests: slow result never overwrites a newer value, a left field never writes back + sample form | ☐ |
-| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); verify and complete Stepper `disableInput` | Tests + device | ☐ |
+| B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ◐ stable-value Picker and cancellable Cascader implemented and unit-tested; new wheel lifecycle device acceptance pending |
+| B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ◐ bounds, precision, filters and time steps implemented with edge tests; device wheel acceptance pending |
+| B8 | Form: typed field values, dirty/touched/validating, trigger policy, versioned async validation, server-side field errors | Tests: slow result never overwrites a newer value, a left field never writes back + sample form | ◐ typed async form tests passed; Web stale-result, submit and server-error paths exercised; native interaction pending |
+| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); verify and complete Stepper `disableInput` | Tests + device | ◐ exact decimal and editable Stepper implemented, arithmetic tested; device draft/edit acceptance pending |
 
 ### C. Component coverage (from COMPONENT_COVERAGE §3)
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ◐ IndexBar and localized formats (万/亿, relative time, lunar calendar) done with sample pages; ListBox, YearPicker, segmented date/time fields, Toolbar and SubMenu not started |
-| C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ☐ |
-| C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ☐ |
+| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ◐ all planned P2 entries in API, registry and sample; full two-device visual acceptance pending |
+| C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ◐ all planned P3 entries in API, registry and sample; full two-device visual acceptance pending |
+| C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ◐ inventory, README, language packs and API baselines refreshed; final guard/CI evidence pending |
 
 ### D. Runtime acceptance
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
 | D1 | Screen readers: TalkBack on an Android device across every page with the spoken text recorded; iOS audited with XCUITest `performAccessibilityAudit` on every page, VoiceOver spot checks on a device for the key families | TalkBack logs, audit report, issue list and fixes | ☐ |
-| D2 | Visual: every sample page × light/dark × Android device and iOS, archived and judged against VISUAL_SPEC page by page | Screenshot set + per-page verdict + deviations | ☐ |
+| D2 | Visual: every sample page × light/dark × Android device and iOS, archived and judged against VISUAL_SPEC page by page | Screenshot set + per-page verdict + deviations | ◐ first-viewport light/dark capture in progress; page-by-page verdict pending |
 | D3 | Large text: Android font scale 1.3 and maximum, iOS largest Dynamic Type, truncation/overflow on every page | Screenshots + issues and fixes | ☐ |
 | D4 | RTL: Android forced RTL layout direction, page by page | Screenshots + issues | ☐ |
 | D5 | Performance on an iOS device (iPhone 16 Pro Max): cold start, theme switch, scrolling against the §1 budgets | `scripts/perf` output | ☐ |
-| D6 | Web: browser automation across pages, including viewport resizing | Script and results | ☐ |
-| D7 | HarmonyOS: sample on the DevEco emulator across every page; device acceptance | Emulator screenshots; device is externally blocked | ☐ |
+| D6 | Web: browser automation across pages, including viewport resizing | Script and results | ◐ selected Web form flows and phone-width layout exercised; all-route/resize acceptance pending |
+| D7 | HarmonyOS: sample on the DevEco emulator across every page; device acceptance | Emulator screenshots; device is externally blocked | ⛔ shared library and unsigned HAP build; signed emulator and device runtime unavailable |
 | D8 | Chinese ROM matrix: Xiaomi covered; Huawei, OPPO, vivo | Screenshots per device | ⛔ no devices |
 
 ### E. Known limits

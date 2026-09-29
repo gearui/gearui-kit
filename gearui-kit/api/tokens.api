@@ -373,6 +373,9 @@
   geometry.checkboxIndicatorTravel = {"$type":"dimension","$value":{"unit":"px","value":4}}
   geometry.closeButtonIcon = {"$type":"dimension","$value":{"unit":"px","value":18}}
   geometry.closeButtonSize = {"$type":"dimension","$value":{"unit":"px","value":32}}
+  geometry.colorAreaHeight = {"$type":"dimension","$value":{"unit":"px","value":192}}
+  geometry.colorSwatchSize = {"$type":"dimension","$value":{"unit":"px","value":40}}
+  geometry.colorThumbSize = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.controlExtraSmall = {"$type":"dimension","$value":{"unit":"px","value":28}}
   geometry.controlLarge = {"$type":"dimension","$value":{"unit":"px","value":56}}
   geometry.controlMedium = {"$type":"dimension","$value":{"unit":"px","value":48}}

@@ -1,8 +1,7 @@
 package com.gearui.sample.examples.format
 
 import androidx.compose.runtime.Composable
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
+import com.tencent.kuikly.core.datetime.DateTime
 import androidx.compose.runtime.remember
 import com.gearui.components.calendar.CalendarDate
 import com.gearui.components.cell.Cell
@@ -26,7 +25,6 @@ private const val Day = 24 * 60 * Minute
  * a time is said, which day a week starts on, and the lunar calendar's names.
  * Switch the sample's language to see the same values in English or Traditional Chinese.
  */
-@OptIn(ExperimentalTime::class)
 @Composable
 fun FormatExample(
     component: ComponentInfo,
@@ -34,7 +32,7 @@ fun FormatExample(
 ) {
     val format = I18n.strings.format
     val lunar = I18n.strings.lunar
-    val now = remember { Clock.System.now().toEpochMilliseconds() }
+    val now = remember { DateTime.currentTimestamp() }
 
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(

@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameNanos
 import com.gearui.components.loading.Loading
 import com.gearui.components.loading.LoadingLayout
 import com.gearui.components.loading.LoadingSize
@@ -84,8 +85,11 @@ fun LazyListScope.loadMoreItem(
             if (status != LoadMoreStatus.Idle) return@LaunchedEffect
             // Wait for a layout in which the footer is actually on screen: the frame that
             // appends a page can still hold the footer before measuring pushes it out.
-            snapshotFlow { listState.footerVisible() }.first { it }
-            load()
+            requestLoadMoreAfterLayout(
+                awaitLayout = { withFrameNanos { }; withFrameNanos { } },
+                awaitVisible = { snapshotFlow { listState.footerVisible() }.first { it } },
+                request = { load() },
+            )
         }
         LoadMoreFooter(status = status, onRetry = { load() }, modifier = modifier)
     }
@@ -147,3 +151,14 @@ internal fun footerVisible(lastVisibleIndex: Int?, totalItems: Int): Boolean =
 /** Whether the footer should ask for the next page now. */
 internal fun shouldLoadMore(status: LoadMoreStatus, lastVisibleIndex: Int?, totalItems: Int): Boolean =
     status == LoadMoreStatus.Idle && footerVisible(lastVisibleIndex, totalItems)
+
+/** Do not inspect the previous page's layout before the appended page has been measured. */
+internal suspend fun requestLoadMoreAfterLayout(
+    awaitLayout: suspend () -> Unit,
+    awaitVisible: suspend () -> Unit,
+    request: () -> Unit,
+) {
+    awaitLayout()
+    awaitVisible()
+    request()
+}

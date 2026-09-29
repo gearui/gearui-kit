@@ -172,7 +172,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
 | A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☐ |
-| A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☐ |
+| A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ◐ 下游 Android 编译通过；iOS 缺 Rust 静态库，详见 BETA7_ACCEPTANCE |
 | A3 | Ant 对标文档入库，作为 B 组能力项来源 | 提交 | ☑ ca32b70；§9.1 实施状态随 1abe521 后续提交补充 |
 
 ### B. 能力补强（来源：Ant 对标 §5、§9）
@@ -181,33 +181,33 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | --- | --- | --- | --- |
 | B1 | 协议同意行：Text 支持内联可点链接片段；默认不勾选的 Checkbox；点链接只打开链接、不勾选；读屏可达 | 单测 + sample 页 + 双端真机点击验证 | ☑ `LinkPiecesTest` 7 例；sample `agreement`；iOS 与 Android 真机点击：点《用户协议》只弹出打开、勾选不变，点其余文字切换勾选；iOS 读屏：勾选框读整句加状态，每个链接为独立按钮。注：Kuikly 不分发 `LinkAnnotation` 点击、不给字符位置，故 `LinkedText` 逐字排版 |
 | B2 | LoadMore 列表尾：idle/loading/error/exhausted，停留底部不连发，失败可重试，文案进语言包 | 状态单测 + sample 订单列表 + 真机滚动 | ☑ `LoadMoreTest` 6 例（仅空闲且尾部可见才请求、加载中不重发、失败等用户、追加页推出尾部不连发）；sample `loadmore`；iOS 截图失败态；Android 真机点重试后第 3 页加载 |
-| B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ◐ `InputFormatTest` 11 例（分组、+86/0086 粘贴、退格删分隔符、中间插入光标、前导零、身份证 X 与校验位）；iOS 逐字输入 11 位完整。待测：真机粘贴与中文输入法下的中间插删。已知限制：Kuikly 异步桥下脚本级连击会丢字，人手输入、粘贴、自动填充不受影响 |
-| B4 | Calendar 周起始由语言包决定，简体/繁体中文默认周一 | 单测 + 截图 | ☑ `FormatStringsTest`；iOS 日历截图简体周一起始。维护者决定（2026-09-29）：繁体中文按香港惯例从周日开始（`Strings.zh_Hant.format.firstDayOfWeek = 0`） |
+| B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ◐ 已接入 IME 组合态草稿处理；中文输入法真机粘贴/中间编辑待验 |
+| B4 | Calendar 周起始由语言包决定，简体默认周一、繁体按香港惯例默认周日 | 单测 + 截图 | ☑ 简体周一、繁体按香港惯例周日；FormatStringsTest 与 iOS 日历证据 |
 | B5 | 数字缩写（万/亿，随语言包）与中文相对时间，放在 i18n 格式化层 | 单测（边界值、四语言） | ☑ `FormatStringsTest`（万/亿边界、向下取整、负数、K/M/B、相对时间六档含跨年与时钟超前）；语言包现为简体、繁体、英文三种，没有第四种 |
-| B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ◐ Cascader 已完成：`CascaderLevelTest` 6 例（叶子、未加载/加载中/失败、同名节点按 value 区分、已加载层标签）；iOS 真机选到区回填「浙江省 / 杭州市 / 西湖区」、异步首次失败后重试加载城市。未做：Picker 稳定 ID 与 label 分离 |
-| B7 | DatePicker 最小/最大日期、年/月/日与时间精度、分钟步长与过滤 | 单测（闰日、月末、跨年、过滤后空列）+ 真机 | ☐ |
-| B8 | Form：类型化字段值、dirty/touched/validating、触发策略、异步校验版本保护、服务端字段错误注入 | 单测（慢请求不覆盖新值、离开组合不写回）+ sample 表单 | ☐ |
-| B9 | NumberField 精确十进制（对称 parser/formatter、暂态输入）；Stepper `disableInput` 核实并补齐 | 单测 + 真机 | ☐ |
+| B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ◐ 稳定值 Picker 和可取消 Cascader 已实现并有单测；新滚轮真机交互待验 |
+| B7 | DatePicker 最小/最大日期、年/月/日与时间精度、分钟步长与过滤 | 单测（闰日、月末、跨年、过滤后空列）+ 真机 | ◐ 上下界、精度、过滤和步长已实现并有边界测试；真机滚轮待验 |
+| B8 | Form：类型化字段值、dirty/touched/validating、触发策略、异步校验版本保护、服务端字段错误注入 | 单测（慢请求不覆盖新值、离开组合不写回）+ sample 表单 | ◐ 类型化异步表单有测试；Web 已验旧结果、提交、服务端错误；原生交互待验 |
+| B9 | NumberField 精确十进制（对称 parser/formatter、暂态输入）；Stepper `disableInput` 核实并补齐 | 单测 + 真机 | ◐ 精确十进制和可编辑 Stepper 已实现，算术有测试；真机草稿输入待验 |
 
 ### C. 组件覆盖（来源：COMPONENT_COVERAGE §3）
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| C1 | P2：独立 ListBox、YearPicker、日期/时间分段字段与本地化格式、Toolbar、SubMenu、IndexBar | 每个组件：API 基线、单测、sample 页、双端真机截图 | ◐ IndexBar 与本地化格式（万亿、相对时间、农历）已完成并有 sample 页；ListBox、YearPicker、日期/时间分段字段、Toolbar、SubMenu 未做 |
-| C2 | P3：Kbd、ColorPicker 家族、Meter、User、Code/Snippet | 同上 | ☐ |
-| C3 | 注册表、README 索引、COMPONENT_COVERAGE、语言包、API 基线同步 | 守卫全绿 | ☐ |
+| C1 | P2：独立 ListBox、YearPicker、日期/时间分段字段与本地化格式、Toolbar、SubMenu、IndexBar | 每个组件：API 基线、单测、sample 页、双端真机截图 | ◐ 全部规划 P2 入口已进 API、注册表和 sample；双端视觉逐页待验 |
+| C2 | P3：Kbd、ColorPicker 家族、Meter、User、Code/Snippet | 同上 | ◐ 全部规划 P3 入口已进 API、注册表和 sample；双端视觉逐页待验 |
+| C3 | 注册表、README 索引、COMPONENT_COVERAGE、语言包、API 基线同步 | 守卫全绿 | ◐ 清单、README、语言包、API 基线已刷新；最终守卫/远程 CI 待验 |
 
 ### D. 运行时验收
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
 | D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ☐ |
-| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ☐ |
+| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ◐ 亮暗首屏截图归档中；逐页判定未完成 |
 | D3 | 大字号/适老化：Android 字号 1.3 与最大、iOS 最大动态字号，全部页截断/溢出 | 截图 + 问题清单与修复 | ☐ |
 | D4 | RTL：Android 强制 RTL 布局方向逐页检查 | 截图 + 问题清单 | ☐ |
 | D5 | 性能：iOS 真机（iPhone 16 Pro Max）冷启动、切主题、滚动，对照 §1 预算 | `scripts/perf` 输出 | ☐ |
-| D6 | Web：浏览器自动化逐页交互与 viewport 缩放 | 脚本与结果 | ☐ |
-| D7 | HarmonyOS：DevEco 模拟器运行 sample 全部页；真机验收 | 模拟器截图；真机为外部阻断 | ☐ |
+| D6 | Web：浏览器自动化逐页交互与 viewport 缩放 | 脚本与结果 | ◐ Web 部分表单链路和手机宽度已验；全页/缩放待验 |
+| D7 | HarmonyOS：DevEco 模拟器运行 sample 全部页；真机验收 | 模拟器截图；真机为外部阻断 | ⛔ 共享库及 unsigned HAP 构建通过；缺签名模拟器与真机运行环境 |
 | D8 | 国产 ROM 矩阵：小米已有；华为、OPPO、vivo | 各机型截图 | ⛔ 缺设备 |
 
 ### E. 已知限制处置

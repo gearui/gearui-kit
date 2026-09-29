@@ -9,7 +9,7 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Row
-import com.tencent.kuikly.compose.foundation.layout.offset
+import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.size
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.ui.Alignment
@@ -46,14 +46,14 @@ fun AvatarGroup(
     ringColor: com.tencent.kuikly.compose.ui.graphics.Color = Theme.colors.background,
     onClick: (() -> Unit)? = null,
 ) {
+    require(size > BorderWidth.thick * 2 && overlap >= com.gearui.foundation.layout.Spacing.none && overlap < size)
     val colors = Theme.colors
     val shown = items.take(max.coerceAtLeast(0))
     val remaining = items.size - shown.size
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        shown.forEachIndexed { index, item ->
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(-overlap), verticalAlignment = Alignment.CenterVertically) {
+        shown.forEach { item ->
             Box(
                 Modifier
-                    .offset(x = -overlap * index)
                     .size(size)
                     .clip(CircleShape)
                     .border(BorderWidth.thick, ringColor, CircleShape),
@@ -71,7 +71,6 @@ fun AvatarGroup(
         if (remaining > 0) {
             Box(
                 Modifier
-                    .offset(x = -overlap * shown.size)
                     .size(size)
                     .clip(CircleShape)
                     .border(BorderWidth.thick, ringColor, CircleShape)

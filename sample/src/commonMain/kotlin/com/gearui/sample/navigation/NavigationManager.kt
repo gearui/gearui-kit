@@ -13,6 +13,7 @@ import com.gearui.sample.examples.text.TextExample
 import com.gearui.sample.examples.tag.TagExample
 import com.gearui.sample.examples.badge.BadgeExample
 import com.gearui.sample.examples.divider.DividerExample
+import com.gearui.sample.examples.beta7.*
 import com.gearui.sample.examples.input.InputExample
 import com.gearui.sample.examples.checkbox.CheckboxExample
 import com.gearui.sample.examples.radio.RadioExample
@@ -125,6 +126,17 @@ object NavigationManager {
             "divider" -> DividerExample(component, onBack)
 
             // Form components (15)
+            "listbox" -> ListBoxExample(component, onBack)
+            "yearpicker" -> YearPickerExample(component, onBack)
+            "datefield" -> DateFieldExample(component, onBack)
+            "typed-form" -> TypedFormExample(component, onBack)
+            "toolbar" -> ToolbarExample(component, onBack)
+            "submenu" -> SubMenuExample(component, onBack)
+            "kbd" -> KbdExample(component, onBack)
+            "meter" -> MeterExample(component, onBack)
+            "user" -> UserExample(component, onBack)
+            "code" -> CodeExample(component, onBack)
+            "colorpicker" -> ColorPickerExample(component, onBack)
             "input" -> InputExample(component, onBack)
             "checkbox" -> CheckboxExample(component, onBack)
             "agreement" -> AgreementExample(component, onBack)

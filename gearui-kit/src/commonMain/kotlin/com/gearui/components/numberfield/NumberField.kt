@@ -1,6 +1,7 @@
 package com.gearui.components.numberfield
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +16,7 @@ import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.components.input.Input
 import com.gearui.components.input.InputSize
+import com.gearui.i18n.I18n
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.Row
@@ -56,12 +58,19 @@ fun NumberField(
     required: Boolean = false,
     format: (Double) -> String = { formatNumberFieldValue(it) },
 ) {
-    var text by remember(value) { mutableStateOf(value?.let(format) ?: "") }
+    require(min <= max && step.isFinite() && step > 0 && (value == null || value.isFinite()))
+    var text by remember { mutableStateOf(value?.let(format).orEmpty()) }
+    var editing by remember { mutableStateOf(false) }
+    var emitted by remember { mutableStateOf(value) }
+    LaunchedEffect(value, editing) {
+        if (!editing || value != emitted) text = value?.let(format).orEmpty()
+    }
     val canDecrease = enabled && (value ?: 0.0) - step >= min - EPSILON
     val canIncrease = enabled && (value ?: 0.0) + step <= max + EPSILON
 
     fun commit(next: Double?) {
         val clamped = next?.coerceIn(min, max)
+        emitted = clamped
         text = clamped?.let(format) ?: ""
         onValueChange(clamped)
     }
@@ -84,8 +93,8 @@ fun NumberField(
                     text = cleaned
                     val parsed = cleaned.toDoubleOrNull()
                     when {
-                        cleaned.isEmpty() -> onValueChange(null)
-                        parsed != null -> onValueChange(parsed.coerceIn(min, max))
+                        cleaned.isEmpty() -> { emitted = null; onValueChange(null) }
+                        parsed != null && parsed.isFinite() -> { emitted = parsed.coerceIn(min, max); onValueChange(emitted) }
                         // Half-typed input such as "-" or "1." stays on screen and commits nothing.
                         else -> Unit
                     }
@@ -95,9 +104,9 @@ fun NumberField(
                 variant = variant,
                 placeholder = placeholder,
                 size = InputSize.MEDIUM,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Decimal,
                 textAlign = TextAlign.Center,
-                onFocusChanged = { focused -> if (!focused) commit(text.toDoubleOrNull() ?: value) },
+                onFocusChanged = { focused -> editing = focused; if (!focused) commit(text.toDoubleOrNull()?.takeIf { it.isFinite() } ?: value) },
             )
             StepButton(Icons.plus, canIncrease) { commit(((value ?: 0.0) + step)) }
         }
@@ -111,7 +120,8 @@ fun NumberField(
 @Composable
 private fun StepButton(icon: String, enabled: Boolean, onClick: () -> Unit) {
     // A CloseButton is the icon-only tertiary button of the reference; only the glyph differs.
-    CloseButton(onClick = onClick, enabled = enabled, icon = icon)
+    CloseButton(onClick = onClick, enabled = enabled, icon = icon,
+        contentDescription = if (icon == Icons.minus) I18n.strings.common.remove else I18n.strings.common.add)
 }
 
 private const val EPSILON = 1e-9
@@ -123,7 +133,7 @@ internal fun sanitizeNumberInput(raw: String): String {
     val body = buildString {
         for (ch in raw) {
             when {
-                ch.isDigit() -> append(ch)
+                ch in '0'..'9' -> append(ch)
                 (ch == '.' || ch == ',') && !seenDot -> {
                     seenDot = true
                     append('.')

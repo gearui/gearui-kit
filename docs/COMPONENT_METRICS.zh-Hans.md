@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**177 / 216** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**180 / 219** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -106,6 +106,14 @@
 | --- | ---: | ---: | ---: | --- | --- |
 | `closeButtonIcon` | 18 | 18 | — | HeroUI |  |
 | `closeButtonSize` | 32 | 32 | — | HeroUI |  |
+
+## color
+
+| Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
+| --- | ---: | ---: | ---: | --- | --- |
+| `colorAreaHeight` | 192 | — | — | GearUI | Square saturation/value surface leaves room for hue and alpha controls on a phone. |
+| `colorSwatchSize` | 40 | — | — | GearUI | A color choice reuses the small control height and fits a wrapping row. |
+| `colorThumbSize` | 20 | — | — | GearUI | Color-area thumb remains readable without obscuring a large part of the selected color. |
 
 ## control
 

@@ -303,7 +303,7 @@ fun DecoratedSurface(
     // measured size recreates them, and so redraws them, whenever the surface resizes.
     var size by remember { mutableStateOf(IntSize.Zero) }
     Box(modifier.onSizeChanged { size = it }, propagateMinConstraints = true) {
-        key(size) {
+        key(size, shape, outer) {
         if (outer.isNotEmpty()) Canvas(
             Modifier.matchParentSize().layout { measurable, constraints ->
                 val pad = ceil(bleed.toPx()).toInt()
@@ -322,7 +322,7 @@ fun DecoratedSurface(
         ) { paintDecoration(shape, outer, bleed = bleed) }
         }
         Box(Modifier.clip(shape), propagateMinConstraints = true, content = content)
-        key(size) {
+        key(size, shape, inner, border) {
         if (inner.isNotEmpty() || border != null) Canvas(
             Modifier.matchParentSize()
         ) { paintDecoration(shape, inner, border) }

@@ -16,6 +16,17 @@ fun main() {
     // Set to false to allow text selection and image dragging.
     // KuiklyProcessor.preventDefaultDragAndSelect = false
 
+    // A soft keyboard changes viewport height, not width. Only real width changes
+    // (window resize / rotation) should remeasure the Kuikly page.
+    var previousWidth = window.innerWidth
+    window.addEventListener("resize", {
+        val width = window.innerWidth
+        if (width != previousWidth) {
+            previousWidth = width
+            KuiklyRouter.updateViewportSize(width, window.innerHeight)
+        }
+    })
+
     // Takes over control if "use_spa=1" is present in URL or ENABLE_BY_DEFAULT is true
     if (KuiklyRouter.handleEntry()) {
         return

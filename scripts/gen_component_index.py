@@ -36,6 +36,7 @@ REGISTRY = ROOT / "sample/src/commonMain/kotlin/com/gearui/sample/config/Compone
 # named here. gearui.github.io's scripts/sync-gearui-kit.mjs applies the same rule.
 RUNTIME_PREFIX = "runtime-"
 NON_COMPONENT_IDS = {
+    "typed-form",              # validation demo of Form, not a second component
     "icon-render",             # PNG/SVG rendering check
     "navigator-kuikly-spike",  # Phase 0 runtime spike
     "navigator-v1-demo",       # Navigator demo page, Navigator is not a widget

@@ -278,6 +278,7 @@ data class DateTimeStrings(
     /** Calendar navigation, for screen readers. */
     val previousMonth: String,
     val nextMonth: String,
+    val secondSuffix: String = "s",
 )
 
 data class DateTimeStringsPatch(
@@ -297,6 +298,7 @@ data class DateTimeStringsPatch(
     val weekdaysShort: List<String>? = null,
     val previousMonth: String? = null,
     val nextMonth: String? = null,
+    val secondSuffix: String? = null,
 )
 
 val DateTimeStringsPatch.isEmpty: Boolean
@@ -312,6 +314,7 @@ val DateTimeStringsPatch.isEmpty: Boolean
         daySuffix == null &&
         hourSuffix == null &&
         minuteSuffix == null &&
+        secondSuffix == null &&
         calendarYearMonthFormat == null &&
         weekdaysShort == null &&
         previousMonth == null &&
@@ -334,6 +337,7 @@ fun DateTimeStrings.merge(patch: DateTimeStringsPatch?): DateTimeStrings {
         daySuffix = patch.daySuffix ?: daySuffix,
         hourSuffix = patch.hourSuffix ?: hourSuffix,
         minuteSuffix = patch.minuteSuffix ?: minuteSuffix,
+        secondSuffix = patch.secondSuffix ?: secondSuffix,
         calendarYearMonthFormat = patch.calendarYearMonthFormat ?: calendarYearMonthFormat,
         weekdaysShort = patch.weekdaysShort ?: weekdaysShort,
     )

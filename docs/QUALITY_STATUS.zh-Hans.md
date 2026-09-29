@@ -182,7 +182,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | B1 | 协议同意行：Text 支持内联可点链接片段；默认不勾选的 Checkbox；点链接只打开链接、不勾选；读屏可达 | 单测 + sample 页 + 双端真机点击验证 | ☑ `LinkPiecesTest` 7 例；sample `agreement`；iOS 与 Android 真机点击：点《用户协议》只弹出打开、勾选不变，点其余文字切换勾选；iOS 读屏：勾选框读整句加状态，每个链接为独立按钮。注：Kuikly 不分发 `LinkAnnotation` 点击、不给字符位置，故 `LinkedText` 逐字排版 |
 | B2 | LoadMore 列表尾：idle/loading/error/exhausted，停留底部不连发，失败可重试，文案进语言包 | 状态单测 + sample 订单列表 + 真机滚动 | ☑ `LoadMoreTest` 6 例（仅空闲且尾部可见才请求、加载中不重发、失败等用户、追加页推出尾部不连发）；sample `loadmore`；iOS 截图失败态；Android 真机点重试后第 3 页加载 |
 | B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ◐ `InputFormatTest` 11 例（分组、+86/0086 粘贴、退格删分隔符、中间插入光标、前导零、身份证 X 与校验位）；iOS 逐字输入 11 位完整。待测：真机粘贴与中文输入法下的中间插删。已知限制：Kuikly 异步桥下脚本级连击会丢字，人手输入、粘贴、自动填充不受影响 |
-| B4 | Calendar 周起始由语言包决定，简体/繁体中文默认周一 | 单测 + 截图 | ◐ `FormatStringsTest`；iOS 日历截图周一起始。与本条不一致：繁体中文按台湾惯例设为周日（`Strings.zh_Hant.format.firstDayOfWeek = 0`），待维护者决定 |
+| B4 | Calendar 周起始由语言包决定，简体/繁体中文默认周一 | 单测 + 截图 | ☑ `FormatStringsTest`；iOS 日历截图简体周一起始。维护者决定（2026-09-29）：繁体中文按香港惯例从周日开始（`Strings.zh_Hant.format.firstDayOfWeek = 0`） |
 | B5 | 数字缩写（万/亿，随语言包）与中文相对时间，放在 i18n 格式化层 | 单测（边界值、四语言） | ☑ `FormatStringsTest`（万/亿边界、向下取整、负数、K/M/B、相对时间六档含跨年与时钟超前）；语言包现为简体、繁体、英文三种，没有第四种 |
 | B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ◐ Cascader 已完成：`CascaderLevelTest` 6 例（叶子、未加载/加载中/失败、同名节点按 value 区分、已加载层标签）；iOS 真机选到区回填「浙江省 / 杭州市 / 西湖区」、异步首次失败后重试加载城市。未做：Picker 稳定 ID 与 label 分离 |
 | B7 | DatePicker 最小/最大日期、年/月/日与时间精度、分钟步长与过滤 | 单测（闰日、月末、跨年、过滤后空列）+ 真机 | ☐ |

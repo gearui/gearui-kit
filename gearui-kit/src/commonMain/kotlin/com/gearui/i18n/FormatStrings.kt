@@ -11,7 +11,7 @@ data class CompactUnit(val size: Long, val suffix: String)
  * by region rather than by word.
  *
  * @property firstDayOfWeek 0 = Sunday, 1 = Monday. Mainland China starts the week on
- *   Monday (GB/T 7408); Taiwan and the US on Sunday.
+ *   Monday (GB/T 7408); Traditional Chinese follows Hong Kong, and English the US, on Sunday.
  * @property compactUnits ascending; a count at or above a unit's size is written in it.
  */
 @Immutable

@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+### Migration from 1.0.0-beta6
+
+- **Source-compatible, binary-incompatible.** New trailing parameters with defaults:
+  `contentDescription` on `Button`, `Checkbox`, `RadioButton`, `Switch`,
+  `PressableFeedback`, `InputOTP` and `NavBarItem`; `accessibilityLabel` on
+  `BasicTextField`; `surface` on `Popup.Host`. Callers recompile unchanged; a library
+  compiled against beta6 that calls these must be rebuilt.
+- **Source-breaking for custom language packs.** `CommonStrings` gains `back`, `on`,
+  `off` and `partiallySelected`; `FieldStrings` gains `clear`, `showPassword`,
+  `hidePassword`, `selectAll`, `selectRowFormat` and `verificationCode`;
+  `DateTimeStrings` gains `previousMonth` and `nextMonth`; `MediaStrings` gains
+  `previousSlide` and `nextSlide`. A pack that constructs these classes in full must
+  supply them. Packs built from `*Patch` over a shipped pack need no change.
+- **Behavioral.** `DatePickerInput` / `TimePickerInput` open a bottom sheet instead of
+  a dialog. `SearchBar`'s Cancel is text, not a filled button. Remembered notification
+  and snackbar controllers dismiss what they showed when their screen leaves.
+  `Skeleton`'s default corner radius is `Radius.sm` (8) instead of 4.
+
 ### Added
 
 - Accessibility names. `Button`, `Checkbox`, `RadioButton`, `Switch` and

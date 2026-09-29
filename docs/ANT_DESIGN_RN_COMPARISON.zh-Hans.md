@@ -334,6 +334,21 @@ A/B/C 可按实际业务优先级调整，不需要重建整个组件库。建�
 
 **不做的**：农历、节气、法定节假日数据（需要时另立数据范围）；微信 / 支付宝的 SDK 接入（平台桥，不进组件库）；“红涨绿跌”（只有金融 App 需要，用主题色自己配）；Ant 风格的红色 AgreeItem。
 
+### 9.1 实施状态（2026-09-29）
+
+| 项 | 状态 | 落点 |
+| --- | --- | --- |
+| 协议 / 隐私同意行 | 已实现 | `AgreementCheckbox`、`LinkedText`（Kuikly 不分发 LinkAnnotation 点击，改为逐字排版；行首不出现「，」、行尾不留「《」） |
+| 加载更多 | 已实现 | `loadMoreItem` / `LoadMoreFooter`，状态沿用 Kuikly `FooterRefresh`；下拉刷新沿用 Kuikly `pullToRefreshItem` |
+| 手机号 / 银行卡 / 身份证输入 | 已实现 | `Input(format = InputFormat.ChinaMobile / BankCard / IdCard)`；Kuikly 异步桥下脚本级连击可能丢字，人手输入、粘贴、自动填充不受影响 |
+| 周起始跟随语言包 | 已实现 | `Strings.format.firstDayOfWeek`，简体中文周一 |
+| 万 / 亿缩写、中文相对时间 | 已实现 | `Strings.format.compactNumber` / `relativeTime` |
+| 农历 | 已实现 | `Lunar`（1900–2100 离线算法、节气、传统节日、干支生肖），`Calendar(lunar = true)` |
+| 地址三级联动 + 异步子级 | 已实现 | `Cascader` 改为底部面板 + 层级页签，`loadChildren` 支持加载中 / 失败重试 |
+| 字母索引栏 | 已实现 | `IndexBar` |
+| 大字体 / 适老化验收 | 未做 | 需在系统最大字号下逐页检查 |
+| 鸿蒙 NEXT、国产 ROM 验收矩阵 | 未做 | 押后 |
+
 ## 10. 本次交付与后续维护
 
 本次交付是完整双向组件清单、重点能力差距、场景归属与执行建议；没有实现上述候选，也未运行两个库的 UI 或测试套件。清单已按源码导出及 GearUI 注册表做数量和遗漏检查。

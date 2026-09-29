@@ -137,8 +137,13 @@ fun LoadMoreFooter(
 
 private const val LoadMoreKey = "gearui-load-more"
 
-private fun LazyListState.footerVisible(): Boolean {
-    val info = layoutInfo
-    val last = info.visibleItemsInfo.lastOrNull() ?: return false
-    return last.index == info.totalItemsCount - 1
-}
+private fun LazyListState.footerVisible(): Boolean =
+    footerVisible(layoutInfo.visibleItemsInfo.lastOrNull()?.index, layoutInfo.totalItemsCount)
+
+/** The footer is the list's last item, so it is on screen when the last visible item is it. */
+internal fun footerVisible(lastVisibleIndex: Int?, totalItems: Int): Boolean =
+    lastVisibleIndex != null && totalItems > 0 && lastVisibleIndex == totalItems - 1
+
+/** Whether the footer should ask for the next page now. */
+internal fun shouldLoadMore(status: LoadMoreStatus, lastVisibleIndex: Int?, totalItems: Int): Boolean =
+    status == LoadMoreStatus.Idle && footerVisible(lastVisibleIndex, totalItems)

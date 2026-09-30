@@ -171,8 +171,8 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ◐ 199838e 上 CI 绿、Guardrails 因一条仍断言旧主色的 token 测试失败，已随验收记录提交修复；以验收记录所在提交的 CI 为准（见 BETA7_ACCEPTANCE A1） |
-| A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☑ Android：privchat-ui、live-chat、lms-app 编译通过；iOS：构建 Rust FFI 后 privchat-app、live-chat 链接通过，lms-app 修复历史 iOS 编译错误（lms-app 22b7654）后链接通过；Weey 正式包真机验证。见 BETA7_ACCEPTANCE |
+| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☑ 候选代码 db346b3：CI（含 iOS job）与 Guardrails 全绿；本记录提交的 CI 见 BETA7_ACCEPTANCE |
+| A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☑ 以 db346b3 代码重编：privchat-ui、privchat-app、lms-app、live-chat Android 编译通过；iOS 此前 privchat-app/live-chat/lms-app 链接通过（本轮无下游所用签名变更）；Weey 正式包真机验证 |
 | A3 | 历史竞品对照的已采纳事项归入 B/C 组，删除过时对照文档 | B/C 门禁与文档清理提交 | ☑ B/C 条目已列全；历史比较留在 git 历史，不再作为发布规范 |
 
 ### B. 移动业务能力补强
@@ -202,7 +202,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
 | D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ◐ 对比度已修（色板+组件+品牌派生，PaletteContrastTest 守护）；点击区域按规范与 iOS 27（HIG 44×44）落地，真机实测 44，iOS 审计无点击区域问题；iOS 审计/Android 节点树在候选上重跑；TalkBack/VoiceOver 需人工 |
-| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ◐ 两端首屏亮暗 + 滚动到底审查并修复；两端交互验收（表单/选择器/下拉/弹层/键盘避让）通过；键盘避让按 iOS 方式落地（列表内聚焦字段滚到键盘上方）；待人工项见 BETA7_ACCEPTANCE |
+| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ☑ 两端首屏亮暗 + 滚动到底审查并修复；两端交互验收（表单/选择器/下拉/弹层/键盘避让）Android 41/41、iOS 36/36（含软键盘）；Web 182 页冒烟与弹层缩放全过；偏差已登记 |
 | D3 | 大字号/适老化：Android 字号 1.3 与最大、iOS 最大动态字号，全部页截断/溢出 | 截图 + 问题清单与修复 | ⏸ 维护者决定推迟到下一阶段（2026-09-29） |
 | D4 | RTL：Android 强制 RTL 布局方向逐页检查 | 截图 + 问题清单 | ⛔ 不支持：Kuikly 不转发系统 RTL，根部提供 RTL 布局方向也不镜像；已记为上游问题；kit 无从右到左语言包 |
 | D5 | 性能：iOS 真机（iPhone 16 Pro Max）冷启动、切主题、滚动，对照 §1 预算 | `scripts/perf` 输出 | ◐ 模拟器 Release 20 次冷启动（主机负载 36–49，结果偏保守）：中位 989.5 ms（预算 1000）、p90 1082；切主题 46.1 ms；滚动 p95 16.9 ms、掉帧 0.3%；原始数据已存；真机数字待维护者 iPhone |

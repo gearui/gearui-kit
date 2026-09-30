@@ -5,7 +5,7 @@ table is [QUALITY_STATUS.zh-Hans.md §7](./QUALITY_STATUS.zh-Hans.md) /
 [QUALITY_STATUS.md §7](./QUALITY_STATUS.md); each gate there carries one status and
 points here. Feature scope follows the approved beta7 plan.
 
-Candidate: the commit that adds this record on main (the code of 199838e, plus a token test and acceptance scripts). Devices: Android 16 phone (Xiaomi 2201122G, 560 dpi,
+Candidate: the code of db346b3 on main (CI and Guardrails green), plus this record. Devices: Android 16 phone (Xiaomi 2201122G, 560 dpi,
 gesture navigation); iOS 26.2 simulator "GearUI beta7 iPhone 17 Pro" (the maintainer
 accepted a simulator for iOS on 2026-09-30); Chromium (Playwright) for the Web. 93
 sample routes, light and dark.
@@ -210,6 +210,35 @@ Tag's close square drifted from the ×. The same pass caught a regression of its
 the Web: consuming native touches (the fall-through fix) swallowed every Compose click
 in the browser, so no Select or Popover opened — limited to Android and iOS, and
 `web_overlay_resize.mjs` is part of every run because the page smoke run cannot see it.
+
+## Quality verdict (2026-10-01)
+
+Judged against the gate (QUALITY_STATUS §7: evidence per item, nothing silently skipped)
+and common release practice for a beta (every automated gate green on the exact code,
+no open P0/P1 defect, what is unverified named, not assumed):
+
+- **Automated evidence — complete.** CI, Guardrails (24 checks), API baselines, unit
+  tests, the downstream compile of four apps, the iOS accessibility audit (contrast 0,
+  hit region only IndexBar's declared exception), the Android node tree, first-viewport
+  and page-end visual review on both platforms, interaction runs on both platforms
+  (forms, pickers, dropdowns, overlays, BACK, scrim, keyboard), the Web smoke and
+  overlay runs, and a Release performance run on the simulator.
+- **Defects — none open at P0/P1.** Every defect found this cycle was fixed and has a
+  check that failed before the fix. Open, non-blocking and documented: iOS draws no "…"
+  for single-line truncation (KuiklyUI caches the unconstrained layout; the text is cut
+  at the edge), iOS ignores `autoCorrectEnabled`, key bursts under 50 ms can drop a
+  character in a formatted field (not reachable by typing), RTL is not mirrored.
+- **Not yet verified, by a person:** TalkBack and VoiceOver (focus order, focus return),
+  Chinese IME composition/paste/selection in formatted fields, and a device performance
+  number. These are the remaining conditions.
+- **Waivers the maintainer owns:** D3 (deferred), D4 (RTL), D7 (HarmonyOS runtime), D8
+  (other vendors' devices), E2 (filing upstream).
+
+**Verdict: beta7 meets its acceptance bar for the automated and in-house criteria and is
+ready to publish as a beta once the maintainer signs the waivers above.** Doing the
+manual screen-reader and IME pass first (about an hour on one Android phone and one
+iPhone, checklist below) is recommended; publishing without it is acceptable for a
+beta only if those two items are listed as unverified in the release notes.
 
 ## Needs a maintainer decision
 

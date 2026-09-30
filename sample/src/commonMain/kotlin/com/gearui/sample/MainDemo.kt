@@ -1,27 +1,22 @@
 package com.gearui.sample
 
+import com.gearui.navigation.NavOptions
+import com.gearui.navigation.NavRoute
+import com.gearui.navigation.Navigator
+import com.gearui.navigation.rememberNavigatorController
+import com.gearui.sample.config.ComponentConfig
 import com.gearui.sample.perf.StartupMark
 import com.gearui.sample.perf.MarkStartupContent
 import androidx.compose.runtime.*
-import com.tencent.kuikly.compose.BackHandler
-import com.tencent.kuikly.compose.animation.core.Animatable
-import com.tencent.kuikly.compose.animation.core.spring
-import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
-import com.tencent.kuikly.compose.foundation.lazy.LazyListState
 import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
-import com.tencent.kuikly.compose.ui.layout.onSizeChanged
 import com.tencent.kuikly.core.annotations.Page
 import com.gearui.View
 import com.gearui.App
-import com.gearui.gestures.SwipeBackConfig
-import com.gearui.gestures.swipeBack
 import com.gearui.sample.i18n.SampleI18nProvider
-import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.HomePage
 import com.gearui.sample.pages.SettingsPage
 import com.gearui.sample.pages.SettingsState
@@ -36,16 +31,6 @@ import com.gearui.theme.Themes
 import com.gearui.theme.Shapes
 import com.gearui.theme.ShapesDefault
 import com.gearui.theme.withBrandAccent
-import kotlinx.coroutines.launch
-
-/**
- * Navigation page enum
- */
-enum class AppPage {
-    HOME,
-    COMPONENT_DETAIL,
-    SETTINGS
-}
 
 /**
  * GearUI sample main page
@@ -53,7 +38,8 @@ enum class AppPage {
  * - HomePage: the component index
  * - ExamplePages: standalone pages from the component registry
  * - SettingsPage: settings
- * - NavigationManager: navigation
+ * - Navigator: the page stack (push, pop, swipe back), as in privchat-app
+ * - NavigationManager: component id to example page
  *
  * Supports switching theme and language at runtime
  */
@@ -187,185 +173,56 @@ private fun MainDemoContentInner(settingsState: SettingsState, startRoute: Strin
         }
         return
     }
-    // Navigation state
-    val startComponent = remember(startRoute) {
-        com.gearui.sample.config.ComponentConfig.all.firstOrNull { it.id == startRoute }
+    // A page stack, as in privchat-app: the page underneath stays composed while the top
+    // one is dragged away, so a swipe from anywhere on the page reveals it, and Android
+    // BACK pops before it leaves the app.
+    val nav = rememberNavigatorController<SampleRoute>(SampleRoute.Home)
+    // Automation opens a page directly; Home stays underneath so back still works.
+    LaunchedEffect(startRoute) {
+        when {
+            startRoute == "settings" -> nav.push(SampleRoute.Settings)
+            ComponentConfig.all.any { it.id == startRoute } -> nav.push(SampleRoute.Component(startRoute))
+        }
     }
-    var currentPage by remember {
-        mutableStateOf(
-            when {
-                startRoute == "settings" -> AppPage.SETTINGS
-                startComponent != null -> AppPage.COMPONENT_DETAIL
-                else -> AppPage.HOME
-            }
-        )
-    }
-    var currentComponent by remember { mutableStateOf(startComponent) }
-
-    // Home list scroll state
+    // Hoisted: Home leaves composition while covered and comes back as the lower layer.
     val homeListState = rememberLazyListState()
 
-    fun returnToHome() {
-        currentPage = AppPage.HOME
-        currentComponent = null
-    }
-
-    when (currentPage) {
-        AppPage.HOME -> {
-            MarkStartupContent()
-            HomePage(
-                listState = homeListState,
-                onComponentClick = { component ->
-                    currentComponent = component
-                    currentPage = AppPage.COMPONENT_DETAIL
-                },
-                onSettingsClick = {
-                    currentPage = AppPage.SETTINGS
-                }
-            )
-        }
-
-        AppPage.COMPONENT_DETAIL -> {
-            currentComponent?.let { component ->
-                if (component.id == "navigator-kuikly-spike" || component.id == "navigator-v1-demo") {
-                    // These two detail pages carry their own swipeBack/Navigator, so they bypass the outer SwipeBackHost to avoid gesture conflicts
-                    NavigationManager.getExamplePage(
-                        component = component,
-                        onBack = { returnToHome() }
-                    )
-                } else {
-                    ExampleDetailSwipeBackHost(
-                        homeListState = homeListState,
-                        onHomeComponentClick = { nextComponent ->
-                            currentComponent = nextComponent
-                            currentPage = AppPage.COMPONENT_DETAIL
-                        },
-                        onSettingsClick = {
-                            currentPage = AppPage.SETTINGS
-                        },
-                        onBack = { returnToHome() }
-                    ) {
-                        NavigationManager.getExamplePage(
-                            component = component,
-                            onBack = { returnToHome() }
-                        )
-                    }
-                }
-            } ?: run {
-                returnToHome()
-            }
-        }
-
-        AppPage.SETTINGS -> {
-            // Same host as component pages: without it Settings had no BackHandler
-            // (Android BACK left the app) and no edge swipe back on iOS.
-            ExampleDetailSwipeBackHost(
-                homeListState = homeListState,
-                onHomeComponentClick = { nextComponent ->
-                    currentComponent = nextComponent
-                    currentPage = AppPage.COMPONENT_DETAIL
-                },
-                onSettingsClick = {},
-                onBack = { returnToHome() }
-            ) {
-                SettingsPage(
-                    settingsState = settingsState,
-                    onBack = { returnToHome() }
+    Navigator(controller = nav, swipeBackEnabled = true, handleBack = true) { entry ->
+        when (val route = entry.route) {
+            SampleRoute.Home -> {
+                MarkStartupContent()
+                HomePage(
+                    listState = homeListState,
+                    onComponentClick = { nav.push(SampleRoute.Component(it.id)) },
+                    onSettingsClick = { nav.push(SampleRoute.Settings) },
                 )
             }
+            SampleRoute.Settings -> SettingsPage(settingsState = settingsState, onBack = { nav.pop() })
+            is SampleRoute.Component -> NavigationManager.getExamplePage(
+                component = ComponentConfig.all.first { it.id == route.id },
+                onBack = { nav.pop() },
+            )
         }
     }
 }
 
-@Composable
-private fun ExampleDetailSwipeBackHost(
-    homeListState: LazyListState,
-    onHomeComponentClick: (ComponentInfo) -> Unit,
-    onSettingsClick: () -> Unit,
-    onBack: () -> Unit,
-    content: @Composable () -> Unit
-) {
-    val colors = Theme.colors
-    val scope = rememberCoroutineScope()
-    val offsetX = remember { Animatable(0f) }
-    var previousLayerMounted by remember { mutableStateOf(false) }
-    var isCompletingPop by remember { mutableStateOf(false) }
-    var containerWidthPx by remember { mutableStateOf(0) }
-
-    fun finishPop(animated: Boolean) {
-        if (isCompletingPop) return
-        isCompletingPop = true
-        previousLayerMounted = true
-        scope.launch {
-            if (animated) {
-                val targetX = if (containerWidthPx > 0) containerWidthPx.toFloat() else 480f
-                offsetX.animateTo(
-                    targetValue = targetX,
-                    animationSpec = tween(durationMillis = 180)
-                )
-            }
-            onBack()
-            offsetX.snapTo(0f)
-            previousLayerMounted = false
-            isCompletingPop = false
-        }
+/** The sample's pages. A component page carries its id, as privchat-app's routes carry theirs. */
+private sealed interface SampleRoute : NavRoute {
+    data object Home : SampleRoute {
+        override val routeName = "home"
     }
 
-    BackHandler {
-        finishPop(animated = false)
+    data object Settings : SampleRoute {
+        override val routeName = "settings"
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-            .onSizeChanged { size ->
-                containerWidthPx = size.width
-            }
-    ) {
-        if (previousLayerMounted) {
-            HomePage(
-                listState = homeListState,
-                onComponentClick = onHomeComponentClick,
-                onSettingsClick = onSettingsClick
-            )
-        }
+    data class Component(val id: String) : SampleRoute {
+        override val routeName = "component"
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer {
-                    translationX = offsetX.value
-                }
-                .swipeBack(
-                    enabled = !isCompletingPop,
-                    config = SwipeBackConfig(edgeWidthDp = 96f),
-                    onStart = {
-                        previousLayerMounted = true
-                        scope.launch {
-                            offsetX.snapTo(0f)
-                        }
-                    },
-                    onProgress = { _, dragX ->
-                        scope.launch {
-                            offsetX.snapTo(dragX)
-                        }
-                    },
-                    onCancel = {
-                        scope.launch {
-                            offsetX.animateTo(
-                                targetValue = 0f,
-                                animationSpec = spring()
-                            )
-                            previousLayerMounted = false
-                        }
-                    },
-                    onCommit = {
-                        finishPop(animated = true)
-                    }
-                )
-        ) {
-            content()
-        }
+        // These examples host a Navigator of their own; the drag belongs to it.
+        override val options: NavOptions =
+            if (id in NestedNavigatorExamples) NavOptions(swipeBackEnabled = false) else NavOptions.Default
     }
 }
+
+private val NestedNavigatorExamples = setOf("navigator-kuikly-spike", "navigator-v1-demo")

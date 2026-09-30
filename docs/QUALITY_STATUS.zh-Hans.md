@@ -171,7 +171,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☑ 主线已推送；候选提交 37bc643 上 CI（含 iOS job）与 Guardrails 全绿 |
+| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ◐ 199838e 上 CI 绿、Guardrails 因一条仍断言旧主色的 token 测试失败，已随验收记录提交修复；以验收记录所在提交的 CI 为准（见 BETA7_ACCEPTANCE A1） |
 | A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☑ Android：privchat-ui、live-chat、lms-app 编译通过；iOS：构建 Rust FFI 后 privchat-app、live-chat 链接通过，lms-app 修复历史 iOS 编译错误（lms-app 22b7654）后链接通过；Weey 正式包真机验证。见 BETA7_ACCEPTANCE |
 | A3 | 历史竞品对照的已采纳事项归入 B/C 组，删除过时对照文档 | B/C 门禁与文档清理提交 | ☑ B/C 条目已列全；历史比较留在 git 历史，不再作为发布规范 |
 
@@ -181,7 +181,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | --- | --- | --- | --- |
 | B1 | 协议同意行：Text 支持内联可点链接片段；默认不勾选的 Checkbox；点链接只打开链接、不勾选；读屏可达 | 单测 + sample 页 + 双端真机点击验证 | ☑ `LinkPiecesTest` 7 例；sample `agreement`；iOS 与 Android 真机点击：点《用户协议》只弹出打开、勾选不变，点其余文字切换勾选；iOS 读屏：勾选框读整句加状态，每个链接为独立按钮。注：Kuikly 不分发 `LinkAnnotation` 点击、不给字符位置，故 `LinkedText` 逐字排版 |
 | B2 | LoadMore 列表尾：idle/loading/error/exhausted，停留底部不连发，失败可重试，文案进语言包 | 状态单测 + sample 订单列表 + 真机滚动 | ☑ `LoadMoreTest` 6 例（仅空闲且尾部可见才请求、加载中不重发、失败等用户、追加页推出尾部不连发）；sample `loadmore`；iOS 截图失败态；Android 真机点重试后第 3 页加载 |
-| B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ◐ 已接入 IME 组合态草稿处理；中文输入法真机粘贴/中间编辑待验 |
+| B3 | Input 格式化层：原始值/显示值/光标映射分离；手机号 3-4-4、银行卡四位分组、身份证末位 X | 纯函数单测 + 真机粘贴、中间插删、中文输入法 | ◐ 自动部分真机通过（逐位输入、跨分隔符删除、未满时中间插入）；发现快速连发按键丢字、满号用方向键插入偏一位；中文输入法组字/粘贴/选区替换待人工（见 BETA7_ACCEPTANCE 人工检查） |
 | B4 | Calendar 周起始由语言包决定，简体默认周一、繁体按香港惯例默认周日 | 单测 + 截图 | ☑ 简体周一、繁体按香港惯例周日；FormatStringsTest 与 iOS 日历证据 |
 | B5 | 数字缩写（万/亿，随语言包）与中文相对时间，放在 i18n 格式化层 | 单测（边界值、四语言） | ☑ `FormatStringsTest`（万/亿边界、向下取整、负数、K/M/B、相对时间六档含跨年与时钟超前）；语言包现为简体、繁体、英文三种，没有第四种 |
 | B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ☑ 稳定值 Picker 与可取消 Cascader 有单测；Android 真机：联动选到无下级的「香港特别行政区」可确认，同名节点按 value 区分 |
@@ -201,12 +201,12 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ◐ iOS XCUITest 全页亮暗审计 + Android 读屏节点树全页审计已跑，修复已提交；**对比度（参考色板浅色主题灰字 4.43、主色文字 3.38–3.68）与 <44dp 设计尺寸待维护者决定** |
-| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ☑ Android 真机与 iOS 模拟器亮暗全页逐页判定：发现的问题已修复（Kbd/Code/Card/Upload/Timeline/Watermark/示例页等），偏差已登记；iOS 仅剩 NavBar 单行标题无省略号（上游）。见 BETA7_ACCEPTANCE |
+| D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ◐ 对比度已修（色板 + 组件 + 品牌派生，PaletteContrastTest 守护）；iOS 审计与 Android 节点树在候选上重跑，Textarea 命名、OTP 已修；点击区域实测，小于平台建议的 5 类待维护者定；TalkBack/VoiceOver 需人工 |
+| D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ◐ 两端首屏亮暗 + 滚动到底全部审查并修复；两端交互验收（表单/选择器/下拉/弹层）通过；键盘遮挡页面底部输入框待维护者定 |
 | D3 | 大字号/适老化：Android 字号 1.3 与最大、iOS 最大动态字号，全部页截断/溢出 | 截图 + 问题清单与修复 | ⏸ 维护者决定推迟到下一阶段（2026-09-29） |
 | D4 | RTL：Android 强制 RTL 布局方向逐页检查 | 截图 + 问题清单 | ⛔ 不支持：Kuikly 不转发系统 RTL，根部提供 RTL 布局方向也不镜像；已记为上游问题；kit 无从右到左语言包 |
-| D5 | 性能：iOS 真机（iPhone 16 Pro Max）冷启动、切主题、滚动，对照 §1 预算 | `scripts/perf` 输出 | ◐ 维护者同意用模拟器（2026-09-30）。iOS 模拟器 Release：冷启动中位 1029 ms（预算 1000，超 3%）、切主题 47.7 ms、滚动掉帧 0% |
-| D6 | Web：浏览器自动化逐页交互与 viewport 缩放 | 脚本与结果 | ☑ 93 页 Web 自动化（390 宽加载、滚动、点击、1280→390 缩放）：91 页干净；avatar 为示例故意失败的图片；combo-box 打开的下拉在窗口缩放后不重新定位（登记） |
+| D5 | 性能：iOS 真机（iPhone 16 Pro Max）冷启动、切主题、滚动，对照 §1 预算 | `scripts/perf` 输出 | ◐ 模拟器 Release 20 次冷启动（主机负载 36–49，结果偏保守）：中位 989.5 ms（预算 1000）、p90 1082；切主题 46.1 ms；滚动 p95 16.9 ms、掉帧 0.3%；原始数据已存；真机数字待维护者 iPhone |
+| D6 | Web：浏览器自动化逐页交互与 viewport 缩放 | 脚本与结果 | ☑ 186 页亮暗冒烟（加载/滚动/缩放）与弹层缩放确定性测试通过；Kuikly Web 运行时依赖 jsdelivr CDN 已记录 |
 | D7 | HarmonyOS：DevEco 模拟器运行 sample 全部页；真机验收 | 模拟器截图；真机为外部阻断 | ⛔ 共享库及 unsigned HAP 构建通过；缺签名模拟器与真机运行环境 |
 | D8 | 国产 ROM 矩阵：小米已有；华为、OPPO、vivo | 各机型截图 | ⛔ 缺设备 |
 
@@ -215,7 +215,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
 | E1 | 圆角↔直角热切换原生边框不刷新：kit 侧能规避则修，否则登记并附最小复现 | 修复提交或复现工程 | ☑ 3ef6158 的装饰层按尺寸/形状/描边重建；Android 真机与 iOS 模拟器材质页圆角↔直角热切换边框与阴影即时刷新 |
-| E2 | 模糊的四个上游缺口：整理成可直接提交的 Kuikly issue | issue 草稿；提交由维护者决定 | ◐ 四个模糊缺口的上游 issue 草稿已写好，待维护者审阅后提交（草稿不入库） |
+| E2 | 模糊的四个上游缺口：整理成可直接提交的 Kuikly issue | issue 草稿；提交由维护者决定 | ◐ 上游 issue 草稿（模糊 4 项 + RTL、iOS 省略号、最小触摸目标、iOS 自动更正、Web CDN）待维护者审阅后提交 |
 | E3 | beta3 携带决策：原生字号刻度、iOS 密码可见切换、Kuikly 文本框焦点串扰——给出决策与实现，或登记为已知限制 | 决策记录与提交 | ☑ 原生字号刻度 beta4 已定（参考刻度默认、Platform 可选）；iOS 密码可见 beta3 已实现（单行限制已记）；焦点串扰登记为已知限制（kit 侧 5 处规避） |
 
 ### F. 发布

@@ -196,7 +196,11 @@ class TokenGenerationTest(unittest.TestCase):
 
     def test_reference_palette_semantic_mapping(self):
         doc = generator.resolve_document(json.loads(generator.COLOR_SOURCE.read_text()))
-        self.assertEqual([0.6204, 0.195, 253.83], doc['colors']['lightPrimary']['$value']['components'])
+        # The reference keeps HeroUI's blue; the semantic primary is deepened for a 4.6:1
+        # white label and says so in its description.
+        self.assertEqual([0.6204, 0.195, 253.83], doc['reference']['light']['accent']['$value']['components'])
+        self.assertEqual([0.5574, 0.176, 253.83], doc['colors']['lightPrimary']['$value']['components'])
+        self.assertIn('WCAG 1.4.3', doc['colors']['lightPrimary']['$description'])
         self.assertEqual(0, doc['reference']['dark']['field-border']['$value']['alpha'])
         self.assertEqual(doc['reference']['dark']['field-border']['$value'], doc['colors']['darkInputBorder']['$value'])
         self.assertEqual(doc['reference']['light']['surface']['$value'], doc['colors']['lightSurface']['$value'])

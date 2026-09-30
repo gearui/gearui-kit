@@ -97,18 +97,18 @@ class Page:
         w, h = self.size()
         a, b = (h // 2, h * 3 // 4) if down else (h * 3 // 4, h // 2)
         if self.d.platform == "android":
-            self.d.adb("shell", "input", "swipe", str(w // 2), str(a), str(w // 2), str(b), "400", what="scroll")
+            self.d.adb("shell", "input", "swipe", str(self.edge_x(w)), str(a), str(self.edge_x(w)), str(b), "400", what="scroll")
         else:
-            run(["idb", "ui", "swipe", "--udid", self.d.udid, str(w // 2), str(a), str(w // 2), str(b), "--duration", "0.5"], "scroll")
+            run(["idb", "ui", "swipe", "--udid", self.d.udid, str(self.edge_x(w)), str(a), str(self.edge_x(w)), str(b), "--duration", "0.5"], "scroll")
         time.sleep(0.9 if self.d.platform == "android" else 1.6)
 
     def scroll_to(self, text, exact=False):
         w, h = self.size()
         for _ in range(6):
             if self.d.platform == "android":
-                self.d.adb("shell", "input", "swipe", str(w // 2), str(h * 3 // 4), str(w // 2), str(h // 3), "300", what="scroll")
+                self.d.adb("shell", "input", "swipe", str(self.edge_x(w)), str(h * 3 // 4), str(self.edge_x(w)), str(h // 3), "300", what="scroll")
             else:
-                run(["idb", "ui", "swipe", "--udid", self.d.udid, str(w // 2), str(h * 3 // 4), str(w // 2), str(h // 3), "--duration", "0.3"], "scroll")
+                run(["idb", "ui", "swipe", "--udid", self.d.udid, str(self.edge_x(w)), str(h * 3 // 4), str(self.edge_x(w)), str(h // 3), "--duration", "0.3"], "scroll")
             time.sleep(0.9 if self.d.platform == "android" else 1.6)
             b = self.find(text, exact)
             if b is not None:
@@ -119,9 +119,9 @@ class Page:
         w, h = self.size()
         a, b = (h // 3, h * 3 // 4) if down else (h * 3 // 4, h // 3)
         if self.d.platform == "android":
-            self.d.adb("shell", "input", "swipe", str(w // 2), str(a), str(w // 2), str(b), "300", what="scroll")
+            self.d.adb("shell", "input", "swipe", str(self.edge_x(w)), str(a), str(self.edge_x(w)), str(b), "300", what="scroll")
         else:
-            run(["idb", "ui", "swipe", "--udid", self.d.udid, str(w // 2), str(a), str(w // 2), str(b), "--duration", "0.3"], "scroll")
+            run(["idb", "ui", "swipe", "--udid", self.d.udid, str(self.edge_x(w)), str(a), str(self.edge_x(w)), str(b), "--duration", "0.3"], "scroll")
         # iOS decelerates for a while; a tap before it stops only stops the scroll.
         time.sleep(0.9 if self.d.platform == "android" else 1.6)
 
@@ -136,6 +136,11 @@ class Page:
                 return True
             self.swipe(down=False)
         return self.find(text, exact) is not None
+
+    @staticmethod
+    def edge_x(w):
+        """Scroll in the page's side margin: started on a text field, a swipe selects text."""
+        return int(w * 0.06)
 
     def tap_mask(self):
         """A point on the dimmed page above an open overlay (below the status bar)."""

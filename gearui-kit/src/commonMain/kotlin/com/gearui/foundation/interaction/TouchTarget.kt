@@ -1,5 +1,7 @@
 package com.gearui.foundation.interaction
 
+import com.tencent.kuikly.compose.ui.layout.Layout
+import androidx.compose.runtime.Composable
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.layout.layout
@@ -39,3 +41,31 @@ internal fun Modifier.touchTarget(visual: Dp, target: Dp = ControlGeometry.selec
  */
 internal fun Modifier.hitTarget(min: Dp = ControlGeometry.selectionTouchTarget): Modifier =
     sizeIn(minWidth = min, minHeight = min)
+
+/**
+ * A hit region around a drawn control that takes the caller's sizing: the width the
+ * caller asks for (fillMaxWidth, weight, width) reaches [content], and so does a fixed
+ * height; otherwise [content] keeps its own height. The region itself is at least [min]
+ * each way and centres [content]. Put the click handler and semantics on [modifier].
+ *
+ * A Layout, not a modifier: KuiklyUI sizes a node's native view from the node's own
+ * measured size, which this reports.
+ */
+@Composable
+internal fun HitRegion(
+    modifier: Modifier,
+    min: Dp = ControlGeometry.selectionTouchTarget,
+    content: @Composable () -> Unit,
+) {
+    Layout(content = content, modifier = modifier) { measurables, constraints ->
+        val t = min.roundToPx()
+        val fixedHeight = constraints.hasFixedHeight
+        val childConstraints = if (fixedHeight) constraints else constraints.copy(minHeight = 0)
+        val placeables = measurables.map { it.measure(childConstraints) }
+        val cw = placeables.maxOfOrNull { it.width } ?: 0
+        val ch = placeables.maxOfOrNull { it.height } ?: 0
+        val w = maxOf(cw, t).coerceIn(constraints.minWidth, constraints.maxWidth)
+        val h = maxOf(ch, t).coerceIn(constraints.minHeight, constraints.maxHeight)
+        layout(w, h) { placeables.forEach { it.place((w - it.width) / 2, (h - it.height) / 2) } }
+    }
+}

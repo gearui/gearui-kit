@@ -2,6 +2,8 @@ package com.gearui.foundation.interaction
 
 import com.tencent.kuikly.compose.extension.setEvent
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.composed
+import com.tencent.kuikly.compose.ui.platform.LocalConfiguration
 
 /**
  * Makes this node's native view the end of the line for a touch nobody inside took.
@@ -14,4 +16,10 @@ import com.tencent.kuikly.compose.ui.Modifier
  * included) and raised the keyboard. A touch listener makes the view consume the touch;
  * its children, the page's own fields included, still get it first.
  */
-internal fun Modifier.consumeNativeTouches(): Modifier = setEvent("touchDown") { }
+internal fun Modifier.consumeNativeTouches(): Modifier = composed {
+    // Android and iOS only. On the Web the DOM already stops a click at the element on
+    // top, and a touch listener there kept every click from reaching Compose at all —
+    // no Select or Popover opened.
+    val configuration = LocalConfiguration.current
+    if (configuration.isAndroid || configuration.isIOS) setEvent("touchDown") { } else this
+}

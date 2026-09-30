@@ -1,5 +1,6 @@
 package com.gearui.components.select
 
+import com.gearui.foundation.keyboard.keyboardHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.gearui.foundation.control.ControlGeometry
@@ -60,7 +61,8 @@ internal fun TrackDropdownAnchor(
 ) {
     val environment = LocalRuntimeEnvironment.current
     val viewport = LocalOverlayViewportSize.current
-    LaunchedEffect(overlayId, trigger, viewport, environment.safeArea, environment.keyboard.height) {
+    val keyboard = keyboardHeight()
+    LaunchedEffect(overlayId, trigger, viewport, environment.safeArea, keyboard) {
         val id = overlayId ?: return@LaunchedEffect
         val bounds = trigger ?: return@LaunchedEffect
         val placement = placementFor(bounds)

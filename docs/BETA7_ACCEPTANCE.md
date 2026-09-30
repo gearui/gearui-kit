@@ -68,7 +68,13 @@ input page's 格式化输入 section): typing one digit at a time gives 138 1234
 (138 1235 678); inserting in the middle of an unfilled number lands at the caret. Found:
 a burst of key events (adb `input text`) drops a digit — the second character is
 applied to text the field has not yet been given back; inserting into an already full
-number with hardware arrow keys lands one place to the left. IME composition, paste and
+number with hardware arrow keys lands one place to the left. Measured further: the
+drop happens only for key events under 50 ms apart (a single `input keyevent` burst);
+at 50, 100 and 150 ms every digit lands, and human typing, IME candidates, voice input
+and paste all commit at slower rates or at once — a known limitation of KuiklyUI's
+asynchronous text bridge, not reachable by typing. The full-number insertion maps
+correctly in the kit (tests added); the device offset came from the native caret under
+arrow keys, which the manual caret-by-tap check covers. IME composition, paste and
 selection replacement need a person (manual checklist below).
 
 **C1–C3.** All P2/P3 entries in API, registry and sample; registry, README index,
@@ -191,6 +197,20 @@ Native type scale decided in beta4; iOS password reveal implemented in beta3 (si
 line limit documented); text-field focus crosstalk a known limitation with five kit-side
 mitigations.
 
+## Code review (2026-10-01)
+
+An independent review of the session's kit changes found six defects, all fixed before
+this record: a caller's width, weight or height on `Button` sized the hit region instead
+of the button (now `HitRegion` hands the caller's sizing to the drawn button); focus
+return was taken by toasts, could target a removed view and kept a popped page's view
+alive; the keyboard-avoidance scroll restarted itself every frame (now keyed on which
+field has focus); dropdowns ignored the keyboard height GearUI observes on iOS; corner
+buttons (Upload remove, Cascader close) moved inward and covered their tile; a stretched
+Tag's close square drifted from the ×. The same pass caught a regression of its own on
+the Web: consuming native touches (the fall-through fix) swallowed every Compose click
+in the browser, so no Select or Popover opened — limited to Android and iOS, and
+`web_overlay_resize.mjs` is part of every run because the page smoke run cannot see it.
+
 ## Needs a maintainer decision
 
 1. ~~Target sizes~~ — decided 2026-10-01: follow the spec, close to iOS 27 (HIG hit
@@ -219,8 +239,9 @@ and where the caret ends:
 **TalkBack (Android) and VoiceOver (iPhone)**, on these pages: button, checkbox, radio,
 switch, input, textarea, select, combo-box, picker, dialog, actionsheet, bottomsheet,
 tabs, calendar. Check: each control announces name, role and state; swipe order follows
-the visual order; double-tap activates; after a dialog or sheet closes, focus returns to
-the control that opened it (the kit has no focus restoration; expect a gap here).
+the visual order; double-tap activates; after a dialog, sheet, menu or dropdown closes,
+focus returns to the control that opened it (implemented 2026-10-01 through KuiklyUI's
+`accessibilityFocus()`; only a screen reader shows whether it lands).
 
 ## Reproduce
 

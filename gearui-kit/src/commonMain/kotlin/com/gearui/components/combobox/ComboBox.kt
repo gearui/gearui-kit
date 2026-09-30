@@ -1,5 +1,6 @@
 package com.gearui.components.combobox
 
+import com.gearui.foundation.keyboard.keyboardHeight
 import com.gearui.components.select.dropdownBottomInset
 import com.gearui.components.select.dropdownPlacement
 import com.gearui.components.select.TrackDropdownAnchor
@@ -78,6 +79,8 @@ fun <T> ComboBox(
     val density = LocalDensity.current
     val viewport = LocalOverlayViewportSize.current
     val environment = LocalRuntimeEnvironment.current
+    // The host's or the platform's report (iOS: GearUI observes it itself).
+    val keyboard = keyboardHeight()
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var focused by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
@@ -95,7 +98,7 @@ fun <T> ComboBox(
 
     fun placementFor(bounds: Rect): DropdownPlacement? = dropdownPlacement(
         bounds, matchesState.value.size, -1, density, viewport.height,
-        environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+        environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, keyboard),
     )
 
     fun open() {

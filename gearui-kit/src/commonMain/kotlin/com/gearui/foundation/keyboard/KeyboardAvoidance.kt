@@ -30,16 +30,19 @@ internal class KeyboardAvoider {
     /** The focused field's bottom edge in root pixels, or null when none inside has focus. */
     var focusedBottom: Float? by mutableStateOf(null)
         private set
-    private var owner: Any? = null
+
+    /** Which field has focus; changes only when focus moves, not as the field scrolls. */
+    var focusedToken: Any? by mutableStateOf(null)
+        private set
 
     fun report(token: Any, bottom: Float) {
-        owner = token
+        if (focusedToken !== token) focusedToken = token
         focusedBottom = bottom
     }
 
     fun clear(token: Any) {
-        if (owner === token) {
-            owner = null
+        if (focusedToken === token) {
+            focusedToken = null
             focusedBottom = null
         }
     }

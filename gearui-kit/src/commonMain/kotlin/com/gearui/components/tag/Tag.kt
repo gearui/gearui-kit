@@ -6,7 +6,7 @@ import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.tencent.kuikly.compose.ui.semantics.contentDescription
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.gearui.i18n.I18n
-import com.gearui.foundation.interaction.hitTarget
+import com.gearui.foundation.interaction.HitRegion
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
@@ -132,20 +132,19 @@ fun Tag(
     val closeCentre = tokens.paddingHorizontal + tokens.iconBoxSize / 2
     val endReserve = if (closeable) (hit / 2 - closeCentre).coerceAtLeast(0.dp) else 0.dp
 
-    Box(
-        modifier = modifier
-            .disabledAppearance(disabled)
-            .then(if (onClick != null || closeable) Modifier.hitTarget() else Modifier)
-            .then(
-                if (onClick != null) Modifier.clickable(
-                    enabled = !disabled,
-                    interactionSource = interaction,
-                    indication = null,
-                    onClick = onClick,
-                ) else Modifier
-            ),
-        contentAlignment = Alignment.CenterStart,
-    ) {
+    val outer = modifier
+        .disabledAppearance(disabled)
+        .then(
+            if (onClick != null) Modifier.clickable(
+                enabled = !disabled,
+                interactionSource = interaction,
+                indication = null,
+                onClick = onClick,
+            ) else Modifier
+        )
+    val body: @Composable () -> Unit = {
+    // Sized by the chip, so a Tag stretched by its caller keeps the × square on the ×.
+    Box(modifier = Modifier.wrapContentWidth(Alignment.Start), contentAlignment = Alignment.CenterStart) {
     Box(
         modifier = Modifier
             .padding(end = endReserve)
@@ -210,6 +209,8 @@ fun Tag(
         )
     }
     }
+    }
+    if (onClick != null || closeable) HitRegion(modifier = outer) { body() } else Box(modifier = outer) { body() }
 }
 
 enum class TagTheme { PRIMARY, SUCCESS, WARNING, DANGER, DEFAULT }

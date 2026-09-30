@@ -1,5 +1,6 @@
 package com.gearui.components.upload
 
+import com.tencent.kuikly.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import com.gearui.components.closebutton.CloseButton
 import com.gearui.components.icon.Icons
@@ -208,7 +209,13 @@ private fun UploadTile(
             CloseButton(
                 onClick = { onRemove(item) },
                 contentDescription = I18n.strings.common.remove,
-                modifier = Modifier.align(Alignment.TopEnd),
+                // The 44 hit region is centred on the drawn button: shifted back so the
+                // button stays in the corner and the region overhangs the tile rather
+                // than covering its preview.
+                modifier = Modifier.align(Alignment.TopEnd).offset(
+                    x = (ControlGeometry.selectionTouchTarget - ControlGeometry.uploadRemoveSize) / 2,
+                    y = -(ControlGeometry.selectionTouchTarget - ControlGeometry.uploadRemoveSize) / 2,
+                ),
                 size = ControlGeometry.uploadRemoveSize,
                 iconSize = ControlGeometry.uploadRemoveIcon,
                 containerColor = colors.foreground.copy(alpha = FeedbackDefaults.disabledOpacity),

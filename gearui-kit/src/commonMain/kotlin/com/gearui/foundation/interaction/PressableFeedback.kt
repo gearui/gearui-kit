@@ -68,6 +68,7 @@ fun PressableFeedback(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val source = interactionSource ?: remember { MutableInteractionSource() }
+    val activation = rememberActivationTracker()
     val pressed by source.collectIsPressedAsState()
     val active = pressed && enabled
     val amount = highlightAmount(highlight && active)
@@ -78,13 +79,13 @@ fun PressableFeedback(
             .pressScale(pressed = active && scale)
             .clip(shape)
             .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier)
+            .activationTarget(activation)
             .clickable(
                 enabled = enabled,
                 interactionSource = source,
                 indication = null,
                 role = Role.Button,
-                onClick = onClick,
-            ),
+            ) { activation.mark(); onClick() },
     ) {
         content()
         if (highlight) {

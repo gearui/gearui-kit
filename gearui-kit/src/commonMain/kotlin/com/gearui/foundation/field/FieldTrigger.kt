@@ -1,5 +1,7 @@
 package com.gearui.foundation.field
 
+import com.gearui.foundation.interaction.rememberActivationTracker
+import com.gearui.foundation.interaction.activationTarget
 import androidx.compose.runtime.*
 import com.gearui.foundation.field.FieldDefaults
 import com.gearui.foundation.field.FieldSizeTokens
@@ -27,6 +29,7 @@ internal fun fieldTriggerModifier(
     onClick: () -> Unit,
 ): Modifier {
     val interaction = remember { MutableInteractionSource() }
+    val activation = rememberActivationTracker()
     val hovered by interaction.collectIsHoveredAsState()
     val pressed by interaction.collectIsPressedAsState()
     val palette = LocalInputColors.current
@@ -40,5 +43,6 @@ internal fun fieldTriggerModifier(
                 if (error != null) colors.destructive else null), shape)
         .background(if (enabled && pressed) variant.pressedFill(palette.background) else variant.fill(palette.background))
         .hoverable(interaction, enabled)
-        .clickable(interactionSource = interaction, indication = null, enabled = enabled, onClick = onClick)
+        .activationTarget(activation)
+        .clickable(interactionSource = interaction, indication = null, enabled = enabled) { activation.mark(); onClick() }
 }

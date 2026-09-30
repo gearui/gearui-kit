@@ -1,5 +1,7 @@
 package com.gearui.components.cell
 
+import com.gearui.foundation.interaction.rememberActivationTracker
+import com.gearui.foundation.interaction.activationTarget
 import com.gearui.foundation.interaction.LocalControlLabel
 import androidx.compose.runtime.CompositionLocalProvider
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
@@ -69,6 +71,7 @@ fun Cell(
     // A group hands the row its source so it can watch the press and cover the
     // separators either side; standalone, the row owns one.
     val interaction = LocalRowInteractionSource.current ?: remember { MutableInteractionSource() }
+    val activation = rememberActivationTracker()
 
     Row(
         modifier = modifier
@@ -86,7 +89,8 @@ fun Cell(
                         // the card's own clip, so the first and last rows round with it
                         // and the rows between them stay square.
                         .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false, base = colors.surface)
-                        .clickable(interactionSource = interaction, indication = null) { onClick!!() }
+                        .activationTarget(activation)
+                        .clickable(interactionSource = interaction, indication = null) { activation.mark(); onClick!!() }
                 } else {
                     Modifier.background(colors.surface)
                 }

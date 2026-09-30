@@ -1,5 +1,7 @@
 package com.gearui.overlay
 
+import com.tencent.kuikly.core.base.DeclarativeBaseView
+import com.gearui.foundation.interaction.LastActivated
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.ui.geometry.Rect
 
@@ -54,6 +56,8 @@ class OverlayController {
         _items += OverlayItem(
             id = id,
             anchor = mutableStateOf(anchorBounds),
+            // A toast or banner does not take focus, so it has none to give back.
+            returnFocus = if (options.holdsFocus) LastActivated.takeRecent() else null,
             passThrough = mutableStateOf(passThroughBounds),
             options = options,
             content = content,
@@ -102,7 +106,14 @@ class OverlayController {
      * Called by the host, not by components — components call [dismiss].
      */
     internal fun remove(id: Long) {
+        val item = _items.find { it.id == id }
         _items.removeAll { it.id == id }
+        // The last focus-holding overlay gone (a toast still showing does not count):
+        // screen-reader focus back to the control that opened it, if it is still on screen.
+        val target = item?.returnFocus
+        if (target != null && target.renderView != null && _items.none { !it.exiting.value && it.options.holdsFocus }) {
+            target.accessibilityFocus()
+        }
     }
 
     /**
@@ -168,6 +179,8 @@ internal data class OverlayItem(
     /** State, like [exiting], so a moved trigger moves the panel without a new item. */
     val anchor: MutableState<Rect?>,
     val passThrough: MutableState<Rect?>,
+    /** The control that opened this overlay, for screen-reader focus when it closes. */
+    val returnFocus: DeclarativeBaseView<*, *>? = null,
     val options: OverlayOptions,
     val content: @Composable () -> Unit,
     val onDismiss: (() -> Unit)? = null,
@@ -251,3 +264,7 @@ object OverlayManager {
      */
     fun hasOverlay(): Boolean = controller?.hasOverlay() ?: false
 }
+
+/** Whether an overlay takes the user's attention (a dialog, a sheet, a menu), not a passing toast or banner. */
+internal val OverlayOptions.holdsFocus: Boolean
+    get() = !passThroughOutside && dismissPolicy.timeoutMillis == null

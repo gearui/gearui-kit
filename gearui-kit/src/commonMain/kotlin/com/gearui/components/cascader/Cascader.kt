@@ -1,5 +1,6 @@
 package com.gearui.components.cascader
 
+import com.tencent.kuikly.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -289,7 +290,12 @@ private fun CascaderSheet(
             contentAlignment = Alignment.Center,
         ) {
             Text(text = title, style = Theme.typography.titleMedium, color = colors.foreground)
-            CloseButton(onClick = onClose, modifier = Modifier.align(Alignment.CenterEnd))
+            // Shifted by half the hit region's margin so the drawn button keeps its place.
+            CloseButton(
+                onClick = onClose,
+                modifier = Modifier.align(Alignment.CenterEnd)
+                    .offset(x = (ControlGeometry.selectionTouchTarget - ControlGeometry.closeButtonSize) / 2),
+            )
         }
 
         val chosen = cascaderLabels(options, draft) { key -> (loaded[key] as? LevelState.Loaded)?.children }

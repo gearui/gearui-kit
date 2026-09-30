@@ -1,5 +1,6 @@
 package com.gearui.components.select
 
+import com.gearui.foundation.keyboard.keyboardHeight
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.shadowed
@@ -65,6 +66,8 @@ fun <T> Select(
     val density = LocalDensity.current
     val viewport = LocalOverlayViewportSize.current
     val environment = LocalRuntimeEnvironment.current
+    // The host's or the platform's report (iOS: GearUI observes it itself).
+    val keyboard = keyboardHeight()
     val optionsState = rememberUpdatedState(options)
     val enabledState = rememberUpdatedState(enabled)
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
@@ -93,7 +96,7 @@ fun <T> Select(
         val rows = selectRows(optionsState.value)
         return dropdownPlacement(
             bounds, rows.size, rows.indexOfFirst { it.option?.value == valueState.value }, density, viewport.height,
-            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, keyboard),
         )
     }
 
@@ -227,6 +230,8 @@ fun <T> MultiSelect(
     val density = LocalDensity.current
     val viewport = LocalOverlayViewportSize.current
     val environment = LocalRuntimeEnvironment.current
+    // The host's or the platform's report (iOS: GearUI observes it itself).
+    val keyboard = keyboardHeight()
     val optionsState = rememberUpdatedState(options)
     val enabledState = rememberUpdatedState(enabled)
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
@@ -252,7 +257,7 @@ fun <T> MultiSelect(
         val rows = selectRows(optionsState.value)
         return dropdownPlacement(
             bounds, rows.size, rows.indexOfFirst { it.option?.value in valuesState.value }, density, viewport.height,
-            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, keyboard),
         )
     }
 

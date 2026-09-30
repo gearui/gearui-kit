@@ -75,18 +75,19 @@ fun GearLazyColumn(
     // can scroll above it.
     val overlap = if (avoiding) (listBottomInRoot - keyboardTop).coerceAtLeast(0f) else 0f
     val margin = with(density) { KeyboardAvoidanceMargin.toPx() }
-    LaunchedEffect(avoiding, focusedBottom, keyboardTop, listBottomInRoot) {
-        val bottom = focusedBottom ?: return@LaunchedEffect
+    // Keyed on which field has focus and on the geometry, never on the field's position:
+    // scrolling moves the field, and restarting on that cancelled the scroll every frame.
+    LaunchedEffect(avoiding, avoider.focusedToken, keyboardTop, listBottomInRoot) {
         if (!avoiding) return@LaunchedEffect
         val visibleBottom = minOf(listBottomInRoot, keyboardTop) - margin
-        var remaining = bottom - visibleBottom
         // The end padding for the keyboard is laid out a frame after it is asked for; a
-        // short page cannot scroll until then. Scroll what can be scrolled, wait a frame,
-        // and go on until the field is above the keyboard.
+        // short page cannot scroll until then. Scroll, let a frame pass, re-read where the
+        // field is, until it is above the keyboard.
         repeat(10) {
+            val remaining = (avoider.focusedBottom ?: return@LaunchedEffect) - visibleBottom
             if (remaining <= 1f) return@LaunchedEffect
-            remaining -= state.animateScrollBy(remaining)
-            if (remaining > 1f) delay(16)
+            state.animateScrollBy(remaining)
+            delay(16)
         }
     }
     val paddedContent = if (overlap > 0f) {

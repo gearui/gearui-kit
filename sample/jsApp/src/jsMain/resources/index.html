@@ -52,8 +52,8 @@
 <div id="root"></div>
 <!-- The sample bundle and host bundle are served from the same directory. -->
 <script type="text/javascript" src="gearui_sample.js"></script>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/libpag@4.3.51/lib/libpag.umd.min.js"></script>
+<!-- No libpag: GearUI renders no PAG animation, and the Kuikly template's CDN script
+     made every page load depend on cdn.jsdelivr.net. -->
 <script type="text/javascript" src="jsApp.js"></script>
 </body>
 </html>

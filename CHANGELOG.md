@@ -95,6 +95,11 @@
   scrims now consume native touches their content leaves.
 - An open `ComboBox` panel is updated in place as the query changes instead of closing
   and reopening, so a tap on an option cannot land on a panel being rebuilt.
+- Screen-reader focus returns to the control that opened a dialog, sheet, menu or
+  dropdown when it closes (VoiceOver/TalkBack, through KuiklyUI's
+  `accessibilityFocus()`); toasts and banners neither take nor return it.
+- The Web sample no longer loads `libpag` from cdn.jsdelivr.net (GearUI renders no PAG
+  animation); pages load with no third-party request.
 - A focused text field in a `GearLazyColumn` stays above the software keyboard, as on
   iOS: the list pads its end by the keyboard's overlap and scrolls the field into view,
   also on a page too short to scroll before. Only fields inside that list count, so a

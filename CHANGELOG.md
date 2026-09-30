@@ -57,6 +57,12 @@
     of the card, which read as a triple inset.
   - `Kbd` and `Code`: the text sat in the top-left corner of its cap; padding on a
     KuiklyUI text node does not move the glyphs.
+  - `Upload`: a file tile without a thumbnail states its status in place of the
+    paperclip instead of under a scrim that hid the file name, above all in dark.
+  - `Timeline`: the connector runs from dot to dot whatever the item's height.
+  - `Watermark`: tiles run past the edge and are cut there instead of wrapping the
+    text of the last column mid-word.
+  - `Tag`: the close button is a named button with a larger target.
 - No beta7 artifact has been uploaded and no version tag has been created.
 
 ### Migration from 1.0.0-beta6

@@ -1,5 +1,8 @@
 package com.gearui.components.watermark
 
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.foundation.layout.wrapContentWidth
+import com.tencent.kuikly.compose.ui.draw.clipToBounds
 import com.gearui.foundation.layout.Spacing
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -35,7 +38,9 @@ fun Watermark(
         content.split("\n").map { it.trim() }.filter { it.isNotEmpty() }.ifEmpty { listOf(content) }
     }
 
-    Box(modifier = modifier) {
+    // Tiles run past the edge and are cut there; squeezed into the width, the last
+    // column wrapped its text mid-word.
+    Box(modifier = modifier.clipToBounds()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -43,14 +48,18 @@ fun Watermark(
             verticalArrangement = Arrangement.spacedBy(gapY)
         ) {
             repeat(rows.coerceAtLeast(1)) {
-                Row(horizontalArrangement = Arrangement.spacedBy(gapX)) {
+                Row(
+                    modifier = Modifier.wrapContentWidth(align = Alignment.Start, unbounded = true),
+                    horizontalArrangement = Arrangement.spacedBy(gapX),
+                ) {
                     repeat(columns.coerceAtLeast(1)) {
                         Column(modifier = Modifier.rotate(rotate)) {
                             lines.forEach { line ->
                                 Text(
                                     text = line,
                                     style = textStyle,
-                                    color = colors.mutedForeground.copy(alpha = normalizedAlpha)
+                                    color = colors.mutedForeground.copy(alpha = normalizedAlpha),
+                                    maxLines = 1,
                                 )
                             }
                         }

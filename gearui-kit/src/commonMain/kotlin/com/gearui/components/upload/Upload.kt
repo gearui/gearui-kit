@@ -144,29 +144,45 @@ private fun UploadTile(
                         contentDescription = item.name,
                     )
                 } else {
+                    // A file tile states its status in place of the paperclip: a scrim over
+                    // the name made it unreadable, most of all in the dark theme.
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(ControlGeometry.dialogTextGap),
                         modifier = Modifier.padding(horizontal = ControlGeometry.uploadTileGap),
                     ) {
-                        Icon(name = Icons.paperclip, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
+                        when (item.status) {
+                            UploadStatus.PENDING -> Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = colors.mutedForeground)
+                            UploadStatus.FAILED -> Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = colors.destructive)
+                            else -> Icon(name = Icons.paperclip, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
+                        }
                         if (item.name.isNotEmpty()) {
                             Text(
                                 text = item.name,
                                 style = Theme.typography.bodyExtraSmall,
-                                color = colors.mutedForeground,
+                                color = if (failed) colors.destructive else colors.mutedForeground,
                                 maxLines = 2,
+                            )
+                        }
+                        if (item.status == UploadStatus.UPLOADING) {
+                            LinearProgress(
+                                progress = item.progress.coerceIn(0f, 1f),
+                                modifier = Modifier.fillMaxWidth(),
+                                showLabel = false,
                             )
                         }
                     }
                 }
-                when (item.status) {
-                    UploadStatus.UPLOADING -> UploadingOverlay(item.progress)
-                    UploadStatus.PENDING -> StatusOverlay { Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = Color.White) }
-                    UploadStatus.FAILED -> StatusOverlay {
-                        Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = Color.White)
+                // A picture keeps its status on a scrim, so progress reads over any image.
+                if (item.thumbnail != null) {
+                    when (item.status) {
+                        UploadStatus.UPLOADING -> UploadingOverlay(item.progress)
+                        UploadStatus.PENDING -> StatusOverlay { Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = Color.White) }
+                        UploadStatus.FAILED -> StatusOverlay {
+                            Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = Color.White)
+                        }
+                        UploadStatus.DONE -> Unit
                     }
-                    UploadStatus.DONE -> Unit
                 }
             }
         }

@@ -127,8 +127,11 @@ private fun TimelineItemView(
         TimelineColor.ERROR -> colors.destructive
     }
 
+    // The row is as tall as its content, and the axis fills it, so the connector runs
+    // from this dot to the next one whatever the content's height. A fixed-height line
+    // stopped short of the next dot.
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
         horizontalArrangement = if (position == TimelinePosition.RIGHT) {
             Arrangement.End
         } else {
@@ -143,7 +146,7 @@ private fun TimelineItemView(
         // Dot and line
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.width(ControlGeometry.timelineAxisWidth)
+            modifier = Modifier.width(ControlGeometry.timelineAxisWidth).fillMaxHeight()
         ) {
             // Dot
             Box(
@@ -168,7 +171,8 @@ private fun TimelineItemView(
                 Box(
                     modifier = Modifier
                         .width(BorderWidth.thick)
-                        .height(ControlGeometry.timelineConnectorMinHeight)
+                        .weight(1f)
+                        .heightIn(min = ControlGeometry.timelineConnectorMinHeight)
                         .background(colors.border)
                 )
             }

@@ -1,5 +1,10 @@
 package com.gearui.components.tag
 
+import com.tencent.kuikly.compose.ui.semantics.semantics
+import com.tencent.kuikly.compose.ui.semantics.contentDescription
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.gearui.i18n.I18n
+import com.gearui.foundation.interaction.touchTarget
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
@@ -166,13 +171,19 @@ fun Tag(
             // Close button
             if (closable && onClose != null) {
                 Spacer(modifier = Modifier.width(Spacing.xs))
+                val closeLabel = I18n.strings.common.close
                 Box(
                     modifier = Modifier
                         .size(tokens.iconBoxSize)
+                        // A named button with a 44dp target; it was a 14dp unnamed one.
+                        .touchTarget(tokens.iconBoxSize)
+                        .semantics { contentDescription = closeLabel }
                         .clickable(
                             enabled = !disabled,
+                            role = Role.Button,
                             onClick = onClose
-                        )
+                        ),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         name = Icons.x,

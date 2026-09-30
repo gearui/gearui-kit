@@ -206,12 +206,24 @@ class Ios:
         self.tree_empty = len(data) == 1 and not (data[0].get("frame") or {}).get("width")
         rows = []
         for e in data:
+            if e.get("type") == "Application" and e.get("frame"):
+                self.screen_h = e["frame"]["height"]
+        for e in data:
             label = (e.get("AXLabel") or "").strip()
+            value = e.get("AXValue")
             f = e.get("frame") or {}
-            if label and f:
-                rows.append((label, (f["x"], f["y"], f["x"] + f["width"], f["y"] + f["height"])))
-            if e.get("type") == "Application" and f:
-                self.screen_h = f["height"]
+            if not f:
+                continue
+            box = (f["x"], f["y"], f["x"] + f["width"], f["y"] + f["height"])
+            # idb lists elements scrolled out of sight too; Android's tree has only what
+            # is on screen. Keep the two alike: what a finger could reach now.
+            if self.screen_h and (box[3] <= 0 or box[1] >= self.screen_h):
+                continue
+            if label:
+                rows.append((label, box))
+            # A field's text is its value on iOS (Android shows it as the node's text).
+            if isinstance(value, str) and value.strip() and value.strip() != label:
+                rows.append((value.strip(), box))
         return rows
 
     def wait_ready(self, title, timeout=20):

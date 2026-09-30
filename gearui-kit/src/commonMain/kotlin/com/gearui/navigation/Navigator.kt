@@ -1,5 +1,6 @@
 package com.gearui.navigation
 
+import com.gearui.foundation.interaction.consumeNativeTouches
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.runtime.Composable
@@ -310,7 +311,7 @@ fun <R : NavRoute> Navigator(
                                 // layer the hit, and consumes nothing its content needs.
                                 .let { m -> if (layer.role == NavLayerRole.Front || layer.role == NavLayerRole.Moving) m.pointerInput(Unit) {
                                     awaitPointerEventScope { while (true) awaitPointerEvent() }
-                                } else m },
+                                }.consumeNativeTouches() else m },
                         ) {
                             // Page-first swipe-back arbitration. Each layer owns a
                             // gate; the foreground layer publishes it into the state

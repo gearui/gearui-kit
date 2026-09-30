@@ -39,6 +39,7 @@ private val NarrowColumnWidth = 72.dp
 private val MediumColumnWidth = 96.dp
 private val WideColumnWidth = 128.dp
 private val ExtraWideColumnWidth = 160.dp
+private val StatusColumnWidth = 92.dp
 
 private typealias Row4 = Map<String, String>
 
@@ -355,6 +356,9 @@ fun TableExample(
                     TableColumn(
                         key = "status",
                         title = "状态",
+                        // A three-character tag and the cell's padding; shared equally, the
+                        // status was cut to "已…".
+                        width = StatusColumnWidth,
                         align = TableAlign.CENTER,
                         render = { item, _ ->
                             val theme = when (item.status) {

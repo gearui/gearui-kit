@@ -1,5 +1,6 @@
 package com.gearui.overlay
 
+import com.gearui.foundation.interaction.consumeNativeTouches
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.ui.unit.dp
@@ -306,6 +307,7 @@ private fun OverlayItemLayout(
                     .fillMaxSize()
                     .alpha(progress.value)
                     .background(options.maskColor ?: OverlayDefaults.scrimColor)
+                    .consumeNativeTouches()
                     // Consume every pointer change up front so a LazyColumn behind
                     // never sees them. detectDragGestures is not enough — it lets the
                     // down event reach the layer below first, where the native scroll
@@ -341,7 +343,7 @@ private fun OverlayItemLayout(
             )
         } else if (policy.outsideClick || policy.scroll) {
             // Transparent touch layer for click and drag dismissal.
-            val dismissGesture = Modifier.pointerInput(item.id) {
+            val dismissGesture = Modifier.consumeNativeTouches().pointerInput(item.id) {
                         val dragThreshold = 10f
 
                         awaitEachGesture {

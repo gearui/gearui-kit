@@ -134,11 +134,24 @@ fun <T> ComboBox(
         }
     }
 
-    // Reopen whenever the suggestions change, so the panel tracks typing — and once the
-    // viewport is measured: an autofocused field gains focus before it is.
+    // Follow the suggestions as the user types — and open once the viewport is measured:
+    // an autofocused field gains focus before it is. An open panel is updated in place,
+    // never closed and reopened: rebuilt between a tap's down and up (iOS commits an
+    // autocorrection on that tap, which changes the query), the tap on an option was lost.
     LaunchedEffect(focused, query, matches.size, enabled, viewport.height > 0) {
-        close()
-        if (focused && enabled) open()
+        val id = overlayId
+        val bounds = anchorBounds
+        when {
+            !focused || !enabled || matches.isEmpty() -> close()
+            id == null -> open()
+            bounds != null -> {
+                val moved = placementFor(bounds)
+                if (moved == null) close() else {
+                    placement = moved
+                    overlay.updateAnchor(id, moved.anchor, bounds)
+                }
+            }
+        }
     }
     TrackDropdownAnchor(overlay, overlayId, anchorBounds, ::placementFor, { placement = it }, ::close)
 

@@ -86,6 +86,13 @@
   placeholder in a separate text view, so the kit's placeholder-based name never
   reached the input and VoiceOver read an unnamed text view; the name is now also the
   input's own accessibility label there (Android keeps its placeholder name).
+- A tap on an overlay's scrim, or on a blank part of a page, no longer reaches a text
+  field underneath. KuiklyUI's fields are native views and took the touch directly —
+  the sample's hidden Home search field (kept alive under the pushed page) caught taps
+  on a bottom sheet's scrim and raised the keyboard. Navigator's front page and overlay
+  scrims now consume native touches their content leaves.
+- An open `ComboBox` panel is updated in place as the query changes instead of closing
+  and reopening, so a tap on an option cannot land on a panel being rebuilt.
 - Overlays no longer widen the page on the Web: a screen-wide panel's shadow is clipped
   at the screen edge instead of adding a horizontal scroll.
 - Overlay: `OverlayController.updateAnchor(id, anchorBounds, passThroughBounds)` moves an

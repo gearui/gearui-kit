@@ -1,87 +1,115 @@
 #!/usr/bin/env python3
-"""Screen-reader audit of every sample page on an Android device.
+"""Accessibility-tree audit of every sample page on an Android device.
 
-    python3 scripts/acceptance/android_accessibility_audit.py <adb-serial> [out-dir]
+    python3 scripts/acceptance/android_accessibility_audit.py <adb-serial> [--out DIR] [--routes a,b] [--themes light,dark]
 
 TalkBack reads the platform accessibility node tree; uiautomator dumps that same
-tree. For each route (light theme) this records, in traversal order, what TalkBack
-would announce for every labelled node, and flags:
+tree. Each route is opened through sample_driver (launch checked, page proven
+rendered, tree freshly dumped) and this records, in traversal order, what each
+labelled node would announce, and flags:
 
-  unlabeled   a clickable, checkable or focusable node with no text or description
+  unlabeled   a clickable or checkable node with no text or description
   small       a clickable node under 48 x 48 dp (Android's minimum touch target)
+  overlap     two clickable nodes whose touch areas intersect (an enlarged target
+              stealing its neighbour's taps)
 
-Output: <out>/<route>.txt (the readout) and one ISSUE line per finding on stdout.
-This is the tree TalkBack uses, not a recording of TalkBack speaking.
+This is the tree TalkBack uses, not TalkBack speaking: focus order as spoken, the
+effect of actions and state announcements are checked by hand with TalkBack on.
+Exit status: 0 no findings, 1 findings, 2 a page could not be audited.
 """
+import argparse
+import json
 import os
-import re
-import subprocess
 import sys
-import time
-import xml.etree.ElementTree as ET
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SERIAL = sys.argv[1]
-OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, "build/beta7-acceptance/android-a11y")
-APP = "com.gearui.kit.sample/com.gearui.sample.MainActivity"
-PACKAGE = "com.gearui.kit.sample"
-
-
-def adb(*args):
-    return subprocess.run(["adb", "-s", SERIAL, *args], capture_output=True, text=True).stdout
-
-
-def routes():
-    path = os.path.join(ROOT, "sample/src/commonMain/kotlin/com/gearui/sample/config/ComponentConfig.kt")
-    return re.findall(r'ComponentInfo\("([^"]+)"', open(path).read())
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sample_driver import PACKAGE, DriverError, device, output_dir, routes, write_meta  # noqa: E402
+import re  # noqa: E402
 
 
 def bounds(node):
-    x1, y1, x2, y2 = map(int, re.findall(r"\d+", node.get("bounds", "[0,0][0,0]")))
-    return x1, y1, x2, y2
+    return tuple(map(int, re.findall(r"-?\d+", node.get("bounds", "[0,0][0,0]"))))
+
+
+def audit(tree, dev):
+    findings, lines, targets = [], [], []
+    min_px = 48 * dev.density
+    for node in tree.iter("node"):
+        if node.get("package") != PACKAGE:
+            continue
+        label = (node.get("content-desc") or node.get("text") or "").strip()
+        clickable = node.get("clickable") == "true"
+        checkable = node.get("checkable") == "true"
+        x1, y1, x2, y2 = bounds(node)
+        visible = x2 > x1 and y2 > y1
+        state = []
+        if checkable:
+            state.append("checked" if node.get("checked") == "true" else "not checked")
+        if node.get("enabled") == "false":
+            state.append("disabled")
+        if label or state:
+            lines.append(" · ".join([label or "(no label)", node.get("class", "").split(".")[-1], *state]))
+        if (clickable or checkable) and not label and visible:
+            findings.append(("unlabeled", f"{node.get('class')} at {node.get('bounds')}"))
+        # A node cut by the screen edge is not its real size; skip it.
+        cut = y1 <= 0 or y2 >= dev.screen_h
+        if clickable and visible and not cut:
+            if x2 - x1 < min_px or y2 - y1 < min_px:
+                findings.append(("small", f"{label[:40]}|{(x2 - x1) / dev.density:.0f}x{(y2 - y1) / dev.density:.0f}dp"))
+            targets.append((label, (x1, y1, x2, y2)))
+    for i, (la, a) in enumerate(targets):
+        for lb, b in targets[i + 1:]:
+            nested = (a[0] <= b[0] and a[1] <= b[1] and a[2] >= b[2] and a[3] >= b[3]) or \
+                     (b[0] <= a[0] and b[1] <= a[1] and b[2] >= a[2] and b[3] >= a[3])
+            if not nested and a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
+                findings.append(("overlap", f"{la[:30]} ∩ {lb[:30]}"))
+    return findings, lines
 
 
 def main():
-    os.makedirs(OUT, exist_ok=True)
-    density = int(re.search(r"(\d+)\s*$", adb("shell", "wm", "density").strip()).group(1)) / 160
-    min_px = 48 * density
-    screen_h = int(adb("shell", "wm", "size").strip().split("x")[-1])
-    total = 0
-    for route in routes():
-        adb("shell", "am", "start", "-S", "-W", "-n", APP, "--es", "route", route, "--es", "theme", "light")
-        time.sleep(1.5)
-        adb("shell", "uiautomator", "dump", "/sdcard/a11y.xml")
-        xml = adb("exec-out", "cat", "/sdcard/a11y.xml")
-        try:
-            tree = ET.fromstring(xml[xml.index("<?xml"):])
-        except (ET.ParseError, ValueError):
-            print(f"ISSUE|{route}|dump|could not read the node tree", flush=True)
-            total += 1
-            continue
-        lines = []
-        for node in tree.iter("node"):
-            if node.get("package") != PACKAGE:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("serial")
+    ap.add_argument("--out")
+    ap.add_argument("--routes")
+    ap.add_argument("--themes", default="light")
+    a = ap.parse_args()
+    try:
+        dev = device("android", a.serial)
+        info = dev.describe()
+    except DriverError as e:
+        print(f"FAIL|setup|{e}", flush=True)
+        return 2
+    wanted = set(a.routes.split(",")) if a.routes else None
+    todo = [(r, t) for r, t in routes() if wanted is None or r in wanted]
+    if wanted:
+        todo += [(r, r) for r in sorted(wanted - {r for r, _ in todo})]
+    themes = a.themes.split(",")
+    out = output_dir("android-a11y", a.out)
+    write_meta(out, **info, pages_expected=len(todo) * len(themes))
+    total, done, failed = 0, 0, []
+    for route, title in todo:
+        for theme in themes:
+            try:
+                dev.launch(route, theme)
+                tree = dev.wait_ready(title)
+            except DriverError as e:
+                failed.append({"route": route, "theme": theme, "error": str(e)})
+                print(f"FAIL|{route}|{theme}|{e}", flush=True)
                 continue
-            label = (node.get("content-desc") or node.get("text") or "").strip()
-            clickable = node.get("clickable") == "true"
-            interactive = clickable or node.get("checkable") == "true"
-            if label:
-                lines.append(label)
-            x1, y1, x2, y2 = bounds(node)
-            visible = x2 > x1 and y2 > y1
-            if interactive and not label and visible:
-                print(f"ISSUE|{route}|unlabeled|{node.get('class')} at {node.get('bounds')}", flush=True)
-                total += 1
-            # A node cut by the screen edge is not its real size; skip it.
-            cut = y1 <= 0 or y2 >= screen_h
-            if clickable and label and visible and not cut and (x2 - x1 < min_px or y2 - y1 < min_px):
-                print(f"ISSUE|{route}|small|{label[:40]}|{(x2 - x1) / density:.0f}x{(y2 - y1) / density:.0f}dp", flush=True)
-                total += 1
-        with open(os.path.join(OUT, f"{route}.txt"), "w") as f:
-            f.write("\n".join(lines) + "\n")
-        print(f"PAGE|{route}|{len(lines)} announced", flush=True)
-    print(f"TOTAL|{total}")
+            findings, lines = audit(tree, dev)
+            with open(os.path.join(out, f"{route}-{theme}.txt"), "w") as f:
+                f.write("\n".join(lines) + "\n")
+            for kind, detail in findings:
+                print(f"ISSUE|{route}|{theme}|{kind}|{detail}", flush=True)
+            total += len(findings)
+            done += 1
+            print(f"PAGE|{route}|{theme}|{len(lines)} nodes|{len(findings)} findings", flush=True)
+    with open(os.path.join(out, "result.json"), "w") as f:
+        json.dump({"pages_expected": len(todo) * len(themes), "pages_done": done,
+                   "findings": total, "failed": failed}, f, indent=2, ensure_ascii=False)
+    print(f"DONE|{done}/{len(todo) * len(themes)}|findings={total}|{out}", flush=True)
+    return 2 if failed else (1 if total else 0)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

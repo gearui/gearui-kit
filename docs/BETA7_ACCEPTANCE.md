@@ -148,12 +148,19 @@ before A1/C3/F1 can be closed.
 Reproduce screenshots after installing the candidate app:
 
 ```bash
-scripts/acceptance/capture_sample.sh android <adb-serial>
-scripts/acceptance/capture_sample.sh ios <simulator-udid>
+scripts/acceptance/capture_sample.py android <adb-serial> [--scroll]
+scripts/acceptance/capture_sample.py ios <simulator-udid> --build release [--scroll]
+scripts/acceptance/android_accessibility_audit.py <adb-serial> [--themes light,dark]
+scripts/acceptance/ios_accessibility_audit.sh <simulator-udid> [themes] [routes]
 ```
 
-The script captures **first viewports only** for all 93 sample routes, light and
-dark. A generated PNG or successful launch is not a visual verdict, and a
+Every script opens a page through `scripts/acceptance/sample_driver.py`, which checks
+each platform command and counts a page only once its NavBar title and content are in
+the accessibility tree. Each run writes to a fresh `build/acceptance/<kind>-<time>-<sha>`
+directory with `run.json` (SHA, dirty worktree, device, build type, pages expected)
+and `result.json` (pages done, failures); a failed page makes the run exit non-zero.
+The capture covers all 93 sample routes, light and dark, and with `--scroll` also
+the end of every page that scrolls. A generated PNG or successful launch is not a visual verdict, and a
 simulator is not an iOS device. Review each result against `VISUAL_SPEC`, scroll
 long pages and exercise state changes before marking D2 complete.
 

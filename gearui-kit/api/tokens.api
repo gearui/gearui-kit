@@ -159,7 +159,7 @@
 
 [source] colors.tokens.json
   colors.darkAccentSoft = {"$type":"color","$value":"{reference.dark.accent-soft}"}
-  colors.darkAccentSoftForeground = {"$type":"color","$value":"{reference.dark.accent-soft-foreground}"}
+  colors.darkAccentSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7465,0.133,253.83]}}
   colors.darkBackdrop = {"$type":"color","$value":"{reference.dark.backdrop}"}
   colors.darkBackground = {"$type":"color","$value":"{reference.dark.background}"}
   colors.darkBorder = {"$type":"color","$value":"{reference.dark.border}"}
@@ -172,8 +172,8 @@
   colors.darkButtonPressed = {"$type":"color","$value":"{reference.dark.default}"}
   colors.darkButtonPressedBorder = {"$type":"color","$value":"{reference.dark.border}"}
   colors.darkDangerSoft = {"$type":"color","$value":"{reference.dark.danger-soft}"}
-  colors.darkDangerSoftForeground = {"$type":"color","$value":"{reference.dark.danger-soft-foreground}"}
-  colors.darkDestructive = {"$type":"color","$value":"{reference.dark.danger}"}
+  colors.darkDangerSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.7424,0.1554,24.63]}}
+  colors.darkDestructive = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.58,0.1967,24.63]}}
   colors.darkDestructiveForeground = {"$type":"color","$value":"{reference.dark.danger-foreground}"}
   colors.darkForeground = {"$type":"color","$value":"{reference.dark.foreground}"}
   colors.darkInputBorder = {"$type":"color","$value":"{reference.dark.field-border}"}
@@ -182,7 +182,7 @@
   colors.darkMutedForeground = {"$type":"color","$value":"{reference.dark.muted}"}
   colors.darkOverlay = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.243,0.0059,285.89]}}
   colors.darkPressHighlight = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.8313725490196079,0.8313725490196079,0.8470588235294118],"hex":"#d4d4d8"}}
-  colors.darkPrimary = {"$type":"color","$value":"{reference.dark.accent}"}
+  colors.darkPrimary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5574,0.176,253.83]}}
   colors.darkPrimaryForeground = {"$type":"color","$value":"{reference.dark.accent-foreground}"}
   colors.darkRing = {"$type":"color","$value":"{reference.dark.focus}"}
   colors.darkSegment = {"$type":"color","$value":"{reference.dark.segment}"}
@@ -202,7 +202,7 @@
   colors.darkWarningSoft = {"$type":"color","$value":"{reference.dark.warning-soft}"}
   colors.darkWarningSoftForeground = {"$type":"color","$value":"{reference.dark.warning-soft-foreground}"}
   colors.lightAccentSoft = {"$type":"color","$value":"{reference.light.accent-soft}"}
-  colors.lightAccentSoftForeground = {"$type":"color","$value":"{reference.light.accent-soft-foreground}"}
+  colors.lightAccentSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.4984,0.157,254.06]}}
   colors.lightBackdrop = {"$type":"color","$value":"{reference.light.backdrop}"}
   colors.lightBackground = {"$type":"color","$value":"{reference.light.background}"}
   colors.lightBorder = {"$type":"color","$value":"{reference.light.border}"}
@@ -215,17 +215,17 @@
   colors.lightButtonPressed = {"$type":"color","$value":"{reference.light.default}"}
   colors.lightButtonPressedBorder = {"$type":"color","$value":"{reference.light.border}"}
   colors.lightDangerSoft = {"$type":"color","$value":"{reference.light.danger-soft}"}
-  colors.lightDangerSoftForeground = {"$type":"color","$value":"{reference.light.danger-soft-foreground}"}
-  colors.lightDestructive = {"$type":"color","$value":"{reference.light.danger}"}
+  colors.lightDangerSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5186,0.186,25.38]}}
+  colors.lightDestructive = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5852,0.2328,25.74]}}
   colors.lightDestructiveForeground = {"$type":"color","$value":"{reference.light.danger-foreground}"}
   colors.lightForeground = {"$type":"color","$value":"{reference.light.foreground}"}
   colors.lightInputBorder = {"$type":"color","$value":"{reference.light.field-border}"}
   colors.lightInputHoverBorder = {"$type":"color","$value":"{reference.light.field-border}"}
   colors.lightMuted = {"$type":"color","$value":"{reference.light.default}"}
-  colors.lightMutedForeground = {"$type":"color","$value":"{reference.light.muted}"}
+  colors.lightMutedForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5207,0.0138,285.94]}}
   colors.lightOverlay = {"$type":"color","$value":"{reference.light.overlay}"}
   colors.lightPressHighlight = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0.24705882352941178,0.24705882352941178,0.27450980392156865],"hex":"#3f3f46"}}
-  colors.lightPrimary = {"$type":"color","$value":"{reference.light.accent}"}
+  colors.lightPrimary = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5574,0.176,253.83]}}
   colors.lightPrimaryForeground = {"$type":"color","$value":"{reference.light.accent-foreground}"}
   colors.lightRing = {"$type":"color","$value":"{reference.light.focus}"}
   colors.lightSegment = {"$type":"color","$value":"{reference.light.segment}"}
@@ -235,7 +235,7 @@
   colors.lightSuccess = {"$type":"color","$value":"{reference.light.success}"}
   colors.lightSuccessForeground = {"$type":"color","$value":"{reference.light.success-foreground}"}
   colors.lightSuccessSoft = {"$type":"color","$value":"{reference.light.success-soft}"}
-  colors.lightSuccessSoftForeground = {"$type":"color","$value":"{reference.light.success-soft-foreground}"}
+  colors.lightSuccessSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.4871,0.1292,151.34]}}
   colors.lightSurface = {"$type":"color","$value":"{reference.light.surface}"}
   colors.lightSurfaceForeground = {"$type":"color","$value":"{reference.light.surface-foreground}"}
   colors.lightSwitchThumb = {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[1,1,1]}}
@@ -243,7 +243,7 @@
   colors.lightWarning = {"$type":"color","$value":"{reference.light.warning}"}
   colors.lightWarningForeground = {"$type":"color","$value":"{reference.light.warning-foreground}"}
   colors.lightWarningSoft = {"$type":"color","$value":"{reference.light.warning-soft}"}
-  colors.lightWarningSoftForeground = {"$type":"color","$value":"{reference.light.warning-soft-foreground}"}
+  colors.lightWarningSoftForeground = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.5058,0.1013,71.68]}}
   reference.base.black = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0,0,0]}}
   reference.base.eclipse = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.2103,0.0059,285.89]}}
   reference.base.snow = {"$type":"color","$value":{"alpha":1,"colorSpace":"oklch","components":[0.9911,0,0]}}

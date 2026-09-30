@@ -208,7 +208,7 @@ fun ImageWithState(
                         Icon(
                             name = Icons.x,
                             size = IconSizes.Default.lg,
-                            tint = colors.destructive
+                            tint = colors.destructiveSoftForeground
                         )
                         Spacer(modifier = Modifier.height(Spacing.xs))
                         Text(

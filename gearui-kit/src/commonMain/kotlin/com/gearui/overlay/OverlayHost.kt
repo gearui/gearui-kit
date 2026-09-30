@@ -5,6 +5,7 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.IntOffset
 import com.tencent.kuikly.compose.ui.unit.IntSize
+import com.tencent.kuikly.compose.ui.draw.clipToBounds
 import kotlin.math.roundToInt
 import com.tencent.kuikly.compose.ui.unit.Density
 import com.tencent.kuikly.compose.animation.core.Animatable
@@ -159,7 +160,9 @@ fun OverlayHost(
     val blocksContentBelow = controller.items.any { !it.exiting.value && !it.options.passThroughOutside }
 
     var hostSize by remember { mutableStateOf(IntSize.Zero) }
-    Box(Modifier.fillMaxSize().onSizeChanged { hostSize = it }) {
+    // Clipped: a panel as wide as the screen draws its shadow past both edges, and on the
+    // Web that overflow made the whole page scroll sideways.
+    Box(Modifier.fillMaxSize().clipToBounds().onSizeChanged { hostSize = it }) {
         // Normal app content
         Box(
             Modifier

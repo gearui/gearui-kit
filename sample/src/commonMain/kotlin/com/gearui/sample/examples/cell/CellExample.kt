@@ -76,7 +76,7 @@ fun CellExample(
                             Text(
                                 text = "已开启",
                                 style = Theme.typography.bodySmall,
-                                color = colors.success
+                                color = colors.successSoftForeground
                             )
                         }
                     )

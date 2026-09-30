@@ -53,12 +53,12 @@ fun FieldLabel(
         modifier = modifier.alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = text, style = style, color = if (invalid) colors.destructive else colors.foreground)
+        Text(text = text, style = style, color = if (invalid) colors.destructiveSoftForeground else colors.foreground)
         if (required) {
             Text(
                 text = " *",
                 style = style,
-                color = if (enabled) colors.destructive else colors.mutedForeground,
+                color = if (enabled) colors.destructiveSoftForeground else colors.mutedForeground,
             )
         }
     }
@@ -77,7 +77,7 @@ fun FieldDescription(
     Text(
         text = text,
         style = Theme.typography.bodySmall,
-        color = if (invalid) Theme.colors.destructive else Theme.colors.mutedForeground,
+        color = if (invalid) Theme.colors.destructiveSoftForeground else Theme.colors.mutedForeground,
         modifier = modifier,
     )
 }

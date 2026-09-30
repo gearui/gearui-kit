@@ -153,14 +153,14 @@ private fun UploadTile(
                     ) {
                         when (item.status) {
                             UploadStatus.PENDING -> Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = colors.mutedForeground)
-                            UploadStatus.FAILED -> Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = colors.destructive)
+                            UploadStatus.FAILED -> Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = colors.destructiveSoftForeground)
                             else -> Icon(name = Icons.paperclip, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
                         }
                         if (item.name.isNotEmpty()) {
                             Text(
                                 text = item.name,
                                 style = Theme.typography.bodyExtraSmall,
-                                color = if (failed) colors.destructive else colors.mutedForeground,
+                                color = if (failed) colors.destructiveSoftForeground else colors.mutedForeground,
                                 maxLines = 2,
                             )
                         }

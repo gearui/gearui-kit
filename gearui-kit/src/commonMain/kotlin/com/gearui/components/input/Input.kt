@@ -533,7 +533,7 @@ fun Input(
                     Text(
                         text = "${value.length}/$maxLength",
                         style = Theme.typography.bodySmall,
-                        color = if (hasError) colors.destructive else colors.mutedForeground,
+                        color = if (hasError) colors.destructiveSoftForeground else colors.mutedForeground,
                     )
                 }
             }

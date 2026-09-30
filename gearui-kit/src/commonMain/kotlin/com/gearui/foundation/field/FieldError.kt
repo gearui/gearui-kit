@@ -64,7 +64,7 @@ fun FieldErrorText(error: String?) {
     Text(
         text = error,
         style = Theme.typography.bodySmall,
-        color = Theme.colors.destructive,
+        color = Theme.colors.destructiveSoftForeground,
         modifier = Modifier.padding(top = Spacing.xs),
     )
 }

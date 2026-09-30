@@ -120,7 +120,7 @@ fun BackTopExample(
                     Text(
                         text = "顶部",
                         style = Theme.typography.bodyExtraSmall,
-                        color = colors.primary
+                        color = colors.primarySoftForeground
                     )
                 }
             }

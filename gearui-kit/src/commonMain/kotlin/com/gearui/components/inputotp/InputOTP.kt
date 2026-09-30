@@ -115,13 +115,15 @@ fun InputOTP(
                 )
             }
         }
-        // The only real input. Text and caret are transparent: the slots draw both.
+        // The only real input. Text and caret are transparent: the slots draw both. The
+        // text is the theme's foreground at zero alpha rather than transparent black: an
+        // accessibility audit reads the colour without its alpha, and black failed on dark.
         BasicTextField(
             value = code,
             onValueChange = { next -> if (enabled) onValueChange(sanitizeOtp(next, length, numeric)) },
             enabled = enabled,
             singleLine = true,
-            textStyle = TextStyle(color = Color.Transparent),
+            textStyle = TextStyle(color = Theme.colors.foreground.copy(alpha = 0f)),
             cursorBrush = SolidColor(Color.Transparent),
             keyboardOptions = KeyboardOptions(keyboardType = if (numeric) numericKeyboardType() else KeyboardType.Text),
             modifier = Modifier

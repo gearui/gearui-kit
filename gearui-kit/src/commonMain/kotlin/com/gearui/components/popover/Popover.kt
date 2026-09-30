@@ -585,7 +585,7 @@ fun PopoverMenu(
                             text = item.label,
                             style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                             color = when {
-                                item.danger -> colors.destructive
+                                item.danger -> colors.destructiveSoftForeground
                                 else -> LocalPopoverTextColor.current
                             }
                         )

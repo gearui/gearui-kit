@@ -498,7 +498,7 @@ private fun BottomSheetItemRow(
     val interaction = remember { MutableInteractionSource() }
 
     val textColor = when {
-        item.danger -> colors.destructive
+        item.danger -> colors.destructiveSoftForeground
         else -> colors.foreground
     }
 

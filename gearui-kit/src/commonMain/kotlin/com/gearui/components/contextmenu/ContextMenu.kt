@@ -163,7 +163,7 @@ fun ContextMenu(
                         val interaction = remember(item) { MutableInteractionSource() }
                         val itemColor = when {
                             item.disabled -> colors.mutedForeground
-                            item.danger -> colors.destructive
+                            item.danger -> colors.destructiveSoftForeground
                             else -> colors.foreground
                         }
                         Row(

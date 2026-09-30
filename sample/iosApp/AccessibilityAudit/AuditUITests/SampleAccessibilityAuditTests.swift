@@ -2,7 +2,8 @@ import XCTest
 
 /// Runs Apple's accessibility audit on every sample page, light and dark.
 ///
-/// Pages come from `TEST_RUNNER_GEARUI_ROUTES` as comma-separated `route=Title` pairs,
+/// Pages come from `TEST_RUNNER_GEARUI_ROUTES` as comma-separated `route=Title|Heading`
+/// entries (the NavBar's English name, or the Chinese heading of a page without one),
 /// which scripts/acceptance/ios_accessibility_audit.sh fills from the component
 /// registry. A page is audited only once its NavBar title is on screen; otherwise it
 /// is reported as `AUDITPAGE|route|theme|NOT_READY` and the run fails.
@@ -27,7 +28,7 @@ final class SampleAccessibilityAuditTests: XCTestCase {
                 app.launchArguments = ["-route", route, "-theme", theme]
                 app.launch()
                 guard app.wait(for: .runningForeground, timeout: 10),
-                      app.staticTexts[title].firstMatch.waitForExistence(timeout: 20) else {
+                      waitForAny(app, title.split(separator: "|").map(String.init), timeout: 20) else {
                     print("AUDITPAGE|\(route)|\(theme)|NOT_READY")
                     notReady += 1
                     app.terminate()
@@ -36,7 +37,7 @@ final class SampleAccessibilityAuditTests: XCTestCase {
                 sleep(1) // entry animations
                 var issues = 0
                 try app.performAccessibilityAudit(for: XCUIAccessibilityAuditType.all.subtracting(.dynamicType)) { issue in
-                    let element = issue.element.map { "\($0.elementType.rawValue):\($0.label)" } ?? "-"
+                    let element = issue.element.map { "\($0.elementType.rawValue):\($0.label)@y\(Int($0.frame.minY))" } ?? "-"
                     print("AUDIT|\(route)|\(theme)|\(issue.auditType.rawValue)|\(element)|\(issue.compactDescription)")
                     issues += 1
                     return true // collect, do not fail per issue
@@ -48,5 +49,14 @@ final class SampleAccessibilityAuditTests: XCTestCase {
         }
         XCTAssertEqual(notReady, 0, "pages that never rendered; see NOT_READY lines")
         XCTAssertEqual(failures, 0, "accessibility issues found; see AUDIT lines")
+    }
+
+    private func waitForAny(_ app: XCUIApplication, _ titles: [String], timeout: TimeInterval) -> Bool {
+        let end = Date().addingTimeInterval(timeout)
+        while Date() < end {
+            if titles.contains(where: { app.staticTexts[$0].firstMatch.exists }) { return true }
+            usleep(300_000)
+        }
+        return false
     }
 }

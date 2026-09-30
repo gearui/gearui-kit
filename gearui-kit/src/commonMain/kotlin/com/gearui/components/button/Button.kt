@@ -345,6 +345,15 @@ private fun getButtonColors(
         }
     }
 
+    // Text colour on no fill (outline, text, light): the theme colour's text form, which
+    // reads at 4.5:1 where the fill colour itself does not (yellow, green, the blue).
+    val textForm = when (theme) {
+        ButtonTheme.DANGER -> colors.destructiveSoftForeground
+        ButtonTheme.WARNING -> colors.warningSoftForeground
+        ButtonTheme.SUCCESS -> colors.successSoftForeground
+        else -> colors.primarySoftForeground
+    }
+
     // Text colour on a solid coloured fill: the matching foreground for the theme (adapting to light/dark), no longer primaryForeground for everything
     val onFillColor = when (theme) {
         ButtonTheme.DANGER -> colors.destructiveForeground
@@ -365,7 +374,7 @@ private fun getButtonColors(
                 Triple(
                     if (theme == ButtonTheme.LIGHT) lightColor else primaryColor,
                     if (theme == ButtonTheme.DEFAULT) colors.foreground
-                    else if (theme == ButtonTheme.LIGHT) colors.primary
+                    else if (theme == ButtonTheme.LIGHT) textForm
                     else onFillColor,
                     Color.Transparent
                 )
@@ -381,7 +390,7 @@ private fun getButtonColors(
             } else {
                 Triple(
                     colors.surface,
-                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground else textForm,
                     colors.border
                 )
             }
@@ -396,7 +405,7 @@ private fun getButtonColors(
             } else {
                 Triple(
                     Color.Transparent,
-                    if (theme == ButtonTheme.DEFAULT) colors.foreground else primaryColor,
+                    if (theme == ButtonTheme.DEFAULT) colors.foreground else textForm,
                     Color.Transparent
                 )
             }

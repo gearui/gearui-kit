@@ -186,24 +186,26 @@ fun SwiperExample(
 @Composable
 private fun Slide(index: Int, label: String) {
     val colors = Theme.colors
+    // Each fill with its own foreground: white read at 2:1 on the green and yellow slides.
     val slideColors = listOf(
-        colors.primary,
-        colors.success,
-        colors.warning,
-        colors.destructive,
-        colors.info
+        colors.primary to colors.primaryForeground,
+        colors.success to colors.successForeground,
+        colors.warning to colors.warningForeground,
+        colors.destructive to colors.destructiveForeground,
+        colors.info to colors.infoForeground,
     )
+    val (fill, foreground) = slideColors[index % slideColors.size]
     Box(
         modifier = Modifier
             .fillMaxSize()
             .clip(Theme.shapes.lg)
-            .background(slideColors[index % slideColors.size]),
+            .background(fill),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = label,
             style = Theme.typography.headlineMedium,
-            color = colors.primaryForeground
+            color = foreground
         )
     }
 }

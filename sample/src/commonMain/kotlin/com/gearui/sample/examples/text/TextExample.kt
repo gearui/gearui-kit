@@ -61,10 +61,10 @@ fun TextExample(
             title = "语义颜色",
             description = "通过 color 传入主题语义色"
         ) {
-            Text(text = "品牌色 primary", style = typography.bodyLarge, color = colors.primary)
-            Text(text = "成功 success", style = typography.bodyLarge, color = colors.success)
-            Text(text = "警告 warning", style = typography.bodyLarge, color = colors.warning)
-            Text(text = "危险 destructive", style = typography.bodyLarge, color = colors.destructive)
+            Text(text = "品牌色 primary", style = typography.bodyLarge, color = colors.primarySoftForeground)
+            Text(text = "成功 success", style = typography.bodyLarge, color = colors.successSoftForeground)
+            Text(text = "警告 warning", style = typography.bodyLarge, color = colors.warningSoftForeground)
+            Text(text = "危险 destructive", style = typography.bodyLarge, color = colors.destructiveSoftForeground)
         }
 
         ExampleSection(

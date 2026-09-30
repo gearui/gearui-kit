@@ -74,10 +74,10 @@ internal fun NotificationContent(
 
     // Icon and colour for the type
     val (iconName, iconColor) = when (type) {
-        NotificationType.INFO -> Icons.info to colors.primary
-        NotificationType.SUCCESS -> Icons.check to colors.success
-        NotificationType.WARNING -> Icons.warning to colors.warning
-        NotificationType.ERROR -> Icons.x to colors.destructive
+        NotificationType.INFO -> Icons.info to colors.primarySoftForeground
+        NotificationType.SUCCESS -> Icons.check to colors.successSoftForeground
+        NotificationType.WARNING -> Icons.warning to colors.warningSoftForeground
+        NotificationType.ERROR -> Icons.x to colors.destructiveSoftForeground
     }
 
     Row(
@@ -131,7 +131,7 @@ internal fun NotificationContent(
                 Text(
                     text = action,
                     style = Theme.typography.bodyMedium,
-                    color = colors.primary,
+                    color = colors.primarySoftForeground,
                     modifier = Modifier.clickable(onClick = {
                         onAction()
                         onDismiss()

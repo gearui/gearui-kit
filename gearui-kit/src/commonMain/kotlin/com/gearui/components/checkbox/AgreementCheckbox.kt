@@ -61,7 +61,7 @@ fun AgreementCheckbox(
             modifier = Modifier.padding(top = firstLineInset),
             style = style,
             color = Theme.colors.mutedForeground,
-            linkColor = Theme.colors.primary,
+            linkColor = Theme.colors.primarySoftForeground,
             onTextClick = { if (enabled) onCheckedChange(!checked) },
             readSentence = false,
         )

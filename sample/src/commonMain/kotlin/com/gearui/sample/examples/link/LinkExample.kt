@@ -63,8 +63,8 @@ fun LinkExample(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 LinkButton("忘记密码？", onClick = { Toast.show("忘记密码") })
-                LinkButton("立即注册", onClick = { Toast.show("立即注册") }, color = colors.primary)
-                LinkButton("删除", onClick = { Toast.show("删除") }, color = colors.destructive)
+                LinkButton("立即注册", onClick = { Toast.show("立即注册") }, color = colors.primarySoftForeground)
+                LinkButton("删除", onClick = { Toast.show("删除") }, color = colors.destructiveSoftForeground)
                 LinkButton("禁用", onClick = {}, enabled = false)
             }
         }

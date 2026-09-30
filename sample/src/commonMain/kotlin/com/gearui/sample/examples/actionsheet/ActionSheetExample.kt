@@ -294,7 +294,7 @@ fun ActionSheetExample(
                 visible = true,
                 items = listOf(
                     ActionSheetItem(label = "默认选项"),
-                    ActionSheetItem(label = "自定义选项", textColor = colors.primary),
+                    ActionSheetItem(label = "自定义选项", textColor = colors.primarySoftForeground),
                     ActionSheetItem(label = "失效选项", disabled = true),
                     ActionSheetItem(label = "警告选项", textColor = colors.destructive)
                 ),
@@ -313,7 +313,7 @@ fun ActionSheetExample(
                 visible = true,
                 items = listOf(
                     ActionSheetItem(label = "默认选项", icon = Icons.gear),
-                    ActionSheetItem(label = "自定义选项", icon = Icons.gear, textColor = colors.primary),
+                    ActionSheetItem(label = "自定义选项", icon = Icons.gear, textColor = colors.primarySoftForeground),
                     ActionSheetItem(label = "失效选项", icon = Icons.gear, disabled = true),
                     ActionSheetItem(label = "警告选项", icon = Icons.gear, textColor = colors.destructive)
                 ),

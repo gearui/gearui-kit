@@ -157,9 +157,9 @@ private fun HorizontalSteps(
                     text = item.title,
                     style = Theme.typography.bodySmall,
                     color = when (stepStatus) {
-                        StepStatus.FINISH -> colors.success
-                        StepStatus.PROCESS -> colors.primary
-                        StepStatus.ERROR -> colors.destructive
+                        StepStatus.FINISH -> colors.successSoftForeground
+                        StepStatus.PROCESS -> colors.primarySoftForeground
+                        StepStatus.ERROR -> colors.destructiveSoftForeground
                         StepStatus.WAITING -> colors.mutedForeground
                     },
                     maxLines = 2,
@@ -259,9 +259,9 @@ private fun VerticalSteps(
                         text = item.title,
                         style = Theme.typography.bodyMedium,
                         color = when (stepStatus) {
-                            StepStatus.FINISH -> colors.success
-                            StepStatus.PROCESS -> colors.primary
-                            StepStatus.ERROR -> colors.destructive
+                            StepStatus.FINISH -> colors.successSoftForeground
+                            StepStatus.PROCESS -> colors.primarySoftForeground
+                            StepStatus.ERROR -> colors.destructiveSoftForeground
                             StepStatus.WAITING -> colors.mutedForeground
                         }
                     )

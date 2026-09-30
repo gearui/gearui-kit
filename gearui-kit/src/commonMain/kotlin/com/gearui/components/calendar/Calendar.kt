@@ -391,7 +391,7 @@ private fun CalendarCell(
         }
         DateSelectType.Centre -> {
             backgroundColor = colors.primary.copy(alpha = 0.1f)
-            textColor = colors.primary
+            textColor = colors.primarySoftForeground
         }
         DateSelectType.Disabled -> {
             backgroundColor = Color.Transparent
@@ -399,7 +399,7 @@ private fun CalendarCell(
         }
         DateSelectType.Empty -> {
             backgroundColor = Color.Transparent
-            textColor = if (isToday) colors.primary else colors.foreground
+            textColor = if (isToday) colors.primarySoftForeground else colors.foreground
         }
     }
 
@@ -439,7 +439,7 @@ private fun CalendarCell(
             val lunarColor = when {
                 onFill -> textColor
                 selectType == DateSelectType.Disabled -> colors.mutedForeground
-                occasion -> colors.primary
+                occasion -> colors.primarySoftForeground
                 else -> colors.mutedForeground
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

@@ -155,7 +155,7 @@ fun CalendarExample(
                     Text(
                         text = "已选择：${it.year}年${it.month}月${it.day}日",
                         style = Theme.typography.bodyMedium,
-                        color = colors.primary
+                        color = colors.primarySoftForeground
                     )
                 }
             }

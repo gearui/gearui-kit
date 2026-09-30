@@ -135,7 +135,7 @@ fun IndexBar(
                     Text(
                         text = letter,
                         style = Theme.typography.bodyExtraSmall,
-                        color = if (on) colors.primary else colors.mutedForeground,
+                        color = if (on) colors.primarySoftForeground else colors.mutedForeground,
                     )
                 }
             }

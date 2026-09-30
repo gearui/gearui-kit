@@ -51,7 +51,7 @@ fun LinkedText(
     modifier: Modifier = Modifier,
     style: TextStyle = Theme.typography.bodySmall,
     color: Color = Theme.colors.mutedForeground,
-    linkColor: Color = Theme.colors.primary,
+    linkColor: Color = Theme.colors.primarySoftForeground,
     onTextClick: (() -> Unit)? = null,
 ) {
     LinkedTextFlow(text, links, modifier, style, color, linkColor, onTextClick, readSentence = true)

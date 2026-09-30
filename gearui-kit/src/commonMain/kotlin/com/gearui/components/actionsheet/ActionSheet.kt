@@ -419,6 +419,8 @@ private fun ActionSheetListItem(
 
     val textColor = when {
         item.disabled -> colors.mutedForeground
+        // A danger row passes `colors.destructive`; as text it reads in its text form.
+        item.textColor == colors.destructive -> colors.destructiveSoftForeground
         item.textColor != null -> item.textColor
         else -> colors.foreground
     }

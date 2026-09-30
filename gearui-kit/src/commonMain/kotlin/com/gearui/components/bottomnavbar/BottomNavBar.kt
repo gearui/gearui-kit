@@ -105,7 +105,7 @@ fun BottomNavBar(
     )
     val selected = selectedId ?: items.firstOrNull()?.id.orEmpty()
     val barBackground = backgroundColor ?: colors.surface
-    val selectedColor = activeColor ?: colors.primary
+    val selectedColor = activeColor ?: colors.primarySoftForeground
     val unselectedColor = inactiveColor ?: colors.mutedForeground
 
     // Animation wrapper. When `visible=false`, the bar slides down off-screen + fades

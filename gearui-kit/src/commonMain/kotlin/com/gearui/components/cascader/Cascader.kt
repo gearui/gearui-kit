@@ -374,7 +374,7 @@ private fun CascaderRow(option: CascaderOption, selected: Boolean, onClick: () -
             style = Theme.typography.bodyMedium,
             color = when {
                 option.disabled -> colors.mutedForeground
-                selected -> colors.primary
+                selected -> colors.primarySoftForeground
                 else -> colors.foreground
             },
         )

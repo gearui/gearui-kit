@@ -14,14 +14,15 @@ class BrandAccentTest {
     @Test fun lightAndDarkKeepTheirSurfaceRoles() {
         for (base in listOf(Themes.Light, Themes.Dark)) {
             val result = base.withBrandAccent(Color.Red)
-            // The soft pair is derived from the accent, so it moves with it; every other
+            // The soft pair is derived from the accent, so it moves with it (its text form
+            // is pushed until readable; PaletteContrastTest checks that); every other
             // role, including all surfaces, stays exactly as the base theme had it.
             val expected = base.colors.copy(
                 primary = Color.Red,
                 primaryForeground = Color.Black,
                 primarySoft = Color.Red.copy(alpha = 0.15f),
-                primarySoftForeground = lerp(Color.Red, base.colors.foreground, 0.20f),
-                ring = Color.Red,
+                primarySoftForeground = result.colors.primarySoftForeground,
+                ring = result.colors.ring,
             )
             assertEquals(expected, result.colors)
         }

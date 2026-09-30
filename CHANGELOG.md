@@ -70,6 +70,20 @@
     resized window, a scroll, the keyboard coming up — instead of closing (Select) or
     keeping the width and place they opened at (ComboBox on the Web). Tapping the
     trigger again reaches the trigger: Select toggles, a focused ComboBox stays focused.
+- Colour contrast (WCAG 1.4.3) in the built-in palettes, light and dark. `primary` and
+  `destructive` are deepened so a white label on them reads at 4.6:1 (the blue from
+  lightness 0.62 to 0.56); secondary text (`mutedForeground`, light) at 4.6:1 on page,
+  card and field; each colour's text form (`primarySoftForeground`, `destructive…`,
+  `success…`, `warning…`) at 5:1 on every ground and on its soft fill. The focus ring
+  keeps the reference blue. Coloured text in components now uses the text form instead
+  of the fill colour — links, text and outline buttons, outline and soft tags, selected
+  calendar days and cascader rows, step titles, field errors, status icons, danger menu
+  rows, picker and snackbar actions — so yellow, green and the blue no longer render as
+  2–3.7:1 text. `withBrandAccent` derives the brand's text form and focus ring until they
+  read (5:1 and 3:1), whatever the brand colour. `PaletteContrastTest` holds all of it.
+  The iOS accessibility audit went from 467 contrast findings to disabled controls only.
+- Overlays no longer widen the page on the Web: a screen-wide panel's shadow is clipped
+  at the screen edge instead of adding a horizontal scroll.
 - Overlay: `OverlayController.updateAnchor(id, anchorBounds, passThroughBounds)` moves an
   open overlay; `show(passThroughBounds = …)` leaves an area of the page (the trigger)
   to the page instead of treating a tap on it as a tap outside.

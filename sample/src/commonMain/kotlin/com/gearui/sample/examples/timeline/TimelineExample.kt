@@ -207,7 +207,7 @@ fun TimelineExample(
                             Text(
                                 text = "任务完成",
                                 style = Theme.typography.titleMedium,
-                                color = colors.success
+                                color = colors.successSoftForeground
                             )
                             Text(
                                 text = "所有测试用例通过",
@@ -221,7 +221,7 @@ fun TimelineExample(
                             Text(
                                 text = "代码审查中",
                                 style = Theme.typography.titleMedium,
-                                color = colors.primary
+                                color = colors.primarySoftForeground
                             )
                             Text(
                                 text = "等待团队成员审核",
@@ -235,7 +235,7 @@ fun TimelineExample(
                             Text(
                                 text = "待处理",
                                 style = Theme.typography.titleMedium,
-                                color = colors.warning
+                                color = colors.warningSoftForeground
                             )
                             Text(
                                 text = "需要进一步优化",

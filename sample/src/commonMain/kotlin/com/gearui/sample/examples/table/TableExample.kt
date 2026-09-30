@@ -202,7 +202,7 @@ fun TableExample(
                 Text(
                     text = "已选择 ${selectionState.selectedItems.size} 项",
                     style = Theme.typography.bodySmall,
-                    color = colors.primary
+                    color = colors.primarySoftForeground
                 )
             }
             Table(

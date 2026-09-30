@@ -271,7 +271,7 @@ private fun PickerHeader(
         Text(
             text = I18n.strings.common.ok,
             style = Theme.typography.bodyLarge,
-            color = colors.primary,
+            color = colors.primarySoftForeground,
             modifier = Modifier
                 .pressScale(confirmPressed)
                 .disabledAppearance(!confirmEnabled)

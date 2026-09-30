@@ -91,11 +91,13 @@ fun Tag(
         TagTheme.DEFAULT -> colors.secondaryForeground
     }
 
+    // The theme colour's text form: readable on the soft fill and on the page.
     val softForeground = when (theme) {
         TagTheme.DEFAULT -> colors.secondaryForeground
-        TagTheme.SUCCESS -> lerp(themeColor, colors.foreground, FeedbackDefaults.tagSuccessForegroundMix)
-        TagTheme.WARNING -> lerp(themeColor, colors.foreground, FeedbackDefaults.tagWarningForegroundMix)
-        else -> lerp(themeColor, colors.foreground, FeedbackDefaults.tagAccentForegroundMix)
+        TagTheme.PRIMARY -> colors.primarySoftForeground
+        TagTheme.SUCCESS -> colors.successSoftForeground
+        TagTheme.WARNING -> colors.warningSoftForeground
+        TagTheme.DANGER -> colors.destructiveSoftForeground
     }
 
     // Background and text colour follow the variant
@@ -114,7 +116,7 @@ fun Tag(
 
         TagVariant.OUTLINE -> Triple(
             Color.Transparent,    // Transparent fill
-            if (theme == TagTheme.DEFAULT) colors.foreground else themeColor,
+            if (theme == TagTheme.DEFAULT) colors.foreground else softForeground,
             themeColor            // Themed border
         )
     }

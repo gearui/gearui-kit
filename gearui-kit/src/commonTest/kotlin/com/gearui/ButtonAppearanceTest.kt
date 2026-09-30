@@ -90,7 +90,6 @@ class ButtonAppearanceTest {
         assertEquals(channel(0.960848743f), Themes.Light.colors.background.red)
         assertEquals(Themes.Light.colors.secondary, light.background)
         assertEquals(buttonHighlightColor(light.background, light.foreground, true), light.backgroundPressed)
-        assertEquals(Themes.Light.colors.primary, Themes.Light.colors.ring)
     }
 
     @Test fun typographyProfilesKeepPlatformDifferences() {

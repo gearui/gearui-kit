@@ -18,7 +18,16 @@
       "$value": "{reference.light.default}"
     },
     "lightMutedForeground": {
-      "$value": "{reference.light.muted}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5207,
+          0.0138,
+          285.94
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.muted} with lightness 0.5517 → 0.5207: secondary text at least 4.6:1 on background, surface and field (WCAG 1.4.3)."
     },
     "lightBorder": {
       "$value": "{reference.light.border}"
@@ -111,13 +120,31 @@
       "$value": "{reference.dark.field-border}"
     },
     "lightPrimary": {
-      "$value": "{reference.light.accent}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5574,
+          0.176,
+          253.83
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.accent} with lightness 0.6204 → 0.5574 (chroma 0.195 → 0.176, the sRGB gamut edge): white label on a filled control at least 4.6:1 (WCAG 1.4.3)."
     },
     "lightPrimaryForeground": {
       "$value": "{reference.light.accent-foreground}"
     },
     "lightDestructive": {
-      "$value": "{reference.light.danger}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5852,
+          0.2328,
+          25.74
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.danger} with lightness 0.6532 → 0.5852: white label on a filled control at least 4.6:1 (WCAG 1.4.3)."
     },
     "lightDestructiveForeground": {
       "$value": "{reference.light.danger-foreground}"
@@ -138,13 +165,31 @@
       "$value": "{reference.light.overlay}"
     },
     "darkPrimary": {
-      "$value": "{reference.dark.accent}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5574,
+          0.176,
+          253.83
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.dark.accent} with lightness 0.6204 → 0.5574 (chroma 0.195 → 0.176, the sRGB gamut edge): white label on a filled control at least 4.6:1 (WCAG 1.4.3)."
     },
     "darkPrimaryForeground": {
       "$value": "{reference.dark.accent-foreground}"
     },
     "darkDestructive": {
-      "$value": "{reference.dark.danger}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.58,
+          0.1967,
+          24.63
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.dark.danger} with lightness 0.594 → 0.58: white label on a filled control at least 4.6:1 (WCAG 1.4.3)."
     },
     "darkDestructiveForeground": {
       "$value": "{reference.dark.danger-foreground}"
@@ -218,37 +263,91 @@
       "$value": "{reference.light.accent-soft}"
     },
     "lightAccentSoftForeground": {
-      "$value": "{reference.light.accent-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.4984,
+          0.157,
+          254.06
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.accent-soft-foreground} with lightness 0.5384 → 0.4984: coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "lightDangerSoft": {
       "$value": "{reference.light.danger-soft}"
     },
     "lightDangerSoftForeground": {
-      "$value": "{reference.light.danger-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5186,
+          0.186,
+          25.38
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.danger-soft-foreground} with lightness 0.5646 → 0.5186: coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "lightWarningSoft": {
       "$value": "{reference.light.warning-soft}"
     },
     "lightWarningSoftForeground": {
-      "$value": "{reference.light.warning-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.5058,
+          0.1013,
+          71.68
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.warning-soft-foreground} with lightness 0.5818 → 0.5058: coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "lightSuccessSoft": {
       "$value": "{reference.light.success-soft}"
     },
     "lightSuccessSoftForeground": {
-      "$value": "{reference.light.success-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.4871,
+          0.1292,
+          151.34
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.light.success-soft-foreground} with lightness 0.5761 → 0.4871 (chroma 0.1342 → 0.1292, the sRGB gamut edge): coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "darkAccentSoft": {
       "$value": "{reference.dark.accent-soft}"
     },
     "darkAccentSoftForeground": {
-      "$value": "{reference.dark.accent-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.7465,
+          0.133,
+          253.83
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.dark.accent-soft-foreground} with lightness 0.6945 → 0.7465 (chroma 0.156 → 0.133, the sRGB gamut edge): coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "darkDangerSoft": {
       "$value": "{reference.dark.danger-soft}"
     },
     "darkDangerSoftForeground": {
-      "$value": "{reference.dark.danger-soft-foreground}"
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.7424,
+          0.1554,
+          24.63
+        ],
+        "alpha": 1
+      },
+      "$description": "{reference.dark.danger-soft-foreground} with lightness 0.6734 → 0.7424 (chroma 0.1574 → 0.1554, the sRGB gamut edge): coloured text at least 5:1 on background, surface, field and its soft fill — WCAG 1.4.3 asks 4.5, and the margin covers anti-aliased strokes, which Apple's audit measures as rendered."
     },
     "darkWarningSoft": {
       "$value": "{reference.dark.warning-soft}"

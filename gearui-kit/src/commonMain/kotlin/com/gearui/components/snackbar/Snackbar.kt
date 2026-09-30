@@ -214,10 +214,10 @@ internal fun SnackbarContent(
 
     // Icon colour from the type
     val iconColor = when (type) {
-        SnackbarType.INFO -> colors.primary
-        SnackbarType.SUCCESS -> colors.success
-        SnackbarType.WARNING -> colors.warning
-        SnackbarType.ERROR -> colors.destructive
+        SnackbarType.INFO -> colors.primarySoftForeground
+        SnackbarType.SUCCESS -> colors.successSoftForeground
+        SnackbarType.WARNING -> colors.warningSoftForeground
+        SnackbarType.ERROR -> colors.destructiveSoftForeground
     }
 
     // Text colour
@@ -263,7 +263,7 @@ internal fun SnackbarContent(
             Text(
                 text = action,
                 style = Theme.typography.bodyMedium,
-                color = colors.primary,
+                color = colors.primarySoftForeground,
                 modifier = Modifier
                     .pressScale(actionPressed)
                     .clickable(interactionSource = actionInteraction, indication = null, onClick = {

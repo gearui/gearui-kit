@@ -25,7 +25,11 @@ class DriverError(Exception):
 
 def routes():
     """(route id, NavBar title) for every registered sample page."""
-    return re.findall(r'ComponentInfo\("([^"]+)",\s*"[^"]*",\s*"([^"]+)"', open(REGISTRY).read())
+    return [(r, en) for r, _, en in _registry()]
+
+
+def _registry():
+    return re.findall(r'ComponentInfo\("([^"]+)",\s*"([^"]*)",\s*"([^"]+)"', open(REGISTRY).read())
 
 
 def run(cmd, what, timeout=60):
@@ -68,12 +72,21 @@ def write_meta(out, **fields):
 
 
 def ready(nodes, title, screen_h):
-    """The title sits in the top fifth and something labelled is drawn below it."""
-    top = [b for label, b in nodes if label == title and b[1] < screen_h * 0.2]
+    """The title sits in the top fifth and something labelled is drawn below it. [title]
+    may be a route's registered English name; its Chinese name is accepted as well."""
+    accepted = set(titles_for_title(title))
+    top = [b for label, b in nodes if label in accepted and b[1] < screen_h * 0.2]
     if not top:
         return False
     title_bottom = top[0][3]
-    return any(b[1] >= title_bottom and label != title for label, b in nodes)
+    return any(b[1] >= title_bottom and label not in accepted for label, b in nodes)
+
+
+def titles_for_title(title):
+    for r, zh, en in _registry():
+        if en == title:
+            return (en, zh)
+    return (title,)
 
 
 class Android:

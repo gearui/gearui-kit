@@ -245,9 +245,9 @@ private fun toastForeground(type: ToastType): Color {
     val colors = Theme.colors
     return when (type) {
         ToastType.INFO -> colors.popoverForeground
-        ToastType.SUCCESS -> lerp(colors.success, colors.foreground, FeedbackDefaults.tagSuccessForegroundMix)
-        ToastType.WARNING -> lerp(colors.warning, colors.foreground, FeedbackDefaults.tagWarningForegroundMix)
-        ToastType.ERROR -> colors.destructive
+        ToastType.SUCCESS -> colors.successSoftForeground
+        ToastType.WARNING -> colors.warningSoftForeground
+        ToastType.ERROR -> colors.destructiveSoftForeground
     }
 }
 

@@ -140,7 +140,7 @@ fun SearchBarExample(
                     Text(
                         text = searchResult,
                         style = Theme.typography.bodySmall,
-                        color = colors.primary
+                        color = colors.primarySoftForeground
                     )
                 }
             }

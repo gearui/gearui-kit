@@ -132,12 +132,12 @@ fun Result(
 
 private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<String?, Color> {
     return when (status) {
-        ResultStatus.SUCCESS -> Icons.check to colors.success
-        ResultStatus.ERROR -> Icons.x to colors.destructive
-        ResultStatus.WARNING -> Icons.warning to colors.warning
-        ResultStatus.INFO -> Icons.info to colors.primary
-        ResultStatus.QUESTION -> Icons.question to colors.primary
-        ResultStatus.FORBIDDEN -> Icons.lock_simple to colors.destructive
+        ResultStatus.SUCCESS -> Icons.check to colors.successSoftForeground
+        ResultStatus.ERROR -> Icons.x to colors.destructiveSoftForeground
+        ResultStatus.WARNING -> Icons.warning to colors.warningSoftForeground
+        ResultStatus.INFO -> Icons.info to colors.primarySoftForeground
+        ResultStatus.QUESTION -> Icons.question to colors.primarySoftForeground
+        ResultStatus.FORBIDDEN -> Icons.lock_simple to colors.destructiveSoftForeground
         ResultStatus.NOT_FOUND -> null to colors.mutedForeground
     }
 }

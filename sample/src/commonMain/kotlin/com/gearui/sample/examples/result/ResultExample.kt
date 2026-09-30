@@ -184,7 +184,7 @@ fun ResultExample(
                 Text(
                     text = actionResult,
                     style = Theme.typography.bodyMedium,
-                    color = colors.primary
+                    color = colors.primarySoftForeground
                 )
             }
         }

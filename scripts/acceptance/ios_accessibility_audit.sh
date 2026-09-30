@@ -11,7 +11,7 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 UDID="${1:?simulator UDID}"
 THEMES="${2:-light,dark}"
 ONLY="${3:-}"
-PAIRS=$(sed -nE 's/.*ComponentInfo\("([^"]+)", *"[^"]*", *"([^"]+)".*/\1=\2/p' \
+PAIRS=$(sed -nE 's/.*ComponentInfo\("([^"]+)", *"([^"]*)", *"([^"]+)".*/\1=\3|\2/p' \
   "$ROOT/sample/src/commonMain/kotlin/com/gearui/sample/config/ComponentConfig.kt")
 if [ -n "$ONLY" ]; then
   PAIRS=$(echo "$PAIRS" | grep -E "^($(echo "$ONLY" | tr , '|'))=" || true)

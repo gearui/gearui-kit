@@ -31,12 +31,12 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**85 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**83 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
-| 表单（24） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`YearPicker`、`DateField`、`ColorPicker` |
+| 表单（22） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`ColorPicker` |
 | 导航（9） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar`、`SubMenu` |
 | 数据展示（21） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`Kbd` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
@@ -84,8 +84,6 @@
 | `Form` | 表单 | 表单容器 |
 | `Cascader` | 级联选择 | 级联选择器 |
 | `ListBox` | 选项列表 |  |
-| `YearPicker` | 年份选择 |  |
-| `DateField` | 分段日期时间 |  |
 | `ColorPicker` | 颜色选择 |  |
 
 **导航**

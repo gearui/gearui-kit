@@ -5,7 +5,6 @@ import com.gearui.components.button.*
 import com.gearui.components.calendar.CalendarDate
 import com.gearui.components.code.*
 import com.gearui.components.colorpicker.*
-import com.gearui.components.datefield.*
 import com.gearui.components.form.*
 import com.gearui.components.input.Input
 import com.gearui.components.kbd.Kbd
@@ -16,7 +15,6 @@ import com.gearui.components.select.SelectOption
 import com.gearui.components.submenu.*
 import com.gearui.components.toolbar.Toolbar
 import com.gearui.components.user.User
-import com.gearui.components.yearpicker.YearPicker
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.primitives.Text
@@ -36,30 +34,6 @@ fun ListBoxExample(component: ComponentInfo, onBack: () -> Unit) {
         ExampleSection("独立选项列表", "稳定值、多选、分组与禁用", SectionSurface.Plain) {
             ListBox(items, selected, { selected = it }, multiple = true)
             Text("value：" + selected.joinToString(" / ").ifEmpty { "无" }, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
-        }
-    }
-}
-
-@Composable
-fun YearPickerExample(component: ComponentInfo, onBack: () -> Unit) {
-    var year by remember { mutableStateOf<Int?>(2026) }
-    ExamplePage(component, onBack) {
-        ExampleSection("年份范围", "2020–2030，共享日期选择器的滚轮与取消规则") {
-            YearPicker(year, { year = it }, min = 2020, max = 2030, label = "毕业年份", variant = FieldVariant.SECONDARY)
-            YearPicker(year, {}, enabled = false, label = "禁用状态", variant = FieldVariant.SECONDARY)
-        }
-    }
-}
-
-@Composable
-fun DateFieldExample(component: ComponentInfo, onBack: () -> Unit) {
-    var date by remember { mutableStateOf<CalendarDate?>(CalendarDate(2026, 9, 30)) }
-    var time by remember { mutableStateOf<PickerTime?>(PickerTime(9, 30)) }
-    ExamplePage(component, onBack) {
-        ExampleSection("分段日期与时间", "字段顺序随语言变化，值仍是类型化的公历日期与本地时间") {
-            DateField(date, { date = it }, label = "预约日期", variant = FieldVariant.SECONDARY)
-            TimeField(time, { time = it }, label = "预约时间", variant = FieldVariant.SECONDARY)
-            DateField(date, {}, enabled = false, label = "禁用日期", variant = FieldVariant.SECONDARY)
         }
     }
 }

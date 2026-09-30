@@ -59,8 +59,6 @@ object ComponentConfig {
         ComponentInfo("form", "表单", "Form", ComponentCategory.FORM, "/components/form", "表单容器", "Form container"),
         ComponentInfo("cascader", "级联选择", "Cascader", ComponentCategory.FORM, "/components/cascader", "级联选择器", "Cascade selector"),
         ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox"),
-        ComponentInfo("yearpicker", "年份选择", "YearPicker", ComponentCategory.FORM, "/components/yearpicker"),
-        ComponentInfo("datefield", "分段日期时间", "DateField", ComponentCategory.FORM, "/components/datefield"),
         ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form"),
         ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker"),
 

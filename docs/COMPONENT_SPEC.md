@@ -70,6 +70,27 @@ inconsistency.
 - Insets are read from `RuntimeEnvironment`; a component never re-parses host
   measurements or consumes an inset its scaffold already consumed.
 
+### Choosing a selection component
+
+One job per component; pick by the data, not by habit. Follows iOS (HIG) and common
+Chinese mobile practice.
+
+| Data | Use | Not |
+| --- | --- | --- |
+| 2–5 options that should all stay visible | `Radio` / `SegmentedControl` | a dropdown that hides them |
+| A short flat list (about 10 or fewer) | `Select` (a menu from the field, as iOS's pop-up button) | a wheel |
+| A long flat list, found by typing | `ComboBox` | scrolling `Select` |
+| Linked levels of fixed depth (province/city/district) | `Picker.Linked` wheels in a sheet | chained `Select`s |
+| A hierarchy of any depth, loaded on demand | `Cascader` sheet | `Picker.Linked` with placeholder rows |
+| A date, a month, a year, a time | `DatePickerInput` / `TimePickerInput` with `precision` | typed date segments |
+| A range of dates | `Calendar` (range) | two unrelated date fields |
+| Options shown in the page, no trigger | `ListBox` | a `Select` that is always open |
+| Nested actions | `SubMenu` (one level at a time in a sheet) | side-flyout menus |
+
+Removed before beta7 shipped: segmented keyboard date/time fields (`DateField`,
+`TimeField`), a desktop pattern with small targets and a keyboard on touch, and
+`YearPicker`, which was `DatePickerInput(precision = YEAR)`.
+
 ## 4. Accessibility
 
 **Rules.**

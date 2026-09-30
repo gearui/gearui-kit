@@ -32,6 +32,14 @@ fun DatePickerExample(
         component = component,
         onBack = onBack
     ) {
+        ExampleSection("精度", "precision = YEAR / MONTH：只选年份或年月，值写成 YYYY / YYYY-MM") {
+            var year by remember { mutableStateOf("2026") }
+            val years = remember { DatePickerConstraints(CalendarDate(2020, 1, 1), CalendarDate(2030, 12, 31), DatePickerPrecision.YEAR) }
+            DatePickerInput(year, { year = it }, label = "毕业年份", constraints = years, variant = FieldVariant.SECONDARY)
+            var month by remember { mutableStateOf("2026-09") }
+            val months = remember { DatePickerConstraints(precision = DatePickerPrecision.MONTH) }
+            DatePickerInput(month, { month = it }, label = "账单月份", constraints = months, variant = FieldVariant.SECONDARY)
+        }
         ExampleSection("范围与过滤", "闰日、跨月、只允许工作日；空结果不可确认") {
             var constrained by remember { mutableStateOf("2024-02-29") }
             val bounds = remember { DatePickerConstraints(CalendarDate(2024, 2, 28), CalendarDate(2024, 3, 5), filter = { it.day != 2 && it.day != 3 }) }

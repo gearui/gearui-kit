@@ -225,7 +225,7 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ☑ All P2 entries in API, registry and sample; Android light/dark reviewed page by page and fixed (BETA7_ACCEPTANCE D2) |
+| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ☑ All P2 entries in API, registry and sample; Android light/dark reviewed page by page and fixed (BETA7_ACCEPTANCE D2). Maintainer decision 2026-10-01: segmented date/time fields (DateField/TimeField) are a desktop keyboard pattern and YearPicker duplicates DatePicker's year precision, so both were removed before release; see COMPONENT_SPEC "Choosing a selection component" |
 | C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ☑ All P3 entries in API, registry and sample; Kbd/Code text placement fixed; flat ColorPicker sliders registered as a deviation |
 | C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ☑ Registry, README index, language packs and API baselines in sync; guards green |
 

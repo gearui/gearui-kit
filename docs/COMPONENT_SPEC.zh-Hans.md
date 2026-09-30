@@ -61,6 +61,25 @@ fun MyComponent(
 - Insets 从 `RuntimeEnvironment` 读；组件绝不重新解析宿主测量，也不重复
   消费 scaffold 已消费的 inset。
 
+### 选择类组件选型
+
+一个组件只做一件事；按数据选组件，不按习惯。依据 iOS（HIG）与国内移动端的通行做法。
+
+| 数据 | 用 | 不用 |
+| --- | --- | --- |
+| 2–5 个且都应直接可见的选项 | `Radio` / `SegmentedControl` | 把它们藏进下拉 |
+| 短的平铺列表（约 10 个以内） | `Select`（从字段弹出菜单，即 iOS 的 pop-up button） | 滚轮 |
+| 长的平铺列表，靠输入查找 | `ComboBox` | 滚动的 `Select` |
+| 层级固定的联动（省/市/区） | `Picker.Linked`（面板中的联动滚轮） | 几个 `Select` 串起来 |
+| 任意层级、按需加载的层级数据 | `Cascader` 面板 | 用占位行凑齐列数的 `Picker.Linked` |
+| 日期、年月、年份、时间 | `DatePickerInput` / `TimePickerInput` 配 `precision` | 分段键入日期 |
+| 日期区间 | `Calendar`（区间） | 两个互不相关的日期字段 |
+| 在页面里直接列出选项、没有触发器 | `ListBox` | 常开的 `Select` |
+| 多级操作 | `SubMenu`（在面板中逐级进入） | 侧向弹出的子菜单 |
+
+beta7 发布前删除：分段键入日期/时间（`DateField`、`TimeField`）——桌面键盘录入模式，触控下
+目标小、要弹键盘；`YearPicker`——它就是 `DatePickerInput(precision = YEAR)`。
+
 ## 4. 无障碍
 
 **规则。**

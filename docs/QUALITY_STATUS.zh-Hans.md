@@ -193,7 +193,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| C1 | P2：独立 ListBox、YearPicker、日期/时间分段字段与本地化格式、Toolbar、SubMenu、IndexBar | 每个组件：API 基线、单测、sample 页、双端真机截图 | ☑ 全部 P2 入口已进 API、注册表、sample；Android 亮暗逐页判定并修复（见 BETA7_ACCEPTANCE D2） |
+| C1 | P2：独立 ListBox、YearPicker、日期/时间分段字段与本地化格式、Toolbar、SubMenu、IndexBar | 每个组件：API 基线、单测、sample 页、双端真机截图 | ☑ 全部 P2 入口已进 API、注册表、sample；Android 亮暗逐页判定并修复（见 BETA7_ACCEPTANCE D2）。维护者 2026-10-01 决定：分段日期时间（DateField/TimeField）是桌面键盘录入模式、YearPicker 与 DatePicker 年精度重复，二者在发布前删除；选型见 COMPONENT_SPEC「选择类组件选型」 |
 | C2 | P3：Kbd、ColorPicker 家族、Meter、User、Code/Snippet | 同上 | ☑ 全部 P3 入口已进 API、注册表、sample；Kbd/Code 文字错位已修；ColorPicker 滑条为纯色登记为偏差 |
 | C3 | 注册表、README 索引、COMPONENT_COVERAGE、语言包、API 基线同步 | 守卫全绿 | ☑ 注册表、README 索引、语言包、API 基线同步；门禁全绿 |
 

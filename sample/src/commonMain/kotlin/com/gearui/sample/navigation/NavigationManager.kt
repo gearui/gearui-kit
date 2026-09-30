@@ -127,8 +127,6 @@ object NavigationManager {
 
             // Form components (15)
             "listbox" -> ListBoxExample(component, onBack)
-            "yearpicker" -> YearPickerExample(component, onBack)
-            "datefield" -> DateFieldExample(component, onBack)
             "typed-form" -> TypedFormExample(component, onBack)
             "toolbar" -> ToolbarExample(component, onBack)
             "submenu" -> SubMenuExample(component, onBack)

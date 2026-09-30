@@ -29,8 +29,10 @@
   replacing it, so a submit that coincides with a blur check no longer returns false
   silently; `rememberTypedFormFieldState` keeps what the user typed when its
   `initialValue` changes (a record that finished loading) and moves untouched fields.
-- Added ListBox, YearPicker, DateField/TimeField, Toolbar, SubMenu, Kbd,
-  ColorPicker family, Meter, User and Code/Snippet, with sample entries.
+- Added ListBox, Toolbar, SubMenu, Kbd, ColorPicker family, Meter, User and
+  Code/Snippet, with sample entries. (YearPicker and DateField/TimeField were built for
+  this release and removed before it: segmented keyboard date entry is a desktop
+  pattern, and a year is `DatePickerInput` with `DatePickerPrecision.YEAR`.)
 - `InputFormat` now defers formatting while the native IME reports active
   composition; formatted input no longer uses the rendered length as a native
   paste limit. `Avatar` load/failure fallbacks and `AvatarGroup` overlap were

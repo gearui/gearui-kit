@@ -28,8 +28,6 @@
 | 条目 | 用途 | 参考家族 |
 | --- | --- | --- |
 | `ListBox` | 选项列表 | GearUI 扩展 |
-| `YearPicker` | 年份选择 | GearUI 扩展 |
-| `DateField` | 分段日期时间 | GearUI 扩展 |
 | `ColorPicker` | 颜色选择 | GearUI 扩展 |
 | `Input` | 文本输入 | HeroUI Native |
 | `Checkbox` | 多选操作 | HeroUI Native |
@@ -125,7 +123,7 @@
 
 ## 2. beta7 实施状态
 
-稳定值 Picker、可取消 Cascader 加载、日期/时间约束、类型化异步表单、精确十进制 NumberField 与可编辑 Stepper 已接入生产调用并有测试。ListBox、YearPicker、DateField/TimeField、Toolbar、SubMenu、Kbd、ColorPicker 家族、Meter、User、Code/Snippet 已提供公开入口和 sample 路由。IndexBar、协议行、LoadMore、语言格式化来自此前 beta7 工作。
+稳定值 Picker、可取消 Cascader 加载、日期/时间约束、类型化异步表单、精确十进制 NumberField 与可编辑 Stepper 已接入生产调用并有测试。ListBox、Toolbar、SubMenu、Kbd、ColorPicker 家族、Meter、User、Code/Snippet 已提供公开入口和 sample 路由。IndexBar、协议行、LoadMore、语言格式化来自此前 beta7 工作。
 
 ## 3. 尚须验收的范围
 

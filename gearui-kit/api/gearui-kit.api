@@ -603,11 +603,6 @@ public final class com/gearui/components/contextmenu/ContextMenuKt {
 	public static final fun ContextMenu (Ljava/util/List;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/popover/PopoverPlacement;Lcom/gearui/components/popover/PopoverTheme;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/gearui/components/datefield/DateFieldKt {
-	public static final fun DateField (Lcom/gearui/components/calendar/CalendarDate;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Lcom/gearui/components/picker/DatePickerConstraints;Lcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;II)V
-	public static final fun TimeField (Lcom/gearui/components/picker/PickerTime;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/String;Lcom/gearui/components/picker/TimePickerConstraints;Lcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;II)V
-}
-
 public final class com/gearui/components/dialog/ConfirmDialogKt {
 	public static final fun AlertDialog (ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZLandroidx/compose/runtime/Composer;II)V
 	public static final fun ConfirmDialog (ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZZZLandroidx/compose/runtime/Composer;III)V
@@ -2436,10 +2431,6 @@ public final class com/gearui/components/watermark/WatermarkKt {
 	public static final fun Watermark-lTBkk9I (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;FFFFFFIILcom/gearui/foundation/typography/TextStyle;Landroidx/compose/runtime/Composer;III)V
 }
 
-public final class com/gearui/components/yearpicker/YearPickerKt {
-	public static final fun YearPicker (Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;IIZLjava/lang/String;Ljava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;II)V
-}
-
 public final class com/gearui/compose/ComponentsKt {
 	public static final fun BodyLarge (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 	public static final fun BodyMedium (Ljava/lang/String;ILcom/tencent/kuikly/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
@@ -3170,7 +3161,7 @@ public final class com/gearui/foundation/primitives/BasicTextFieldKt {
 }
 
 public final class com/gearui/foundation/primitives/GearLazyColumnKt {
-	public static final fun GearLazyColumn (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;Lcom/tencent/kuikly/compose/foundation/layout/PaddingValues;Lcom/tencent/kuikly/compose/foundation/layout/Arrangement$Vertical;Lcom/tencent/kuikly/compose/ui/Alignment$Horizontal;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun GearLazyColumn (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;Lcom/tencent/kuikly/compose/foundation/layout/PaddingValues;Lcom/tencent/kuikly/compose/foundation/layout/Arrangement$Vertical;Lcom/tencent/kuikly/compose/ui/Alignment$Horizontal;ZZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun GearLazyRow (Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;Lcom/tencent/kuikly/compose/foundation/layout/PaddingValues;Lcom/tencent/kuikly/compose/foundation/layout/Arrangement$Horizontal;Lcom/tencent/kuikly/compose/ui/Alignment$Vertical;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 

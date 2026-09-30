@@ -82,6 +82,10 @@
   2–3.7:1 text. `withBrandAccent` derives the brand's text form and focus ring until they
   read (5:1 and 3:1), whatever the brand colour. `PaletteContrastTest` holds all of it.
   The iOS accessibility audit went from 467 contrast findings to disabled controls only.
+- `Textarea` has an accessible name on iOS. Kuikly draws a multi-line field's native
+  placeholder in a separate text view, so the kit's placeholder-based name never
+  reached the input and VoiceOver read an unnamed text view; the name is now also the
+  input's own accessibility label there (Android keeps its placeholder name).
 - Overlays no longer widen the page on the Web: a screen-wide panel's shadow is clipped
   at the screen edge instead of adding a horizontal scroll.
 - Overlay: `OverlayController.updateAnchor(id, anchorBounds, passThroughBounds)` moves an

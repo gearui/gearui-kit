@@ -325,6 +325,7 @@ fun InputExample(
                 format = InputFormat.BankCard,
                 clearable = true,
                 variant = FieldVariant.SECONDARY,
+                helperText = "value：${card.ifEmpty { "空" }}",
             )
             var idCard by remember { mutableStateOf("") }
             Input(
@@ -335,6 +336,7 @@ fun InputExample(
                 format = InputFormat.IdCard,
                 clearable = true,
                 variant = FieldVariant.SECONDARY,
+                helperText = "value：${idCard.ifEmpty { "空" }}",
                 error = if (idCard.length == 18 && !InputFormat.IdCard.isComplete(idCard)) "身份证号校验位不正确" else null,
             )
         }

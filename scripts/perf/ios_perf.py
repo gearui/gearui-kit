@@ -10,7 +10,11 @@ What each number is — and is not:
 
 * startup_content: process start → first frame of the home screen's content, taken
   in-app from the kernel's process start time, one cold start per run. A simulator
-  runs on the Mac's CPU, so compare runs; it is not device TTI.
+  runs on the Mac's CPU, so compare runs; it is not device TTI. Split at the Kuikly
+  page's creation: before it, the process, the host app and the Kuikly runtime;
+  after it ("page → content"), Compose setup, GearUI's theme and runtime, the
+  sample's Home composition and the renderer's first layout together — not GearUI
+  alone. Raw per-run values are kept in the output.
 * theme: the in-app benchmark on the Performance page (state change → second
   frame after it), 20 flips of ~200 components.
 * frames: the in-app frame-interval recorder while the script flings the
@@ -96,7 +100,9 @@ def startup(sim, runs):
     took. Unlike timing a launch from outside, this includes no tool latency.
     """
     samples, pages = [], []
+    attempted = 0
     for _ in range(runs):
+        attempted += 1
         open_performance(sim)                 # terminates, launches, navigates
         hit = wait_for(sim, lambda l, t: l.startswith("PERF startup"), 10)
         value = parse(hit[0], "content") if hit else None
@@ -106,12 +112,15 @@ def startup(sim, runs):
             if page is not None:
                 pages.append(page)
     if not samples:
-        return {"runs": 0}
-    out = {"runs": len(samples), "median_ms": statistics.median(samples),
-           "min_ms": min(samples), "max_ms": max(samples)}
+        return {"runs": 0, "attempted": attempted}
+    ordered = sorted(samples)
+    out = {"runs": len(samples), "attempted": attempted, "median_ms": statistics.median(samples),
+           "p90_ms": ordered[min(len(ordered) - 1, int(round(0.9 * (len(ordered) - 1))))],
+           "min_ms": min(samples), "max_ms": max(samples), "samples_ms": samples}
     if pages:
         out["page_created_median_ms"] = statistics.median(pages)
         out["page_to_content_median_ms"] = statistics.median([c - p for c, p in zip(samples, pages)])
+        out["page_created_ms"] = pages
     return out
 
 
@@ -183,9 +192,16 @@ def main():
     udid = sys.argv[1]
     runs = int(sys.argv[sys.argv.index("--runs") + 1]) if "--runs" in sys.argv else 5
     sim = Sim(udid)
-    result = {"platform": "ios-simulator", "udid": udid, "startup_content": startup(sim, runs)}
+    import os
+    import subprocess as sp
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    result = {"platform": "ios-simulator", "udid": udid,
+              "sha": sp.run(["git", "-C", root, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
+              "host_load_before": os.getloadavg(),
+              "startup_content": startup(sim, runs)}
     result["theme"] = theme(sim)
     result["frames"] = frames(sim)
+    result["host_load_after"] = os.getloadavg()
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 

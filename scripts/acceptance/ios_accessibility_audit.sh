@@ -6,6 +6,8 @@
 # run.json go to a fresh build/acceptance/ios-a11y-<time>-<sha> directory.
 # Exit status: 0 no findings, 1 findings, 2 the run itself failed (build, launch,
 # a page that never rendered, or fewer pages audited than expected).
+# Afterwards the simulator's accessibility service often reads empty to idb (every app
+# shows a zero-size tree); reboot the simulator before running idb-driven scripts.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 UDID="${1:?simulator UDID}"

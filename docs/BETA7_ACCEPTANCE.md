@@ -150,9 +150,9 @@ ellipsis for `TextOverflow.Ellipsis` (NavBar title, Text maxLines, NoticeBar).
   opening place and width on resize (they now follow their trigger); an open ComboBox
   panel was rebuilt under a tap as the query changed. Upstream: iOS ignores
   `autoCorrectEnabled` — a correction committed after a ComboBox choice overwrites it.
-- Open: with the kit's edge-to-edge contract a field focused near the bottom of a page
-  is covered by the keyboard (the window no longer pans, and nothing scrolls it into
-  view). The sample now uses `adjustResize` like privchat-app, so the case is visible.
+- Fixed: with the kit's edge-to-edge contract a field focused near the bottom of a page
+  was covered by the keyboard (the window no longer pans). `GearLazyColumn` now keeps
+  it above the keyboard (see decision 2).
 
 **D3 large text.** Deferred to the next phase by the maintainer (2026-09-29).
 
@@ -195,10 +195,11 @@ mitigations.
 
 1. ~~Target sizes~~ — decided 2026-10-01: follow the spec, close to iOS 27 (HIG hit
    region 44×44). Done; see D1.
-2. **Keyboard avoidance for page content.** Scrolling a focused field above the keyboard
-   is not done by the kit; doing it in `GearLazyColumn` by default would add keyboard
-   padding to pages that already handle the keyboard themselves (a chat composer).
-   Options: opt-in now, default later, or leave to hosts.
+2. ~~Keyboard avoidance~~ — decided 2026-10-01: as iOS does. Done: a focused field in
+   a `GearLazyColumn` is kept above the keyboard (only fields inside that list, so a page
+   handling its own composer is not padded twice; `avoidKeyboard = false` to opt out).
+   `interactions.py` keyboard family: the lowest field ends above the keyboard and the
+   NavBar stays put, Android and iOS (software keyboard), 4/4 each.
 3. **Waivers:** D4 (RTL), D7 (HarmonyOS runtime), D8 (other vendors' devices), D5's
    device number (simulator figures only).
 4. **Upstream drafts (E2):** review and approve filing.

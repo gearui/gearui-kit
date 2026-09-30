@@ -1,4 +1,5 @@
 package com.gearui.components.input
+import com.gearui.foundation.keyboard.avoidsKeyboard
 import com.gearui.foundation.interaction.LocalControlLabel
 import com.gearui.foundation.field.fieldName
 import com.gearui.i18n.I18n
@@ -400,7 +401,7 @@ fun Input(
                             // field keeps whatever was typed, so a rejected keystroke leaves the platform
                             // view and the counter out of sync. Kuikly's maxLength modifier enforces the
                             // limit inside the native field itself.
-                            modifier = Modifier.fieldName(label ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
+                            modifier = Modifier.fieldName(label ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt().avoidsKeyboard(isFocused)
                                 .then(
                                     when {
                                         // Accept the entire paste before stripping a country code or separators.

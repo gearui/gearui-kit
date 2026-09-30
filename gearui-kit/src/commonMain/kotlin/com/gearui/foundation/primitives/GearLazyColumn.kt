@@ -1,5 +1,13 @@
 package com.gearui.foundation.primitives
 
+import kotlinx.coroutines.delay
+import com.tencent.kuikly.compose.foundation.gestures.animateScrollBy
+import com.tencent.kuikly.compose.ui.unit.LayoutDirection
+import com.tencent.kuikly.compose.ui.platform.LocalDensity
+import com.gearui.overlay.LocalOverlayViewportSize
+import com.gearui.foundation.keyboard.keyboardHeight
+import com.gearui.foundation.keyboard.LocalKeyboardAvoider
+import com.gearui.foundation.keyboard.KeyboardAvoider
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
@@ -45,9 +53,50 @@ fun GearLazyColumn(
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     userScrollEnabled: Boolean = true,
+    /**
+     * Keep a focused text field inside this list above the software keyboard, as iOS
+     * does: the list pads its end by the keyboard's overlap and scrolls the field into
+     * view. Only fields inside this list count. Turn off for a list whose page already
+     * moves its content for the keyboard.
+     */
+    avoidKeyboard: Boolean = true,
     content: LazyListScope.() -> Unit
 ) {
     val focusManager = LocalFocusManager.current
+    val density = LocalDensity.current
+    val avoider = remember { KeyboardAvoider() }
+    var listBottomInRoot by remember { mutableStateOf(0f) }
+    val keyboardPx = with(density) { keyboardHeight().toPx() }
+    val screenHeight = LocalOverlayViewportSize.current.height.toFloat()
+    val focusedBottom = avoider.focusedBottom
+    val keyboardTop = screenHeight - keyboardPx
+    val avoiding = avoidKeyboard && keyboardPx > 0f && screenHeight > 0f && focusedBottom != null
+    // Room at the end for the part of the list the keyboard covers, so the last fields
+    // can scroll above it.
+    val overlap = if (avoiding) (listBottomInRoot - keyboardTop).coerceAtLeast(0f) else 0f
+    val margin = with(density) { KeyboardAvoidanceMargin.toPx() }
+    LaunchedEffect(avoiding, focusedBottom, keyboardTop, listBottomInRoot) {
+        val bottom = focusedBottom ?: return@LaunchedEffect
+        if (!avoiding) return@LaunchedEffect
+        val visibleBottom = minOf(listBottomInRoot, keyboardTop) - margin
+        var remaining = bottom - visibleBottom
+        // The end padding for the keyboard is laid out a frame after it is asked for; a
+        // short page cannot scroll until then. Scroll what can be scrolled, wait a frame,
+        // and go on until the field is above the keyboard.
+        repeat(10) {
+            if (remaining <= 1f) return@LaunchedEffect
+            remaining -= state.animateScrollBy(remaining)
+            if (remaining > 1f) delay(16)
+        }
+    }
+    val paddedContent = if (overlap > 0f) {
+        PaddingValues(
+            start = contentPadding.calculateLeftPadding(LayoutDirection.Ltr),
+            top = contentPadding.calculateTopPadding(),
+            end = contentPadding.calculateRightPadding(LayoutDirection.Ltr),
+            bottom = contentPadding.calculateBottomPadding() + with(density) { overlap.toDp() },
+        )
+    } else contentPadding
 
     // Only genuine finger displacement dismisses focus/overlays. Measure in
     // root coordinates: keyboard/reply layout shifts change local coordinates
@@ -57,9 +106,14 @@ fun GearLazyColumn(
     // after an input gains focus.
     var listOriginInRoot by remember { mutableStateOf(Offset.Zero) }
 
+    CompositionLocalProvider(LocalKeyboardAvoider provides avoider) {
     LazyColumn(
         modifier = modifier
-            .onGloballyPositioned { listOriginInRoot = it.boundsInRoot().topLeft }
+            .onGloballyPositioned {
+                val bounds = it.boundsInRoot()
+                listOriginInRoot = bounds.topLeft
+                listBottomInRoot = bounds.bottom
+            }
             .pointerInput(Unit) {
                 val dragThreshold = 10f
 
@@ -83,7 +137,7 @@ fun GearLazyColumn(
                 }
             },
         state = state,
-        contentPadding = contentPadding,
+        contentPadding = paddedContent,
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment,
         // 🔴 An overlay covering the page freezes this list — a native scroll view
@@ -91,7 +145,11 @@ fun GearLazyColumn(
         userScrollEnabled = userScrollEnabled && !LocalInputBlockedByOverlay.current,
         content = content
     )
+    }
 }
+
+/** Space kept between a focused field and the keyboard. */
+private val KeyboardAvoidanceMargin = 12.dp
 
 /**
  * GearLazyRow - wrapped horizontal lazy list

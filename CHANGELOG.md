@@ -95,6 +95,12 @@
   scrims now consume native touches their content leaves.
 - An open `ComboBox` panel is updated in place as the query changes instead of closing
   and reopening, so a tap on an option cannot land on a panel being rebuilt.
+- A focused text field in a `GearLazyColumn` stays above the software keyboard, as on
+  iOS: the list pads its end by the keyboard's overlap and scrolls the field into view,
+  also on a page too short to scroll before. Only fields inside that list count, so a
+  page that moves its own content for the keyboard (a chat composer) is not padded
+  twice; `avoidKeyboard = false` turns it off. On iOS GearUI now observes the keyboard
+  itself; on Android the host reports it through `RuntimeInsetsBridge`, as before.
 - Hit regions of at least 44×44 on every control (Apple HIG, GearUI's spec), with the
   visual unchanged: small `Button` and `ToggleButton` (40), `Stepper` − and + (24–40),
   `SegmentedControl` segments (26), tappable and closable `Tag` and `TagGroup` chips

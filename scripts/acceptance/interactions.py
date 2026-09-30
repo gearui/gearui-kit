@@ -142,6 +142,19 @@ class Page:
         """Scroll in the page's side margin: started on a text field, a swipe selects text."""
         return int(w * 0.06)
 
+    def seek_prefix(self, prefix):
+        """Whether a label starting with [prefix] is anywhere on the page."""
+        hit = lambda: any(label.startswith(prefix) for label, _ in self.labels())
+        if hit():
+            return True
+        for _ in range(5):
+            self.swipe(down=True)
+        for _ in range(8):
+            if hit():
+                return True
+            self.swipe(down=False)
+        return hit()
+
     def tap_mask(self):
         """A point on the dimmed page above an open overlay (below the status bar)."""
         w, h = self.size()
@@ -162,6 +175,23 @@ class Page:
         if self.d.platform == "android":
             return "mInputShown=true" in self.d.adb("shell", "dumpsys", "input_method", what="ime").decode()
         return None  # the simulator's hardware keyboard hides the software one
+
+    def keyboard_top(self):
+        """Android: the software keyboard's top edge in screen pixels (None when hidden)."""
+        import re
+        if not self.keyboard_up():
+            return None
+        dump = self.d.adb("shell", "dumpsys", "window", "InputMethod", what="ime window").decode()
+        frame = re.search(r"parent=\[\d+,(\d+)\]", dump)
+        inset = re.search(r"mGivenVisibleInsets=\[\d+,(\d+)\]", dump)
+        return int(frame.group(1)) + int(inset.group(1)) if frame and inset else None
+
+    def focused_field(self):
+        import re
+        for n in self.d.dump().iter("node"):
+            if n.get("class", "").endswith("EditText") and n.get("focused") == "true":
+                return tuple(map(int, re.findall(r"\d+", n.get("bounds"))))
+        return None
 
     def open(self, route, title):
         self.d.launch(route, "light")
@@ -214,13 +244,17 @@ def picker(p):
 def datepicker(p):
     p.open("datepicker", "DatePicker")
     p.tap("请选择日期", exact=True)
-    check("datepicker", "opens", p.wait(lambda: p.shown("选择日期", True)))
+    # The sheet's title matches another field's placeholder; its cancel button does not.
+    check("datepicker", "opens", p.wait(lambda: p.shown("取消", True)))
     p.tap("取消", exact=True)
-    check("datepicker", "cancel leaves it empty", p.wait(lambda: p.shown("已选择: 未选择", True)))
+    check("datepicker", "cancel leaves it empty",
+          p.wait(lambda: not p.shown("取消", True)) and p.seek("已选择: 未选择"))
+    p.seek("请选择日期")
     p.tap("请选择日期", exact=True)
-    p.wait(lambda: p.shown("选择日期", True))
+    p.wait(lambda: p.shown("取消", True))
     p.tap("确定", exact=True)
-    check("datepicker", "confirm writes a date", p.wait(lambda: p.any_startswith("已选择: 20")))
+    check("datepicker", "confirm writes a date",
+          p.wait(lambda: not p.shown("取消", True)) and p.seek_prefix("已选择: 20"))
 
 
 def cascader(p):
@@ -335,7 +369,50 @@ def dropdowns(p):
     check("dropdowns", "a filtered choice writes the value", p.wait(lambda: p.shown("美元 USD", True)))
 
 
-FAMILIES = {f.__name__: f for f in (form, picker, datepicker, cascader, dropdowns, dialog, actionsheet, bottomsheet, popup)}
+def keyboard(p):
+    """A field low on the page, once focused, ends above the software keyboard."""
+    import json, re
+    for route, title in (("number-field", "NumberField"), ("input", "Input")):
+        p.open(route, title)
+        if p.d.platform == "android":
+            edits = [tuple(map(int, re.findall(r"\d+", n.get("bounds")))) for n in p.d.dump().iter("node")
+                     if n.get("class", "").endswith("EditText")]
+            b = edits[-1]
+            p.tap_xy((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, settle=2.0)
+            top, f = p.keyboard_top(), p.focused_field()
+            bottom = f[3] if f else None
+        else:
+            def tree():
+                return json.loads(run(["idb", "ui", "describe-all", "--udid", p.d.udid], "tree"))
+            raw = tree()
+            fields = [e["frame"] for e in raw if e.get("role") in ("AXTextField", "AXTextArea")
+                      and 0 <= e["frame"]["y"] < (p.d.screen_h or 1e9)]
+            f = fields[-1]
+            # Static labels on screen now, to measure how far the page moves.
+            anchors = {e["AXLabel"]: e["frame"]["y"] for e in raw
+                       if e.get("role") == "AXStaticText" and e.get("AXLabel") and 120 < e["frame"]["y"] < f["y"]}
+            p.tap_xy(f["x"] + f["width"] / 2, f["y"] + f["height"] / 2, settle=2.5)
+            raw = tree()
+            keys = [e["frame"]["y"] for e in raw if e.get("AXLabel") in ("q", "Q")]
+            if not keys:
+                print("SKIP|keyboard|no software keyboard (the simulator uses the hardware one)", flush=True)
+                return
+            top = min(keys) - 40  # the suggestion bar sits above the first key row
+            # idb does not say which element has focus: follow the tapped field by how far
+            # a label that stayed on screen moved (typing to find it would switch the
+            # simulator to its hardware keyboard).
+            moved = [anchors[e["AXLabel"]] - e["frame"]["y"] for e in raw
+                     if e.get("role") == "AXStaticText" and e.get("AXLabel") in anchors]
+            shift = sorted(moved)[len(moved) // 2] if moved else 0.0
+            bottom = f["y"] + f["height"] - shift
+        check("keyboard", f"{route}: the focused field ends above the keyboard",
+              top is not None and bottom is not None and bottom <= top, f"field bottom {bottom}, keyboard top {top}")
+        check("keyboard", f"{route}: the navigation bar stays in place", p.shown(title, True))
+        if p.d.platform == "android":
+            p.back()
+
+
+FAMILIES = {f.__name__: f for f in (form, picker, datepicker, cascader, dropdowns, keyboard, dialog, actionsheet, bottomsheet, popup)}
 
 
 def main():

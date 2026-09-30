@@ -1,4 +1,5 @@
 package com.gearui.components.textarea
+import com.gearui.foundation.keyboard.avoidsKeyboard
 import com.gearui.foundation.interaction.LocalControlLabel
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.gearui.foundation.field.multiLineFieldName
@@ -406,7 +407,7 @@ private fun TextareaInputArea(
                         // Rejecting a value in onValueChange does not reset the native field; the
                         // platform view would keep the extra text while the counter stops at the
                         // limit. Kuikly's maxLength modifier enforces it inside the native field.
-                        modifier = Modifier.multiLineFieldName(accessibilityLabel ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt()
+                        modifier = Modifier.multiLineFieldName(accessibilityLabel ?: LocalControlLabel.current ?: placeholder).keyboardDismissExempt().avoidsKeyboard(focusedState.value)
                             .then(if (maxLength != null) Modifier.maxLength(maxLength) else Modifier)
                             .fillMaxWidth()
                             .focusRequester(inputFocusRequester)

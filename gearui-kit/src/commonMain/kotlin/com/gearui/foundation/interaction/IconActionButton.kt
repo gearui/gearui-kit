@@ -40,19 +40,27 @@ internal fun IconActionButton(
     enabled: Boolean = true,
 ) {
     val interaction = remember { MutableInteractionSource() }
+    // Laid out at [size], touched over at least 44dp (see touchTarget).
     Box(
         modifier = modifier
+            .size(size)
+            .touchTarget(size)
             .semantics {
                 role = Role.Button
                 this.contentDescription = contentDescription
             }
-            .pressScale(interaction, enabled)
-            .size(size)
-            .clip(shape)
-            .background(background)
             .clickable(enabled = enabled, interactionSource = interaction, indication = null, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(name = icon, size = iconSize, tint = tint)
+        Box(
+            modifier = Modifier
+                .size(size)
+                .pressScale(interaction, enabled)
+                .clip(shape)
+                .background(background),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(name = icon, size = iconSize, tint = tint)
+        }
     }
 }

@@ -1,9 +1,20 @@
 package com.gearui.components.closebutton
 
+import com.tencent.kuikly.compose.ui.semantics.Role
+import com.tencent.kuikly.compose.ui.draw.clip
+import com.tencent.kuikly.compose.ui.draw.alpha
+import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.clickable
+import com.gearui.foundation.motion.FeedbackDefaults
+import com.gearui.foundation.interaction.touchTarget
+import com.gearui.foundation.interaction.pressedSurfaceColor
+import com.gearui.foundation.interaction.pressScale
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.control.ControlGeometry
-import com.gearui.foundation.interaction.PressableFeedback
 import com.gearui.i18n.I18n
 import com.tencent.kuikly.compose.ui.semantics.contentDescription
 import com.tencent.kuikly.compose.ui.semantics.semantics
@@ -45,18 +56,25 @@ fun CloseButton(
     contentDescription: String = I18n.strings.common.close,
 ) {
     val colors = Theme.colors
-    PressableFeedback(
-        onClick = onClick,
+    val source = remember { MutableInteractionSource() }
+    val pressed by source.collectIsPressedAsState()
+    val fill = if (containerColor.isSpecified()) containerColor else colors.muted
+    // The circle stays [size]; the touch target around it is 44dp (see touchTarget).
+    Box(
         modifier = modifier
             .size(size)
-            .semantics { this.contentDescription = contentDescription },
-        enabled = enabled,
-        shape = CircleShape,
+            .touchTarget(size)
+            .semantics { this.contentDescription = contentDescription }
+            .clickable(enabled = enabled, interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
+        contentAlignment = Alignment.Center,
     ) {
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .background(if (containerColor.isSpecified()) containerColor else colors.muted),
+                .size(size)
+                .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)
+                .pressScale(pressed = pressed && enabled)
+                .clip(CircleShape)
+                .background(pressedSurfaceColor(fill, pressed && enabled)),
             contentAlignment = Alignment.Center,
         ) {
             Icon(

@@ -320,13 +320,13 @@ private fun PreviousLayerCard(mode: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEAF6EF))
+            .background(Theme.colors.successSoft)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "Previous layer mounted", style = Theme.typography.titleMedium, color = Color(0xFF174A2A))
-        Text(text = mode, style = Theme.typography.bodyMedium, color = Color(0xFF174A2A))
-        Text(text = "This stands in for the examples list / chat list.", style = Theme.typography.bodySmall, color = Color(0xFF38684A))
+        Text(text = "Previous layer mounted", style = Theme.typography.titleMedium, color = Theme.colors.successSoftForeground)
+        Text(text = mode, style = Theme.typography.bodyMedium, color = Theme.colors.successSoftForeground)
+        Text(text = "This stands in for the examples list / chat list.", style = Theme.typography.bodySmall, color = Theme.colors.successSoftForeground)
     }
 }
 
@@ -338,16 +338,16 @@ private fun CurrentLayerCard(
 ) {
     Column(
         modifier = modifier
-            .background(Color(0xFFFFFFFF))
+            .background(Theme.colors.surface)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(text = "Current layer", style = Theme.typography.titleMedium, color = Color(0xFF111827))
-        Text(text = mode, style = Theme.typography.bodyMedium, color = Color(0xFF374151))
-        Text(text = "translationX=${offset.toInt()} px", style = Theme.typography.bodySmall, color = Color(0xFF6B7280))
+        Text(text = "Current layer", style = Theme.typography.titleMedium, color = Theme.colors.foreground)
+        Text(text = mode, style = Theme.typography.bodyMedium, color = Theme.colors.foreground)
+        Text(text = "translationX=${offset.toInt()} px", style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
         Spacer(modifier = Modifier.height(60.dp))
-        Text(text = "Swipe from the left side of this card.", style = Theme.typography.bodySmall, color = Color(0xFF6B7280))
+        Text(text = "Swipe from the left side of this card.", style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
     }
 }
 

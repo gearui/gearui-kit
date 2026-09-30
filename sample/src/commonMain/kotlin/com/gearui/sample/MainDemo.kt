@@ -177,8 +177,10 @@ private fun MainDemoContentInner(settingsState: SettingsState, startRoute: Strin
     // one is dragged away, so a swipe from anywhere on the page reveals it, and Android
     // BACK pops before it leaves the app.
     val nav = rememberNavigatorController<SampleRoute>(SampleRoute.Home)
-    // Automation opens a page directly; Home stays underneath so back still works.
-    LaunchedEffect(startRoute) {
+    // Automation opens a page directly. Pushed before the Navigator's first frame, the
+    // page is simply there (no slide-in to catch half-way in a screenshot), with Home
+    // underneath so back still works.
+    remember(startRoute) {
         when {
             startRoute == "settings" -> nav.push(SampleRoute.Settings)
             ComponentConfig.all.any { it.id == startRoute } -> nav.push(SampleRoute.Component(startRoute))

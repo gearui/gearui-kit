@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.interaction.touchTarget
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonType
 import com.gearui.components.button.Button
@@ -237,7 +238,9 @@ fun SearchBar(
                     // Search icon
                     Box(
                         modifier = if (onSearch != null && enabled) {
-                            Modifier.semantics { contentDescription = searchLabel }.clickable(role = Role.Button) { onSearch(value) }
+                            // A 16dp glyph, touched over 44dp; the field after it wins where they overlap.
+                            Modifier.touchTarget(FieldDefaults.trailingIconSize)
+                                .semantics { contentDescription = searchLabel }.clickable(role = Role.Button) { onSearch(value) }
                         } else Modifier,
                         contentAlignment = Alignment.Center
                     ) {

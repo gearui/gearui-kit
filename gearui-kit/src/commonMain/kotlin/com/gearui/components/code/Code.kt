@@ -1,5 +1,7 @@
 package com.gearui.components.code
 
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
@@ -16,8 +18,13 @@ import com.tencent.kuikly.compose.ui.Modifier
 /** Inline source or command text; typography can be replaced with the app's monospace token. */
 @Composable
 fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace"))) {
-    Text(text, style = style, color = Theme.colors.foreground,
-            modifier = modifier.background(Theme.colors.muted, Theme.shapes.sm).padding(Spacing.sm))
+    // A box carries the chip: on a KuiklyUI text node padding does not move the glyphs.
+    Box(
+        modifier.background(Theme.colors.muted, Theme.shapes.sm).padding(horizontal = Spacing.sm, vertical = Spacing.xs),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(text, style = style, color = Theme.colors.foreground)
+    }
 }
 
 /** Scrollable source block. The host supplies clipboard behavior and its localized action label. */

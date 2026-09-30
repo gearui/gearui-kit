@@ -35,7 +35,7 @@ fun ListBoxExample(component: ComponentInfo, onBack: () -> Unit) {
     ExamplePage(component, onBack) {
         ExampleSection("独立选项列表", "稳定值、多选、分组与禁用", SectionSurface.Plain) {
             ListBox(items, selected, { selected = it }, multiple = true)
-            Text(selected.joinToString(), style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
+            Text("value：" + selected.joinToString(" / ").ifEmpty { "无" }, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
         }
     }
 }
@@ -153,7 +153,7 @@ fun TypedFormExample(component: ComponentInfo, onBack: () -> Unit) {
     var submitted by remember { mutableStateOf(false) }
     ExamplePage(component, onBack) {
         ExampleSection("类型化与异步校验", "输入 taken 后立即修改，旧结果不得覆盖新值；服务端错误可注入") {
-            Input(name.value, { submitted = false; name.update(it) }, variant = FieldVariant.SECONDARY, label = "用户名", error = name.error, helperText = if (name.validating) "正在校验" else null)
+            Input(name.value, { submitted = false; name.update(it) }, variant = FieldVariant.SECONDARY, label = "用户名", placeholder = "请输入用户名（输入 taken 试试）", error = name.error, helperText = if (name.validating) "正在校验" else null)
             com.gearui.components.stepper.Stepper(quantity.value, { submitted = false; quantity.update(it) })
             Text("dirty=${name.dirty} touched=${name.touched}", style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
             Button("提交", { scope.launch { submitted = form.validateAll() } })

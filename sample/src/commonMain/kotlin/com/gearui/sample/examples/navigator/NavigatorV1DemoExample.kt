@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.navigator
 
+import com.gearui.components.scaffold.PageScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -96,6 +97,9 @@ fun NavigatorV1DemoExample(
             if (removedLog.size > 20) removedLog.removeAt(removedLog.size - 1)
         },
     ) { entry ->
+        // Each screen owns its insets, as privchat-app's PrivChatNavGraph does; without
+        // this the demo drew under the status bar.
+        PageScaffold(backgroundColor = Theme.colors.background, topSafeAreaColor = Theme.colors.background) {
         when (entry.route) {
             DemoRoute.Main -> MainScreen(
                 component = component,
@@ -125,6 +129,7 @@ fun NavigatorV1DemoExample(
                 onTryBack = { controller.pop() },
                 onConfirmDiscard = { controller.forcePop() },
             )
+        }
         }
     }
 }

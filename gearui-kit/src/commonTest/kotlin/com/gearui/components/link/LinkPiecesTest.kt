@@ -44,7 +44,7 @@ class LinkPiecesTest {
     @Test
     fun latinWordsStayWhole() {
         val pieces = linkPieces("I agree to the Terms of Service.", listOf("Terms of Service"))
-        assertEquals(listOf("I ", "agree ", "to ", "the ", "Terms ", "of ", "Service"), pieces.map { it.text })
+        assertEquals(listOf("I ", "agree ", "to ", "the ", "Terms of Service"), pieces.map { it.text })
         assertEquals(".", pieces.last().trailing)
     }
 
@@ -52,5 +52,18 @@ class LinkPiecesTest {
     fun theWholeSentenceSurvives() {
         val pieces = linkPieces(consent, links)
         assertEquals(consent, pieces.joinToString("") { it.text + it.trailing })
+    }
+
+    @Test
+    fun aLinkIsOnePieceSoItsButtonCoversThePhrase() {
+        val pieces = linkPieces(consent, links)
+        assertEquals(listOf("《用户协议》", "《隐私政策》"), pieces.filter { it.link != null }.map { it.text })
+    }
+
+    @Test
+    fun aVeryLongLinkMayStillWrap() {
+        val long = "《" + "很".repeat(20) + "》"
+        val pieces = linkPieces("同意$long", listOf(long))
+        assertTrue(pieces.count { it.link == long } > 1)
     }
 }

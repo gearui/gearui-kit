@@ -79,12 +79,14 @@ fun PickerExample(
             val stableLabels = stableValues.runningFold(stableOptions as List<PickerOption>?) { level, value ->
                 level?.firstOrNull { it.value == value }?.children
             }.zip(stableValues).mapNotNull { (level, value) -> level?.firstOrNull { it.value == value }?.label }
-            Cell(
-                title = stableLabels.joinToString(" / "),
-                description = "value：" + stableValues.joinToString(" / "),
-                arrow = true,
-                onClick = { stableOpen = true },
-            )
+            CellGroup(items = listOf(Unit)) {
+                Cell(
+                    title = stableLabels.joinToString(" / "),
+                    description = "value：" + stableValues.joinToString(" / "),
+                    arrow = true,
+                    onClick = { stableOpen = true },
+                )
+            }
         }
         // Each row opens a picker from the bottom sheet; the note shows the result.
         ExampleSection(

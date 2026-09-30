@@ -1,5 +1,7 @@
 package com.gearui.components.kbd
 
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.layout.Spacing
@@ -19,8 +21,15 @@ fun Kbd(keys: List<String>, modifier: Modifier = Modifier, accessibilityLabel: S
     val colors = Theme.colors
     FlowRow(modifier.semantics(mergeDescendants = true) { contentDescription = accessibilityLabel }, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         keys.forEach { key ->
-            Text(key, style = Theme.typography.bodySmall, color = colors.foreground, modifier = Modifier
-                .background(colors.muted, Theme.shapes.sm).border(BorderWidth.thin, colors.border, Theme.shapes.sm).padding(Spacing.sm))
+            // The cap is a box around the text: on a KuiklyUI text node, padding and a
+            // background do not move the glyphs, which stayed in the top-left corner.
+            Box(
+                Modifier.background(colors.muted, Theme.shapes.sm).border(BorderWidth.thin, colors.border, Theme.shapes.sm)
+                    .padding(horizontal = Spacing.sm, vertical = Spacing.xs),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(key, style = Theme.typography.bodySmall, color = colors.foreground)
+            }
         }
     }
 }

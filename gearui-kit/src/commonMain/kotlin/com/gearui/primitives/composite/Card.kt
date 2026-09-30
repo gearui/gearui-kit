@@ -1,5 +1,6 @@
 package com.gearui.primitives.composite
 
+import com.tencent.kuikly.compose.ui.Alignment
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
@@ -107,7 +108,10 @@ fun Card(
         colors = surfaceColors,
         interactionSource = interactionSource,
         onClick = onClick,
-        shape = shape
+        shape = shape,
+        // A card holds content, not a label: narrower content starts at the padding
+        // instead of floating in the middle of the card.
+        contentAlignment = Alignment.TopStart,
     ) {
         Column(
             modifier = Modifier.padding(padding),

@@ -45,6 +45,18 @@
   parked page is hidden from screen readers and cannot receive taps.
 - The architecture docs now require the single-page `Navigator` model for apps and
   say what it costs.
+- Acceptance fixes:
+  - `CloseButton` (and so NumberField's steps and Upload's remove), the calendar's
+    month buttons and SearchBar's search icon take touches over 44dp while keeping
+    their size: KuiklyUI does not widen small targets as Compose does, so a 32dp close
+    button took taps only inside its 32dp.
+  - `LinkedText` / `AgreementCheckbox`: VoiceOver read every character as its own
+    element; the semantics now sit on a wrapper KuiklyUI honours, and a link is one
+    piece, so its button covers the whole phrase.
+  - `Card` aligns content to the top start; narrow content used to float in the middle
+    of the card, which read as a triple inset.
+  - `Kbd` and `Code`: the text sat in the top-left corner of its cap; padding on a
+    KuiklyUI text node does not move the glyphs.
 - No beta7 artifact has been uploaded and no version tag has been created.
 
 ### Migration from 1.0.0-beta6

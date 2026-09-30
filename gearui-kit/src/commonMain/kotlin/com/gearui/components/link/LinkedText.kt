@@ -1,5 +1,6 @@
 package com.gearui.components.link
 
+import com.tencent.kuikly.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,10 +38,11 @@ import com.tencent.kuikly.compose.ui.semantics.role
  *
  * KuiklyUI draws a text natively and neither delivers taps to link annotations nor
  * reports character positions, so the sentence is laid out as a flow of pieces instead:
- * a Chinese character each, a Latin word each. Closing punctuation stays on the line of
- * the character before it and opening punctuation with the one after, so no line starts
- * with "，" or ends with "《". A screen reader hears the sentence once and each link as a
- * button.
+ * a Chinese character each, a Latin word each, a link whole. Closing punctuation stays on
+ * the line of the character before it and opening punctuation with the one after, so no
+ * line starts with "，" or ends with "《". A screen reader hears the sentence once and
+ * each link as a button. An inline link's touch target is one line tall — the inline
+ * exception of WCAG 2.5.8 — so a standalone action belongs in a Link or Button.
  */
 @Composable
 fun LinkedText(
@@ -81,45 +83,46 @@ internal fun LinkedTextFlow(
         pieces.forEachIndexed { index, piece ->
             val phrase = piece.link
             val firstOfLink = phrase != null && pieces.getOrNull(index - 1)?.link != phrase
-            Row {
-                Text(
-                    text = piece.text,
-                    style = style,
-                    color = when {
-                        phrase == null -> color
-                        phrase == pressed -> linkColor.copy(alpha = linkColor.alpha * FeedbackDefaults.disabledOpacity)
-                        else -> linkColor
-                    },
-                    modifier = Modifier
-                        .pointerInput(phrase) {
-                            detectTapGestures(
-                                onPress = {
-                                    pressed = phrase
-                                    tryAwaitRelease()
-                                    pressed = null
-                                },
-                                onTap = { if (phrase != null) actions[phrase]?.invoke() else plainClick?.invoke() },
-                            )
-                        }
-                        .clearAndSetSemantics {
-                            when {
-                                firstOfLink -> {
-                                    role = Role.Button
-                                    contentDescription = phrase!!
-                                    onClick(label = null) { actions[phrase]?.invoke(); true }
-                                }
-                                index == 0 && readSentence -> contentDescription = text
-                                else -> Unit
+            // The semantics sit on a wrapper: a Text's own text semantics live on its
+            // node, where clearing cannot reach them, and KuiklyUI then exposes every
+            // piece to the screen reader as its own label.
+            Box(
+                modifier = Modifier
+                    .pointerInput(phrase) {
+                        detectTapGestures(
+                            onPress = {
+                                pressed = phrase
+                                tryAwaitRelease()
+                                pressed = null
+                            },
+                            onTap = { if (phrase != null) actions[phrase]?.invoke() else plainClick?.invoke() },
+                        )
+                    }
+                    .clearAndSetSemantics {
+                        when {
+                            firstOfLink -> {
+                                role = Role.Button
+                                contentDescription = phrase!!
+                                onClick(label = null) { actions[phrase]?.invoke(); true }
                             }
-                        },
-                )
-                if (piece.trailing.isNotEmpty()) {
+                            index == 0 && readSentence -> contentDescription = text
+                            else -> Unit
+                        }
+                    },
+            ) {
+                Row {
                     Text(
-                        text = piece.trailing,
+                        text = piece.text,
                         style = style,
-                        color = color,
-                        modifier = Modifier.clearAndSetSemantics { },
+                        color = when {
+                            phrase == null -> color
+                            phrase == pressed -> linkColor.copy(alpha = linkColor.alpha * FeedbackDefaults.disabledOpacity)
+                            else -> linkColor
+                        },
                     )
+                    if (piece.trailing.isNotEmpty()) {
+                        Text(text = piece.trailing, style = style, color = color)
+                    }
                 }
             }
         }
@@ -131,11 +134,13 @@ internal data class LinkPiece(val text: String, val link: String?, val trailing:
 
 private const val ClosingPunctuation = "，。、；：？！）》」』】〉”’,.;:?!)]}"
 private const val OpeningPunctuation = "（《「『【〈“‘([{"
+private const val MaxUnbrokenLink = 16
 
 /**
  * Splits [text] into pieces that may wrap between them: each CJK character alone, each
- * Latin word with its trailing spaces, punctuation kept on the side it belongs to, and
- * never across the edge of a link.
+ * Latin word with its trailing spaces, each link whole (up to [MaxUnbrokenLink]
+ * characters), punctuation kept on the side it belongs to, and never across the edge
+ * of a link.
  */
 internal fun linkPieces(text: String, phrases: Collection<String>): List<LinkPiece> {
     val owner = arrayOfNulls<String>(text.length)
@@ -159,6 +164,9 @@ internal fun linkPieces(text: String, phrases: Collection<String>): List<LinkPie
         val latin = c.code < 0x2E80 && !c.isWhitespace() && c !in ClosingPunctuation && c !in OpeningPunctuation
         val sameLink = link == currentLink
         val attachToPrevious = sameLink && current.isNotEmpty() && (
+            // A link is one piece, so its button covers the whole phrase; only a link
+            // longer than a line's worth may wrap inside.
+            (link != null && link.length <= MaxUnbrokenLink) ||
             c in ClosingPunctuation ||
                 c.isWhitespace() ||
                 glueNext ||

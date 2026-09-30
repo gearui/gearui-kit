@@ -49,7 +49,7 @@ fun Surface(
     content: @Composable BoxScope.() -> Unit
 ) = SurfaceWithShape(
     modifier, enabled, tokens, colors, interactionSource, onClick,
-    RoundedCornerShape(tokens.radius), content
+    RoundedCornerShape(tokens.radius), content = content
 )
 
 /** Internal shape-aware path; existing public Surface callers retain their token radius. */
@@ -62,6 +62,8 @@ internal fun SurfaceWithShape(
     interactionSource: MutableInteractionSource,
     onClick: (() -> Unit)?,
     shape: Shape,
+    /** Centre for a control's label; a container (Card) aligns its content to the top start. */
+    contentAlignment: Alignment = Alignment.Center,
     content: @Composable BoxScope.() -> Unit
 ) {
     // =========================
@@ -113,7 +115,7 @@ internal fun SurfaceWithShape(
                 } else Modifier
             )
             .padding(tokens.padding),
-        contentAlignment = Alignment.Center
+        contentAlignment = contentAlignment
     ) {
         content()
     }

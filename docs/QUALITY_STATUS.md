@@ -197,14 +197,14 @@ recorded in §2. A green compile closes nothing. Items that cannot be done state
 an upstream fix, a decision) and are marked externally blocked; before release the maintainer releases or
 defers each one explicitly. Nothing is skipped silently.
 
-Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ externally blocked
+Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ externally blocked · ⏸ deferred by the maintainer
 
 ### A. Release hygiene
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
 | A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☐ |
-| A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ◐ Android downstream compiles passed; iOS requires missing Rust static archives (see BETA7_ACCEPTANCE) |
+| A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ☑ Android: privchat-ui, live-chat, lms-app compile. iOS: after building the Rust FFI, privchat-app and live-chat link; lms-app links after fixing its long-standing iOS compile errors (lms-app 22b7654). Weey release verified on a device. See BETA7_ACCEPTANCE |
 | A3 | Incorporate accepted items from the historical comparison into groups B/C and retire the outdated document | B/C gates and documentation cleanup commit | ☑ B/C entries recorded; comparison remains in git history, not the release specification |
 
 ### B. Mobile-business capabilities
@@ -216,29 +216,29 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 | B3 | Input formatting layer: raw value, display value and caret mapping kept apart; phone 3-4-4, bank-card groups of four, ID-card trailing X | Pure-function tests + on-device paste, mid-string edits, Chinese IME | ◐ IME draft handling wired in; physical-device Chinese IME and paste acceptance pending |
 | B4 | Calendar first day of week from the language pack; Monday for Simplified Chinese; Sunday for Traditional Chinese (Hong Kong) | Tests + screenshots | ☑ Simplified Monday, Traditional Chinese Sunday per Hong Kong convention; FormatStringsTest and iOS calendar evidence |
 | B5 | Compact numbers (万/亿 by language pack) and Chinese relative time in the i18n formatting layer | Tests: boundaries, four languages | ☑ `FormatStringsTest` (万/亿 boundaries, rounding down, negatives, K/M/B, six relative-time cases including a year boundary and a fast clock); the kit ships three packs (Simplified, Traditional, English), not four |
-| B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ◐ stable-value Picker and cancellable Cascader implemented and unit-tested; new wheel lifecycle device acceptance pending |
-| B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ◐ bounds, precision, filters and time steps implemented with edge tests; device wheel acceptance pending |
+| B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ☑ Stable-value Picker and cancellable Cascader have tests; Android device: a linked branch ending at 香港 (no children) confirms, same-named nodes told apart by value |
+| B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ☑ Bounds, precision, filters and steps have boundary tests; columns computed on demand (a few hundred checks for the default range); Android device: Oct 31 rolled to September lands on the 30th, confirm writes 2026-09-30 |
 | B8 | Form: typed field values, dirty/touched/validating, trigger policy, versioned async validation, server-side field errors | Tests: slow result never overwrites a newer value, a left field never writes back + sample form | ◐ typed async form tests passed; Web stale-result, submit and server-error paths exercised; native interaction pending |
-| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); optional Stepper input (`editable`, off by default) | Tests + device | ◐ exact decimal and editable Stepper implemented, arithmetic tested; device draft/edit acceptance pending |
+| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); optional Stepper input (`editable`, off by default) | Tests + device | ☑ Exact decimals tested; inputType read on an Android device: whole non-negative fields get the digit pad (0x2), decimal/signed fields the text keyboard (0x1, Kuikly has no decimal pad); Stepper read-only by default, `editable` to opt in |
 
 ### C. Component coverage (from COMPONENT_COVERAGE §3)
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ◐ all planned P2 entries in API, registry and sample; full two-device visual acceptance pending |
-| C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ◐ all planned P3 entries in API, registry and sample; full two-device visual acceptance pending |
-| C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ◐ inventory, README, language packs and API baselines refreshed; final guard/CI evidence pending |
+| C1 | P2: standalone ListBox, YearPicker, segmented date/time fields with localized formats, Toolbar, SubMenu, IndexBar | Per component: API baseline, tests, sample page, screenshots on both platforms | ☑ All P2 entries in API, registry and sample; Android light/dark reviewed page by page and fixed (BETA7_ACCEPTANCE D2) |
+| C2 | P3: Kbd, ColorPicker family, Meter, User, Code/Snippet | Same | ☑ All P3 entries in API, registry and sample; Kbd/Code text placement fixed; flat ColorPicker sliders registered as a deviation |
+| C3 | Registry, README index, COMPONENT_COVERAGE, language packs, API baselines in sync | Guards green | ☑ Registry, README index, language packs and API baselines in sync; guards green |
 
 ### D. Runtime acceptance
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| D1 | Screen readers: TalkBack on an Android device across every page with the spoken text recorded; iOS audited with XCUITest `performAccessibilityAudit` on every page, VoiceOver spot checks on a device for the key families | TalkBack logs, audit report, issue list and fixes | ☐ |
-| D2 | Visual: every sample page × light/dark × Android device and iOS, archived and judged against VISUAL_SPEC page by page | Screenshot set + per-page verdict + deviations | ◐ first-viewport light/dark capture in progress; page-by-page verdict pending |
-| D3 | Large text: Android font scale 1.3 and maximum, iOS largest Dynamic Type, truncation/overflow on every page | Screenshots + issues and fixes | ☐ |
-| D4 | RTL: Android forced RTL layout direction, page by page | Screenshots + issues | ☐ |
-| D5 | Performance on an iOS device (iPhone 16 Pro Max): cold start, theme switch, scrolling against the §1 budgets | `scripts/perf` output | ☐ |
-| D6 | Web: browser automation across pages, including viewport resizing | Script and results | ◐ selected Web form flows and phone-width layout exercised; all-route/resize acceptance pending |
+| D1 | Screen readers: TalkBack on an Android device across every page with the spoken text recorded; iOS audited with XCUITest `performAccessibilityAudit` on every page, VoiceOver spot checks on a device for the key families | TalkBack logs, audit report, issue list and fixes | ◐ iOS XCUITest audit and Android screen-reader node-tree audit over all pages run, fixes committed; **contrast (reference palette: light muted text 4.43, primary text 3.38–3.68) and sub-44dp design sizes await a maintainer decision** |
+| D2 | Visual: every sample page × light/dark × Android device and iOS, archived and judged against VISUAL_SPEC page by page | Screenshot set + per-page verdict + deviations | ☑ Android device and iOS simulator, light and dark, reviewed page by page: findings fixed (Kbd/Code/Card/Upload/Timeline/Watermark/sample pages), deviations registered; iOS only has the NavBar single-line title without an ellipsis left (upstream). See BETA7_ACCEPTANCE |
+| D3 | Large text: Android font scale 1.3 and maximum, iOS largest Dynamic Type, truncation/overflow on every page | Screenshots + issues and fixes | ⏸ Deferred to the next phase by the maintainer (2026-09-29) |
+| D4 | RTL: Android forced RTL layout direction, page by page | Screenshots + issues | ⛔ Not supported: Kuikly does not pass the platform RTL setting through, and an RTL layout direction provided at the root does not mirror either; recorded for upstream; the kit ships no right-to-left language |
+| D5 | Performance on an iOS device (iPhone 16 Pro Max): cold start, theme switch, scrolling against the §1 budgets | `scripts/perf` output | ◐ Maintainer accepted a simulator (2026-09-30). iOS simulator, Release: cold start median 1029 ms (budget 1000, 3% over), theme switch 47.7 ms, scroll 0% janky |
+| D6 | Web: browser automation across pages, including viewport resizing | Script and results | ☑ Web automation over 93 pages (390 wide: load, scroll, tap, 1280→390 resize): 91 clean; avatar is the demo's deliberately broken image; combo-box keeps an open dropdown where it was after a resize (registered) |
 | D7 | HarmonyOS: sample on the DevEco emulator across every page; device acceptance | Emulator screenshots; device is externally blocked | ⛔ shared library and unsigned HAP build; signed emulator and device runtime unavailable |
 | D8 | Chinese ROM matrix: Xiaomi covered; Huawei, OPPO, vivo | Screenshots per device | ⛔ no devices |
 
@@ -246,9 +246,9 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| E1 | Native border not refreshed on rounded↔square hot swap: fix in the kit if it can be worked around, else record with a minimal repro | Fix commit or repro project | ☐ |
-| E2 | The four upstream blur gaps: written up as Kuikly issues ready to file | Issue drafts; filing is the maintainer's call | ☐ |
-| E3 | Decisions carried from beta3 — native type scale, iOS password visibility toggle, Kuikly text-field focus crosstalk: decide and implement, or record as known limits | Decision record and commits | ☐ |
+| E1 | Native border not refreshed on rounded↔square hot swap: fix in the kit if it can be worked around, else record with a minimal repro | Fix commit or repro project | ☑ 3ef6158 rebuilds decorations on size/shape/border; Android device and iOS simulator: the Surface lab switched round ↔ square with borders and shadows redrawn at once |
+| E2 | The four upstream blur gaps: written up as Kuikly issues ready to file | Issue drafts; filing is the maintainer's call | ◐ Upstream issue drafts for the four blur gaps written, awaiting maintainer review before filing (drafts kept out of the repo) |
+| E3 | Decisions carried from beta3 — native type scale, iOS password visibility toggle, Kuikly text-field focus crosstalk: decide and implement, or record as known limits | Decision record and commits | ☑ Native type scale decided in beta4 (reference default, Platform opt-in); iOS password reveal implemented in beta3 (single-line limit documented); focus crosstalk a known limitation with five kit-side mitigations |
 
 ### F. Release
 

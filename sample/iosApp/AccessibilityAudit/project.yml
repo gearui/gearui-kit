@@ -1,0 +1,32 @@
+# A separate project so the sample's CocoaPods project is never regenerated.
+# The UI tests drive the installed sample by bundle id.
+name: GearUIAccessibilityAudit
+options:
+  bundleIdPrefix: com.gearui.kit
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  AuditHost:
+    type: application
+    platform: iOS
+    sources: [AuditHost]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.gearui.kit.audithost
+      GENERATE_INFOPLIST_FILE: YES
+  AuditUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [AuditUITests]
+    dependencies:
+      - target: AuditHost
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      TEST_TARGET_NAME: AuditHost
+schemes:
+  AuditUITests:
+    build:
+      targets:
+        AuditHost: all
+        AuditUITests: [test]
+    test:
+      targets: [AuditUITests]

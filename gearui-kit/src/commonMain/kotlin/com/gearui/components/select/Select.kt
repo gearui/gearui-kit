@@ -70,6 +70,7 @@ fun <T> Select(
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
+    var placement by remember { mutableStateOf<DropdownPlacement?>(null) }
     val selectedOption = options.find { it.value == value }
 
     // Wrapped in State so the lambdas can read the current value
@@ -88,31 +89,24 @@ fun <T> Select(
         // Note: state clearing is handled by the onDismiss callback
     }
 
+    fun placementFor(bounds: Rect): DropdownPlacement? {
+        val rows = selectRows(optionsState.value)
+        return dropdownPlacement(
+            bounds, rows.size, rows.indexOfFirst { it.option?.value == valueState.value }, density, viewport.height,
+            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+        )
+    }
+
     // Opens the dropdown
     fun openDropdown() {
         if (anchorBounds == null || viewport.height <= 0 || !enabledState.value || expanded) return
 
         val bounds = anchorBounds!!
-        val anchorWidth = bounds.width
-        val rows = selectRows(optionsState.value)
-        val selectedRow = rows.indexOfFirst { it.option?.value == valueState.value }
-        val layout = with(density) {
-            selectPanelLayout(
-                rows.size, selectedRow, FieldSizeTokens.Medium.height.value,
-                bounds.top.toDp().value, bounds.bottom.toDp().value,
-                viewport.height.toDp().value, environment.safeArea.top.value,
-                maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value,
-                contentPadding = ControlGeometry.selectContentPadding.value,
-            )
-        }
-        if (layout.height <= 0f) return
-
-        // A resolved zero-height anchor avoids the generic dropdown rule that
-        // forbids covering the trigger. Select owns the real trigger lifecycle.
-        val panelTop = with(density) { layout.top.dp.toPx() }
+        val opened = placementFor(bounds) ?: return
+        placement = opened
         overlayId = overlay.show(
-            anchorBounds = Rect(bounds.left, panelTop, bounds.right, panelTop),
+            anchorBounds = opened.anchor,
+            passThroughBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
                 offsetY = Spacing.none,
@@ -128,9 +122,8 @@ fun <T> Select(
             SelectPanel(
                 options = optionsState.value,
                 isSelected = { it.value == valueState.value },
-                anchorWidth = anchorWidth,
-                layout = layout,
-                viewportWidth = viewport.width,
+                anchorWidth = (placement ?: opened).anchorWidth,
+                layout = (placement ?: opened).layout,
                 enabled = enabledState.value,
                 onOptionClick = { option ->
                     if (expanded && enabledState.value && !option.disabled) {
@@ -143,10 +136,10 @@ fun <T> Select(
         expanded = true
     }
 
-    // Dismiss the Overlay when the component leaves composition
-    LaunchedEffect(enabled, viewport) {
-        if (!enabled || expanded) closeDropdown()
+    LaunchedEffect(enabled) {
+        if (!enabled) closeDropdown()
     }
+    TrackDropdownAnchor(overlay, overlayId, anchorBounds, ::placementFor, { placement = it }, ::closeDropdown)
 
     DisposableEffect(Unit) {
         onDispose {
@@ -172,9 +165,7 @@ fun <T> Select(
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
                     .onGloballyPositioned { coordinates ->
-                        if (!expanded) {
-                            anchorBounds = coordinates.boundsInRoot()
-                        }
+                        anchorBounds = coordinates.boundsInRoot()
                     }
                     .then(fieldTriggerModifier(enabled, error, variant) {
                         if (expanded) {
@@ -241,6 +232,7 @@ fun <T> MultiSelect(
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var expanded by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
+    var placement by remember { mutableStateOf<DropdownPlacement?>(null) }
 
     // Wrapped in State so the lambdas can read the current value
     val valuesState = rememberUpdatedState(values)
@@ -256,30 +248,23 @@ fun <T> MultiSelect(
         overlayId?.let { overlay.dismiss(it) }
     }
 
+    fun placementFor(bounds: Rect): DropdownPlacement? {
+        val rows = selectRows(optionsState.value)
+        return dropdownPlacement(
+            bounds, rows.size, rows.indexOfFirst { it.option?.value in valuesState.value }, density, viewport.height,
+            environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+        )
+    }
+
     fun openDropdown() {
         if (anchorBounds == null || viewport.height <= 0 || !enabledState.value || expanded) return
 
         val bounds = anchorBounds!!
-        val anchorWidth = bounds.width
-        val rows = selectRows(optionsState.value)
-        val selectedRow = rows.indexOfFirst { it.option?.value in valuesState.value }
-        val layout = with(density) {
-            selectPanelLayout(
-                rows.size, selectedRow, FieldSizeTokens.Medium.height.value,
-                bounds.top.toDp().value, bounds.bottom.toDp().value,
-                viewport.height.toDp().value, environment.safeArea.top.value,
-                maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value,
-                contentPadding = ControlGeometry.selectContentPadding.value,
-            )
-        }
-        if (layout.height <= 0f) return
-
-        // A resolved zero-height anchor avoids the generic dropdown rule that
-        // forbids covering the trigger. Select owns the real trigger lifecycle.
-        val panelTop = with(density) { layout.top.dp.toPx() }
+        val opened = placementFor(bounds) ?: return
+        placement = opened
         overlayId = overlay.show(
-            anchorBounds = Rect(bounds.left, panelTop, bounds.right, panelTop),
+            anchorBounds = opened.anchor,
+            passThroughBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
                 offsetY = Spacing.none,
@@ -294,9 +279,8 @@ fun <T> MultiSelect(
             SelectPanel(
                 options = optionsState.value,
                 isSelected = { it.value in valuesState.value },
-                anchorWidth = anchorWidth,
-                layout = layout,
-                viewportWidth = viewport.width,
+                anchorWidth = (placement ?: opened).anchorWidth,
+                layout = (placement ?: opened).layout,
                 enabled = enabledState.value,
                 multiple = true,
                 onOptionClick = { option ->
@@ -312,9 +296,10 @@ fun <T> MultiSelect(
         expanded = true
     }
 
-    LaunchedEffect(enabled, viewport) {
-        if (!enabled || expanded) closeDropdown()
+    LaunchedEffect(enabled) {
+        if (!enabled) closeDropdown()
     }
+    TrackDropdownAnchor(overlay, overlayId, anchorBounds, ::placementFor, { placement = it }, ::closeDropdown)
 
     DisposableEffect(Unit) {
         onDispose {
@@ -338,9 +323,7 @@ fun <T> MultiSelect(
                     .fillMaxWidth()
                     .height(FieldSizeTokens.Medium.height)
                     .onGloballyPositioned { coordinates ->
-                        if (!expanded) {
-                            anchorBounds = coordinates.boundsInRoot()
-                        }
+                        anchorBounds = coordinates.boundsInRoot()
                     }
                     .then(fieldTriggerModifier(enabled, error, variant) {
                         if (expanded) closeDropdown() else openDropdown()

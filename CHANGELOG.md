@@ -63,6 +63,16 @@
   - `Watermark`: tiles run past the edge and are cut there instead of wrapping the
     text of the last column mid-word.
   - `Tag`: the close button is a named button with a larger target.
+  - `ComboBox` stays open on Android: showing its panel cleared focus (overlays dismiss
+    the keyboard by default), the field's blur closed the panel, and the dropdown never
+    stayed up. The panel no longer dismisses the keyboard.
+  - `Select`, `MultiSelect` and `ComboBox` panels follow their trigger while open — a
+    resized window, a scroll, the keyboard coming up — instead of closing (Select) or
+    keeping the width and place they opened at (ComboBox on the Web). Tapping the
+    trigger again reaches the trigger: Select toggles, a focused ComboBox stays focused.
+- Overlay: `OverlayController.updateAnchor(id, anchorBounds, passThroughBounds)` moves an
+  open overlay; `show(passThroughBounds = …)` leaves an area of the page (the trigger)
+  to the page instead of treating a tap on it as a tap outside.
 - No beta7 artifact has been uploaded and no version tag has been created.
 
 ### Migration from 1.0.0-beta6

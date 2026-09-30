@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import com.gearui.runtime.RuntimeInsetsBridge
+import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.sample.adapter.SampleImageAdapter
 import com.gearui.sample.adapter.SampleThreadAdapter
 import com.tencent.kuikly.core.render.android.adapter.KuiklyRenderAdapterManager
@@ -35,6 +39,14 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
         }
 
         setContentView(container)
+
+        // The keyboard inset comes from the host (RuntimeInsetsBridge), as in a real app:
+        // Kuikly does not report it, and without it dropdowns open under the keyboard.
+        ViewCompat.setOnApplyWindowInsetsListener(container) { _, insets ->
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            RuntimeInsetsBridge.updateKeyboardHeight((ime / resources.displayMetrics.density).dp)
+            insets
+        }
 
         // Register the status bar controller
         StatusBarControllerImpl.register(this)

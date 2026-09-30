@@ -4550,8 +4550,9 @@ public final class com/gearui/overlay/OverlayController {
 	public final fun dismissByPolicy (Lkotlin/jvm/functions/Function1;)V
 	public final fun dispatchEvent (Lcom/gearui/overlay/OverlayEvent;)V
 	public final fun hasOverlay ()Z
-	public final fun show (Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lcom/gearui/overlay/OverlayOptions;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;)J
-	public static synthetic fun show$default (Lcom/gearui/overlay/OverlayController;Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lcom/gearui/overlay/OverlayOptions;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)J
+	public final fun show (Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lcom/gearui/overlay/OverlayOptions;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lkotlin/jvm/functions/Function2;)J
+	public static synthetic fun show$default (Lcom/gearui/overlay/OverlayController;Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lcom/gearui/overlay/OverlayOptions;Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/geometry/Rect;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)J
+	public final fun updateAnchor (JLcom/tencent/kuikly/compose/ui/geometry/Rect;Lcom/tencent/kuikly/compose/ui/geometry/Rect;)V
 }
 
 public final class com/gearui/overlay/OverlayControllerKt {

@@ -37,20 +37,24 @@ class OverlayController {
      * @param anchorBounds anchor position; null means position by placement
      * @param options configuration, including dismissPolicy
      * @param onDismiss called when dismissed
+     * @param passThroughBounds for a non-modal overlay, an area of the page (usually the
+     *   trigger) whose touches reach the page instead of counting as an outside tap
      * @param content the content
-     * @return the Overlay ID, usable with dismiss
+     * @return the Overlay ID, usable with dismiss and [updateAnchor]
      */
     fun show(
         anchorBounds: Rect? = null,
         options: OverlayOptions = OverlayOptions(),
         onDismiss: (() -> Unit)? = null,
+        passThroughBounds: Rect? = null,
         content: @Composable () -> Unit
     ): Long {
         val id = nextId++
 
         _items += OverlayItem(
             id = id,
-            anchorBounds = anchorBounds,
+            anchor = mutableStateOf(anchorBounds),
+            passThrough = mutableStateOf(passThroughBounds),
             options = options,
             content = content,
             onDismiss = onDismiss
@@ -80,6 +84,16 @@ class OverlayController {
         if (item.exiting.value) return
         item.exiting.value = true
         item.onDismiss?.invoke()
+    }
+
+    /**
+     * Moves an open Overlay to a new anchor — its trigger moved (a resize, a scroll, the
+     * keyboard) — without closing and reopening it.
+     */
+    fun updateAnchor(id: Long, anchorBounds: Rect?, passThroughBounds: Rect?) {
+        val item = _items.find { it.id == id } ?: return
+        item.anchor.value = anchorBounds
+        item.passThrough.value = passThroughBounds
     }
 
     /**
@@ -151,7 +165,9 @@ class OverlayController {
  */
 internal data class OverlayItem(
     val id: Long,
-    val anchorBounds: Rect?,
+    /** State, like [exiting], so a moved trigger moves the panel without a new item. */
+    val anchor: MutableState<Rect?>,
+    val passThrough: MutableState<Rect?>,
     val options: OverlayOptions,
     val content: @Composable () -> Unit,
     val onDismiss: (() -> Unit)? = null,
@@ -163,7 +179,9 @@ internal data class OverlayItem(
      * and restart it from its enter animation, mid-exit.
      */
     val exiting: MutableState<Boolean> = mutableStateOf(false),
-)
+) {
+    val anchorBounds: Rect? get() = anchor.value
+}
 
 /**
  * Global Overlay Controller, injected through a CompositionLocal

@@ -188,6 +188,9 @@ class Ios:
             data = json.loads(raw)
         except json.JSONDecodeError as e:
             raise DriverError(f"describe tree: unreadable output: {e}")
+        # A lone zero-size Application: normal for a moment at launch; if it lasts, the
+        # simulator's accessibility service is down (every app reads empty).
+        self.tree_empty = len(data) == 1 and not (data[0].get("frame") or {}).get("width")
         rows = []
         for e in data:
             label = (e.get("AXLabel") or "").strip()
@@ -205,6 +208,9 @@ class Ios:
             if self.screen_h and ready(rows, title, self.screen_h):
                 return rows
             time.sleep(0.5)
+        if getattr(self, "tree_empty", False):
+            raise DriverError("accessibility tree stayed empty; the simulator's accessibility "
+                              "service is down — reboot the simulator and reconnect idb")
         raise DriverError(f"page '{title}' did not render within {timeout}s")
 
     def screenshot(self, path):

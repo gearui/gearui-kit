@@ -1,5 +1,6 @@
 package com.gearui.components.select
 
+import com.gearui.overlay.LocalOverlayViewportSize
 import com.tencent.kuikly.compose.foundation.clickable
 import com.gearui.foundation.interaction.choiceSemantics
 import com.gearui.foundation.material.MaterialSurface
@@ -42,7 +43,6 @@ internal fun <T> SelectPanel(
     isSelected: (SelectOption<T>) -> Boolean,
     anchorWidth: Float,
     layout: SelectPanelLayout,
-    viewportWidth: Int,
     enabled: Boolean,
     multiple: Boolean = false,
     onOptionClick: (SelectOption<T>) -> Unit,
@@ -52,6 +52,8 @@ internal fun <T> SelectPanel(
     val density = LocalDensity.current
     val rows = remember(options) { selectRows(options) }
     val state = rememberLazyListState(initialFirstVisibleItemIndex = layout.firstRow)
+    // Read here, not passed in at opening, so a resized window re-limits an open panel.
+    val viewportWidth = LocalOverlayViewportSize.current.width
     val width = with(density) { anchorWidth.toDp().coerceAtMost(viewportWidth.toDp() - Spacing.lg) }
     val rowHeight = FieldSizeTokens.Medium.height
 

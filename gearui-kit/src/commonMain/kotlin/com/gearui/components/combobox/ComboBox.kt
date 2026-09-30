@@ -1,5 +1,9 @@
 package com.gearui.components.combobox
 
+import com.gearui.components.select.dropdownBottomInset
+import com.gearui.components.select.dropdownPlacement
+import com.gearui.components.select.TrackDropdownAnchor
+import com.gearui.components.select.DropdownPlacement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -77,6 +81,7 @@ fun <T> ComboBox(
     var anchorBounds by remember { mutableStateOf<Rect?>(null) }
     var focused by remember { mutableStateOf(false) }
     var overlayId by remember { mutableStateOf<Long?>(null) }
+    var placement by remember { mutableStateOf<DropdownPlacement?>(null) }
 
     val matches = options.filter { filter(it, query) }
     val matchesState = rememberUpdatedState(matches)
@@ -88,39 +93,36 @@ fun <T> ComboBox(
         overlayId = null
     }
 
+    fun placementFor(bounds: Rect): DropdownPlacement? = dropdownPlacement(
+        bounds, matchesState.value.size, -1, density, viewport.height,
+        environment.safeArea.top, dropdownBottomInset(environment.safeArea.bottom, environment.keyboard.height),
+    )
+
     fun open() {
         val bounds = anchorBounds ?: return
-        if (!enabledState.value || viewport.height <= 0 || matchesState.value.isEmpty()) return
-        val layout = with(density) {
-            selectPanelLayout(
-                matchesState.value.size, -1, FieldSizeTokens.Medium.height.value,
-                bounds.top.toDp().value, bounds.bottom.toDp().value,
-                viewport.height.toDp().value, environment.safeArea.top.value,
-                maxOf(environment.safeArea.bottom.value, environment.keyboard.height.value),
-                ControlGeometry.selectPanelOffset.value,
-                contentPadding = ControlGeometry.selectContentPadding.value,
-            )
-        }
-        if (layout.height <= 0f) return
-        val panelTop = with(density) { layout.top.dp.toPx() }
-        val anchorWidth = bounds.width
+        if (!enabledState.value || matchesState.value.isEmpty()) return
+        val opened = placementFor(bounds) ?: return
+        placement = opened
         overlayId = overlay.show(
-            anchorBounds = Rect(bounds.left, panelTop, bounds.right, panelTop),
+            anchorBounds = opened.anchor,
+            passThroughBounds = bounds,
             options = OverlayOptions(
                 placement = OverlayPlacement.BottomLeft,
                 offsetY = Spacing.none,
                 autoFlip = false,
                 // The field keeps focus and the keyboard; only a tap outside closes it.
+                // Without this the host cleared focus as the panel appeared, the field's
+                // blur closed the panel, and on Android the ComboBox never stayed open.
                 dismissPolicy = OverlayDismissPolicy.Dropdown,
+                dismissKeyboardOnShow = false,
             ),
             onDismiss = { overlayId = null },
         ) {
             SelectPanel(
                 options = matchesState.value,
                 isSelected = { false },
-                anchorWidth = anchorWidth,
-                layout = layout,
-                viewportWidth = viewport.width,
+                anchorWidth = (placement ?: opened).anchorWidth,
+                layout = (placement ?: opened).layout,
                 enabled = enabledState.value,
                 onOptionClick = { option ->
                     if (!option.disabled) {
@@ -132,11 +134,13 @@ fun <T> ComboBox(
         }
     }
 
-    // Reopen whenever the suggestions change, so the panel tracks typing.
-    LaunchedEffect(focused, query, matches.size, enabled, viewport) {
+    // Reopen whenever the suggestions change, so the panel tracks typing — and once the
+    // viewport is measured: an autofocused field gains focus before it is.
+    LaunchedEffect(focused, query, matches.size, enabled, viewport.height > 0) {
         close()
         if (focused && enabled) open()
     }
+    TrackDropdownAnchor(overlay, overlayId, anchorBounds, ::placementFor, { placement = it }, ::close)
 
     DisposableEffect(Unit) { onDispose { overlayId?.let { overlay.dismiss(it) } } }
 

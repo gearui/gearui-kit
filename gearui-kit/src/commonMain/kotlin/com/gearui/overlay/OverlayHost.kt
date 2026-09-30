@@ -5,6 +5,7 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.ui.unit.IntOffset
 import com.tencent.kuikly.compose.ui.unit.IntSize
+import kotlin.math.roundToInt
 import com.tencent.kuikly.compose.ui.unit.Density
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.tween
@@ -170,8 +171,16 @@ fun OverlayHost(
                         Modifier.pointerInput(blocksContentBelow) {
                             awaitEachGesture {
                                 var event = awaitPointerEvent(PointerEventPass.Initial)
+                                // Except a gesture that starts on an open dropdown's trigger
+                                // (its passThrough area): tapping the trigger again belongs to
+                                // the trigger — Select toggles, a focused ComboBox stays focused.
+                                val toTrigger = event.changes.any { change ->
+                                    controller.items.any { item ->
+                                        !item.exiting.value && item.passThrough.value?.contains(change.position) == true
+                                    }
+                                }
                                 while (true) {
-                                    event.changes.forEach { it.consume() }
+                                    if (!toTrigger) event.changes.forEach { it.consume() }
                                     if (event.changes.all { !it.pressed }) break
                                     event = awaitPointerEvent(PointerEventPass.Initial)
                                 }
@@ -329,10 +338,7 @@ private fun OverlayItemLayout(
             )
         } else if (policy.outsideClick || policy.scroll) {
             // Transparent touch layer for click and drag dismissal.
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .pointerInput(item.id) {
+            val dismissGesture = Modifier.pointerInput(item.id) {
                         val dragThreshold = 10f
 
                         awaitEachGesture {
@@ -365,8 +371,8 @@ private fun OverlayItemLayout(
                                 }
                             }
                         }
-                    }
-            )
+            }
+            OutsideTouchLayer(item.passThrough.value, screenSize, dismissGesture)
         }
 
         // ===== Overlay content, above the touch layer =====
@@ -739,4 +745,43 @@ internal fun computeOffset(
     }
 
     return IntOffset(constrainedX, constrainedY)
+}
+
+/**
+ * The transparent layer that turns a tap or drag outside a non-modal overlay into a
+ * dismissal. With [hole] (the trigger, in the host's coordinates) it is four strips
+ * around that area instead of one full-screen box: a native view cannot be hit-tested
+ * through, so a full-screen layer swallowed taps on the trigger itself — a focused
+ * ComboBox lost its focus and its panel when tapped again.
+ */
+@Composable
+private fun OutsideTouchLayer(hole: Rect?, screen: IntSize, gesture: Modifier) {
+    if (hole == null || screen == IntSize.Zero) {
+        Box(Modifier.fillMaxSize().then(gesture))
+        return
+    }
+    val w = screen.width.toFloat()
+    val h = screen.height.toFloat()
+    val left = hole.left.coerceIn(0f, w)
+    val right = hole.right.coerceIn(left, w)
+    val top = hole.top.coerceIn(0f, h)
+    val bottom = hole.bottom.coerceIn(top, h)
+    Box(Modifier.fillMaxSize()) {
+        TouchStrip(0f, 0f, w, top, gesture)
+        TouchStrip(0f, bottom, w, h - bottom, gesture)
+        TouchStrip(0f, top, left, bottom - top, gesture)
+        TouchStrip(right, top, w - right, bottom - top, gesture)
+    }
+}
+
+@Composable
+private fun TouchStrip(x: Float, y: Float, width: Float, height: Float, gesture: Modifier) {
+    if (width <= 0f || height <= 0f) return
+    val density = LocalDensity.current
+    Box(
+        Modifier
+            .offset { IntOffset(x.roundToInt(), y.roundToInt()) }
+            .size(with(density) { width.toDp() }, with(density) { height.toDp() })
+            .then(gesture)
+    )
 }

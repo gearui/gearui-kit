@@ -7,11 +7,10 @@ import android.view.Window
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import com.tencent.kuikly.compose.ui.graphics.Color
-import com.tencent.kuikly.compose.ui.graphics.toArgb
 
 /**
  * Android system bar controller implementation
- * Tints the status bar and keeps the bottom system navigation bar transparent.
+ * Keeps both system bars transparent and sets their icon colour; pages paint what is behind them.
  */
 actual object StatusBarControllerImpl {
 
@@ -19,17 +18,24 @@ actual object StatusBarControllerImpl {
 
     fun register(activity: AppCompatActivity) {
         this.activity = activity
-        keepNavigationBarTransparent(activity.window)
+        keepSystemBarsTransparent(activity.window)
     }
 
     @Suppress("DEPRECATION")
-    private fun keepNavigationBarTransparent(window: Window) {
+    /**
+     * Both system bars stay transparent: the pages draw behind them (edge-to-edge)
+     * and paint their own insets, so everything under the bars moves with its page.
+     */
+    private fun keepSystemBarsTransparent(window: Window) {
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
         window.navigationBarColor = android.graphics.Color.TRANSPARENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.navigationBarDividerColor = android.graphics.Color.TRANSPARENT
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // Otherwise Android may add its own three-button navigation scrim.
+            // Otherwise Android adds its own scrims "for legibility", which darken the
+            // page's top and bottom a shade.
+            window.isStatusBarContrastEnforced = false
             window.isNavigationBarContrastEnforced = false
         }
     }
@@ -47,15 +53,16 @@ actual object StatusBarControllerImpl {
         return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
 
+    /** Picks light or dark status bar icons for a page whose top is [color]; the page paints the colour itself. */
     actual fun setStatusBarColor(color: Color, darkIcons: Boolean) {
         val activity = this.activity ?: return
 
         activity.runOnUiThread {
-            // Status bar background colour
-            activity.window.statusBarColor = color.toArgb()
-
-            // Theme changes must not paint a separate strip over the page background.
-            keepNavigationBarTransparent(activity.window)
+            // The status bar strip is the page's own top inset (PageScaffold's
+            // topSafeAreaColor), so it slides with the page on a swipe back. A colour
+            // set here would be a window-level strip that stays put while the page moves
+            // (and is ignored from Android 15 anyway), so only the icons change.
+            keepSystemBarsTransparent(activity.window)
 
             // System bar icon colour
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

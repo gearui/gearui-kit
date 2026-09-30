@@ -171,7 +171,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☐ |
+| A1 | 推送主线；候选提交上远程 CI 全绿（含 iOS job） | CI run 链接与各 job 结论 | ☑ 主线已推送；候选提交 37bc643 上 CI（含 iOS job）与 Guardrails 全绿 |
 | A2 | 下游迁移：privchat-ui、live-chat、lms-app 对候选提交编译通过；privchat-app Android/iOS 编译 | 各仓迁移提交与构建日志 | ☑ Android：privchat-ui、live-chat、lms-app 编译通过；iOS：构建 Rust FFI 后 privchat-app、live-chat 链接通过，lms-app 修复历史 iOS 编译错误（lms-app 22b7654）后链接通过；Weey 正式包真机验证。见 BETA7_ACCEPTANCE |
 | A3 | 历史竞品对照的已采纳事项归入 B/C 组，删除过时对照文档 | B/C 门禁与文档清理提交 | ☑ B/C 条目已列全；历史比较留在 git 历史，不再作为发布规范 |
 

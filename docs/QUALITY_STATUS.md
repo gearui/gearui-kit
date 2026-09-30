@@ -203,7 +203,7 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 
 | ID | Scope | Evidence | Status |
 | --- | --- | --- | --- |
-| A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☐ |
+| A1 | Push main; remote CI green on the candidate commit, iOS job included | CI run link and per-job result | ☑ Pushed; CI (including the iOS job) and Guardrails green on candidate 37bc643 |
 | A2 | Downstream migration: privchat-ui, live-chat, lms-app build against the candidate; privchat-app Android/iOS build | Migration commits and build logs | ☑ Android: privchat-ui, live-chat, lms-app compile. iOS: after building the Rust FFI, privchat-app and live-chat link; lms-app links after fixing its long-standing iOS compile errors (lms-app 22b7654). Weey release verified on a device. See BETA7_ACCEPTANCE |
 | A3 | Incorporate accepted items from the historical comparison into groups B/C and retire the outdated document | B/C gates and documentation cleanup commit | ☑ B/C entries recorded; comparison remains in git history, not the release specification |
 

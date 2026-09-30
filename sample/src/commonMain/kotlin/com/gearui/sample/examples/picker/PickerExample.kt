@@ -38,24 +38,22 @@ fun PickerExample(
     val yearData = (2020..2026).map { "${it}年" }
     val seasonData = listOf("春", "夏", "秋", "冬")
 
-    // Linked picker data (province - city - district)
-    val areaData = mapOf(
-        "广东省" to mapOf(
-            "深圳市" to listOf("南山区", "宝安区", "罗湖区", "福田区"),
-            "广州市" to listOf("天河区", "越秀区", "白云区", "花都区"),
-            "佛山市" to listOf("顺德区", "南海区", "禅城区")
-        ),
-        "浙江省" to mapOf(
-            "杭州市" to listOf("西湖区", "余杭区", "萧山区"),
-            "宁波市" to listOf("江东区", "北仑区", "奉化市"),
-            "温州市" to listOf("鹿城区", "瑞安市", "乐清市")
-        ),
-        "江苏省" to mapOf(
-            "南京市" to listOf("玄武区", "秦淮区", "建邺区", "鼓楼区"),
-            "苏州市" to listOf("姑苏区", "虎丘区", "吴中区"),
-            "无锡市" to listOf("梁溪区", "锡山区", "惠山区")
-        )
+    // Linked picker data (province - city - district). Hong Kong has no level below it,
+    // so its path is complete at the first column.
+    fun districts(vararg names: String) = names.map { PickerOption(it, it) }
+    val areaData = listOf(
+        PickerOption("gd", "广东省", listOf(
+            PickerOption("sz", "深圳市", districts("南山区", "宝安区", "罗湖区", "福田区")),
+            PickerOption("gz", "广州市", districts("天河区", "越秀区", "白云区", "花都区")),
+            PickerOption("fs", "佛山市", districts("顺德区", "南海区", "禅城区")),
+        )),
+        PickerOption("zj", "浙江省", listOf(
+            PickerOption("hz", "杭州市", districts("西湖区", "余杭区", "萧山区")),
+            PickerOption("nb", "宁波市", districts("海曙区", "北仑区", "奉化区")),
+        )),
+        PickerOption("hk", "香港特别行政区"),
     )
+    var areaValues by remember { mutableStateOf(listOf("zj", "hz", "西湖区")) }
 
     // State of each picker
     var showCityPicker by remember { mutableStateOf(false) }
@@ -77,8 +75,16 @@ fun PickerExample(
         component = component,
         onBack = onBack
     ) {
-        ExampleSection("稳定值与同名标签", "两省均有西湖区，提交值不会使用显示文字", surface = SectionSurface.Plain) {
-            Cell(title = "省市区", note = stableValues.joinToString(" / "), arrow = true, onClick = { stableOpen = true })
+        ExampleSection("稳定值与同名标签", "两省都有西湖区，按 value 区分；返回值是 value，不是显示文字", surface = SectionSurface.Plain) {
+            val stableLabels = stableValues.runningFold(stableOptions as List<PickerOption>?) { level, value ->
+                level?.firstOrNull { it.value == value }?.children
+            }.zip(stableValues).mapNotNull { (level, value) -> level?.firstOrNull { it.value == value }?.label }
+            Cell(
+                title = stableLabels.joinToString(" / "),
+                description = "value：" + stableValues.joinToString(" / "),
+                arrow = true,
+                onClick = { stableOpen = true },
+            )
         }
         // Each row opens a picker from the bottom sheet; the note shows the result.
         ExampleSection(
@@ -162,11 +168,12 @@ fun PickerExample(
     Picker.Linked(
         visible = showAreaPicker,
         title = "选择地区",
-        data = areaData,
+        options = areaData,
         columnNum = 3,
-        initialData = listOf("浙江省", "杭州市", "西湖区"),
+        selectedValues = areaValues,
         onConfirm = { selected ->
-            selectedArea = selected.joinToString(" ")
+            areaValues = selected.map { it.value }
+            selectedArea = selected.joinToString(" ") { it.label }
             showAreaPicker = false
         },
         onCancel = { showAreaPicker = false },

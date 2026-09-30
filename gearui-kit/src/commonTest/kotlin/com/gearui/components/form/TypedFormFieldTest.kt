@@ -73,4 +73,43 @@ class TypedFormFieldTest {
         assertFalse(field.validating)
         assertNull(field.error)
     }
+    @Test fun aSubmitThatCoincidesWithABlurCheckGetsTheRealAnswer() = runTest {
+        val response = CompletableDeferred<String?>()
+        val field = TypedFormFieldState("name", listOf(TypedFormRule(validateAsync = { response.await() })),
+            validationScope = this)
+        val form = FormState()
+        form.registerField("name", field)
+        val submitted = async { form.validateAll() }
+        runCurrent()
+        field.touch() // blur while the submit's check is waiting
+        runCurrent()
+        response.complete(null)
+        assertTrue(submitted.await())
+        assertNull(field.error)
+    }
+    @Test fun aNewBaselineMovesUntouchedFieldsAndKeepsEditedOnes() = runTest {
+        val untouched = TypedFormFieldState("")
+        untouched.rebase("Alice")
+        assertEquals("Alice", untouched.value)
+        assertFalse(untouched.dirty)
+        val edited = TypedFormFieldState("")
+        edited.update("typed before load")
+        edited.rebase("Alice")
+        assertEquals("typed before load", edited.value)
+        assertTrue(edited.dirty)
+        edited.reset()
+        assertEquals("Alice", edited.value)
+    }
+    @Test fun aThrowingRuleDoesNotLeaveAJoinedCheckWaiting() = runTest {
+        val gate = CompletableDeferred<Unit>()
+        val field = TypedFormFieldState("x", listOf(TypedFormRule(validateAsync = { gate.await(); error("boom") })))
+        val first = async { runCatching { field.validate() } }
+        runCurrent()
+        val joined = async { field.validate() }
+        runCurrent()
+        gate.complete(Unit)
+        assertTrue(first.await().isFailure)
+        assertFalse(joined.await())
+        assertFalse(field.validating)
+    }
 }

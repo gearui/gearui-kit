@@ -6,11 +6,29 @@
 
 - Added stable-value `PickerOption` wheel entry points; cancellable, revision-keyed
   Cascader loading with explicit empty and failure states; inclusive Gregorian
-  date/time bounds, precision, filters and time steps. Legacy Picker entry points
-  remain available.
+  date/time bounds, precision, filters and time steps. The index-based
+  `Picker.Single` / `Picker.Multi` remain; the untyped `Picker.Linked(data: Map)` is
+  removed in favour of `Picker.Linked(options: List<PickerOption>)`.
+- Date and time wheels are computed column by column as they are shown (a few hundred
+  checks for the default 1900–2100 range, none while the sheet is closed), constraints
+  compare by value so building them inline no longer resets a turning wheel, and stored
+  values are read leniently ("2024-3-5", "09:30:00" under "HH:mm"). A coarse time slot
+  is offered only when it starts within the bounds, so a picked time never precedes `min`.
+- `Picker.Linked` confirms a branch shallower than `columnNum` (a region with no
+  districts) at its leaf. Sibling options sharing a value keep the first instead of
+  throwing during composition.
 - Added typed asynchronous form fields, validation generations and server errors;
   exact `DecimalValue`-based `NumberField` with matching formatter/parser and
-  editable integer Stepper. The existing `Double` overload remains source-compatible.
+  an optionally editable integer Stepper (`editable = false` by default). The existing
+  `Double` overload remains source-compatible.
+- Number fields ask for KuiklyUI's digit pad only when they take non-negative whole
+  numbers; KuiklyUI has no decimal or signed pad, so fields taking "." or "-" use the
+  text keyboard. Number fields commit on leaving the field, not on the unfocused state
+  reported when they first appear.
+- A typed field's check joins one already running for the same value instead of
+  replacing it, so a submit that coincides with a blur check no longer returns false
+  silently; `rememberTypedFormFieldState` keeps what the user typed when its
+  `initialValue` changes (a record that finished loading) and moves untouched fields.
 - Added ListBox, YearPicker, DateField/TimeField, Toolbar, SubMenu, Kbd,
   ColorPicker family, Meter, User and Code/Snippet, with sample entries.
 - `InputFormat` now defers formatting while the native IME reports active

@@ -42,6 +42,19 @@ fun StepperExample(
             )
         }
 
+        ExampleSection(
+            title = "可输入",
+            description = "editable = true 时可直接输入数量，离开输入框按上下限修正；下限非负时弹数字键盘"
+        ) {
+            var typedValue by remember { mutableStateOf(12) }
+            Stepper(
+                value = typedValue,
+                onValueChange = { typedValue = it },
+                max = 999,
+                editable = true,
+            )
+        }
+
         // Sizes
         ExampleSection(
             title = "不同尺寸",

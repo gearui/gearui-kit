@@ -23,6 +23,27 @@ smaller alternative.
   `setSelectionRange` on HTML number inputs, which browsers reject. Native
   platforms still request their number keyboard.
 
+## Review Fixes (2026-09-30)
+
+A code review of the candidate found component-level defects that the helper tests
+did not reach. Fixed, with tests on the production paths where they are pure:
+
+- Number fields regressed to a text keyboard on iOS and Android (`Decimal` is not a
+  KuiklyUI keyboard). Whole non-negative fields get the digit pad again; decimal or
+  signed fields use the text keyboard, as KuiklyUI's only numeric pad has no "." or "-".
+- Date and time wheels enumerated every admissible value (about 73,000 dates) on each
+  recomposition, closed or open. They are now built per column on demand, and
+  constraints compare by value so inline construction does not reset the wheels.
+- `Picker.Linked` could not confirm a branch shallower than its columns; duplicate
+  sibling values threw during composition; stored dates and times in other shapes
+  were not read; coarse time slots could precede `min`.
+- A typed field's superseded check returned false indistinguishably from a failure,
+  and a new `initialValue` discarded typed input. Stepper became editable by default
+  with a text keyboard; it is read-only again unless `editable = true`.
+
+These still need device observation: the digit pad on each number field, and turning
+the date wheels across month ends and bounds.
+
 ## Local Checks
 
 On the working tree, Android, browser JS and iOS simulator Kotlin tests, API

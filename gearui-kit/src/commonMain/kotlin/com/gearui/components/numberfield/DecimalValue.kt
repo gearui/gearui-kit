@@ -24,6 +24,8 @@ class DecimalValue private constructor(private val negative: Boolean, private va
         return if (comparison >= 0) normalized(negative, subtractMagnitude(a, b), common)
             else normalized(other.negative, subtractMagnitude(b, a), common)
     }
+    /** No fractional part: 3, 3.0, not 3.5. */
+    val isWhole: Boolean get() = digits.takeLast(scale).all { it == '0' }
     operator fun minus(other: DecimalValue): DecimalValue = this + normalized(!other.negative, other.digits, other.scale)
     fun coerceIn(min: DecimalValue? = null, max: DecimalValue? = null): DecimalValue {
         require(min == null || max == null || min <= max)

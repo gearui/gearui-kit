@@ -1,6 +1,5 @@
 package com.gearui.components.picker
 
-import com.gearui.components.calendar.CalendarMath
 import com.gearui.components.calendar.CalendarDate
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldSurface
@@ -164,42 +163,46 @@ fun TimePickerInput(
     )
 }
 
-/** Complete admissible dates determine every wheel, so no month can lead to an empty day column. */
+/**
+ * The date wheels. Each column lists only what the constraints admit for the columns to
+ * its left, so no month can lead to an empty day column; turning a column keeps the
+ * other parts as close as possible (29 February moves to the 28th in a common year).
+ * Nothing is computed while the sheet is closed.
+ */
 @Composable
 internal fun DateWheelSheet(
     visible: Boolean, value: String, onConfirm: (String) -> Unit, onDismiss: () -> Unit,
     constraints: DatePickerConstraints = DatePickerConstraints.Default, format: String = "YYYY-MM-DD",
 ) {
     val strings = I18n.strings.dateTime
-    val allowed = remember(constraints) { constraints.dates() }
-    val initial = allowed.firstOrNull { pickerDateText(it, constraints.precision, format) == value }
-        ?: allowed.firstOrNull { it >= CalendarDate.today() } ?: allowed.lastOrNull()
-    var selected by remember(visible, value, constraints, format) { mutableStateOf(initial) }
-    val columns = constraints.precision.ordinal + 1
+    val columns = remember(constraints) { DateColumns(constraints) }
+    var selected by remember(visible, value, constraints, format) {
+        mutableStateOf(if (visible) initialPickerDate(columns, value, format) else null)
+    }
     PickerSheet(visible, strings.selectDateTitle, onDismiss, {
         selected?.let { onConfirm(pickerDateText(it, constraints.precision, format)) }
     }, onDismiss, confirmEnabled = selected != null) {
-        if (selected == null) {
+        val date = selected
+        if (date == null) {
             Text(text = I18n.strings.common.noData, style = Theme.typography.bodyMedium,
                 color = Theme.colors.mutedForeground, modifier = Modifier.padding(Spacing.lg))
         } else {
-            val date = selected!!
-            val years = allowed.map { it.year }.distinct()
-            val months = allowed.filter { it.year == date.year }.map { it.month }.distinct()
-            val days = allowed.filter { it.year == date.year && it.month == date.month }.map { it.day }.distinct()
-            PickerWheels(columns) { column ->
-                val entries = when (column) { 0 -> years; 1 -> months; else -> days }
+            PickerWheels(constraints.precision.ordinal + 1) { column ->
+                val entries = when (column) {
+                    0 -> columns.years
+                    1 -> columns.months(date.year)
+                    else -> columns.days(date.year, date.month)
+                }
                 val chosen = when (column) { 0 -> date.year; 1 -> date.month; else -> date.day }
                 val suffix = when (column) { 0 -> strings.yearSuffix; 1 -> strings.monthSuffix; else -> strings.daySuffix }
                 key(column, entries) {
                     WheelPickerColumn(entries.map { it.toString() + suffix }, entries.indexOf(chosen).coerceAtLeast(0), { index ->
                         val n = entries[index]
-                        val candidates = allowed.filter { d -> when (column) {
-                            0 -> d.year == n
-                            1 -> d.year == date.year && d.month == n
-                            else -> d.year == date.year && d.month == date.month && d.day == n
-                        } }
-                        selected = candidates.minByOrNull { d -> kotlin.math.abs(d.month - date.month) * 31 + kotlin.math.abs(d.day - date.day) }
+                        selected = when (column) {
+                            0 -> columns.nearest(n, date.month, date.day)
+                            1 -> columns.nearest(date.year, n, date.day)
+                            else -> CalendarDate(date.year, date.month, n)
+                        }
                     }, Modifier.weight(1f))
                 }
             }
@@ -207,47 +210,59 @@ internal fun DateWheelSheet(
     }
 }
 
+/** The stored value if it can be read and picked, else the nearest admissible date, else today's. */
+internal fun initialPickerDate(columns: DateColumns, value: String, format: String): CalendarDate? {
+    parsePickerDate(value, format)?.let { (y, m, d) -> return columns.nearest(y, m, d) }
+    val today = CalendarDate.today()
+    return columns.nearest(today.year, today.month, today.day)
+}
+
+/** The time wheels, built like [DateWheelSheet]. */
 @Composable
 internal fun TimeWheelSheet(
     visible: Boolean, value: String, onConfirm: (String) -> Unit, onDismiss: () -> Unit,
     constraints: TimePickerConstraints = TimePickerConstraints.Default, format: String = "HH:mm",
 ) {
     val strings = I18n.strings.dateTime
-    val allowed = remember(constraints) { constraints.times() }
-    var selected by remember(visible, value, constraints) {
-        mutableStateOf(allowed.firstOrNull { pickerFormattedTime(it, constraints.precision, format) == value } ?: allowed.firstOrNull())
+    val columns = remember(constraints) { TimeColumns(constraints) }
+    var selected by remember(visible, value, constraints, format) {
+        mutableStateOf(if (visible) initialPickerTime(columns, value, format) else null)
     }
     PickerSheet(visible, strings.selectTimeTitle, onDismiss, {
-        selected?.let {
-            val text = pickerFormattedTime(it, constraints.precision, format)
-            onConfirm(text)
-        }
+        selected?.let { onConfirm(pickerFormattedTime(it, constraints.precision, format)) }
     }, onDismiss, confirmEnabled = selected != null) {
-        if (selected == null) {
+        val time = selected
+        if (time == null) {
             Text(text = I18n.strings.common.noData, style = Theme.typography.bodyMedium,
                 color = Theme.colors.mutedForeground, modifier = Modifier.padding(Spacing.lg))
         } else {
-            val time = selected!!
-            val hours = allowed.map { it.hour }.distinct()
-            val minutes = allowed.filter { it.hour == time.hour }.map { it.minute }.distinct()
-            val seconds = allowed.filter { it.hour == time.hour && it.minute == time.minute }.map { it.second }.distinct()
             PickerWheels(constraints.precision.ordinal + 1) { column ->
-                val entries = when (column) { 0 -> hours; 1 -> minutes; else -> seconds }
+                val entries = when (column) {
+                    0 -> columns.hours
+                    1 -> columns.minutes(time.hour)
+                    else -> columns.seconds(time.hour, time.minute)
+                }
                 val chosen = when (column) { 0 -> time.hour; 1 -> time.minute; else -> time.second }
                 val suffix = when (column) { 0 -> strings.hourSuffix; 1 -> strings.minuteSuffix; else -> strings.secondSuffix }
                 key(column, entries) {
                     WheelPickerColumn(entries.map { it.toString().padStart(2, '0') + suffix }, entries.indexOf(chosen).coerceAtLeast(0), { index ->
                         val n = entries[index]
-                        selected = allowed.filter { t -> when (column) {
-                            0 -> t.hour == n
-                            1 -> t.hour == time.hour && t.minute == n
-                            else -> t.hour == time.hour && t.minute == time.minute && t.second == n
-                        } }.minByOrNull { t -> kotlin.math.abs(t.minute - time.minute) * 60 + kotlin.math.abs(t.second - time.second) }
+                        selected = when (column) {
+                            0 -> columns.nearest(n, time.minute, time.second)
+                            1 -> columns.nearest(time.hour, n, time.second)
+                            else -> PickerTime(time.hour, time.minute, n)
+                        }
                     }, Modifier.weight(1f))
                 }
             }
         }
     }
+}
+
+/** The stored value if it can be read, moved to the nearest slot; else the first slot. */
+internal fun initialPickerTime(columns: TimeColumns, value: String, format: String): PickerTime? {
+    parsePickerTime(value, format)?.let { (h, m, s) -> return columns.nearest(h, m, s) }
+    return columns.nearest(0, 0, 0)
 }
 
 /**

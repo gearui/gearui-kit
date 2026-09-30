@@ -1,5 +1,6 @@
 package com.gearui.components.numberfield
 
+import com.gearui.components.input.numberFieldKeyboard
 import androidx.compose.runtime.*
 import com.gearui.components.closebutton.CloseButton
 import com.gearui.components.icon.Icons
@@ -11,9 +12,12 @@ import com.gearui.i18n.I18n
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.text.input.KeyboardType
 
-/** Exact decimal overload. Supply a matching parser when formatting currency or localized separators. */
+/**
+ * Exact decimal overload. Supply a matching parser when formatting currency or localized
+ * separators. A whole [step] with a non-negative [min] asks for the digit pad; otherwise
+ * the text keyboard, as KuiklyUI has no decimal or signed pad.
+ */
 @Composable
 fun NumberField(
     value: DecimalValue?, onValueChange: (DecimalValue?) -> Unit, modifier: Modifier = Modifier,
@@ -52,8 +56,13 @@ fun NumberField(
                         onValueChange(emitted)
                     }
                 }, modifier = Modifier.weight(1f), enabled = enabled, error = error, variant = variant, placeholder = placeholder,
-                    keyboardType = KeyboardType.Decimal,
-                    onFocusChanged = { focused -> editing = focused; if (!focused) commit(parser(text) ?: value) })
+                    keyboardType = numberFieldKeyboard(step.isWhole && min != null && min >= DecimalValue.Zero),
+                    // Commit on leaving the field, not on the unfocused state reported when it first appears.
+                    onFocusChanged = { focused ->
+                        val left = editing && !focused
+                        editing = focused
+                        if (left) commit(parser(text) ?: value)
+                    })
                 CloseButton(onClick = { commit(base + step) }, icon = Icons.plus,
                     contentDescription = I18n.strings.common.add,
                     enabled = enabled && (max == null || base + step <= max))

@@ -187,7 +187,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 | B6 | Picker 稳定 ID 与 label 分离；Cascader 区分叶子/未加载/加载中/失败/空；地址三级联动示例 | 单测（同名节点、改父项、过期结果丢弃）+ 真机 | ◐ 稳定值 Picker 和可取消 Cascader 已实现并有单测；新滚轮真机交互待验 |
 | B7 | DatePicker 最小/最大日期、年/月/日与时间精度、分钟步长与过滤 | 单测（闰日、月末、跨年、过滤后空列）+ 真机 | ◐ 上下界、精度、过滤和步长已实现并有边界测试；真机滚轮待验 |
 | B8 | Form：类型化字段值、dirty/touched/validating、触发策略、异步校验版本保护、服务端字段错误注入 | 单测（慢请求不覆盖新值、离开组合不写回）+ sample 表单 | ◐ 类型化异步表单有测试；Web 已验旧结果、提交、服务端错误；原生交互待验 |
-| B9 | NumberField 精确十进制（对称 parser/formatter、暂态输入）；Stepper `disableInput` 核实并补齐 | 单测 + 真机 | ◐ 精确十进制和可编辑 Stepper 已实现，算术有测试；真机草稿输入待验 |
+| B9 | NumberField 精确十进制（对称 parser/formatter、暂态输入）；Stepper 可选输入（`editable`，默认关） | 单测 + 真机 | ◐ 精确十进制和可编辑 Stepper 已实现，算术有测试；真机草稿输入待验 |
 
 ### C. 组件覆盖（来源：COMPONENT_COVERAGE §3）
 

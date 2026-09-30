@@ -1,5 +1,6 @@
 package com.gearui.components.numberfield
 
+import com.gearui.components.input.numberFieldKeyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,7 +24,6 @@ import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
-import com.tencent.kuikly.compose.ui.text.input.KeyboardType
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
 
 /**
@@ -38,7 +38,9 @@ import com.tencent.kuikly.compose.ui.text.style.TextAlign
  * field rewrites the text from the committed value, so an abandoned edit cannot leave
  * something unparsable on screen.
  *
- * [step], [min] and [max] bound the buttons and the committed value.
+ * [step], [min] and [max] bound the buttons and the committed value. A whole [step]
+ * with a non-negative [min] asks for the digit pad; otherwise the text keyboard, as
+ * KuiklyUI has no decimal or signed pad.
  */
 @Composable
 fun NumberField(
@@ -104,9 +106,14 @@ fun NumberField(
                 variant = variant,
                 placeholder = placeholder,
                 size = InputSize.MEDIUM,
-                keyboardType = KeyboardType.Decimal,
+                keyboardType = numberFieldKeyboard(step % 1.0 == 0.0 && min >= 0.0),
                 textAlign = TextAlign.Center,
-                onFocusChanged = { focused -> editing = focused; if (!focused) commit(text.toDoubleOrNull()?.takeIf { it.isFinite() } ?: value) },
+                // Commit on leaving the field, not on the unfocused state reported when it first appears.
+                onFocusChanged = { focused ->
+                    val left = editing && !focused
+                    editing = focused
+                    if (left) commit(text.toDoubleOrNull()?.takeIf { it.isFinite() } ?: value)
+                },
             )
             StepButton(Icons.plus, canIncrease) { commit(((value ?: 0.0) + step)) }
         }

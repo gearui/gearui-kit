@@ -8,7 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.tencent.kuikly.compose.ui.Modifier
 
-/** Stable sibling identity is independent of the translated label. */
+/**
+ * One choice of a picker. [value] identifies it among its siblings and is what a picker
+ * returns; [label] is only shown, so translations and duplicate names are harmless.
+ * Siblings sharing a value (bad server data) are reduced to the first of them.
+ */
 data class PickerOption(val value: String, val label: String, val children: List<PickerOption> = emptyList())
 
 internal fun pickerPath(options: List<PickerOption>, requested: List<String>, columns: Int): List<PickerOption> {
@@ -17,7 +21,7 @@ internal fun pickerPath(options: List<PickerOption>, requested: List<String>, co
     var level = options
     var matchedAncestors = true
     repeat(columns) { depth ->
-        require(level.map { it.value }.distinct().size == level.size) { "Picker values must be unique among siblings" }
+        level = level.distinctByValue()
         val requestedNode = if (matchedAncestors) level.firstOrNull { it.value == requested.getOrNull(depth) } else null
         if (requestedNode == null) matchedAncestors = false
         val node = requestedNode ?: level.firstOrNull()
@@ -26,6 +30,13 @@ internal fun pickerPath(options: List<PickerOption>, requested: List<String>, co
     return path
 }
 
+/** A path is complete when it fills every column or ends at a leaf. */
+internal fun pickerPathComplete(path: List<PickerOption>, columns: Int): Boolean =
+    path.isNotEmpty() && (path.size == columns || path.last().children.isEmpty())
+
+internal fun List<PickerOption>.distinctByValue(): List<PickerOption> =
+    if (map { it.value }.toSet().size == size) this else distinctBy { it.value }
+
 /** Typed wheels shared by Picker's stable-value entry points. */
 @Composable
 internal fun StablePicker(
@@ -33,18 +44,18 @@ internal fun StablePicker(
     selectedValues: List<String>, onConfirm: (List<PickerOption>) -> Unit,
     onCancel: () -> Unit, onDismiss: () -> Unit,
 ) {
-    var values by remember(visible, options, selectedValues) {
-        mutableStateOf(options.mapIndexed { i, column ->
-            require(column.map { it.value }.distinct().size == column.size)
+    val columns = remember(options) { options.map { it.distinctByValue() } }
+    var values by remember(visible, columns, selectedValues) {
+        mutableStateOf(columns.mapIndexed { i, column ->
             column.firstOrNull { it.value == selectedValues.getOrNull(i) }?.value ?: column.firstOrNull()?.value
         })
     }
-    val valid = options.isNotEmpty() && options.all { it.isNotEmpty() }
+    val valid = columns.isNotEmpty() && columns.all { it.isNotEmpty() }
     PickerSheet(visible, title, onCancel, {
-        if (valid) onConfirm(options.mapIndexed { i, column -> column.first { it.value == values[i] } })
+        if (valid) onConfirm(columns.mapIndexed { i, column -> column.first { it.value == values[i] } })
     }, onDismiss, confirmEnabled = valid) {
-        PickerWheels(options.size) { column ->
-            val items = options[column]
+        PickerWheels(columns.size) { column ->
+            val items = columns[column]
             if (items.isNotEmpty()) key(column, items) {
                 WheelPickerColumn(items.map { it.label }, items.indexOfFirst { it.value == values[column] }.coerceAtLeast(0),
                     { index -> values = values.toMutableList().also { it[column] = items[index].value } }, Modifier.weight(1f))

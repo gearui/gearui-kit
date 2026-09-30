@@ -17,6 +17,8 @@ import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.text.TextStyle
 import com.tencent.kuikly.compose.ui.text.input.ImeAction
+import com.tencent.kuikly.compose.ui.text.input.KeyboardType
+import com.gearui.components.input.numericKeyboardType
 import com.tencent.kuikly.compose.ui.text.input.VisualTransformation
 
 /**
@@ -50,6 +52,8 @@ fun BasicTextField(
     ),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     accessibilityLabel: String? = null,
+    /** [KeyboardType.Number] asks for the digit pad (a text input on the Web). */
+    keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     val colors = Theme.colors
     val focusManager = LocalFocusManager.current
@@ -74,7 +78,10 @@ fun BasicTextField(
         singleLine = singleLine,
         minLines = minLines,
         maxLines = maxLines,
-        keyboardOptions = KeyboardOptions(imeAction = imeAction),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = if (keyboardType == KeyboardType.Number) numericKeyboardType() else keyboardType,
+            imeAction = imeAction,
+        ),
         keyboardActions = KeyboardActions(
             onDone = {
                 if (blurOnImeDone) {

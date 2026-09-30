@@ -1,5 +1,6 @@
 package com.gearui.components.stepper
 
+import com.gearui.components.input.numberFieldKeyboard
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
@@ -51,7 +52,13 @@ fun Stepper(
     max: Int = 100,
     step: Int = 1,
     size: StepperSize = StepperSize.MEDIUM,
-    disableInput: Boolean = false
+    /**
+     * Lets the count be typed as well as stepped. Off by default: a stepper is for small
+     * counts the buttons reach quickly, and a text field inside it is easy to hit by
+     * accident. A non-negative [min] gets the digit pad; otherwise the text keyboard, as
+     * KuiklyUI has no signed pad.
+     */
+    editable: Boolean = false
 ) {
     require(min <= max && step > 0)
     val strings = I18n.strings.common
@@ -121,7 +128,8 @@ fun Stepper(
             contentAlignment = Alignment.Center
         ) {
             var draft by remember(value) { mutableStateOf(value.toString()) }
-            if (disableInput) Text(
+            var focused by remember { mutableStateOf(false) }
+            if (!editable) Text(
                 text = value.toString(),
                 style = textStyle,
                 color = colors.foreground
@@ -135,11 +143,17 @@ fun Stepper(
                 },
                 enabled = enabled,
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().onFocusChanged { if (!it.isFocused) {
-                    val number = draft.toIntOrNull()?.coerceIn(min, max) ?: value
-                    draft = number.toString()
-                    if (number != value) onValueChange(number)
-                } },
+                keyboardType = numberFieldKeyboard(min >= 0),
+                // Commit on leaving the field, not on the unfocused state reported when it first appears.
+                modifier = Modifier.fillMaxWidth().onFocusChanged {
+                    val left = focused && !it.isFocused
+                    focused = it.isFocused
+                    if (left) {
+                        val number = draft.toIntOrNull()?.coerceIn(min, max) ?: value
+                        draft = number.toString()
+                        if (number != value) onValueChange(number)
+                    }
+                },
                 textStyle = TextStyle(fontSize = textStyle.fontSize, fontWeight = textStyle.fontWeight, textAlign = TextAlign.Center),
             )
         }

@@ -28,7 +28,7 @@ fun DateField(value: CalendarDate?, onValueChange: (CalendarDate?) -> Unit, modi
     val copy = I18n.strings
     val order = dateSegmentOrder(copy.format.dateFormat).filter { it <= constraints.precision.ordinal }
     val names = listOf(copy.dateTime.yearSuffix, copy.dateTime.monthSuffix, copy.dateTime.daySuffix)
-    val allowed = remember(constraints) { constraints.dates().toSet() }
+    val columns = remember(constraints) { DateColumns(constraints) }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FieldDefaults.labelGap)) {
         if (label != null) FieldLabel(label, invalid = error != null, enabled = enabled)
         InputGroup(enabled = enabled, variant = variant) {
@@ -38,10 +38,7 @@ fun DateField(value: CalendarDate?, onValueChange: (CalendarDate?) -> Unit, modi
                     Input(parts[segment], { text ->
                         parts = parts.toMutableList().also { it[segment] = text }
                         val candidate = parseDateParts(parts, constraints.precision)
-                        val resolved = candidate?.let { date -> allowed.firstOrNull { d ->
-                            d.year == date.year && (constraints.precision == DatePickerPrecision.YEAR || d.month == date.month) &&
-                                (constraints.precision != DatePickerPrecision.DAY || d.day == date.day)
-                        } }
+                        val resolved = candidate?.let(columns::slotOf)
                         if (parts.all { it.isEmpty() } || resolved != null) { emitted = resolved; onValueChange(resolved) }
                     }, modifier = Modifier.weight(if (segment == 0) 1.5f else 1f), enabled = enabled,
                         placeholder = names[segment], keyboardType = KeyboardType.Number, maxLength = if (segment == 0) 4 else 2,
@@ -62,7 +59,6 @@ fun TimeField(value: PickerTime?, onValueChange: (PickerTime?) -> Unit, modifier
     LaunchedEffect(value) { if (value != emitted) parts = timeParts(value) }
     val copy = I18n.strings.dateTime
     val names = listOf(copy.hourSuffix, copy.minuteSuffix, copy.secondSuffix)
-    val allowed = remember(constraints) { constraints.times().toSet() }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(FieldDefaults.labelGap)) {
         if (label != null) FieldLabel(label, invalid = error != null, enabled = enabled)
         InputGroup(enabled = enabled, variant = variant) {
@@ -72,7 +68,7 @@ fun TimeField(value: PickerTime?, onValueChange: (PickerTime?) -> Unit, modifier
                     Input(parts[segment], { text ->
                         parts = parts.toMutableList().also { it[segment] = text }
                         val candidate = parseTimeParts(parts, constraints.precision)
-                        if (parts.all { it.isEmpty() } || candidate in allowed) { emitted = candidate; onValueChange(candidate) }
+                        if (parts.all { it.isEmpty() } || (candidate != null && constraints.allows(candidate))) { emitted = candidate; onValueChange(candidate) }
                     }, modifier = Modifier.weight(1f), enabled = enabled, placeholder = names[segment],
                         keyboardType = KeyboardType.Number, maxLength = 2, textAlign = TextAlign.Center, variant = variant)
                 }

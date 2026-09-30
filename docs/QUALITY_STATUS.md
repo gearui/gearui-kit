@@ -219,7 +219,7 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 | B6 | Picker with stable IDs separate from labels; Cascader distinguishes leaf/unloaded/loading/failed/empty; three-level address example | Tests: duplicate labels, parent change, stale results dropped + device | ◐ stable-value Picker and cancellable Cascader implemented and unit-tested; new wheel lifecycle device acceptance pending |
 | B7 | DatePicker min/max date, year/month/day and time precision, minute step and filter | Tests: leap day, month end, year bounds, empty column after filter + device | ◐ bounds, precision, filters and time steps implemented with edge tests; device wheel acceptance pending |
 | B8 | Form: typed field values, dirty/touched/validating, trigger policy, versioned async validation, server-side field errors | Tests: slow result never overwrites a newer value, a left field never writes back + sample form | ◐ typed async form tests passed; Web stale-result, submit and server-error paths exercised; native interaction pending |
-| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); verify and complete Stepper `disableInput` | Tests + device | ◐ exact decimal and editable Stepper implemented, arithmetic tested; device draft/edit acceptance pending |
+| B9 | NumberField exact decimals (symmetric parser/formatter, transient input); optional Stepper input (`editable`, off by default) | Tests + device | ◐ exact decimal and editable Stepper implemented, arithmetic tested; device draft/edit acceptance pending |
 
 ### C. Component coverage (from COMPONENT_COVERAGE §3)
 

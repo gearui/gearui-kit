@@ -53,17 +53,25 @@ object Picker {
         StablePicker(visible, title, options, selectedValues, onConfirm, onCancel, onDismiss)
     }
 
-    /** Linked tree. A parent change resets only the columns below it. */
+    /**
+     * Linked columns over a tree: province, city, district. Nodes are told apart by
+     * [PickerOption.value], so two districts with the same name stay distinct; a parent
+     * change resets only the columns below it.
+     *
+     * A branch shallower than [columnNum] — a region with no districts — is complete at
+     * its leaf: Confirm is enabled and [onConfirm] gets the shorter path.
+     */
     @Composable
     fun Linked(visible: Boolean, options: List<PickerOption>, selectedValues: List<String> = emptyList(),
         columnNum: Int = 3, title: String? = null, onConfirm: (List<PickerOption>) -> Unit,
         onCancel: () -> Unit, onDismiss: () -> Unit) {
         var requested by remember(visible, options, selectedValues) { mutableStateOf(selectedValues) }
         val path = pickerPath(options, requested, columnNum)
-        PickerSheet(visible, title, onCancel, { if (path.size == columnNum) onConfirm(path) }, onDismiss,
-            confirmEnabled = path.size == columnNum) {
+        val complete = pickerPathComplete(path, columnNum)
+        PickerSheet(visible, title, onCancel, { if (complete) onConfirm(path) }, onDismiss,
+            confirmEnabled = complete) {
             PickerWheels(columnNum) { depth ->
-                val column = if (depth == 0) options else path.getOrNull(depth - 1)?.children.orEmpty()
+                val column = (if (depth == 0) options else path.getOrNull(depth - 1)?.children.orEmpty()).distinctByValue()
                 if (column.isNotEmpty()) key(depth, column) {
                     WheelPickerColumn(column.map { it.label }, column.indexOf(path.getOrNull(depth)).coerceAtLeast(0),
                         { index -> requested = path.take(depth).map { it.value } + column[index].value }, Modifier.weight(1f))
@@ -141,58 +149,6 @@ object Picker {
                         },
                         modifier = Modifier.weight(1f),
                     )
-                }
-            }
-        }
-    }
-
-    /**
-     * Shows a picker with linked columns
-     */
-    @Composable
-    fun Linked(
-        visible: Boolean,
-        title: String? = null,
-        data: Map<String, Any>,
-        columnNum: Int = 3,
-        initialData: List<String> = emptyList(),
-        onConfirm: (List<String>) -> Unit,
-        onCancel: () -> Unit,
-        onDismiss: () -> Unit
-    ) {
-        // Parse the linked data
-        val model = remember(visible, data, initialData, columnNum) {
-            LinkedPickerModel(data, columnNum, initialData)
-        }
-
-        // Counter used to force a refresh
-        var refreshKey by remember { mutableStateOf(0) }
-
-        PickerSheet(
-            visible = visible,
-            title = title,
-            onCancel = onCancel,
-            onConfirm = { onConfirm(model.getSelectedData()) },
-            onDismiss = onDismiss,
-            confirmEnabled = (0 until columnNum).all { model.getColumnData(it).isNotEmpty() },
-        ) {
-            // Keyed to rebuild the columns after a parent column changes.
-            key(refreshKey) {
-                PickerWheels(columnCount = columnNum) { colIndex ->
-                    val columnData = model.getColumnData(colIndex)
-                    if (columnData.isNotEmpty()) {
-                        key(colIndex, columnData.hashCode()) {
-                            WheelPickerColumn(
-                                items = columnData,
-                                initialIndex = model.getSelectedIndex(colIndex).coerceIn(0, columnData.size - 1),
-                                onSelectedChange = { index ->
-                                    model.onColumnSelected(colIndex, index)
-                                    if (colIndex < columnNum - 1) refreshKey++
-                                },
-                                modifier = Modifier.weight(1f),
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -434,84 +390,4 @@ internal fun WheelPickerColumn(
 internal fun wheelSnapIndex(index: Int, offset: Int, itemPixels: Float, count: Int): Int {
     require(count > 0 && itemPixels > 0)
     return (index + if (offset > itemPixels / 2f) 1 else 0).coerceIn(0, count - 1)
-}
-
-/**
- * Linked picker data model
- */
-private class LinkedPickerModel(
-    private val data: Map<String, Any>,
-    private val columnNum: Int,
-    initialData: List<String>
-) {
-    private val selectedData = mutableStateListOf<String>()
-    private val columnDataCache = mutableStateListOf<List<String>>()
-
-    init {
-        // Initialise each column
-        for (i in 0 until columnNum) {
-            val columnData = getColumnDataInternal(i)
-            columnDataCache.add(columnData)
-
-            val initialValue = initialData.getOrNull(i)
-            val selectedValue = if (initialValue != null && columnData.contains(initialValue)) {
-                initialValue
-            } else {
-                columnData.firstOrNull() ?: ""
-            }
-            selectedData.add(selectedValue)
-        }
-    }
-
-    fun getColumnData(colIndex: Int): List<String> {
-        return columnDataCache.getOrElse(colIndex) { emptyList() }
-    }
-
-    fun getSelectedIndex(colIndex: Int): Int {
-        val columnData = getColumnData(colIndex)
-        val selectedValue = selectedData.getOrNull(colIndex) ?: ""
-        return columnData.indexOf(selectedValue).coerceAtLeast(0)
-    }
-
-    fun getSelectedData(): List<String> {
-        return selectedData.toList()
-    }
-
-    fun onColumnSelected(colIndex: Int, index: Int) {
-        val columnData = getColumnData(colIndex)
-        if (index in columnData.indices) {
-            selectedData[colIndex] = columnData[index]
-
-            // Update the data of the columns after this one
-            for (i in (colIndex + 1) until columnNum) {
-                val newColumnData = getColumnDataInternal(i)
-                if (i < columnDataCache.size) {
-                    columnDataCache[i] = newColumnData
-                }
-                val newSelectedValue = newColumnData.firstOrNull() ?: ""
-                if (i < selectedData.size) {
-                    selectedData[i] = newSelectedValue
-                }
-            }
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun getColumnDataInternal(colIndex: Int): List<String> {
-        var currentData: Any? = data
-
-        for (i in 0 until colIndex) {
-            val key = selectedData.getOrNull(i) ?: return emptyList()
-            currentData = when (currentData) {
-                is Map<*, *> -> currentData[key]
-                else -> return emptyList()
-            }
-        }
-
-        return when (currentData) {
-            is Map<*, *> -> currentData.keys.mapNotNull { it?.toString() }
-            is List<*> -> currentData.mapNotNull { it?.toString() }
-            else -> emptyList()
-        }
-    }
 }

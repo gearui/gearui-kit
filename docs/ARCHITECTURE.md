@@ -78,6 +78,35 @@ the scrim, stacking, Back/outside/route/timeout dismissal and exactly-once
 removal. Local panel gestures request host dismissal; they do not duplicate
 global listeners.
 
+**Application page model (required).** An app built on GearUI has one Kuikly
+`@Page` whose `App(...)` holds one `Navigator`; every screen is a typed `NavRoute`
+entry (its parameters live in the route, such as `Chat(channelId)`), reached with
+`push` and left with `pop`. Not allowed: switching screens with
+`when(currentPage)`, a Kuikly page per screen (`RouterModule.openPage`), or a
+hand-written swipe back. The reference is privchat-app's `PrivChatRouteHost` and
+`PrivChatNavGraph`.
+
+What this buys:
+
+- The same finger-tracking back on all four platforms. Android, the Web and
+  HarmonyOS have no system swipe back, and iOS's starts only at the screen edge;
+  `Navigator` tracks the finger 1:1 from anywhere, reveals the previous page, and
+  arbitrates with horizontal pagers inside the page.
+- One runtime. Theme, language, overlays and session state live in one
+  composition, so a theme change restyles every page at once, and an overlay
+  belongs to the entry that opened it and closes when that page leaves.
+- No start-up cost per navigation: no new native controller or Activity, no Kuikly
+  page bootstrap, and parameters are typed objects rather than serialized strings.
+- One BACK path: Android BACK pops page by page and reaches the host only at the
+  bottom of the stack.
+
+Costs and limits: the top entry and the one right beneath it stay composed (the
+latter hidden, parked, so a swipe reveals it without building it mid-gesture);
+deeper entries leave composition and keep their state through
+`SaveableStateHolder` and `RetainedEntry`. The iOS back feel is GearUI's, not the
+system `interactivePopGestureRecognizer`. A deep link pushes its route at start-up,
+with Home still at the bottom.
+
 **Navigation and swipe back.** `Navigator` is a real stack with per-entry
 render. The right-swipe is arbitrated so exactly one owner consumes it:
 
@@ -93,6 +122,11 @@ render. The right-swipe is arbitrated so exactly one owner consumes it:
    (`beyondViewportPageCount = 1`); with Kuikly's default of 0 a heavy page
    re-entering the viewport costs ~180 ms of main-thread native view creation
    mid-drag.
+5. The entry beneath the top stays composed and hidden (parked). It used to be
+   built only once the gesture was recognised, which on a device stalled the main
+   thread for about 450 ms while the page ignored the finger; parked, the next frame
+   comes about 12 ms after recognition. A parked page is hidden from screen readers,
+   and the front page takes the hit test, so a tap on blank space never reaches it.
 
 System BACK is bridged by the runtime, not by `androidx.activity` handlers.
 
@@ -101,7 +135,8 @@ System BACK is bridged by the runtime, not by `androidx.activity` handlers.
 Reject: duplicated global runtime ownership, root-canvas inset clipping,
 hidden API breaks, unreviewed baseline changes, silently ignored token values,
 new hardcoded design values, missing packaged assets, unverified
-compatibility/parity claims, clipped icon+badge bounds in navigation slots.
+compatibility/parity claims, clipped icon+badge bounds in navigation slots,
+screen switching or swipe back built around `Navigator`.
 
 Require evidence for: extra allocations, platform branches, motion/blur cost,
 new theme extension points, new assets, new platform targets. Ratchet

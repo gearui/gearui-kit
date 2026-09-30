@@ -38,6 +38,13 @@
 - **Custom language packs:** `DateTimeStrings.secondSuffix` is a trailing
   defaulted field. Source callers using named/default arguments can recompile;
   precompiled packs must be rebuilt against the new binary API.
+- `Navigator` keeps the entry beneath the top composed and hidden, so a swipe back or
+  a back press reveals it at once. It was built when the gesture was recognised,
+  which stalled the main thread for about 450 ms on an Android device while the page
+  ignored the finger; the next frame now follows recognition in about 12 ms. A
+  parked page is hidden from screen readers and cannot receive taps.
+- The architecture docs now require the single-page `Navigator` model for apps and
+  say what it costs.
 - No beta7 artifact has been uploaded and no version tag has been created.
 
 ### Migration from 1.0.0-beta6

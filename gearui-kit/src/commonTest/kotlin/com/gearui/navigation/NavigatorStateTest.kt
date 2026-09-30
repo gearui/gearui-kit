@@ -289,4 +289,24 @@ class NavigatorStateTest {
         assertTrue(s.popTo { it is TestRoute.Article && it.id == "a" })
         assertEquals("a", (s.current.route as TestRoute.Article).id)
     }
+
+    @Test
+    fun theEntryBeneathStaysComposedAndBecomesTheBelowLayerInPlace() {
+        val s = state()
+        assertEquals(listOf(NavLayerRole.Front), s.visibleLayers().map { it.role }, "nothing beneath the root")
+
+        s.push(TestRoute.Detail)
+        val home = s.previous!!.key
+        val idle = s.visibleLayers()
+        assertEquals(listOf(NavLayerRole.Parked, NavLayerRole.Front), idle.map { it.role })
+        assertEquals(home, idle.first().entry.key)
+        assertTrue(idle.first().zIndex < idle.last().zIndex, "a parked page sits under the top")
+
+        // A swipe reveals the same entry: same key, so the render loop keeps its composition.
+        s.beginSwipe()
+        val swiping = s.visibleLayers()
+        assertEquals(listOf(NavLayerRole.Below, NavLayerRole.Moving), swiping.map { it.role })
+        assertEquals(home, swiping.first().entry.key)
+        assertEquals(swiping.size, swiping.map { it.entry.key }.toSet().size, "no key twice in a frame")
+    }
 }

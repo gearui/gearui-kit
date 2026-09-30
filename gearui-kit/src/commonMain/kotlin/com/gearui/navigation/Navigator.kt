@@ -1,5 +1,7 @@
 package com.gearui.navigation
 
+import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
+import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -278,6 +280,10 @@ fun <R : NavRoute> Navigator(
                                 .zIndex(layer.zIndex)
                                 .graphicsLayer {
                                     when (layer.role) {
+                                        NavLayerRole.Parked -> {
+                                            // Kuikly hides a view reliably only through alpha.
+                                            alpha = 0f
+                                        }
                                         NavLayerRole.Front -> {
                                             translationX = 0f
                                         }
@@ -296,7 +302,15 @@ fun <R : NavRoute> Navigator(
                                         }
                                     }
                                 }
-                                .let { m -> if (opaque) m.background(screenBackground) else m },
+                                .let { m -> if (opaque) m.background(screenBackground) else m }
+                                // A parked page is out of sight and must be out of reach of a screen reader too.
+                                .let { m -> if (layer.role == NavLayerRole.Parked) m.clearAndSetSemantics { } else m }
+                                // Taps on a blank part of the page must not fall through to the
+                                // hidden page beneath: an observing pointer handler makes this
+                                // layer the hit, and consumes nothing its content needs.
+                                .let { m -> if (layer.role == NavLayerRole.Front || layer.role == NavLayerRole.Moving) m.pointerInput(Unit) {
+                                    awaitPointerEventScope { while (true) awaitPointerEvent() }
+                                } else m },
                         ) {
                             // Page-first swipe-back arbitration. Each layer owns a
                             // gate; the foreground layer publishes it into the state
@@ -316,7 +330,7 @@ fun <R : NavRoute> Navigator(
                                 val scope = EntryScopeImpl(
                                     entry = layer.entry,
                                     controller = state,
-                                    isTop = layer.role != NavLayerRole.Below,
+                                    isTop = layer.role != NavLayerRole.Below && layer.role != NavLayerRole.Parked,
                                     isForeground = layer.role == NavLayerRole.Front,
                                     retained = state.retainedOf(layer.entry.key),
                                 )
@@ -355,7 +369,13 @@ fun <R : NavRoute> Navigator(
 }
 
 /** The role a visible layer plays in the render loop. */
-internal enum class NavLayerRole { Front, Below, Moving }
+/**
+ * [Parked] is the entry right under the top while nothing moves: composed but not
+ * shown, so a swipe or a back press can reveal it at once instead of building it from
+ * scratch (on device that build took about 450 ms, during which the page ignored the
+ * finger).
+ */
+internal enum class NavLayerRole { Parked, Front, Below, Moving }
 
 /** One visible layer to render. */
 internal data class NavLayer<R : NavRoute>(
@@ -491,9 +511,10 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     val transitionFraction: Float get() = _fractionAnim.value
 
     /**
-     * Currently visible layers, bottom to top. The render loop tracks identity
-     * by `key(entry.key)`. With no transition there is one top layer,
-     * [NavLayerRole.Front]; during one there are below ([NavLayerRole.Below],
+     * Composed layers, bottom to top. The render loop tracks identity
+     * by `key(entry.key)`. With no transition there is the top layer,
+     * [NavLayerRole.Front], over the hidden [NavLayerRole.Parked] entry beneath it,
+     * which becomes the below layer in place when a transition starts; during one there are below ([NavLayerRole.Below],
      * z=0) and moving ([NavLayerRole.Moving], z=2). Moving is `entries.last()`
      * and below is `entries[size-2]`, so their keys always differ and no key can
      * repeat within a frame. That is what removed the v1 stable-slot crash.
@@ -501,7 +522,11 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     fun visibleLayers(): List<NavLayer<R>> {
         val moving = _moving
         if (moving == null) {
-            return listOf(NavLayer(_entries.last(), NavLayerRole.Front, zIndex = 0f, movingIsOverlay = false))
+            val parked = _entries.getOrNull(_entries.size - 2)
+            return buildList {
+                if (parked != null) add(NavLayer(parked, NavLayerRole.Parked, zIndex = PARKED_Z, movingIsOverlay = false))
+                add(NavLayer(_entries.last(), NavLayerRole.Front, zIndex = 0f, movingIsOverlay = false))
+            }
         }
         val overlayMoving = moving.options.presentation == NavPresentation.Overlay ||
             moving.options.presentation == NavPresentation.Modal
@@ -826,6 +851,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
 
 private const val ANIM_POP_MS: Int = 220
 private const val ANIM_SWIPE_COMMIT_MS: Int = 160
+private const val PARKED_Z = -1f
 
 @Stable
 private class EntryScopeImpl<R : NavRoute>(

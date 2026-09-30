@@ -83,8 +83,15 @@ fun Stepper(
         StepperSize.LARGE -> Theme.typography.bodyLarge
     }
 
+    // The drawn stepper stays [height]; the − and + each take taps over a 44 square
+    // (HIG hit region), so the component reserves that room around the drawing.
+    val hit = maxOf(height, ControlGeometry.selectionTouchTarget)
+    val inset = (hit - height) / 2
+    Box(modifier = modifier.height(hit)) {
     Row(
-        modifier = modifier
+        modifier = Modifier
+            .align(Alignment.Center)
+            .padding(horizontal = inset)
             .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
             .height(height)
             .clip(shapes.md)
@@ -97,11 +104,7 @@ fun Stepper(
                 .fillMaxHeight()
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canDecrease) FeedbackDefaults.disabledOpacity else 1f }
-                .rowPressFeedback(interaction = decrementInteraction, shape = RectangleShape, enabled = canDecrease, scale = false, base = colors.surface)
-                .semantics { contentDescription = strings.remove }
-                .clickable(enabled = canDecrease, role = Role.Button, interactionSource = decrementInteraction, indication = null) {
-                    onValueChange(stepperValue(value, -step.toLong(), min, max))
-                },
+                .rowPressFeedback(interaction = decrementInteraction, shape = RectangleShape, enabled = canDecrease, scale = false, base = colors.surface),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -172,11 +175,7 @@ fun Stepper(
                 .fillMaxHeight()
                 .width(height)
                 .graphicsLayer { alpha = if (enabled && !canIncrease) FeedbackDefaults.disabledOpacity else 1f }
-                .rowPressFeedback(interaction = incrementInteraction, shape = RectangleShape, enabled = canIncrease, scale = false, base = colors.surface)
-                .semantics { contentDescription = strings.add }
-                .clickable(enabled = canIncrease, role = Role.Button, interactionSource = incrementInteraction, indication = null) {
-                    onValueChange(stepperValue(value, step.toLong(), min, max))
-                },
+                .rowPressFeedback(interaction = incrementInteraction, shape = RectangleShape, enabled = canIncrease, scale = false, base = colors.surface),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -185,6 +184,23 @@ fun Stepper(
                 color = colors.foreground
             )
         }
+    }
+    // The hit regions, over the drawn − and + (sharing their interaction, so the cells
+    // still show the press).
+    Box(
+        Modifier.align(Alignment.CenterStart).size(hit)
+            .semantics { contentDescription = strings.remove }
+            .clickable(enabled = canDecrease, role = Role.Button, interactionSource = decrementInteraction, indication = null) {
+                onValueChange(stepperValue(value, -step.toLong(), min, max))
+            }
+    )
+    Box(
+        Modifier.align(Alignment.CenterEnd).size(hit)
+            .semantics { contentDescription = strings.add }
+            .clickable(enabled = canIncrease, role = Role.Button, interactionSource = incrementInteraction, indication = null) {
+                onValueChange(stepperValue(value, step.toLong(), min, max))
+            }
+    )
     }
 }
 

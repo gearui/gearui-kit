@@ -104,8 +104,12 @@ naming "CloseButton"). Accepted: "Label not
   56): Collapse ≥ 48; checkbox/radio rows 42–48; small Button and ToggleButton 40;
   Stepper ± 32 (24–40 by size); Segmented items 26; Tag chips 28; IndexBar letters 18.
   All but IndexBar meet WCAG 2.5.8 (24 px); IndexBar falls under its equivalent-control
-  exception (the list scrolls). Below the platform recommendations: small Button,
-  ToggleButton, Stepper, Segmented, Tag — a design decision (below). KuiklyUI keeps
+  exception (the list scrolls). Decided 2026-10-01 to follow the spec and iOS (HIG: a
+  hit region of at least 44×44 pt, unchanged in iOS 27): every control's own node is
+  now its hit region with the visual centred inside (`hitTarget()`). Re-measured on the
+  device the same way: ToggleButton, Segmented, TagGroup chips, Stepper ±, swatches,
+  CloseButton, links 44; the iOS audit reports no hit-region finding on those pages;
+  `interactions.py` 37/37 (Android), 31/32 (iOS; the miss passed three reruns). KuiklyUI keeps
   Compose's touch-target widening code with a 48 dp default, yet a tap 8 dp outside a
   28 dp chip does nothing, and a node's touch area cannot extend past its parent, so
   only real layout space would lift them. Enlarged targets that overlap: the SearchBar
@@ -189,10 +193,8 @@ mitigations.
 
 ## Needs a maintainer decision
 
-1. **Target sizes below the platform recommendation** (small Button and ToggleButton
-   40, Stepper ± 24–40, Segmented 26, Tag chips 28): they meet WCAG 2.5.8 AA. Lifting
-   them to 44/48 means real layout space — taller controls, wider gaps — a change to the
-   reference's compact look.
+1. ~~Target sizes~~ — decided 2026-10-01: follow the spec, close to iOS 27 (HIG hit
+   region 44×44). Done; see D1.
 2. **Keyboard avoidance for page content.** Scrolling a focused field above the keyboard
    is not done by the kit; doing it in `GearLazyColumn` by default would add keyboard
    padding to pages that already handle the keyboard themselves (a chat composer).

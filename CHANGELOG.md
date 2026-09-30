@@ -93,6 +93,13 @@
   scrims now consume native touches their content leaves.
 - An open `ComboBox` panel is updated in place as the query changes instead of closing
   and reopening, so a tap on an option cannot land on a panel being rebuilt.
+- Hit regions of at least 44×44 on every control (Apple HIG, GearUI's spec), with the
+  visual unchanged: small `Button` and `ToggleButton` (40), `Stepper` − and + (24–40),
+  `SegmentedControl` segments (26), tappable and closable `Tag` and `TagGroup` chips
+  (28), standalone `Link`/`LinkButton`, `ColorSwatchPicker` swatches (40),
+  `CloseButton` and the icon buttons of NumberField, Upload and Calendar. The control's
+  node is the hit region and draws the visual centred, so these controls occupy a
+  little more room. Measured on the device by tapping outward from each edge.
 - Overlays no longer widen the page on the Web: a screen-wide panel's shadow is clipped
   at the screen edge instead of adding a horizontal scroll.
 - Overlay: `OverlayController.updateAnchor(id, anchorBounds, passThroughBounds)` moves an

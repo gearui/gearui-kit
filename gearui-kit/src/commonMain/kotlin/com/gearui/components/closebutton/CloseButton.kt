@@ -1,5 +1,6 @@
 package com.gearui.components.closebutton
 
+import com.gearui.foundation.interaction.hitTarget
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.draw.alpha
@@ -7,7 +8,6 @@ import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.clickable
 import com.gearui.foundation.motion.FeedbackDefaults
-import com.gearui.foundation.interaction.touchTarget
 import com.gearui.foundation.interaction.pressedSurfaceColor
 import com.gearui.foundation.interaction.pressScale
 import androidx.compose.runtime.remember
@@ -59,11 +59,10 @@ fun CloseButton(
     val source = remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
     val fill = if (containerColor.isSpecified()) containerColor else colors.muted
-    // The circle stays [size]; the touch target around it is 44dp (see touchTarget).
+    // The circle stays [size]; the hit region around it is at least 44 (see hitTarget).
     Box(
         modifier = modifier
-            .size(size)
-            .touchTarget(size)
+            .hitTarget()
             .semantics { this.contentDescription = contentDescription }
             .clickable(enabled = enabled, interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.Center,

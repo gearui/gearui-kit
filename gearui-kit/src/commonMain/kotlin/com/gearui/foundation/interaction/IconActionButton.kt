@@ -40,11 +40,10 @@ internal fun IconActionButton(
     enabled: Boolean = true,
 ) {
     val interaction = remember { MutableInteractionSource() }
-    // Laid out at [size], touched over at least 44dp (see touchTarget).
+    // Drawn at [size], a hit region of at least 44 around it (see hitTarget).
     Box(
         modifier = modifier
-            .size(size)
-            .touchTarget(size)
+            .hitTarget()
             .semantics {
                 role = Role.Button
                 this.contentDescription = contentDescription

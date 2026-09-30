@@ -1,10 +1,12 @@
 package com.gearui.components.tag
 
+import com.tencent.kuikly.compose.ui.unit.dp
+import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.tencent.kuikly.compose.ui.semantics.contentDescription
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.gearui.i18n.I18n
-import com.gearui.foundation.interaction.touchTarget
+import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
@@ -122,10 +124,31 @@ fun Tag(
     }
 
     val interaction = remember { MutableInteractionSource() }
+    val closeable = closable && onClose != null
+    val hit = ControlGeometry.selectionTouchTarget
+    // A tag you can tap or close is a control: HIG hit region of at least 44. The chip is
+    // drawn at its height in the middle; the × takes a 44 square centred on it, so the
+    // chip reserves the part of that square that overhangs its end.
+    val closeCentre = tokens.paddingHorizontal + tokens.iconBoxSize / 2
+    val endReserve = if (closeable) (hit / 2 - closeCentre).coerceAtLeast(0.dp) else 0.dp
 
     Box(
         modifier = modifier
             .disabledAppearance(disabled)
+            .then(if (onClick != null || closeable) Modifier.hitTarget() else Modifier)
+            .then(
+                if (onClick != null) Modifier.clickable(
+                    enabled = !disabled,
+                    interactionSource = interaction,
+                    indication = null,
+                    onClick = onClick,
+                ) else Modifier
+            ),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+    Box(
+        modifier = Modifier
+            .padding(end = endReserve)
             .height(tokens.height)
             .clip(shape)
             .then(
@@ -135,14 +158,7 @@ fun Tag(
             )
             .then(
                 if (onClick != null) {
-                    Modifier
-                        .rowPressFeedback(interaction = interaction, shape = shape, enabled = !disabled, base = backgroundColor)
-                        .clickable(
-                            enabled = !disabled,
-                            interactionSource = interaction,
-                            indication = null,
-                            onClick = onClick
-                        )
+                    Modifier.rowPressFeedback(interaction = interaction, shape = shape, enabled = !disabled, base = backgroundColor)
                 } else Modifier.background(backgroundColor)
             )
             .padding(horizontal = tokens.paddingHorizontal),
@@ -170,23 +186,10 @@ fun Tag(
                 maxLines = 1,
             )
 
-            // Close button
-            if (closable && onClose != null) {
+            // Close glyph (the button is the hit square below)
+            if (closeable) {
                 Spacer(modifier = Modifier.width(Spacing.xs))
-                val closeLabel = I18n.strings.common.close
-                Box(
-                    modifier = Modifier
-                        .size(tokens.iconBoxSize)
-                        // A named button with a 44dp target; it was a 14dp unnamed one.
-                        .touchTarget(tokens.iconBoxSize)
-                        .semantics { contentDescription = closeLabel }
-                        .clickable(
-                            enabled = !disabled,
-                            role = Role.Button,
-                            onClick = onClose
-                        ),
-                    contentAlignment = Alignment.Center,
-                ) {
+                Box(modifier = Modifier.size(tokens.iconBoxSize), contentAlignment = Alignment.Center) {
                     Icon(
                         name = Icons.x,
                         size = tokens.iconSize,
@@ -195,6 +198,17 @@ fun Tag(
                 }
             }
         }
+    }
+    if (closeable) {
+        val closeLabel = I18n.strings.common.close
+        Box(
+            Modifier
+                .align(Alignment.CenterEnd)
+                .size(hit)
+                .semantics { contentDescription = closeLabel }
+                .clickable(enabled = !disabled, role = Role.Button, onClick = onClose!!)
+        )
+    }
     }
 }
 

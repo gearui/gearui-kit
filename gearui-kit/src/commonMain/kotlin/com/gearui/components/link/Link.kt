@@ -1,5 +1,6 @@
 package com.gearui.components.link
 
+import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.foundation.border.BorderWidth
@@ -122,10 +123,13 @@ private fun LinkLabel(
     // Icons follow the text size, like the reference `Link.Icon`.
     val iconSize = style.fontSize.value.dp
     Row(
+        // A standalone link is a control: a hit region of at least 44 (HIG); links inside
+        // running text are LinkedText and keep their line height.
         modifier = modifier
+            .hitTarget()
+            .clickable(enabled = enabled, interactionSource = source, indication = null, onClick = onClick)
             .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)
-            .pressScale(source, enabled = enabled)
-            .clickable(enabled = enabled, interactionSource = source, indication = null, onClick = onClick),
+            .pressScale(source, enabled = enabled),
         horizontalArrangement = Arrangement.spacedBy(ControlGeometry.buttonGapSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {

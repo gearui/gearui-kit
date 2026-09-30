@@ -117,9 +117,19 @@ states.
 
 Disabled appearance is applied once and must also suppress interaction —
 alpha alone is not disabling. Read-only stays readable without pretending to
-be disabled. Hover applies only where a pointer exists. Touch targets aim for
-at least 44 logical units even when the visual mark is smaller; compact
-exceptions must be explicit.
+be disabled. Hover applies only where a pointer exists.
+
+**Hit regions.** Every control takes taps over at least 44×44 logical units,
+whatever its visual size — Apple's rule (HIG, Buttons: "a hit region of at least
+44x44 pt"), unchanged in iOS 27, and above WCAG 2.5.8's 24. The visual stays as
+designed (a 40 small button, a 28 tag, a 24 stepper); the control's own node is the
+hit region and draws the visual centred inside it (`hitTarget()`), so it occupies
+that room. It must be the node's own size: KuiklyUI sizes the native view from what
+a node measured and never lets a node take touches outside its parent, so an
+overhanging or reported-only target does not work. Compact exceptions, declared:
+IndexBar letters (a drag strip; the list scrolls to the same place); links inside
+running text (WCAG 2.5.8 inline exception); the SearchBar's search glyph, whose
+44 overhangs the field row it sits in and yields to the field.
 
 **Press feedback is component-owned.** `LocalIndication` cannot deliver it:
 Kuikly creates and delegates the indication node, but nothing it does reaches

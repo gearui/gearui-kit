@@ -1,5 +1,7 @@
 package com.gearui.components.colorpicker
 
+import com.tencent.kuikly.compose.ui.Alignment
+import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.*
 import com.gearui.components.input.Input
 import com.gearui.components.slider.Slider
@@ -44,11 +46,14 @@ fun ColorSwatchPicker(values: List<ColorValue>, value: ColorValue?, onValueChang
         values.forEach { swatch ->
             val selected = swatch.toHex(true) == value?.toHex(true)
             val interaction = remember { MutableInteractionSource() }
-            Box(Modifier.choiceSemantics(swatch.toHex(), selected, Role.Button, if (enabled) ({ onValueChange(swatch) }) else null)
-                .rowPressFeedback(interaction, Theme.shapes.sm, enabled = enabled)
-                .clickable(enabled = enabled, interactionSource = interaction, indication = null) { onValueChange(swatch) }
+            // Hit region of at least 44 (HIG) around the drawn swatch.
+            Box(Modifier.hitTarget().choiceSemantics(swatch.toHex(), selected, Role.Button, if (enabled) ({ onValueChange(swatch) }) else null)
+                .clickable(enabled = enabled, interactionSource = interaction, indication = null) { onValueChange(swatch) },
+                contentAlignment = Alignment.Center) {
+            Box(Modifier.rowPressFeedback(interaction, Theme.shapes.sm, enabled = enabled)
                 .border(if (selected) BorderWidth.thick else BorderWidth.thin, if (selected) Theme.colors.primary else Theme.colors.border, Theme.shapes.sm)) {
                 ColorSwatch(swatch)
+            }
             }
         }
     }

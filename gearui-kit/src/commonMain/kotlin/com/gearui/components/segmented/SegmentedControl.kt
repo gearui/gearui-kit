@@ -1,5 +1,6 @@
 package com.gearui.components.segmented
 
+import com.gearui.foundation.interaction.hitTarget
 import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.*
 import com.gearui.foundation.control.ControlGeometry
@@ -153,8 +154,17 @@ internal fun SegmentedTrack(
         }
     }
 
+    val interactions = remember(count) { List(count) { MutableInteractionSource() } }
     Box(
         modifier = modifier
+            // HIG hit region: the track is drawn at its height inside a node at least 44
+            // tall; the segments' hit columns below span all of it.
+            .hitTarget(),
+        contentAlignment = Alignment.Center,
+    ) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
             .clip(pill)
             .background(colors.muted)
             .padding(ControlGeometry.tabsListPadding)
@@ -181,25 +191,12 @@ internal fun SegmentedTrack(
         ) {
             repeat(count) { index ->
                 val selected = index == selectedIndex
-                val interaction = remember { MutableInteractionSource() }
-                val pressed by interaction.collectIsPressedAsState()
+                val pressed by interactions[index].collectIsPressedAsState()
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .pressScale(pressed && enabled)
                         .clip(pill)
-                        .choiceSemantics(
-                            label = label(index),
-                            selected = selected,
-                            role = Role.Tab,
-                            // Still a button when selected, as the platform's segments are; tapping it is a no-op.
-                            onClick = if (enabled) ({ if (!selected) onSelect(index) }) else null,
-                        )
-                        .clickable(
-                            enabled = enabled && !selected,
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { onSelect(index) }
                         // Segments share the width equally, so the reference inline
                         // padding (which sizes a hugging trigger) would only take room
                         // from the label; keep the block padding that sets the height.
@@ -210,6 +207,33 @@ internal fun SegmentedTrack(
                 }
             }
         }
+    }
+    // Hit columns over the whole 44: one per segment, aligned with the drawn ones.
+    Row(
+        modifier = Modifier.matchParentSize().padding(horizontal = ControlGeometry.tabsListPadding).zIndex(2f),
+        horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap),
+    ) {
+        repeat(count) { index ->
+            val selected = index == selectedIndex
+            Box(
+                Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .choiceSemantics(
+                        label = label(index),
+                        selected = selected,
+                        role = Role.Tab,
+                        // Still a button when selected, as the platform's segments are; tapping it is a no-op.
+                        onClick = if (enabled) ({ if (!selected) onSelect(index) }) else null,
+                    )
+                    .clickable(
+                        enabled = enabled && !selected,
+                        interactionSource = interactions[index],
+                        indication = null,
+                    ) { onSelect(index) }
+            )
+        }
+    }
     }
 }
 

@@ -1,5 +1,10 @@
 package com.gearui.components.tag
 
+import androidx.compose.runtime.remember
+import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
+import com.tencent.kuikly.compose.foundation.layout.Box
+import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
+import com.gearui.foundation.interaction.hitTarget
 import com.tencent.kuikly.compose.ui.semantics.contentDescription
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.gearui.foundation.interaction.choiceSemantics
@@ -153,7 +158,32 @@ private fun GroupTag(
         }
     }
 
-    if (onClick != null) {
+    if (onClick != null && onRemove == null) {
+        // A selectable tag is a control: the outer node is its hit region (at least 44,
+        // HIG) and carries the name, state and tap; the chip is drawn at its size inside,
+        // sharing the interaction so it still shows the press.
+        val source = remember { MutableInteractionSource() }
+        Box(
+            modifier = Modifier
+                .hitTarget()
+                .choiceSemantics(
+                    label = item.label,
+                    selected = selected,
+                    role = Role.Button,
+                    onClick = if (enabled) onClick else null,
+                )
+                .clickable(enabled = enabled, interactionSource = source, indication = null, onClick = onClick),
+            contentAlignment = Alignment.Center,
+        ) {
+            PressableFeedback(
+                onClick = onClick,
+                enabled = enabled,
+                shape = shape,
+                interactionSource = source,
+                modifier = Modifier.clearAndSetSemantics { },
+            ) { body() }
+        }
+    } else if (onClick != null) {
         val state = if (selected) I18n.strings.common.selected else I18n.strings.common.unselected
         PressableFeedback(
             onClick = onClick,

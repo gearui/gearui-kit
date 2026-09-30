@@ -36,6 +36,7 @@ import com.gearui.theme.LocalButtonColors
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
+import com.gearui.foundation.interaction.hitTarget
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
@@ -205,7 +206,19 @@ fun Button(
     }
 
     // Button modifier
-    val buttonModifier = modifier
+    // Hit region first (at least 44, HIG), then the interaction, then the visual at its
+    // own size: a 40dp small button still takes a tap anywhere in 44.
+    val hitModifier = modifier
+        .then(if (block) Modifier.fillMaxWidth() else Modifier)
+        .hitTarget()
+        .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier)
+        .clickable(
+            interactionSource = interactionSource,
+            indication = null,
+            enabled = isEnabled,
+            role = Role.Button,
+        ) { onClick() }
+    val buttonModifier = Modifier
         .then(if (block) Modifier.fillMaxWidth() else Modifier)
         .then(if (buttonWidth != Dp.Unspecified) Modifier.width(buttonWidth) else Modifier)
         .height(height)
@@ -245,15 +258,9 @@ fun Button(
             if (isEnabled && highlight > 0f) drawRect(highlightColor.copy(alpha = highlightColor.alpha * highlight))
             drawContent()
         }
-        .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier)
-        .clickable(
-            interactionSource = interactionSource,
-            indication = null,
-            enabled = isEnabled,
-            role = Role.Button,
-        ) { onClick() }
         .padding(horizontal = if (isIconOnly) 0.dp else paddingH)
 
+    Box(modifier = hitModifier, contentAlignment = Alignment.Center) {
     Box(
         modifier = buttonModifier,
         contentAlignment = Alignment.Center
@@ -301,6 +308,7 @@ fun Button(
                 resolvedIcon()
             }
         }
+    }
     }
 }
 

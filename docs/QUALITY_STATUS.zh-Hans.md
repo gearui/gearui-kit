@@ -201,7 +201,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 | 编号 | 内容 | 验收证据 | 状态 |
 | --- | --- | --- | --- |
-| D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ◐ 对比度已修（色板 + 组件 + 品牌派生，PaletteContrastTest 守护）；iOS 审计与 Android 节点树在候选上重跑，Textarea 命名、OTP 已修；点击区域实测，小于平台建议的 5 类待维护者定；TalkBack/VoiceOver 需人工 |
+| D1 | 读屏：Android TalkBack 真机逐页遍历，记录朗读文本；iOS 以 XCUITest `performAccessibilityAudit` 审计全部页，关键家族 VoiceOver 真机抽检 | TalkBack 朗读日志、审计报告、问题清单与修复提交 | ◐ 对比度已修（色板+组件+品牌派生，PaletteContrastTest 守护）；点击区域按规范与 iOS 27（HIG 44×44）落地，真机实测 44，iOS 审计无点击区域问题；iOS 审计/Android 节点树在候选上重跑；TalkBack/VoiceOver 需人工 |
 | D2 | 视觉：全部 sample 页 × 亮/暗 × Android 真机与 iOS 截图归档，对照 VISUAL_SPEC 逐页判定 | 截图目录 + 逐页结论 + 偏差登记 | ◐ 两端首屏亮暗 + 滚动到底全部审查并修复；两端交互验收（表单/选择器/下拉/弹层）通过；键盘遮挡页面底部输入框待维护者定 |
 | D3 | 大字号/适老化：Android 字号 1.3 与最大、iOS 最大动态字号，全部页截断/溢出 | 截图 + 问题清单与修复 | ⏸ 维护者决定推迟到下一阶段（2026-09-29） |
 | D4 | RTL：Android 强制 RTL 布局方向逐页检查 | 截图 + 问题清单 | ⛔ 不支持：Kuikly 不转发系统 RTL，根部提供 RTL 布局方向也不镜像；已记为上游问题；kit 无从右到左语言包 |

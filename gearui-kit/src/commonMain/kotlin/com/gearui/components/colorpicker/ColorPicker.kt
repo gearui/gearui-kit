@@ -1,5 +1,6 @@
 package com.gearui.components.colorpicker
 
+import com.gearui.gestures.ownsHorizontalDrag
 import com.tencent.kuikly.compose.ui.Alignment
 import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.*
@@ -82,7 +83,7 @@ fun ColorArea(value: ColorValue, onValueChange: (ColorValue) -> Unit, modifier: 
     val current by rememberUpdatedState(value)
     val change by rememberUpdatedState(onValueChange)
     val ring = Theme.colors.foreground
-    Canvas(modifier.disabledAppearance(!enabled).fillMaxWidth().height(ControlGeometry.colorAreaHeight).clip(Theme.shapes.md).onSizeChanged { measured = it }
+    Canvas(modifier.disabledAppearance(!enabled).ownsHorizontalDrag { enabled }.fillMaxWidth().height(ControlGeometry.colorAreaHeight).clip(Theme.shapes.md).onSizeChanged { measured = it }
         .pointerInput(enabled) { if (enabled) detectTapGestures { point ->
             if (measured.width > 0 && measured.height > 0) change(areaColor(current, point.x / measured.width, point.y / measured.height))
         } }

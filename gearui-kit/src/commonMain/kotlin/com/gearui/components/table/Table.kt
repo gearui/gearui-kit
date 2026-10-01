@@ -1,5 +1,7 @@
 package com.gearui.components.table
 
+import com.gearui.gestures.ownsHorizontalDrag
+import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -421,8 +423,11 @@ private fun <T> FixedColumnTable(
         }
 
         // ========== Middle scrollable columns ==========
+        val columnsScroll = rememberLazyListState()
         LazyRow(
-            modifier = Modifier.weight(1f).fillMaxHeight(),
+            modifier = Modifier.weight(1f).fillMaxHeight()
+                .ownsHorizontalDrag { columnsScroll.firstVisibleItemIndex > 0 || columnsScroll.firstVisibleItemScrollOffset > 0 },
+            state = columnsScroll,
             userScrollEnabled = true
         ) {
             items(nonFixedCols) { column ->

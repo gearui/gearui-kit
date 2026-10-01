@@ -156,6 +156,12 @@ def splice(readme: Path, block: str) -> tuple[str, str]:
 def main() -> int:
     check = "--check" in sys.argv
     entries = load_registry()
+    # The sample's home list shows each entry's description under its name; an entry
+    # without one shows a bare title, which is how seven beta7 pages shipped.
+    missing = [e["id"] for e in entries if not (e["dzh"] or "").strip() or not (e["den"] or "").strip()]
+    if missing:
+        print("registry entries without a Chinese and English description: " + ", ".join(missing))
+        return 1
     stale = []
     for name, lang in (("README.md", "en"), ("README.zh-Hans.md", "zh")):
         readme = ROOT / name

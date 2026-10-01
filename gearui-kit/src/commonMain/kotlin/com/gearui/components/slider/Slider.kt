@@ -6,6 +6,8 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.detectDragGestures
+import com.tencent.kuikly.compose.foundation.gestures.detectHorizontalDragGestures
+import com.gearui.gestures.ownsHorizontalDrag
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
@@ -66,6 +68,12 @@ fun Slider(
     onChangeEnd: ((Float) -> Unit)? = null
 ) {
     val colors = Theme.colors
+    // Gesture handlers outlive a recomposition; they must call the latest value and callbacks,
+    // or a caller that derives its update from the current value (ColorSlider) writes a stale one.
+    val value by rememberUpdatedState(value)
+    val onValueChange by rememberUpdatedState(onValueChange)
+    val onChangeStart by rememberUpdatedState(onChangeStart)
+    val onChangeEnd by rememberUpdatedState(onChangeEnd)
 
     var sliderSize by remember { mutableStateOf(IntSize.Zero) }
     val density = LocalDensity.current
@@ -140,9 +148,33 @@ fun Slider(
                     .weight(1f)
                     .height(ControlGeometry.selectionTouchTarget)
                     .onSizeChanged { sliderSize = it }
+                    .ownsHorizontalDrag { enabled }
                     .then(
                         if (enabled) {
-                            Modifier.pointerInput(Unit) {
+                            // Dragging anywhere on the track moves the value with the finger;
+                            // the thumb keeps its own relative drag on top of this.
+                            Modifier.pointerInput(valueRange, steps) {
+                                detectHorizontalDragGestures(
+                                    onDragStart = { offset ->
+                                        isDragging = true
+                                        dragValue = calculateValue(offset.x)
+                                        onChangeStart?.invoke(value)
+                                        onValueChange(dragValue)
+                                    },
+                                    onDragEnd = {
+                                        isDragging = false
+                                        onChangeEnd?.invoke(dragValue)
+                                    },
+                                    onDragCancel = { isDragging = false },
+                                ) { change, _ ->
+                                    change.consume()
+                                    val next = calculateValue(change.position.x)
+                                    if (next != dragValue) {
+                                        dragValue = next
+                                        onValueChange(next)
+                                    }
+                                }
+                            }.pointerInput(Unit) {
                                 detectTapGestures { offset ->
                                     val newValue = calculateValue(offset.x)
                                     onChangeStart?.invoke(newValue)
@@ -406,6 +438,10 @@ fun RangeSlider(
     onChangeEnd: ((ClosedFloatingPointRange<Float>) -> Unit)? = null
 ) {
     val colors = Theme.colors
+    val values by rememberUpdatedState(values)
+    val onValuesChange by rememberUpdatedState(onValuesChange)
+    val onChangeStart by rememberUpdatedState(onChangeStart)
+    val onChangeEnd by rememberUpdatedState(onChangeEnd)
 
     var sliderSize by remember { mutableStateOf(IntSize.Zero) }
     val density = LocalDensity.current
@@ -468,6 +504,7 @@ fun RangeSlider(
                     .weight(1f)
                     .height(ControlGeometry.selectionTouchTarget)
                     .onSizeChanged { sliderSize = it }
+                    .ownsHorizontalDrag { enabled }
                     .then(
                         if (enabled) {
                             Modifier.pointerInput(displayStart, displayEnd, sliderSize) {

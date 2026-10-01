@@ -31,13 +31,13 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**83 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**82 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
 | 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
 | 表单（22） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`ColorPicker` |
-| 导航（9） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar`、`SubMenu` |
+| 导航（8） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar` |
 | 数据展示（21） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`Kbd` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（7） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`LoadMore`、`BottomSheet`、`BackTop` |
@@ -83,8 +83,8 @@
 | `Upload` | 上传 | 文件上传 |
 | `Form` | 表单 | 表单容器 |
 | `Cascader` | 级联选择 | 级联选择器 |
-| `ListBox` | 选项列表 |  |
-| `ColorPicker` | 颜色选择 |  |
+| `ListBox` | 选项列表 | 在页面里直接列出的单选/多选 |
+| `ColorPicker` | 颜色选择 | 色板、色域平面与十六进制输入 |
 
 **导航**
 
@@ -97,8 +97,7 @@
 | `Steps` | 步骤条 | 步骤指示 |
 | `IndexBar` | 索引栏 | 通讯录字母索引 |
 | `Segmented` | 分段控制 | 分段选择 |
-| `Toolbar` | 工具栏 |  |
-| `SubMenu` | 多级菜单 |  |
+| `Toolbar` | 工具栏 | 一组相关操作，窄屏自动换行 |
 
 **数据展示**
 
@@ -121,9 +120,9 @@
 | `Calendar` | 日历 | 日历展示 |
 | `Format` | 本地化格式 | 万亿缩写、相对时间、农历 |
 | `Watermark` | 水印 | 页面水印 |
-| `Meter` | 计量值 |  |
-| `User` | 用户摘要 |  |
-| `Code` | 代码块 |  |
+| `Meter` | 计量值 | 已知上下限的计量值 |
+| `User` | 用户摘要 | 头像、名称与说明的身份摘要 |
+| `Code` | 代码块 | 行内代码与可复制的代码块 |
 | `Kbd` | 快捷键标记 | Web 与外接键盘的按键提示 |
 
 **反馈**

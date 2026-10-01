@@ -1,5 +1,7 @@
 package com.gearui.components.code
 
+import com.gearui.gestures.ownsHorizontalDrag
+import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -33,7 +35,8 @@ fun Snippet(text: String, modifier: Modifier = Modifier, copyLabel: String? = nu
     onCopy: ((String) -> Unit)? = null, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace"))) {
     Column(modifier.fillMaxWidth().background(Theme.colors.muted, Theme.shapes.md).padding(Spacing.md),
         verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
-        LazyRow(Modifier.fillMaxWidth()) {
+        val scroll = rememberLazyListState()
+        LazyRow(Modifier.fillMaxWidth().ownsHorizontalDrag { scroll.firstVisibleItemIndex > 0 || scroll.firstVisibleItemScrollOffset > 0 }, scroll) {
             item { Text(text, style = style, color = Theme.colors.foreground) }
         }
         if (onCopy != null) {

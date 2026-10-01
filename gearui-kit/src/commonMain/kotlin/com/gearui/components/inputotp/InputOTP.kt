@@ -16,6 +16,7 @@ import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
 import com.gearui.foundation.field.shadowed
+import com.gearui.foundation.field.border
 import com.gearui.foundation.keyboard.keyboardDismissExempt
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.primitives.Text
@@ -176,9 +177,11 @@ private fun OtpSlot(
         val outline = when {
             invalid -> colors.destructive
             active -> colors.primary
-            else -> Color.Transparent
+            else -> null
         }
-        Box(Modifier.matchParentSize().border(BorderWidth.thick, outline, shape))
+        Box(Modifier.matchParentSize().border(
+            if (outline != null) BorderWidth.thick else BorderWidth.thin,
+            outline ?: variant.border(inputColors.border), shape))
     }
 }
 

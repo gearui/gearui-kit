@@ -1,5 +1,6 @@
 package com.gearui.foundation.primitives
 
+import com.gearui.gestures.ownsHorizontalDrag
 import kotlinx.coroutines.delay
 import com.tencent.kuikly.compose.foundation.gestures.animateScrollBy
 import com.tencent.kuikly.compose.ui.unit.LayoutDirection
@@ -168,7 +169,7 @@ fun GearLazyRow(
     val focusManager = LocalFocusManager.current
 
     LazyRow(
-        modifier = modifier.pointerInput(Unit) {
+        modifier = modifier.ownsHorizontalDrag { state.firstVisibleItemIndex > 0 || state.firstVisibleItemScrollOffset > 0 }.pointerInput(Unit) {
             val dragThreshold = 10f
 
             awaitEachGesture {

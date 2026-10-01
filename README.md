@@ -32,13 +32,13 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**83 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**82 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
 | Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (22) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader`, `ListBox`, `ColorPicker` |
-| Navigation (9) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented`, `Toolbar`, `SubMenu` |
+| Navigation (8) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented`, `Toolbar` |
 | Data display (21) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark`, `Meter`, `User`, `Code`, `Kbd` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (7) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `LoadMore`, `BottomSheet`, `BackTop` |
@@ -84,8 +84,8 @@ component follows both without any per-screen wiring.
 | `Upload` | File upload |
 | `Form` | Form container |
 | `Cascader` | Cascade selector |
-| `ListBox` |  |
-| `ColorPicker` |  |
+| `ListBox` | Single or multiple choice shown in the page |
+| `ColorPicker` | Swatches, color plane and hex entry |
 
 **Navigation**
 
@@ -98,8 +98,7 @@ component follows both without any per-screen wiring.
 | `Steps` | Step indicator |
 | `IndexBar` | Alphabet index |
 | `Segmented` | Segmented control |
-| `Toolbar` |  |
-| `SubMenu` |  |
+| `Toolbar` | Related actions that wrap on narrow screens |
 
 **Data display**
 
@@ -122,9 +121,9 @@ component follows both without any per-screen wiring.
 | `Calendar` | Calendar display |
 | `Format` | Compact numbers, relative time, lunar |
 | `Watermark` | Page watermark |
-| `Meter` |  |
-| `User` |  |
-| `Code` |  |
+| `Meter` | A measurement within known bounds |
+| `User` | Avatar, name and description |
+| `Code` | Inline code and copyable snippets |
 | `Kbd` | Web and external-keyboard shortcut hint |
 
 **Feedback**

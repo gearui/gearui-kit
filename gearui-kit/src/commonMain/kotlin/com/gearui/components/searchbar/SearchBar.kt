@@ -189,7 +189,7 @@ fun SearchBar(
                     .fillMaxSize()
                     .then(feedback)
                     .clip(shapeModifier)
-                    .background(variant.fill(inputColors.background))
+                    .background(if (variant == FieldVariant.SECONDARY) colors.muted else variant.fill(inputColors.background, enabled))
                     .border(BorderWidth.thin, inputColors.border, shapeModifier)
                     .pointerInput(enabled) {
                         if (enabled) {

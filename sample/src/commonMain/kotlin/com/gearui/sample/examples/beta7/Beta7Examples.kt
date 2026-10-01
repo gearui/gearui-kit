@@ -12,7 +12,6 @@ import com.gearui.components.listbox.ListBox
 import com.gearui.components.meter.Meter
 import com.gearui.components.picker.*
 import com.gearui.components.select.SelectOption
-import com.gearui.components.submenu.*
 import com.gearui.components.toolbar.Toolbar
 import com.gearui.components.user.User
 import com.gearui.foundation.layout.Spacing
@@ -28,12 +27,20 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ListBoxExample(component: ComponentInfo, onBack: () -> Unit) {
-    var selected by remember { mutableStateOf(setOf("delivery")) }
-    val items = listOf(SelectOption("delivery", "送货上门", group = "配送方式"), SelectOption("pickup", "门店自提", group = "配送方式"), SelectOption("later", "稍后开放", disabled = true))
+    var delivery by remember { mutableStateOf(setOf("delivery")) }
+    var toppings by remember { mutableStateOf(setOf("ice")) }
+    val deliveryOptions = listOf(SelectOption("delivery", "送货上门", group = "配送方式"), SelectOption("pickup", "门店自提", group = "配送方式"),
+        SelectOption("express", "同城急送（暂未开放）", disabled = true, group = "配送方式"))
+    val toppingOptions = listOf(SelectOption("ice", "加冰", group = "温度"), SelectOption("hot", "常温", group = "温度"),
+        SelectOption("pearl", "珍珠", group = "小料"), SelectOption("pudding", "布丁", group = "小料"), SelectOption("coconut", "椰果", group = "小料"))
     ExamplePage(component, onBack) {
-        ExampleSection("独立选项列表", "稳定值、多选、分组与禁用", SectionSurface.Plain) {
-            ListBox(items, selected, { selected = it }, multiple = true)
-            Text("value：" + selected.joinToString(" / ").ifEmpty { "无" }, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
+        ExampleSection("单选", "选中项显示对勾，禁用项不可选", SectionSurface.Plain) {
+            ListBox(deliveryOptions, delivery, { delivery = it })
+            Text("value：" + delivery.joinToString(" / ").ifEmpty { "无" }, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
+        }
+        ExampleSection("多选与分组", "同组选项在一张卡片里，再点一次取消", SectionSurface.Plain) {
+            ListBox(toppingOptions, toppings, { toppings = it }, multiple = true)
+            Text("value：" + toppings.joinToString(" / ").ifEmpty { "无" }, style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
         }
     }
 }
@@ -47,18 +54,6 @@ fun ToolbarExample(component: ComponentInfo, onBack: () -> Unit) {
                 listOf("普通", "加粗", "斜体", "下划线").forEach { action -> Button(action, { selected = action }, type = if (selected == action) ButtonType.FILL else ButtonType.TEXT) }
             }
             Text("当前：$selected", style = Theme.typography.bodyMedium, color = Theme.colors.foreground)
-        }
-    }
-}
-
-@Composable
-fun SubMenuExample(component: ComponentInfo, onBack: () -> Unit) {
-    var chosen by remember { mutableStateOf("尚未选择") }
-    val tree = listOf(SubMenuItem("share", "分享", listOf(SubMenuItem("friend", "分享给好友", onClick = { chosen = "好友" }), SubMenuItem("team", "分享到群", onClick = { chosen = "群" }))), SubMenuItem("save", "保存", onClick = { chosen = "保存" }), SubMenuItem("blocked", "不可用", disabled = true))
-    ExamplePage(component, onBack) {
-        ExampleSection("移动端多级菜单", "逐层打开、返回上级、选择后关闭") {
-            SubMenu("更多操作", tree) { open -> Button("打开菜单", open) }
-            Text(chosen, style = Theme.typography.bodyMedium, color = Theme.colors.foreground)
         }
     }
 }
@@ -130,9 +125,11 @@ fun TypedFormExample(component: ComponentInfo, onBack: () -> Unit) {
             Input(name.value, { submitted = false; name.update(it) }, variant = FieldVariant.SECONDARY, label = "用户名", placeholder = "请输入用户名（输入 taken 试试）", error = name.error, helperText = if (name.validating) "正在校验" else null)
             com.gearui.components.stepper.Stepper(quantity.value, { submitted = false; quantity.update(it) })
             Text("dirty=${name.dirty} touched=${name.touched}", style = Theme.typography.bodySmall, color = Theme.colors.mutedForeground)
-            Button("提交", { scope.launch { submitted = form.validateAll() } })
-            Button("注入服务端错误", { submitted = false; form.setFieldErrors(mapOf("username" to "服务端拒绝此用户名")) }, type = ButtonType.TEXT)
-            Button("重置", { form.reset(); submitted = false }, type = ButtonType.TEXT)
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                Button("提交", { scope.launch { submitted = form.validateAll() } })
+                Button("注入服务端错误", { submitted = false; form.setFieldErrors(mapOf("username" to "服务端拒绝此用户名")) }, type = ButtonType.OUTLINE)
+                Button("重置", { form.reset(); submitted = false }, type = ButtonType.TEXT)
+            }
             if (submitted) Text("提交值：${form.getTypedValues()}", style = Theme.typography.bodySmall, color = Theme.colors.foreground)
         }
     }

@@ -4,6 +4,23 @@
 
 ### beta7 candidate (not released)
 
+- **Fields on surfaces (behaviour):** `FieldVariant.SECONDARY` is now the field colour
+  with a hairline border instead of a gray fill, and every disabled field takes the gray
+  fill with no border. A gray enabled field read as disabled. `SearchBar` keeps its gray
+  pill.
+- **Swipe-back and sideways controls:** a drag that starts on a slider, colour plane,
+  swipe cell, carousel, table or horizontal list no longer pops the page. New public
+  `Modifier.ownsHorizontalDrag(active)` marks an app's own sideways control.
+  **Source break:** `Modifier.swipeBack(deferToPage = …)` now receives the touch
+  position, `(Offset) -> Boolean`.
+- `Slider` drags from anywhere on its track, and its gesture handlers use the latest
+  value and callbacks (dragging `ColorSlider`'s hue no longer reset saturation and
+  brightness to their first values).
+- `ListBox` is drawn as the platform's grouped list (one card per group, inset
+  separators, a trailing check, no tinted row) and no longer scrolls inside itself.
+- `Stepper` keeps a compact value readout instead of stretching to the width it is given.
+- **Removed `SubMenu`:** a sheet of nested actions overlapped `ActionSheet` (actions)
+  and `Cascader` (drilling into a hierarchy). Use a flat `ActionSheet`.
 - Added stable-value `PickerOption` wheel entry points; cancellable, revision-keyed
   Cascader loading with explicit empty and failure states; inclusive Gregorian
   date/time bounds, precision, filters and time steps. The index-based
@@ -29,10 +46,11 @@
   replacing it, so a submit that coincides with a blur check no longer returns false
   silently; `rememberTypedFormFieldState` keeps what the user typed when its
   `initialValue` changes (a record that finished loading) and moves untouched fields.
-- Added ListBox, Toolbar, SubMenu, Kbd, ColorPicker family, Meter, User and
-  Code/Snippet, with sample entries. (YearPicker and DateField/TimeField were built for
-  this release and removed before it: segmented keyboard date entry is a desktop
-  pattern, and a year is `DatePickerInput` with `DatePickerPrecision.YEAR`.)
+- Added ListBox, Toolbar, Kbd, ColorPicker family, Meter, User and
+  Code/Snippet, with sample entries. (YearPicker, DateField/TimeField and SubMenu were
+  built for this release and removed before it: segmented keyboard date entry is a
+  desktop pattern, a year is `DatePickerInput` with `DatePickerPrecision.YEAR`, and a
+  nested action sheet overlapped `ActionSheet` and `Cascader`.)
 - `InputFormat` now defers formatting while the native IME reports active
   composition; formatted input no longer uses the rendered length as a native
   paste limit. `Avatar` load/failure fallbacks and `AvatarGroup` overlap were

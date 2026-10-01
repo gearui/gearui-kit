@@ -1,5 +1,6 @@
 package com.gearui.components.swipecell
 
+import com.gearui.gestures.ownsHorizontalDrag
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.spring
@@ -285,6 +286,7 @@ fun SwipeCell(
                 .fillMaxWidth()
                 .offset { IntOffset(state.offsetX.value.roundToInt(), 0) }
                 .onSizeChanged { contentSize = it }
+                .ownsHorizontalDrag { !disabled }
                 .background(colors.surface)
                 .then(
                     if (!disabled) {

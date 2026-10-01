@@ -129,7 +129,6 @@ object NavigationManager {
             "listbox" -> ListBoxExample(component, onBack)
             "typed-form" -> TypedFormExample(component, onBack)
             "toolbar" -> ToolbarExample(component, onBack)
-            "submenu" -> SubMenuExample(component, onBack)
             "kbd" -> KbdExample(component, onBack)
             "meter" -> MeterExample(component, onBack)
             "user" -> UserExample(component, onBack)

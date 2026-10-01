@@ -5,7 +5,9 @@ import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.graphics.Color
 
 /**
- * Field fill, after the reference Input `variant` (`input.css`).
+ * Field style, by what the field sits on. An enabled field is always a light box the
+ * eye reads as "type here"; a gray fill is kept for the disabled state, which is what
+ * both iOS (rounded-rect text fields) and Chinese app conventions read as unavailable.
  *
  * Every field-family component takes it: Input, Textarea, AutoResizeTextarea, InputOTP,
  * ComboBox, NumberField, Select, MultiSelect, Cascader, DatePickerInput,
@@ -13,9 +15,9 @@ import com.tencent.kuikly.compose.ui.graphics.Color
  *
  * - [PRIMARY]: field colour (white in light) with the field shadow; for fields on
  *   the page background.
- * - [SECONDARY]: `muted` fill (light gray), no shadow; for fields that sit on a
- *   surface such as a header, card or sheet, where a white field would vanish.
- *   The reference examples switch to it in exactly that case.
+ * - [SECONDARY]: field colour with a hairline border and no shadow; for fields that
+ *   sit on a surface such as a header, card or sheet, where a shadow would not show.
+ *   A search field is the one exception: it keeps the gray pill users know.
  */
 enum class FieldVariant {
     PRIMARY,
@@ -26,23 +28,24 @@ enum class FieldVariant {
 internal val FieldVariant.shadowed: Boolean
     get() = this == FieldVariant.PRIMARY
 
-/**
- * The field's resting fill: [field] (the component's own field colour, usually
- * `inputColors.background`) for [FieldVariant.PRIMARY], `muted` for [FieldVariant.SECONDARY].
- */
+/** The field's resting fill: [field] while enabled, `muted` while disabled. */
 @Composable
-internal fun FieldVariant.fill(field: Color): Color = when (this) {
-    FieldVariant.PRIMARY -> field
-    FieldVariant.SECONDARY -> Theme.colors.muted
-}
+@Suppress("UnusedReceiverParameter")
+internal fun FieldVariant.fill(field: Color, enabled: Boolean = true): Color =
+    if (enabled) field else Theme.colors.muted
 
 /**
- * Fill of a tappable field trigger while pressed. The primary field darkens to `muted`;
- * the secondary field already sits on `muted`, so it keeps its fill and the border
- * hover colour carries the press.
+ * The field's resting border: the hairline `border` colour for [FieldVariant.SECONDARY],
+ * [field] (the palette's input border) for [FieldVariant.PRIMARY]; none while disabled.
  */
 @Composable
-internal fun FieldVariant.pressedFill(field: Color): Color = when (this) {
-    FieldVariant.PRIMARY -> Theme.colors.muted
-    FieldVariant.SECONDARY -> fill(field)
+internal fun FieldVariant.border(field: Color, enabled: Boolean = true): Color = when {
+    !enabled -> Color.Transparent
+    this == FieldVariant.SECONDARY -> Theme.colors.border
+    else -> field
 }
+
+/** Fill of a tappable field trigger while pressed. */
+@Composable
+@Suppress("UnusedReceiverParameter")
+internal fun FieldVariant.pressedFill(): Color = Theme.colors.muted

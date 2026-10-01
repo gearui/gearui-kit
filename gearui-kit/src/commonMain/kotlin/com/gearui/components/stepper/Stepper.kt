@@ -122,10 +122,11 @@ fun Stepper(
                 .background(colors.border)
         )
 
-        // Value display
+        // Value display: a compact readout, as wide as a few digits, so the stepper keeps
+        // its control size instead of stretching into something that looks like a text field.
         Box(
             modifier = Modifier
-                .weight(1f)
+                .width(height * 2)
                 .fillMaxHeight()
                 .background(colors.surface),
             contentAlignment = Alignment.Center

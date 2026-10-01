@@ -85,11 +85,13 @@ Chinese mobile practice.
 | A date, a month, a year, a time | `DatePickerInput` / `TimePickerInput` with `precision` | typed date segments |
 | A range of dates | `Calendar` (range) | two unrelated date fields |
 | Options shown in the page, no trigger | `ListBox` | a `Select` that is always open |
-| Nested actions | `SubMenu` (one level at a time in a sheet) | side-flyout menus |
+| A few actions on the current item | `ActionSheet` (flat; group related actions, not nest them) | nested action menus |
 
 Removed before beta7 shipped: segmented keyboard date/time fields (`DateField`,
 `TimeField`), a desktop pattern with small targets and a keyboard on touch, and
-`YearPicker`, which was `DatePickerInput(precision = YEAR)`.
+`YearPicker`, which was `DatePickerInput(precision = YEAR)`; and `SubMenu`, a sheet of
+nested actions that overlapped `ActionSheet` for actions and `Cascader` for drilling
+into a hierarchy, where a mobile action menu should stay one level deep.
 
 ## 4. Accessibility
 
@@ -181,7 +183,7 @@ same rules as a component:
 - **Real components only.** A button is a `Button`, a row is a `Cell`, an icon
   is `Icons.*`. No hand-built lookalikes, no letters or emoji standing in for
   icons, no bare `clickable` without press feedback.
-- **Fields on cards** use the filled variant (`variant = FieldVariant.SECONDARY`), as the
+- **Fields on cards** use the outlined variant (`variant = FieldVariant.SECONDARY`), as the
   visual spec requires.
 - **Overlay triggers.** A set of entries that open a non-anchored overlay
   (Dialog, ActionSheet, BottomSheet, Toast, Notification, Snackbar, Drawer,

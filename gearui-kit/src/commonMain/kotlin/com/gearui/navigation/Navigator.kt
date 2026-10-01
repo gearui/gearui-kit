@@ -31,6 +31,9 @@ import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.BoxWithConstraints
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.geometry.Offset
+import com.tencent.kuikly.compose.ui.layout.boundsInRoot
+import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.zIndex
@@ -226,9 +229,13 @@ fun <R : NavRoute> Navigator(
         // swiping the chat page revealed the conversation list underneath. The
         // theme colour is read once here, in composable scope.
         val screenBackground = Theme.colors.background
+        // Where the gesture host sits in the root, so a touch can be matched against
+        // the drag regions controls report in root coordinates.
+        val gestureOrigin = remember { arrayOf(Offset.Zero) }
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .onGloballyPositioned { gestureOrigin[0] = it.boundsInRoot().topLeft }
                 .let { base ->
                     if (swipeBackEnabled) {
                         base.swipeBack(
@@ -241,8 +248,12 @@ fun <R : NavRoute> Navigator(
                             // either, so it stands down there as well — claiming the
                             // drag only to no-op in beginSwipe would swallow the
                             // page's own over-scroll tension on its first page.
-                            deferToPage = {
-                                state.activePageSwipeGate?.canSwipeBack?.invoke() == true ||
+                            // A drag that starts on a control that itself drags sideways
+                            // (slider, colour plane, swipe cell) belongs to that control.
+                            deferToPage = { down ->
+                                val gate = state.activePageSwipeGate
+                                gate?.canSwipeBack?.invoke() == true ||
+                                    gate?.ownsDragAt(down + gestureOrigin[0]) == true ||
                                     !state.hasBackStack
                             },
                             // A foreground page that cannot consume the right-swipe

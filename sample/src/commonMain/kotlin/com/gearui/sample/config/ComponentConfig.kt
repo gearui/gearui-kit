@@ -58,9 +58,9 @@ object ComponentConfig {
         ComponentInfo("upload", "上传", "Upload", ComponentCategory.FORM, "/components/upload", "文件上传", "File upload"),
         ComponentInfo("form", "表单", "Form", ComponentCategory.FORM, "/components/form", "表单容器", "Form container"),
         ComponentInfo("cascader", "级联选择", "Cascader", ComponentCategory.FORM, "/components/cascader", "级联选择器", "Cascade selector"),
-        ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox"),
-        ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form"),
-        ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker"),
+        ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox", "在页面里直接列出的单选/多选", "Single or multiple choice shown in the page"),
+        ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form", "类型化字段、异步校验与服务端错误", "Typed fields, async checks, server errors"),
+        ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker", "色板、色域平面与十六进制输入", "Swatches, color plane and hex entry"),
 
         // Navigation components
         ComponentInfo("navbar", "导航栏", "NavBar", ComponentCategory.NAVIGATION, "/components/navbar", "通用页面导航栏", "Page navigation bar"),
@@ -76,8 +76,7 @@ object ComponentConfig {
         ComponentInfo("runtime-tabhost", "TabHost 保活验证", "TabHost Probe", ComponentCategory.NAVIGATION, "/components/runtime-tabhost", "保活与重建的帧率对照", "Keep-alive vs rebuild frame cost"),
         ComponentInfo("runtime-performance", "性能基准", "Performance", ComponentCategory.NAVIGATION, "/components/runtime-performance", "主题切换耗时与长列表掉帧", "Theme switch time and long-list jank"),
         ComponentInfo("navigator-v1-demo", "Navigator v1 演示", "Navigator v1 Demo", ComponentCategory.NAVIGATION, "/components/navigator-v1-demo", "Navigator v1 栈式跳转 + 边缘滑动返回", "Navigator v1 stack + edge swipe pop"),
-        ComponentInfo("toolbar", "工具栏", "Toolbar", ComponentCategory.NAVIGATION, "/components/toolbar"),
-        ComponentInfo("submenu", "多级菜单", "SubMenu", ComponentCategory.NAVIGATION, "/components/submenu"),
+        ComponentInfo("toolbar", "工具栏", "Toolbar", ComponentCategory.NAVIGATION, "/components/toolbar", "一组相关操作，窄屏自动换行", "Related actions that wrap on narrow screens"),
 
         // Data display
         ComponentInfo("list", "列表", "List", ComponentCategory.DATA_DISPLAY, "/components/list", "列表展示", "List display"),
@@ -97,9 +96,9 @@ object ComponentConfig {
         ComponentInfo("calendar", "日历", "Calendar", ComponentCategory.DATA_DISPLAY, "/components/calendar", "日历展示", "Calendar display"),
         ComponentInfo("format", "本地化格式", "Format", ComponentCategory.DATA_DISPLAY, "/components/format", "万亿缩写、相对时间、农历", "Compact numbers, relative time, lunar"),
         ComponentInfo("watermark", "水印", "Watermark", ComponentCategory.DATA_DISPLAY, "/components/watermark", "页面水印", "Page watermark"),
-        ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter"),
-        ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user"),
-        ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code"),
+        ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter", "已知上下限的计量值", "A measurement within known bounds"),
+        ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user", "头像、名称与说明的身份摘要", "Avatar, name and description"),
+        ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code", "行内代码与可复制的代码块", "Inline code and copyable snippets"),
         ComponentInfo("kbd", "快捷键标记", "Kbd", ComponentCategory.DATA_DISPLAY, "/components/kbd", "Web 与外接键盘的按键提示", "Web and external-keyboard shortcut hint"),
 
         // Feedback components

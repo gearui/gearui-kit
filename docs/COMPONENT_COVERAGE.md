@@ -55,7 +55,6 @@ The registry is the inventory source; README generation is CI-checked. This docu
 | Entry | Purpose | Reference |
 | --- | --- | --- |
 | `Toolbar` | Toolbar | GearUI extension |
-| `SubMenu` | SubMenu | GearUI extension |
 | `NavBar` | Page navigation bar | GearUI extension |
 | `BottomNavBar` | App bottom navigation | GearUI extension |
 | `Tabs` | Content switching | HeroUI Native |
@@ -123,7 +122,7 @@ The registry is the inventory source; README generation is CI-checked. This docu
 
 ## 2. beta7 Implementation Status
 
-Stable-value Picker, cancellable Cascader loading, constrained DatePicker/TimePicker, typed async forms, exact-decimal NumberField and editable Stepper are implemented with production-wired tests. ListBox, Toolbar, SubMenu, Kbd, ColorPicker family, Meter, User and Code/Snippet have public APIs and sample routes. IndexBar, AgreementCheckbox, LoadMore and locale formatting were introduced in the preceding beta7 work.
+Stable-value Picker, cancellable Cascader loading, constrained DatePicker/TimePicker, typed async forms, exact-decimal NumberField and editable Stepper are implemented with production-wired tests. ListBox, Toolbar, Kbd, ColorPicker family, Meter, User and Code/Snippet have public APIs and sample routes. IndexBar, AgreementCheckbox, LoadMore and locale formatting were introduced in the preceding beta7 work.
 
 ## 3. Acceptance Still Required
 

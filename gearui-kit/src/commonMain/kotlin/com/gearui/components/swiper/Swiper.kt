@@ -1,5 +1,6 @@
 package com.gearui.components.swiper
 
+import com.gearui.gestures.ownsHorizontalDrag
 import com.gearui.i18n.I18n
 import com.gearui.foundation.interaction.IconActionButton
 import com.gearui.foundation.control.ControlGeometry
@@ -177,7 +178,8 @@ fun Swiper(
             // HorizontalPager - the actual swiping component
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.fillMaxSize()
+                // A looping carousel can always page back; a plain one only past its first slide.
+                modifier = Modifier.fillMaxSize().ownsHorizontalDrag { totalPages > 1 && (loop || pagerState.currentPage > 0) }
             ) { page ->
                 val contentIndex = pageToContentIndex(page)
                 Box(modifier = Modifier.fillMaxSize()) {

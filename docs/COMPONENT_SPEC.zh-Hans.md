@@ -75,10 +75,11 @@ fun MyComponent(
 | 日期、年月、年份、时间 | `DatePickerInput` / `TimePickerInput` 配 `precision` | 分段键入日期 |
 | 日期区间 | `Calendar`（区间） | 两个互不相关的日期字段 |
 | 在页面里直接列出选项、没有触发器 | `ListBox` | 常开的 `Select` |
-| 多级操作 | `SubMenu`（在面板中逐级进入） | 侧向弹出的子菜单 |
+| 对当前对象的几个操作 | `ActionSheet`（平铺；相关操作分组，不做嵌套） | 多级操作菜单 |
 
 beta7 发布前删除：分段键入日期/时间（`DateField`、`TimeField`）——桌面键盘录入模式，触控下
-目标小、要弹键盘；`YearPicker`——它就是 `DatePickerInput(precision = YEAR)`。
+目标小、要弹键盘；`YearPicker`——它就是 `DatePickerInput(precision = YEAR)`；`SubMenu`——在面板里逐级进入的
+操作菜单，操作与 `ActionSheet` 重叠、逐级钻取与 `Cascader` 重叠，而移动端操作菜单应保持一层。
 
 ## 4. 无障碍
 
@@ -155,7 +156,7 @@ sample 可用 `-route <id>` 直接打开任意页面，所以「全页面扫描�
   高度、被展示的自定义尺寸）在文件顶部定义为具名常量。
 - **只用真实组件。** 按钮就是 `Button`，行就是 `Cell`，图标就是 `Icons.*`。
   不手搭仿制品，不用字母或 emoji 冒充图标，不写没有按压反馈的裸 `clickable`。
-- **卡片上的输入框**用填充变体（`variant = FieldVariant.SECONDARY`），视觉规范如此要求。
+- **卡片上的输入框**用描边变体（`variant = FieldVariant.SECONDARY`），视觉规范如此要求。
 - **浮层触发入口。** 打开非锚定浮层（Dialog、ActionSheet、BottomSheet、Toast、
   Notification、Snackbar、Drawer、Tour、全屏 Loading）的一组入口，是 `Plain`
   区块里的一个 `CellGroup`，每种变体一行、带箭头——平台 Catalog 的做法。锚定

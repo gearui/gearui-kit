@@ -39,9 +39,9 @@ internal fun fieldTriggerModifier(
         alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity
     }.clip(shape)
         .border(FieldSizeTokens.Medium.borderWidth,
-            inputBorderColor(palette, enabled, false, hovered || pressed,
+            inputBorderColor(palette.copy(border = variant.border(palette.border, enabled)), enabled, false, hovered || pressed,
                 if (error != null) colors.destructive else null), shape)
-        .background(if (enabled && pressed) variant.pressedFill(palette.background) else variant.fill(palette.background))
+        .background(if (enabled && pressed) variant.pressedFill() else variant.fill(palette.background, enabled))
         .hoverable(interaction, enabled)
         .activationTarget(activation)
         .clickable(interactionSource = interaction, indication = null, enabled = enabled) { activation.mark(); onClick() }

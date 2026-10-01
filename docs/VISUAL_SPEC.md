@@ -64,7 +64,10 @@ is generated from those sources.
 form layouts remain supported. The editor owns its surface and focus
 treatment; helper/error and count text sit below it. Limit counters are not
 errors. Fields are borderless with a field shadow by default — on white
-cards/surfaces use the filled variant (`variant = FieldVariant.SECONDARY`).
+cards/surfaces use the outlined variant (`variant = FieldVariant.SECONDARY`: the field
+colour with a hairline border). An enabled field always has a light fill; a gray fill is
+kept for the disabled state, which iOS and Chinese apps alike read as unavailable. A
+search field is the one exception and keeps its gray pill.
 
 **Select and hierarchical selection.** A field trigger plus a layered option
 surface with clear selected/disabled states, aligned indicators, bounded

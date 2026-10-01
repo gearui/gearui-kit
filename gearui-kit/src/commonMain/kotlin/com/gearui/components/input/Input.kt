@@ -71,6 +71,7 @@ import com.gearui.foundation.field.FieldFrame
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
 import com.gearui.foundation.field.shadowed
+import com.gearui.foundation.field.border
 import com.gearui.foundation.field.rememberInputFeedback
 import com.gearui.theme.LocalInputColors
 import com.tencent.kuikly.compose.foundation.hoverable
@@ -195,13 +196,13 @@ fun Input(
     // rebuilt the moment focus changes, which recreates the underlying EditText;
     val borderColor = when {
         hasError -> colors.destructive
-        else -> inputColors.border
+        else -> variant.border(inputColors.border, enabled)
     }
 
     // Keep border width stable to avoid layout jump when focus/error changes.
     val borderWidth = tokens.borderWidth
 
-    val backgroundColor = variant.fill(inputColors.background)
+    val backgroundColor = variant.fill(inputColors.background, enabled)
 
     val inputTextStyle = when (size) {
         InputSize.LARGE -> Theme.typography.bodyLarge

@@ -4,6 +4,7 @@ import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.gestures.awaitHorizontalTouchSlopOrCancellation
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.geometry.Offset
 import com.tencent.kuikly.compose.ui.input.pointer.PointerInputChange
 import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
@@ -44,10 +45,12 @@ data class SwipeBackConfig(
  *
  * @param enabled       false skips recognition entirely (root pages, modal pages, ...)
  * @param config        gesture parameters, tunable per platform or page type
- * @param deferToPage   consulted on touch-down; true means the foreground page can
+ * @param deferToPage   consulted on touch-down with the touch position (in this
+ *                      modifier's coordinates); true means the foreground page can
  *                      still swipe backwards itself (e.g. a horizontal pager not on
  *                      its first page), so the app-level back stands down and the
- *                      page owns the drag. See [PageSwipeBackGate].
+ *                      page owns the drag, or the touch landed on a control that
+ *                      drags sideways itself. See [PageSwipeBackGate].
  * @param fullWidthWhenPageAtLeftmost
  *                      consulted on touch-down; true widens the hot zone from the
  *                      left edge to the full width, so once the page reports it is
@@ -62,7 +65,7 @@ data class SwipeBackConfig(
 fun Modifier.swipeBack(
     enabled: Boolean = true,
     config: SwipeBackConfig = SwipeBackConfig(),
-    deferToPage: () -> Boolean = { false },
+    deferToPage: (down: Offset) -> Boolean = { false },
     fullWidthWhenPageAtLeftmost: () -> Boolean = { false },
     onStart: (() -> Unit)? = null,
     onProgress: ((progress: Float, dragX: Float) -> Unit)? = null,
@@ -82,7 +85,7 @@ fun Modifier.swipeBack(
             // Page-first arbitration: while the foreground page can still swipe
             // backwards itself, the router must not take this drag — even inside
             // the edge hot zone — or the page's own paging is starved.
-            if (deferToPage()) return@awaitEachGesture
+            if (deferToPage(down.position)) return@awaitEachGesture
             // Once the page reports it cannot page backwards any further, the
             // router back owns the drag from anywhere on the screen — not just
             // the edge — so the whole page tracks the finger.

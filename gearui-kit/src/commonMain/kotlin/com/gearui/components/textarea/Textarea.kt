@@ -7,6 +7,7 @@ import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
 import com.gearui.foundation.field.fill
 import com.gearui.foundation.field.shadowed
+import com.gearui.foundation.field.border
 import com.gearui.foundation.typography.resolveFontFamily
 
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
@@ -316,7 +317,7 @@ private fun TextareaInputArea(
     }) {
         // Field container. Fill and shadow come from the variant; the compact and
         // standalone metrics are independent of it.
-        val fieldFill = variant.fill(inputColors.background)
+        val fieldFill = variant.fill(inputColors.background, enabled)
         val containerShape = if (compact) Theme.shapes.lg else fieldShape
         FieldSurface(Modifier.fillMaxWidth(), shape = containerShape, shadowed = variant.shadowed) {
             Box(
@@ -334,7 +335,7 @@ private fun TextareaInputArea(
                                 .clip(fieldShape)
                                 .border(
                                     BorderWidth.thin,
-                                    if (error != null) colors.destructive else inputColors.border,
+                                    if (error != null) colors.destructive else variant.border(inputColors.border, enabled),
                                     fieldShape,
                                 )
                                 .background(fieldFill)

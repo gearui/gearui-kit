@@ -2,7 +2,18 @@
 
 ## [Unreleased]
 
-### beta7 candidate (not released)
+## [1.0.0-beta7] - 2026-10-01
+
+Published to Maven Central. Not source-compatible with 1.0.0-beta6: components and
+parameters are removed or changed (see "Migration from 1.0.0-beta6"). Verified on an
+Android phone, the iOS simulator and Chromium; the evidence is
+[docs/BETA7_ACCEPTANCE.md](docs/BETA7_ACCEPTANCE.md). **Not verified by a person before
+release:** TalkBack and VoiceOver (reading order, focus return), Chinese IME composition,
+paste and selection in formatted fields, and a performance figure on a physical iPhone
+(simulator figures only). **Not covered by this beta:** right-to-left layout,
+HarmonyOS at runtime, phones from other vendors, and the largest text sizes.
+
+### Highlights
 
 - Rows (Cell, CellGroup, List, ListBox, menus, ActionSheet) show the press only after
   the finger rests for `rowPressDelay` (100 ms, new feedback token), as platform lists

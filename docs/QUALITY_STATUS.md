@@ -3,8 +3,8 @@
 [English](./QUALITY_STATUS.md) | [简体中文](./QUALITY_STATUS.zh-Hans.md)
 
 Where the kit stands against the 1.0.0 goal: what has been verified, by which
-gate, and what remains open. Current version: `1.0.0-beta6`, published to
-Maven Central on 2026-09-28 from tag `v1.0.0-beta6`.
+gate, and what remains open. Current version: `1.0.0-beta7`, published to
+Maven Central on 2026-10-01 from tag `v1.0.0-beta7`.
 
 ## 1. The 1.0.0 Goal
 
@@ -255,3 +255,9 @@ Status: ☐ not started · ◐ in progress · ☑ done (with evidence) · ⛔ ex
 F1: every gate in [COMPONENT_SPEC.md §8](./COMPONENT_SPEC.md) and remote CI pass on the exact candidate; all six Maven
 modules staged and inspected; published to Central and checked in the Portal; tag `v1.0.0-beta7`; website synced;
 downstream moved to beta7. All of A–E are ☑, or each ⛔ item has been released explicitly by the maintainer.
+
+Status 2026-10-01: the maintainer approved publishing beta7 with the open items as they
+stand — B3 and D1 manual checks and D5's device figure listed as unverified in the
+CHANGELOG, D3/D4/D7/D8 not covered by this beta, E2 drafts kept local. Published to
+Central from the release commit and tagged `v1.0.0-beta7`. Website sync and moving the
+downstream apps to beta7 follow separately.

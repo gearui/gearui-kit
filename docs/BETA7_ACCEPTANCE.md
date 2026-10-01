@@ -1,11 +1,11 @@
 # beta7 Candidate Acceptance Record
 
-Updated 2026-09-30. This is the evidence ledger, **not release approval**. The gate
+Updated 2026-10-01. This is the evidence ledger; the release approval is recorded under "Maintainer feedback round". The gate
 table is [QUALITY_STATUS.zh-Hans.md §7](./QUALITY_STATUS.zh-Hans.md) /
 [QUALITY_STATUS.md §7](./QUALITY_STATUS.md); each gate there carries one status and
 points here. Feature scope follows the approved beta7 plan.
 
-Candidate: the code of db346b3 on main (CI and Guardrails green), plus this record. Devices: Android 16 phone (Xiaomi 2201122G, 560 dpi,
+Candidate: the code of 42913b3 on main (CI and Guardrails green), plus this record. Devices: Android 16 phone (Xiaomi 2201122G, 560 dpi,
 gesture navigation); iOS 26.2 simulator "GearUI beta7 iPhone 17 Pro" (the maintainer
 accepted a simulator for iOS on 2026-09-30); Chromium (Playwright) for the Web. 93
 sample routes, light and dark.
@@ -210,6 +210,42 @@ Tag's close square drifted from the ×. The same pass caught a regression of its
 the Web: consuming native touches (the fall-through fix) swallowed every Compose click
 in the browser, so no Select or Popover opened — limited to Android and iOS, and
 `web_overlay_resize.mjs` is part of every run because the page smoke run cannot see it.
+
+## Maintainer feedback round (2026-10-01, 91c6851 → 42913b3)
+
+The maintainer's review of the sample found five issues and one more after it; all fixed:
+ListBox drawn as separate tinted cards (now the grouped list: one card per group, inset
+separators, trailing check); a drag on ColorPicker popped the page (Navigator's
+full-screen swipe-back claimed it first — controls now claim their region with
+`ownsHorizontalDrag`, read when the finger goes down); the gray secondary field read as
+disabled (now the field colour with a hairline; disabled takes the gray); seven registry
+entries had no description (now enforced by `gen_component_index.py --check`); SubMenu
+duplicated ActionSheet and Cascader (removed); a row flashed its press at the start of
+every scroll (press shown after `rowPressDelay`, 100 ms; a quick tap still flashes).
+
+Weey (production build, `weey` flavor, release-signed, built against this kit and
+installed over the shipped app on the Android phone; browsing only, nothing sent or
+saved) found two regressions of that round, both fixed in 42913b3: the chat composer
+(compact `AutoResizeTextarea`) vanished into its bar, and member and conversation rows
+(swipe cells with only right-side actions) blocked swipe-back. Pages exercised: message
+list (scroll, frame-by-frame: no row flash), 1:1 and group chat (composer, keyboard,
+type and clear), search, the + popover, contacts (segmented, index bar), Me, profile,
+nickname editor, invite code, wallet, group settings and members (swipe actions reveal,
+close, swipe-back), light and dark. No crash in `logcat -b crash`.
+
+Re-run on 42913b3: CI and Guardrails green; Android interactions 41/41; iOS simulator
+interactions 36/36 (software keyboard 4/4); on iOS, drags on the colour plane and hue
+slider stay on the page and a drag on blank space goes back; Web 180 page-themes clean and
+the overlay run ok; downstream compile of privchat-app (Weey release), privchat-ui,
+live-chat and lms-app; the iOS accessibility audit, 180 of 180
+page-themes (`build/acceptance/ios-a11y-20261001-172300-42913b374a`): hit region 38 (IndexBar
+letters, as before), description 38, trait 2, text clipped 116 (was 122), and one
+contrast finding that is an artifact — the ComboBox page focuses its first field on open,
+and when the audit reads the page after the suggestion panel has opened, the panel
+covers half of the next section title; the title itself is foreground on background.
+
+**Release:** the maintainer approved publishing beta7 on 2026-10-01 with the manual
+checks below listed as unverified in the CHANGELOG.
 
 ## Quality verdict (2026-10-01)
 

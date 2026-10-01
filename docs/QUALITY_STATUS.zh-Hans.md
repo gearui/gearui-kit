@@ -3,7 +3,7 @@
 [English](./QUALITY_STATUS.md) | [简体中文](./QUALITY_STATUS.zh-Hans.md)
 
 对照 1.0.0 目标的当前位置：哪些已验证、由哪个门禁验证、哪些仍然开放。
-当前版本：`1.0.0-beta6`，2026-09-28 从 tag `v1.0.0-beta6` 发布至
+当前版本：`1.0.0-beta7`，2026-10-01 从 tag `v1.0.0-beta7` 发布至
 Maven Central。
 
 ## 1. 1.0.0 目标
@@ -222,3 +222,7 @@ beta7 不是「修几个 bug 再发」。§1 目标、§3 开放风险、[COMPON
 
 F1：[COMPONENT_SPEC.zh-Hans.md §8](./COMPONENT_SPEC.zh-Hans.md) 全部门禁与远程 CI 在确切候选提交上通过；六模块 staging 检查；
 发布到 Central 并以 Portal 核对；tag `v1.0.0-beta7`；官网同步；下游切到 beta7。A–E 全部 ☑，或 ⛔ 项经维护者逐条放行。
+
+2026-10-01 状态：维护者批准按现状发布 beta7——B3、D1 的人工检查与 D5 真机数字在 CHANGELOG
+中列为未验证，D3/D4/D7/D8 不在本 beta 覆盖范围，E2 草稿留在本地。已从 release 提交发布到
+Central 并打 tag `v1.0.0-beta7`。官网同步与下游切到 beta7 另行进行。

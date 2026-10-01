@@ -345,10 +345,12 @@ private fun TextareaInputArea(
                                 .clip(containerShape)
                                 .background(fieldFill)
                                 .then(
-                                    if (outlined) {
+                                    // The secondary field is drawn by its hairline, so a compact one
+                                    // keeps it too: its fill matches the bar it sits in.
+                                    if (outlined || variant == FieldVariant.SECONDARY) {
                                         Modifier.border(
                                             BorderWidth.thin,
-                                            fieldBorderColor(error = error, enabled = enabled),
+                                            if (error != null) colors.destructive else variant.border(colors.border, enabled),
                                             containerShape,
                                         )
                                     } else {
@@ -502,12 +504,9 @@ fun AutoResizeTextarea(
      */
     lineHeight: TextUnit = 24.sp,
     /**
-     * Draw a hairline around the field.
-     *
-     * Off by default because this control is usually embedded in a bar that already
-     * frames it. Turn it on where the field sits directly on a surface close in
-     * colour to its own [muted][com.gearui.foundation.color.GearColors.muted]
-     * fill — without an outline the two blend and the input stops looking tappable.
+     * Draw a hairline around a [FieldVariant.PRIMARY] field. A [FieldVariant.SECONDARY]
+     * field (the default) always has one: its fill is the field colour, the same as the
+     * bar it usually sits in, so the hairline is what shows it.
      *
      * This keeps the compact metrics; it is not the same as the standalone
      * [Textarea] form-control look, which fixes a single line near 48dp.

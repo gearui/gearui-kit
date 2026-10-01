@@ -11,9 +11,12 @@
 - **Fields on surfaces (behaviour):** `FieldVariant.SECONDARY` is now the field colour
   with a hairline border instead of a gray fill, and every disabled field takes the gray
   fill with no border. A gray enabled field read as disabled. `SearchBar` keeps its gray
-  pill.
+  pill. A compact `AutoResizeTextarea` (a chat composer) keeps the hairline too, so it does
+  not vanish into the bar it sits in.
 - **Swipe-back and sideways controls:** a drag that starts on a slider, colour plane,
-  swipe cell, carousel, table or horizontal list no longer pops the page. New public
+  swipe cell, carousel, table or horizontal list no longer pops the page. A control
+  claims the drag only when a right swipe moves it: a scroller that can scroll back, a
+  swipe cell with left actions or one that is open. New public
   `Modifier.ownsHorizontalDrag(active)` marks an app's own sideways control.
   **Source break:** `Modifier.swipeBack(deferToPage = …)` now receives the touch
   position, `(Offset) -> Boolean`.

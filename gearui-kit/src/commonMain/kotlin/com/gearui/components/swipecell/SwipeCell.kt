@@ -286,7 +286,9 @@ fun SwipeCell(
                 .fillMaxWidth()
                 .offset { IntOffset(state.offsetX.value.roundToInt(), 0) }
                 .onSizeChanged { contentSize = it }
-                .ownsHorizontalDrag { !disabled }
+                // Swipe-back is a right swipe: the cell takes it only when a right swipe does
+                // something here (left actions to reveal, or an open cell to close).
+                .ownsHorizontalDrag { !disabled && (leftActions.isNotEmpty() || state.isOpen) }
                 .background(colors.surface)
                 .then(
                     if (!disabled) {

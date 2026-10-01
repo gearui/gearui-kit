@@ -50,8 +50,10 @@ class PageSwipeBackGate {
  * cell, a carousel). A drag that starts on it belongs to the control: the Navigator's
  * full-screen swipe-back does not take it, even when the page could otherwise go back.
  *
- * [active] is read when the finger goes down; a scroller passes "can scroll backwards",
- * so on its first item a right-swipe still goes back.
+ * [active] is read when the finger goes down and answers "would a right swipe here move
+ * this control?" — swipe-back is a right swipe. A scroller passes "can scroll backwards",
+ * so on its first item a right swipe still goes back; a swipe cell whose actions are only
+ * revealed by a left swipe passes false while closed.
  */
 fun Modifier.ownsHorizontalDrag(active: () -> Boolean = { true }): Modifier = composed {
     val gate = LocalPageSwipeBackGate.current

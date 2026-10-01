@@ -21,6 +21,7 @@ import com.gearui.theme.Theme
  *
  * Starts a self-contained task, such as deleting an object or buying an item.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ButtonExample(
     component: ComponentInfo,
@@ -152,8 +153,9 @@ fun ButtonExample(
             description = "文字按钮放在深色背景上",
             surface = SectionSurface.Plain
         ) {
-            Row(
+            FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(Theme.shapes.xl)
@@ -168,11 +170,13 @@ fun ButtonExample(
     }
 }
 
+// Wraps on a narrow screen instead of squeezing the last button.
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ButtonRow(content: @Composable RowScope.() -> Unit) {
-    Row(
+private fun ButtonRow(content: @Composable FlowRowScope.() -> Unit) {
+    FlowRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.md),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
         content = content
     )
 }

@@ -33,6 +33,8 @@ import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.foundation.layout.height
 import com.tencent.kuikly.compose.foundation.layout.size
 import com.tencent.kuikly.compose.foundation.layout.width
+import com.tencent.kuikly.compose.foundation.layout.widthIn
+import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
 import com.tencent.kuikly.compose.foundation.text.KeyboardOptions
@@ -108,6 +110,9 @@ fun InputOTP(
                     OtpSeparator()
                 }
                 OtpSlot(
+                    // Equal shares of the row, never wider than the drawn slot: on a narrow
+                    // screen every slot narrows together instead of the last ones being cut.
+                    modifier = Modifier.weight(1f, fill = false).widthIn(max = ControlGeometry.otpSlotWidth),
                     char = code.getOrNull(index),
                     placeholder = placeholder?.getOrNull(index),
                     active = focused && enabled && index == activeOtpSlot(code.length, length),
@@ -141,6 +146,7 @@ fun InputOTP(
 
 @Composable
 private fun OtpSlot(
+    modifier: Modifier,
     char: Char?,
     placeholder: Char?,
     active: Boolean,
@@ -152,7 +158,7 @@ private fun OtpSlot(
     val shape = FieldDefaults.shape
     val style = Theme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
     FieldSurface(
-        modifier = Modifier.size(ControlGeometry.otpSlotWidth, ControlGeometry.otpSlotHeight),
+        modifier = modifier.fillMaxWidth().height(ControlGeometry.otpSlotHeight),
         shape = shape,
         shadowed = variant.shadowed,
     ) {

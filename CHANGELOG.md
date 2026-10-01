@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- Narrow screens (320, the narrowest iOS width): `SegmentedControl` (and the primary
+  `Tabs`) lays segments out as iOS does — equal while every label fits, otherwise by
+  content with the rest shared out, the inline padding giving way before a label ends in
+  "…"; a badge in a primary tab now counts toward its segment. `InputOTP` slots share the
+  row and narrow together instead of the last ones being cut. `Link` labels end in "…"
+  when squeezed. Sample rows of buttons, links and tags wrap.
+- `scripts/acceptance/web_narrow.mjs`: every sample page at 320 wide, reporting content
+  cut by its container, text wider than its box and boxes squeezed to nothing.
+
 - On iOS the system keyboard (and alerts and menus) follows the app's theme: `App` sets
   the windows' interface style from `themeMode` — forced for Light and Dark, left to the
   system for System. On Android the keyboard is a separate app that follows only the

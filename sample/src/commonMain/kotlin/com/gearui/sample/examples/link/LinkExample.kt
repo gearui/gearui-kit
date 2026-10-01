@@ -13,9 +13,12 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Row
+import com.tencent.kuikly.compose.foundation.layout.FlowRow
+import com.tencent.kuikly.compose.foundation.layout.ExperimentalLayoutApi
 import com.tencent.kuikly.compose.ui.Alignment
 import com.gearui.foundation.layout.Spacing
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LinkExample(
     component: ComponentInfo,
@@ -28,7 +31,7 @@ fun LinkExample(
             title = "Link",
             description = "行内跳转链接，可带图标、可去掉下划线"
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.lg)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Link("查看详情", onClick = { Toast.show("查看详情") })
                 Link("帮助中心", onClick = { Toast.show("帮助中心") }, endIcon = Icons.arrow_square_out)
                 Link("复制链接", onClick = { Toast.show("复制链接") }, startIcon = Icons.link, underline = false)
@@ -43,9 +46,9 @@ fun LinkExample(
             title = "尺寸与状态",
             description = "SMALL / MEDIUM / LARGE 与禁用态"
         ) {
-            Row(
+            FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 Link("小号", onClick = {}, size = LinkSize.SMALL)
                 Link("中号", onClick = {})
@@ -58,9 +61,9 @@ fun LinkExample(
             title = "LinkButton",
             description = "无内边距的文字按钮，用于「忘记密码」等次要操作"
         ) {
-            Row(
+            FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 LinkButton("忘记密码？", onClick = { Toast.show("忘记密码") })
                 LinkButton("立即注册", onClick = { Toast.show("立即注册") }, color = colors.primarySoftForeground)

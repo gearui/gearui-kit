@@ -158,7 +158,11 @@ private fun MainScreen(
         )
 
         SectionTitle("基本跳转")
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        @OptIn(com.tencent.kuikly.compose.foundation.layout.ExperimentalLayoutApi::class)
+        com.tencent.kuikly.compose.foundation.layout.FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             Button(text = "push detail", size = ButtonSize.SMALL, onClick = {
                 push(DemoRoute.Detail)
             })

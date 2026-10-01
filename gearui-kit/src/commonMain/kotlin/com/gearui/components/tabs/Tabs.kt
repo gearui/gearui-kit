@@ -1,5 +1,6 @@
 package com.gearui.components.tabs
 
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.interaction.choiceSemantics
 import com.gearui.components.segmented.SegmentedTrack
 import com.tencent.kuikly.compose.foundation.layout.offset
@@ -235,15 +236,20 @@ private fun TabsSegmentLabel(item: Tab, selected: Boolean, size: TabsSize) {
         selected -> colors.foreground
         else -> colors.mutedForeground
     }
-    TabBadgeAnchor(item, inline = true) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (item.icon != null) {
-                Icon(name = item.icon, size = IconSizes.Default.sm, tint = contentColor)
-            }
-            Text(text = item.label, style = textStyle, color = contentColor, maxLines = 1)
+    // Inside a clipped segment there is no room above the label, so the badge sits beside
+    // it in the same row and counts toward the width the track sizes the segment from.
+    val count = item.badge?.takeIf { it > 0 }
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (item.icon != null) {
+            Icon(name = item.icon, size = IconSizes.Default.sm, tint = contentColor)
+        }
+        Text(text = item.label, style = textStyle, color = contentColor, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        when {
+            count != null -> Badge(type = BadgeType.Message, count = count)
+            item.dot -> Badge(type = BadgeType.RedPoint)
         }
     }
 }

@@ -13,6 +13,7 @@ import com.gearui.sample.pages.ExampleSection
 import com.gearui.theme.Theme
 
 /** Real Tag controls, including re-enabling and close/click rejection. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagExample(component: ComponentInfo, onBack: () -> Unit) {
     var disabled by remember { mutableStateOf(false) }
@@ -21,7 +22,7 @@ fun TagExample(component: ComponentInfo, onBack: () -> Unit) {
     ExamplePage(component = component, onBack = onBack) {
         ExampleSection(title = "样式与主题", description = "实色、柔和、描边三种样式，各含五种主题") {
             listOf(TagVariant.DARK, TagVariant.LIGHT, TagVariant.OUTLINE).forEach { variant ->
-                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     listOf(TagTheme.DEFAULT to "默认", TagTheme.PRIMARY to "主要", TagTheme.SUCCESS to "成功",
                         TagTheme.WARNING to "警告", TagTheme.DANGER to "危险").forEach { (theme, label) ->
                         Tag(text = label, theme = theme, variant = variant)

@@ -1,5 +1,6 @@
 package com.gearui.components.link
 
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -137,7 +138,7 @@ private fun LinkLabel(
         // The underline belongs to the words, not the icons. It is a real 1dp view:
         // draw modifiers on a Kuikly Text node do not paint.
         Box {
-            Text(text = text, style = style, color = color, maxLines = 1)
+            Text(text = text, style = style, color = color, maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (underlineColor != null) {
                 Box(Modifier.matchParentSize(), contentAlignment = Alignment.BottomStart) {
                     Box(Modifier.fillMaxWidth().height(BorderWidth.thin).background(underlineColor))

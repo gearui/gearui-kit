@@ -30,6 +30,10 @@ import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import com.tencent.kuikly.compose.ui.unit.IntOffset
 import com.tencent.kuikly.compose.ui.unit.IntSize
 import com.tencent.kuikly.compose.ui.zIndex
+import com.tencent.kuikly.compose.ui.layout.Layout
+import com.tencent.kuikly.compose.ui.unit.Constraints
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
+import com.gearui.foundation.layout.Spacing
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -64,6 +68,7 @@ fun <T> SegmentedControl(
             style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
             color = if (selected) colors.foreground else colors.mutedForeground,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
@@ -103,6 +108,7 @@ fun <T> IconSegmentedControl(
                 style = Theme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
                 color = contentColor,
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -123,6 +129,34 @@ internal fun segmentOffset(width: Float, count: Int, gap: Float, index: Int): Pa
     return index.coerceIn(0, count - 1) * (segment + gap) to segment
 }
 
+/**
+ * Segment widths, as iOS lays out a segmented control: equal while every label fits its
+ * equal share; otherwise each segment gets its own content width and the rest of the
+ * track is shared out equally (UIKit's `apportionsSegmentWidthsByContent`). When the
+ * contents do not fit with their padding, the padding gives way first, down to
+ * [tightPadding]; only then do the segments shrink in proportion, ending in "…".
+ *
+ * [natural] is each segment's content width including [padding] (both sides);
+ * [available] is the track width less the gaps. A label is never drawn past its segment.
+ */
+internal fun segmentWidths(natural: List<Int>, available: Int, padding: Int = 0, tightPadding: Int = padding): List<Int> {
+    val count = natural.size
+    if (count == 0 || available <= 0) return List(count) { 0 }
+    val equal = available / count
+    if (natural.all { it <= equal }) return share(List(count) { 0 }, available)
+    if (natural.sum() <= available) return share(natural, available)
+    val tight = natural.map { (it - padding + tightPadding).coerceAtLeast(0) }
+    if (tight.sum() <= available) return share(tight, available)
+    val needed = tight.sum().coerceAtLeast(1)
+    return share(tight.map { (it.toLong() * available / needed).toInt() }, available)
+}
+
+/** [base] plus an equal share of what is left of [available], the remainder to the first segments. */
+private fun share(base: List<Int>, available: Int): List<Int> {
+    val extra = (available - base.sum()).coerceAtLeast(0)
+    return base.mapIndexed { i, w -> w + extra / base.size + if (i < extra % base.size) 1 else 0 }
+}
+
 @Composable
 internal fun SegmentedTrack(
     count: Int,
@@ -140,11 +174,15 @@ internal fun SegmentedTrack(
     val pill = Theme.shapes.full
     var inner by remember { mutableStateOf(IntSize.Zero) }
     val gapPx = with(density) { ControlGeometry.tabsListGap.toPx() }
-    val (targetX, segmentPx) = segmentOffset(inner.width.toFloat(), count, gapPx, selectedIndex)
+    // Measured by the label row below; the indicator and the hit columns follow it.
+    var widths by remember(count) { mutableStateOf(emptyList<Int>()) }
+    val segmentStart = { index: Int -> widths.take(index).sum() + gapPx.roundToInt() * index }
+    val targetX = if (selectedIndex in widths.indices) segmentStart(selectedIndex).toFloat() else 0f
+    val segmentPx = widths.getOrElse(selectedIndex) { 0 }
     val x = remember { Animatable(targetX) }
     var placed by remember { mutableStateOf(false) }
     LaunchedEffect(targetX, inner) {
-        if (inner.width == 0) return@LaunchedEffect
+        if (inner.width == 0 || widths.isEmpty()) return@LaunchedEffect
         val spec = tabsIndicatorSpring(motion)
         if (!placed || spec == null) {
             x.snapTo(targetX)
@@ -171,7 +209,7 @@ internal fun SegmentedTrack(
             .alpha(if (enabled) 1f else FeedbackDefaults.disabledOpacity)
             .onSizeChanged { inner = it }
     ) {
-        if (selectedIndex >= 0 && inner.width > 0) {
+        if (selectedIndex >= 0 && inner.width > 0 && segmentPx > 0) {
             Box(
                 Modifier
                     .offset { IntOffset(x.value.roundToInt(), 0) }
@@ -185,25 +223,42 @@ internal fun SegmentedTrack(
         }
         // Web mounts the indicator after measurement, so DOM insertion order
         // alone can put its surface above the already-mounted labels.
-        Row(
-            modifier = Modifier.zIndex(1f),
-            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.tabsListGap),
-        ) {
-            repeat(count) { index ->
-                val selected = index == selectedIndex
-                val pressed by interactions[index].collectIsPressedAsState()
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .pressScale(pressed && enabled)
-                        .clip(pill)
-                        // Segments share the width equally, so the reference inline
-                        // padding (which sizes a hugging trigger) would only take room
-                        // from the label; keep the block padding that sets the height.
-                        .padding(vertical = ControlGeometry.tabsTriggerPaddingBlock),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    segment(index, selected)
+        Layout(
+            modifier = Modifier.zIndex(1f).fillMaxWidth(),
+            content = {
+                repeat(count) { index ->
+                    val selected = index == selectedIndex
+                    val pressed by interactions[index].collectIsPressedAsState()
+                    Box(
+                        modifier = Modifier
+                            .pressScale(pressed && enabled)
+                            .clip(pill)
+                            // Inline padding is part of the width rule below, not of the box: it
+                            // gives way on a narrow track, and the label is centred in what is left.
+                            .padding(vertical = ControlGeometry.tabsTriggerPaddingBlock),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        segment(index, selected)
+                    }
+                }
+            },
+        ) { measurables, constraints ->
+            val gap = gapPx.roundToInt()
+            val available = constraints.maxWidth - gap * (count - 1)
+            val padding = Spacing.md.roundToPx() * 2
+            val natural = measurables.map { it.maxIntrinsicWidth(constraints.maxHeight) + padding }
+            val sized = segmentWidths(natural, available, padding = padding,
+                tightPadding = ControlGeometry.tabsListGap.roundToPx() * 2)
+            if (sized != widths) widths = sized
+            val placeables = measurables.mapIndexed { i, m ->
+                m.measure(Constraints(minWidth = sized[i], maxWidth = sized[i], maxHeight = constraints.maxHeight))
+            }
+            val height = placeables.maxOfOrNull { it.height } ?: 0
+            layout(constraints.maxWidth, height) {
+                var left = 0
+                placeables.forEach { p ->
+                    p.place(left, (height - p.height) / 2)
+                    left += p.width + gap
                 }
             }
         }
@@ -217,7 +272,7 @@ internal fun SegmentedTrack(
             val selected = index == selectedIndex
             Box(
                 Modifier
-                    .weight(1f)
+                    .then(widths.getOrNull(index)?.let { Modifier.width(with(density) { it.toDp() }) } ?: Modifier.weight(1f))
                     .fillMaxHeight()
                     .choiceSemantics(
                         label = label(index),

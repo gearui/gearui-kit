@@ -1,5 +1,8 @@
 package com.gearui.foundation.primitives
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import com.gearui.gestures.ownsHorizontalDrag
 import kotlinx.coroutines.delay
 import com.tencent.kuikly.compose.foundation.gestures.animateScrollBy
@@ -46,6 +49,17 @@ import kotlin.math.abs
  *
  * Used exactly like LazyColumn
  */
+/**
+ * Tells what lives in a list that the list has started scrolling vertically — a swipe
+ * cell closes its open actions then, as the platform's lists do, wherever the drag began.
+ */
+internal object ListScroll {
+    var count by mutableStateOf(0)
+        private set
+
+    fun started() { count++ }
+}
+
 @Composable
 fun GearLazyColumn(
     modifier: Modifier = Modifier,
@@ -133,6 +147,7 @@ fun GearLazyColumn(
                         if (!notified && moved.getDistance() > dragThreshold) {
                             OverlayManager.notifyScroll()
                             focusManager.clearFocus()
+                            if (abs(moved.y) > abs(moved.x)) ListScroll.started()
                             notified = true
                         }
                     }

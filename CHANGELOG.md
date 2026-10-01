@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- `SwipeCell` takes a drag only when it is clearly sideways (more than 1.5× its vertical
+  travel once past the touch slop); a diagonal scroll of the list no longer opens a row.
+  A vertical scroll of a `GearLazyColumn`, started anywhere, closes the open row, as
+  platform lists do.
+
 - Narrow screens (320, the narrowest iOS width): `SegmentedControl` (and the primary
   `Tabs`) lays segments out as iOS does — equal while every label fits, otherwise by
   content with the rest shared out, the inline padding giving way before a label ends in

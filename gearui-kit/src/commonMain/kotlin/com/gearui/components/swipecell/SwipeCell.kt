@@ -1,5 +1,7 @@
 package com.gearui.components.swipecell
 
+import kotlinx.coroutines.flow.drop
+import com.gearui.foundation.primitives.ListScroll
 import com.gearui.gestures.ownsHorizontalDrag
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.animation.core.Animatable
@@ -10,7 +12,12 @@ import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
 import com.tencent.kuikly.compose.ui.graphics.lerp
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.gestures.detectHorizontalDragGestures
+import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
+import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
+import com.tencent.kuikly.compose.foundation.gestures.horizontalDrag
+import com.tencent.kuikly.compose.ui.input.pointer.PointerInputChange
+import com.tencent.kuikly.compose.ui.input.pointer.PointerInputScope
+import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.ui.Alignment
@@ -144,11 +151,11 @@ class SwipeCellGroupState {
     }
 
     suspend fun closeOthers(except: SwipeCellState) {
-        cells.filter { it != except }.forEach { it.close() }
+        cells.filter { it != except && it.isOpen }.forEach { it.close() }
     }
 
     suspend fun closeAll() {
-        cells.forEach { it.close() }
+        cells.filter { it.isOpen }.forEach { it.close() }
     }
 
     val isAnyOpen: Boolean
@@ -280,6 +287,15 @@ fun SwipeCell(
             }
         }
 
+        // The list scrolled (from this row or any other): an open row closes, unless it
+        // is the one under the finger.
+        var dragging by remember { mutableStateOf(false) }
+        LaunchedEffect(state) {
+            snapshotFlow { ListScroll.count }.drop(1).collect {
+                if (!dragging && state.isOpen) state.close()
+            }
+        }
+
         // Main content
         Box(
             modifier = Modifier
@@ -293,14 +309,19 @@ fun SwipeCell(
                 .then(
                     if (!disabled) {
                         Modifier.pointerInput(state) {
-                            detectHorizontalDragGestures(
+                            detectSwipeGestures(
+                                // A drag that turns out to be a scroll closes any open row, as
+                                // the platform's lists do, and leaves the scroll to the list.
+                                onScroll = { scope.launch { if (groupState != null) groupState.closeAll() else if (state.isOpen) state.close() } },
                                 onDragStart = {
+                                    dragging = true
                                     // Close the other SwipeCells when a drag starts
                                     scope.launch {
                                         groupState?.closeOthers(state)
                                     }
                                 },
                                 onDragEnd = {
+                                    dragging = false
                                     scope.launch {
                                         val currentOffset = state.offsetX.value
                                         val velocity = state.offsetX.velocity
@@ -342,6 +363,7 @@ fun SwipeCell(
                                     }
                                 },
                                 onDragCancel = {
+                                    dragging = false
                                     scope.launch { state.close() }
                                 },
                                 onHorizontalDrag = { _, dragAmount ->
@@ -503,5 +525,53 @@ fun SwipeCellGroup(
 ) {
     Column(modifier = modifier) {
         content(state)
+    }
+}
+
+/**
+ * How much more sideways than vertical a drag must be for a swipe cell to take it (about
+ * 34° from horizontal). A drag that is mostly vertical — scrolling the list, even at an
+ * angle — is left to the list.
+ */
+internal const val SwipeHorizontalIntent = 1.5f
+
+/** Whether a drag of ([dx], [dy]) past the touch slop is a swipe rather than a scroll. */
+internal fun isSwipeIntent(dx: Float, dy: Float): Boolean = abs(dx) > abs(dy) * SwipeHorizontalIntent
+
+/**
+ * Horizontal drag recognition with a direction test: `detectHorizontalDragGestures` takes
+ * a drag as soon as its sideways travel passes the slop, so a diagonal scroll opened rows.
+ * Here the decision is made once the finger has moved past the slop in any direction.
+ */
+private suspend fun PointerInputScope.detectSwipeGestures(
+    onScroll: () -> Unit,
+    onDragStart: () -> Unit,
+    onDragEnd: () -> Unit,
+    onDragCancel: () -> Unit,
+    onHorizontalDrag: (change: PointerInputChange, dragAmount: Float) -> Unit,
+) {
+    awaitEachGesture {
+        val down = awaitFirstDown(requireUnconsumed = false)
+        val slop = viewConfiguration.touchSlop
+        var start: PointerInputChange? = null
+        while (start == null) {
+            val change = awaitPointerEvent().changes.firstOrNull { it.id == down.id } ?: return@awaitEachGesture
+            if (!change.pressed || change.isConsumed) return@awaitEachGesture
+            val dx = change.position.x - down.position.x
+            val dy = change.position.y - down.position.y
+            if (dx * dx + dy * dy <= slop * slop) continue
+            if (!isSwipeIntent(dx, dy)) {
+                onScroll()
+                return@awaitEachGesture
+            }
+            change.consume()
+            start = change
+        }
+        onDragStart()
+        val ended = horizontalDrag(start.id) { change ->
+            onHorizontalDrag(change, change.positionChange().x)
+            change.consume()
+        }
+        if (ended) onDragEnd() else onDragCancel()
     }
 }

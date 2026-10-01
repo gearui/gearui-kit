@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+- On iOS the system keyboard (and alerts and menus) follows the app's theme: `App` sets
+  the windows' interface style from `themeMode` — forced for Light and Dark, left to the
+  system for System. On Android the keyboard is a separate app that follows only the
+  system's dark setting; no API lets an app choose it (a per-app night mode was tried
+  and does not reach it).
+- Sample: iOS reports the system appearance (it always reported light), and the `theme`
+  launch parameter accepts `system`.
+
 ## [1.0.0-beta7] - 2026-10-01
 
 Published to Maven Central. Not source-compatible with 1.0.0-beta6: components and

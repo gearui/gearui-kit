@@ -1,5 +1,7 @@
 package com.gearui
 
+import androidx.compose.runtime.LaunchedEffect
+import com.gearui.system.applyPlatformInterfaceStyle
 import androidx.compose.runtime.Composable
 import com.gearui.components.toast.ToastHost
 import com.gearui.foundation.keyboard.KeyboardDismissContainer
@@ -107,6 +109,9 @@ fun App(
     keyboardDismissMode: KeyboardDismissMode = KeyboardDismissMode.OnTapOrScroll,
     content: @Composable () -> Unit,
 ) {
+    // The app's appearance, not the system's, for what the platform draws itself (the
+    // iOS keyboard). Set here at the root only: a nested Theme styles a region, not the window.
+    LaunchedEffect(themeMode) { applyPlatformInterfaceStyle(themeMode) }
     I18nRoot(languageTag = languageTag, fallbackLanguageTag = fallbackLanguageTag) {
         I18nProvider(overrides = stringsOverrides) {
             ProvideSystemDarkMode(isSystemDark = isSystemDark) {

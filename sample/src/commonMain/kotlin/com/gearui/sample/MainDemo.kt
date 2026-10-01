@@ -80,6 +80,7 @@ fun MainDemoContent(startRoute: String = "", startTheme: String = "", startLangu
             when (startTheme) {
                 "light" -> themeStyle = ThemeStyle.LIGHT
                 "dark" -> themeStyle = ThemeStyle.DARK
+                "system" -> themeStyle = ThemeStyle.SYSTEM
             }
             if (startLanguage.isNotEmpty()) languageTag = startLanguage
         }

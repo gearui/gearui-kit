@@ -263,7 +263,7 @@ def generate_feedback(document):
                 'accordionExitEasing': 'cubicBezier',
                 'accordionEnterTransition': 'transition', 'accordionExitTransition': 'transition',
                 'menuItemPressScale': 'number', 'menuItemPressDuration': 'duration',
-                'menuItemDangerPressOpacity': 'number',
+                'menuItemDangerPressOpacity': 'number', 'rowPressDelay': 'duration',
                 'overlayEnterDuration': 'duration', 'overlayExitDuration': 'duration',
                 'dialogEnterScale': 'number', 'anchoredEnterScale': 'number',
                 'anchoredEnterTranslate': 'dimension',

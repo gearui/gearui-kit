@@ -1,5 +1,6 @@
 package com.gearui.components.cellgroup
 
+import com.gearui.foundation.motion.collectIsShownPressedAsState
 import androidx.compose.runtime.key as rowKey
 import com.gearui.foundation.material.surfaceShadowStyles
 import com.gearui.foundation.material.DecoratedSurface
@@ -147,7 +148,7 @@ fun <T> CellGroup(
             val rowSources = keys.map { k -> sources.getOrPut(k) { MutableInteractionSource() } }
             sources.keys.retainAll(keys.toSet())
             val pressed = keys.mapIndexed { index, k ->
-                rowKey(k) { rowSources[index].collectIsPressedAsState().value }
+                rowKey(k) { rowSources[index].collectIsShownPressedAsState().value }
             }
 
             items.forEachIndexed { index, item ->

@@ -587,6 +587,7 @@
   feedback.radioRevealDuration = {"$type":"duration","$value":{"unit":"ms","value":300}}
   feedback.ratingTrackOpacity = {"$type":"number","$value":0.25}
   feedback.referenceWidth = {"$type":"dimension","$value":{"unit":"px","value":300}}
+  feedback.rowPressDelay = {"$type":"duration","$value":{"unit":"ms","value":100}}
   feedback.selectForegroundMix = {"$type":"number","$value":0.2}
   feedback.selectIndicatorDamping = {"$type":"number","$value":140}
   feedback.selectIndicatorMass = {"$type":"number","$value":4}

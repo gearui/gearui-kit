@@ -4,6 +4,10 @@
 
 ### beta7 candidate (not released)
 
+- Rows (Cell, CellGroup, List, ListBox, menus, ActionSheet) show the press only after
+  the finger rests for `rowPressDelay` (100 ms, new feedback token), as platform lists
+  do: the touch that starts a scroll no longer flashes the row under it. A quick tap
+  still flashes the row.
 - **Fields on surfaces (behaviour):** `FieldVariant.SECONDARY` is now the field colour
   with a hairline border instead of a gray fill, and every disabled field takes the gray
   fill with no border. A gray enabled field read as disabled. `SearchBar` keeps its gray

@@ -233,6 +233,14 @@
       "$type": "number",
       "$value": 0.1
     },
+    "rowPressDelay": {
+      "$type": "duration",
+      "$description": "How long a finger rests on a row before it shows as pressed, so the first touch of a scroll does not flash the row (Android tapTimeout; iOS scroll views wait 150 ms). A tap released sooner still flashes.",
+      "$value": {
+        "value": 100,
+        "unit": "ms"
+      }
+    },
     "overlayEnterDuration": {
       "$type": "duration",
       "$value": {

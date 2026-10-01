@@ -1,19 +1,27 @@
 package com.gearui.foundation.motion
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.animation.core.animateFloatAsState
 import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.tencent.kuikly.compose.foundation.interaction.collectIsPressedAsState
+import com.tencent.kuikly.compose.foundation.interaction.InteractionSource
+import com.tencent.kuikly.compose.foundation.interaction.PressInteraction
 import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.graphics.Shape
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.tencent.kuikly.compose.ui.graphics.lerp
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Press feedback for a tappable row: a menu or action sheet option, a cell, a list item.
@@ -26,6 +34,10 @@ import com.tencent.kuikly.compose.ui.graphics.lerp
  * background colour — a second `.background` replaces the first rather than drawing
  * over it — so this modifier paints the base itself, with the press fill composited on
  * top, and adds nothing at all while idle on a transparent row.
+ *
+ * The press shows only once the finger has rested for [FeedbackDefaults.rowPressDelay],
+ * as in the platform's lists: a touch that turns into a scroll is cancelled before then
+ * and never lights the row it started on. A tap released sooner still flashes the row.
  *
  * The caller still owns the click handler and must pass the same [interaction] to it;
  * this modifier only draws. Place it before padding so the fill covers the whole row.
@@ -47,7 +59,7 @@ internal fun Modifier.rowPressFeedback(
     base: Color = Color.Transparent,
 ): Modifier {
     val colors = Theme.colors
-    val pressed by interaction.collectIsPressedAsState()
+    val pressed by interaction.collectIsShownPressedAsState()
     val active = pressed && enabled
     val spec = tween<Float>(FeedbackDefaults.menuItemPressDuration)
     val fill by animateFloatAsState(if (active) 1f else 0f, spec)
@@ -79,4 +91,45 @@ private fun Color.over(dst: Color): Color {
     if (a == 0f) return Color.Transparent
     fun ch(s: Float, d: Float) = (s * alpha + d * dst.alpha * (1f - alpha)) / a
     return Color(ch(red, dst.red), ch(green, dst.green), ch(blue, dst.blue), a)
+}
+
+/**
+ * Pressed as the row should show it: from [FeedbackDefaults.rowPressDelay] after the
+ * finger goes down until it lifts, never for a press cancelled before the delay (the
+ * start of a scroll), and for one press duration when a tap lifts before the delay.
+ */
+@Composable
+internal fun InteractionSource.collectIsShownPressedAsState(): androidx.compose.runtime.State<Boolean> {
+    val shown = remember { mutableStateOf(false) }
+    LaunchedEffect(this) {
+        var pending: Job? = null
+        interactions.collect { interaction ->
+            when (interaction) {
+                is PressInteraction.Press -> {
+                    pending?.cancel()
+                    pending = launch {
+                        delay(FeedbackDefaults.rowPressDelay.toLong())
+                        shown.value = true
+                    }
+                }
+                is PressInteraction.Release -> {
+                    pending?.cancel()
+                    if (shown.value) {
+                        shown.value = false
+                    } else {
+                        pending = launch {
+                            shown.value = true
+                            delay(FeedbackDefaults.menuItemPressDuration.toLong())
+                            shown.value = false
+                        }
+                    }
+                }
+                is PressInteraction.Cancel -> {
+                    pending?.cancel()
+                    shown.value = false
+                }
+            }
+        }
+    }
+    return shown
 }

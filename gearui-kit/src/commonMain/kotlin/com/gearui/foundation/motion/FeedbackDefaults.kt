@@ -53,6 +53,7 @@ internal object FeedbackDefaults {
     val menuItemPressScale = 0.98f
     val menuItemPressDuration = 150
     val menuItemDangerPressOpacity = 0.1f
+    val rowPressDelay = 100
     val overlayEnterDuration = 200
     val overlayExitDuration = 150
     val dialogEnterScale = 0.96f

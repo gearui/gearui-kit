@@ -1,5 +1,6 @@
 package com.gearui.foundation.primitives
 
+import com.gearui.foundation.motion.collectIsShownPressedAsState
 import kotlinx.coroutines.flow.drop
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.*
@@ -107,7 +108,7 @@ internal class ListScopeImpl(
     @Composable
     private fun Row(index: Int, content: @Composable () -> Unit) {
         val interaction = remember { MutableInteractionSource() }
-        val pressed by interaction.collectIsPressedAsState()
+        val pressed by interaction.collectIsShownPressedAsState()
         LaunchedEffect(pressed) {
             if (pressed) pressedRow.value = index
             else if (pressedRow.value == index) pressedRow.value = NO_ROW

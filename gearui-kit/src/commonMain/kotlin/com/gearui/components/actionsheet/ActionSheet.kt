@@ -1,5 +1,6 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.foundation.motion.collectIsShownPressedAsState
 import com.gearui.primitives.BadgeType
 import com.gearui.primitives.Badge
 import com.gearui.foundation.motion.FeedbackDefaults
@@ -606,7 +607,7 @@ private fun ActionSheetGridItem(
 ) {
     val colors = Theme.colors
     val interaction = remember { MutableInteractionSource() }
-    val isPressed by interaction.collectIsPressedAsState()
+    val isPressed by interaction.collectIsShownPressedAsState()
     val textColor = if (item.disabled) colors.mutedForeground else colors.foreground
 
     val shapes = Theme.shapes

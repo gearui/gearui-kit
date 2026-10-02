@@ -1,5 +1,6 @@
 package com.gearui.components.noticebar
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -70,7 +71,7 @@ fun NoticeBar(
     text: String,
     modifier: Modifier = Modifier,
     tone: NoticeBarTone = NoticeBarTone.INFO,
-    icon: String? = null,
+    icon: IconSource? = null,
     showIcon: Boolean = true,
     scroll: Boolean = true,
     onClick: (() -> Unit)? = null,
@@ -98,7 +99,7 @@ fun NoticeBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (showIcon) {
-            Icon(name = icon ?: noticeBarIcon(tone), size = ControlGeometry.alertIcon, tint = content)
+            Icon(icon ?: noticeBarIcon(tone), size = ControlGeometry.alertIcon, tint = content)
         }
         Box(modifier = Modifier.weight(1f)) {
             MarqueeText(text = text, color = content, scroll = scroll)
@@ -193,10 +194,10 @@ internal fun noticeBarForeground(colors: Colors, tone: NoticeBarTone): Color = w
 }
 
 /** Default icon per tone, matching Alert so the two read as one family. */
-internal fun noticeBarIcon(tone: NoticeBarTone): String = when (tone) {
+internal fun noticeBarIcon(tone: NoticeBarTone): IconSource = when (tone) {
     NoticeBarTone.SUCCESS -> Icons.check
     NoticeBarTone.WARNING -> Icons.warning
-    NoticeBarTone.DANGER -> Icons.warning_circle
+    NoticeBarTone.DANGER -> Icons.warningCircle
     NoticeBarTone.NEUTRAL -> Icons.bell
     NoticeBarTone.INFO -> Icons.info
 }

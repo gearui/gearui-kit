@@ -1,5 +1,6 @@
 package com.gearui.components.contextmenu
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -61,14 +62,14 @@ import com.tencent.kuikly.compose.ui.text.font.FontWeight
  * Context menu action model.
  *
  * @param label action text
- * @param icon optional leading icon (gearui [Icon] name, e.g. `Icons.users_three`)
+ * @param icon optional leading icon (gearui [Icon] name, e.g. `Icons.usersThree`)
  * @param disabled whether action is disabled
  * @param danger whether action uses danger semantic color
  * @param onClick action callback
  */
 data class ContextMenuItem(
     val label: String,
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val disabled: Boolean = false,
     val danger: Boolean = false,
     val onClick: () -> Unit
@@ -188,8 +189,7 @@ fun ContextMenu(
                             horizontalArrangement = Arrangement.spacedBy(ControlGeometry.menuItemGap),
                         ) {
                             if (item.icon != null) {
-                                Icon(
-                                    name = item.icon,
+                                Icon(item.icon,
                                     size = IconSizes.Default.lg,
                                     tint = itemColor,
                                 )

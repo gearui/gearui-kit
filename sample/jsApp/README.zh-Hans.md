@@ -43,8 +43,8 @@ dev server 用 8081 而不是 webpack 默认的 8080——后者被占用的概�
 - `:sample` 编译成 JS 产物 `gearui_sample.js`。它只包含 sample 注册的那**一个** Kuikly 页面
   `@Page("MainDemo")`；76 个组件演示之间的跳转发生在 Compose 内部，不走页面路由。
 - `jsApp` 是宿主，负责启动 web 渲染器并挂载 `MainDemo`。
-- 图标把 `assets://icons/<name>.png` 解析成 `/assets/icons/<name>.png`，所以资源必须和
-  bundle 放在一起。
+- 图片把 `assets://<路径>` 解析成 `/assets/<路径>`，所以 sample 的资源必须和 bundle
+  放在一起。GearUI 的图标是矢量绘制，不需要资源文件。
 
 ## 两个会咬人的点
 

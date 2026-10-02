@@ -1,5 +1,7 @@
 package com.gearui.sample.examples.grid
 
+import com.gearui.components.icon.IconSource
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -24,17 +26,17 @@ import com.gearui.theme.Theme
 private val CellHeight = 56.dp
 private val ResponsiveMinColumnWidth = 100.dp
 
-private data class GridEntry(val icon: String, val label: String)
+private data class GridEntry(val icon: IconSource, val label: String)
 
 private val iconEntries = listOf(
     GridEntry(Icons.house, "首页"),
-    GridEntry(Icons.magnifying_glass, "搜索"),
-    GridEntry(Icons.chat_circle, "消息"),
+    GridEntry(Icons.magnifyingGlass, "搜索"),
+    GridEntry(Icons.chatCircle, "消息"),
     GridEntry(Icons.user, "我的"),
     GridEntry(Icons.gear, "设置"),
     GridEntry(Icons.question, "帮助"),
     GridEntry(Icons.info, "关于"),
-    GridEntry(Icons.sign_out, "退出"),
+    GridEntry(Icons.signOut, "退出"),
 )
 
 /**
@@ -100,8 +102,7 @@ fun GridExample(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                         ) {
-                            Icon(
-                                name = entry.icon,
+                            Icon(entry.icon,
                                 size = IconSizes.Default.xl,
                                 tint = colors.primary
                             )

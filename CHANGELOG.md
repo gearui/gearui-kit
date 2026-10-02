@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+- **Icons are drawn vectors, typed, with fill forms (breaking).** `Icons` now carries
+  every Phosphor icon (1512, regular and fill) as generated path data that GearUI draws
+  on a canvas: sharp at any size, and an icon an app does not reference is left out by
+  the compiler (iOS and Web always, Android with R8). `Icon(icon: IconSource, size,
+  tint = theme foreground, fill = false)` replaces `Icon(name: String)`; icon parameters
+  across components take `IconSource`. Other sets implement the same `IconSource`, as
+  `VectorIcon` or `ImageIcon`. The PNG icon assets, `Icons.all`, `Icons.png`,
+  `scripts/gen_icons.py` and `scripts/icon-set.py` are removed. Migration:
+  `import com.gearui.components.icon.*`; `Icons.x_circle` → `Icons.xCircle`;
+  `Icon(name = Icons.x)` → `Icon(Icons.x)`; `Icons.star_fill` → `Icons.star.filled` (or
+  `Icon(Icons.star, fill = true)`); an app's own PNG → an `ImageIcon` in an object of the
+  app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
+  `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
+
 - Icons: `smiley`, `code` and `lightning` (Phosphor, regular), 100 icons in all.
 
 - `Slider` and `RangeSlider` (track and thumbs) use the same direction test as

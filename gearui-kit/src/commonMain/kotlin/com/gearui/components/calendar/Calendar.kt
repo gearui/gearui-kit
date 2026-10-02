@@ -1,5 +1,6 @@
 package com.gearui.components.calendar
 
+import com.gearui.components.icon.*
 import com.gearui.i18n.calendarLabelIsOccasion
 import com.gearui.i18n.calendarLabel
 import com.gearui.foundation.interaction.IconActionButton
@@ -219,7 +220,7 @@ private fun CalendarHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconActionButton(
-            icon = Icons.caret_left,
+            icon = Icons.caretLeft,
             contentDescription = I18n.strings.dateTime.previousMonth,
             onClick = { onPreviousMonth() },
             size = ControlGeometry.calendarNavButton,
@@ -236,7 +237,7 @@ private fun CalendarHeader(
         )
 
         IconActionButton(
-            icon = Icons.caret_right,
+            icon = Icons.caretRight,
             contentDescription = I18n.strings.dateTime.nextMonth,
             onClick = { onNextMonth() },
             size = ControlGeometry.calendarNavButton,

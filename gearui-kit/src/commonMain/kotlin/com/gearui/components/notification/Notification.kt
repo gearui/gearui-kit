@@ -1,5 +1,6 @@
 package com.gearui.components.notification
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
@@ -102,8 +103,7 @@ internal fun NotificationContent(
         if (leading != null) {
             leading()
         } else {
-            Icon(
-                name = iconName,
+            Icon(iconName,
                 size = IconSizes.Default.lg,
                 tint = iconColor
             )

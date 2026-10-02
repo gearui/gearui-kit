@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.input
 
+import com.gearui.components.icon.*
 import com.gearui.components.input.InputFormat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -188,8 +189,7 @@ fun InputExample(
                 variant = FieldVariant.SECONDARY,
                 suffix = {
                     PressableFeedback(onClick = { Toast.show("点击图标") }, contentDescription = "账号") {
-                        Icon(
-                            name = Icons.user,
+                        Icon(Icons.user,
                             size = IconSizes.Default.md,
                             tint = colors.foreground,
                         )
@@ -204,8 +204,7 @@ fun InputExample(
                 placeholder = "搜索",
                 variant = FieldVariant.SECONDARY,
                 prefix = {
-                    Icon(
-                        name = Icons.magnifying_glass,
+                    Icon(Icons.magnifyingGlass,
                         size = IconSizes.Default.md,
                         tint = colors.mutedForeground,
                     )
@@ -231,8 +230,7 @@ fun InputExample(
                         onClick = { showPassword = !showPassword },
                         contentDescription = if (showPassword) I18n.strings.field.hidePassword else I18n.strings.field.showPassword,
                     ) {
-                        Icon(
-                            name = if (showPassword) Icons.eye else Icons.eye_slash,
+                        Icon(if (showPassword) Icons.eye else Icons.eyeSlash,
                             size = IconSizes.Default.md,
                             tint = colors.mutedForeground,
                         )

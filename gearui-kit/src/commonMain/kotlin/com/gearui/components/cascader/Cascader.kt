@@ -1,5 +1,6 @@
 package com.gearui.components.cascader
 
+import com.gearui.components.icon.*
 import com.tencent.kuikly.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -142,7 +143,7 @@ fun Cascader(
                     color = if (selectedPath.isNotEmpty()) LocalInputColors.current.foreground
                         else LocalInputColors.current.placeholder,
                 )
-                Icon(name = Icons.caret_down, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
+                Icon(Icons.caretDown, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
             }
         }
         FieldErrorText(error)
@@ -384,6 +385,6 @@ private fun CascaderRow(option: CascaderOption, selected: Boolean, onClick: () -
                 else -> colors.foreground
             },
         )
-        if (selected) Icon(name = Icons.check, size = FieldDefaults.trailingIconSize, tint = colors.primary)
+        if (selected) Icon(Icons.check, size = FieldDefaults.trailingIconSize, tint = colors.primary)
     }
 }

@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.segmented
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Modifier

@@ -1,5 +1,6 @@
 package com.gearui.sample.pages
 
+import com.gearui.components.icon.*
 import com.tencent.kuikly.compose.ui.semantics.stateDescription
 import com.tencent.kuikly.compose.ui.semantics.semantics
 import com.tencent.kuikly.compose.ui.graphics.luminance
@@ -209,7 +210,7 @@ private fun SelectableCell(
         leading = leading,
         modifier = Modifier.semantics { stateDescription = state },
         trailing = if (selected) {
-            { Icon(name = Icons.check, size = IconSizes.Default.md, tint = colors.primary) }
+            { Icon(Icons.check, size = IconSizes.Default.md, tint = colors.primary) }
         } else null,
     )
 }

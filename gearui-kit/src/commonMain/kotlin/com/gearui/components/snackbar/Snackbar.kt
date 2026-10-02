@@ -1,5 +1,6 @@
 package com.gearui.components.snackbar
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.animation.core.*
@@ -241,8 +242,7 @@ internal fun SnackbarContent(
                 SnackbarType.WARNING -> Icons.warning
                 SnackbarType.ERROR -> Icons.x
             }
-            Icon(
-                name = iconName,
+            Icon(iconName,
                 size = IconSizes.Default.lg,
                 tint = iconColor
             )

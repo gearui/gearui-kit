@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.contextmenu
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
 import com.gearui.components.contextmenu.ContextMenu
@@ -25,8 +26,8 @@ fun ContextMenuExample(
     )
     val iconItems = listOf(
         ContextMenuItem("复制", icon = Icons.copy) { Toast.show("复制") },
-        ContextMenuItem("分享", icon = Icons.share_network) { Toast.show("分享") },
-        ContextMenuItem("编辑", icon = Icons.pencil_simple, disabled = true) { },
+        ContextMenuItem("分享", icon = Icons.shareNetwork) { Toast.show("分享") },
+        ContextMenuItem("编辑", icon = Icons.pencilSimple, disabled = true) { },
         ContextMenuItem("删除", icon = Icons.trash, danger = true) { Toast.show("删除") }
     )
 

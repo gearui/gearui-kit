@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.inputgroup
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -90,7 +91,7 @@ fun InputGroupExample(
             description = "InputGroupAddon(icon) 放前置图标"
         ) {
             InputGroup(variant = FieldVariant.SECONDARY) {
-                InputGroupAddon(icon = Icons.magnifying_glass)
+                InputGroupAddon(icon = Icons.magnifyingGlass)
                 Input(
                     value = query,
                     onValueChange = { query = it },

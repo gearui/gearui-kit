@@ -1,5 +1,6 @@
 package com.gearui.components.tag
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.tencent.kuikly.compose.foundation.layout.Box
@@ -49,7 +50,7 @@ enum class TagGroupVariant { DEFAULT, SURFACE }
 data class TagGroupItem(
     val key: String,
     val label: String,
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val enabled: Boolean = true,
 )
 
@@ -139,12 +140,11 @@ private fun GroupTag(
             horizontalArrangement = Arrangement.spacedBy(metrics.gap),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (item.icon != null) Icon(name = item.icon, size = iconSize, tint = foreground)
+            if (item.icon != null) Icon(item.icon, size = iconSize, tint = foreground)
             Text(text = item.label, style = style, color = foreground, maxLines = 1)
             if (onRemove != null) {
                 val removeLabel = "${I18n.strings.common.remove} ${item.label}"
-                Icon(
-                    name = Icons.x,
+                Icon(Icons.x,
                     size = ControlGeometry.tagGroupRemoveIcon,
                     tint = if (selected) foreground else colors.mutedForeground,
                     modifier = Modifier

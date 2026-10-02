@@ -1,5 +1,8 @@
 package com.gearui.sample.examples.icon
 
+import com.gearui.components.icon.ImageIcon
+import com.gearui.components.icon.IconSource
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,10 +50,11 @@ fun IconExample(
 
     var keyword by remember { mutableStateOf("") }
     var showBorder by remember { mutableStateOf(false) }
+    var fill by remember { mutableStateOf(false) }
 
     val filteredIcons = remember(keyword) {
         val q = keyword.trim()
-        if (q.isEmpty()) Icons.all else Icons.all.filter { it.contains(q, ignoreCase = true) }
+        if (q.isEmpty()) allIcons else allIcons.filter { it.first.contains(q, ignoreCase = true) }
     }
 
     ExamplePage(
@@ -67,7 +71,7 @@ fun IconExample(
             ) {
                 val sizes = IconSizes.Default
                 listOf(sizes.xs, sizes.sm, sizes.md, sizes.lg, sizes.xl).forEach { size ->
-                    Icon(name = Icons.house, size = size, tint = colors.foreground)
+                    Icon(Icons.house, size = size, tint = colors.foreground)
                 }
             }
             Row(
@@ -75,24 +79,21 @@ fun IconExample(
                 horizontalArrangement = Arrangement.spacedBy(Spacing.lg)
             ) {
                 listOf(colors.primary, colors.success, colors.warning, colors.destructive, colors.mutedForeground)
-                    .forEach { tint -> Icon(name = Icons.heart, size = IconSizes.Default.xl, tint = tint) }
+                    .forEach { tint -> Icon(Icons.heart, size = IconSizes.Default.xl, tint = tint) }
             }
         }
 
         ExampleSection(
             title = "应用自带图标",
-            description = "应用把 PNG 放进自己的 assets/icons/，即可用同一个 API 按名称渲染"
+            description = "应用用 ImageIcon 包一张自己的 PNG，就和内置图标走同一个 Icon API"
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
-                // Supplied by sample/src/commonMain/assets/icons/app_folder.png,
-                // not by the library. Android merges library and app assets into
-                // one tree; iOS looks in the bundle and then falls through to the
-                // host adapter. So this is the extension point, and it needs no
-                // API of its own.
-                Icon(name = "app_folder", size = IconSizes.Default.xl, tint = colors.foreground)
+                // Supplied by sample/src/commonMain/assets/icons/app_folder.png, not by the
+                // library: an app's own icon set is an object of ImageIcon (or VectorIcon) getters.
+                Icon(SampleIcons.appFolder, size = IconSizes.Default.xl)
                 Text(
                     text = "app_folder（来自 sample 自己的 assets）",
                     style = Theme.typography.bodySmall,
@@ -103,7 +104,7 @@ fun IconExample(
 
         ExampleSection(
             title = "内置图标库",
-            description = "按名称搜索并浏览内置 Phosphor 图标"
+            description = "按名称搜索内置 Phosphor 图标，regular 与 fill 两种"
         ) {
             Text(
                 text = "筛选 Icon 可参考：https://phosphoricons.com",
@@ -133,6 +134,16 @@ fun IconExample(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     Text(
+                        text = "实心",
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground
+                    )
+                    Switch(
+                        checked = fill,
+                        onCheckedChange = { fill = it },
+                        contentDescription = "实心"
+                    )
+                    Text(
                         text = "显示边框",
                         style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
@@ -159,9 +170,18 @@ fun IconExample(
                     )
                 }
             } else {
+                // A page of results: drawing all of them at once is 1500 canvases.
+                if (filteredIcons.size > GALLERY_LIMIT) {
+                    Text(
+                        text = "显示前 $GALLERY_LIMIT 个，搜索名称缩小范围",
+                        style = Theme.typography.bodySmall,
+                        color = colors.mutedForeground
+                    )
+                }
                 IconGrid(
-                    icons = filteredIcons,
-                    showBorder = showBorder
+                    icons = filteredIcons.take(GALLERY_LIMIT),
+                    showBorder = showBorder,
+                    fill = fill,
                 )
             }
         }
@@ -170,8 +190,9 @@ fun IconExample(
 
 @Composable
 private fun IconGrid(
-    icons: List<String>,
-    showBorder: Boolean
+    icons: List<Pair<String, IconSource>>,
+    showBorder: Boolean,
+    fill: Boolean,
 ) {
     val columns = 3
 
@@ -184,9 +205,11 @@ private fun IconGrid(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
-                rowIcons.forEach { iconName ->
+                rowIcons.forEach { (iconName, icon) ->
                     IconCell(
                         iconName = iconName,
+                        icon = icon,
+                        fill = fill,
                         showBorder = showBorder,
                         modifier = Modifier.weight(1f)
                     )
@@ -202,6 +225,8 @@ private fun IconGrid(
 @Composable
 private fun IconCell(
     iconName: String,
+    icon: IconSource,
+    fill: Boolean,
     showBorder: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -223,10 +248,9 @@ private fun IconCell(
                 .background(cellBackground, cellShape),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                name = iconName,
+            Icon(icon,
                 size = IconSizes.Default.xl,
-                tint = colors.foreground
+                fill = fill,
             )
         }
 
@@ -236,4 +260,11 @@ private fun IconCell(
             color = colors.mutedForeground
         )
     }
+}
+
+private const val GALLERY_LIMIT = 99
+
+/** The sample's own icons: the way an app extends the set, here with a PNG it ships. */
+object SampleIcons {
+    val appFolder: IconSource get() = ImageIcon("app_folder", "assets://icons/app_folder.png")
 }

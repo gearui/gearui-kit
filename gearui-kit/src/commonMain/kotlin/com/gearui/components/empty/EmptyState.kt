@@ -1,5 +1,6 @@
 package com.gearui.components.empty
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.button.Button
 import com.gearui.components.icon.Icons
@@ -53,8 +54,7 @@ fun EmptyState(
             Spacer(modifier = Modifier.height(Spacing.lg))
         } else {
             // Default empty state icon
-            Icon(
-                name = Icons.image,
+            Icon(Icons.image,
                 size = IconSizes.Display.sm,
                 tint = colors.mutedForeground
             )
@@ -103,10 +103,10 @@ fun EmptyStatePreset(
     val s = I18n.strings
     val (message, description, iconName) = when (type) {
         EmptyStateType.NO_DATA -> Triple(s.common.noData, s.feedback.emptyNoDataDescription, Icons.image)
-        EmptyStateType.NO_SEARCH_RESULT -> Triple(s.common.noSearchResult, s.feedback.emptyNoSearchResultDescription, Icons.magnifying_glass)
+        EmptyStateType.NO_SEARCH_RESULT -> Triple(s.common.noSearchResult, s.feedback.emptyNoSearchResultDescription, Icons.magnifyingGlass)
         EmptyStateType.NO_NETWORK -> Triple(s.feedback.emptyNoNetworkTitle, s.feedback.emptyNoNetworkDescription, Icons.warning)
-        EmptyStateType.ERROR -> Triple(s.common.loadFailed, s.feedback.emptyErrorDescription, Icons.warning_circle)
-        EmptyStateType.NO_PERMISSION -> Triple(s.feedback.emptyNoPermissionTitle, s.feedback.emptyNoPermissionDescription, Icons.camera_slash)
+        EmptyStateType.ERROR -> Triple(s.common.loadFailed, s.feedback.emptyErrorDescription, Icons.warningCircle)
+        EmptyStateType.NO_PERMISSION -> Triple(s.feedback.emptyNoPermissionTitle, s.feedback.emptyNoPermissionDescription, Icons.cameraSlash)
     }
 
     val colors = Theme.colors
@@ -115,8 +115,7 @@ fun EmptyStatePreset(
         message = message,
         description = description,
         icon = {
-            Icon(
-                name = iconName,
+            Icon(iconName,
                 size = IconSizes.Display.sm,
                 tint = colors.mutedForeground
             )

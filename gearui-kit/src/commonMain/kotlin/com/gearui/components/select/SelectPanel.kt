@@ -1,5 +1,6 @@
 package com.gearui.components.select
 
+import com.gearui.components.icon.*
 import com.gearui.overlay.LocalOverlayViewportSize
 import com.tencent.kuikly.compose.foundation.clickable
 import com.gearui.foundation.interaction.choiceSemantics

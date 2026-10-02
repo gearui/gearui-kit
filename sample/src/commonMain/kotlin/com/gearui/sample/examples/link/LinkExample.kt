@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.link
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
 import com.gearui.components.link.Link
@@ -33,7 +34,7 @@ fun LinkExample(
         ) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Link("查看详情", onClick = { Toast.show("查看详情") })
-                Link("帮助中心", onClick = { Toast.show("帮助中心") }, endIcon = Icons.arrow_square_out)
+                Link("帮助中心", onClick = { Toast.show("帮助中心") }, endIcon = Icons.arrowSquareOut)
                 Link("复制链接", onClick = { Toast.show("复制链接") }, startIcon = Icons.link, underline = false)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {

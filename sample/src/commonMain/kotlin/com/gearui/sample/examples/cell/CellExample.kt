@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.cell
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
@@ -63,8 +64,7 @@ fun CellExample(
                     0 -> Cell(
                         title = "前置内容",
                         leading = {
-                            Icon(
-                                name = Icons.bell,
+                            Icon(Icons.bell,
                                 size = IconSizes.Default.md,
                                 tint = colors.primary
                             )

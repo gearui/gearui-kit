@@ -20,7 +20,7 @@ import com.gearui.foundation.button.DefaultButtonColors
  * core model. See `docs/DESIGN_SYSTEM.md` §3.
  *
  * Pre-1.0 legacy bridge properties were removed in Batch 13A; see
- * `docs/DESIGN_SYSTEM.md` §8 for the current API-change rules.
+ * `docs/DESIGN_SYSTEM.md` §9 for the current API-change rules.
  */
 @Immutable
 data class Colors(

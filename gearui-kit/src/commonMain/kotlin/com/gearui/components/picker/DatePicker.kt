@@ -1,5 +1,6 @@
 package com.gearui.components.picker
 
+import com.gearui.components.icon.*
 import com.gearui.components.calendar.CalendarDate
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.field.FieldSurface
@@ -73,8 +74,7 @@ fun DatePickerInput(
                     color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
                 )
 
-                Icon(
-                    name = Icons.calendar_blank,
+                Icon(Icons.calendarBlank,
                     size = FieldDefaults.trailingIconSize,
                     tint = colors.mutedForeground
                 )
@@ -142,8 +142,7 @@ fun TimePickerInput(
                     color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
                 )
 
-                Icon(
-                    name = Icons.clock,
+                Icon(Icons.clock,
                     size = FieldDefaults.trailingIconSize,
                     tint = colors.mutedForeground
                 )

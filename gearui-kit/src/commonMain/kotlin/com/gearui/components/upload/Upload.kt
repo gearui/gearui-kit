@@ -1,5 +1,6 @@
 package com.gearui.components.upload
 
+import com.gearui.components.icon.*
 import com.tencent.kuikly.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import com.gearui.components.closebutton.CloseButton
@@ -154,8 +155,8 @@ private fun UploadTile(
                     ) {
                         when (item.status) {
                             UploadStatus.PENDING -> Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = colors.mutedForeground)
-                            UploadStatus.FAILED -> Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = colors.destructiveSoftForeground)
-                            else -> Icon(name = Icons.paperclip, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
+                            UploadStatus.FAILED -> Icon(Icons.arrowClockwise, size = ControlGeometry.alertIcon, tint = colors.destructiveSoftForeground)
+                            else -> Icon(Icons.paperclip, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
                         }
                         if (item.name.isNotEmpty()) {
                             Text(
@@ -180,7 +181,7 @@ private fun UploadTile(
                         UploadStatus.UPLOADING -> UploadingOverlay(item.progress)
                         UploadStatus.PENDING -> StatusOverlay { Loading(size = LoadingSize.SMALL, layout = LoadingLayout.HORIZONTAL, color = Color.White) }
                         UploadStatus.FAILED -> StatusOverlay {
-                            Icon(name = Icons.arrow_clockwise, size = ControlGeometry.alertIcon, tint = Color.White)
+                            Icon(Icons.arrowClockwise, size = ControlGeometry.alertIcon, tint = Color.White)
                         }
                         UploadStatus.DONE -> Unit
                     }
@@ -267,7 +268,7 @@ private fun AddTile(size: Dp, enabled: Boolean, onAdd: () -> Unit) {
                 .border(BorderWidth.thin, colors.separator, shape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(name = Icons.plus, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
+            Icon(Icons.plus, size = ControlGeometry.alertIcon, tint = colors.mutedForeground)
         }
     }
 }

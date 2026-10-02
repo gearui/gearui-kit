@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.gearui.components.icon.*
 import com.gearui.foundation.interaction.touchTarget
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonType
@@ -244,8 +245,7 @@ fun SearchBar(
                         } else Modifier,
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            name = Icons.magnifying_glass,
+                        Icon(Icons.magnifyingGlass,
                             size = FieldDefaults.trailingIconSize,
                             tint = colors.mutedForeground
                         )
@@ -325,8 +325,7 @@ fun SearchBar(
                                 ) { onValueChange("") },
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
-                                name = Icons.x,
+                            Icon(Icons.x,
                                 size = IconSizes.Default.sm,
                                 tint = colors.mutedForeground
                             )

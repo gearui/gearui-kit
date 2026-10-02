@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.button
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -94,9 +95,9 @@ fun ButtonExample(
         ) {
             ButtonRow {
                 Button(text = "矩形", onClick = clicked, shape = ButtonShape.RECTANGLE)
-                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.star_fill, contentDescription = "收藏")
+                Button(onClick = clicked, shape = ButtonShape.SQUARE, icon = Icons.star.filled, contentDescription = "收藏")
                 Button(text = "圆角", onClick = clicked, shape = ButtonShape.ROUND)
-                Button(onClick = clicked, shape = ButtonShape.CIRCLE, icon = Icons.star_fill, contentDescription = "收藏")
+                Button(onClick = clicked, shape = ButtonShape.CIRCLE, icon = Icons.star.filled, contentDescription = "收藏")
             }
             ButtonRow {
                 Button(text = "胶囊", onClick = clicked, shape = ButtonShape.FILLED)
@@ -144,7 +145,7 @@ fun ButtonExample(
                 text = "发送",
                 onClick = clicked,
                 block = true,
-                icon = Icons.paper_plane_tilt
+                icon = Icons.paperPlaneTilt
             )
         }
 

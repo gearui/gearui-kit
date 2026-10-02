@@ -1,5 +1,6 @@
 package com.gearui.components.imageviewer
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.layout.Radius
 import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.*
@@ -251,8 +252,7 @@ private fun ImageViewerSurface(
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(
-                                name = Icons.image,
+                            Icon(Icons.image,
                                 size = IconSizes.Display.md,
                                 tint = Color.White.copy(alpha = 0.5f)
                             )
@@ -331,8 +331,7 @@ private fun ImageViewerSurface(
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        name = Icons.trash,
+                    Icon(Icons.trash,
                         size = IconSizes.Default.lg,
                         tint = Color.White
                     )

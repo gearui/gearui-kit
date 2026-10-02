@@ -22,7 +22,7 @@ import com.gearui.foundation.control.ControlGeometry
  * round avatars / badges — there is no dedicated `circle` token.
  *
  * Pre-1.0 legacy bridge properties were removed in Batch 13B; see
- * `docs/DESIGN_SYSTEM.md` §8 for the current API-change rules.
+ * `docs/DESIGN_SYSTEM.md` §9 for the current API-change rules.
  */
 @Immutable
 data class Shapes(

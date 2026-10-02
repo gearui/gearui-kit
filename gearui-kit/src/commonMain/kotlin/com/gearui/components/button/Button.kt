@@ -1,5 +1,6 @@
 package com.gearui.components.button
 
+import com.gearui.components.icon.IconSource
 import com.gearui.foundation.interaction.rememberActivationTracker
 import com.gearui.foundation.interaction.activationTarget
 import androidx.compose.runtime.Composable
@@ -81,7 +82,7 @@ fun Button(
     disabled: Boolean = false,
     loading: Boolean = false,
     block: Boolean = false,
-    icon: String? = null,
+    icon: IconSource? = null,
     iconWidget: (@Composable () -> Unit)? = null,
     iconPosition: ButtonIconPosition = ButtonIconPosition.LEFT,
     iconTextSpacing: Dp = Dp.Unspecified,
@@ -198,7 +199,7 @@ fun Button(
         icon != null -> {
             {
                 FoundationIcon(
-                    name = icon,
+                    icon,
                     size = iconSize,
                     tint = contentColor,
                 )

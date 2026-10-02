@@ -1,5 +1,6 @@
 package com.gearui.components.switch
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.interaction.controlSemantics
 import com.tencent.kuikly.compose.ui.graphics.luminance
 import com.gearui.foundation.interaction.controlLabel
@@ -135,7 +136,7 @@ internal fun SwitchVisual(
                 SwitchType.TEXT -> Text(if (checked) openText else closeText, style = Theme.typography.bodySmall, color = contentColor, maxLines = 1)
                 SwitchType.ICON -> Icon(if (checked) Icons.check else Icons.x, size = IconSizes.Default.xs, tint = contentColor)
                 SwitchType.LOADING -> if (motion.normal <= 0) {
-                    Icon(Icons.arrows_clockwise, size = IconSizes.Default.xs, tint = contentColor)
+                    Icon(Icons.arrowsClockwise, size = IconSizes.Default.xs, tint = contentColor)
                 } else {
                     LoadingIndicator(size = IconSizes.Default.xs, color = contentColor, strokeWidth = BorderWidth.thin)
                 }

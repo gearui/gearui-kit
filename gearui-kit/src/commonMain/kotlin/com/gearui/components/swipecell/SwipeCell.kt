@@ -1,5 +1,8 @@
 package com.gearui.components.swipecell
 
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.primitives.Icon
+import com.gearui.components.icon.IconSource
 import kotlinx.coroutines.flow.drop
 import com.gearui.foundation.primitives.ListScroll
 import com.gearui.gestures.ownsHorizontalDrag
@@ -57,7 +60,7 @@ enum class SwipeCellActionTheme {
 data class SwipeCellAction(
     val label: String,
     val theme: SwipeCellActionTheme = SwipeCellActionTheme.PRIMARY,
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val iconPosition: SwipeCellIconPosition = SwipeCellIconPosition.LEFT,
     val flex: Int = 1,
     val onClick: () -> Unit
@@ -451,11 +454,10 @@ private fun SwipeCellActionButton(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(horizontal = tokens.actionPaddingHorizontal)
             ) {
-                Text(
-                    text = action.icon,
-                    style = Theme.typography.titleMedium,
-                    color = foregroundColor,
-                    maxLines = 1
+                Icon(
+                    action.icon,
+                    size = IconSizes.Default.xl,
+                    tint = foregroundColor,
                 )
                 if (action.label.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(tokens.iconSpacing))
@@ -474,11 +476,10 @@ private fun SwipeCellActionButton(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(horizontal = tokens.actionPaddingHorizontal)
             ) {
-                Text(
-                    text = action.icon,
-                    style = Theme.typography.bodyMedium,
-                    color = foregroundColor,
-                    maxLines = 1
+                Icon(
+                    action.icon,
+                    size = IconSizes.Default.lg,
+                    tint = foregroundColor,
                 )
                 Spacer(modifier = Modifier.width(tokens.iconSpacing))
                 Text(
@@ -490,11 +491,10 @@ private fun SwipeCellActionButton(
             }
         } else if (action.icon != null) {
             // Icon only
-            Text(
-                text = action.icon,
-                style = Theme.typography.titleMedium,
-                color = foregroundColor,
-                maxLines = 1
+            Icon(
+                action.icon,
+                size = IconSizes.Default.xl,
+                tint = foregroundColor,
             )
         } else {
             // Label only

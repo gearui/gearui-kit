@@ -1,5 +1,6 @@
 package com.gearui.components.toast
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
 import com.gearui.foundation.material.MaterialSurface
@@ -214,8 +215,7 @@ private fun ToastSurface(toast: ToastData) {
             }
 
             if (iconName != null) {
-                Icon(
-                    name = iconName,
+                Icon(iconName,
                     size = IconSizes.Default.lg,
                     tint = textColor
                 )

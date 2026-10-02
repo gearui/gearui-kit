@@ -1,5 +1,6 @@
 package com.gearui.components.select
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.gearui.components.icon.Icons
@@ -36,8 +37,7 @@ internal fun SelectIndicator(expanded: Boolean) {
             stiffness = selectIndicatorStiffness(motion),
         ),
     )
-    Icon(
-        name = Icons.caret_down,
+    Icon(Icons.caretDown,
         size = FieldDefaults.trailingIconSize,
         tint = Theme.colors.mutedForeground,
         modifier = Modifier.graphicsLayer {

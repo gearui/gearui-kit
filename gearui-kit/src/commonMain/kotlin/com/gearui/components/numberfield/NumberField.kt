@@ -1,5 +1,7 @@
 package com.gearui.components.numberfield
 
+import com.gearui.components.icon.*
+import com.gearui.components.icon.IconSource
 import com.gearui.components.input.numberFieldKeyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -125,7 +127,7 @@ fun NumberField(
 }
 
 @Composable
-private fun StepButton(icon: String, enabled: Boolean, onClick: () -> Unit) {
+private fun StepButton(icon: IconSource, enabled: Boolean, onClick: () -> Unit) {
     // A CloseButton is the icon-only tertiary button of the reference; only the glyph differs.
     CloseButton(onClick = onClick, enabled = enabled, icon = icon,
         contentDescription = if (icon == Icons.minus) I18n.strings.common.remove else I18n.strings.common.add)

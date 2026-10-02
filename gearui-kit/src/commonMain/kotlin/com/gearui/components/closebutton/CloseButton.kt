@@ -1,5 +1,6 @@
 package com.gearui.components.closebutton
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.interaction.hitTarget
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.tencent.kuikly.compose.ui.draw.clip
@@ -52,7 +53,7 @@ fun CloseButton(
     iconSize: Dp = ControlGeometry.closeButtonIcon,
     containerColor: Color = Color.Unspecified,
     iconColor: Color = Color.Unspecified,
-    icon: String = Icons.x,
+    icon: IconSource = Icons.x,
     contentDescription: String = I18n.strings.common.close,
 ) {
     val colors = Theme.colors
@@ -76,8 +77,7 @@ fun CloseButton(
                 .background(pressedSurfaceColor(fill, pressed && enabled)),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(
-                name = icon,
+            Icon(icon,
                 size = iconSize,
                 tint = if (iconColor.isSpecified()) iconColor else colors.mutedForeground,
             )

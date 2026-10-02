@@ -1,5 +1,6 @@
 package com.gearui.components.tag
 
+import com.gearui.components.icon.*
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.ui.semantics.semantics
@@ -189,8 +190,7 @@ fun Tag(
             if (closeable) {
                 Spacer(modifier = Modifier.width(Spacing.xs))
                 Box(modifier = Modifier.size(tokens.iconBoxSize), contentAlignment = Alignment.Center) {
-                    Icon(
-                        name = Icons.x,
+                    Icon(Icons.x,
                         size = tokens.iconSize,
                         tint = textColor
                     )

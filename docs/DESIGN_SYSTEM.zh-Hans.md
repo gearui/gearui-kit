@@ -87,12 +87,41 @@ Card 与 MaterialSurface 共享 `DecoratedSurface`：有序 outer/inset 阴影�
 遗留单海拔消费方在显式迁移前使用具名 Elevation 角色。"所有卡片必须扁平"
 和"每个组件都有新阴影"都不是规则；每次迁移记录视觉证据。
 
-## 7. 运行时 Insets 不是 Token
+## 7. 图标
+
+`Icon(Icons.house)` 画一个图标；`fill = true` 切换到实心版（没有实心版的图标保持常规版）；
+`tint` 默认取主题前景色，深浅色下都看得清，不必每处传颜色；`size` 用 `IconSizes` 的档位。
+
+```kotlin
+import com.gearui.components.icon.*
+
+Icon(Icons.heart, fill = liked, tint = Theme.colors.destructive)
+Button(icon = Icons.star.filled, ...)   // 组件参数没有 fill 开关，用 `.filled`
+```
+
+**内置图标是代码。** `Icons` 是 Phosphor 的全部图标（常规与实心），以路径数据的形式放在
+`components/icon/generated/`，由 `scripts/gen_vector_icons.py` 从 Phosphor 的 Flat SVG
+生成，GearUI 自己在画布上绘制——任意尺寸都清晰。每个图标是一个扩展属性（所以需要 import，
+和 Compose 的 Material 图标一样），App 没引用的图标会被编译器剔除：iOS 和 Web 总会剔除，
+Android 在开启 R8 时剔除。不支持按字符串查找：代码里没写出的名字无法被保留。
+
+**其他图标集用同一个契约。** `IconSource` 解析成 `VectorIcon`（路径数据，绘制）或
+`ImageIcon`（App 自带的图片）。一个图标集就是一个由 getter 组成的对象——用 getter 而不是
+存储属性，用到一个图标时不会把整个集合都留下：
+
+```kotlin
+object AppIcons {
+    val logo: IconSource get() = ImageIcon("logo", "assets://icons/logo.png", fill = "assets://icons/logo_fill.png")
+}
+Icon(AppIcons.logo, tint = Color.Unspecified)   // 保留图片自身颜色
+```
+
+## 8. 运行时 Insets 不是 Token
 
 `safeArea` 与 `keyboard` 几何量是来自 `RuntimeEnvironment` 的环境测量值，
 绝不是样式常量。不要把设备边框编码进 token JSON。
 
-## 8. 治理
+## 9. 治理
 
 - 规则只有一个所有者：本文档拥有主题规则；VISUAL_SPEC 拥有视觉规则；
   `tokens/README.md` 拥有格式策略。

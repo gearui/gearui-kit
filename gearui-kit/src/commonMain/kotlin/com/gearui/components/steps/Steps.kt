@@ -1,5 +1,6 @@
 package com.gearui.components.steps
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -29,7 +30,7 @@ data class StepItem(
     val title: String,
     val description: String? = null,
     /** An [com.gearui.components.icon.Icons] name drawn in place of the step number. */
-    val icon: String? = null
+    val icon: IconSource? = null
 )
 
 /**
@@ -317,16 +318,14 @@ private fun StepIcon(
         if (theme == StepsTheme.DEFAULT) {
             when (status) {
                 StepStatus.FINISH -> {
-                    Icon(
-                        name = Icons.check,
+                    Icon(Icons.check,
                         size = IconSizes.Default.sm,
                         tint = contentColor
                     )
                 }
 
                 StepStatus.ERROR -> {
-                    Icon(
-                        name = Icons.x,
+                    Icon(Icons.x,
                         size = IconSizes.Default.sm,
                         tint = contentColor
                     )
@@ -334,7 +333,7 @@ private fun StepIcon(
 
                 else -> {
                     item.icon?.let { icon ->
-                        Icon(name = icon, size = IconSizes.Default.sm, tint = contentColor)
+                        Icon(icon, size = IconSizes.Default.sm, tint = contentColor)
                     } ?: run {
                         Text(
                             text = (index + 1).toString(),

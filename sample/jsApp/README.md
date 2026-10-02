@@ -48,8 +48,9 @@ iframe passes its own locale; see the deployment rules in
   the sample registers, `@Page("MainDemo")`; navigation between the 76 component
   demos happens inside Compose, not through page routing.
 - `jsApp` is the host. It boots the web renderer and attaches `MainDemo`.
-- Icons resolve `assets://icons/<name>.png` to `/assets/icons/<name>.png`, which
-  is why the assets have to sit next to the bundle.
+- Images resolve `assets://<path>` to `/assets/<path>`, which is why the sample's
+  assets have to sit next to the bundle. GearUI's icons are drawn vectors and need
+  no assets.
 
 ## Two things that will bite
 

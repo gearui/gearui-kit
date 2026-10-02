@@ -1,5 +1,6 @@
 package com.gearui.components.result
 
+import com.gearui.components.icon.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -60,7 +61,7 @@ fun Result(
     title: String,
     modifier: Modifier = Modifier,
     description: String? = null,
-    icon: String? = null,
+    icon: IconSource? = null,
     primaryAction: (@Composable () -> Unit)? = null,
     secondaryAction: (@Composable () -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
@@ -79,8 +80,7 @@ fun Result(
     ) {
         // Icon
         if (displayIconName != null) {
-            Icon(
-                name = displayIconName,
+            Icon(displayIconName,
                 size = IconSizes.Display.lg,
                 tint = iconColor
             )
@@ -130,14 +130,14 @@ fun Result(
     }
 }
 
-private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<String?, Color> {
+private fun getStatusIconAndColor(status: ResultStatus, colors: com.gearui.theme.Colors): Pair<IconSource?, Color> {
     return when (status) {
         ResultStatus.SUCCESS -> Icons.check to colors.successSoftForeground
         ResultStatus.ERROR -> Icons.x to colors.destructiveSoftForeground
         ResultStatus.WARNING -> Icons.warning to colors.warningSoftForeground
         ResultStatus.INFO -> Icons.info to colors.primarySoftForeground
         ResultStatus.QUESTION -> Icons.question to colors.primarySoftForeground
-        ResultStatus.FORBIDDEN -> Icons.lock_simple to colors.destructiveSoftForeground
+        ResultStatus.FORBIDDEN -> Icons.lockSimple to colors.destructiveSoftForeground
         ResultStatus.NOT_FOUND -> null to colors.mutedForeground
     }
 }
@@ -230,7 +230,7 @@ fun EmptyResult(
     modifier: Modifier = Modifier,
     title: String = I18n.strings.common.noData,
     description: String? = null,
-    icon: String = Icons.image,
+    icon: IconSource = Icons.image,
     primaryAction: (@Composable () -> Unit)? = null
 ) {
     Result(
@@ -251,7 +251,7 @@ fun LoadingResult(
     modifier: Modifier = Modifier,
     title: String = I18n.strings.feedback.processingTitle,
     description: String? = I18n.strings.feedback.processingDescription,
-    icon: String = Icons.hourglass
+    icon: IconSource = Icons.hourglass
 ) {
     Result(
         status = ResultStatus.INFO,

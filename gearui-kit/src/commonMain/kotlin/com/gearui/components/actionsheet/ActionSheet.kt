@@ -1,5 +1,6 @@
 package com.gearui.components.actionsheet
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.motion.collectIsShownPressedAsState
 import com.gearui.primitives.BadgeType
 import com.gearui.primitives.Badge
@@ -100,7 +101,7 @@ data class ActionSheetItem(
      * like every other family, so it follows the theme tint and draws the same
      * picture on every platform.
      */
-    val icon: String? = null,
+    val icon: IconSource? = null,
     /** Badge text */
     val badge: String? = null,
     /** Whether to show a red dot */
@@ -458,8 +459,7 @@ private fun ActionSheetListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (item.icon != null) {
-            Icon(
-                name = item.icon,
+            Icon(item.icon,
                 size = IconSizes.Default.lg,
                 tint = if (item.textColor != null && !item.disabled) textColor else colors.foreground,
             )
@@ -635,8 +635,7 @@ private fun ActionSheetGridItem(
                         .background(colors.muted),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        name = item.icon,
+                    Icon(item.icon,
                         size = IconSizes.Display.sm,
                         tint = if (item.disabled) colors.mutedForeground else colors.foreground,
                     )

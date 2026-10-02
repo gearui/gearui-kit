@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.backtop
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -112,8 +113,7 @@ fun BackTopExample(
                     modifier = Modifier.align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        name = Icons.caret_up,
+                    Icon(Icons.caretUp,
                         size = IconSizes.Default.md,
                         tint = colors.primary
                     )

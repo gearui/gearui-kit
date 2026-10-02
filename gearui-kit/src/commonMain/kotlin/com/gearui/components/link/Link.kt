@@ -1,5 +1,6 @@
 package com.gearui.components.link
 
+import com.gearui.components.icon.IconSource
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.interaction.hitTarget
 import androidx.compose.runtime.Composable
@@ -52,8 +53,8 @@ fun Link(
     enabled: Boolean = true,
     underline: Boolean = true,
     color: Color = Color.Unspecified,
-    startIcon: String? = null,
-    endIcon: String? = null,
+    startIcon: IconSource? = null,
+    endIcon: IconSource? = null,
 ) {
     val colors = Theme.colors
     val underlineColor = colors.separator
@@ -117,8 +118,8 @@ private fun LinkLabel(
     enabled: Boolean,
     color: Color,
     underlineColor: Color? = null,
-    startIcon: String? = null,
-    endIcon: String? = null,
+    startIcon: IconSource? = null,
+    endIcon: IconSource? = null,
 ) {
     val source = remember { MutableInteractionSource() }
     // Icons follow the text size, like the reference `Link.Icon`.
@@ -134,7 +135,7 @@ private fun LinkLabel(
         horizontalArrangement = Arrangement.spacedBy(ControlGeometry.buttonGapSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (startIcon != null) Icon(name = startIcon, size = iconSize, tint = color)
+        if (startIcon != null) Icon(startIcon, size = iconSize, tint = color)
         // The underline belongs to the words, not the icons. It is a real 1dp view:
         // draw modifiers on a Kuikly Text node do not paint.
         Box {
@@ -145,6 +146,6 @@ private fun LinkLabel(
                 }
             }
         }
-        if (endIcon != null) Icon(name = endIcon, size = iconSize, tint = color)
+        if (endIcon != null) Icon(endIcon, size = iconSize, tint = color)
     }
 }

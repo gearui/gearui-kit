@@ -1,5 +1,6 @@
 package com.gearui.components.swiper
 
+import com.gearui.components.icon.*
 import com.gearui.gestures.ownsHorizontalDrag
 import com.gearui.i18n.I18n
 import com.gearui.foundation.interaction.IconActionButton
@@ -200,7 +201,7 @@ fun Swiper(
                     val showLeftArrow = loop || currentContentIndex > 0
                     if (showLeftArrow) {
                         IconActionButton(
-                            icon = Icons.caret_left,
+                            icon = Icons.caretLeft,
                             contentDescription = I18n.strings.media.previousSlide,
                             onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
                             size = ControlGeometry.swiperArrowSize,
@@ -216,7 +217,7 @@ fun Swiper(
                     val showRightArrow = loop || currentContentIndex < itemCount - 1
                     if (showRightArrow) {
                         IconActionButton(
-                            icon = Icons.caret_right,
+                            icon = Icons.caretRight,
                             contentDescription = I18n.strings.media.nextSlide,
                             onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
                             size = ControlGeometry.swiperArrowSize,

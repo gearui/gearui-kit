@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.actionsheet
 
+import com.gearui.components.icon.*
 import com.gearui.components.icon.Icons
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.Box
@@ -221,13 +222,13 @@ fun ActionSheetExample(
                 visible = true,
                 theme = ActionSheetTheme.GRID,
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat_circle),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "微信", icon = Icons.chatCircle),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.shareNetwork),
                     ActionSheetItem(label = "QQ", icon = Icons.chats),
-                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "企业微信", icon = Icons.usersThree),
                     ActionSheetItem(label = "收藏", icon = Icons.star),
-                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
-                    ActionSheetItem(label = "下载", icon = Icons.download_simple),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrowClockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.downloadSimple),
                     ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->
@@ -246,13 +247,13 @@ fun ActionSheetExample(
                 theme = ActionSheetTheme.GRID,
                 description = "动作面板描述文字",
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat_circle),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "微信", icon = Icons.chatCircle),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.shareNetwork),
                     ActionSheetItem(label = "QQ", icon = Icons.chats),
-                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "企业微信", icon = Icons.usersThree),
                     ActionSheetItem(label = "收藏", icon = Icons.star),
-                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
-                    ActionSheetItem(label = "下载", icon = Icons.download_simple),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrowClockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.downloadSimple),
                     ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->
@@ -270,13 +271,13 @@ fun ActionSheetExample(
                 visible = true,
                 theme = ActionSheetTheme.GRID,
                 items = listOf(
-                    ActionSheetItem(label = "微信", icon = Icons.chat_circle, badge = "NEW"),
-                    ActionSheetItem(label = "朋友圈", icon = Icons.share_network),
+                    ActionSheetItem(label = "微信", icon = Icons.chatCircle, badge = "NEW"),
+                    ActionSheetItem(label = "朋友圈", icon = Icons.shareNetwork),
                     ActionSheetItem(label = "QQ", icon = Icons.chats),
-                    ActionSheetItem(label = "企业微信", icon = Icons.users_three),
+                    ActionSheetItem(label = "企业微信", icon = Icons.usersThree),
                     ActionSheetItem(label = "收藏", icon = Icons.star, showRedPoint = true),
-                    ActionSheetItem(label = "刷新", icon = Icons.arrow_clockwise),
-                    ActionSheetItem(label = "下载", icon = Icons.download_simple, badge = "8"),
+                    ActionSheetItem(label = "刷新", icon = Icons.arrowClockwise),
+                    ActionSheetItem(label = "下载", icon = Icons.downloadSimple, badge = "8"),
                     ActionSheetItem(label = "复制", icon = Icons.copy)
                 ),
                 onSelected = { item, _ ->

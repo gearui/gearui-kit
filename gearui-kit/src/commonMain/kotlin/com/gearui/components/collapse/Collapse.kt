@@ -1,5 +1,6 @@
 package com.gearui.components.collapse
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Icon
@@ -188,8 +189,7 @@ private fun CollapsePanelItem(
                     )
                 }
 
-                Icon(
-                    name = Icons.caret_down,
+                Icon(Icons.caretDown,
                     size = IconSizes.Default.md,
                     tint = colors.foreground,
                     modifier = Modifier.rotate(rotation)

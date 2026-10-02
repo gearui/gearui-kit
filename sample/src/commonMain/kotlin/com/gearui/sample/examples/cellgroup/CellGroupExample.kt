@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.cellgroup
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
@@ -79,8 +80,7 @@ fun CellGroupExample(
                     title = name,
                     arrow = true,
                     leading = {
-                        Icon(
-                            name = Icons.bell,
+                        Icon(Icons.bell,
                             size = IconSizes.Default.md,
                             tint = colors.mutedForeground,
                         )

@@ -1,5 +1,6 @@
 package com.gearui.components.alert
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.closebutton.CloseButton
 import com.gearui.components.icon.Icons
@@ -42,7 +43,7 @@ fun Alert(
     modifier: Modifier = Modifier,
     description: String? = null,
     status: AlertStatus = AlertStatus.DEFAULT,
-    icon: String? = null,
+    icon: IconSource? = null,
     showIcon: Boolean = true,
     action: (@Composable () -> Unit)? = null,
     onClose: (() -> Unit)? = null,
@@ -65,8 +66,7 @@ fun Alert(
             if (showIcon) {
                 // Reference indicator sits 3.5 below the top to centre on the title's first line.
                 Box(Modifier.padding(top = ControlGeometry.alertIndicatorOffset)) {
-                    Icon(
-                        name = icon ?: alertStatusIcon(status),
+                    Icon(icon ?: alertStatusIcon(status),
                         size = ControlGeometry.alertIcon,
                         tint = statusColor,
                     )
@@ -109,9 +109,9 @@ internal fun alertStatusColor(colors: Colors, status: AlertStatus): Color = when
 }
 
 /** Reference icons: a check for success, a triangle for warning, "info" otherwise. Danger uses the circled warning so it does not read as neutral information. */
-internal fun alertStatusIcon(status: AlertStatus): String = when (status) {
+internal fun alertStatusIcon(status: AlertStatus): IconSource = when (status) {
     AlertStatus.SUCCESS -> Icons.check
     AlertStatus.WARNING -> Icons.warning
-    AlertStatus.DANGER -> Icons.warning_circle
+    AlertStatus.DANGER -> Icons.warningCircle
     else -> Icons.info
 }

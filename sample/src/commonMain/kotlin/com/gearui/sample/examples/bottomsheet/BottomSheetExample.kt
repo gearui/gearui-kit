@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.bottomsheet
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.bottomsheet.BottomSheet
 import com.gearui.components.bottomsheet.BottomSheetItem
@@ -112,8 +113,7 @@ fun BottomSheetExample(
                     BottomSheetItem(
                         label = "微信",
                         icon = {
-                            Icon(
-                                name = Icons.chat_circle,
+                            Icon(Icons.chatCircle,
                                 size = IconSizes.Default.xl,
                                 tint = colors.success
                             )
@@ -122,8 +122,7 @@ fun BottomSheetExample(
                     BottomSheetItem(
                         label = "朋友圈",
                         icon = {
-                            Icon(
-                                name = Icons.users_three,
+                            Icon(Icons.usersThree,
                                 size = IconSizes.Default.xl,
                                 tint = colors.success
                             )
@@ -132,8 +131,7 @@ fun BottomSheetExample(
                     BottomSheetItem(
                         label = "微博",
                         icon = {
-                            Icon(
-                                name = Icons.share_network,
+                            Icon(Icons.shareNetwork,
                                 size = IconSizes.Default.xl,
                                 tint = colors.destructive
                             )
@@ -142,8 +140,7 @@ fun BottomSheetExample(
                     BottomSheetItem(
                         label = "复制链接",
                         icon = {
-                            Icon(
-                                name = Icons.link,
+                            Icon(Icons.link,
                                 size = IconSizes.Default.xl,
                                 tint = colors.primary
                             )

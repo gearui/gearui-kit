@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.runtime
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -212,7 +213,7 @@ private fun ThemeWorkload() {
                 title = "设置项 $i",
                 description = "说明文字",
                 arrow = true,
-                leading = { Icon(name = Icons.gear, size = IconSizes.Default.md, tint = colors.primary) },
+                leading = { Icon(Icons.gear, size = IconSizes.Default.md, tint = colors.primary) },
             )
         }
         repeat(20) { row ->
@@ -234,7 +235,7 @@ private fun ScrollRow(i: Int) {
         description = "最近一条消息的预览，用来占住第二行",
         arrow = i % 10 != 0,
         onClick = {},
-        leading = { Icon(name = Icons.user_circle, size = IconSizes.Default.xl, tint = colors.primary) },
+        leading = { Icon(Icons.userCircle, size = IconSizes.Default.xl, tint = colors.primary) },
         trailing = if (i % 10 == 0) {
             { Switch(checked = on, onCheckedChange = { on = it }) }
         } else null,

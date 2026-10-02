@@ -1,5 +1,7 @@
 package com.gearui.sample.examples.list
 
+import com.gearui.components.icon.IconSource
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.cell.Cell
 import com.gearui.components.cellgroup.CellGroup
@@ -28,12 +30,12 @@ import com.tencent.kuikly.compose.ui.unit.dp
 /** Fixed viewport height, so the List demo actually scrolls. */
 private val ScrollViewportHeight = 220.dp
 
-private data class Entry(val title: String, val icon: String, val value: String? = null)
+private data class Entry(val title: String, val icon: IconSource, val value: String? = null)
 
 private val SETTINGS = listOf(
-    Entry("消息", Icons.chat_circle, "3 条未读"),
+    Entry("消息", Icons.chatCircle, "3 条未读"),
     Entry("通知", Icons.bell, "已开启"),
-    Entry("隐私", Icons.lock_simple),
+    Entry("隐私", Icons.lockSimple),
     Entry("关于", Icons.info, "v1.0.0"),
 )
 
@@ -59,7 +61,7 @@ fun ListExample(
                     note = entry.value,
                     arrow = true,
                     leading = {
-                        Icon(name = entry.icon, size = IconSizes.Default.xl, tint = colors.mutedForeground)
+                        Icon(entry.icon, size = IconSizes.Default.xl, tint = colors.mutedForeground)
                     },
                     onClick = { Toast.show(entry.title) },
                 )

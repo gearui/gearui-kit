@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.badge
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.ui.Alignment
@@ -241,7 +242,7 @@ private fun Labeled(label: String, content: @Composable () -> Unit) {
 /** A small anchor for inline badges. */
 @Composable
 private fun BellIcon() {
-    Icon(name = Icons.bell, size = IconSizes.Default.xl, tint = Theme.colors.foreground)
+    Icon(Icons.bell, size = IconSizes.Default.xl, tint = Theme.colors.foreground)
 }
 
 /** A larger anchor: a real Avatar, as badges usually sit on one. */

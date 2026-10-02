@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.table
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonShape
@@ -169,7 +170,7 @@ fun TableExample(
                                     onClick = { Toast.show("修改第 ${index + 1} 行") }
                                 )
                                 Button(
-                                    icon = Icons.upload_simple,
+                                    icon = Icons.uploadSimple,
                                     type = ButtonType.TEXT,
                                     theme = ButtonTheme.DEFAULT,
                                     shape = ButtonShape.SQUARE,

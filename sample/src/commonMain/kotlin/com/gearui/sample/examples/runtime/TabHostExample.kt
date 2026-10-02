@@ -1,5 +1,7 @@
 package com.gearui.sample.examples.runtime
 
+import com.gearui.sample.examples.icon.allIcons
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -100,11 +102,12 @@ private fun HeavyPage(index: Int) {
     val colors = Theme.colors
     when (index) {
         0 -> LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(Icons.all.chunked(4)) { row ->
+            // The first hundred icons: the page's weight stays what the keep-alive numbers were measured with.
+            items(allIcons.take(100).map { it.second }.chunked(4)) { row ->
                 Row(modifier = Modifier.fillMaxWidth().padding(Spacing.sm)) {
-                    row.forEach { name ->
+                    row.forEach { icon ->
                         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                            Icon(name = name, size = IconSizes.Default.xl, tint = colors.foreground)
+                            Icon(icon, size = IconSizes.Default.xl, tint = colors.foreground)
                         }
                     }
                 }
@@ -116,7 +119,7 @@ private fun HeavyPage(index: Int) {
                     modifier = Modifier.fillMaxWidth().padding(Spacing.md),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(name = Icons.user_circle, size = IconSizes.Default.xl, tint = colors.primary)
+                    Icon(Icons.userCircle, size = IconSizes.Default.xl, tint = colors.primary)
                     Column(modifier = Modifier.weight(1f).padding(start = Spacing.md)) {
                         Text(text = "条目 $i", style = Theme.typography.bodyMedium, color = colors.foreground)
                         Text(

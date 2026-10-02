@@ -1,5 +1,6 @@
 package com.gearui.components.navbar
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.remember
 import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
 import com.gearui.foundation.interaction.pressScale
@@ -177,7 +178,7 @@ fun NavBar(
                 ) {
                     if (useDefaultBack) {
                         NavBarIconButton(
-                            icon = Icons.caret_left,
+                            icon = Icons.caretLeft,
                             iconColor = textColor,
                             onClick = onBackClick,
                             contentDescription = I18n.strings.common.back,
@@ -244,7 +245,7 @@ fun NavBar(
                 // Left button area
                 if (useDefaultBack) {
                     NavBarIconButton(
-                        icon = Icons.caret_left,
+                        icon = Icons.caretLeft,
                         iconColor = textColor,
                         onClick = onBackClick,
                         contentDescription = I18n.strings.common.back,
@@ -338,7 +339,7 @@ fun NavBar(
  */
 @Composable
 private fun NavBarIconButton(
-    icon: String,
+    icon: IconSource,
     iconColor: Color,
     onClick: (() -> Unit)?,
     /** What a screen reader says; an icon alone gives it nothing to read. */
@@ -371,8 +372,7 @@ private fun NavBarIconButton(
         // `check_emoji_as_icon` forbids — the sample passed "⋯" eight times.
         // It also hid typos: `icon = "chat_circl"` drew the literal string in
         // the nav bar rather than failing visibly.
-        Icon(
-            name = icon,
+        Icon(icon,
             size = IconSizes.Default.xl,
             tint = iconColor
         )
@@ -424,7 +424,7 @@ fun NavBarActionSlot(
  * NavBar item data class
  */
 data class NavBarItem(
-    val icon: String,
+    val icon: IconSource,
     val iconColor: Color? = null,
     val onClick: (() -> Unit)? = null,
     /** What a screen reader says for this icon-only action; set it for every tappable item. */

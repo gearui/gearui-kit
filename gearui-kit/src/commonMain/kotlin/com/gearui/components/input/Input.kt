@@ -1,4 +1,5 @@
 package com.gearui.components.input
+import com.gearui.components.icon.*
 import com.gearui.foundation.keyboard.avoidsKeyboard
 import com.gearui.foundation.interaction.LocalControlLabel
 import com.gearui.foundation.field.fieldName
@@ -482,8 +483,7 @@ fun Input(
                                 },
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
-                                name = Icons.x,
+                            Icon(Icons.x,
                                 size = IconSizes.Default.xs,
                                 tint = colors.mutedForeground
                             )

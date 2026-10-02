@@ -1,5 +1,6 @@
 package com.gearui.components.togglebutton
 
+import com.gearui.components.icon.IconSource
 import com.tencent.kuikly.compose.ui.semantics.Role
 import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.Composable
@@ -28,7 +29,7 @@ fun ToggleButton(
     text: String = "",
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    icon: String? = null,
+    icon: IconSource? = null,
     size: ButtonSize = ButtonSize.MEDIUM,
     shape: ButtonShape = ButtonShape.ROUND,
     theme: ButtonTheme = ButtonTheme.PRIMARY,
@@ -57,7 +58,7 @@ fun ToggleButton(
 data class ToggleButtonItem(
     val key: String,
     val label: String = "",
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val enabled: Boolean = true,
 )
 

@@ -1,5 +1,8 @@
 package com.gearui.components.timeline
 
+import com.gearui.foundation.typography.IconSizes
+import com.gearui.foundation.primitives.Icon
+import com.gearui.components.icon.IconSource
 import com.gearui.foundation.control.ControlGeometry
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
@@ -23,7 +26,7 @@ import com.gearui.foundation.border.BorderWidth
 data class TimelineItem(
     val content: String,
     val timestamp: String? = null,
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val color: TimelineColor = TimelineColor.DEFAULT
 )
 
@@ -158,10 +161,10 @@ private fun TimelineItemView(
                 contentAlignment = Alignment.Center
             ) {
                 item.icon?.let { icon ->
-                    Text(
-                        text = icon,
-                        style = Theme.typography.bodySmall,
-                        color = colors.primaryForeground
+                    Icon(
+                        icon,
+                        size = IconSizes.Default.sm,
+                        tint = colors.primaryForeground
                     )
                 }
             }

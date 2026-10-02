@@ -1,5 +1,6 @@
 package com.gearui.components.image
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.avatar.AvatarSizeTokens
 import com.gearui.foundation.layout.Radius
 import com.gearui.foundation.control.ControlGeometry
@@ -205,8 +206,7 @@ fun ImageWithState(
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Icon(
-                            name = Icons.x,
+                        Icon(Icons.x,
                             size = IconSizes.Default.lg,
                             tint = colors.destructiveSoftForeground
                         )
@@ -298,7 +298,7 @@ fun ImagePlaceholder(
     modifier: Modifier = Modifier,
     text: String = I18n.strings.media.imageEmpty,
     /** An [Icons] name; the image icon when left empty. */
-    icon: String? = null
+    icon: IconSource? = null
 ) {
     val colors = Theme.colors
 
@@ -311,8 +311,7 @@ fun ImagePlaceholder(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                name = icon ?: Icons.image,
+            Icon(icon ?: Icons.image,
                 size = IconSizes.Default.xl,
                 tint = colors.mutedForeground
             )

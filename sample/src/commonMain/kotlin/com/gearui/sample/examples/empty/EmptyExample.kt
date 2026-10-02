@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.empty
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonTheme
@@ -34,8 +35,7 @@ fun EmptyExample(
             EmptyState(
                 message = "等待处理",
                 icon = {
-                    Icon(
-                        name = Icons.hourglass,
+                    Icon(Icons.hourglass,
                         size = IconSizes.Display.md,
                         tint = colors.mutedForeground
                     )

@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.bottomnavbar
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,13 +48,13 @@ fun BottomNavBarExample(
                     BottomNavItem(
                         id = "contacts",
                         label = "通讯录",
-                        icon = Icons.address_book,
+                        icon = Icons.addressBook,
                         showBadgeDot = true
                     ),
                     BottomNavItem(
                         id = "me",
                         label = "我",
-                        icon = Icons.user_circle
+                        icon = Icons.userCircle
                     )
                 ),
                 selectedId = selectedId,
@@ -78,7 +79,7 @@ fun BottomNavBarExample(
                 items = listOf(
                     BottomNavItem(id = "five", label = "少量", icon = Icons.chats, badgeCount = 5),
                     BottomNavItem(id = "ninetynine", label = "临界", icon = Icons.bell, badgeCount = 99),
-                    BottomNavItem(id = "overflow", label = "溢出", icon = Icons.envelope_simple, badgeCount = 120)
+                    BottomNavItem(id = "overflow", label = "溢出", icon = Icons.envelopeSimple, badgeCount = 120)
                 ),
                 selectedId = selectedId,
                 onSelect = { selectedId = it }
@@ -95,7 +96,7 @@ fun BottomNavBarExample(
             BottomNavBar(
                 items = listOf(
                     BottomNavItem(id = "feed", label = "首页", icon = Icons.house),
-                    BottomNavItem(id = "discover", label = "发现", icon = Icons.magnifying_glass, disabled = true),
+                    BottomNavItem(id = "discover", label = "发现", icon = Icons.magnifyingGlass, disabled = true),
                     BottomNavItem(id = "profile", label = "我的", icon = Icons.user)
                 ),
                 selectedId = selectedId,

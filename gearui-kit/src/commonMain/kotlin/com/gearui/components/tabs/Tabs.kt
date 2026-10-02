@@ -1,5 +1,6 @@
 package com.gearui.components.tabs
 
+import com.gearui.components.icon.IconSource
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.foundation.interaction.choiceSemantics
 import com.gearui.components.segmented.SegmentedTrack
@@ -66,7 +67,7 @@ import com.tencent.kuikly.compose.ui.unit.Constraints
 data class Tab(
     val id: String,
     val label: String,
-    val icon: String? = null,
+    val icon: IconSource? = null,
     val disabled: Boolean = false,
     val badge: Int? = null,
     val dot: Boolean = false,
@@ -244,7 +245,7 @@ private fun TabsSegmentLabel(item: Tab, selected: Boolean, size: TabsSize) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (item.icon != null) {
-            Icon(name = item.icon, size = IconSizes.Default.sm, tint = contentColor)
+            Icon(item.icon, size = IconSizes.Default.sm, tint = contentColor)
         }
         Text(text = item.label, style = textStyle, color = contentColor, maxLines = 1, overflow = TextOverflow.Ellipsis)
         when {
@@ -387,8 +388,7 @@ private fun TabCell(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (item.icon != null) {
-                        Icon(
-                            name = item.icon,
+                        Icon(item.icon,
                             size = IconSizes.Default.md,
                             tint = contentColor
                         )

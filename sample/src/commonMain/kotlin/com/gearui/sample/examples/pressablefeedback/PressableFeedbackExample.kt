@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.pressablefeedback
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import com.gearui.components.icon.Icons
 import com.gearui.components.toast.Toast
@@ -53,12 +54,12 @@ fun PressableFeedbackExample(
                         horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Icon(name = Icons.wallet, size = IconSizes.Default.xl, tint = colors.foreground)
+                        Icon(Icons.wallet, size = IconSizes.Default.xl, tint = colors.foreground)
                         Column(Modifier.weight(1f)) {
                             Text("我的订单", style = Theme.typography.bodyMedium, color = colors.foreground)
                             Text("查看全部订单", style = Theme.typography.bodySmall, color = colors.mutedForeground)
                         }
-                        Icon(name = Icons.caret_right, size = IconSizes.Default.md, tint = colors.mutedForeground)
+                        Icon(Icons.caretRight, size = IconSizes.Default.md, tint = colors.mutedForeground)
                     }
                 }
             }
@@ -100,7 +101,7 @@ fun PressableFeedbackExample(
                 }
                 PressableFeedback(shape = Theme.shapes.full, onClick = {}, contentDescription = "收藏") {
                     Box(Modifier.size(TileHeight).background(colors.muted), contentAlignment = Alignment.Center) {
-                        Icon(name = Icons.heart, size = IconSizes.Default.xl, tint = colors.foreground)
+                        Icon(Icons.heart, size = IconSizes.Default.xl, tint = colors.foreground)
                     }
                 }
             }

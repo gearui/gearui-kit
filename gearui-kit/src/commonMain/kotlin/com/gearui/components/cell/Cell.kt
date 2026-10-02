@@ -1,5 +1,6 @@
 package com.gearui.components.cell
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.interaction.rememberActivationTracker
 import com.gearui.foundation.interaction.activationTarget
 import com.gearui.foundation.interaction.LocalControlLabel
@@ -155,8 +156,7 @@ fun Cell(
         // Chevron
         if (arrow) {
             Spacer(modifier = Modifier.width(ControlGeometry.listItemGap))
-            Icon(
-                name = Icons.caret_right,
+            Icon(Icons.caretRight,
                 size = IconSizes.Default.md,
                 tint = colors.mutedForeground
             )

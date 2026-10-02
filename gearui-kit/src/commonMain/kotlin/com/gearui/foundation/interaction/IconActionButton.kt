@@ -1,5 +1,6 @@
 package com.gearui.foundation.interaction
 
+import com.gearui.components.icon.IconSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.gearui.foundation.primitives.Icon
@@ -28,7 +29,7 @@ import com.tencent.kuikly.compose.ui.semantics.semantics
  */
 @Composable
 internal fun IconActionButton(
-    icon: String,
+    icon: IconSource,
     contentDescription: String,
     onClick: () -> Unit,
     size: Dp,
@@ -59,7 +60,7 @@ internal fun IconActionButton(
                 .background(background),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(name = icon, size = iconSize, tint = tint)
+            Icon(icon, size = iconSize, tint = tint)
         }
     }
 }

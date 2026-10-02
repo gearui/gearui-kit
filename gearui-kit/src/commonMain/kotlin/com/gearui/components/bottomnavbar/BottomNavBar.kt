@@ -1,5 +1,6 @@
 package com.gearui.components.bottomnavbar
 
+import com.gearui.components.icon.IconSource
 import com.gearui.foundation.control.ControlGeometry
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.primitives.Icon
@@ -41,15 +42,15 @@ import com.gearui.runtime.SafeAreaEdge
 data class BottomNavItem(
     val id: String,
     val label: String,
-    val icon: String,
-    val selectedIcon: String? = null,
+    val icon: IconSource,
+    val selectedIcon: IconSource? = null,
     /**
      * Interior fill layer for the two-tone selected treatment: when set, the selected
      * tab stacks this asset tinted with the active color UNDER the outline icon tinted
      * with the regular foreground — dark outline, brand-colored inside (and the label
      * goes foreground too). When null, selection falls back to a plain active-color tint.
      */
-    val selectedFillIcon: String? = null,
+    val selectedFillIcon: IconSource? = null,
     val badgeCount: Int = 0,
     val showBadgeDot: Boolean = false,
     val disabled: Boolean = false
@@ -200,14 +201,12 @@ fun BottomNavBar(
                                 ) {
                                     Box {
                                         if (twoTone) {
-                                            Icon(
-                                                name = item.selectedFillIcon!!,
+                                            Icon(item.selectedFillIcon!!,
                                                 size = IconSizes.Default.xl,
                                                 tint = selectedColor
                                             )
                                         }
-                                        Icon(
-                                            name = iconName,
+                                        Icon(iconName,
                                             size = IconSizes.Default.xl,
                                             tint = contentColor
                                         )

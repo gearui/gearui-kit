@@ -1,5 +1,6 @@
 package com.gearui.components
 
+import com.gearui.components.icon.*
 import com.gearui.components.alert.AlertStatus
 import com.gearui.components.alert.alertStatusIcon
 import com.gearui.components.icon.Icons

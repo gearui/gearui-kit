@@ -1,5 +1,6 @@
 package com.gearui.components.segmented
 
+import com.gearui.components.icon.IconSource
 import com.gearui.foundation.interaction.hitTarget
 import com.gearui.foundation.interaction.choiceSemantics
 import androidx.compose.runtime.*
@@ -101,7 +102,7 @@ fun <T> IconSegmentedControl(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (option.icon != null) {
-                Icon(name = option.icon, size = IconSizes.Default.md, tint = contentColor)
+                Icon(option.icon, size = IconSizes.Default.md, tint = contentColor)
             }
             Text(
                 text = option.label,
@@ -301,5 +302,5 @@ internal fun SegmentedTrack(
 data class SegmentedOption<T>(
     val value: T,
     val label: String,
-    val icon: String? = null
+    val icon: IconSource? = null
 )

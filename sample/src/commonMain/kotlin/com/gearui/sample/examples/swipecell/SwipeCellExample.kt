@@ -1,5 +1,7 @@
 package com.gearui.sample.examples.swipecell
 
+import com.gearui.components.icon.IconSource
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -41,7 +43,7 @@ fun SwipeCellExample(
 
     fun iconAction(
         label: String,
-        icon: String,
+        icon: IconSource,
         theme: SwipeCellActionTheme,
         position: SwipeCellIconPosition = SwipeCellIconPosition.LEFT
     ) = SwipeCellAction(
@@ -104,15 +106,15 @@ fun SwipeCellExample(
         ) {
             val rows = listOf(
                 "图标加文字（横向）" to listOf(
-                    iconAction("编辑", Icons.pencil_simple, SwipeCellActionTheme.WARNING),
+                    iconAction("编辑", Icons.pencilSimple, SwipeCellActionTheme.WARNING),
                     iconAction("删除", Icons.trash, SwipeCellActionTheme.DANGER)
                 ),
                 "仅图标" to listOf(
-                    iconAction("", Icons.pencil_simple, SwipeCellActionTheme.WARNING),
+                    iconAction("", Icons.pencilSimple, SwipeCellActionTheme.WARNING),
                     iconAction("", Icons.trash, SwipeCellActionTheme.DANGER)
                 ),
                 "图标加文字（纵向）" to listOf(
-                    iconAction("编辑", Icons.pencil_simple, SwipeCellActionTheme.WARNING, SwipeCellIconPosition.TOP),
+                    iconAction("编辑", Icons.pencilSimple, SwipeCellActionTheme.WARNING, SwipeCellIconPosition.TOP),
                     iconAction("删除", Icons.trash, SwipeCellActionTheme.DANGER, SwipeCellIconPosition.TOP)
                 )
             )

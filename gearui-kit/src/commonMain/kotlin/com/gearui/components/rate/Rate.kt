@@ -1,5 +1,6 @@
 package com.gearui.components.rate
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,9 +73,9 @@ fun Rate(
     allowClear: Boolean = false,
     readonly: Boolean = false,
     /** Icon name for the active star; the built-in star is used when left null. */
-    icon: String? = null,
+    icon: IconSource? = null,
     /** Icon name for the track star; defaults to [icon], and to the built-in star. */
-    emptyIcon: String? = null,
+    emptyIcon: IconSource? = null,
     size: Dp = ControlGeometry.rateStarSize,
     gap: Dp = ControlGeometry.rateStarGap,
     enabled: Boolean = true,
@@ -87,8 +88,8 @@ fun Rate(
     val clamped = value.coerceIn(0f, count.toFloat())
     val active = if (activeColor != Color.Unspecified) activeColor else colors.warning
     val track = colors.mutedForeground.copy(alpha = FeedbackDefaults.ratingTrackOpacity)
-    val activeIcon = icon ?: Icons.star_fill
-    val trackIcon = emptyIcon ?: icon ?: Icons.star_fill
+    val activeIcon = icon ?: Icons.star.filled
+    val trackIcon = emptyIcon ?: icon ?: Icons.star.filled
 
     Row(
         modifier = modifier,
@@ -127,8 +128,8 @@ private fun Star(
     label: String,
     fraction: Float,
     size: Dp,
-    activeIcon: String,
-    trackIcon: String,
+    activeIcon: IconSource,
+    trackIcon: IconSource,
     activeColor: Color,
     trackColor: Color,
     enabled: Boolean,
@@ -159,7 +160,7 @@ private fun Star(
                 if (onTap != null) role = Role.Button
             },
     ) {
-        Icon(name = trackIcon, size = size, tint = if (enabled) trackColor else trackColor.copy(alpha = trackColor.alpha * FeedbackDefaults.disabledOpacity))
+        Icon(trackIcon, size = size, tint = if (enabled) trackColor else trackColor.copy(alpha = trackColor.alpha * FeedbackDefaults.disabledOpacity))
         if (fraction > 0f) {
             // The cut has to take the *leading* part of the star. requiredSize would keep
             // the icon at full size but centres it in the narrower box, which sliced a band
@@ -171,8 +172,7 @@ private fun Star(
                     .requiredHeight(size)
                     .clipToBounds(),
             ) {
-                Icon(
-                    name = activeIcon,
+                Icon(activeIcon,
                     size = size,
                     tint = if (enabled) activeColor else activeColor.copy(alpha = FeedbackDefaults.disabledOpacity),
                     modifier = Modifier.wrapContentSize(Alignment.CenterStart, unbounded = true),

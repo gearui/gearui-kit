@@ -1,5 +1,6 @@
 package com.gearui.components.backtop
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.foundation.primitives.Icon
@@ -91,7 +92,7 @@ fun BackTop(
      * whichever font the platform picked, and made this the third component
      * (after ActionSheet and NavBar) whose icon parameter meant "text".
      */
-    icon: String = Icons.caret_up,
+    icon: IconSource = Icons.caretUp,
     text: String = I18n.strings.common.backToTop,
     offset: Pair<Dp, Dp> = Spacing.lg to Spacing.lg // (right, bottom)
 ) {
@@ -145,8 +146,7 @@ fun BackTop(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Icon(
-                                name = icon,
+                            Icon(icon,
                                 size = IconSizes.Default.md,
                                 tint = contentColor
                             )
@@ -157,8 +157,7 @@ fun BackTop(
                             )
                         }
                     } else {
-                        Icon(
-                            name = icon,
+                        Icon(icon,
                             size = IconSizes.Default.xl,
                             tint = contentColor
                         )
@@ -193,8 +192,7 @@ fun BackTop(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Icon(
-                                name = icon,
+                            Icon(icon,
                                 size = IconSizes.Default.sm,
                                 tint = contentColor
                             )
@@ -205,8 +203,7 @@ fun BackTop(
                             )
                         }
                     } else {
-                        Icon(
-                            name = icon,
+                        Icon(icon,
                             size = IconSizes.Default.md,
                             tint = contentColor
                         )

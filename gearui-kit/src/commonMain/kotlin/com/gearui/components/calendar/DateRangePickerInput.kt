@@ -1,5 +1,6 @@
 package com.gearui.components.calendar
 
+import com.gearui.components.icon.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -100,7 +101,7 @@ fun DateRangePickerInput(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Icon(name = Icons.arrow_right, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
+                Icon(Icons.arrowRight, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
                 Text(
                     text = end?.let(format) ?: endPlaceholder,
                     style = Theme.typography.bodyMedium,
@@ -116,8 +117,7 @@ fun DateRangePickerInput(
                         iconSize = FieldDefaults.trailingIconSize,
                     )
                 } else {
-                    Icon(
-                        name = Icons.calendar_blank,
+                    Icon(Icons.calendarBlank,
                         size = FieldDefaults.trailingIconSize,
                         tint = colors.mutedForeground,
                     )

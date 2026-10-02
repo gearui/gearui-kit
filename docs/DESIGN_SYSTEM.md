@@ -102,13 +102,46 @@ Legacy single-elevation consumers use named Elevation roles until explicitly
 migrated. Neither "all cards must be flat" nor "every component has new
 shadows" is the rule; each migration records visual evidence.
 
-## 7. Runtime Insets Are Not Tokens
+## 7. Icons
+
+`Icon(Icons.house)` draws an icon; `fill = true` switches to its fill form (an icon
+without one keeps its regular form); `tint` defaults to the theme's foreground, so an
+icon reads in light and dark without a colour at every call; `size` takes an
+`IconSizes` step.
+
+```kotlin
+import com.gearui.components.icon.*
+
+Icon(Icons.heart, fill = liked, tint = Theme.colors.destructive)
+Button(icon = Icons.star.filled, ...)   // a parameter has no fill switch: `.filled`
+```
+
+**Built-in icons are code.** `Icons` is every Phosphor icon, regular and fill, as
+path data in `components/icon/generated/`, written by `scripts/gen_vector_icons.py`
+from Phosphor's flat SVGs and drawn by GearUI on a canvas — sharp at any size. Each
+icon is an extension property (hence the import, as with Compose's Material icons),
+so the compiler leaves out every icon an app does not reference: always on iOS and
+the Web, on Android when R8 runs. There is no string lookup; a name the code does not
+spell cannot be kept.
+
+**Other sets use the same contract.** An `IconSource` resolves to a `VectorIcon`
+(path data, drawn) or an `ImageIcon` (an image the app ships). A pack is an object of
+getters — getters, not stored properties, so one icon does not keep the pack:
+
+```kotlin
+object AppIcons {
+    val logo: IconSource get() = ImageIcon("logo", "assets://icons/logo.png", fill = "assets://icons/logo_fill.png")
+}
+Icon(AppIcons.logo, tint = Color.Unspecified)   // keep an image's own colours
+```
+
+## 8. Runtime Insets Are Not Tokens
 
 `safeArea` and `keyboard` geometry are environment measurements from
 `RuntimeEnvironment`, never style constants. Do not encode device chrome in
 token JSON.
 
-## 8. Governance
+## 9. Governance
 
 - A rule has one owner: this document owns theming rules; VISUAL_SPEC owns
   the visual rules; `tokens/README.md` owns format policy.

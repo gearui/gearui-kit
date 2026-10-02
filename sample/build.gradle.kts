@@ -145,11 +145,8 @@ dependencies {
 }
 
 val syncSharedAssetsToPodResources by tasks.registering(Copy::class) {
-    val sharedAssetsDir = project(":gearui-kit").projectDir.resolve("src/commonMain/assets")
-    val sampleAssetsDir = projectDir.resolve("src/commonMain/assets")
-
-    from(sharedAssetsDir)
-    from(sampleAssetsDir)
+    // GearUI's icons are code (drawn vectors); only the sample's own images are assets.
+    from(projectDir.resolve("src/commonMain/assets"))
     into(layout.buildDirectory.dir("compose/cocoapods/compose-resources"))
 }
 

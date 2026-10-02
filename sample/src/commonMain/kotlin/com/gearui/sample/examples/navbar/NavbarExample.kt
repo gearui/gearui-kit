@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.navbar
 
+import com.gearui.components.icon.*
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.components.icon.Icons
@@ -80,7 +81,7 @@ fun NavbarExample(
                 onBackClick = { Toast.show("返回") },
                 rightItems = listOf(
                     NavBarItem(
-                        icon = Icons.dots_three,
+                        icon = Icons.dotsThree,
                         onClick = { Toast.show("更多") },
                         contentDescription = "更多"
                     )
@@ -125,7 +126,7 @@ fun NavbarExample(
                         contentDescription = "主页"
                     ),
                     NavBarItem(
-                        icon = Icons.dots_three,
+                        icon = Icons.dotsThree,
                         onClick = { Toast.show("更多") },
                         contentDescription = "更多"
                     )
@@ -169,7 +170,7 @@ fun NavbarExample(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
                     ) {
-                        Icon(name = Icons.star_fill, size = IconSizes.Default.xl, tint = colors.primary)
+                        Icon(Icons.star.filled, size = IconSizes.Default.xl, tint = colors.primary)
                         Text(text = "GearUI", style = Theme.typography.titleMedium, color = colors.foreground)
                     }
                 }
@@ -191,7 +192,7 @@ fun NavbarExample(
                 onBackClick = { Toast.show("返回") },
                 rightItems = listOf(
                     NavBarItem(
-                        icon = Icons.dots_three,
+                        icon = Icons.dotsThree,
                         onClick = { Toast.show("更多") },
                         contentDescription = "更多"
                     )
@@ -204,7 +205,7 @@ fun NavbarExample(
                 onBackClick = { Toast.show("返回") },
                 rightItems = listOf(
                     NavBarItem(
-                        icon = Icons.dots_three,
+                        icon = Icons.dotsThree,
                         onClick = { Toast.show("更多") },
                         contentDescription = "更多"
                     )
@@ -225,7 +226,7 @@ fun NavbarExample(
                 onBackClick = { Toast.show("返回") },
                 rightItems = listOf(
                     NavBarItem(
-                        icon = Icons.dots_three,
+                        icon = Icons.dotsThree,
                         onClick = { Toast.show("更多") },
                         contentDescription = "更多"
                     )
@@ -265,7 +266,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = Icons.dots_three,
+                            icon = Icons.dotsThree,
                             iconColor = colors.primaryForeground,
                             onClick = { Toast.show("更多") },
                             contentDescription = "更多"
@@ -282,7 +283,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = Icons.dots_three,
+                            icon = Icons.dotsThree,
                             iconColor = colors.primaryForeground,
                             onClick = { Toast.show("更多") },
                             contentDescription = "更多"
@@ -298,7 +299,7 @@ fun NavbarExample(
                     onBackClick = { Toast.show("返回") },
                     rightItems = listOf(
                         NavBarItem(
-                            icon = Icons.dots_three,
+                            icon = Icons.dotsThree,
                             onClick = { Toast.show("更多") },
                             contentDescription = "更多"
                         )

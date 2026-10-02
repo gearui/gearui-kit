@@ -1,5 +1,6 @@
 package com.gearui.components.inputgroup
 
+import com.gearui.components.icon.IconSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import com.gearui.foundation.border.BorderWidth
@@ -101,7 +102,7 @@ fun InputGroup(
 fun InputGroupAddon(
     text: String? = null,
     modifier: Modifier = Modifier,
-    icon: String? = null,
+    icon: IconSource? = null,
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
     content: (@Composable () -> Unit)? = null,
@@ -119,7 +120,7 @@ fun InputGroupAddon(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (icon != null) {
-                Icon(name = icon, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
+                Icon(icon, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
             }
             if (content != null) {
                 content()

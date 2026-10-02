@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- `Slider` and `RangeSlider` (track and thumbs) use the same direction test as
+  `SwipeCell`: an angled scroll that starts on a slider scrolls the page instead of moving
+  the value. The overlay system no longer prints debug lines (one per list drag).
+
 - `SwipeCell` takes a drag only when it is clearly sideways (more than 1.5× its vertical
   travel once past the touch slop); a diagonal scroll of the list no longer opens a row.
   A vertical scroll of a `GearLazyColumn`, started anywhere, closes the open row, as

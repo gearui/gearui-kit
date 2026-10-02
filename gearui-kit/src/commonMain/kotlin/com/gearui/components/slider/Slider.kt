@@ -5,8 +5,7 @@ import com.gearui.foundation.primitives.Text
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.gestures.detectDragGestures
-import com.tencent.kuikly.compose.foundation.gestures.detectHorizontalDragGestures
+import com.gearui.gestures.detectSidewaysDrag
 import com.gearui.gestures.ownsHorizontalDrag
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -154,7 +153,7 @@ fun Slider(
                             // Dragging anywhere on the track moves the value with the finger;
                             // the thumb keeps its own relative drag on top of this.
                             Modifier.pointerInput(valueRange, steps) {
-                                detectHorizontalDragGestures(
+                                detectSidewaysDrag(
                                     onDragStart = { offset ->
                                         isDragging = true
                                         dragValue = calculateValue(offset.x)
@@ -237,7 +236,7 @@ fun Slider(
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
-                                        detectDragGestures(
+                                        detectSidewaysDrag(
                                             onDragStart = {
                                                 isDragging = true
                                                 dragValue = value
@@ -258,7 +257,7 @@ fun Slider(
                                         ) { change, dragAmount ->
                                             change.consume()
                                             val effectiveWidth = getEffectiveWidth()
-                                            if (effectiveWidth <= 0f) return@detectDragGestures
+                                            if (effectiveWidth <= 0f) return@detectSidewaysDrag
 
                                             val deltaRatio = dragAmount.x / effectiveWidth
                                             val deltaValue =
@@ -595,7 +594,7 @@ fun RangeSlider(
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
-                                        detectDragGestures(
+                                        detectSidewaysDrag(
                                             onDragStart = {
                                                 draggingThumb = 0
                                                 dragStartValue = values.start
@@ -617,7 +616,7 @@ fun RangeSlider(
                                         ) { change, dragAmount ->
                                             change.consume()
                                             val effectiveWidth = getEffectiveWidth()
-                                            if (effectiveWidth <= 0f) return@detectDragGestures
+                                            if (effectiveWidth <= 0f) return@detectSidewaysDrag
 
                                             val deltaRatio = dragAmount.x / effectiveWidth
                                             val deltaValue =
@@ -662,7 +661,7 @@ fun RangeSlider(
                             .then(
                                 if (enabled) {
                                     Modifier.pointerInput(Unit) {
-                                        detectDragGestures(
+                                        detectSidewaysDrag(
                                             onDragStart = {
                                                 draggingThumb = 1
                                                 dragStartValue = values.start
@@ -684,7 +683,7 @@ fun RangeSlider(
                                         ) { change, dragAmount ->
                                             change.consume()
                                             val effectiveWidth = getEffectiveWidth()
-                                            if (effectiveWidth <= 0f) return@detectDragGestures
+                                            if (effectiveWidth <= 0f) return@detectSidewaysDrag
 
                                             val deltaRatio = dragAmount.x / effectiveWidth
                                             val deltaValue =

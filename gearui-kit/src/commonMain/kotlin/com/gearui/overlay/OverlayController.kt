@@ -64,7 +64,6 @@ class OverlayController {
             onDismiss = onDismiss
         )
 
-        println("[GearUI] Overlay.show id=$id, policy=${options.dismissPolicy}")
         return id
     }
 
@@ -83,7 +82,6 @@ class OverlayController {
      * long as the animation runs.
      */
     fun dismiss(id: Long) {
-        println("[GearUI] Overlay.dismiss id=$id")
         val item = _items.find { it.id == id } ?: return
         if (item.exiting.value) return
         item.exiting.value = true
@@ -120,7 +118,6 @@ class OverlayController {
      * Dismisses every Overlay
      */
     fun dismissAll() {
-        println("[GearUI] Overlay.dismissAll count=${_items.size}")
         _items.toList().forEach { dismiss(it.id) }
     }
 
@@ -139,7 +136,6 @@ class OverlayController {
      * All dismissal logic lives here; component code must contain none of it.
      */
     fun dispatchEvent(event: OverlayEvent) {
-        println("[GearUI] Overlay.dispatchEvent event=$event, items=${_items.size}")
 
         val itemsToRemove = _items.filter { item ->
             if (item.exiting.value) return@filter false
@@ -152,11 +148,9 @@ class OverlayController {
                 OverlayEvent.Timeout -> true // fired by the timer: always dismiss
                 OverlayEvent.AnchorDetached -> policy.anchorDetached
             }
-            println("[GearUI] Overlay item id=${item.id}, policy.scroll=${policy.scroll}, shouldRemove=$shouldRemove")
             shouldRemove
         }
 
-        println("[GearUI] Overlay itemsToRemove=${itemsToRemove.size}")
         itemsToRemove.forEach { dismiss(it.id) }
     }
 
@@ -216,7 +210,6 @@ object OverlayManager {
      * Internal: binds the Controller
      */
     internal fun bind(controller: OverlayController) {
-        println("[GearUI] OverlayManager.bind controller=$controller")
         this.controller = controller
     }
 
@@ -224,7 +217,6 @@ object OverlayManager {
      * Internal: unbinds the Controller
      */
     internal fun unbind() {
-        println("[GearUI] OverlayManager.unbind")
         this.controller = null
     }
 
@@ -234,7 +226,6 @@ object OverlayManager {
      * Called by scrolling components such as ScrollView / LazyColumn
      */
     fun notifyScroll() {
-        println("[GearUI] OverlayManager.notifyScroll controller=$controller")
         controller?.dispatchEvent(OverlayEvent.Scroll)
     }
 

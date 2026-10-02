@@ -56,6 +56,7 @@ object Icons {
     const val clock = "clock"
     const val clock_clockwise = "clock_clockwise"
     const val clock_counter_clockwise = "clock_counter_clockwise"
+    const val code = "code"
     const val copy = "copy"
     const val dots_three = "dots_three"
     const val dots_three_circle = "dots_three_circle"
@@ -74,6 +75,7 @@ object Icons {
     const val image = "image"
     const val info = "info"
     const val keyboard = "keyboard"
+    const val lightning = "lightning"
     const val link = "link"
     const val link_break = "link_break"
     const val list = "list"
@@ -99,6 +101,7 @@ object Icons {
     const val share_network = "share_network"
     const val shield_check = "shield_check"
     const val sign_out = "sign_out"
+    const val smiley = "smiley"
     const val square = "square"
     const val star = "star"
     const val star_fill = "star_fill"
@@ -156,6 +159,7 @@ object Icons {
         clock,
         clock_clockwise,
         clock_counter_clockwise,
+        code,
         copy,
         dots_three,
         dots_three_circle,
@@ -174,6 +178,7 @@ object Icons {
         image,
         info,
         keyboard,
+        lightning,
         link,
         link_break,
         list,
@@ -199,6 +204,7 @@ object Icons {
         share_network,
         shield_check,
         sign_out,
+        smiley,
         square,
         star,
         star_fill,

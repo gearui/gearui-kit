@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Icons: `smiley`, `code` and `lightning` (Phosphor, regular), 100 icons in all.
+
 - `Slider` and `RangeSlider` (track and thumbs) use the same direction test as
   `SwipeCell`: an angled scroll that starts on a slider scrolls the page instead of moving
   the value. The overlay system no longer prints debug lines (one per list drag).

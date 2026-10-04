@@ -1661,13 +1661,26 @@
     },
     "navBarActionSlot": {
       "$value": {
-        "value": 56,
+        "value": 44,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {"value": 44, "ref": "Apple HIG, Buttons: hit region at least 44x44 pt"},
+          "basis": "ios",
+          "why": "The 44 HIG hit region around one 24 icon. Side by side, two icons sit 20 apart, as in iOS bars; a 56 slot left 32 between them, wider than iOS and Material (24) alike. Both sides take the same slots, so a one-sided bar still centres its title."
+        }
+      }
+    },
+    "navBarEdgeInset": {
+      "$value": {
+        "value": 6,
         "unit": "px"
       },
       "$extensions": {
         "com.gearui.source": {
           "basis": "gearui",
-          "why": "One 24 icon with 16 either side; both slots take it, so a one-sided bar still centres its title."
+          "why": "Between the bar's edge and its outermost slot: with the 10 a 44 slot leaves beside its 24 icon, the icon sits 16 from the edge, on the page's content margin."
         }
       }
     },

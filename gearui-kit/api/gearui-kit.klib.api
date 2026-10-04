@@ -4613,6 +4613,8 @@ final object com.gearui.components.navbar/NavBarDefaults { // com.gearui.compone
         final fun <get-actionIconSize>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.components.navbar/NavBarDefaults.actionIconSize.<get-actionIconSize>|<get-actionIconSize>(){}[0]
     final val actionSlotWidth // com.gearui.components.navbar/NavBarDefaults.actionSlotWidth|{}actionSlotWidth[0]
         final fun <get-actionSlotWidth>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.components.navbar/NavBarDefaults.actionSlotWidth.<get-actionSlotWidth>|<get-actionSlotWidth>(){}[0]
+    final val edgeInset // com.gearui.components.navbar/NavBarDefaults.edgeInset|{}edgeInset[0]
+        final fun <get-edgeInset>(): com.tencent.kuikly.compose.ui.unit/Dp // com.gearui.components.navbar/NavBarDefaults.edgeInset.<get-edgeInset>|<get-edgeInset>(){}[0]
 }
 
 final object com.gearui.components.picker/Picker { // com.gearui.components.picker/Picker|null[0]

@@ -421,7 +421,8 @@
   geometry.menuMinWidth = {"$type":"dimension","$value":{"unit":"px","value":160}}
   geometry.menuPaddingBlock = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.menuPaddingInline = {"$type":"dimension","$value":{"unit":"px","value":6}}
-  geometry.navBarActionSlot = {"$type":"dimension","$value":{"unit":"px","value":56}}
+  geometry.navBarActionSlot = {"$type":"dimension","$value":{"unit":"px","value":44}}
+  geometry.navBarEdgeInset = {"$type":"dimension","$value":{"unit":"px","value":6}}
   geometry.navBarHeight = {"$type":"dimension","$value":{"unit":"px","value":48}}
   geometry.noticeBarGap = {"$type":"dimension","$value":{"unit":"px","value":8}}
   geometry.noticeBarHeight = {"$type":"dimension","$value":{"unit":"px","value":40}}

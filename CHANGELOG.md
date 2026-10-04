@@ -16,6 +16,12 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- `NavBar` action icons sit 20 apart, as in iOS bars, instead of 32: an action slot is
+  44 wide (the HIG hit region; `navBarActionSlot`, was 56) and the bar keeps 6 between its
+  edge and the outermost slot (`navBarEdgeInset`, `NavBarDefaults.edgeInset`), so the
+  outer icons and the back key stay 16 from the edge. Widths built from
+  `NavBarDefaults.actionSlotWidth` follow; a hand-written 56 in a caller does not.
+
 - `SearchBarButton`: a search field that only opens search — the look of `SearchBar`
   (pill, glyph, placeholder) as a button named by its placeholder, for the entry at the
   head of a list whose search lives on its own page. No keyboard or text; the press

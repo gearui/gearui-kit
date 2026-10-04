@@ -93,7 +93,8 @@ internal object ControlGeometry {
     val menuMinWidth = 160.dp
     val menuPaddingBlock = 12.dp
     val menuPaddingInline = 6.dp
-    val navBarActionSlot = 56.dp
+    val navBarActionSlot = 44.dp
+    val navBarEdgeInset = 6.dp
     val navBarHeight = 48.dp
     val noticeBarGap = 8.dp
     val noticeBarHeight = 40.dp

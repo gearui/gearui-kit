@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**180 / 219** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**181 / 220** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -229,7 +229,8 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
-| `navBarActionSlot` | 56 | — | — | GearUI | One 24 icon with 16 either side; both slots take it, so a one-sided bar still centres its title. |
+| `navBarActionSlot` | 44 | — | 44 | iOS | The 44 HIG hit region around one 24 icon. Side by side, two icons sit 20 apart, as in iOS bars; a 56 slot left 32 between them, wider than iOS and Material (24) alike. Both sides take the same slots, so a one-sided bar still centres its title. |
+| `navBarEdgeInset` | 6 | — | — | GearUI | Between the bar's edge and its outermost slot: with the 10 a 44 slot leaves beside its 24 icon, the icon sits 16 from the edge, on the page's content margin. |
 | `navBarHeight` | 48 | — | — | GearUI | The 48 medium control row, so the back and action buttons get a full touch target and line up with a 48 field below the bar. |
 
 ## notice
@@ -547,6 +548,7 @@
 - heroui-native 1.0.9 menu.css item padding-inline
 - heroui-native 1.0.9 menu.css content padding-block
 - heroui-native 1.0.9 menu.css content padding-inline
+- Apple HIG, Buttons: hit region at least 44x44 pt
 - heroui-native 1.0.9 input-otp.css slot-caret width
 - heroui-native 1.0.9 input-otp.css group gap
 - heroui-native 1.0.9 input-otp.css separator height

@@ -65,10 +65,10 @@ fun NavBar(
     rightWidget: (@Composable () -> Unit)? = null,
     /** Custom leading slot (a "Cancel" text button, say). Symmetric with [rightWidget]; when set it replaces the default back key and leftItems. */
     leftWidget: (@Composable () -> Unit)? = null,
-    /** Slot width for [leftWidget]; null = the 56dp icon-only default. Text buttons need an explicit larger value. */
+    /** Slot width for [leftWidget]; null = one icon-only slot ([NavBarDefaults.actionSlotWidth]). Text buttons need an explicit larger value. */
     leftWidgetWidth: Dp? = null,
     /**
-     * Slot width for [rightWidget]. `null` (the default) uses [actionSlotWidth] (56dp, matching an icon-only button).
+     * Slot width for [rightWidget]. `null` (the default) uses [NavBarDefaults.actionSlotWidth] (one icon-only button).
      * If rightWidget holds a text button such as "Done" or "Create (N)", pass a larger value explicitly
      * (80-120dp suggested); the padding on both sides of a centred title follows this value so the two do not overlap.
      */
@@ -117,6 +117,7 @@ fun NavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height)
+                    .padding(horizontal = ControlGeometry.navBarEdgeInset)
             ) {
                 // Upper layer: left action area
                 val leftCount = (if (useDefaultBack) 1 else 0) + leftItems.size
@@ -239,7 +240,8 @@ fun NavBar(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(height),
+                    .height(height)
+                    .padding(horizontal = ControlGeometry.navBarEdgeInset),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Left button area
@@ -390,8 +392,14 @@ private fun NavBarIconButton(
  * [NavBarItem].
  */
 object NavBarDefaults {
-    /** Width of one action slot; matches an icon-only button. */
+    /**
+     * Width of one action slot; matches an icon-only button. Slots sit side by side, so
+     * two icons are this minus the icon size apart; the bar adds [edgeInset] outside them.
+     */
     val actionSlotWidth = ControlGeometry.navBarActionSlot
+
+    /** Between the bar's edge and its outermost slot, on each side. */
+    val edgeInset = ControlGeometry.navBarEdgeInset
 
     /** Icon size inside an action slot. */
     val actionIconSize = IconSizes.Default.xl

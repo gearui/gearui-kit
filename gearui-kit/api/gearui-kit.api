@@ -2690,6 +2690,7 @@ public final class com/gearui/components/navbar/NavBarDefaults {
 	public static final field INSTANCE Lcom/gearui/components/navbar/NavBarDefaults;
 	public final fun getActionIconSize-UdJoRJA ()F
 	public final fun getActionSlotWidth-UdJoRJA ()F
+	public final fun getEdgeInset-UdJoRJA ()F
 }
 
 public final class com/gearui/components/navbar/NavBarItem {

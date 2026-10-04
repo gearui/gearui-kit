@@ -90,6 +90,23 @@ fun SegmentedExample(
         }
 
         ExampleSection(
+            title = "按内容定宽",
+            description = "放进按内容定宽的容器时，各段等宽、宽度取最长的文字"
+        ) {
+            var selectedOption by remember { mutableStateOf("daily") }
+
+            Box(Modifier.width(IntrinsicSize.Max)) {
+                SegmentedControl(
+                    options = PERIOD_LABELS.keys.toList(),
+                    selectedOption = selectedOption,
+                    onOptionSelected = { selectedOption = it },
+                    labelProvider = { PERIOD_LABELS[it] ?: it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        ExampleSection(
             title = "多个选项",
             description = "五个选项平分宽度"
         ) {

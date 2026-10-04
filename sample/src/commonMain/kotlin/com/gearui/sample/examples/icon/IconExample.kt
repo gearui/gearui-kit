@@ -16,6 +16,7 @@ import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.Row
 import com.tencent.kuikly.compose.foundation.layout.Spacer
 import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
+import com.tencent.kuikly.compose.foundation.layout.width
 import com.tencent.kuikly.compose.foundation.layout.padding
 import com.tencent.kuikly.compose.foundation.layout.size
 import com.tencent.kuikly.compose.ui.Alignment
@@ -118,42 +119,39 @@ fun IconExample(
                 placeholder = "搜索图标名称"
             )
 
+            // The count and the two switches do not share a row: on a 320-wide phone the
+            // switches pushed the count into the edge.
+            Text(
+                text = "图标数量：${filteredIcons.size}",
+                style = Theme.typography.bodyMedium,
+                color = colors.foreground
+            )
+
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 Text(
-                    text = "图标数量：${filteredIcons.size}",
-                    style = Theme.typography.bodyMedium,
-                    color = colors.foreground
+                    text = "实心",
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
                 )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
-                ) {
-                    Text(
-                        text = "实心",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Switch(
-                        checked = fill,
-                        onCheckedChange = { fill = it },
-                        contentDescription = "实心"
-                    )
-                    Text(
-                        text = "显示边框",
-                        style = Theme.typography.bodySmall,
-                        color = colors.mutedForeground
-                    )
-                    Switch(
-                        checked = showBorder,
-                        onCheckedChange = { showBorder = it },
-                        contentDescription = "显示边框"
-                    )
-                }
+                Switch(
+                    checked = fill,
+                    onCheckedChange = { fill = it },
+                    contentDescription = "实心"
+                )
+                Spacer(Modifier.width(Spacing.md))
+                Text(
+                    text = "显示边框",
+                    style = Theme.typography.bodySmall,
+                    color = colors.mutedForeground
+                )
+                Switch(
+                    checked = showBorder,
+                    onCheckedChange = { showBorder = it },
+                    contentDescription = "显示边框"
+                )
             }
 
             if (filteredIcons.isEmpty()) {

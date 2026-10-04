@@ -245,17 +245,21 @@ internal fun SegmentedTrack(
             },
         ) { measurables, constraints ->
             val gap = gapPx.roundToInt()
-            val available = constraints.maxWidth - gap * (count - 1)
             val padding = Spacing.md.roundToPx() * 2
             val natural = measurables.map { it.maxIntrinsicWidth(constraints.maxHeight) + padding }
+            // An intrinsic pass (a parent sizing to content) asks with no width limit: the
+            // track then wants equal segments, each as wide as the widest label.
+            val bounded = constraints.hasBoundedWidth
+            val available = if (bounded) constraints.maxWidth - gap * (count - 1) else (natural.maxOrNull() ?: 0) * count
             val sized = segmentWidths(natural, available, padding = padding,
                 tightPadding = ControlGeometry.tabsListGap.roundToPx() * 2)
-            if (sized != widths) widths = sized
+            if (bounded && sized != widths) widths = sized
             val placeables = measurables.mapIndexed { i, m ->
                 m.measure(Constraints(minWidth = sized[i], maxWidth = sized[i], maxHeight = constraints.maxHeight))
             }
             val height = placeables.maxOfOrNull { it.height } ?: 0
-            layout(constraints.maxWidth, height) {
+            val width = if (bounded) constraints.maxWidth else sized.sum() + gap * (count - 1)
+            layout(width.coerceAtLeast(constraints.minWidth), height) {
                 var left = 0
                 placeables.forEach { p ->
                     p.place(left, (height - p.height) / 2)

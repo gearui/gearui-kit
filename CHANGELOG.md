@@ -16,6 +16,11 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- `SegmentedControl` (and the primary `Tabs`) and `BottomNavBar` measure in a parent
+  that sizes to its content (`Modifier.width(IntrinsicSize.Max)` and the like): the
+  segments come out equal at the widest label's width, a tab's pill hugs its content.
+  Before, the unbounded width reached `layout()` and the measurement threw.
+
 - Icons: `smiley`, `code` and `lightning` (Phosphor, regular), 100 icons in all.
 
 - `Slider` and `RangeSlider` (track and thumbs) use the same direction test as

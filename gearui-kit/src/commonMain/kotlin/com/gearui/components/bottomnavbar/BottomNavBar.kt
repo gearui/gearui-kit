@@ -234,13 +234,18 @@ fun BottomNavBar(
                             // The indicator follows the tab cell's width (minus the badge
                             // headroom margin on each side) instead of hugging the label,
                             // so every tab shows the same generous block.
-                            val pillW = (constraints.maxWidth - reservedW).coerceAtLeast(0)
-                            val pillP = measurables[0].measure(
-                                constraints.copy(minWidth = pillW, maxWidth = pillW)
-                            )
+                            // An intrinsic pass asks with no width limit; the pill then
+                            // hugs its content.
+                            val pillP = if (constraints.hasBoundedWidth) {
+                                val pillW = (constraints.maxWidth - reservedW).coerceAtLeast(0)
+                                measurables[0].measure(constraints.copy(minWidth = pillW, maxWidth = pillW))
+                            } else {
+                                measurables[0].measure(constraints.copy(minWidth = 0))
+                            }
                             val badgeP = measurables.getOrNull(1)
                                 ?.measure(com.tencent.kuikly.compose.ui.unit.Constraints())
-                            val totalW = constraints.maxWidth
+                            val totalW = if (constraints.hasBoundedWidth) constraints.maxWidth
+                                else (pillP.width + reservedW).coerceAtLeast(constraints.minWidth)
                             val totalH = pillP.height + reservedH / 2
                             layout(totalW, totalH) {
                                 val pillX = reservedW / 2

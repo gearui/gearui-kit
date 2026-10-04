@@ -1,5 +1,6 @@
 package com.gearui.components.swiper
 
+import com.tencent.kuikly.compose.ui.graphics.Color
 import com.gearui.components.icon.*
 import com.gearui.gestures.ownsHorizontalDrag
 import com.gearui.i18n.I18n
@@ -342,20 +343,22 @@ private fun SwiperIndicator(
             }
 
             SwiperNavigation.FRACTION -> {
-                // Fraction indicator
+                // Fraction indicator. Inside, it sits on the slide's own imagery, which the
+                // theme knows nothing about: a dark scrim under white text reads on a white
+                // slide as on a black one (white on half-transparent surface did not, in light).
                 Box(
                     modifier = Modifier
                         .clip(Theme.shapes.xl)
                         .background(
                             if (isOuter) colors.mutedForeground
-                            else colors.surface.copy(alpha = 0.5f)
+                            else Color.Black.copy(alpha = 0.6f)
                         )
                         .padding(horizontal = Spacing.md, vertical = Spacing.xs)
                 ) {
                     Text(
                         text = "${currentIndex + 1}/$itemCount",
                         style = Theme.typography.bodySmall,
-                        color = if (isOuter) colors.primaryForeground else colors.primaryForeground
+                        color = if (isOuter) colors.primaryForeground else Color.White
                     )
                 }
             }

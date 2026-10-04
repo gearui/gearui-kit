@@ -16,6 +16,10 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- `Swiper`'s inner fraction indicator ("2/6") sits on a dark scrim with white text in
+  both themes; in light it was white text on a half-transparent white pill and failed
+  contrast over light slides.
+
 - Android: text keeps its line spacing at a large system font size. KuiklyUI's
   renderer scaled the font size with the system setting but not the line height, so at
   2× the lines of wrapped text drew over each other; `Text` now hands the renderer a

@@ -1,4 +1,7 @@
 package com.gearui.components.searchbar
+import com.gearui.foundation.interaction.pressedSurfaceColor
+import com.gearui.foundation.interaction.pressScale
+import com.gearui.foundation.motion.collectIsShownPressedAsState
 import com.gearui.components.icon.*
 import com.gearui.foundation.interaction.touchTarget
 import com.gearui.components.button.ButtonSize
@@ -383,6 +386,59 @@ enum class SearchBarAlignment {
 /**
  * SearchBarWithAction - search bar with an action button
  */
+/**
+ * A search field that only opens search: it looks like [SearchBar] — same pill, glyph and
+ * placeholder — but is a button. No keyboard, no text; [onClick] goes to the search page.
+ *
+ * The entry the platforms put at the head of a list (WeChat's chat list, iOS Mail): the
+ * search itself lives on its own page, and this is the way there. Assistive technology
+ * reads it as a button named by [placeholder]. The press shows only after a short delay,
+ * as a list row's does, so a scroll that starts on it does not flash it.
+ */
+@Composable
+fun SearchBarButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: String = I18n.strings.field.searchPlaceholder,
+    shape: SearchBarShape = SearchBarShape.ROUNDED,
+    alignment: SearchBarAlignment = SearchBarAlignment.LEFT,
+    /** PRIMARY on the page background; SECONDARY (the default, as [SearchBar]) on a card, sheet or header. */
+    variant: FieldVariant = FieldVariant.SECONDARY,
+) {
+    val colors = Theme.colors
+    val shapes = Theme.shapes
+    val inputColors = LocalInputColors.current
+    val interaction = remember { MutableInteractionSource() }
+    val pressed by interaction.collectIsShownPressedAsState()
+    val shapeModifier = when (shape) {
+        SearchBarShape.ROUNDED -> FieldDefaults.shape
+        SearchBarShape.SQUARE -> shapes.none
+    }
+    val fill = if (variant == FieldVariant.SECONDARY) colors.muted else variant.fill(inputColors.background, true)
+    FieldSurface(
+        modifier.fillMaxWidth().height(FieldSizeTokens.Medium.height).pressScale(pressed),
+        shape = shapeModifier,
+        shadowed = variant.shadowed,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(shapeModifier)
+                .background(pressedSurfaceColor(fill, pressed))
+                .border(BorderWidth.thin, inputColors.border, shapeModifier)
+                .semantics { contentDescription = placeholder }
+                .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
+                .padding(horizontal = Spacing.md),
+            horizontalArrangement = if (alignment == SearchBarAlignment.CENTER) Arrangement.Center else Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(Icons.magnifyingGlass, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
+            Spacer(modifier = Modifier.width(Spacing.sm))
+            Text(text = placeholder, style = Theme.typography.bodyMedium, color = inputColors.placeholder, maxLines = 1)
+        }
+    }
+}
+
 @Composable
 fun SearchBarWithAction(
     value: String,

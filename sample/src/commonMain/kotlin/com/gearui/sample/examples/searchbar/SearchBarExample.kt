@@ -7,6 +7,9 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.components.searchbar.SearchBar
 import com.gearui.components.searchbar.SearchBarShape
 import com.gearui.components.searchbar.SearchBarWithAction
+import com.gearui.components.searchbar.SearchBarButton
+import com.gearui.components.searchbar.SearchBarAlignment
+import com.gearui.components.toast.Toast
 import com.gearui.sample.config.ComponentInfo
 import com.gearui.sample.pages.ExamplePage
 import com.gearui.sample.pages.ExampleSection
@@ -144,6 +147,18 @@ fun SearchBarExample(
                     )
                 }
             }
+        }
+
+        ExampleSection(
+            surface = SectionSurface.Plain,
+            title = "搜索入口",
+            description = "SearchBarButton：外观同搜索框，点击跳到搜索页，不弹键盘；常放在列表顶部"
+        ) {
+            SearchBarButton(
+                onClick = { Toast.show("打开搜索页") },
+                placeholder = "搜索",
+                alignment = SearchBarAlignment.CENTER,
+            )
         }
 
         // Disabled state

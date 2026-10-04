@@ -16,6 +16,11 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- `SearchBarButton`: a search field that only opens search — the look of `SearchBar`
+  (pill, glyph, placeholder) as a button named by its placeholder, for the entry at the
+  head of a list whose search lives on its own page. No keyboard or text; the press
+  shows after the list-row delay, so a scroll that starts on it does not flash it.
+
 - An editable `Stepper`'s − and + no longer take taps on the edge of the value field: their
   44 hit regions reached past the drawn buttons into it, so a tap meant to focus the field
   could change the value. With `editable = true` a region stops at its button's inner edge

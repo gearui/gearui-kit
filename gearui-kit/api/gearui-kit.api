@@ -3136,6 +3136,7 @@ public final class com/gearui/components/searchbar/SearchBarCancel : java/lang/E
 
 public final class com/gearui/components/searchbar/SearchBarKt {
 	public static final fun SearchBar (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLcom/gearui/components/searchbar/SearchBarCancel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;ZLcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;III)V
+	public static final fun SearchBarButton (Lkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;Lcom/gearui/components/searchbar/SearchBarShape;Lcom/gearui/components/searchbar/SearchBarAlignment;Lcom/gearui/foundation/field/FieldVariant;Landroidx/compose/runtime/Composer;II)V
 	public static final fun SearchBarWithAction (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
 }
 

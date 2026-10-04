@@ -16,6 +16,12 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- Android: text keeps its line spacing at a large system font size. KuiklyUI's
+  renderer scaled the font size with the system setting but not the line height, so at
+  2× the lines of wrapped text drew over each other; `Text` now hands the renderer a
+  line height converted the way the font size is (Android 14's non-linear scaling
+  included). Nothing changes at the default size or on the other platforms.
+
 - `SegmentedControl` (and the primary `Tabs`) and `BottomNavBar` measure in a parent
   that sizes to its content (`Modifier.width(IntrinsicSize.Max)` and the like): the
   segments come out equal at the widest label's width, a tab's pill hugs its content.

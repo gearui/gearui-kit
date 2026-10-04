@@ -37,7 +37,7 @@ fun Text(
 ) {
     val kuiklyStyle = KuiklyTextStyle(
         fontSize = style.fontSize,
-        lineHeight = style.lineHeight,
+        lineHeight = rendererLineHeight(style.lineHeight),
         fontWeight = style.fontWeight,
         fontFamily = style.resolveFontFamily(),
         letterSpacing = style.letterSpacing,

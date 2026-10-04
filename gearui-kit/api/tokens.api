@@ -464,6 +464,7 @@
   geometry.rateStarSize = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.rateStarSizeCompact = {"$type":"dimension","$value":{"unit":"px","value":20}}
   geometry.scrollShadowSize = {"$type":"dimension","$value":{"unit":"px","value":50}}
+  geometry.searchBarHeight = {"$type":"dimension","$value":{"unit":"px","value":36}}
   geometry.searchClearSize = {"$type":"dimension","$value":{"unit":"px","value":24}}
   geometry.selectContentPadding = {"$type":"dimension","$value":{"unit":"px","value":12}}
   geometry.selectIndicatorSlot = {"$type":"dimension","$value":{"unit":"px","value":20}}

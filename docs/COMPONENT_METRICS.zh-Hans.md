@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**181 / 220** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**182 / 221** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -332,6 +332,7 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `searchBarHeight` | 36 | — | 36 | iOS | A search field heads a list or a page, not a form: at the 48 form-field height it outweighed the rows below it. Its button form keeps a 44 hit region around the 36 pill. |
 | `searchClearSize` | 24 | 24 | — | HeroUI |  |
 
 ## select
@@ -568,6 +569,7 @@
 - heroui-native 1.0.9 theme.css --radius-4xl
 - heroui-native 1.0.9 theme.css --radius-lg
 - heroui-native 1.0.9 scroll-shadow.constants.ts DEFAULT_SHADOW_SIZE
+- UIKit UISearchBar search text field height
 - heroui-native 1.0.9 search-field.css clear button size
 - heroui-native 1.0.9 select.css content padding
 - heroui-native 1.0.9 select.css item padding-inline

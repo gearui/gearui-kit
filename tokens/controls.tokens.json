@@ -1011,6 +1011,22 @@
         }
       }
     },
+    "searchBarHeight": {
+      "$value": {
+        "value": 36,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {
+            "value": 36,
+            "ref": "UIKit UISearchBar search text field height"
+          },
+          "basis": "ios",
+          "why": "A search field heads a list or a page, not a form: at the 48 form-field height it outweighed the rows below it. Its button form keeps a 44 hit region around the 36 pill."
+        }
+      }
+    },
     "searchClearSize": {
       "$value": {
         "value": 24,

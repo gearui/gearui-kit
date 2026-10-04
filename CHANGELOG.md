@@ -16,6 +16,12 @@
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
 
+- `SearchBar` is 36 tall (`searchBarHeight`, the UIKit search field), not the 48 of a
+  form field: heading a list or a page, the 48 bar outweighed the rows below it.
+  `SearchBarWithAction`'s action is a text button beside it, as the platform's are.
+  `SearchBarButton` draws the same 36 pill inside a 44 hit region and is read once, by
+  its placeholder.
+
 - `NavBar` action icons sit 20 apart, as in iOS bars, instead of 32: an action slot is
   44 wide (the HIG hit region; `navBarActionSlot`, was 56) and the bar keeps 6 between its
   edge and the outermost slot (`navBarEdgeInset`, `NavBarDefaults.edgeInset`), so the

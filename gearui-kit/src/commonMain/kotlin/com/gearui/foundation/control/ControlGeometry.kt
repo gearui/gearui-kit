@@ -136,6 +136,7 @@ internal object ControlGeometry {
     val rateStarSize = 24.dp
     val rateStarSizeCompact = 20.dp
     val scrollShadowSize = 50.dp
+    val searchBarHeight = 36.dp
     val searchClearSize = 24.dp
     val selectContentPadding = 12.dp
     val selectIndicatorSlot = 20.dp

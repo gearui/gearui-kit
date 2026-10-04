@@ -1,4 +1,7 @@
 package com.gearui.components.searchbar
+import com.tencent.kuikly.compose.ui.semantics.role
+import com.tencent.kuikly.compose.ui.semantics.onClick
+import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
 import com.gearui.foundation.interaction.pressedSurfaceColor
 import com.gearui.foundation.interaction.pressScale
 import com.gearui.foundation.motion.collectIsShownPressedAsState
@@ -58,7 +61,6 @@ import com.gearui.foundation.field.rememberInputFeedback
 import kotlin.math.abs
 import com.gearui.i18n.I18n
 import com.gearui.foundation.field.FieldDefaults
-import com.gearui.foundation.field.FieldSizeTokens
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.border.BorderWidth
 import com.gearui.foundation.typography.IconSizes
@@ -179,7 +181,7 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
-            .height(FieldSizeTokens.Medium.height),
+            .height(ControlGeometry.searchBarHeight),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Search box body
@@ -415,26 +417,41 @@ fun SearchBarButton(
         SearchBarShape.SQUARE -> shapes.none
     }
     val fill = if (variant == FieldVariant.SECONDARY) colors.muted else variant.fill(inputColors.background, true)
-    FieldSurface(
-        modifier.fillMaxWidth().height(FieldSizeTokens.Medium.height).pressScale(pressed),
-        shape = shapeModifier,
-        shadowed = variant.shadowed,
+    // The node is the 44 hit region and takes the tap; the pill is drawn at the search
+    // field's height inside it (KuiklyUI sizes the touch area from the node itself).
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(ControlGeometry.selectionTouchTarget)
+            // Named once: the placeholder drawn inside would otherwise be read again ("Search,
+            // Search"). Clearing the subtree drops the click, so it is declared here.
+            .clearAndSetSemantics {
+                role = Role.Button
+                contentDescription = placeholder
+                onClick(label = null) { onClick(); true }
+            }
+            .clickable(interactionSource = interaction, indication = null, onClick = onClick),
+        contentAlignment = Alignment.Center,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(shapeModifier)
-                .background(pressedSurfaceColor(fill, pressed))
-                .border(BorderWidth.thin, inputColors.border, shapeModifier)
-                .semantics { contentDescription = placeholder }
-                .clickable(interactionSource = interaction, indication = null, role = Role.Button, onClick = onClick)
-                .padding(horizontal = Spacing.md),
-            horizontalArrangement = if (alignment == SearchBarAlignment.CENTER) Arrangement.Center else Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
+        FieldSurface(
+            Modifier.fillMaxWidth().height(ControlGeometry.searchBarHeight).pressScale(pressed),
+            shape = shapeModifier,
+            shadowed = variant.shadowed,
         ) {
-            Icon(Icons.magnifyingGlass, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
-            Spacer(modifier = Modifier.width(Spacing.sm))
-            Text(text = placeholder, style = Theme.typography.bodyMedium, color = inputColors.placeholder, maxLines = 1)
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(shapeModifier)
+                    .background(pressedSurfaceColor(fill, pressed))
+                    .border(BorderWidth.thin, inputColors.border, shapeModifier)
+                    .padding(horizontal = Spacing.md),
+                horizontalArrangement = if (alignment == SearchBarAlignment.CENTER) Arrangement.Center else Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(Icons.magnifyingGlass, size = FieldDefaults.trailingIconSize, tint = colors.mutedForeground)
+                Spacer(modifier = Modifier.width(Spacing.sm))
+                Text(text = placeholder, style = Theme.typography.bodyMedium, color = inputColors.placeholder, maxLines = 1)
+            }
         }
     }
 }
@@ -469,8 +486,12 @@ fun SearchBarWithAction(
 
         Spacer(modifier = Modifier.width(Spacing.sm))
 
+        // A text action, as the platform puts beside a search field: no button height
+        // has to match the 36 field, and it reads as part of the bar.
         Button(
             text = actionText,
+            type = ButtonType.TEXT,
+            size = ButtonSize.SMALL,
             disabled = !enabled,
             onClick = {
                 focusManager.clearFocus(force = true)

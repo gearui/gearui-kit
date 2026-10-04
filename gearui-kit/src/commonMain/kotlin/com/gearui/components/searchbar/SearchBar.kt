@@ -44,6 +44,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.draw.clip
 import com.tencent.kuikly.compose.ui.focus.FocusRequester
 import com.tencent.kuikly.compose.ui.focus.focusRequester
+import com.tencent.kuikly.compose.ui.layout.onGloballyPositioned
 import com.tencent.kuikly.compose.ui.graphics.SolidColor
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
@@ -151,12 +152,16 @@ fun SearchBar(
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (autoFocus && enabled) {
-            // Wait for the textarea to finish composition before requesting focus (same timing trap as MessagePage voice-to-text).
-            kotlinx.coroutines.delay(80)
+    // Autofocus once the field is laid out, as Input does. A fixed delay is a guess at
+    // when the native text view exists; on iOS 80ms after entering a page it does not
+    // yet, the focus goes to a view instance that is never rendered, and the field shows
+    // focused while no keyboard appears. Android happened to be fast enough.
+    var positioned by remember { mutableStateOf(false) }
+    var autoFocused by remember { mutableStateOf(false) }
+    LaunchedEffect(autoFocus, positioned, enabled) {
+        if (autoFocus && positioned && enabled && !autoFocused) {
+            autoFocused = true
             focusRequester.requestFocus()
-            keyboardController?.show()
         }
     }
 
@@ -307,6 +312,7 @@ fun SearchBar(
                                 .fillMaxWidth()
                                 .onFocusChanged { isFocused = it.isFocused }
                                 .focusRequester(focusRequester)
+                                .onGloballyPositioned { if (it.size.width > 0) positioned = true }
                         )
                     }
 

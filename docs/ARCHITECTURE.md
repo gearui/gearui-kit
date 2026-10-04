@@ -4,7 +4,7 @@
 
 GearUI Kit is a Kotlin Multiplatform UI framework built on Kuikly Compose. One
 codebase renders to native views on iOS, Android, Web (JS) and HarmonyOS. It is
-published as `com.gearui:gearui-kit` (currently `1.0.0-beta7`) and consumed by
+published as `com.gearui:gearui-kit` (currently `1.0.0-beta8`) and consumed by
 `privchat-ui` and other product layers.
 
 ## Layer Stack

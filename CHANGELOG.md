@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.0.0-beta8] - 2026-10-05
+
+Published to Maven Central. Not source-compatible with 1.0.0-beta7: icons are typed
+`IconSource` values instead of string names (first entry below, with its migration).
+Verified on an Android phone, the iOS simulator and Chromium: every sample page loads,
+scrolls and resizes cleanly in both themes (180 of 180) and fits a 320-wide screen
+(88 of 88); Apple's accessibility audit covers all 180 page-themes with no contrast
+failure and the same 38 small hit regions as beta7 (IndexBar letters). **Not verified by a person before release:**
+TalkBack and VoiceOver, Chinese IME composition, and a performance figure on a physical
+iPhone. **Not covered by this beta:** right-to-left layout and HarmonyOS at runtime.
+
 - **Icons are drawn vectors, typed, with fill forms (breaking).** `Icons` now carries
   every Phosphor icon (1512, regular and fill) as generated path data that GearUI draws
   on a canvas: sharp at any size, and an icon an app does not reference is left out by
@@ -15,6 +26,11 @@
   `Icon(Icons.star, fill = true)`); an app's own PNG → an `ImageIcon` in an object of the
   app's; delete the app build's task that copied gearui-kit's `assets/icons` for iOS.
   `SwipeCell` and `Timeline` draw their action and item icons (they printed the name).
+
+- `SearchBar(autoFocus = true)` raises the keyboard on iOS. It requested focus a fixed
+  80 ms after entering the page, when the native text view did not exist yet: the field
+  drew focused while no keyboard appeared. It now focuses once the field is laid out,
+  as `Input` does; the focus itself starts input on both platforms.
 
 - `SearchBar` is 36 tall (`searchBarHeight`, the UIKit search field), not the 48 of a
   form field: heading a list or a page, the 48 bar outweighed the rows below it.

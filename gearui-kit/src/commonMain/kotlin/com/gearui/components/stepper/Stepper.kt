@@ -187,16 +187,19 @@ fun Stepper(
         }
     }
     // The hit regions, over the drawn − and + (sharing their interaction, so the cells
-    // still show the press).
+    // still show the press). A 44 square reaches past a smaller button's inner edge; when
+    // the value is a text field that strip belongs to the field — a tap meant to focus it
+    // changed the value — so there a region stops at its button and keeps only the height.
+    val hitWidth = if (editable) inset + height else hit
     Box(
-        Modifier.align(Alignment.CenterStart).size(hit)
+        Modifier.align(Alignment.CenterStart).width(hitWidth).height(hit)
             .semantics { contentDescription = strings.remove }
             .clickable(enabled = canDecrease, role = Role.Button, interactionSource = decrementInteraction, indication = null) {
                 onValueChange(stepperValue(value, -step.toLong(), min, max))
             }
     )
     Box(
-        Modifier.align(Alignment.CenterEnd).size(hit)
+        Modifier.align(Alignment.CenterEnd).width(hitWidth).height(hit)
             .semantics { contentDescription = strings.add }
             .clickable(enabled = canIncrease, role = Role.Button, interactionSource = incrementInteraction, indication = null) {
                 onValueChange(stepperValue(value, step.toLong(), min, max))

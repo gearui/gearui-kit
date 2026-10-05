@@ -1,3 +1,5 @@
+import java.util.Properties
+
 // gearui-kit for HarmonyOS. Same sources as the normal build, compiled against
 // the ohos-flavoured Kuikly artifacts. The one expect/actual in the library
 // (calendar's wall clock) has its ohos actual under src/ohosArm64Main; a new
@@ -8,8 +10,13 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-// Version comes from gradle.properties; see the note there.
-val kuiklyVersion = "${providers.gradleProperty("KUIKLY_VERSION").get()}-${providers.gradleProperty("KUIKLY_KOTLIN_OHOS").get()}"
+// Version comes from this repository's gradle.properties; see the note there. Read
+// from the file rather than as Gradle properties so the value holds when another
+// build (privchat-app's ohos build) includes this project.
+val gearuiProps = Properties().apply {
+    project.file("../gradle.properties").reader().use { load(it) }
+}
+val kuiklyVersion = "${gearuiProps.getProperty("KUIKLY_VERSION")}-${gearuiProps.getProperty("KUIKLY_KOTLIN_OHOS")}"
 
 kotlin {
     ohosArm64()

@@ -97,28 +97,32 @@ needs an iOS device pass before it counts against the 1000 ms budget.
 
 ## 3. Open Risks And Limits
 
-- **Screen reader and focus traversal**: unaccepted globally. Semantics are
-  implemented and inspectable, but no screen-reader pass has been recorded.
-- **Performance**: Android meets every budget on a 2022 flagship; a low-end
-  device has not been measured. iOS has simulator numbers only; startup there
-  is 1030 ms, almost all of it before the Kotlin page exists — an iOS device
-  pass decides whether that is the simulator or the binary. Nothing runs
-  nightly.
-- **Web**: development builds pass; live viewport-resize behavior and full
-  browser interaction acceptance are open.
-- **HarmonyOS**: no connected device for visual acceptance; build evidence
-  only.
-- **Renderer limits**: hot rounded-to-square native border refresh does not
-  propagate; blur is off by default pending the four upstream gaps
-  ([VISUAL_SPEC.md](./VISUAL_SPEC.md) §5); iOS Dynamic Type unverified.
-- **Known product-level decisions carried from beta3**: the native type
-  scale is undecided, password reveal on iOS, intermittent Kuikly text-field
-  focus crossing.
-- **RTL**: typed packs exist; layout direction is not accepted.
-- Full pixel/motion consistency against
-  [VISUAL_SPEC.md](./VISUAL_SPEC.md) is unaccepted as a whole; recorded
-  deviations are the documented differences, everything else still needs
-  per-component visual passes.
+The completion condition and status of each item is in
+§8 "1.0 Release Gate" below; this section is an overview.
+
+- **Screen reader and focus traversal**: semantics are implemented, with automated
+  evidence from the Android node tree and Apple's audit (beta8: 180 of 180 page-themes,
+  no contrast failure), but no TalkBack or VoiceOver pass by a person is recorded.
+- **Performance**: every budget met on a 2022 flagship Android (Xiaomi 12 Pro, `benchmark`
+  build); iOS has simulator Release figures only (startup median about 1030 ms, mostly
+  before the Kotlin page exists); no low-end Android figure; nothing runs nightly.
+- **Web**: every sample page loads, scrolls and resizes in both themes (beta8: 180 of 180)
+  and fits 320 wide (88 of 88); keyboard operation, focus order and Safari/WebKit are not
+  accepted.
+- **HarmonyOS**: build evidence (kit compile, sample link); no runtime acceptance.
+- **Renderer limits**: blur is off by default pending four upstream gaps
+  ([VISUAL_SPEC.md](./VISUAL_SPEC.md) §5); iOS does not follow Dynamic Type (KuiklyUI
+  turns font scaling off by default); the Android system keyboard follows the system's
+  light or dark setting only (the platform has no interface for it); intermittent Kuikly
+  text-field focus crossing is a recorded limit (five kit-side workarounds, see E3).
+- **Closed beta3 decisions**: the native type scale (beta4: reference scale by default,
+  `Typographies.Platform` optional) and the iOS password reveal (beta3) are closed in E3
+  and are not open items.
+- **RTL**: typed packs exist; KuiklyUI does not forward layout direction; not supported (D4).
+- Visual: both platforms' first screens in light and dark, page ends, interaction paths
+  and narrow screens have recorded acceptance (D2, beta8 narrow sweep); full state
+  coverage (pressed, disabled, loading, focus, error; long, empty and large data; live
+  theme, accent and shape changes) is not complete per component.
 
 ## 4. Release Procedure
 
@@ -261,3 +265,63 @@ stand — B3 and D1 manual checks and D5's device figure listed as unverified in
 CHANGELOG, D3/D4/D7/D8 not covered by this beta, E2 drafts kept local. Published to
 Central from the release commit and tagged `v1.0.0-beta7`. Website sync and moving the
 downstream apps to beta7 follow separately.
+
+## 8. 1.0 Release Gate (opened 2026-10-05)
+
+The single list of what stands between the kit and 1.0. Each item carries its completion
+condition; ☐ not started, ◐ partial, ☑ done, ⊘ limited support (not done, with one promise
+everywhere). 1.0 adds no components: what remains is evidence of stability and what the kit
+promises. API, visual defaults and behaviour are reviewed separately: a change of size or
+spacing is a visual default, not an API break; turning string icons into `IconSource`
+(beta8) is a source-compatibility change.
+
+### G. Contract freeze
+
+| ID | Item | Done when | Status |
+| --- | --- | --- | --- |
+| G1 | Public API freeze | Every public component reviewed (parameter names, defaults, naming consistency) and the changes made at once; at RC1 a frozen baseline is kept with the tag, and after RC every removal, signature change or default-behaviour change has a recorded review — no green build by "change the code, refresh the dump"; the `enabled`/`disabled` family boundary stays as the spec sets it | ☐ |
+| G2 | Public behaviour freeze | Written and tested: order of controlled value and callback, confirm/cancel, dismiss reasons, late async results and cancellation, focus restoration, disabled versus read-only; key behaviours have regression tests (`apiCheck` cannot see these) | ☐ |
+| G3 | Theme and token contract | Key colours, light/dark, radius and type switch independently and open overlays follow; DTCG support, unit mapping and error handling written down; unsupported data is reported, never silently dropped | ◐ radius↔square live switch fixed (E1); the rest not accepted |
+
+### H. Defects to fix (fix whatever a user can reach)
+
+| ID | Item | Done when | Status |
+| --- | --- | --- | --- |
+| H1 | Lost characters | Plain and formatted fields lose nothing under bursts, per-key typing, paste, selection replacement and Chinese IME composition | ◐ formatted bursts fixed (a939c9d: Android 40/40, iOS 10/10); plain bursts 10/10; paste 6/6; selection replacement and IME composition untested |
+| H2 | Caret misplacement | Arrow keys into a full formatted number insert at the caret (beta7 record: one place to the left) | ☐ |
+| H3 | Clipped text at large sizes | No text clipped at Android font scale 2.0 or the largest iOS size | ◐ line height not following the font fixed (36bde64); fixed-height components such as the small Tag still clip |
+| H4 | Wrong focus | Focus never lands in the wrong field; closing an overlay returns focus to its trigger | ◐ Kuikly focus crossing recorded as a limit (E3, five kit-side workarounds); focus restoration not accepted |
+| H5 | Overlapping touch targets | The Android node-tree audit shows no adjacent tappable areas overlapping (measurement artefacts explained one by one) | ◐ editable Stepper fixed (6a854ac); one SearchBar overlap to recheck; two ComboBox overlaps are the open panel covering the field |
+
+### J. Acceptance
+
+| ID | Item | Done when | Status |
+| --- | --- | --- | --- |
+| J1 | Screen readers by a person | TalkBack and VoiceOver through the main components: name, role and state, reading order, focus inside overlays and its return; findings go to H or G2 | ☐ |
+| J2 | Chinese IME | Sogou and the system pinyin keyboard: composition, candidate commit, selection replacement, paste, in plain, formatted and multi-line fields | ☐ |
+| J3 | Device performance | An iPhone and a low-end Android measured against the §1 budgets, with device, load and method recorded | ◐ flagship Android meets them; the rest unmeasured |
+| J4 | Lifecycle and composition | Field + scrolling list + overlay + keyboard + back gesture together; background and return, rotation or window change, leaving the page, late async results: no stray scrim, wrong focus, repeated callback or lost state | ☐ |
+| J5 | Full state coverage | Pressed, disabled, loading, focus, error; long, empty and large data; live light/dark, accent and radius switches; both platforms, screenshots and a verdict per component; D2 and narrow-screen evidence kept | ◐ |
+| J6 | Consuming the artifacts | After staging the six modules, an independent project consumes only the Maven artifacts (no source composite): Android Release with R8, an iOS device link and a Web production build pass, the vector icons checked | ☐ (an independent compile was done once, at beta3) |
+| J7 | Web keyboard and focus | The main interactions work by keyboard with a visible, ordered focus; if Safari support is claimed, a WebKit pass | ☐ |
+
+### K. Support scope and promises
+
+| ID | Item | Done when | Status |
+| --- | --- | --- | --- |
+| K1 | Platform and browser matrix | Minimum Android and iOS versions, Kotlin and KuiklyUI versions, supported browsers and the verification level of each; README, website and release notes agree | ☐ |
+| K2 | Limited support | RTL (not supported), HarmonyOS (build level, runtime not accepted) and iOS Dynamic Type (not followed) stated the same in README, website and release notes; an earlier HarmonyOS test by a friend is history, not acceptance of the final candidate | ⊘ to be written |
+| K3 | Android minimum touch target | The maintainer keeps 44 everywhere (the spec follows the iOS design): recorded in the design spec as a design choice and a platform deviation from Android's 48 dp; H5 keeps adjacent targets from overlapping | ⊘ to be written |
+| K4 | Upstream issues | Blur (four), line height, focus crossing, iOS single-line ellipsis and RTL filed with minimal reproductions; filing does not replace verifying the kit's own behaviour | ◐ drafts in `docs/upstream/` (local) |
+
+### R. RC and 1.0 exit
+
+| ID | Item | Done when | Status |
+| --- | --- | --- | --- |
+| R1 | RC1 | G1–G3 frozen, every H ☑ and J6 passed: publish `1.0.0-rc1` with the frozen baseline kept by the tag | ☐ |
+| R2 | Observation | The RC runs in PrivChat and Weey production for at least 14 days with the §5 regression list run weekly; defects only, no API changes | ☐ |
+| R3 | 1.0 | The final candidate's CI green; no open severe defect (crash, data loss, a main task impossible); J1–J3 records complete; K items consistent | ☐ |
+
+Order: ① this ledger, and locating the lost characters; ② G1/G2 reviews and J1–J3 manual
+passes in parallel (a manual finding may change the API, so it cannot wait for the freeze);
+③ J6 and J4, then RC1; ④ RC closed out by R2/R3, then 1.0.

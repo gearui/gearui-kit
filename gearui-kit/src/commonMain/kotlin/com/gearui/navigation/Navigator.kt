@@ -516,11 +516,28 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     /** Exit progress 0..1 as a fraction of screen width: 0 = fully covering, 1 = fully off-screen right with the layer below exposed. */
     private val _fractionAnim = Animatable(0f)
 
+    /**
+     * Whether [_moving] is an entering page (a push) rather than a leaving one. A
+     * push runs the same two layers as a pop, the fraction going 1 -> 0 instead of
+     * 0 -> 1, so a page arrives the way it will leave: from the right, over the
+     * previous page drifting left — and the edge swipe that takes it back follows
+     * the same path.
+     */
+    private var _entering: Boolean = false
+
+    /**
+     * Set by [push] until the enter animation has moved the fraction to 1. Snapping
+     * an Animatable suspends, and the new page is composed in the frame the push
+     * happens: without this it would show at the fraction the last transition left
+     * (0, covering) for a frame, then jump off-screen to slide in — a flash.
+     */
+    private var _enterPending: Boolean by mutableStateOf(false)
+
     /** Viewport width in pixels, injected by [Navigator]'s BoxWithConstraints. */
     private var viewportWidth: Float = 0f
 
     val movingEntry: NavEntry<R>? get() = _moving
-    val transitionFraction: Float get() = _fractionAnim.value
+    val transitionFraction: Float get() = if (_enterPending) 1f else _fractionAnim.value
 
     /**
      * Composed layers, bottom to top. The render loop tracks identity
@@ -592,15 +609,61 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         get() = _moving != null || pendingEntry != null
 
     override fun push(route: R) {
+        settleEnter()
         if (isMidFlight) return
         val newKey = generateKey(route.routeName, keyCounter++)
         dismissOverlaysForRouteChange()
-        _entries.add(NavEntry<R>(route = route, key = newKey))
+        val entry = NavEntry<R>(route = route, key = newKey)
+        _entries.add(entry)
+        startEnterAnim(entry)
+    }
+
+    /**
+     * The enter animation of a push: the new top is the moving layer and the
+     * fraction runs 1 -> 0 (Push: in from the right over the previous page's
+     * parallax and scrim; Overlay/Modal: a fade in). The stack already holds the
+     * entry, so nothing is added or removed when it ends — the moving layer simply
+     * becomes the front one, at the same key, without remounting.
+     */
+    private fun startEnterAnim(entry: NavEntry<R>) {
+        val scope = animScope ?: return // detached: the page is simply there
+        _swipeMode = false
+        _entering = true
+        _enterPending = true
+        _moving = entry
+        scope.launch {
+            try {
+                _fractionAnim.snapTo(1f)
+                _enterPending = false
+                _fractionAnim.animateTo(0f, tween(durationMillis = ANIM_PUSH_MS))
+            } finally {
+                // Only the enter that is still current ends here: a later push,
+                // a pop or a reset may have taken over (see settleEnter).
+                if (_moving?.key == entry.key && _entering) endEnter()
+            }
+        }
+    }
+
+    private fun endEnter() {
+        _moving = null
+        _entering = false
+        _enterPending = false
+    }
+
+    /**
+     * A page still sliding in is finished where it is going before anything else
+     * moves the stack. Unlike a running pop, which refuses changes until it lands, an
+     * enter never blocks: a deep link pushing two pages, or a back tapped as a page
+     * arrives, must not be dropped.
+     */
+    private fun settleEnter() {
+        if (_moving != null && _entering) endEnter()
     }
 
     override fun pop(): Boolean = requestPop(PopReason.Programmatic)
 
     override fun forcePop(): Boolean {
+        settleEnter()
         // Skips onPopRequest, and is allowed through a pending confirmation:
         // this is the blunt "leave regardless" for callers that have no pending
         // state to reason about. Use confirmPendingPop when there is one — it
@@ -613,6 +676,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     }
 
     override fun confirmPendingPop(): Boolean {
+        settleEnter()
         val pending = pendingEntry ?: return false
         pendingEntry = null
         if (_moving != null) return false
@@ -630,6 +694,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     override fun popTo(route: R): Boolean = popTo { it.routeName == route.routeName }
 
     override fun popTo(predicate: (R) -> Boolean): Boolean {
+        settleEnter()
         if (isMidFlight) return false
         val idx = _entries.indexOfLast { predicate(it.route) }
         if (idx < 0 || idx == _entries.size - 1) return false
@@ -645,6 +710,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
     }
 
     override fun replace(route: R) {
+        settleEnter()
         if (isMidFlight) return
         if (_entries.isEmpty()) return
         val old = _entries.removeAt(_entries.size - 1)
@@ -662,6 +728,8 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         // exactly-once, so the animation's late finally finds nothing to do.
         pendingEntry = null
         _moving = null
+        _entering = false
+        _enterPending = false
         val snapshot = _entries.toList()
         _entries.clear()
         snapshot.forEach { notifyRemoved(it) }
@@ -676,6 +744,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
      *   the caller calls forcePop itself when ready.
      */
     internal fun requestPop(reason: PopReason): Boolean {
+        settleEnter()
         if (_entries.size <= 1) return false
         dismissOverlaysForRouteChange()
         if (pendingEntry != null) return false
@@ -752,6 +821,7 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
      * cancelSwipe all self-check and return.
      */
     internal fun beginSwipe() {
+        settleEnter()
         if (_entries.size <= 1) return
         if (_moving != null) return
         if (pendingEntry != null) return
@@ -862,6 +932,8 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
 }
 
 private const val ANIM_POP_MS: Int = 220
+/** Longer than the pop: an arriving page is read as it comes in, a leaving one is not. */
+private const val ANIM_PUSH_MS: Int = 300
 private const val ANIM_SWIPE_COMMIT_MS: Int = 160
 private const val PARKED_Z = -1f
 

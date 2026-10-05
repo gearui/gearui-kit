@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+- `Navigator` animates a push. A pushed page came in with a cut while it left with a
+  slide, so the way in and the way back — the edge swipe — did not match. A page now
+  arrives the way it leaves: a `SlidePush` page slides in from the right over the
+  previous page, which drifts left under a dimming scrim (300 ms, the pop stays 220 ms);
+  `FadeIn` and `ModalSheet` pages fade in. The new page is composed off-screen in its
+  first frame, so it does not flash. A push, pop, replace, popTo or swipe that comes while
+  a page is still arriving settles that page first instead of being refused, so a deep
+  link pushing two pages or a back tapped at once is not lost. Without an animation scope
+  (tests, a controller used outside composition) a push stays immediate.
+
 - A formatted `Input` (`InputFormat.ChinaMobile`, `BankCard`, `IdCard`) no longer drops
   characters typed faster than a hand types them — a barcode or card reader acting as a
   keyboard. The grouped text the field writes back crosses KuiklyUI's asynchronous

@@ -70,7 +70,11 @@ data class NavOptions(
     }
 }
 
-/** Enter and exit animation style. Commit 1 only implements the instant cut; [SlidePush], [FadeIn] and [ModalSheet] arrive in Commit 2. */
+/**
+ * Enter and exit animation, the same path both ways: [SlidePush] comes in from the right
+ * over the previous page and leaves to the right (the edge swipe follows it); [FadeIn]
+ * and [ModalSheet] fade in and out.
+ */
 enum class NavTransition { SlidePush, FadeIn, ModalSheet }
 
 /** Presentation semantics. */

@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+- A formatted `Input` (`InputFormat.ChinaMobile`, `BankCard`, `IdCard`) no longer drops
+  characters typed faster than a hand types them — a barcode or card reader acting as a
+  keyboard. The grouped text the field writes back crosses KuiklyUI's asynchronous
+  bridge, and when it landed after the next key it replaced the field's newer text, so
+  that key was lost (about one entry in ten for an eleven-digit burst on Android). Keys
+  under 80 ms apart are now taken as the field reports them and grouped once they stop;
+  the raw value still updates on every key, and typing at a human pace groups at once,
+  as before. Measured on the Android device: 40 of 40 bursts exact (9 of 10 before);
+  the iOS simulator 10 of 10; typing, deletion across a separator and paste unchanged.
+
 ## [1.0.0-beta8] - 2026-10-05
 
 Published to Maven Central. Not source-compatible with 1.0.0-beta7: icons are typed

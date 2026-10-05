@@ -1,4 +1,6 @@
 package com.gearui.components.input
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import com.gearui.components.icon.*
 import com.gearui.foundation.keyboard.avoidsKeyboard
 import com.gearui.foundation.interaction.LocalControlLabel
@@ -346,8 +348,16 @@ fun Input(
                         var caretState by remember {
                             mutableStateOf(TextFieldValue(shown, TextRange(shown.length)))
                         }
+                        // Keys closer together than any hand types them — a barcode or card
+                        // reader acting as a keyboard — are taken as the field reports them and
+                        // grouped once they stop. A grouped text written back crosses
+                        // KuiklyUI's asynchronous bridge, and when it lands after the next key
+                        // it replaces the field's newer text: that key is lost. Writing back
+                        // the field's own text is harmless, as the plain field shows.
+                        val burst = remember { FormatBurst() }
+                        val holdScope = rememberCoroutineScope()
                         val fieldValue =
-                            if (caretState.composition != null || caretState.text == shown) caretState
+                            if (caretState.composition != null || caretState.text == shown || burst.holding) caretState
                             else TextFieldValue(shown, TextRange(shown.length))
                         BasicTextField(
                             value = fieldValue,
@@ -355,8 +365,19 @@ fun Input(
                                 if (!readOnly && enabled) {
                                     if (format != null) {
                                         val edit = formattedInputEdit(format, fieldValue.text, newValue)
-                                        caretState = edit.fieldValue
                                         edit.raw?.let { if (it != value) onValueChange(it) }
+                                        if (burst.isBurst(newValue.text) && newValue.composition == null) {
+                                            burst.hold(fieldValue.text)
+                                            caretState = newValue
+                                            burst.release?.cancel()
+                                            burst.release = holdScope.launch {
+                                                delay(FormatBurst.GAP)
+                                                caretState = formattedInputEdit(format, burst.before, caretState).fieldValue
+                                                burst.holding = false
+                                            }
+                                        } else if (!burst.holding) {
+                                            caretState = edit.fieldValue
+                                        }
                                     } else if (maxLength == null || newValue.text.length <= maxLength) {
                                         caretState = newValue
                                         if (newValue.text != value) onValueChange(newValue.text)

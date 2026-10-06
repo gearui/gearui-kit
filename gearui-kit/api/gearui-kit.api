@@ -3716,7 +3716,7 @@ public final class com/gearui/components/tag/TagVariant : java/lang/Enum {
 }
 
 public final class com/gearui/components/textarea/TextareaKt {
-	public static final fun AutoResizeTextarea-oe6m7SA (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Lcom/gearui/foundation/field/FieldVariant;FJZLandroidx/compose/runtime/Composer;III)V
+	public static final fun AutoResizeTextarea-hCmWfeo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZLjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;ZLcom/tencent/kuikly/compose/ui/focus/FocusRequester;Lkotlin/jvm/functions/Function1;Lcom/gearui/foundation/field/FieldVariant;FJZFLandroidx/compose/runtime/Composer;III)V
 	public static final fun Textarea (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;ZZLjava/lang/String;Lcom/gearui/foundation/field/FieldVariant;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Integer;ZLcom/gearui/components/textarea/TextareaLayout;ZZLjava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 

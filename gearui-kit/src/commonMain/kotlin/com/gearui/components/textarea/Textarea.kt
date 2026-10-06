@@ -272,6 +272,11 @@ private fun TextareaInputArea(
      * patch of background.
      */
     outlined: Boolean = false,
+    /**
+     * Minimum height of the **compact** field, border included, with the text centred
+     * vertically in it. Unspecified: the padding and the line decide.
+     */
+    compactMinHeight: Dp = Dp.Unspecified,
     modifier: Modifier = Modifier,
 ) {
     val colors = Theme.colors
@@ -321,6 +326,7 @@ private fun TextareaInputArea(
         val containerShape = if (compact) Theme.shapes.lg else fieldShape
         FieldSurface(Modifier.fillMaxWidth(), shape = containerShape, shadowed = variant.shadowed) {
             Box(
+                contentAlignment = if (compact && compactMinHeight != Dp.Unspecified) Alignment.CenterStart else Alignment.TopStart,
                 modifier = Modifier
                     .fillMaxWidth()
                     .then(if (!compact) feedback else Modifier)
@@ -342,6 +348,7 @@ private fun TextareaInputArea(
 
                         } else {
                             Modifier
+                                .then(if (compactMinHeight != Dp.Unspecified) Modifier.heightIn(min = compactMinHeight) else Modifier)
                                 .clip(containerShape)
                                 .background(fieldFill)
                                 .then(
@@ -512,6 +519,15 @@ fun AutoResizeTextarea(
      * [Textarea] form-control look, which fixes a single line near 48dp.
      */
     outlined: Boolean = false,
+    /**
+     * Exact height of the collapsed (single-line) field, border included; the text is
+     * centred vertically in it and the field still grows past it as lines are added.
+     *
+     * Use this, not [verticalPadding] arithmetic, to line the field up with the controls
+     * beside it: the native line box comes out a little taller than [lineHeight], so a
+     * height computed from padding lands a dp short (a 42dp target rendered at 41dp).
+     */
+    minHeight: Dp = Dp.Unspecified,
 ) {
     val inputFocusRequester = focusRequester ?: remember { FocusRequester() }
 
@@ -540,6 +556,7 @@ fun AutoResizeTextarea(
         lineHeight = lineHeight,
         compact = true,
         outlined = outlined,
+        compactMinHeight = minHeight,
         modifier = modifier,
     )
 }

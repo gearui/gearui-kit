@@ -11,9 +11,16 @@
 - `Navigator` animates a push. A pushed page came in with a cut while it left with a
   slide, so the way in and the way back — the edge swipe — did not match. A page now
   arrives the way it leaves: a `SlidePush` page slides in from the right over the
-  previous page, which drifts left under a dimming scrim (300 ms, the pop stays 220 ms);
+  previous page, which drifts left under a dimming scrim (350 ms, the pop stays 220 ms);
   `FadeIn` and `ModalSheet` pages fade in. The new page is composed off-screen in its
-  first frame, so it does not flash. A push, pop, replace, popTo or swipe that comes while
+  first frame, so it does not flash, and starts to move about 66 ms later, once its
+  native views are built: started at once, a heavy page (a chat) lost the first frames
+  of its slide to building them and then jumped. Measured from the moving view's
+  on-screen position on an iPhone 13, eight of nine chat pushes reached the screen at
+  every frame and the ninth repeated one. An iOS host needs
+  `CADisableMinimumFrameDurationOnPhone` in its `Info.plist` for this, or any GearUI
+  animation, to run at 120 Hz on a ProMotion iPhone; without it the system holds them
+  to 60 Hz. A push, pop, replace, popTo or swipe that comes while
   a page is still arriving settles that page first instead of being refused, so a deep
   link pushing two pages or a back tapped at once is not lost. Without an animation scope
   (tests, a controller used outside composition) a push stays immediate.

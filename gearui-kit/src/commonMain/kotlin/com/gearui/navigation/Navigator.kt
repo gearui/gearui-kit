@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import com.gearui.overlay.OverlayManager
@@ -634,6 +635,15 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
         scope.launch {
             try {
                 _fractionAnim.snapTo(1f)
+                // Start the clock once the page is built, not while it is being built.
+                // The first frame composes the new page off-screen; the native views it
+                // describes are then created on the main thread, which for a page like a
+                // chat drops two or three frames on device. A clock started with the push
+                // spends that time with nothing on screen moving, then jumps a tenth of
+                // the way in. Waiting it out keeps every step of the slide. The wait is
+                // time, not frames: the views take as long at 120 Hz as at 60.
+                val composedAt = withFrameNanos { it }
+                while (withFrameNanos { it } - composedAt < ENTER_SETTLE_NANOS) { }
                 _enterPending = false
                 _fractionAnim.animateTo(0f, tween(durationMillis = ANIM_PUSH_MS))
             } finally {
@@ -933,7 +943,16 @@ internal class NavigatorState<R : NavRoute>(initialRoute: R) : NavigatorControll
 
 private const val ANIM_POP_MS: Int = 220
 /** Longer than the pop: an arriving page is read as it comes in, a leaving one is not. */
-private const val ANIM_PUSH_MS: Int = 300
+private const val ANIM_PUSH_MS: Int = 350
+/**
+ * Time a pushed page is given, after the frame that composes it, for its native views
+ * to be built before it starts to move. On an iPhone 13 a chat page's views kept the
+ * main thread 25-47 ms; started sooner, the slide's first steps were dropped frames.
+ * With this wait, read from the moving view's on-screen position, eight of nine chat
+ * pushes reached the screen at every frame and the ninth repeated one. It sits inside
+ * the press feedback the tap shows.
+ */
+private const val ENTER_SETTLE_NANOS = 66_000_000L
 private const val ANIM_SWIPE_COMMIT_MS: Int = 160
 private const val PARKED_Z = -1f
 

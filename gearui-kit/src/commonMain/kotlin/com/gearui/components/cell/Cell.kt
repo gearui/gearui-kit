@@ -1,20 +1,13 @@
 package com.gearui.components.cell
 
 import com.gearui.components.icon.*
-import com.gearui.foundation.interaction.rememberActivationTracker
-import com.gearui.foundation.interaction.activationTarget
 import com.gearui.foundation.interaction.LocalControlLabel
 import androidx.compose.runtime.CompositionLocalProvider
 import com.tencent.kuikly.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import com.gearui.components.icon.Icons
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.interaction.MutableInteractionSource
-import com.gearui.foundation.motion.rowPressFeedback
-import com.gearui.foundation.list.LocalRowInteractionSource
-import com.tencent.kuikly.compose.ui.graphics.RectangleShape
+import com.gearui.foundation.list.rowClickable
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.gearui.foundation.primitives.Icon
 import com.tencent.kuikly.compose.ui.Alignment
@@ -69,10 +62,6 @@ fun Cell(
     val colors = Theme.colors
     val tokens = if (compact) CellDefaults.Compact else CellDefaults.Default
     val interactive = onClick != null && enabled
-    // A group hands the row its source so it can watch the press and cover the
-    // separators either side; standalone, the row owns one.
-    val interaction = LocalRowInteractionSource.current ?: remember { MutableInteractionSource() }
-    val activation = rememberActivationTracker()
 
     Row(
         modifier = modifier
@@ -89,9 +78,7 @@ fun Cell(
                         // edge the way the platform's own lists do. The corners come from
                         // the card's own clip, so the first and last rows round with it
                         // and the rows between them stay square.
-                        .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false, base = colors.surface)
-                        .activationTarget(activation)
-                        .clickable(interactionSource = interaction, indication = null) { activation.mark(); onClick!!() }
+                        .rowClickable(onClick = onClick!!, background = colors.surface)
                 } else {
                     Modifier.background(colors.surface)
                 }

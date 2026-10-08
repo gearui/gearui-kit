@@ -4493,6 +4493,10 @@ public final class com/gearui/foundation/list/CellTokens {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/foundation/list/RowClickableKt {
+	public static final fun rowClickable-ua2YJiY (Lcom/tencent/kuikly/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;JZLandroidx/compose/runtime/Composer;II)Lcom/tencent/kuikly/compose/ui/Modifier;
+}
+
 public final class com/gearui/foundation/material/BorderLineStyle : java/lang/Enum {
 	public static final field Custom Lcom/gearui/foundation/material/BorderLineStyle;
 	public static final field Dashed Lcom/gearui/foundation/material/BorderLineStyle;

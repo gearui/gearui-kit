@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+- `Modifier.rowClickable` makes a row of an app's own layout — a chat in a conversation
+  list, an order in an order list — tappable with the press a `Cell` row has: the fill
+  covers the row edge to edge, shows once the finger rests (a quick tap still flashes),
+  and runs through a `CellGroup`'s separators. Pass the row's own colour as `background`
+  instead of setting a second background, which would hide the press. `Cell` now uses it.
+
 - `Navigator` animates a push. A pushed page came in with a cut while it left with a
   slide, so the way in and the way back — the edge swipe — did not match. A page now
   arrives the way it leaves: a `SlidePush` page slides in from the right over the

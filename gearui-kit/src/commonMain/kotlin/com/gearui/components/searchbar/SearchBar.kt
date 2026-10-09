@@ -2,6 +2,7 @@ package com.gearui.components.searchbar
 import com.tencent.kuikly.compose.ui.semantics.role
 import com.tencent.kuikly.compose.ui.semantics.onClick
 import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
+import com.gearui.foundation.interaction.focusOnTap
 import com.gearui.foundation.interaction.pressedSurfaceColor
 import com.gearui.foundation.interaction.pressScale
 import com.gearui.foundation.motion.collectIsShownPressedAsState
@@ -30,7 +31,6 @@ import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.shape.CircleShape
 import com.tencent.kuikly.compose.foundation.border
 import com.tencent.kuikly.compose.foundation.clickable
-import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
 import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
 import com.tencent.kuikly.compose.foundation.layout.*
@@ -237,7 +237,7 @@ fun SearchBar(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .pointerInput(enabled) { detectTapGestures { if (enabled) requestSearchFocus() } }
+                        .focusOnTap(enabled) { requestSearchFocus() }
                 )
 
                 Row(

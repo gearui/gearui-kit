@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- A scroll that starts on a text field no longer focuses it. `Input` focused the field
+  whenever the finger lifted, moved or not, and `Textarea` and `SearchBar` relied on a
+  tap detector that, over KuiklyUI's native scrolling, still took a scroll for a tap
+  (seven times in ten on iOS): the field moves with the finger, so the press never
+  leaves it. All three now focus only on a tap — no scroll took the press and it stayed
+  within the touch slop. Dragging from `Input`'s clear button no longer clears the field.
+  Checked on an iOS simulator and an Android phone: no focus in any swipe started on a
+  field, and every tap still focuses.
+
 - `Modifier.rowClickable` makes a row of an app's own layout — a chat in a conversation
   list, an order in an order list — tappable with the press a `Cell` row has: the fill
   covers the row edge to edge, shows once the finger rests (a quick tap still flashes),

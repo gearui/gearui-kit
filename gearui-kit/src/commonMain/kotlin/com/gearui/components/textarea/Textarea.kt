@@ -1,7 +1,7 @@
 package com.gearui.components.textarea
 import com.gearui.foundation.keyboard.avoidsKeyboard
+import com.gearui.foundation.interaction.focusOnTap
 import com.gearui.foundation.interaction.LocalControlLabel
-import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.gearui.foundation.field.multiLineFieldName
 import com.gearui.foundation.field.FieldSurface
 import com.gearui.foundation.field.FieldVariant
@@ -16,7 +16,6 @@ import com.gearui.foundation.motion.FeedbackDefaults
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.border
-import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
 import com.tencent.kuikly.compose.foundation.layout.*
 import com.tencent.kuikly.compose.foundation.shape.RoundedCornerShape
 import com.tencent.kuikly.compose.foundation.text.BasicTextField
@@ -333,7 +332,7 @@ private fun TextareaInputArea(
                     .hoverable(hoverSource, enabled = enabled && !compact)
                     // A tap gesture, not a clickable: a clickable container is one accessibility
                     // element, and it would hide the native text view inside it.
-                    .pointerInput(canFocus) { detectTapGestures { if (canFocus) requestInputFocus() } }
+                    .focusOnTap(canFocus) { requestInputFocus() }
                     .then(
                         if (!compact) {
                             Modifier

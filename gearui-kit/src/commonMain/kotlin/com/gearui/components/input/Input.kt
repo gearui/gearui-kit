@@ -268,7 +268,9 @@ fun Input(
         // Compose's clickable never fires when a child composable (BasicTextField)
         // consumes the event, so tapping the field itself never reaches an outer
         // clickable — that only covers taps on the padding, and cannot compensate
-        // for Kuikly's intermittent focus loss inside the EditText. pointerInput
+        // for Kuikly's intermittent focus loss inside the EditText. focusOnTap sees
+        // every press and focuses the field on a tap — and only on a tap.
+        //
         // Reference `.input__input--variant-primary`: field colour, no border, and the
         // field shadow stack (`ios:shadow-field`). The secondary variant (muted fill for
         // use on surfaces) has no shadow.
@@ -277,20 +279,7 @@ fun Input(
                 modifier = feedback.then(containerModifier)
                     .onGloballyPositioned { if (it.size.width > 0) positioned = true }
                     .hoverable(hoverSource, enabled = enabled)
-                    .pointerInput(canFocus) {
-                        if (!canFocus) return@pointerInput
-                        awaitEachGesture {
-                            val down = awaitFirstDown(requireUnconsumed = false)
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                val change = event.changes.firstOrNull { it.id == down.id }
-                                if (change == null || !change.pressed) {
-                                    requestInputFocus()
-                                    break
-                                }
-                            }
-                        }
-                    }
+                    .focusOnTap(canFocus) { requestInputFocus() }
             ) {
               Column(modifier = Modifier.fillMaxSize()) {
                 Row(
@@ -465,7 +454,7 @@ fun Input(
                     // Clear button
                     // pointerInput consumes the down event in the Initial pass so it never reaches the
                     // underlying native EditText, which would produce a visible "blur -> IME hides ->
-                    // requestFocus -> IME reappears" flicker. Clearing fires on tap only, not on drag,
+                    // requestFocus -> IME reappears" flicker. Clearing fires on a tap only, not on a drag or a scroll,
                     // and requestInputFocus is called afterwards as a safeguard.
                     if (clearable && value.isNotEmpty() && enabled && !readOnly) {
                         var clearPressed by remember { mutableStateOf(false) }
@@ -488,9 +477,12 @@ fun Input(
                                         )
                                         down.consume()
                                         clearPressed = true
+                                        val slop = viewConfiguration.touchSlop
                                         while (true) {
                                             val event = awaitPointerEvent(PointerEventPass.Initial)
                                             val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                                            // A scroll that starts on the button must not clear the field.
+                                            if (change.leftTap(down, slop)) break
                                             change.consume()
                                             if (!change.pressed) {
                                                 onClear?.invoke()

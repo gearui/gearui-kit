@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+- `ScrollView` keeps a focused field above the keyboard. It is documented for form pages
+  but was built on a bare `LazyColumn`, so a field low on the page stayed under the
+  keyboard when focused (seen on the iOS simulator), a drag did not close an open `Select`
+  menu, and scrolling did not hide the keyboard. It is now built on `GearLazyColumn`,
+  which does all three; nothing in its parameters changes.
+
 - A scroll that starts on a text field no longer focuses it. `Input` focused the field
   whenever the finger lifted, moved or not, and `Textarea` and `SearchBar` relied on a
   tap detector that, over KuiklyUI's native scrolling, still took a scroll for a tap

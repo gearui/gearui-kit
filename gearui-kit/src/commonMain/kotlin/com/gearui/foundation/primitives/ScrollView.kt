@@ -2,7 +2,6 @@ package com.gearui.foundation.primitives
 
 import androidx.compose.runtime.Composable
 import com.tencent.kuikly.compose.foundation.layout.*
-import com.tencent.kuikly.compose.foundation.lazy.LazyColumn
 import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
 import com.gearui.foundation.scroll.*
@@ -18,11 +17,16 @@ import com.gearui.foundation.scroll.*
  * - consistent padding / spacing
  * - consistent bounce / physics
  * - a consistent scrollbar policy
- * - safe area handling
+ * - what a page that scrolls owes its overlays and fields, through [GearLazyColumn]:
+ *   a drag dismisses anchored overlays (a Select's menu would otherwise float away
+ *   from its field) and hides the keyboard, and a focused field inside is kept above
+ *   the keyboard. A form page built on a bare LazyColumn left its fields under it.
+ *
+ * Safe area is not handled here: put the page in PageScaffold.
  *
  * Implementation note:
  * - KuiklyUI does not support Modifier.verticalScroll
- * - the scrolling container is built on LazyColumn
+ * - the scrolling container is built on GearLazyColumn
  *
  * Use for:
  * - ordinary page scrolling
@@ -43,7 +47,7 @@ fun ScrollView(
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    LazyColumn(
+    GearLazyColumn(
         modifier = modifier.then(physics.modifier()),
         state = state.raw,
         contentPadding = tokens.contentPadding,

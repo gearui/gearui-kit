@@ -102,3 +102,6 @@ jobs:
 
       - name: README component index guard
         run: ./scripts/ci/check_readme_component_index.sh
+
+      - name: Agent skill reference guard
+        run: ./scripts/ci/check_skill_reference.sh

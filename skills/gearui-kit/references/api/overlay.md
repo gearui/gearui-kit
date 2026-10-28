@@ -96,16 +96,15 @@ Source: `commonMain/kotlin/com/gearui/overlay/OverlayDefaults.kt`
 //
 // | Group | Shape | Members |
 // |---|---|---|
-// | panel (trigger-anchored / transient) | [panelShape] 24 (`--radius-3xl`) | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
-// | modal (centred, takes focus) | [modalShape] 24 (`--radius-3xl`) | Dialog, Tour |
-// | sheet (edge-anchored) | [sheetShape] 32 top corners (`--radius-4xl`) | BottomSheet, ActionSheet, Drawer |
+// | panel (trigger-anchored / transient) | [panelShape] = `Theme.shapes.xl`, 24 by default (`--radius-3xl`) | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
+// | modal (centred, takes focus) | [modalShape] = `Theme.shapes.xl`, 24 by default (`--radius-3xl`) | Dialog, Tour |
+// | sheet (edge-anchored) | [sheetShape] = `Theme.shapes.sheet`, 32 top corners by default (`--radius-4xl`) | BottomSheet, ActionSheet, Drawer |
 //
 // …
 object OverlayDefaults
     // members: val panelShape: Shape
     //   val modalShape: Shape
-    //   val sheetCornerRadius: Dp = ControlGeometry.radiusSheet
-    //   val sheetShape: Shape =
+    //   val sheetShape: Shape
     //   val scrimColor: Color = DefaultPalette.lightBackdrop
     //   val transitionDurationMillis: Int = FeedbackDefaults.overlayEnterDuration
     //   val exitDurationMillis: Int = FeedbackDefaults.overlayExitDuration

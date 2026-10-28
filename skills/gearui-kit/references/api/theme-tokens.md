@@ -116,9 +116,9 @@ Source: `commonMain/kotlin/com/gearui/theme/Shapes.kt`
 //   controlLarge = 16.dp — large buttons and fields
 //   xl   = 24.dp   — sheets, large cards, prominent surfaces
 //   full = 9999.dp — capsule buttons, fully rounded segmented controls
+//   sheet = 32.dp top corners — edge-anchored overlays (bottom sheet, action sheet)
 //
 // Use `CircleShape` directly (e.g. `Modifier.clip(CircleShape)`) for
-// round avatars / badges — there is no dedicated `circle` token.
 // …
 @Immutable
 data class Shapes(
@@ -129,6 +129,7 @@ data class Shapes(
     val xl: Shape,
     val full: Shape,
     val controlLarge: Shape = lg,
+    val sheet: Shape = RoundedCornerShape(topStart = ControlGeometry.radiusSheet, topEnd = ControlGeometry.radiusSheet),
 )
 
 object ShapesDefault

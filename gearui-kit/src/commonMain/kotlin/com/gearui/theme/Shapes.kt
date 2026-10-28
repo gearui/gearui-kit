@@ -17,6 +17,7 @@ import com.gearui.foundation.control.ControlGeometry
  *   controlLarge = 16.dp — large buttons and fields
  *   xl   = 24.dp   — sheets, large cards, prominent surfaces
  *   full = 9999.dp — capsule buttons, fully rounded segmented controls
+ *   sheet = 32.dp top corners — edge-anchored overlays (bottom sheet, action sheet)
  *
  * Use `CircleShape` directly (e.g. `Modifier.clip(CircleShape)`) for
  * round avatars / badges — there is no dedicated `circle` token.
@@ -34,6 +35,11 @@ data class Shapes(
     val full: Shape,
     /** Large controls, distinct from regular controls and overlay surfaces. */
     val controlLarge: Shape = lg,
+    /**
+     * Edge-anchored overlays — bottom sheet, action sheet, the calendar sheet. Only the
+     * corners facing the content are rounded. A square-corner theme sets this square too.
+     */
+    val sheet: Shape = RoundedCornerShape(topStart = ControlGeometry.radiusSheet, topEnd = ControlGeometry.radiusSheet),
 )
 
 /* ---------------------------------------------------------------------- */

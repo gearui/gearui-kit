@@ -1,5 +1,6 @@
 package com.gearui.overlay
 
+import com.gearui.theme.Theme
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.control.ControlGeometry
 import com.gearui.foundation.motion.FeedbackDefaults
@@ -22,9 +23,9 @@ import com.gearui.foundation.layout.Spacing
  *
  * | Group | Shape | Members |
  * |---|---|---|
- * | panel (trigger-anchored / transient) | [panelShape] 24 (`--radius-3xl`) | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
- * | modal (centred, takes focus) | [modalShape] 24 (`--radius-3xl`) | Dialog, Tour |
- * | sheet (edge-anchored) | [sheetShape] 32 top corners (`--radius-4xl`) | BottomSheet, ActionSheet, Drawer |
+ * | panel (trigger-anchored / transient) | [panelShape] = `Theme.shapes.xl`, 24 by default (`--radius-3xl`) | Select, Cascader and TreeSelect dropdowns, Popup, Popover, ContextMenu, Toast, Snackbar, Notification |
+ * | modal (centred, takes focus) | [modalShape] = `Theme.shapes.xl`, 24 by default (`--radius-3xl`) | Dialog, Tour |
+ * | sheet (edge-anchored) | [sheetShape] = `Theme.shapes.sheet`, 32 top corners by default (`--radius-4xl`) | BottomSheet, ActionSheet, Drawer |
  *
  * Every overlay surface uses the overlay colour and the overlay shadow stack. They
  * draw no border: in the dark theme the shadow stack is itself a 1px inset hairline.
@@ -40,18 +41,15 @@ import com.gearui.foundation.layout.Spacing
 object OverlayDefaults {
     /** Surface shape for trigger-anchored and transient overlays. */
     val panelShape: Shape
-        @Composable get() = RoundedCornerShape(ControlGeometry.radiusOverlay)
+        @Composable get() = Theme.shapes.xl
 
     /** Surface shape for centred modal cards. */
     val modalShape: Shape
-        @Composable get() = RoundedCornerShape(ControlGeometry.radiusOverlay)
-
-    /** Corner radius for edge-anchored sheets; only the corners facing content are rounded. */
-    val sheetCornerRadius: Dp = ControlGeometry.radiusSheet
+        @Composable get() = Theme.shapes.xl
 
     /** Sheet rising from the bottom: only the top corners are rounded. */
-    val sheetShape: Shape =
-        RoundedCornerShape(topStart = sheetCornerRadius, topEnd = sheetCornerRadius)
+    val sheetShape: Shape
+        @Composable get() = Theme.shapes.sheet
 
     /**
      * Modal scrim: the reference `--backdrop`, black at 20%.

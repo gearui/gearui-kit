@@ -104,7 +104,7 @@ fun MainDemoContent(startRoute: String = "", startTheme: String = "", startLangu
     val square = ShapesDefault.Default.none
     val shapes = if (settingsState.squareControls) Shapes(
         none = square, sm = square, md = square, lg = square,
-        xl = square, full = square, controlLarge = square
+        xl = square, full = square, controlLarge = square, sheet = square
     ) else ShapesDefault.Default
 
     // App as the single entry point (i18n + Theme + Overlay + Toast together)

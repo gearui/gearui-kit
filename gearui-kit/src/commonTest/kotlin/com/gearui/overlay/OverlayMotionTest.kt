@@ -50,7 +50,7 @@ class OverlayMotionTest {
     @Test
     fun overlayGeometryMatchesReference() {
         assertEquals(24f, ControlGeometry.radiusOverlay.value)
-        assertEquals(32f, OverlayDefaults.sheetCornerRadius.value)
+        assertEquals(32f, ControlGeometry.radiusSheet.value)
         assertEquals(9f, OverlayDefaults.anchorOffset.value)
         assertEquals(200, OverlayDefaults.transitionDurationMillis)
         assertEquals(150, OverlayDefaults.exitDurationMillis)

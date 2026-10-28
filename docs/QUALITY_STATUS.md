@@ -281,7 +281,7 @@ spacing is a visual default, not an API break; turning string icons into `IconSo
 | --- | --- | --- | --- |
 | G1 | Public API freeze | Every public component reviewed (parameter names, defaults, naming consistency) and the changes made at once; at RC1 a frozen baseline is kept with the tag, and after RC every removal, signature change or default-behaviour change has a recorded review — no green build by "change the code, refresh the dump"; the `enabled`/`disabled` family boundary stays as the spec sets it | ☐ |
 | G2 | Public behaviour freeze | Written and tested: order of controlled value and callback, confirm/cancel, dismiss reasons, late async results and cancellation, focus restoration, disabled versus read-only; key behaviours have regression tests (`apiCheck` cannot see these) | ☐ |
-| G3 | Theme and token contract | Key colours, light/dark, radius and type switch independently and open overlays follow; DTCG support, unit mapping and error handling written down; unsupported data is reported, never silently dropped | ◐ radius↔square live switch fixed (E1); the rest not accepted |
+| G3 | Theme and token contract | Key colours, light/dark, radius and type switch independently and open overlays follow; DTCG support, unit mapping and error handling written down; unsupported data is reported, never silently dropped | ◐ radius↔square live switch fixed (E1); light/dark, accent and shape follow live with a dialog open (iOS simulator); overlays and capsule buttons now read the theme's shapes (`xl`, new `sheet`, `full`) instead of fixed radii; Android and DTCG documentation pending |
 
 ### H. Defects to fix (fix whatever a user can reach)
 

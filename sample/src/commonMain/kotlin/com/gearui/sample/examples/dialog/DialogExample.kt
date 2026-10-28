@@ -226,6 +226,9 @@ fun DialogExample(
                                 settings.brandAccent = if (settings.brandAccent == BrandAccent.GREEN)
                                     BrandAccent.DEFAULT else BrandAccent.GREEN
                             })
+                            Button(text = "切换圆角", block = true, onClick = {
+                                settings.squareControls = !settings.squareControls
+                            })
                         }
                     },
                     actions = listOf(

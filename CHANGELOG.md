@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+- Overlays and capsule buttons follow the theme's shape axis. Dialogs, menus, toasts and
+  popovers used a fixed 24 radius, sheets a fixed 32, and `ButtonShape.ROUND`/`FILLED` a
+  fixed capsule, so a square-corner theme left them rounded. They now read
+  `Theme.shapes.xl`, the new `Theme.shapes.sheet` (32 top corners by default) and
+  `Theme.shapes.full`. A custom square preset should set `sheet` too.
+  `OverlayDefaults.sheetShape` is now `@Composable`; `OverlayDefaults.sheetCornerRadius`
+  is removed (use `ControlGeometry.radiusSheet`).
+
 - **Breaking (source): 1.0 API review renames** — see `docs/API_REVIEW_1.0.md`.
   `Input(labelPosition = "top"/"left")` → `Input(layout = FormLayout.VERTICAL/HORIZONTAL)`;
   `Input(isPassword)` → `password`; `Tabs(isScrollable)` → `scrollable`;

@@ -155,10 +155,11 @@ fun Button(
     // Shape configuration
     val buttonShape: Shape = when (shape) {
         ButtonShape.RECTANGLE -> Theme.shapes.full
-        ButtonShape.ROUND -> RoundedCornerShape(height / 2)
+        // Capsules are the theme's `full` role, so a square-corner theme squares them too.
+        ButtonShape.ROUND -> Theme.shapes.full
         ButtonShape.SQUARE -> sizedShape
         ButtonShape.CIRCLE -> CircleShape
-        ButtonShape.FILLED -> RoundedCornerShape(height / 2)
+        ButtonShape.FILLED -> Theme.shapes.full
     }
 
     // Whether it is square / circular (icon only, no text)

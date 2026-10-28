@@ -134,7 +134,9 @@ a node measured and never lets a node take touches outside its parent, so an
 overhanging or reported-only target does not work. Compact exceptions, declared:
 IndexBar letters (a drag strip; the list scrolls to the same place); links inside
 running text (WCAG 2.5.8 inline exception); the SearchBar's search glyph, whose
-44 overhangs the field row it sits in and yields to the field.
+44 overhangs the field row it sits in and yields to the field; an editable Stepper's
+− and + (44 tall, as wide as the button: any wider covers the value field, and a tap
+meant to focus the value changed it).
 
 **Press feedback is component-owned.** `LocalIndication` cannot deliver it:
 Kuikly creates and delegates the indication node, but nothing it does reaches

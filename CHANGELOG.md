@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- `Tag` grows with its text. Its fixed height clipped the label at Android's largest font
+  scale; its height is now a minimum, so it looks the same at the default size.
+
 - `SearchBar` is 44 tall, its field still drawn 36 inside, as `SearchBarButton` already was.
   The row was 36, and KuiklyUI never lets a node take touches outside its parent, so the
   Cancel button's hit region was held to 36 instead of 44. Pages using `SearchBar` gain 8 dp.

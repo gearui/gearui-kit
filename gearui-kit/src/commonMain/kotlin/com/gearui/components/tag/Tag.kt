@@ -149,7 +149,9 @@ fun Tag(
     Box(
         modifier = Modifier
             .padding(end = endReserve)
-            .height(tokens.height)
+            // At least the tag's height, growing with the text: a fixed height clipped the
+            // label at Android's largest font scale.
+            .heightIn(min = tokens.height)
             .clip(shape)
             .then(
                 if (variant == TagVariant.OUTLINE) {

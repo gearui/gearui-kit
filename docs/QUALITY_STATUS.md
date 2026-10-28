@@ -3,8 +3,9 @@
 [English](./QUALITY_STATUS.md) | [简体中文](./QUALITY_STATUS.zh-Hans.md)
 
 Where the kit stands against the 1.0.0 goal: what has been verified, by which
-gate, and what remains open. Current version: `1.0.0-beta8`, published to
-Maven Central on 2026-10-05 from tag `v1.0.0-beta8`.
+gate, and what remains open. Current version: `1.0.0`, published to
+Maven Central on 2026-10-29 from tag `v1.0.0`. Gate items still open at release
+are listed as known limitations in the CHANGELOG and RELEASE_1.0_TODO.
 
 ## 1. The 1.0.0 Goal
 

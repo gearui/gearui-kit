@@ -71,7 +71,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation("com.gearui:gearui-kit:1.0.0-beta8")   // the root coordinate only
+            implementation("com.gearui:gearui-kit:1.0.0")   // the root coordinate only
             implementation("com.tencent.kuikly-open:core:$kuikly")
             implementation("com.tencent.kuikly-open:core-annotations:$kuikly")
             implementation(compose.runtime)

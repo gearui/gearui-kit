@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-29
+
+The first stable release. The public API (`apiCheck` baseline), token schema and the
+behaviour contract (`docs/BEHAVIOR_CONTRACT.md`) are frozen: from here a breaking change
+needs a major version.
+
+Released by decision without the planned `1.0.0-rc1` and 14-day production observation.
+Known limitations — gate items still open, to be closed in 1.0.x:
+
+- Screen readers were verified at the accessibility-tree level on Android and iOS (dialogs
+  shut out the page behind them, focus moves in and back); listening with TalkBack and
+  VoiceOver by a person is still to do.
+- Performance is measured on a flagship Android phone only; iOS and low-end Android are
+  still to be measured.
+- Composite scenarios (field + list + overlay + keyboard + back gesture, background and
+  rotation) and full state coverage are still to be walked through.
+- On Android, WeType leaves a committed Chinese candidate shown in a formatted ID field until
+  the next keystroke; the reported value is correct. KuiklyUI does not report the end of the
+  composition.
+- On the Web, disabled controls can still be reached with Tab (KuiklyUI does not pass the
+  disabled state), and a switch has no switch role.
+
 - Placeholders stay on one line and end in an ellipsis when the field is too narrow:
   `SearchBar`, `Input` (single-line), `BasicTextField`, and the `DatePicker`/`TimePicker`
   triggers. On a narrow Web page, focusing the search field brought in Cancel, and its

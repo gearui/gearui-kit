@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- KuiklyUI 2.30.0 (from 2.28.0) across runtime, renderers, KSP, iOS Pods and the OpenHarmony
+  render package. Apps must move their own Kuikly artifacts and `OpenKuiklyIOSRender` tag to
+  2.30.0 with it. iOS deployment target of the renderer is unchanged (12; GearUI requires 15).
+
 - `Tag` grows with its text. Its fixed height clipped the label at Android's largest font
   scale; its height is now a minimum, so it looks the same at the default size.
 

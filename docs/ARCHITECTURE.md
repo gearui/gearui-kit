@@ -25,7 +25,7 @@ Theme/Overlay roots; runtime services never reach into component internals.
 ## Kuikly Integration
 
 - **Dependency direction.** GearUI compiles against the published Kuikly
-  artifacts (`com.tencent.kuikly-open:*`, 2.28.0 across runtime, renderers, KSP
+  artifacts (`com.tencent.kuikly-open:*`, 2.30.0 across runtime, renderers, KSP
   and iOS Pods). Kuikly source is never patched or vendored; behavior gaps are
   worked around in GearUI or recorded for upstream (see the blur findings in
   [VISUAL_SPEC.md](./VISUAL_SPEC.md)).

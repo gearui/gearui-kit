@@ -6,7 +6,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "@kuikly-open/render": "^2.28.0",
+    "@kuikly-open/render": "^2.30.0",
     "libkuikly_entry.so": "file:./src/main/cpp/types/kuikly_entry",
     "@tencent/libpag": "4.5.2",
     "@kuiklybase/knoi": "0.0.4"

@@ -283,7 +283,7 @@ The sample does this in `SampleThreadAdapter`.
 | Web (H5) | Chromium-based browsers | Every sample page loads, scrolls and resizes in both themes (Playwright, Chromium) | Keyboard operation and focus order; Safari/WebKit |
 | HarmonyOS | — | Builds end to end (kit, NAPI glue, HAP) | Running on a device or emulator |
 
-Toolchain: Kotlin **2.1.21** (must equal KuiklyUI's), KuiklyUI **2.28.0**, Compose Multiplatform **1.7.3**.
+Toolchain: Kotlin **2.1.21** (must equal KuiklyUI's), KuiklyUI **2.30.0**, Compose Multiplatform **1.7.3**.
 
 **Limited support — stated the same everywhere:**
 

@@ -21,7 +21,7 @@ rather than writing them from memory.
 | | Version |
 | --- | --- |
 | Kotlin | **2.1.21** — must equal KuiklyUI's Kotlin; a mismatch fails at dependency resolution |
-| KuiklyUI | 2.28.0, artifacts `com.tencent.kuikly-open:*:2.28.0-2.1.21` |
+| KuiklyUI | 2.30.0, artifacts `com.tencent.kuikly-open:*:2.30.0-2.1.21` |
 | Compose Multiplatform plugin | 1.7.3 |
 | KSP | 2.1.21-2.0.1 (Kuikly's `@Page` processor) |
 | Android | minSdk 21, compileSdk 36 |
@@ -56,7 +56,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.1.21-2.0.1"
 }
 
-val kuikly = "2.28.0-2.1.21"
+val kuikly = "2.30.0-2.1.21"
 
 kotlin {
     androidTarget()

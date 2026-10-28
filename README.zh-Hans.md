@@ -279,7 +279,7 @@ sample 的做法见 `SampleThreadAdapter`。
 | Web（H5） | Chromium 内核浏览器 | 示例每个页面在明暗两种主题下加载、滚动、缩放正常（Playwright，Chromium） | 键盘操作与焦点顺序；Safari/WebKit |
 | HarmonyOS | — | 端到端构建通过（Kit、NAPI 胶水、HAP） | 真机或模拟器运行 |
 
-工具链：Kotlin **2.1.21**（必须与 KuiklyUI 一致）、KuiklyUI **2.28.0**、Compose Multiplatform **1.7.3**。
+工具链：Kotlin **2.1.21**（必须与 KuiklyUI 一致）、KuiklyUI **2.30.0**、Compose Multiplatform **1.7.3**。
 
 **有限支持（各处说法一致）：**
 

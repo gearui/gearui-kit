@@ -26,7 +26,7 @@ Kuikly Compose             渲染桥：每个 Compose 节点对应一个原生�
 
 - **依赖方向。** GearUI 编译依赖 Kuikly 的已发布制品
   （`com.tencent.kuikly-open:*`，runtime、渲染器、KSP、iOS Pods 全部对齐
-  2.28.0）。绝不修改或内嵌 Kuikly 源码；行为缺口要么在 GearUI 内规避，要么
+  2.30.0）。绝不修改或内嵌 Kuikly 源码；行为缺口要么在 GearUI 内规避，要么
   记录后反馈上游（模糊渲染的四项缺口见
   [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md)）。
 - **渲染模型。** Kuikly 把每个 Compose 节点映射为真实平台视图。GearUI 围绕

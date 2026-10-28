@@ -1,4 +1,5 @@
 package com.gearui.components.searchbar
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.semantics.role
 import com.tencent.kuikly.compose.ui.semantics.onClick
 import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
@@ -271,10 +272,14 @@ fun SearchBar(
                         contentAlignment = if (isCenter && value.isEmpty()) Alignment.Center else Alignment.CenterStart
                     ) {
                         if (value.isEmpty()) {
+                            // One line: the field narrows when Cancel appears, and a wrapped
+                            // placeholder spilled out of the field's height.
                             Text(
                                 text = placeholder,
                                 style = Theme.typography.bodyMedium,
-                                color = inputColors.placeholder
+                                color = inputColors.placeholder,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
 

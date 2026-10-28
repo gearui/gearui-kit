@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- Placeholders stay on one line and end in an ellipsis when the field is too narrow:
+  `SearchBar`, `Input` (single-line), `BasicTextField`, and the `DatePicker`/`TimePicker`
+  triggers. On a narrow Web page, focusing the search field brought in Cancel, and its
+  placeholder wrapped onto a second line cut off by the field.
+
 - KuiklyUI 2.30.0 (from 2.28.0) across runtime, renderers, KSP, iOS Pods and the OpenHarmony
   render package. Apps must move their own Kuikly artifacts and `OpenKuiklyIOSRender` tag to
   2.30.0 with it. iOS deployment target of the renderer is unchanged (12; GearUI requires 15).

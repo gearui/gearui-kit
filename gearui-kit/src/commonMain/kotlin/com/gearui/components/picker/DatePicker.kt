@@ -1,5 +1,6 @@
 package com.gearui.components.picker
 
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.components.icon.*
 import com.gearui.components.calendar.CalendarDate
 import com.gearui.foundation.control.ControlGeometry
@@ -70,6 +71,9 @@ fun DatePickerInput(
             ) {
                 Text(
                     text = value.ifEmpty { placeholder },
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = Theme.typography.bodyMedium,
                     color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
                 )
@@ -138,6 +142,9 @@ fun TimePickerInput(
             ) {
                 Text(
                     text = value.ifEmpty { placeholder },
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = Theme.typography.bodyMedium,
                     color = if (value.isNotEmpty()) LocalInputColors.current.foreground else LocalInputColors.current.placeholder
                 )

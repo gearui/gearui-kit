@@ -1,5 +1,6 @@
 package com.gearui.foundation.primitives
 
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import androidx.compose.runtime.Composable
 import com.gearui.foundation.field.fieldName
 import com.gearui.theme.Theme
@@ -100,7 +101,9 @@ fun BasicTextField(
                     Text(
                         text = placeholder,
                         style = Theme.typography.bodyMedium,
-                        color = colors.mutedForeground
+                        color = colors.mutedForeground,
+                        maxLines = maxLines,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
                 innerTextField()

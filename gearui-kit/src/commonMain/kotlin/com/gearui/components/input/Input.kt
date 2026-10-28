@@ -1,5 +1,6 @@
 package com.gearui.components.input
 
+import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.gearui.components.form.FormLayout
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
@@ -444,7 +445,9 @@ fun Input(
                                         Text(
                                             text = placeholder,
                                             style = inputTextStyle,
-                                            color = inputColors.placeholder
+                                            color = inputColors.placeholder,
+                                            maxLines = maxLines,
+                                            overflow = TextOverflow.Ellipsis,
                                         )
                                     }
                                     innerTextField()

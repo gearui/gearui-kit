@@ -79,7 +79,7 @@
   - ✅ J1.1 节点树：Android 88 页审计（名称/角色/状态齐全，无未标注可点节点）；iOS 90/90 页 XCUITest 无障碍审计，发现项与 10-05 基线同类且已解释（Text clipped 误报、示例描述含代码标识、IndexBar 声明例外）
   - ✅ J1.2 对话框打开时背后页面可被 TalkBack 读到（**本轮发现**）→ Android 宿主 `AccessibilityLayers` 按 `gearuiLayer` 把模态层以外设为 NO_HIDE_DESCENDANTS；真机 `uiautomator dump --compressed`（TalkBack 可见树）：打开 13→4 个节点（只剩标题/正文/取消/确认），返回、确认关闭后恢复 14；下层页本就不在树里
   - ✅ J1.3 iOS 宿主 `AccessibilityLayers.swift`（`setCss_gearuiLayer:` 由 Kuikly 反射调用）：模态打开时其外全部 accessibilityElementsHidden，VoiceOver 用 screenChanged 移入、关闭后回到原焦点；iOS 18.2 模拟器 XCUITest 可见元素：打开前 14，打开 5（应用根 + 标题/正文/取消/确认），关闭后 15；浮层相关 8 页审计与上轮逐条一致
-  - ⬜ J1.4 开 TalkBack/VoiceOver 实听：焦点移入对话框、关闭后回到触发者、状态播报
+  - ⬜ J1.4 开 TalkBack/VoiceOver 实听：焦点移入对话框、关闭后回到触发者、状态播报。需要人来听：我听不到语音；在共享真机上用 adb 开 TalkBack 会先弹 TalkBack 新版引导页和「Android 无障碍套件」通知权限请求（10-28 试过一次，已按返回关掉、未授权，TalkBack 已关、设置已恢复）。树层面的证据见 J1.1–J1.3
   - ✅ J1.5 Android 审计报的「点击区不足 44」逐个实测：复选/单选行（节点 28，点节点外 44 内能切换）、上传删除（节点被卡片裁成 32，卡片外角上也能点中）、输入框 20 均为测量假象；NavBar 搜索为 SearchBar 图标（已声明例外）；唯一真低于 44 的是可编辑 Stepper 的 −/+（38 宽，H5.1 有意取舍），补进 VISUAL_SPEC §4 例外（中英）
 - ✅ **J2 中文输入法**：搜狗、微信输入法、系统键盘；组字、选词、选中替换、粘贴；普通/格式化/多行输入框
   - Android 真机（搜狗九宫格、微信输入法全键盘；本机系统键盘为 AOSP 英文、无系统拼音）：普通框组字上屏无丢字/重复；多行框组字 + 回车换行正确（`你\n国内`）；手机号框弹数字键盘，逐键与快速连按各 11 位无丢字；选中「好」后打 ma 选「吗」→「你吗」

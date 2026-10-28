@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- A centred overlay — a dialog — stays above the keyboard. A dialog with a field kept its
+  place on screen when the field was focused, and its actions sat under the keyboard; it
+  now centres in the space the keyboard leaves. Checked on the iOS simulator and an Android
+  phone.
+- On Android, BACK with the keyboard up only hides the keyboard, as elsewhere on Android.
+  It used to pop the page or close the dialog and leave the keyboard over a screen with no
+  field. The next BACK leaves as before.
+- The minimum iOS version is 15.0. Xcode 27 no longer builds for 14.0.
+
 - `ScrollView` keeps a focused field above the keyboard. It is documented for form pages
   but was built on a bare `LazyColumn`, so a field low on the page stayed under the
   keyboard when focused (seen on the iOS simulator), a drag did not close an open `Select`

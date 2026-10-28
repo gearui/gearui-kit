@@ -292,6 +292,9 @@ spacing is a visual default, not an API break; turning string icons into `IconSo
 | H3 | Clipped text at large sizes | No text clipped at Android font scale 2.0 or the largest iOS size | ◐ line height not following the font fixed (36bde64); fixed-height components such as the small Tag still clip |
 | H4 | Wrong focus | Focus never lands in the wrong field; closing an overlay returns focus to its trigger | ◐ Kuikly focus crossing recorded as a limit (E3, five kit-side workarounds); focus restoration not accepted |
 | H5 | Overlapping touch targets | The Android node-tree audit shows no adjacent tappable areas overlapping (measurement artefacts explained one by one) | ◐ editable Stepper fixed (6a854ac); one SearchBar overlap to recheck; two ComboBox overlaps are the open panel covering the field |
+| H6 | Dialog actions under the keyboard | A field in a centred dialog focused: the dialog's actions stay above the keyboard | ☑ centred overlays centre above the keyboard; iOS simulator and Android device |
+| H7 | iOS deployment target | The sample builds with the current Xcode without overrides | ☑ minimum iOS raised to 15.0 (Xcode 27 rejects 14.0) |
+| H8 | Orphaned keyboard on Android BACK | With the keyboard up, BACK hides it before it pops a page or closes an overlay | ☑ Navigator and the overlay host; checked on an Android device |
 
 ### J. Acceptance
 

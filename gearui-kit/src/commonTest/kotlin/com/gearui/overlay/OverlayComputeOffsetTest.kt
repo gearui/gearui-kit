@@ -138,4 +138,18 @@ class OverlayComputeOffsetTest {
         val offset = computeOffset(anchor, popupSize, screenSize, opts, doubleDensity)
         assertEquals(IntOffset(116, 142), offset)
     }
+
+    @Test
+    fun aCentredOverlayCentresAboveTheKeyboard() {
+        // 800 tall, keyboard 300: the visible part is 500, so a 40-tall dialog sits at 230.
+        val offset = computeOffset(null, popupSize, screenSize, options(OverlayPlacement.Center), unitDensity, keyboardHeight = 300)
+        assertEquals(IntOffset(160, 230), offset)
+    }
+
+    @Test
+    fun aCentredOverlayTallerThanTheVisiblePartKeepsItsTopOnScreen() {
+        val tall = IntSize(80, 600)
+        val offset = computeOffset(null, tall, screenSize, options(OverlayPlacement.Center), unitDensity, keyboardHeight = 300)
+        assertEquals(0, offset.y)
+    }
 }

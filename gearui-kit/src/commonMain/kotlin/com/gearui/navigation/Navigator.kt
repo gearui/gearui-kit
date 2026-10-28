@@ -24,6 +24,10 @@ import com.gearui.gestures.PageSwipeBackGate
 import com.gearui.gestures.SwipeBackConfig
 import com.gearui.gestures.swipeBack
 import com.tencent.kuikly.compose.BackHandler
+import com.gearui.foundation.keyboard.keyboardHeight
+import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
+import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
+import com.tencent.kuikly.compose.ui.unit.dp
 import com.tencent.kuikly.compose.animation.core.Animatable
 import com.tencent.kuikly.compose.animation.core.spring
 import com.tencent.kuikly.compose.animation.core.tween
@@ -163,9 +167,21 @@ fun <R : NavRoute> Navigator(
     // host in exactly the moments the app most needs to keep it. requestPop is
     // already guarded, so a BACK arriving in those moments is swallowed rather
     // than starting a second pop.
+    //
+    // With the keyboard up, BACK only puts it away, as everywhere on Android; the next
+    // BACK leaves the page. Popping straight away left the keyboard over the page
+    // underneath, with no field to type into (seen on a device).
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardUp = keyboardHeight() > 0.dp
     if (handleBack && state.hasBackStack) {
         BackHandler {
-            state.requestPop(PopReason.BackButton)
+            if (keyboardUp) {
+                runCatching { focusManager.clearFocus(force = true) }
+                keyboardController?.hide()
+            } else {
+                state.requestPop(PopReason.BackButton)
+            }
         }
     }
 

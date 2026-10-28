@@ -33,6 +33,7 @@ import com.tencent.kuikly.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tencent.kuikly.compose.ui.unit.*
 import com.tencent.kuikly.compose.ui.zIndex
 import com.gearui.runtime.LocalRuntimeEnvironment
+import com.gearui.foundation.keyboard.keyboardHeight
 import kotlinx.coroutines.delay
 
 /**
@@ -119,15 +120,25 @@ fun OverlayHost(
     // .isNotEmpty()` before invoking anything, so a handler left registered with
     // nothing to dismiss swallows BACK entirely. Being composed above Navigator
     // makes this `list.last()`, which is what gets invoked.
+    //
+    // With the keyboard up, the first BACK only puts it away, as everywhere on Android:
+    // a field in a dialog is being typed into, and BACK closing the dialog left the
+    // keyboard on screen over a page with no field (seen on a device).
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardUp = keyboardHeight() > 0.dp
     val backDismissible = controller.items.any { !it.exiting.value && it.options.dismissPolicy.backPress }
     if (backDismissible) {
         BackHandler {
-            OverlayManager.notifyBackPress()
+            if (keyboardUp) {
+                runCatching { focusManager.clearFocus(force = true) }
+                keyboardController?.hide()
+            } else {
+                OverlayManager.notifyBackPress()
+            }
         }
     }
 
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
     val handledIds = remember(controller) { mutableSetOf<Long>() }
     val pendingKeyboardDismiss = controller.items
         .any { !it.exiting.value && it.options.dismissKeyboardOnShow && it.id !in handledIds }
@@ -275,13 +286,20 @@ private fun OverlayItemLayout(
     // Whether the position is settled; popupSize has to be measured first.
     val isPositionReady = popupSize != IntSize.Zero && screenSize != IntSize.Zero
 
-    val offset = remember(item.anchorBounds, popupSize, screenSize, item.options) {
+    // The keyboard is drawn by the system over the bottom of the screen. A centred
+    // overlay — a dialog with a field in it — centres in the space left above it, as
+    // an iOS alert does; without this the dialog's actions sat under the keyboard.
+    // keyboardHeight() takes the host's report (Android) and the kit's own observer
+    // (iOS, where Kuikly reports none); the runtime environment alone is 0 on iOS.
+    val keyboardPx = with(density) { keyboardHeight().roundToPx() }
+    val offset = remember(item.anchorBounds, popupSize, screenSize, item.options, keyboardPx) {
         computeOffset(
             anchor = item.anchorBounds,
             popupSize = popupSize,
             screenSize = screenSize,
             options = item.options,
-            density = density
+            density = density,
+            keyboardHeight = keyboardPx,
         )
     }
 
@@ -530,15 +548,19 @@ internal fun computeOffset(
     popupSize: IntSize,
     screenSize: IntSize,
     options: OverlayOptions,
-    density: Density
+    density: Density,
+    /** Pixels the keyboard covers at the bottom of the screen; 0 when it is down. */
+    keyboardHeight: Int = 0,
 ): IntOffset {
 
     if (anchor == null) {
-        // No anchor: centre on screen.
+        // No anchor: centre in the part of the screen the keyboard leaves visible. A dialog
+        // taller than that keeps its top on screen; its own body scrolls.
+        val visibleHeight = (screenSize.height - keyboardHeight).coerceAtLeast(0)
         return when (options.placement) {
             OverlayPlacement.Center -> IntOffset(
                 ((screenSize.width - popupSize.width) / 2).coerceAtLeast(0),
-                ((screenSize.height - popupSize.height) / 2).coerceAtLeast(0)
+                ((visibleHeight - popupSize.height) / 2).coerceAtLeast(0)
             )
             OverlayPlacement.Fullscreen -> IntOffset.Zero
             else -> IntOffset.Zero

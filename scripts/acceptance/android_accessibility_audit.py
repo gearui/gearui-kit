@@ -9,7 +9,8 @@ rendered, tree freshly dumped) and this records, in traversal order, what each
 labelled node would announce, and flags:
 
   unlabeled   a clickable or checkable node with no text or description
-  small       a clickable node under 48 x 48 dp (Android's minimum touch target)
+  small       a clickable node under 44 x 44 dp (GearUI's touch target on every platform;
+              Android's guideline is 48 dp — see VISUAL_SPEC §4)
   overlap     two clickable nodes whose touch areas intersect (an enlarged target
               stealing its neighbour's taps)
 
@@ -33,7 +34,7 @@ def bounds(node):
 
 def audit(tree, dev):
     findings, lines, targets = [], [], []
-    min_px = 48 * dev.density
+    min_px = 44 * dev.density
     for node in tree.iter("node"):
         if node.get("package") != PACKAGE:
             continue

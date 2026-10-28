@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- `SearchBar` is 44 tall, its field still drawn 36 inside, as `SearchBarButton` already was.
+  The row was 36, and KuiklyUI never lets a node take touches outside its parent, so the
+  Cancel button's hit region was held to 36 instead of 44. Pages using `SearchBar` gain 8 dp.
+
 - **Behaviour: an overlay's `onDismiss` is no longer called when the caller closes it.**
   Confirming a `ConfirmDialog` also reported a cancel: the caller set `visible = false`,
   closing the overlay called `onDismiss`, which defaults to `onCancel`. Every overlay

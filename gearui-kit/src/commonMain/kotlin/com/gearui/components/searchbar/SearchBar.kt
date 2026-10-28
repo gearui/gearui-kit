@@ -186,12 +186,15 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer { alpha = if (enabled) 1f else FeedbackDefaults.disabledOpacity }
-            .height(ControlGeometry.searchBarHeight),
+            // The row is the 44 hit region; the field draws 36 tall inside it, as UIKit's
+            // search field sits in a taller bar. KuiklyUI never lets a node take touches
+            // outside its parent, so a 36-tall row held Cancel's target to 36.
+            .height(ControlGeometry.selectionTouchTarget),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Search box body
         FieldSurface(
-            Modifier.weight(1f).fillMaxHeight(),
+            Modifier.weight(1f).height(ControlGeometry.searchBarHeight),
             shape = shapeModifier,
             shadowed = variant.shadowed,
         ) {

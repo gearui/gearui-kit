@@ -60,6 +60,7 @@ enum class OverlayEvent
 class OverlayController
     // members: fun show( anchorBounds: Rect? = null, options: OverlayOptions = OverlayOptions(), onDismiss: (() -> Unit)? = null, passThroughBounds: Rect? = null, content: @Composable () -> Unit )
     //   fun dismiss(id: Long)
+    //   fun close(id: Long)
     //   fun updateAnchor(id: Long, anchorBounds: Rect?, passThroughBounds: Rect?)
     //   fun dismissAll()
     //   fun hasOverlay(): Boolean = _items.any { !it.exiting.value }

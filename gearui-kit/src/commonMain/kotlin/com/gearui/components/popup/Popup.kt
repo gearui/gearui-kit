@@ -99,7 +99,7 @@ object Popup {
                 }
                 anchorBoundsWhenOpened = anchorBounds
             } else {
-                overlayId?.let { controller.dismiss(it) }
+                overlayId?.let { controller.close(it) }
                 overlayId = null
                 anchorBoundsWhenOpened = null
             }
@@ -121,7 +121,7 @@ object Popup {
         // Dismiss when the component leaves composition
         DisposableEffect(Unit) {
             onDispose {
-                overlayId?.let { controller.dismiss(it) }
+                overlayId?.let { controller.close(it) }
             }
         }
     }

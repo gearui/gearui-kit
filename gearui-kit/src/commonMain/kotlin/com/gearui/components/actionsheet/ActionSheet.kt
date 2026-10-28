@@ -278,14 +278,14 @@ fun ActionSheetContent(
                 currentOverlayContent.value()
             }
         } else {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
             overlayId = null
         }
     }
 
     DisposableEffect(Unit) {
         onDispose {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
         }
     }
 }

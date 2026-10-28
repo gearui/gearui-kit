@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+- **Behaviour: an overlay's `onDismiss` is no longer called when the caller closes it.**
+  Confirming a `ConfirmDialog` also reported a cancel: the caller set `visible = false`,
+  closing the overlay called `onDismiss`, which defaults to `onCancel`. Every overlay
+  component (Dialog, ConfirmDialog, AlertDialog, BottomSheet, ActionSheet, Drawer, Popup,
+  ImageViewer) now reports `onDismiss` only for closes the runtime made — Back, an outside
+  tap, scroll, timeout, a route change. New `OverlayController.close(id)` closes without
+  reporting, for custom overlays. See `docs/BEHAVIOR_CONTRACT.md`.
+
 - A formatted `Input` (phone, bank card, ID) replaces a selection when you type over it.
   Selecting with Shift+arrow collapsed the selection to a caret at its left end, so the
   next key was inserted there instead, and a full number lost its last digits.

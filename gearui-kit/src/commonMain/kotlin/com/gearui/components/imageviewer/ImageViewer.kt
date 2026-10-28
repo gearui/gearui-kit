@@ -155,13 +155,13 @@ fun ImageViewer(
                 },
             ) { surface() }
         } else {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
             overlayId = null
         }
     }
 
     DisposableEffect(Unit) {
-        onDispose { overlayId?.let { controller.dismiss(it) } }
+        onDispose { overlayId?.let { controller.close(it) } }
     }
 }
 

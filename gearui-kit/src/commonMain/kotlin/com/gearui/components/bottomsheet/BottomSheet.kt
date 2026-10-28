@@ -126,14 +126,14 @@ fun BottomSheet(
                 currentContent()
             }
         } else {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
             overlayId = null
         }
     }
 
     DisposableEffect(Unit) {
         onDispose {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
         }
     }
 }
@@ -210,14 +210,14 @@ fun BottomSheet(
                 )
             }
         } else {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
             overlayId = null
         }
     }
 
     DisposableEffect(Unit) {
         onDispose {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
         }
     }
 }
@@ -588,14 +588,14 @@ object BottomSheet {
                     BottomSheetHostSurface(content = currentContent)
                 }
             } else {
-                overlayId?.let { controller.dismiss(it) }
+                overlayId?.let { controller.close(it) }
                 overlayId = null
             }
         }
 
         DisposableEffect(Unit) {
             onDispose {
-                overlayId?.let { controller.dismiss(it) }
+                overlayId?.let { controller.close(it) }
             }
         }
     }

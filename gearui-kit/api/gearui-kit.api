@@ -6055,6 +6055,7 @@ public final class com/gearui/navigation/TabHostKt {
 public final class com/gearui/overlay/OverlayController {
 	public static final field $stable I
 	public fun <init> ()V
+	public final fun close (J)V
 	public final fun dismiss (J)V
 	public final fun dismissAll ()V
 	public final fun dismissByPolicy (Lkotlin/jvm/functions/Function1;)V

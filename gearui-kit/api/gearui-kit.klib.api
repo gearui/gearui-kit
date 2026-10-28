@@ -4068,6 +4068,7 @@ final class com.gearui.navigation/NavOptions { // com.gearui.navigation/NavOptio
 final class com.gearui.overlay/OverlayController { // com.gearui.overlay/OverlayController|null[0]
     constructor <init>() // com.gearui.overlay/OverlayController.<init>|<init>(){}[0]
 
+    final fun close(kotlin/Long) // com.gearui.overlay/OverlayController.close|close(kotlin.Long){}[0]
     final fun dismiss(kotlin/Long) // com.gearui.overlay/OverlayController.dismiss|dismiss(kotlin.Long){}[0]
     final fun dismissAll() // com.gearui.overlay/OverlayController.dismissAll|dismissAll(){}[0]
     final fun dismissByPolicy(kotlin/Function1<com.gearui.overlay/OverlayDismissPolicy, kotlin/Boolean>) // com.gearui.overlay/OverlayController.dismissByPolicy|dismissByPolicy(kotlin.Function1<com.gearui.overlay.OverlayDismissPolicy,kotlin.Boolean>){}[0]

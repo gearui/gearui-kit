@@ -160,14 +160,14 @@ fun Drawer(
             kotlinx.coroutines.delay(16) // wait one frame so the overlay has rendered
             animationTarget.value = true
         } else if (!shouldShowOverlay && overlayId != null) {
-            controller.dismiss(overlayId!!)
+            controller.close(overlayId!!)
             overlayId = null
         }
     }
 
     DisposableEffect(Unit) {
         onDispose {
-            overlayId?.let { controller.dismiss(it) }
+            overlayId?.let { controller.close(it) }
         }
     }
 }

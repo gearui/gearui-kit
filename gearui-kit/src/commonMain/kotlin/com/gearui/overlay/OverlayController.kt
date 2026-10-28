@@ -89,6 +89,18 @@ class OverlayController {
     }
 
     /**
+     * Closes an Overlay because its caller said so — the caller set `visible = false`, or
+     * the component left the composition. Plays the exit like [dismiss] but does not call
+     * `onDismiss`: the caller already knows, and calling it would report a second outcome —
+     * a confirmed dialog also reporting a cancel through `onDismiss = onCancel`.
+     */
+    fun close(id: Long) {
+        val item = _items.find { it.id == id } ?: return
+        if (item.exiting.value) return
+        item.exiting.value = true
+    }
+
+    /**
      * Moves an open Overlay to a new anchor — its trigger moved (a resize, a scroll, the
      * keyboard) — without closing and reopening it.
      */

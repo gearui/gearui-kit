@@ -188,7 +188,7 @@ fun rememberSwipeCellGroupState(): SwipeCellGroupState {
  * @param rightActions actions on the right, revealed by swiping left
  * @param tokens design tokens controlling size, spacing and animation
  * @param disabled whether swiping is disabled
- * @param onChange called when the swipe state changes
+ * @param onOpenChange called when the swipe state changes
  * @param content the main content
  */
 @Composable
@@ -200,7 +200,7 @@ fun SwipeCell(
     rightActions: List<SwipeCellAction> = emptyList(),
     tokens: SwipeCellTokens = SwipeCellDefaults.Default,
     disabled: Boolean = false,
-    onChange: ((SwipeCellDirection, Boolean) -> Unit)? = null,
+    onOpenChange: ((SwipeCellDirection, Boolean) -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val colors = Theme.colors
@@ -330,31 +330,31 @@ fun SwipeCell(
                                             abs(velocity) > velocityThreshold -> {
                                                 if (velocity > 0 && leftActions.isNotEmpty()) {
                                                     state.openLeft(leftActionsWidth)
-                                                    onChange?.invoke(SwipeCellDirection.RIGHT, true)
+                                                    onOpenChange?.invoke(SwipeCellDirection.RIGHT, true)
                                                 } else if (velocity < 0 && rightActions.isNotEmpty()) {
                                                     state.openRight(rightActionsWidth)
-                                                    onChange?.invoke(SwipeCellDirection.LEFT, true)
+                                                    onOpenChange?.invoke(SwipeCellDirection.LEFT, true)
                                                 } else {
                                                     state.close()
-                                                    onChange?.invoke(state.currentDirection, false)
+                                                    onOpenChange?.invoke(state.currentDirection, false)
                                                 }
                                             }
                                             // Swiped left past the threshold: open the right actions
                                             currentOffset < -rightActionsWidth * openThreshold && rightActions.isNotEmpty() -> {
                                                 state.openRight(rightActionsWidth)
-                                                onChange?.invoke(SwipeCellDirection.LEFT, true)
+                                                onOpenChange?.invoke(SwipeCellDirection.LEFT, true)
                                             }
                                             // Swiped right past the threshold: open the left actions
                                             currentOffset > leftActionsWidth * openThreshold && leftActions.isNotEmpty() -> {
                                                 state.openLeft(leftActionsWidth)
-                                                onChange?.invoke(SwipeCellDirection.RIGHT, true)
+                                                onOpenChange?.invoke(SwipeCellDirection.RIGHT, true)
                                             }
                                             // Below the threshold: close
                                             else -> {
                                                 val previousDirection = state.currentDirection
                                                 state.close()
                                                 if (previousDirection != SwipeCellDirection.NONE) {
-                                                    onChange?.invoke(previousDirection, false)
+                                                    onOpenChange?.invoke(previousDirection, false)
                                                 }
                                             }
                                         }

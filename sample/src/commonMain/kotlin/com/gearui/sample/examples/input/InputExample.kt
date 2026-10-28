@@ -1,5 +1,6 @@
 package com.gearui.sample.examples.input
 
+import com.gearui.components.form.FormLayout
 import com.gearui.components.icon.*
 import com.gearui.components.input.InputFormat
 import androidx.compose.runtime.Composable
@@ -109,14 +110,14 @@ fun InputExample(
 
         ExampleSection(
             title = "标签位置",
-            description = "labelPosition：标签在上方或左侧"
+            description = "layout：标签在上方（VERTICAL）或左侧（HORIZONTAL）"
         ) {
             var top by remember { mutableStateOf("") }
             Input(
                 value = top,
                 onValueChange = { top = it },
                 label = "上方标签",
-                labelPosition = "top",
+                layout = FormLayout.VERTICAL,
                 placeholder = "请输入文字",
                 variant = FieldVariant.SECONDARY
             )
@@ -125,7 +126,7 @@ fun InputExample(
                 value = left,
                 onValueChange = { left = it },
                 label = "左侧标签",
-                labelPosition = "left",
+                layout = FormLayout.HORIZONTAL,
                 placeholder = "请输入文字",
                 variant = FieldVariant.SECONDARY
             )
@@ -223,7 +224,7 @@ fun InputExample(
                 onValueChange = { password = it },
                 label = "密码",
                 placeholder = "请输入密码",
-                isPassword = !showPassword,
+                password = !showPassword,
                 variant = FieldVariant.SECONDARY,
                 suffix = {
                     PressableFeedback(

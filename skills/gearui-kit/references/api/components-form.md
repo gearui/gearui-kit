@@ -32,7 +32,7 @@ fun Input(
     size: InputSize = InputSize.MEDIUM,
     placeholder: String = "",
     label: String? = null,
-    labelPosition: String = "top", // "left" or "top"
+    layout: FormLayout = FormLayout.VERTICAL,
     required: Boolean = false,
     helperText: String? = null,
     error: String? = null,
@@ -43,7 +43,7 @@ fun Input(
     showCounter: Boolean = false,
     maxLines: Int = 1,
     blurOnImeDone: Boolean = maxLines == 1,
-    isPassword: Boolean = false,
+    password: Boolean = false,
     textAlign: TextAlign = TextAlign.Start,
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,

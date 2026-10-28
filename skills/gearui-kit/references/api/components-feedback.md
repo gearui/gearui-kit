@@ -79,7 +79,7 @@ fun SwipeCell(
     rightActions: List<SwipeCellAction> = emptyList(),
     tokens: SwipeCellTokens = SwipeCellDefaults.Default,
     disabled: Boolean = false,
-    onChange: ((SwipeCellDirection, Boolean) -> Unit)? = null,
+    onOpenChange: ((SwipeCellDirection, Boolean) -> Unit)? = null,
     content: @Composable () -> Unit
 )
 

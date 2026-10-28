@@ -145,12 +145,12 @@ fun SwiperExample(
         ExampleSection(
             surface = SectionSurface.Plain,
             title = "监听索引变化",
-            description = "onIndexChanged 回调当前索引：$currentIndex"
+            description = "onIndexChange 回调当前索引：$currentIndex"
         ) {
             Swiper(
                 itemCount = 6,
                 height = CompactBannerHeight,
-                onIndexChanged = { index -> currentIndex = index }
+                onIndexChange = { index -> currentIndex = index }
             ) { index -> Slide(index, "Index ${index + 1}") }
         }
 

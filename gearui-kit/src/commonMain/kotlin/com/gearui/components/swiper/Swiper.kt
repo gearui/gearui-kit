@@ -69,7 +69,7 @@ enum class SwiperIndicatorPosition {
  * @param indicatorPosition indicator position
  * @param showArrows whether to show arrows
  * @param height carousel height
- * @param onIndexChanged index change callback
+ * @param onIndexChange index change callback
  * @param content slide content
  */
 @Composable
@@ -84,7 +84,7 @@ fun Swiper(
     indicatorPosition: SwiperIndicatorPosition = SwiperIndicatorPosition.BOTTOM,
     showArrows: Boolean = false,
     height: Dp = ControlGeometry.swiperHeight,
-    onIndexChanged: ((Int) -> Unit)? = null,
+    onIndexChange: ((Int) -> Unit)? = null,
     content: @Composable BoxScope.(index: Int) -> Unit
 ) {
     if (itemCount <= 0) return
@@ -120,7 +120,7 @@ fun Swiper(
 
     // Report index changes
     LaunchedEffect(currentContentIndex) {
-        onIndexChanged?.invoke(currentContentIndex)
+        onIndexChange?.invoke(currentContentIndex)
     }
 
     // Handle the loop boundary jump

@@ -310,7 +310,7 @@ private fun CascaderSheet(
             onSelect = { active = it.toInt() },
             // Level names start where the list's rows do.
             modifier = Modifier.padding(horizontal = Spacing.sm),
-            isScrollable = true,
+            scrollable = true,
             outlineType = TabsOutlineType.UNDERLINE,
         )
 

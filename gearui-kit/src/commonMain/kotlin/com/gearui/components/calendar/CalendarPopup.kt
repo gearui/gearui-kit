@@ -35,7 +35,7 @@ import com.gearui.foundation.typography.IconSizes
  * if (showCalendar) {
  *     CalendarPopup(
  *         visible = true,
- *         onClose = { showCalendar = false },
+ *         onDismiss = { showCalendar = false },
  *         onConfirm = { date ->
  *             selectedDate = date
  *             showCalendar = false
@@ -47,7 +47,7 @@ import com.gearui.foundation.typography.IconSizes
 @Composable
 fun CalendarPopup(
     visible: Boolean,
-    onClose: () -> Unit,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     title: String = I18n.strings.dateTime.selectDateTitle,
     type: CalendarType = CalendarType.Single,
@@ -90,7 +90,7 @@ fun CalendarPopup(
                 .fillMaxSize()
                 .background(OverlayDefaults.scrimColor)
                 .clickable {
-                    if (autoClose) onClose()
+                    if (autoClose) onDismiss()
                 }
         )
 
@@ -116,7 +116,7 @@ fun CalendarPopup(
                 )
 
                 // Close button
-                com.gearui.components.closebutton.CloseButton(onClick = onClose)
+                com.gearui.components.closebutton.CloseButton(onClick = onDismiss)
             }
 
             Spacer(modifier = Modifier.height(Spacing.lg))
@@ -130,7 +130,7 @@ fun CalendarPopup(
                     selectedDate = date
                     if (autoClose && !showConfirmButton) {
                         onConfirm?.invoke(date)
-                        onClose()
+                        onDismiss()
                     }
                 },
                 selectedDates = selectedDates,
@@ -168,7 +168,7 @@ fun CalendarPopup(
                                 onConfirmRange?.invoke(rangeStart, rangeEnd)
                             }
                         }
-                        if (autoClose) onClose()
+                        if (autoClose) onDismiss()
                     }
                 )
             }

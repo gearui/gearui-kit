@@ -277,7 +277,7 @@ fun ImageViewer(
     showCloseBtn: Boolean = true,
     showDeleteBtn: Boolean = false,
     backgroundColor: Color = Color.Black,
-    onClose: ((Int) -> Unit)? = null,
+    onDismiss: ((Int) -> Unit)? = null,
     onDelete: ((Int) -> Unit)? = null,
     onIndexChange: ((Int) -> Unit)? = null,
     onLongPress: ((Int) -> Unit)? = null,
@@ -782,7 +782,7 @@ Source: `commonMain/kotlin/com/gearui/components/calendar/CalendarPopup.kt`
 @Composable
 fun CalendarPopup(
     visible: Boolean,
-    onClose: () -> Unit,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     title: String = I18n.strings.dateTime.selectDateTitle,
     type: CalendarType = CalendarType.Single,

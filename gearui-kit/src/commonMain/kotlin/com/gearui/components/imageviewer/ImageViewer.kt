@@ -96,7 +96,7 @@ fun rememberImageViewerState(
  * @param showIndex whether to show the page number
  * @param showCloseBtn whether to show the close button
  * @param showDeleteBtn whether to show the delete button
- * @param onClose close callback
+ * @param onDismiss called when the viewer is dismissed, with the index shown
  * @param onDelete delete callback
  * @param onIndexChange page change callback
  * @param onLongPress long-press callback
@@ -113,7 +113,7 @@ fun ImageViewer(
     showCloseBtn: Boolean = true,
     showDeleteBtn: Boolean = false,
     backgroundColor: Color = Color.Black,
-    onClose: ((Int) -> Unit)? = null,
+    onDismiss: ((Int) -> Unit)? = null,
     onDelete: ((Int) -> Unit)? = null,
     onIndexChange: ((Int) -> Unit)? = null,
     onLongPress: ((Int) -> Unit)? = null,
@@ -126,12 +126,12 @@ fun ImageViewer(
     val controller = LocalOverlayController.current
     var overlayId by remember { mutableStateOf<Long?>(null) }
     val visible = state.isVisible && images.isNotEmpty()
-    val currentOnClose by rememberUpdatedState(onClose)
+    val currentOnDismiss by rememberUpdatedState(onDismiss)
     val surface by rememberUpdatedState<@Composable () -> Unit> {
         ImageViewerSurface(
             images = images, state = state, modifier = modifier, labels = labels,
             width = width, height = height, showIndex = showIndex, showCloseBtn = showCloseBtn,
-            showDeleteBtn = showDeleteBtn, backgroundColor = backgroundColor, onClose = onClose,
+            showDeleteBtn = showDeleteBtn, backgroundColor = backgroundColor, onDismiss = onDismiss,
             onDelete = onDelete, onIndexChange = onIndexChange, onLongPress = onLongPress, onTap = onTap,
         )
     }
@@ -150,7 +150,7 @@ fun ImageViewer(
                 onDismiss = {
                     if (state.isVisible) {
                         state.hide()
-                        currentOnClose?.invoke(state.currentIndex)
+                        currentOnDismiss?.invoke(state.currentIndex)
                     }
                 },
             ) { surface() }
@@ -177,7 +177,7 @@ private fun ImageViewerSurface(
     showCloseBtn: Boolean,
     showDeleteBtn: Boolean,
     backgroundColor: Color,
-    onClose: ((Int) -> Unit)?,
+    onDismiss: ((Int) -> Unit)?,
     onDelete: ((Int) -> Unit)?,
     onIndexChange: ((Int) -> Unit)?,
     onLongPress: ((Int) -> Unit)?,
@@ -281,7 +281,7 @@ private fun ImageViewerSurface(
             // Close button
             if (showCloseBtn) {
                 com.gearui.components.closebutton.CloseButton(
-                    onClick = { onClose?.invoke(state.currentIndex) ?: state.hide() },
+                    onClick = { onDismiss?.invoke(state.currentIndex) ?: state.hide() },
                     containerColor = Color.White.copy(alpha = 0.2f),
                     iconColor = Color.White,
                 )

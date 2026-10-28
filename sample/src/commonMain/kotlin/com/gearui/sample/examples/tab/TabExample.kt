@@ -59,11 +59,11 @@ fun TabsExample(
 
         ExampleSection(
             title = "可滚动",
-            description = "isScrollable 让超出宽度的标签横向滚动"
+            description = "scrollable 让超出宽度的标签横向滚动"
         ) {
             TabsDemoRow(
                 labels = List(8) { "选项${it + 1}" },
-                isScrollable = true
+                scrollable = true
             )
         }
 
@@ -94,7 +94,7 @@ fun TabsExample(
             TabsDemoItemsRow(items = badgeItems, outlineType = TabsOutlineType.CAPSULE, showDivider = false)
             TabsDemoItemsRow(
                 items = badgeItems + List(4) { Tab("badge-more-$it", "选项${it + 5}") },
-                isScrollable = true,
+                scrollable = true,
                 outlineType = TabsOutlineType.CARD,
                 showDivider = false
             )
@@ -250,7 +250,7 @@ fun TabsExample(
 @Composable
 private fun TabsDemoRow(
     labels: List<String>,
-    isScrollable: Boolean = false,
+    scrollable: Boolean = false,
     showIndicator: Boolean = true,
     showDivider: Boolean = true,
     size: TabsSize = TabsSize.MEDIUM,
@@ -269,7 +269,7 @@ private fun TabsDemoRow(
             items = items,
             selectedId = selected,
             onSelect = { selected = it },
-            isScrollable = isScrollable,
+            scrollable = scrollable,
             showIndicator = showIndicator,
             showDivider = showDivider,
             size = size,
@@ -281,7 +281,7 @@ private fun TabsDemoRow(
 @Composable
 private fun TabsDemoItemsRow(
     items: List<Tab>,
-    isScrollable: Boolean = false,
+    scrollable: Boolean = false,
     showIndicator: Boolean = true,
     showDivider: Boolean = true,
     size: TabsSize = TabsSize.MEDIUM,
@@ -297,7 +297,7 @@ private fun TabsDemoItemsRow(
             items = items,
             selectedId = selected,
             onSelect = { selected = it },
-            isScrollable = isScrollable,
+            scrollable = scrollable,
             showIndicator = showIndicator,
             showDivider = showDivider,
             size = size,

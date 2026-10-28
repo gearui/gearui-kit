@@ -1,4 +1,6 @@
 package com.gearui.components.input
+
+import com.gearui.components.form.FormLayout
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 import com.gearui.components.icon.*
@@ -109,7 +111,7 @@ fun Input(
     size: InputSize = InputSize.MEDIUM,
     placeholder: String = "",
     label: String? = null,
-    labelPosition: String = "top", // "left" or "top"
+    layout: FormLayout = FormLayout.VERTICAL,
     required: Boolean = false,
     helperText: String? = null,
     error: String? = null,
@@ -121,7 +123,7 @@ fun Input(
     showCounter: Boolean = false,
     maxLines: Int = 1,
     blurOnImeDone: Boolean = maxLines == 1,
-    isPassword: Boolean = false,
+    password: Boolean = false,
     textAlign: TextAlign = TextAlign.Start,
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
@@ -154,9 +156,9 @@ fun Input(
     // (secureTextEntry follows the keyboardType attribute). A field that has ever been a
     // password field therefore always states its keyboard type explicitly.
     var passwordCapable by remember { mutableStateOf(false) }
-    if (isPassword) passwordCapable = true
+    if (password) passwordCapable = true
     val explicitKeyboardType = if (!passwordCapable) null else when {
-        isPassword -> "password"
+        password -> "password"
         keyboardType == KeyboardType.Number -> if (numericKeyboardType() == KeyboardType.Number) "number" else "text"
         keyboardType == KeyboardType.Email -> "email"
         else -> "text"
@@ -292,8 +294,8 @@ fun Input(
                         ),
                     verticalAlignment = if (maxLines > 1) Alignment.Top else Alignment.CenterVertically
                 ) {
-                    // Leading label, when labelPosition == "left"
-                    if (label != null && labelPosition == "left") {
+                    // Leading label, when layout == FormLayout.HORIZONTAL
+                    if (label != null && layout == FormLayout.HORIZONTAL) {
                         // The field applies the disabled opacity itself.
                         com.gearui.foundation.field.FieldLabel(text = label, required = required, invalid = hasError)
                         Spacer(modifier = Modifier.width(Spacing.md))
@@ -383,10 +385,10 @@ fun Input(
                             ),
                             cursorBrush = SolidColor(colors.primary),
                             keyboardOptions = KeyboardOptions(
-                                // isPassword must go through KeyboardType.Password: on Kuikly iOS the masking
+                                // password must go through KeyboardType.Password: on Kuikly iOS the masking
                                 // channel is the native secureTextEntry (triggered by keyboardType=password),
                                 // and visualTransformation has no effect across the Kuikly bridge.
-                                keyboardType = if (isPassword) KeyboardType.Password else (format?.keyboardType ?: keyboardType).let {
+                                keyboardType = if (password) KeyboardType.Password else (format?.keyboardType ?: keyboardType).let {
                                     if (it == KeyboardType.Number) numericKeyboardType() else it
                                 },
                                 imeAction = when {
@@ -408,7 +410,7 @@ fun Input(
                             maxLines = maxLines,
                             readOnly = readOnly,
                             enabled = enabled,
-                            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+                            visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
                             // The onValueChange guard above only protects the Compose value. The native
                             // field keeps whatever was typed, so a rejected keystroke leaves the platform
                             // view and the counter out of sync. Kuikly's maxLength modifier enforces the
@@ -520,8 +522,8 @@ fun Input(
     Column(modifier = modifier.then(com.tencent.kuikly.compose.ui.Modifier.graphicsLayer {
         alpha = if (enabled || parentDims) 1f else com.gearui.foundation.motion.FeedbackDefaults.disabledOpacity
     })) {
-        // Top label (when labelPosition == "top")
-        if (label != null && labelPosition == "top") {
+        // Top label (when layout == FormLayout.VERTICAL)
+        if (label != null && layout == FormLayout.VERTICAL) {
             com.gearui.foundation.field.FieldLabel(
                 text = label,
                 required = required,

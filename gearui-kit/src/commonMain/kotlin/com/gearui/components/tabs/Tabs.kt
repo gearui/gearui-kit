@@ -91,7 +91,7 @@ fun Tabs(
     selectedId: String?,
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isScrollable: Boolean = false,
+    scrollable: Boolean = false,
     showIndicator: Boolean = true,
     showDivider: Boolean = true,
     size: TabsSize = TabsSize.MEDIUM,
@@ -110,7 +110,7 @@ fun Tabs(
     }
     Column(modifier = modifier.fillMaxWidth()) {
         when {
-            isScrollable -> {
+            scrollable -> {
                 GearLazyRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(Spacing.md)

@@ -91,7 +91,7 @@ fun Steps(
     direction: StepsDirection = StepsDirection.HORIZONTAL,
     theme: StepsTheme = StepsTheme.DEFAULT,
     status: StepStatus = StepStatus.PROCESS,
-    onChange: ((Int) -> Unit)? = null
+    onCurrentChange: ((Int) -> Unit)? = null
 ) {
     val colors = Theme.colors
 
@@ -103,7 +103,7 @@ fun Steps(
                 theme = theme,
                 status = status,
                 modifier = modifier,
-                onChange = onChange
+                onCurrentChange = onCurrentChange
             )
         }
 
@@ -114,7 +114,7 @@ fun Steps(
                 theme = theme,
                 status = status,
                 modifier = modifier,
-                onChange = onChange
+                onCurrentChange = onCurrentChange
             )
         }
     }
@@ -127,7 +127,7 @@ private fun HorizontalSteps(
     theme: StepsTheme,
     status: StepStatus,
     modifier: Modifier,
-    onChange: ((Int) -> Unit)?
+    onCurrentChange: ((Int) -> Unit)?
 ) {
     val colors = Theme.colors
 
@@ -210,7 +210,7 @@ private fun VerticalSteps(
     theme: StepsTheme,
     status: StepStatus,
     modifier: Modifier,
-    onChange: ((Int) -> Unit)?
+    onCurrentChange: ((Int) -> Unit)?
 ) {
     val colors = Theme.colors
 

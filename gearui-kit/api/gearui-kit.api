@@ -2602,7 +2602,7 @@ public final class com/gearui/components/input/InputFormat$Companion {
 }
 
 public final class com/gearui/components/input/InputKt {
-	public static final fun Input-MrL24kM (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;ZZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ILcom/gearui/components/input/InputFormat;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
+	public static final fun Input-MrL24kM (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/input/InputSize;Ljava/lang/String;Ljava/lang/String;Lcom/gearui/components/form/FormLayout;ZLjava/lang/String;Ljava/lang/String;ZZLcom/gearui/foundation/field/FieldVariant;Ljava/lang/Integer;ZIZZIZLkotlin/jvm/functions/Function0;ILcom/gearui/components/input/InputFormat;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ZLandroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class com/gearui/components/input/InputSize : java/lang/Enum {

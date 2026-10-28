@@ -130,7 +130,7 @@ fun DateRangePickerInput(
 
     CalendarPopup(
         visible = open,
-        onClose = { open = false },
+        onDismiss = { open = false },
         title = title,
         type = CalendarType.Range,
         initialRangeStart = start,

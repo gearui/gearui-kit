@@ -195,7 +195,7 @@ fun Tabs(
     selectedId: String?,
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isScrollable: Boolean = false,
+    scrollable: Boolean = false,
     showIndicator: Boolean = true,
     showDivider: Boolean = true,
     size: TabsSize = TabsSize.MEDIUM,
@@ -316,7 +316,7 @@ fun Steps(
     direction: StepsDirection = StepsDirection.HORIZONTAL,
     theme: StepsTheme = StepsTheme.DEFAULT,
     status: StepStatus = StepStatus.PROCESS,
-    onChange: ((Int) -> Unit)? = null
+    onCurrentChange: ((Int) -> Unit)? = null
 )
 ```
 

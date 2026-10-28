@@ -163,7 +163,7 @@ fun CalendarExample(
 
         CalendarPopup(
             visible = showSingleCalendar,
-            onClose = { showSingleCalendar = false },
+            onDismiss = { showSingleCalendar = false },
             title = "请选择日期",
             type = CalendarType.Single,
             initialDate = singleSelectedDate,
@@ -172,7 +172,7 @@ fun CalendarExample(
 
         CalendarPopup(
             visible = showMultipleCalendar,
-            onClose = { showMultipleCalendar = false },
+            onDismiss = { showMultipleCalendar = false },
             title = "请选择日期（可多选）",
             type = CalendarType.Multiple,
             initialDates = multipleSelectedDates,
@@ -181,7 +181,7 @@ fun CalendarExample(
 
         CalendarPopup(
             visible = showRangeCalendar,
-            onClose = { showRangeCalendar = false },
+            onDismiss = { showRangeCalendar = false },
             title = "请选择日期区间",
             type = CalendarType.Range,
             initialRangeStart = rangeStartDate,

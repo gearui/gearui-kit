@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+- **Breaking (source): 1.0 API review renames** — see `docs/API_REVIEW_1.0.md`.
+  `Input(labelPosition = "top"/"left")` → `Input(layout = FormLayout.VERTICAL/HORIZONTAL)`;
+  `Input(isPassword)` → `password`; `Tabs(isScrollable)` → `scrollable`;
+  `Steps(onChange)` → `onCurrentChange`; `SwipeCell(onChange)` → `onOpenChange`;
+  `Swiper(onIndexChanged)` → `onIndexChange`; `CalendarPopup(onClose)` and
+  `ImageViewer(onClose)` → `onDismiss`. Rename the argument at each call site; nothing
+  behaves differently.
+
 - A centred overlay — a dialog — stays above the keyboard. A dialog with a field kept its
   place on screen when the field was focused, and its actions sat under the keyboard; it
   now centres in the space the keyboard leaves. Checked on the iOS simulator and an Android

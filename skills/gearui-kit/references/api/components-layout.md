@@ -92,7 +92,7 @@ fun Swiper(
     indicatorPosition: SwiperIndicatorPosition = SwiperIndicatorPosition.BOTTOM,
     showArrows: Boolean = false,
     height: Dp = ControlGeometry.swiperHeight,
-    onIndexChanged: ((Int) -> Unit)? = null,
+    onIndexChange: ((Int) -> Unit)? = null,
     content: @Composable BoxScope.(index: Int) -> Unit
 )
 

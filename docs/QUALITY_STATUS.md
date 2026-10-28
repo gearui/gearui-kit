@@ -312,9 +312,9 @@ spacing is a visual default, not an API break; turning string icons into `IconSo
 
 | ID | Item | Done when | Status |
 | --- | --- | --- | --- |
-| K1 | Platform and browser matrix | Minimum Android and iOS versions, Kotlin and KuiklyUI versions, supported browsers and the verification level of each; README, website and release notes agree | ☐ |
-| K2 | Limited support | RTL (not supported), HarmonyOS (build level, runtime not accepted) and iOS Dynamic Type (not followed) stated the same in README, website and release notes; an earlier HarmonyOS test by a friend is history, not acceptance of the final candidate | ⊘ to be written |
-| K3 | Android minimum touch target | The maintainer keeps 44 everywhere (the spec follows the iOS design): recorded in the design spec as a design choice and a platform deviation from Android's 48 dp; H5 keeps adjacent targets from overlapping | ⊘ to be written |
+| K1 | Platform and browser matrix | Minimum Android and iOS versions, Kotlin and KuiklyUI versions, supported browsers and the verification level of each; README, website and release notes agree | ☑ support matrix in README, website and CHANGELOG |
+| K2 | Limited support | RTL (not supported), HarmonyOS (build level, runtime not accepted) and iOS Dynamic Type (not followed) stated the same in README, website and release notes; an earlier HarmonyOS test by a friend is history, not acceptance of the final candidate | ⊘ written: same wording in README, website and CHANGELOG |
+| K3 | Android minimum touch target | The maintainer keeps 44 everywhere (the spec follows the iOS design): recorded in the design spec as a design choice and a platform deviation from Android's 48 dp; H5 keeps adjacent targets from overlapping | ⊘ written: VISUAL_SPEC §4 and the support matrix |
 | K4 | Upstream issues | Blur (four), line height, focus crossing, iOS single-line ellipsis and RTL filed with minimal reproductions; filing does not replace verifying the kit's own behaviour | ◐ drafts in `docs/upstream/` (local) |
 
 ### R. RC and 1.0 exit

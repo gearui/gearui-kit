@@ -276,16 +276,25 @@ The sample does this in `SampleThreadAdapter`.
 
 ## Supported Platforms
 
-| Platform | Library | Sample | CI |
-|---|---|---|---|
-| Android | ✅ | ✅ | ✅ |
-| iOS | ✅ | ✅ | ✅ |
-| Web (H5) | ✅ | ✅ 75 of 76 demos | ✅ |
-| HarmonyOS | ✅ | ✅ builds | — |
+| Platform | Minimum | Verified at | Not accepted yet |
+| --- | --- | --- | --- |
+| Android | minSdk 21 (compileSdk 36) | Interaction on a device (Xiaomi 12 Pro, Android 16); unit tests and lint in CI | A low-end device's performance |
+| iOS | 15.0 | Interaction on the simulator (iOS 18.2 and 27.0); Kotlin tests on the simulator in CI | A physical-device pass of the kit itself |
+| Web (H5) | Chromium-based browsers | Every sample page loads, scrolls and resizes in both themes (Playwright, Chromium) | Keyboard operation and focus order; Safari/WebKit |
+| HarmonyOS | — | Builds end to end (kit, NAPI glue, HAP) | Running on a device or emulator |
 
-Web runs through KuiklyUI's web renderer; the one demo that fails is `Table`,
-on a Kotlin/JS partial-linkage error in the sample's own demo file rather than
-in the component. See [sample/jsApp/README.md](./sample/jsApp/README.md).
+Toolchain: Kotlin **2.1.21** (must equal KuiklyUI's), KuiklyUI **2.28.0**, Compose Multiplatform **1.7.3**.
+
+**Limited support — stated the same everywhere:**
+
+- **Right-to-left languages are not supported.** KuiklyUI does not pass the layout direction through.
+- **iOS Dynamic Type is not followed.** KuiklyUI turns font scaling off on iOS; Android's font scale is followed.
+- **HarmonyOS is build-level only.** Nothing about its UI is verified until it runs on a device.
+- **Blur is off by default** until four renderer gaps are fixed upstream (see `docs/VISUAL_SPEC.md` §5).
+- The Android system keyboard follows the system's light or dark setting, not the app's — the platform offers no way to set it.
+
+**Touch targets are 44 × 44 on every platform.** This follows Apple's rule and is a deliberate
+choice: Android's guideline is 48 dp. Controls never overlap their neighbours' targets.
 
 HarmonyOS is supported and builds end to end — Kotlin/Native → CMake NAPI glue
 → ArkTS → an installable HAP carrying both `libshared.so` and

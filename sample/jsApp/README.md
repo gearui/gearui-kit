@@ -69,10 +69,10 @@ build refuses the JS target outright.
 
 ## Status
 
-75 of the 76 component demos render and are interactive. `Table` fails at
-runtime with a Kotlin/JS partial-linkage error naming `TableExample.kt` — the
-sample's own demo file, the largest at 883 lines with 46 render lambdas — not
-the Table component itself. Root cause is not established; it needs a minimal
-reproduction before anything is filed upstream.
+Every sample page loads, scrolls and resizes in both themes
+(`scripts/acceptance/web_pages.mjs`). `Table`, which once failed here with a Kotlin/JS
+partial-linkage error in the sample's demo file, renders without page errors in light and
+dark (checked 2026-10-28). Keyboard operation, focus order and Safari/WebKit are not yet
+accepted.
 
 The development bundle is 23MB. Production size has not been measured.

@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+- **Support matrix** (README, website): Android minSdk 21 verified on a device; iOS 15.0
+  verified on the simulator; Chromium browsers (keyboard/focus and Safari not accepted);
+  HarmonyOS build-level. Limited support: no right-to-left layout, iOS Dynamic Type not
+  followed, blur off by default. Touch targets are 44 on every platform, deliberately
+  below Android's 48 dp.
+
 - Overlays and capsule buttons follow the theme's shape axis. Dialogs, menus, toasts and
   popovers used a fixed 24 radius, sheets a fixed 32, and `ButtonShape.ROUND`/`FILLED` a
   fixed capsule, so a square-corner theme left them rounded. They now read

@@ -59,8 +59,8 @@ core-render-web 的 `@JsExport` 文件、会产生一个 `com` 键——于是 `
 
 ## 现状
 
-76 个组件演示中 **75 个渲染正常且可交互**。`Table` 在运行期失败，报 Kotlin/JS 部分链接错误，
-指向的是 `TableExample.kt`——sample 自身的演示文件（883 行、46 个 render lambda，是最大的
-一个），而不是 Table 组件本身。**根因尚未查实**，在向上游提 issue 之前需要最小复现。
+sample 每个页面在明暗两种主题下都能加载、滚动、缩放（`scripts/acceptance/web_pages.mjs`）。`Table`
+曾在这里因 sample 演示文件的 Kotlin/JS 部分链接错误而失败，现在明暗两种主题下渲染正常、无页面错误
+（2026-10-28 复核）。键盘操作、焦点顺序和 Safari/WebKit 尚未验收。
 
 开发版 bundle 为 23MB，production 体积尚未测量。

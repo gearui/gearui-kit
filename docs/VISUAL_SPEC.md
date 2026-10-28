@@ -124,7 +124,9 @@ be disabled. Hover applies only where a pointer exists.
 
 **Hit regions.** Every control takes taps over at least 44×44 logical units,
 whatever its visual size — Apple's rule (HIG, Buttons: "a hit region of at least
-44x44 pt"), unchanged in iOS 27, and above WCAG 2.5.8's 24. The visual stays as
+44x44 pt"), unchanged in iOS 27, and above WCAG 2.5.8's 24. The same 44 applies on Android:
+this is a deliberate deviation from Material's 48 dp, chosen so one layout has one rhythm on
+every platform; neighbouring targets still never overlap. The visual stays as
 designed (a 40 small button, a 28 tag, a 24 stepper); the control's own node is the
 hit region and draws the visual centred inside it (`hitTarget()`), so it occupies
 that room. It must be the node's own size: KuiklyUI sizes the native view from what

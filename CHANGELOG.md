@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- A formatted `Input` (phone, bank card, ID) replaces a selection when you type over it.
+  Selecting with Shift+arrow collapsed the selection to a caret at its left end, so the
+  next key was inserted there instead, and a full number lost its last digits.
+
 - **Support matrix** (README, website): Android minSdk 21 verified on a device; iOS 15.0
   verified on the simulator; Chromium browsers (keyboard/focus and Safari not accepted);
   HarmonyOS build-level. Limited support: no right-to-left layout, iOS Dynamic Type not

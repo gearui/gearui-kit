@@ -17,6 +17,13 @@ internal data class FormattedInputEdit(val fieldValue: TextFieldValue, val raw: 
 internal fun formattedInputEdit(format: InputFormat, previous: String, next: TextFieldValue): FormattedInputEdit {
     if (next.composition != null) return FormattedInputEdit(next, null)
     val edit = format.edit(previous, next.text, next.selection.end)
+    // Only the caret moved or a range was selected: the text is what the field shows and
+    // already formatted. Keep the selection as it is. Collapsing it to a caret at
+    // `selection.end` — the left end of a leftward selection — made the next key insert
+    // there instead of replacing the selection, and a full number lost its last digits.
+    // (A committed IME draft can also equal the previous text, but it is not formatted
+    // yet, so it still goes through the edit.)
+    if (next.text == previous && edit.display == next.text) return FormattedInputEdit(next, edit.raw)
     return FormattedInputEdit(TextFieldValue(edit.display, TextRange(edit.caret)), edit.raw)
 }
 

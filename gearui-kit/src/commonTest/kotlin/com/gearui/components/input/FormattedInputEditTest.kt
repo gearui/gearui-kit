@@ -19,4 +19,18 @@ class FormattedInputEditTest {
         assertEquals("13800138000", edit.raw)
         assertEquals("138 0013 8000", edit.fieldValue.text)
     }
+    @Test fun aSelectionIsKeptWhileTheTextIsUnchanged() {
+        // Shift+Left four times from the end of a full number: anchor 13, active end 9.
+        val selecting = TextFieldValue("138 0013 8000", TextRange(13, 9))
+        val edit = formattedInputEdit(InputFormat.ChinaMobile, "138 0013 8000", selecting)
+        assertEquals(TextRange(13, 9), edit.fieldValue.selection)
+        assertEquals("13800138000", edit.raw)
+    }
+    @Test fun typingOverASelectionReplacesIt() {
+        // The native field replaces the selected "8000" with "7" and reports the result.
+        val edit = formattedInputEdit(InputFormat.ChinaMobile, "138 0013 8000", TextFieldValue("138 0013 7", TextRange(10)))
+        assertEquals("138 0013 7", edit.fieldValue.text)
+        assertEquals("138001 37".replace(" ", ""), edit.raw)
+        assertEquals(TextRange(10), edit.fieldValue.selection)
+    }
 }

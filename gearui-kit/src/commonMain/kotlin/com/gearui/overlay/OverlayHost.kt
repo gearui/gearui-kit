@@ -1,5 +1,7 @@
 package com.gearui.overlay
 
+import com.gearui.foundation.a11y.AccessibilityLayer
+import com.gearui.foundation.a11y.AccessibilityLayerBox
 import com.gearui.foundation.interaction.consumeNativeTouches
 import com.tencent.kuikly.compose.ui.graphics.graphicsLayer
 import com.gearui.foundation.motion.FeedbackDefaults
@@ -317,182 +319,193 @@ private fun OverlayItemLayout(
             .zIndex(1000f + options.zIndex)
             .onSizeChanged { screenSize = it }
     ) {
-        // ===== Backdrop touch layer: outside-click dismissal and event blocking =====
-        if (options.modal || options.maskColor != null) {
-            // With a scrim: intercept every gesture so nothing reaches scrollable content behind.
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .alpha(progress.value)
-                    .background(options.maskColor ?: OverlayDefaults.scrimColor)
-                    .consumeNativeTouches()
-                    // Consume every pointer change up front so a LazyColumn behind
-                    // never sees them. detectDragGestures is not enough — it lets the
-                    // down event reach the layer below first, where the native scroll
-                    // view takes it.
-                    .pointerInput(item.id) {
-                        // 🔴 Tap detection must happen inside THIS gesture loop. To keep the LazyColumn underneath
-                        // from scrolling, this layer consumes every pointer event — a .clickable attached afterwards
-                        // waits for an unconsumed down that never arrives, and tap-outside dismissal (outsideClick)
-                        // dies wholesale: sheets and pickers stop closing on scrim taps (iOS gesture semantics:
-                        // sheets close on a scrim tap, only alerts do not).
-                        val dragThreshold = 10f
-                        awaitEachGesture {
-                            val down = awaitFirstDown(requireUnconsumed = false)
-                            down.consume()
-                            var totalDrag = 0f
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                event.changes.forEach {
-                                    totalDrag += kotlin.math.abs(it.positionChange().x) +
-                                        kotlin.math.abs(it.positionChange().y)
-                                    it.consume()
-                                }
-                                if (event.changes.all { !it.pressed }) {
-                                    // Finger up without a drag = tap; the policy decides whether to dismiss.
-                                    if (totalDrag <= dragThreshold && policy.outsideClick) {
-                                        controller.dismiss(item.id)
-                                    }
-                                    break
-                                }
-                            }
-                        }
-                    }
-            )
-        } else if (policy.outsideClick || policy.scroll) {
-            // Transparent touch layer for click and drag dismissal.
-            val dismissGesture = Modifier.consumeNativeTouches().pointerInput(item.id) {
-                        val dragThreshold = 10f
-
-                        awaitEachGesture {
-                            val down = awaitFirstDown(requireUnconsumed = false)
-                            var totalDrag = 0f
-                            var isDrag = false
-
-                            // Track movement
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                val change = event.changes.firstOrNull() ?: break
-
-                                if (!change.pressed) {
-                                // Finger lifted: if it was not a drag, it was a tap.
-                                    if (!isDrag && policy.outsideClick) {
-                                        controller.dismiss(item.id)
-                                    }
-                                    break
-                                }
-
-                                val delta = change.positionChange()
-                                totalDrag += kotlin.math.abs(delta.x) + kotlin.math.abs(delta.y)
-
-                                // Moved past the threshold, so treat it as a drag.
-                                if (!isDrag && totalDrag > dragThreshold) {
-                                    isDrag = true
-                                    if (policy.scroll) {
-                                        controller.dismiss(item.id)
-                                    }
-                                }
-                            }
-                        }
-            }
-            OutsideTouchLayer(item.passThrough.value, screenSize, dismissGesture)
+        // What the layer is to a screen reader and to keyboard focus: a dialog or sheet
+        // takes focus and shuts out the page; an anchored panel only answers Escape. It
+        // lets go the moment it starts to close, so focus can return to its trigger.
+        val accessibilityLayer = when {
+            !visible || !policy.backPress -> AccessibilityLayer.None
+            !options.passThroughOutside && (options.modal || options.maskColor != null ||
+                options.placement == OverlayPlacement.Fullscreen) -> AccessibilityLayer.Modal
+            else -> AccessibilityLayer.Popup
         }
-
-        // ===== Overlay content, above the touch layer =====
-        // Content must intercept clicks, or they fall through to the backdrop and dismiss it.
-        if (options.placement == OverlayPlacement.Fullscreen) {
-            // Fullscreen: fills the screen, no position calculation needed.
-            val safeTop = if (options.safeAreaTop) runtimeEnvironment.safeArea.top else 0.dp
-            val safeBottom = if (options.safeAreaBottom) runtimeEnvironment.safeArea.bottom else 0.dp
-            val safeLeft = if (options.safeAreaLeft) runtimeEnvironment.safeArea.left else 0.dp
-            val safeRight = if (options.safeAreaRight) runtimeEnvironment.safeArea.right else 0.dp
-            // passThroughOutside: a non-modal banner such as an in-app notification must
-            // not freeze the whole screen — gestures outside its content belong to the
-            // page below. The default is still to intercept, so modal and dialog
-            // semantics are unchanged.
-            val fullscreenModifier = if (options.passThroughOutside) {
-                Modifier.fillMaxSize()
-            } else {
-                Modifier
-                    .fillMaxSize()
-                    // 🔴 This layer fills the screen above the backdrop, so the backdrop's outsideClick never
-                    // receives an event. Tap-outside dismissal therefore has to be executed HERE rather than
-                    // blindly intercepting: sheets and pickers close on any tap outside the content (iOS gesture
-                    // semantics), while the real panel content (the surface) consumes its own clicks and nothing bubbles here.
-                    // A tap gesture, not `.clickable`: clickable carries click semantics, and a
-                    // full-screen accessibility element hides everything inside it from
-                    // VoiceOver and TalkBack — a dialog read as one node, its buttons out of
-                    // reach. Gesture handling is the same.
-                    .pointerInput(item.id, policy.outsideClick) {
-                        detectTapGestures(onTap = {
-                            if (policy.outsideClick) {
-                                controller.dismiss(item.id)
-                            }
-                        })
-                    }
-            }
-            Box(fullscreenModifier) {
+        AccessibilityLayerBox(accessibilityLayer, Modifier.fillMaxSize()) {
+            // ===== Backdrop touch layer: outside-click dismissal and event blocking =====
+            if (options.modal || options.maskColor != null) {
+                // With a scrim: intercept every gesture so nothing reaches scrollable content behind.
                 Box(
                     Modifier
                         .fillMaxSize()
-                        // A sliding surface moves itself; fading it as well would make it
-                        // arrive twice over.
-                        .alpha(if (transition == OverlayTransition.Fade) progress.value else 1f)
-                        .padding(
-                            start = safeLeft,
-                            top = safeTop,
-                            end = safeRight,
-                            bottom = safeBottom
-                        )
+                        .alpha(progress.value)
+                        .background(options.maskColor ?: OverlayDefaults.scrimColor)
+                        .consumeNativeTouches()
+                        // Consume every pointer change up front so a LazyColumn behind
+                        // never sees them. detectDragGestures is not enough — it lets the
+                        // down event reach the layer below first, where the native scroll
+                        // view takes it.
+                        .pointerInput(item.id) {
+                            // 🔴 Tap detection must happen inside THIS gesture loop. To keep the LazyColumn underneath
+                            // from scrolling, this layer consumes every pointer event — a .clickable attached afterwards
+                            // waits for an unconsumed down that never arrives, and tap-outside dismissal (outsideClick)
+                            // dies wholesale: sheets and pickers stop closing on scrim taps (iOS gesture semantics:
+                            // sheets close on a scrim tap, only alerts do not).
+                            val dragThreshold = 10f
+                            awaitEachGesture {
+                                val down = awaitFirstDown(requireUnconsumed = false)
+                                down.consume()
+                                var totalDrag = 0f
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    event.changes.forEach {
+                                        totalDrag += kotlin.math.abs(it.positionChange().x) +
+                                            kotlin.math.abs(it.positionChange().y)
+                                        it.consume()
+                                    }
+                                    if (event.changes.all { !it.pressed }) {
+                                        // Finger up without a drag = tap; the policy decides whether to dismiss.
+                                        if (totalDrag <= dragThreshold && policy.outsideClick) {
+                                            controller.dismiss(item.id)
+                                        }
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                )
+            } else if (policy.outsideClick || policy.scroll) {
+                // Transparent touch layer for click and drag dismissal.
+                val dismissGesture = Modifier.consumeNativeTouches().pointerInput(item.id) {
+                            val dragThreshold = 10f
+
+                            awaitEachGesture {
+                                val down = awaitFirstDown(requireUnconsumed = false)
+                                var totalDrag = 0f
+                                var isDrag = false
+
+                                // Track movement
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    val change = event.changes.firstOrNull() ?: break
+
+                                    if (!change.pressed) {
+                                    // Finger lifted: if it was not a drag, it was a tap.
+                                        if (!isDrag && policy.outsideClick) {
+                                            controller.dismiss(item.id)
+                                        }
+                                        break
+                                    }
+
+                                    val delta = change.positionChange()
+                                    totalDrag += kotlin.math.abs(delta.x) + kotlin.math.abs(delta.y)
+
+                                    // Moved past the threshold, so treat it as a drag.
+                                    if (!isDrag && totalDrag > dragThreshold) {
+                                        isDrag = true
+                                        if (policy.scroll) {
+                                            controller.dismiss(item.id)
+                                        }
+                                    }
+                                }
+                            }
+                }
+                OutsideTouchLayer(item.passThrough.value, screenSize, dismissGesture)
+            }
+
+            // ===== Overlay content, above the touch layer =====
+            // Content must intercept clicks, or they fall through to the backdrop and dismiss it.
+            if (options.placement == OverlayPlacement.Fullscreen) {
+                // Fullscreen: fills the screen, no position calculation needed.
+                val safeTop = if (options.safeAreaTop) runtimeEnvironment.safeArea.top else 0.dp
+                val safeBottom = if (options.safeAreaBottom) runtimeEnvironment.safeArea.bottom else 0.dp
+                val safeLeft = if (options.safeAreaLeft) runtimeEnvironment.safeArea.left else 0.dp
+                val safeRight = if (options.safeAreaRight) runtimeEnvironment.safeArea.right else 0.dp
+                // passThroughOutside: a non-modal banner such as an in-app notification must
+                // not freeze the whole screen — gestures outside its content belong to the
+                // page below. The default is still to intercept, so modal and dialog
+                // semantics are unchanged.
+                val fullscreenModifier = if (options.passThroughOutside) {
+                    Modifier.fillMaxSize()
+                } else {
+                    Modifier
+                        .fillMaxSize()
+                        // 🔴 This layer fills the screen above the backdrop, so the backdrop's outsideClick never
+                        // receives an event. Tap-outside dismissal therefore has to be executed HERE rather than
+                        // blindly intercepting: sheets and pickers close on any tap outside the content (iOS gesture
+                        // semantics), while the real panel content (the surface) consumes its own clicks and nothing bubbles here.
+                        // A tap gesture, not `.clickable`: clickable carries click semantics, and a
+                        // full-screen accessibility element hides everything inside it from
+                        // VoiceOver and TalkBack — a dialog read as one node, its buttons out of
+                        // reach. Gesture handling is the same.
+                        .pointerInput(item.id, policy.outsideClick) {
+                            detectTapGestures(onTap = {
+                                if (policy.outsideClick) {
+                                    controller.dismiss(item.id)
+                                }
+                            })
+                        }
+                }
+                Box(fullscreenModifier) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            // A sliding surface moves itself; fading it as well would make it
+                            // arrive twice over.
+                            .alpha(if (transition == OverlayTransition.Fade) progress.value else 1f)
+                            .padding(
+                                start = safeLeft,
+                                top = safeTop,
+                                end = safeRight,
+                                bottom = safeBottom
+                            )
+                    ) {
+                        CompositionLocalProvider(LocalOverlayVisible provides visible) {
+                            item.content()
+                        }
+                    }
+                }
+            } else {
+                // Other placements need measurement and position calculation.
+                val motion = remember(item.anchorBounds, offset, popupSize, options.placement) {
+                    anchoredEntryMotion(item.anchorBounds, offset, popupSize, options, density)
+                }
+                val p = progress.value
+                Box(
+                    Modifier
+                        .offset { offset }
+                        .onSizeChanged { popupSize = it }
+                        // Reference motion (use-popup-dialog/popover-content-animation.ts):
+                        // a centred dialog scales 0.96 -> 1 both ways; an anchored panel
+                        // slides in from its trigger by up to 12, scaling 0.97 -> 1 on the
+                        // way in only, and slides back out without scaling.
+                        .graphicsLayer {
+                            if (transition == OverlayTransition.Fade && isPositionReady) {
+                                val scale = when {
+                                    options.placement == OverlayPlacement.Center ->
+                                        FeedbackDefaults.dialogEnterScale + (1f - FeedbackDefaults.dialogEnterScale) * p
+                                    visible && motion != null ->
+                                        FeedbackDefaults.anchoredEnterScale + (1f - FeedbackDefaults.anchoredEnterScale) * p
+                                    else -> 1f
+                                }
+                                scaleX = scale
+                                scaleY = scale
+                                if (motion != null) {
+                                    val shift = motion.distancePx * (1f - p)
+                                    if (motion.vertical) translationY = shift else translationX = shift
+                                }
+                            }
+                        }
+                        // Fully transparent until the position is settled, then shown.
+                        // Two reasons to be invisible, one modifier: not yet positioned, and
+                        // not yet arrived.
+                        .alpha(if (isPositionReady) p else 0f)
+                        // Swallow taps so they do not reach the backdrop — as a gesture, not a
+                        // `.clickable`, which would make the whole panel one accessibility element.
+                        .pointerInput(item.id) {
+                            detectTapGestures(onTap = { })
+                        }
                 ) {
                     CompositionLocalProvider(LocalOverlayVisible provides visible) {
                         item.content()
                     }
-                }
-            }
-        } else {
-            // Other placements need measurement and position calculation.
-            val motion = remember(item.anchorBounds, offset, popupSize, options.placement) {
-                anchoredEntryMotion(item.anchorBounds, offset, popupSize, options, density)
-            }
-            val p = progress.value
-            Box(
-                Modifier
-                    .offset { offset }
-                    .onSizeChanged { popupSize = it }
-                    // Reference motion (use-popup-dialog/popover-content-animation.ts):
-                    // a centred dialog scales 0.96 -> 1 both ways; an anchored panel
-                    // slides in from its trigger by up to 12, scaling 0.97 -> 1 on the
-                    // way in only, and slides back out without scaling.
-                    .graphicsLayer {
-                        if (transition == OverlayTransition.Fade && isPositionReady) {
-                            val scale = when {
-                                options.placement == OverlayPlacement.Center ->
-                                    FeedbackDefaults.dialogEnterScale + (1f - FeedbackDefaults.dialogEnterScale) * p
-                                visible && motion != null ->
-                                    FeedbackDefaults.anchoredEnterScale + (1f - FeedbackDefaults.anchoredEnterScale) * p
-                                else -> 1f
-                            }
-                            scaleX = scale
-                            scaleY = scale
-                            if (motion != null) {
-                                val shift = motion.distancePx * (1f - p)
-                                if (motion.vertical) translationY = shift else translationX = shift
-                            }
-                        }
-                    }
-                    // Fully transparent until the position is settled, then shown.
-                    // Two reasons to be invisible, one modifier: not yet positioned, and
-                    // not yet arrived.
-                    .alpha(if (isPositionReady) p else 0f)
-                    // Swallow taps so they do not reach the backdrop — as a gesture, not a
-                    // `.clickable`, which would make the whole panel one accessibility element.
-                    .pointerInput(item.id) {
-                        detectTapGestures(onTap = { })
-                    }
-            ) {
-                CompositionLocalProvider(LocalOverlayVisible provides visible) {
-                    item.content()
                 }
             }
         }

@@ -12,7 +12,7 @@
 | --- | --- | --- | --- |
 | G 契约冻结 | 3 | 0 | G1 只差 RC1 时随 tag 存基线 |
 | H 缺陷 | 9 | 8 | 含新登记的 H6–H9；仅剩 H4（焦点恢复随 J1） |
-| J 验收 | 7 | 2 | |
+| J 验收 | 7 | 3 | |
 | K 承诺范围 | 4 | 3 | K4 待提交上游 |
 | R 发版 | 3 | 0 | |
 
@@ -75,7 +75,12 @@
 
 ## J. 验收
 
-- ⬜ **J1 读屏**：TalkBack（真机）与 VoiceOver（模拟器）走主要组件：名称、角色、状态、朗读顺序、浮层内焦点与返回
+- ◐ **J1 读屏**：TalkBack（真机）与 VoiceOver（模拟器）走主要组件：名称、角色、状态、朗读顺序、浮层内焦点与返回
+  - ✅ J1.1 节点树：Android 88 页审计（名称/角色/状态齐全，无未标注可点节点）；iOS 90/90 页 XCUITest 无障碍审计，发现项与 10-05 基线同类且已解释（Text clipped 误报、示例描述含代码标识、IndexBar 声明例外）
+  - ✅ J1.2 对话框打开时背后页面可被 TalkBack 读到（**本轮发现**）→ Android 宿主 `AccessibilityLayers` 按 `gearuiLayer` 把模态层以外设为 NO_HIDE_DESCENDANTS；真机 `uiautomator dump --compressed`（TalkBack 可见树）：打开 13→4 个节点（只剩标题/正文/取消/确认），返回、确认关闭后恢复 14；下层页本就不在树里
+  - ⬜ J1.3 iOS 宿主同等处理（VoiceOver 模态限制 + 关闭后焦点返回）
+  - ⬜ J1.4 开 TalkBack/VoiceOver 实听：焦点移入对话框、关闭后回到触发者、状态播报
+  - ⬜ J1.5 点击区不足 44 的真实问题：横排复选/单选行 28、Stepper 加减 38 宽、上传删除 32、NavBar 搜索 30×36（Android 审计；iOS 审计只报 IndexBar，需先确认是否 Android 测量差异）
 - ✅ **J2 中文输入法**：搜狗、微信输入法、系统键盘；组字、选词、选中替换、粘贴；普通/格式化/多行输入框
   - Android 真机（搜狗九宫格、微信输入法全键盘；本机系统键盘为 AOSP 英文、无系统拼音）：普通框组字上屏无丢字/重复；多行框组字 + 回车换行正确（`你\n国内`）；手机号框弹数字键盘，逐键与快速连按各 11 位无丢字；选中「好」后打 ma 选「吗」→「你吗」
   - iOS 18.2 模拟器（系统简体拼音，逐键点按触发真实组字）：框内显示带下划线的拼音草稿，选「你好」上屏；身份证号框中文候选上屏被过滤、小写 x 上屏为 X；选中「好」后组字 ma 选「吗」→「你吗」
@@ -90,7 +95,11 @@
 - ✅ **J6 消费正式产物**：独立项目只用 Maven 产物（不走源码引用）：Android Release + R8、iOS 链接、Web 生产构建，矢量图标核对
   - 证据：6 个模块发布到独立本地仓库（版本 1.0.0-j6），独立工程 /tmp/j6-consumer 只从该仓库取 Kit：Android Release+R8 通过（APK 756KB），iOS arm64 Release framework 链接通过，Web 生产构建通过；R8 与 JS 产物中用到的图标（house、heart）保留、未用到的（airplane、alarm）被删除
   - 说明：RC1 候选提交上需按同一方法再跑一遍（随 R1）
-- ⬜ **J7 Web 键盘与焦点**：主要交互可用键盘完成，焦点可见且有序
+- ✅ **J7 Web 键盘与焦点**：主要交互可用键盘完成，焦点可见且有序
+  - 发现：Kuikly Web 只把无障碍文字转成 aria-label，丢掉「可点击」和角色，按钮是一个 Tab 不到、回车按不动的 div；路由页下层的首页（alpha 0）还能被 Tab 到；返回键模块缺失，发 Back 直接抛 IllegalStateException
+  - 修复：Kit 给浮层、下层页、未选中 Tab 挂 `gearuiLayer`（modal/popup/hidden，BEHAVIOR_CONTRACT §6）；Web 宿主 `KeyboardAccess` 给可点击节点加 tabindex、角色、回车/空格（按 Compose 认的 pointer 事件重放），modal 抢焦点并让外部 inert，popup 不抢文本框焦点，关闭后焦点回触发者，Esc 仅在有弹层时等于返回；补 `KRBackPressModule`
+  - 证据（Playwright，Chromium 390 宽）：Button 页首个 Tab 落在「返回」（不再落到首页）；Checkbox 空格、Switch 回车切换状态；Dialog 回车打开→焦点进对话框→Tab 只在 取消/确认 间循环→Esc 或回车确认关闭→焦点回到触发行；Select 回车打开→Tab 到选项→回车选中「上海」→焦点回触发器；ComboBox 输入不被抢焦点
+  - 遗留：禁用项仍可 Tab 到（Kuikly 不传禁用状态）；Switch 的角色 Kuikly 映射为文本，读作带「已开启」的标签
 
 ## K. 承诺范围
 
@@ -112,6 +121,7 @@
 
 按时间倒序，每条写明：项目、平台、方法、结果、提交。
 
+- 2026-10-28 · J7/J1 · Web（Playwright）+ Android 真机 · 键盘走查与 TalkBack 可见树 · Web 键盘可用；修复对话框背后可读、首页可 Tab、Esc 抛异常 · 本次提交
 - 2026-10-28 · J2 · Android 真机（搜狗、微信输入法）+ iOS 18.2 模拟器（系统拼音）· 按屏幕坐标逐键点按真实组字，读输入框与原始值 · 通过，记一项 Android 已知限制 · 无代码改动（测完已恢复默认输入法）
 - 2026-10-28 · H3.2 · Android 真机 · 系统字号 2.0 截屏 18 个组件页 · Tag 截字已修，其余无截字 · 本次提交
 - 2026-10-28 · H5 · Android 真机 · 节点树审计 SearchBar、ComboBox，逐条解释 · 修复 SearchBar 取消按钮点击区，余下均为声明的例外或测量假象 · 本次提交

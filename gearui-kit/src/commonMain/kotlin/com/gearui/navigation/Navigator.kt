@@ -1,5 +1,7 @@
 package com.gearui.navigation
 
+import com.gearui.foundation.a11y.AccessibilityLayer
+import com.gearui.foundation.a11y.AccessibilityLayerBox
 import com.gearui.foundation.interaction.consumeNativeTouches
 import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.semantics.clearAndSetSemantics
@@ -363,7 +365,14 @@ fun <R : NavRoute> Navigator(
                                     isForeground = layer.role == NavLayerRole.Front,
                                     retained = state.retainedOf(layer.entry.key),
                                 )
-                                scope.content(layer.entry)
+                                // clearAndSetSemantics above drops the Compose semantics only;
+                                // the host takes the native views out of reach too.
+                                AccessibilityLayerBox(
+                                    if (layer.role == NavLayerRole.Parked) AccessibilityLayer.Hidden else AccessibilityLayer.None,
+                                    Modifier.fillMaxSize(),
+                                ) {
+                                    scope.content(layer.entry)
+                                }
                             }
                         }
                     }

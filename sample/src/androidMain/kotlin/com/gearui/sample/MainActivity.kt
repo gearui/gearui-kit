@@ -11,6 +11,7 @@ import com.gearui.runtime.RuntimeInsetsBridge
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.sample.adapter.SampleImageAdapter
 import com.gearui.sample.adapter.SampleThreadAdapter
+import com.tencent.kuikly.core.render.android.IKuiklyRenderExport
 import com.tencent.kuikly.core.render.android.adapter.KuiklyRenderAdapterManager
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
@@ -88,6 +89,12 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
         super.onDestroy()
         kuiklyDelegator.onDetach()
         StatusBarControllerImpl.unregister()
+    }
+
+    // TalkBack for dialogs and sheets: the page behind is out of reach while one is open.
+    override fun registerViewExternalPropHandler(kuiklyRenderExport: IKuiklyRenderExport) {
+        super.registerViewExternalPropHandler(kuiklyRenderExport)
+        kuiklyRenderExport.viewPropExternalHandlerExport(AccessibilityLayers())
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {

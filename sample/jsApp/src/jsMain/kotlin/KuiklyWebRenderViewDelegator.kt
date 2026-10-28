@@ -9,6 +9,7 @@ import com.tencent.kuikly.core.render.web.runtime.web.expand.KuiklyRenderViewDel
 import com.tencent.kuikly.h5app.components.KRMyView
 import com.tencent.kuikly.h5app.components.KRWebView
 import com.tencent.kuikly.h5app.components.KuiklyPageView
+import com.tencent.kuikly.h5app.module.KRBackPressModule
 import com.tencent.kuikly.h5app.module.KRBridgeModule
 import com.tencent.kuikly.h5app.module.KRCacheModule
 import com.tencent.kuikly.h5app.module.KRRouterModule
@@ -25,7 +26,7 @@ class ViewPropExternalHandler : IKuiklyRenderViewPropExternalHandler {
                 true
             }
 
-            else -> false
+            else -> KeyboardAccess.set(renderViewExport.ele, propKey, propValue)
         }
     }
 
@@ -39,7 +40,7 @@ class ViewPropExternalHandler : IKuiklyRenderViewPropExternalHandler {
                 true
             }
 
-            else -> false
+            else -> KeyboardAccess.reset(renderViewExport.ele, propKey)
         }
     }
 }
@@ -60,6 +61,8 @@ class KuiklyWebRenderViewDelegator : KuiklyRenderViewDelegatorDelegate {
         pageData: Map<String, Any>,
         size: SizeI,
     ) {
+        // Escape closes the open dialog or panel, as Back does on a phone.
+        KeyboardAccess.onBack = { delegate.sendEvent("onBackPressed", emptyMap()) }
         // Initialize and create view
         delegate.onAttach(
             containerId,
@@ -110,6 +113,11 @@ class KuiklyWebRenderViewDelegator : KuiklyRenderViewDelegatorDelegate {
         // Register cache module
         kuiklyRenderExport.moduleExport(KRCacheModule.MODULE_NAME) {
             KRCacheModule()
+        }
+
+        // Answers Back (Escape); the renderer has none
+        kuiklyRenderExport.moduleExport(KRBackPressModule.MODULE_NAME) {
+            KRBackPressModule()
         }
 
         // rewrite KRRouterModule

@@ -50,8 +50,9 @@ API change does.
    dialog used to report a cancel as well. *Evidence:* `OverlayContractTest`; H9 on device.
 5. With the keyboard up, the first Back hides the keyboard; the next one closes the overlay.
    A centred overlay stays above the keyboard. *Evidence:* H6, H8 on both platforms.
-6. When the last focus-holding overlay closes, screen-reader focus returns to the control
-   that opened it if that control is still on screen. *Evidence:* pending (J1).
+6. When the last focus-holding overlay closes, focus returns to the control that opened it
+   if that control is still on screen (§6). *Evidence:* Web keyboard, J7; screen readers on
+   Android and iOS pending (J1).
 
 ## 3. Navigation
 
@@ -83,3 +84,22 @@ API change does.
    component exposes both (COMPONENT_SPEC §2, `check_state_param_naming.sh`).
 4. *Pending (J1):* how a screen reader announces each state, and whether a read-only field's
    text can be selected for copying on each platform.
+
+## 6. Accessibility layers
+
+1. Every overlay, every page under the top one and every unselected tab sits in a native
+   view carrying the Kuikly property `gearuiLayer` (`AccessibilityLayer`):
+   - `modal` — a dialog, sheet, drawer, picker or full-screen panel that answers Back;
+   - `popup` — an anchored panel that answers Back (Select, Popover, ComboBox list);
+   - `hidden` — a parked page under the top one, an unselected `TabHost` child;
+   - empty — none of these, or an overlay that has started to close.
+2. Kuikly does not act on it: the host renderer does. A host that ignores it loses only what
+   this section promises; nothing else depends on it.
+3. **Web** (`sample/jsApp`, `KeyboardAccess`): a `modal` takes focus, gets
+   `role="dialog"`/`aria-modal`, and everything outside it is `inert` until it closes; a
+   `popup` takes focus unless a text field has it (a combo box keeps typing); both return
+   focus to the control that had it when they close; `hidden` is `inert`. Escape sends Back
+   while a modal or popup is open, and only then. Clickable nodes get `tabindex`, an ARIA role
+   and Enter/Space activation. *Evidence:* J7.
+4. **Android and iOS**: see J1 in RELEASE_1.0_TODO for what TalkBack and VoiceOver do with
+   these layers today.

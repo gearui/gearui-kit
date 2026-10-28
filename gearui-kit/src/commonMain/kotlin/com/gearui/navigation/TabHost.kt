@@ -5,6 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import com.gearui.foundation.a11y.AccessibilityLayer
+import com.gearui.foundation.a11y.AccessibilityLayerBox
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.fillMaxSize
 import com.tencent.kuikly.compose.ui.Modifier
@@ -79,7 +81,12 @@ fun TabHost(
                         .alpha(if (active) 1f else 0f)
                         .then(if (active) Modifier else Modifier.blockPointerInput())
                 ) {
-                    content(index)
+                    AccessibilityLayerBox(
+                        if (active) AccessibilityLayer.None else AccessibilityLayer.Hidden,
+                        Modifier.fillMaxSize(),
+                    ) {
+                        content(index)
+                    }
                 }
             }
         }

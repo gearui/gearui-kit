@@ -13,6 +13,7 @@
 		6C9A5F7DDB86109358F85D5E /* KuiklyRenderViewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755C87BB2DE583E92C0DB459 /* KuiklyRenderViewPage.swift */; };
 		8B01BA54D5C99B4D5A2AC645 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF132B182F55938F5B68FBA /* iosApp.swift */; };
 		BE343F675912DE31CD772CA6 /* KuiklyRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA40AF1A2D2C5985CC98380 /* KuiklyRenderViewController.m */; };
+		A11E0001A11E0001A11E0001 /* AccessibilityLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11E0002A11E0002A11E0002 /* AccessibilityLayers.swift */; };
 		DC0A7F0AEF1BF6CE3E6F24A7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88086D2B382ADE371AAE1A57 /* ContentView.swift */; };
 		EFA98E5CFD6269B084AA687C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 750BF869EB1D3D141E59A2AD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		755C87BB2DE583E92C0DB459 /* KuiklyRenderViewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KuiklyRenderViewPage.swift; sourceTree = "<group>"; };
 		848D4E59D680988E8233C5BA /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		87E1B9DFCC0E10B2A1E628AE /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		A11E0002A11E0002A11E0002 /* AccessibilityLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityLayers.swift; sourceTree = "<group>"; };
 		88086D2B382ADE371AAE1A57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9834FDFFD541B72C11EEFD20 /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F8FBBFF63463E28706F24D2 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				750BF869EB1D3D141E59A2AD /* Assets.xcassets */,
+				A11E0002A11E0002A11E0002 /* AccessibilityLayers.swift */,
 				88086D2B382ADE371AAE1A57 /* ContentView.swift */,
 				41DA8A612E3CF7F251E4C8AD /* Info.plist */,
 				9834FDFFD541B72C11EEFD20 /* iosApp-Bridging-Header.h */,
@@ -307,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11E0001A11E0001A11E0001 /* AccessibilityLayers.swift in Sources */,
 				DC0A7F0AEF1BF6CE3E6F24A7 /* ContentView.swift in Sources */,
 				BE343F675912DE31CD772CA6 /* KuiklyRenderViewController.m in Sources */,
 				6C9A5F7DDB86109358F85D5E /* KuiklyRenderViewPage.swift in Sources */,

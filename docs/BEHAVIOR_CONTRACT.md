@@ -101,5 +101,9 @@ API change does.
    focus to the control that had it when they close; `hidden` is `inert`. Escape sends Back
    while a modal or popup is open, and only then. Clickable nodes get `tabindex`, an ARIA role
    and Enter/Space activation. *Evidence:* J7.
-4. **Android and iOS**: see J1 in RELEASE_1.0_TODO for what TalkBack and VoiceOver do with
-   these layers today.
+4. **Android** (`sample/src/androidMain/.../AccessibilityLayers.kt`, registered in the Kuikly
+   delegate's `registerViewExternalPropHandler`) and **iOS** (`sample/iosApp/AccessibilityLayers.swift`,
+   a `setCss_gearuiLayer:` setter on `UIView`): while a `modal` is open everything outside it is
+   hidden from TalkBack/VoiceOver; the screen reader moves into it and, when it closes, back to
+   what it was on. `hidden` is hidden. An app's host copies these files, as it wires
+   `RuntimeInsetsBridge`. *Evidence:* J1.2, J1.3.

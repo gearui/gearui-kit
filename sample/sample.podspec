@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'GearUI-KuiklyUI Sample - GearUI Component Demo'
     spec.vendored_frameworks      = 'build/cocoapods/framework/GearUISample.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target    = '14.0'
+    spec.ios.deployment_target    = '15.0'
                 
                 
     if !Dir.exist?('build/cocoapods/framework/GearUISample.framework') || Dir.empty?('build/cocoapods/framework/GearUISample.framework')

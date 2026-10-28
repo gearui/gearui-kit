@@ -47,7 +47,7 @@ kotlin {
         summary = "GearUI-KuiklyUI Sample - GearUI Component Demo"
         homepage = "https://github.com/gearui/gearui-kit"
         version = "1.0"
-        ios.deploymentTarget = "14.0"
+        ios.deploymentTarget = "15.0"
         podfile = project.file("iosApp/Podfile")
         framework {
             baseName = "GearUISample"

@@ -2,7 +2,7 @@ name: GearUISample
 options:
   bundleIdPrefix: com.gearui.kit
   deploymentTarget:
-    iOS: "14.0"
+    iOS: "15.0"
 targets:
   iosApp:
     type: application

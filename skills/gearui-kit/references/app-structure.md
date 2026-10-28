@@ -25,7 +25,7 @@ rather than writing them from memory.
 | Compose Multiplatform plugin | 1.7.3 |
 | KSP | 2.1.21-2.0.1 (Kuikly's `@Page` processor) |
 | Android | minSdk 21, compileSdk 36 |
-| iOS | 14.0+ |
+| iOS | 15.0+ |
 
 `settings.gradle.kts` — KuiklyUI 2.x is only on Tencent's mirror; without it nothing resolves:
 
@@ -64,7 +64,7 @@ kotlin {
     js(IR) { browser(); binaries.executable() }   // only if you ship the Web
 
     cocoapods {
-        ios.deploymentTarget = "14.0"
+        ios.deploymentTarget = "15.0"
         podfile = project.file("iosApp/Podfile")
         framework { baseName = "shared"; isStatic = true }
     }

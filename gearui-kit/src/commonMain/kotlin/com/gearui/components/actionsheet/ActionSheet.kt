@@ -209,8 +209,9 @@ object ActionSheet {
                 cancelText = cancelText,
                 gridColumns = gridColumns,
                 onSelected = { item, index ->
-                    onSelected?.invoke(item, index)
+                    // Dismiss first: a selection may open the next sheet from its callback.
                     dismiss()
+                    onSelected?.invoke(item, index)
                 },
                 onCancel = {
                     onCancel?.invoke()

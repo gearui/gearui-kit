@@ -21,6 +21,8 @@ import kotlin.math.abs
  * @param minFlingDistanceDp   minimum fling distance (dp); a fast enough flick may commit over a shorter distance
  * @param flingVelocityDpPerSec  fling velocity threshold (dp/s)
  * @param directionRatio       horizontal intent ratio: abs(dx) must exceed abs(dy) * ratio, ruling out vertical drags
+ * @param fullWidthDirectionRatio  stricter ratio for a drag that starts anywhere on the page (not the edge):
+ *                      the page usually scrolls vertically, so only a clearly sideways start counts as back
  */
 data class SwipeBackConfig(
     val edgeWidthDp: Float = 24f,
@@ -28,6 +30,7 @@ data class SwipeBackConfig(
     val minFlingDistanceDp: Float = 24f,
     val flingVelocityDpPerSec: Float = 1200f,
     val directionRatio: Float = 1.2f,
+    val fullWidthDirectionRatio: Float = 2f,
 )
 
 /**
@@ -119,8 +122,11 @@ fun Modifier.swipeBack(
                     }
                 }
             } else {
-                // Manual slop on the Initial pass: recognise a rightward, mostly
-                // horizontal drag and consume it here so children never see it.
+                // Manual slop on the Initial pass, with the direction decided once:
+                // the first time the finger moves past slop in any direction, a
+                // clearly rightward drag is a back swipe and is consumed here so
+                // children never see it; anything else (a vertical scroll that
+                // drifts sideways) gives up for the whole touch, so the page keeps it.
                 val touchSlop = viewConfiguration.touchSlop
                 var change: PointerInputChange? = null
                 while (true) {
@@ -129,15 +135,13 @@ fun Modifier.swipeBack(
                     if (!c.pressed) break
                     totalDx = c.position.x - startX
                     totalDy = c.position.y - startY
-                    if (abs(totalDx) > touchSlop &&
-                        abs(totalDx) > abs(totalDy) * config.directionRatio &&
-                        totalDx > 0f
-                    ) {
+                    if (abs(totalDx) <= touchSlop && abs(totalDy) <= touchSlop) continue
+                    if (totalDx > 0f && abs(totalDx) > abs(totalDy) * config.fullWidthDirectionRatio) {
                         c.consume()
                         recognized = true
                         change = c
-                        break
                     }
+                    break
                 }
                 change
             }

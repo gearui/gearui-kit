@@ -166,10 +166,10 @@ fun Tag(
             .padding(horizontal = tokens.paddingHorizontal),
         contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxHeight()
-        ) {
+        // Sized by its content and centred by the Box. Not fillMaxHeight: since the tag's
+        // height became a minimum, filling took whatever height the parent allowed — in a
+        // sheet or dialog the tag, and the row holding it, grew to the screen.
+        Row(verticalAlignment = Alignment.CenterVertically) {
             // Icon
             if (icon != null) {
                 Box(modifier = Modifier.size(tokens.iconBoxSize)) { icon() }

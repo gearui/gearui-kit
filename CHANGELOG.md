@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- Fix: a `Tag` in a sheet, dialog or any container with a bounded height grew to that height,
+  and so did the row holding it. 1.0.0 made the tag's height a minimum (so large font scales
+  no longer clip it) while its content still filled the available height.
+
 ## [1.0.0] - 2026-10-29
 
 The first stable release. The public API (`apiCheck` baseline), token schema and the

@@ -18,7 +18,7 @@ class SurfaceDecorationTest {
     @Test fun blurredCoverageIsBoundedAndPreservesSourceAlpha() {
         for (blur in listOf(.1f, 1f, 8f, 100f)) {
             val bands = shadowBands(blur, .6f)
-            assertTrue(bands.size <= 49)
+            assertTrue(bands.size <= 25)
             assertTrue(bands.zipWithNext().all { (a, b) -> a.extent >= b.extent })
             var alpha = 0f
             bands.forEach { assertTrue(it.alpha in 0f..1f); alpha += (1f - alpha) * it.alpha }

@@ -53,13 +53,19 @@ data class SurfaceBorder(
 
 internal data class ShadowBand(val extent: Float, val alpha: Float)
 
-/** Gaussian edge profile, discretized into bounded contour bands (not a bitmap convolution). */
+/**
+ * Gaussian edge profile, discretized into bounded contour bands (not a bitmap convolution).
+ *
+ * About one band per 4 px of blur: every band is a path the renderer replays on each frame a
+ * surface moves, and at one band per half pixel a list of cards dropped most of its frames on
+ * Android while scrolling. Coarser bands are invisible at shadow opacities.
+ */
 internal fun shadowBands(blur: Float, alpha: Float): List<ShadowBand> {
     require(blur.isFinite() && blur >= 0f && alpha.isFinite() && alpha in 0f..1f)
     if (alpha == 0f) return emptyList()
     if (blur == 0f) return listOf(ShadowBand(0f, alpha))
     val sigma = blur / 2f
-    val count = ceil(blur * 2f).toInt().coerceIn(12, 48)
+    val count = ceil(blur / 4f).toInt().coerceIn(4, 24)
     var previous = 0f
     return (0..count).map { index ->
         val z = 3f - 6f * index / count
@@ -199,18 +205,38 @@ private fun DrawScope.paintDecoration(
         for ((shadow, bands) in layers) {
             if (shadow.inset != inset) continue
             val canvasBounds = Rect(0f, 0f, size.width, size.height)
-            clipPath(if (inset) boundary else excludingPath(canvasBounds, rect.contour())) {
+            if (inset) clipPath(boundary) {
                 for ((bandRect, alpha, offset) in bands) {
                     if (alpha == 0f) continue
-                    if (inset) {
-                        if (bandRect == null) drawRect(shadow.color.copy(alpha = alpha))
-                        else {
-                            // Move the hole, not the surface clip.
-                            val moved = bandRect.contour().map { it + offset }
-                            drawPath(excludingPath(canvasBounds, moved), shadow.color.copy(alpha = alpha))
+                    if (bandRect == null) drawRect(shadow.color.copy(alpha = alpha))
+                    else {
+                        // Move the hole, not the surface clip.
+                        val moved = bandRect.contour().map { it + offset }
+                        drawPath(excludingPath(canvasBounds, moved), shadow.color.copy(alpha = alpha))
+                    }
+                }
+            } else translate(shadow.offsetX.toPx(), shadow.offsetY.toPx()) {
+                // Each band is painted as the ring between it and the next, at the alpha accumulated
+                // so far, rather than as nested fills clipped to the outside of the surface. Every
+                // canvas op is a path the renderer re-rasterizes on each frame the surface moves; a
+                // path clip plus a dozen surface-sized fills per card cost a scrolling list on
+                // Android over half its frames. Thin rings cover a fraction of that area.
+                val spread = shadow.spread.toPx()
+                val offset = max(abs(shadow.offsetX.toPx()), abs(shadow.offsetY.toPx()))
+                val raw = shadowBands(shadow.blur.toPx(), shadow.color.alpha)
+                var coverage = 0f
+                raw.forEachIndexed { index, band ->
+                    coverage += (1f - coverage) * band.alpha
+                    if (coverage == 0f) return@forEachIndexed
+                    val color = shadow.color.copy(alpha = coverage)
+                    val next = raw.getOrNull(index + 1)?.extent
+                    // Rings and the core lying wholly under the surface are hidden by it.
+                    if (-spread - band.extent >= offset) return@forEachIndexed
+                    if (next == null) rect.insetBy(-spread - band.extent)?.let { drawPath(it.path(), color) }
+                    else if (band.extent > next) {
+                        rect.insetBy(-spread - (band.extent + next) / 2f)?.let {
+                            drawPath(it.path(), color, style = Stroke(band.extent - next))
                         }
-                    } else if (bandRect != null) translate(offset.x, offset.y) {
-                        drawPath(bandRect.path(), shadow.color.copy(alpha = alpha))
                     }
                 }
             }

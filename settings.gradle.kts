@@ -32,6 +32,7 @@ rootProject.name = "GearUI-Kit"
 // ============================================================================
 
 include(":gearui-kit")
+include(":gearui-markdown")
 include(":sample")
 // Web (H5) host for the sample. Kept inside the main build rather than as a
 // standalone one so it can depend on :sample's JS bundle directly instead of

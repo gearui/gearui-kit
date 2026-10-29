@@ -14,6 +14,7 @@ import com.tencent.kuiklybase.config.MarkdownConfig
 import com.tencent.kuiklybase.config.MarkdownTypography
 import com.tencent.kuiklybase.config.TextStyleConfig
 import com.tencent.kuiklybase.markdown.compose.MarkdownView
+import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 
 /**
  * Renders Markdown (GFM: headings, emphasis, lists, task lists, links, code, quotes, tables)
@@ -49,7 +50,10 @@ fun Markdown(
             eolAsNewLine = true,
         )
     }
-    MarkdownView(modifier = modifier, content = content, config = config)
+    // MarkdownView keys its parse on the flavour, and its default builds a new one on every call:
+    // without one kept here, each recomposition parsed the whole document again.
+    val flavour = remember { GFMFlavourDescriptor() }
+    MarkdownView(modifier = modifier, content = content, config = config, flavour = flavour)
 }
 
 private fun Color.argb(): Long = toArgb().toLong() and 0xFFFFFFFFL

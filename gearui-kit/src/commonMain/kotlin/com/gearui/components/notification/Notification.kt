@@ -21,8 +21,8 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.OverlayTransition
 import com.gearui.overlay.OverlayDismissPolicy
-import kotlinx.coroutines.delay
 import com.gearui.overlay.OverlayDefaults
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.overlay.rememberTopFloatingOffset
@@ -186,15 +186,22 @@ class NotificationController internal constructor(
         // Dismiss the previous one first
         dismiss()
 
-        currentOverlayId = overlayController.show(
+        var id = -1L
+        id = overlayController.show(
             options = OverlayOptions(
                 placement = OverlayPlacement.Fullscreen,
+                // The banner does not slide itself, so the host fades it; as a fullscreen
+                // overlay it would otherwise default to SurfaceSlide and stay fully drawn
+                // while it exits.
+                transition = OverlayTransition.Fade,
                 modal = false,
                 // A notification is non-blocking: everything outside the banner stays tappable and scrollable, and the whole screen is never frozen.
                 passThroughOutside = true,
                 // It reports, it does not take focus: showing it must not close a keyboard the user is typing on.
                 dismissKeyboardOnShow = false,
-                dismissPolicy = OverlayDismissPolicy.toast(duration)
+                // The overlay runtime times the banner out; the content keeps no timer.
+                // A duration of 0 or less keeps it until it is closed.
+                dismissPolicy = OverlayDismissPolicy.toast(duration).copy(timeoutMillis = duration.takeIf { it > 0 })
             )
         ) {
             NotificationOverlayContent(
@@ -203,14 +210,20 @@ class NotificationController internal constructor(
                 type = type,
                 action = action,
                 onAction = onAction,
-                duration = duration,
                 closable = closable,
                 topOffset = topOffset,
-                onDismiss = { dismiss() },
+                // This banner's own id: a later banner must not be closed by this one.
+                onDismiss = { dismiss(id) },
                 leading = leading,
                 onClick = onClick,
             )
         }
+        currentOverlayId = id
+    }
+
+    private fun dismiss(id: Long) {
+        overlayController.dismiss(id)
+        if (currentOverlayId == id) currentOverlayId = null
     }
 
     /**
@@ -234,21 +247,12 @@ private fun NotificationOverlayContent(
     type: NotificationType,
     action: String?,
     onAction: (() -> Unit)?,
-    duration: Long,
     closable: Boolean,
     topOffset: Float,
     onDismiss: () -> Unit,
     leading: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
-    // Auto-dismiss timer
-    LaunchedEffect(Unit) {
-        if (duration > 0) {
-            delay(duration)
-            onDismiss()
-        }
-    }
-
     val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
 
     Box(

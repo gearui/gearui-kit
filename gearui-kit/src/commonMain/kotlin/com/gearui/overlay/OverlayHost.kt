@@ -220,10 +220,16 @@ fun OverlayHost(
         // not only the page content above.
         CompositionLocalProvider(LocalOverlayViewportSize provides hostSize) {
         controller.items.forEach { item ->
-            OverlayItemLayout(
-                item = item,
-                controller = controller
-            )
+            // Keyed by id: when an item ahead of it is removed, this one keeps its own
+            // state instead of taking over the removed one's slot. Without the key it took
+            // over that slot's exit effect, which had already finished and does not restart
+            // for an item that is exiting too — so it was never removed.
+            key(item.id) {
+                OverlayItemLayout(
+                    item = item,
+                    controller = controller
+                )
+            }
         }
         }
     }

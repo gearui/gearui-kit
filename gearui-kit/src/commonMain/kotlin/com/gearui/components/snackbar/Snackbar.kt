@@ -25,6 +25,7 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.overlay.LocalOverlayController
 import com.gearui.overlay.OverlayOptions
 import com.gearui.overlay.OverlayPlacement
+import com.gearui.overlay.OverlayTransition
 import com.gearui.overlay.OverlayDismissPolicy
 import kotlinx.coroutines.delay
 import com.gearui.overlay.OverlayDefaults
@@ -349,16 +350,22 @@ class SnackbarController internal constructor(
         // Dismiss the previous one first
         dismiss()
 
-        currentOverlayId = overlayController.show(
+        var id = -1L
+        id = overlayController.show(
             options = OverlayOptions(
                 placement = OverlayPlacement.Fullscreen,
+                // It does not slide itself, so the host fades it; as a fullscreen overlay it
+                // would otherwise default to SurfaceSlide and stay fully drawn while it exits.
+                transition = OverlayTransition.Fade,
                 modal = false,
                 // Snackbar is non-blocking feedback: outside the banner, the
                 // underlying page should keep receiving taps and scrolls.
                 passThroughOutside = true,
                 // It reports, it does not take focus: showing it must not close a keyboard the user is typing on.
                 dismissKeyboardOnShow = false,
-                dismissPolicy = OverlayDismissPolicy.toast(duration)
+                // The overlay runtime times it out; the content keeps no timer.
+                // A duration of 0 or less keeps it until it is closed.
+                dismissPolicy = OverlayDismissPolicy.toast(duration).copy(timeoutMillis = duration.takeIf { it > 0 })
             )
         ) {
             SnackbarOverlayContent(
@@ -368,11 +375,17 @@ class SnackbarController internal constructor(
                 onActionClick = onActionClick,
                 showCloseButton = showCloseButton,
                 showIcon = showIcon,
-                duration = duration,
                 topOffset = topOffset,
-                onDismiss = { dismiss() }
+                // This one's own id: a later Snackbar must not be closed by this one.
+                onDismiss = { dismiss(id) }
             )
         }
+        currentOverlayId = id
+    }
+
+    private fun dismiss(id: Long) {
+        overlayController.dismiss(id)
+        if (currentOverlayId == id) currentOverlayId = null
     }
 
     /**
@@ -397,18 +410,9 @@ private fun SnackbarOverlayContent(
     onActionClick: (() -> Unit)?,
     showCloseButton: Boolean,
     showIcon: Boolean,
-    duration: Long,
     topOffset: Float,
     onDismiss: () -> Unit
 ) {
-    // Auto-dismiss timer
-    LaunchedEffect(Unit) {
-        if (duration > 0) {
-            delay(duration)
-            onDismiss()
-        }
-    }
-
     val resolvedTopOffset = rememberTopFloatingOffset(topOffset.dp)
 
     Box(

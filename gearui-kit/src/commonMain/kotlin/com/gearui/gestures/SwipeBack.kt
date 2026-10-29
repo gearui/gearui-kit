@@ -21,8 +21,6 @@ import kotlin.math.abs
  * @param minFlingDistanceDp   minimum fling distance (dp); a fast enough flick may commit over a shorter distance
  * @param flingVelocityDpPerSec  fling velocity threshold (dp/s)
  * @param directionRatio       horizontal intent ratio: abs(dx) must exceed abs(dy) * ratio, ruling out vertical drags
- * @param fullWidthDirectionRatio  stricter ratio for a drag that starts anywhere on the page (not the edge):
- *                      the page usually scrolls vertically, so only a clearly sideways start counts as back
  */
 data class SwipeBackConfig(
     val edgeWidthDp: Float = 24f,
@@ -30,8 +28,14 @@ data class SwipeBackConfig(
     val minFlingDistanceDp: Float = 24f,
     val flingVelocityDpPerSec: Float = 1200f,
     val directionRatio: Float = 1.2f,
-    val fullWidthDirectionRatio: Float = 2f,
 )
+
+/**
+ * Stricter horizontal-intent ratio for a drag that starts anywhere on the page (not the edge): the page
+ * usually scrolls vertically, so only a clearly sideways start counts as back. Internal so the public
+ * [SwipeBackConfig] keeps its 1.0 shape.
+ */
+private const val FULL_WIDTH_DIRECTION_RATIO = 2f
 
 /**
  * Attaches the left-edge swipe-back gesture to any composable.
@@ -136,7 +140,7 @@ fun Modifier.swipeBack(
                     totalDx = c.position.x - startX
                     totalDy = c.position.y - startY
                     if (abs(totalDx) <= touchSlop && abs(totalDy) <= touchSlop) continue
-                    if (totalDx > 0f && abs(totalDx) > abs(totalDy) * config.fullWidthDirectionRatio) {
+                    if (totalDx > 0f && abs(totalDx) > abs(totalDy) * FULL_WIDTH_DIRECTION_RATIO) {
                         c.consume()
                         recognized = true
                         change = c

@@ -27,9 +27,7 @@ data class TimelineItem(
     val content: String,
     val timestamp: String? = null,
     val icon: IconSource? = null,
-    val color: TimelineColor = TimelineColor.DEFAULT,
-    /** Replaces the plain [content] text with custom content (e.g. rich text); [content] stays the accessible summary. */
-    val body: (@Composable () -> Unit)? = null,
+    val color: TimelineColor = TimelineColor.DEFAULT
 )
 
 /**
@@ -192,8 +190,7 @@ private fun TimelineItemView(
                     .weight(1f)
                     .padding(bottom = if (!isLast) Spacing.xl else Spacing.none)
             ) {
-                val body = item.body
-                if (body != null) body() else Text(
+                Text(
                     text = item.content,
                     style = Theme.typography.bodyMedium,
                     color = colors.foreground

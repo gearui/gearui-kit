@@ -1,0 +1,4 @@
+public final class com/gearui/components/markdown/MarkdownKt {
+	public static final fun Markdown (Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/foundation/typography/TextStyle;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+

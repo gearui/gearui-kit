@@ -3024,6 +3024,82 @@ public final class com/gearui/components/progress/ProgressStatus : java/lang/Enu
 	public static fun values ()[Lcom/gearui/components/progress/ProgressStatus;
 }
 
+public final class com/gearui/components/questionnaire/QuestionnaireAnswer {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/util/Set;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/Set;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChoices ()Ljava/util/Set;
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isEmpty ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireChoice {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBadge ()Ljava/lang/String;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getDisabled ()Z
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireInput {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getPlaceholder ()Ljava/lang/String;
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireItem {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLcom/gearui/components/questionnaire/QuestionnaireInput;ZLkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLcom/gearui/components/questionnaire/QuestionnaireInput;ZLkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAppliesWhen ()Lkotlin/jvm/functions/Function1;
+	public final fun getChoices ()Ljava/util/List;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getInput ()Lcom/gearui/components/questionnaire/QuestionnaireInput;
+	public final fun getMultiple ()Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPrompt ()Ljava/lang/String;
+	public final fun getRequired ()Z
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireKt {
+	public static final fun Questionnaire (Ljava/util/List;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/questionnaire/QuestionnaireState;ZLjava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireState {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/util/Map;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun answerOf (Ljava/lang/String;)Lcom/gearui/components/questionnaire/QuestionnaireAnswer;
+	public final fun applicable (Ljava/util/List;)Ljava/util/List;
+	public final fun canLeave (Lcom/gearui/components/questionnaire/QuestionnaireItem;)Z
+	public final fun choose (Lcom/gearui/components/questionnaire/QuestionnaireItem;Ljava/lang/String;)V
+	public final fun current (Ljava/util/List;)Lcom/gearui/components/questionnaire/QuestionnaireItem;
+	public final fun getAnswers ()Ljava/util/Map;
+	public final fun getCurrentName ()Ljava/lang/String;
+	public final fun getInvalidName ()Ljava/lang/String;
+	public final fun goTo (Ljava/lang/String;)V
+	public final fun next (Ljava/util/List;)Z
+	public final fun previous (Ljava/util/List;)Z
+	public final fun reset ()V
+	public final fun skip (Ljava/util/List;)Z
+	public final fun submission (Ljava/util/List;)Ljava/util/Map;
+	public final fun type (Lcom/gearui/components/questionnaire/QuestionnaireItem;Ljava/lang/String;)V
+}
+
+public final class com/gearui/components/questionnaire/QuestionnaireStateKt {
+	public static final fun rememberQuestionnaireState (Ljava/util/Map;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Lcom/gearui/components/questionnaire/QuestionnaireState;
+}
+
 public final class com/gearui/components/radio/RadioButtonKt {
 	public static final fun RadioButton (ZLkotlin/jvm/functions/Function0;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/radio/RadioSize;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 	public static final fun RadioButtonWithLabel (ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Lcom/tencent/kuikly/compose/ui/Modifier;ZLcom/gearui/components/radio/RadioSize;Landroidx/compose/runtime/Composer;II)V

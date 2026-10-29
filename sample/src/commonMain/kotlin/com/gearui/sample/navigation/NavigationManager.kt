@@ -2,6 +2,7 @@ package com.gearui.sample.navigation
 
 import com.gearui.sample.examples.refresh.LoadMoreExample
 import com.gearui.sample.examples.format.FormatExample
+import com.gearui.sample.examples.questionnaire.QuestionnaireExample
 import com.gearui.sample.examples.indexbar.IndexBarExample
 import com.gearui.sample.examples.agreement.AgreementExample
 import com.gearui.sample.examples.runtime.PerformanceExample
@@ -127,6 +128,7 @@ object NavigationManager {
 
             // Form components (15)
             "listbox" -> ListBoxExample(component, onBack)
+            "questionnaire" -> QuestionnaireExample(component, onBack)
             "typed-form" -> TypedFormExample(component, onBack)
             "toolbar" -> ToolbarExample(component, onBack)
             "kbd" -> KbdExample(component, onBack)

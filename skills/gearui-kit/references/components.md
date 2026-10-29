@@ -37,6 +37,7 @@ read its signatures in the file named in the last column.
 | `Form` | Form container / 表单容器 | api/components-form.md |
 | `Cascader` | Cascade selector / 级联选择器 | api/components-form.md |
 | `ListBox` | Single or multiple choice shown in the page / 在页面里直接列出的单选/多选 | api/components-form.md |
+| `Questionnaire` | Step-by-step questions: choices, free text, agent prompts / 逐题提问，单选/多选/自由输入，AI 澄清与向导 | api/components-form.md |
 | `ColorPicker` | Swatches, color plane and hex entry / 色板、色域平面与十六进制输入 | api/components-form.md |
 | `NavBar` | Page navigation bar / 通用页面导航栏 | api/components-navigation.md |
 | `BottomNavBar` | App bottom navigation / 应用底部主导航 | api/components-navigation.md |

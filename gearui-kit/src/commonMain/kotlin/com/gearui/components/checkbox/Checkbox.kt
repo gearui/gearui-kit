@@ -81,7 +81,7 @@ private fun checkboxState(checked: Boolean, indeterminate: Boolean): String {
 }
 
 @Composable
-private fun CheckboxMark(checked: Boolean, indeterminate: Boolean, enabled: Boolean, pressed: Boolean, size: CheckboxSize) {
+internal fun CheckboxMark(checked: Boolean, indeterminate: Boolean, enabled: Boolean, pressed: Boolean, size: CheckboxSize) {
     val colors = Theme.colors
     val shape = Theme.shapes.sm
     val motion = Theme.motion

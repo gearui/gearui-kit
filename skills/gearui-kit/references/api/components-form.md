@@ -1294,6 +1294,116 @@ fun <T> ListBox(
 )
 ```
 
+## components/questionnaire
+
+### `Questionnaire` — `import com.gearui.components.questionnaire.*`
+
+Source: `commonMain/kotlin/com/gearui/components/questionnaire/Questionnaire.kt`
+
+```kotlin
+// Questions asked one at a time, each answered by choosing, typing, or both — what an
+// agent shows before it acts ("Which approach?"), a setup wizard, a short survey.
+//
+// One item is a question card: its prompt, its choices as cards (radios, or checkboxes
+// with [QuestionnaireItem.multiple]), an optional "Other" field, and the action. With
+// more items there is progress, Previous, Skip for optional items, and Next until the
+// last item, where the action submits. Items whose [QuestionnaireItem.appliesWhen] does
+// not hold are not asked and not counted.
+//
+// A required item blocks Next and Submit until it is answered, and says so under the
+// item. [onSubmit] receives the answers of the items that apply, keyed by name; what
+// happens next — send them to the agent, close the sheet — is the caller's.
+//
+// It does not scroll by itself: place it in the page's scroll, a card or a BottomSheet.
+// …
+@Composable
+fun Questionnaire(
+    items: List<QuestionnaireItem>,
+    onSubmit: (Map<String, QuestionnaireAnswer>) -> Unit,
+    modifier: Modifier = Modifier,
+    state: QuestionnaireState = rememberQuestionnaireState(),
+    advanceOnChoice: Boolean = false,
+    submitLabel: String = I18n.strings.guide.tourFinish,
+    enabled: Boolean = true,
+)
+```
+
+### `QuestionnaireState` — `import com.gearui.components.questionnaire.*`
+
+Source: `commonMain/kotlin/com/gearui/components/questionnaire/QuestionnaireState.kt`
+
+```kotlin
+// One fixed answer to a [QuestionnaireItem]. [value] is what the answers report.
+class QuestionnaireChoice(
+    val value: String,
+    val label: String,
+    val description: String? = null,
+    val badge: String? = null,
+    val disabled: Boolean = false,
+)
+
+// A free-text answer next to the fixed choices — "Other". [label] names the field for
+// everyone, screen readers included; a placeholder is not a name.
+class QuestionnaireInput(
+    val label: String,
+    val placeholder: String = "",
+)
+
+// One question. [name] keys its answer. With [multiple] the choices are checkboxes,
+// otherwise radios; with [input] the user can also type an answer. A [required] item
+// must be answered to move on; an optional one can be skipped. [appliesWhen] leaves the
+// item out — not asked, not counted, not reported — unless it holds for the answers so far.
+class QuestionnaireItem(
+    val name: String,
+    val prompt: String,
+    val description: String? = null,
+    val choices: List<QuestionnaireChoice> = emptyList(),
+    val multiple: Boolean = false,
+    val input: QuestionnaireInput? = null,
+    val required: Boolean = true,
+    val appliesWhen: ((Map<String, QuestionnaireAnswer>) -> Boolean)? = null,
+)
+
+// The answer to one item: the chosen [choices] and the typed [text]. For a single-choice
+// item they exclude each other — choosing clears the text, typing clears the choice.
+class QuestionnaireAnswer(
+    val choices: Set<String> = emptySet(),
+    val text: String = "",
+)
+    // members: val isEmpty: Boolean get() = choices.isEmpty() && text.isBlank()
+
+// Where a [Questionnaire] stands: the answers, the item on screen, and the item whose
+// missing answer is being reported. Hoist it to read or restore answers (resume a
+// questionnaire), or to move between items from outside.
+@Stable
+class QuestionnaireState(
+    initialAnswers: Map<String, QuestionnaireAnswer> = emptyMap(),
+    initialItem: String? = null,
+)
+    // members: var answers: Map<String, QuestionnaireAnswer> by mutableStateOf(initialAnswers)
+    //   var currentName: String? by mutableStateOf(initialItem)
+    //   var invalidName: String? by mutableStateOf(null)
+    //   fun applicable(items: List<QuestionnaireItem>): List<QuestionnaireItem> =
+    //   fun current(items: List<QuestionnaireItem>): QuestionnaireItem?
+    //   fun answerOf(name: String): QuestionnaireAnswer = answers[name] ?: QuestionnaireAnswer()
+    //   fun choose(item: QuestionnaireItem, value: String)
+    //   fun type(item: QuestionnaireItem, text: String)
+    //   fun canLeave(item: QuestionnaireItem): Boolean = !item.required || !answerOf(item.name).isEmpty
+    //   fun next(items: List<QuestionnaireItem>): Boolean
+    //   fun skip(items: List<QuestionnaireItem>): Boolean
+    //   fun previous(items: List<QuestionnaireItem>): Boolean
+    //   fun goTo(name: String)
+    //   fun submission(items: List<QuestionnaireItem>): Map<String, QuestionnaireAnswer>?
+    //   fun reset()
+
+// A [QuestionnaireState] kept across recomposition.
+@Composable
+fun rememberQuestionnaireState(
+    initialAnswers: Map<String, QuestionnaireAnswer> = emptyMap(),
+    initialItem: String? = null,
+): QuestionnaireState
+```
+
 ## components/colorpicker
 
 ### `ColorPicker` — `import com.gearui.components.colorpicker.*`

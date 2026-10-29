@@ -59,6 +59,7 @@ object ComponentConfig {
         ComponentInfo("form", "表单", "Form", ComponentCategory.FORM, "/components/form", "表单容器", "Form container"),
         ComponentInfo("cascader", "级联选择", "Cascader", ComponentCategory.FORM, "/components/cascader", "级联选择器", "Cascade selector"),
         ComponentInfo("listbox", "选项列表", "ListBox", ComponentCategory.FORM, "/components/listbox", "在页面里直接列出的单选/多选", "Single or multiple choice shown in the page"),
+        ComponentInfo("questionnaire", "问卷提问", "Questionnaire", ComponentCategory.FORM, "/components/questionnaire", "逐题提问，单选/多选/自由输入，AI 澄清与向导", "Step-by-step questions: choices, free text, agent prompts"),
         ComponentInfo("typed-form", "异步表单", "TypedForm", ComponentCategory.FORM, "/components/typed-form", "类型化字段、异步校验与服务端错误", "Typed fields, async checks, server errors"),
         ComponentInfo("colorpicker", "颜色选择", "ColorPicker", ComponentCategory.FORM, "/components/colorpicker", "色板、色域平面与十六进制输入", "Swatches, color plane and hex entry"),
 

@@ -61,7 +61,7 @@ fun RadioButton(
 }
 
 @Composable
-private fun RadioMark(selected: Boolean, enabled: Boolean, pressed: Boolean, size: RadioSize) {
+internal fun RadioMark(selected: Boolean, enabled: Boolean, pressed: Boolean, size: RadioSize) {
     val colors = Theme.colors
     val motion = Theme.motion
     val outer = when (size) {

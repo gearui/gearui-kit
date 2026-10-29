@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+- **New: `Questionnaire`** — questions asked one at a time, answered by choosing, typing, or
+  both: an agent's clarifying question before it acts, a setup wizard, a short survey.
+  Choices are cards with an optional description and badge ("Recommended"), as radios or,
+  with `multiple`, checkboxes; an item can add an "Other" text field (`QuestionnaireInput`),
+  which replaces the choice of a single-choice item. Several items get progress, Previous,
+  Skip for optional items, Next and Submit; `appliesWhen` leaves out items that do not
+  apply to earlier answers; a missing required answer is reported under the item.
+  `advanceOnChoice` answers a single-choice item with the tap itself, for quick decisions in
+  a conversation. State is a hoistable `QuestionnaireState` (restore answers, move between
+  items). Works inside a `BottomSheet`, where screen readers and the Web keyboard stay in
+  the sheet. Additive: no existing API changes.
+
 - Fix: a `Tag` in a sheet, dialog or any container with a bounded height grew to that height,
   and so did the row holding it. 1.0.0 made the tag's height a minimum (so large font scales
   no longer clip it) while its content still filled the available height.

@@ -85,6 +85,7 @@ Chinese mobile practice.
 | A date, a month, a year, a time | `DatePickerInput` / `TimePickerInput` with `precision` | typed date segments |
 | A range of dates | `Calendar` (range) | two unrelated date fields |
 | Options shown in the page, no trigger | `ListBox` | a `Select` that is always open |
+| Questions answered one at a time — an agent's clarifying question, a setup wizard | `Questionnaire` (choices with descriptions, "Other" text, progress, skip) | a form of `RadioGroup`s with hand-made Next buttons |
 | A few actions on the current item | `ActionSheet` (flat; group related actions, not nest them) | nested action menus |
 
 Removed before beta7 shipped: segmented keyboard date/time fields (`DateField`,

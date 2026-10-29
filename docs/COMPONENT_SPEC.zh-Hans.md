@@ -75,6 +75,7 @@ fun MyComponent(
 | 日期、年月、年份、时间 | `DatePickerInput` / `TimePickerInput` 配 `precision` | 分段键入日期 |
 | 日期区间 | `Calendar`（区间） | 两个互不相关的日期字段 |
 | 在页面里直接列出选项、没有触发器 | `ListBox` | 常开的 `Select` |
+| 逐题回答的问题——AI 助手的澄清提问、配置向导 | `Questionnaire`（选项带说明、「其他」输入、进度、可跳过） | 一堆 `RadioGroup` 加手写的「下一步」 |
 | 对当前对象的几个操作 | `ActionSheet`（平铺；相关操作分组，不做嵌套） | 多级操作菜单 |
 
 beta7 发布前删除：分段键入日期/时间（`DateField`、`TimeField`）——桌面键盘录入模式，触控下

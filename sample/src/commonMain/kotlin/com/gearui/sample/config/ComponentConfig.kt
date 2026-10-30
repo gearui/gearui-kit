@@ -30,6 +30,7 @@ object ComponentConfig {
         ComponentInfo("icon", "图标", "Icon", ComponentCategory.BASIC, "/components/icon", "图标展示", "Icon display"),
         ComponentInfo("icon-render", "图标渲染验证", "Icon Render", ComponentCategory.BASIC, "/components/icon-render", "PNG/SVG 资源渲染能力验证", "PNG/SVG resource rendering"),
         ComponentInfo("link", "链接", "Link", ComponentCategory.BASIC, "/components/link", "文本链接与链接按钮", "Link and LinkButton"),
+        ComponentInfo("suggestion", "推荐问题", "SuggestionChips", ComponentCategory.BASIC, "/components/suggestion", "快捷回复与推荐问题", "Quick replies and suggested questions"),
         ComponentInfo("close-button", "关闭按钮", "CloseButton", ComponentCategory.BASIC, "/components/close-button", "统一的关闭/移除按钮", "Unified dismiss button"),
         ComponentInfo("pressable-feedback", "按压反馈", "PressableFeedback", ComponentCategory.BASIC, "/components/pressable-feedback", "任意可点区域的缩放与高亮", "Scale and highlight for any tappable area"),
         ComponentInfo("text", "文本", "Text", ComponentCategory.BASIC, "/components/text", "文本展示", "Text display"),
@@ -100,6 +101,10 @@ object ComponentConfig {
         ComponentInfo("meter", "计量值", "Meter", ComponentCategory.DATA_DISPLAY, "/components/meter", "已知上下限的计量值", "A measurement within known bounds"),
         ComponentInfo("user", "用户摘要", "User", ComponentCategory.DATA_DISPLAY, "/components/user", "头像、名称与说明的身份摘要", "Avatar, name and description"),
         ComponentInfo("code", "代码块", "Code", ComponentCategory.DATA_DISPLAY, "/components/code", "行内代码与可复制的代码块", "Inline code and copyable snippets"),
+        ComponentInfo("codeblock", "代码块", "CodeBlock", ComponentCategory.DATA_DISPLAY, "/components/codeblock", "行号、复制、diff、超长截断", "Line numbers, copy, diff, long-code cut"),
+        ComponentInfo("reasoning", "思考过程", "Reasoning", ComponentCategory.DATA_DISPLAY, "/components/reasoning", "思考中展开，结束后收起", "Model reasoning that closes when done"),
+        ComponentInfo("tool-call", "工具调用", "ToolCallCard", ComponentCategory.DATA_DISPLAY, "/components/toolcall", "Agent 的一次工具调用：参数与结果", "One tool call: input and output"),
+        ComponentInfo("agent-trace", "执行步骤", "AgentTrace", ComponentCategory.DATA_DISPLAY, "/components/agenttrace", "Agent 执行步骤与状态", "An agent run, step by step"),
         ComponentInfo("kbd", "快捷键标记", "Kbd", ComponentCategory.DATA_DISPLAY, "/components/kbd", "Web 与外接键盘的按键提示", "Web and external-keyboard shortcut hint"),
 
         // Feedback components

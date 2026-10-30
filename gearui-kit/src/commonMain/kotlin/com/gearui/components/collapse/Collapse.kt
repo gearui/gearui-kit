@@ -1,5 +1,8 @@
 package com.gearui.components.collapse
 
+import com.gearui.foundation.disclosure.DisclosureBody
+import com.gearui.foundation.disclosure.DisclosureHeader
+
 import com.gearui.components.icon.*
 import androidx.compose.runtime.*
 import com.gearui.components.icon.Icons
@@ -147,7 +150,7 @@ object Collapse {
 }
 
 /**
- * A single collapse panel with shared content and indicator feedback.
+ * A single collapse panel: the shared disclosure header and body.
  */
 @Composable
 private fun CollapsePanelItem(
@@ -156,47 +159,32 @@ private fun CollapsePanelItem(
     onToggle: () -> Unit
 ) {
     val colors = Theme.colors
-
-    val rotation = collapseRotation(panel.isExpanded)
-    val interaction = remember { MutableInteractionSource() }
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // Title bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .rowPressFeedback(interaction = interaction, shape = RectangleShape, scale = false)
-                .clickable(interactionSource = interaction, indication = null, onClick = onToggle)
-                .padding(horizontal = if (surface) ControlGeometry.accordionSurfacePadding else ControlGeometry.accordionPadding, vertical = ControlGeometry.accordionVerticalPadding),
-            horizontalArrangement = Arrangement.spacedBy(ControlGeometry.accordionTriggerGap),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(modifier = Modifier.weight(1f)) {
-                panel.headerBuilder(panel.isExpanded)
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
-            ) {
-                panel.expandIconTextBuilder?.let { builder ->
+    val inline = if (surface) ControlGeometry.accordionSurfacePadding else ControlGeometry.accordionPadding
+    Column(modifier = Modifier.fillMaxWidth()) {
+        DisclosureHeader(
+            expanded = panel.isExpanded,
+            onToggle = onToggle,
+            padding = PaddingValues(horizontal = inline, vertical = ControlGeometry.accordionVerticalPadding),
+            gap = ControlGeometry.accordionTriggerGap,
+            chevronTint = colors.foreground,
+            trailing = panel.expandIconTextBuilder?.let { builder ->
+                {
                     Text(
                         text = builder(panel.isExpanded),
                         style = Theme.typography.bodySmall,
                         color = colors.mutedForeground
                     )
                 }
-
-                Icon(Icons.caretDown,
-                    size = IconSizes.Default.md,
-                    tint = colors.foreground,
-                    modifier = Modifier.rotate(rotation)
-                )
+            },
+        ) {
+            Box(modifier = Modifier.weight(1f)) {
+                panel.headerBuilder(panel.isExpanded)
             }
         }
-
-        CollapseContent(panel.isExpanded, surface, panel.body)
+        DisclosureBody(
+            expanded = panel.isExpanded,
+            padding = PaddingValues(start = inline, end = inline, bottom = ControlGeometry.accordionVerticalPadding),
+            content = panel.body,
+        )
     }
 }

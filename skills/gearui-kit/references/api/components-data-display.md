@@ -911,12 +911,128 @@ Source: `commonMain/kotlin/com/gearui/components/code/Code.kt`
 ```kotlin
 // Inline source or command text; typography can be replaced with the app's monospace token.
 @Composable
-fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace")))
+fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = codeTextStyle())
 
 // Scrollable source block. The host supplies clipboard behavior and its localized action label.
 @Composable
 fun Snippet(text: String, modifier: Modifier = Modifier, copyLabel: String? = null,
-    onCopy: ((String) -> Unit)? = null, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace")))
+    onCopy: ((String) -> Unit)? = null, style: TextStyle = codeTextStyle())
+```
+
+## components/codeblock
+
+### `CodeBlock` — `import com.gearui.components.codeblock.*`
+
+Source: `commonMain/kotlin/com/gearui/components/codeblock/CodeBlock.kt`
+
+```kotlin
+// A block of code, a command's output or a diff, as an agent shows it: an optional
+// header with the language and a copy button, line numbers, and lines that do not wrap
+// — the block scrolls sideways instead, so each number stays beside its line.
+//
+// Beyond [collapsedLines] lines it shows the first ones and offers the rest, so a long
+// file in a reply does not lay out hundreds of lines nobody asked to see. With [diff],
+// lines starting with `+` and `-` are tinted as added and removed.
+//
+// The whole text is two text nodes — the numbers and the code — however long it is.
+//
+// @param onCopy copies the code; Kuikly has no clipboard, so the host does it. Null hides
+//   the copy button.
+@Composable
+fun CodeBlock(
+    code: String,
+    modifier: Modifier = Modifier,
+    language: String? = null,
+    showLineNumbers: Boolean = true,
+    collapsedLines: Int = CodeBlockDefaults.CollapsedLines,
+    diff: Boolean = false,
+    onCopy: ((String) -> Unit)? = null,
+)
+
+object CodeBlockDefaults
+    // members: const val CollapsedLines: Int = 12
+```
+
+## components/reasoning
+
+### `Reasoning` — `import com.gearui.components.reasoning.*`
+
+Source: `commonMain/kotlin/com/gearui/components/reasoning/Reasoning.kt`
+
+```kotlin
+// A model's reasoning before its answer. While [thinking] it is open and its title says
+// so with a spinner; when thinking ends it closes into one line — "Thought for 12s" — that
+// opens it again. [text] may grow while thinking (streamed); it is one text node.
+//
+// @param durationSeconds how long it thought, for the closed title; null shows a plain title.
+// @param expanded null lets the component open and close itself as above; a value
+//   controls it, with [onExpandedChange] reporting the user's taps.
+@Composable
+fun Reasoning(
+    text: String,
+    thinking: Boolean,
+    modifier: Modifier = Modifier,
+    durationSeconds: Int? = null,
+    expanded: Boolean? = null,
+    onExpandedChange: ((Boolean) -> Unit)? = null,
+)
+```
+
+## components/toolcall
+
+### `ToolCallCard` — `import com.gearui.components.toolcall.*`
+
+Source: `commonMain/kotlin/com/gearui/components/toolcall/ToolCallCard.kt`
+
+```kotlin
+// One call an agent made to a tool: its [name] and [status] on a line, and — opened —
+// what it was given ([input]), what came back ([output]) or what went wrong ([error]).
+// Arguments and results show as code blocks, cut to a few lines until asked for more.
+//
+// @param expanded null opens and closes on its own — closed, except a failed call, which
+//   opens to show its error; a value controls it, with [onExpandedChange] reporting taps.
+@Composable
+fun ToolCallCard(
+    name: String,
+    status: ActivityStatus,
+    modifier: Modifier = Modifier,
+    input: String? = null,
+    output: String? = null,
+    error: String? = null,
+    expanded: Boolean? = null,
+    onExpandedChange: ((Boolean) -> Unit)? = null,
+)
+```
+
+## components/agenttrace
+
+### `AgentTrace` — `import com.gearui.components.agenttrace.*`
+
+Source: `commonMain/kotlin/com/gearui/components/agenttrace/AgentTrace.kt`
+
+```kotlin
+// One step an agent takes. [id] keys it, so a step keeps its place and state while the
+// list grows during a run. [detail] is any content under the step — a ToolCallCard, a
+// CodeBlock.
+class AgentStep(
+    val id: String,
+    val title: String,
+    val status: ActivityStatus,
+    val description: String? = null,
+    val detail: (@Composable () -> Unit)? = null,
+)
+
+// The steps of an agent's run, each with its status on a rail. While it runs the list is
+// open, and only the running step animates. When every step is over and
+// [collapseWhenDone] is set, it closes into one line — the overall outcome and "5 steps"
+// — that opens the list again.
+@Composable
+fun AgentTrace(
+    steps: List<AgentStep>,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    collapseWhenDone: Boolean = true,
+)
 ```
 
 ## components/kbd

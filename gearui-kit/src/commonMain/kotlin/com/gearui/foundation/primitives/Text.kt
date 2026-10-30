@@ -6,6 +6,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.text.style.TextOverflow
 import com.tencent.kuikly.compose.ui.text.style.TextAlign
+import com.tencent.kuikly.compose.ui.text.AnnotatedString
 import com.gearui.foundation.typography.*
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.ui.text.TextStyle as KuiklyTextStyle
@@ -54,5 +55,34 @@ fun Text(
         overflow = overflow,
         softWrap = softWrap,
         color = { color }
+    )
+}
+
+/**
+ * [Text] for an [AnnotatedString]: the same style mapping, with spans for colour and
+ * background inside one text node — a diff's added and removed lines, a highlight —
+ * rather than a node per line.
+ */
+@Composable
+internal fun StyledText(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    style: TextStyle = Theme.typography.bodyMedium,
+    color: Color = Theme.colors.foreground,
+    softWrap: Boolean = true,
+) {
+    BasicText(
+        text = text,
+        modifier = modifier,
+        style = KuiklyTextStyle(
+            fontSize = style.fontSize,
+            lineHeight = rendererLineHeight(style.lineHeight),
+            fontWeight = style.fontWeight,
+            fontFamily = style.resolveFontFamily(),
+            letterSpacing = style.letterSpacing,
+            color = color,
+            textAlign = TextAlign.Start,
+        ),
+        softWrap = softWrap,
     )
 }

@@ -5,6 +5,27 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **New: AI content blocks** — pieces that go inside any message, independent of the chat
+  UI around them:
+  - `CodeBlock`: language label, line numbers, copy (the host writes the clipboard),
+    unwrapped lines that scroll sideways, diff colouring, cut after
+    `CodeBlockDefaults.CollapsedLines` lines with "Show all".
+  - `Reasoning`: open with a spinner while the model thinks (text may stream in), closes
+    into "Thought for 12s" when done.
+  - `ToolCallCard`: a tool call's name and status; opened, its input and output as code
+    blocks, or its error (a failed call opens by itself).
+  - `AgentTrace`: an agent run's steps on a rail with their status; only the running step
+    animates; a finished run closes into one line.
+  - `SuggestionChips`: quick replies and suggested questions as pills, one scrolling line
+    or wrapped.
+  New public types: `ActivityStatus`, `AgentStep`, `Suggestion`, `CodeBlockDefaults`.
+- **New copy domains** `I18n.activity` and `I18n.actions` (statuses, copy/copied,
+  expand/collapse, more options…) in en-US / zh-Hans / zh-Hant, overridable with
+  `ExtendedStringsProvider`. `Strings` is unchanged.
+- `Collapse` is built on the kit's shared disclosure (the same header, motion and body as
+  the new blocks); it looks and behaves as before. `Code` and `Snippet` take the shared
+  monospace style.
+
 - **New: `Questionnaire`** — questions asked one at a time, answered by choosing, typing, or
   both: an agent's clarifying question before it acts, a setup wizard, a short survey.
   Choices are cards with an optional description and badge ("Recommended"), as radios or,

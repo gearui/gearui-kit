@@ -10,6 +10,7 @@ read its signatures in the file named in the last column.
 | `Button` | Trigger actions / 用于触发操作 | api/components-basic.md |
 | `Icon` | Icon display / 图标展示 | api/components-basic.md |
 | `Link` | Link and LinkButton / 文本链接与链接按钮 | api/components-basic.md |
+| `SuggestionChips` | Quick replies and suggested questions / 快捷回复与推荐问题 | api/components-basic.md |
 | `CloseButton` | Unified dismiss button / 统一的关闭/移除按钮 | api/components-basic.md |
 | `PressableFeedback` | Scale and highlight for any tappable area / 任意可点区域的缩放与高亮 | api/primitives.md |
 | `Text` | Text display / 文本展示 | api/primitives.md |
@@ -67,6 +68,10 @@ read its signatures in the file named in the last column.
 | `Meter` | A measurement within known bounds / 已知上下限的计量值 | api/components-data-display.md |
 | `User` | Avatar, name and description / 头像、名称与说明的身份摘要 | api/components-data-display.md |
 | `Code` | Inline code and copyable snippets / 行内代码与可复制的代码块 | api/components-data-display.md |
+| `CodeBlock` | Line numbers, copy, diff, long-code cut / 行号、复制、diff、超长截断 | api/components-data-display.md |
+| `Reasoning` | Model reasoning that closes when done / 思考中展开，结束后收起 | api/components-data-display.md |
+| `ToolCallCard` | One tool call: input and output / Agent 的一次工具调用：参数与结果 | api/components-data-display.md |
+| `AgentTrace` | An agent run, step by step / Agent 执行步骤与状态 | api/components-data-display.md |
 | `Kbd` | Web and external-keyboard shortcut hint / Web 与外接键盘的按键提示 | api/components-data-display.md |
 | `SwipeCell` | Swipeable cell / 滑动操作单元格 | api/components-feedback.md |
 | `ActionSheet` | Bottom action sheet / 底部动作面板 | api/components-feedback.md |

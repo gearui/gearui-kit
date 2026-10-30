@@ -265,6 +265,38 @@ fun LinkedText(
 )
 ```
 
+## components/suggestion
+
+### `SuggestionChips` — `import com.gearui.components.suggestion.*`
+
+Source: `commonMain/kotlin/com/gearui/components/suggestion/SuggestionChips.kt`
+
+```kotlin
+// One suggestion. [id] keys it.
+class Suggestion(
+    val id: String,
+    val label: String,
+    val icon: IconSource? = null,
+)
+
+// Suggested questions or quick replies as pills: tapping one hands it to [onSelect] — to
+// send it, or to fill the input. One sideways-scrolling line by default (under a reply,
+// above the input); with [wrap] they flow onto as many lines as they need (a welcome
+// screen).
+//
+// @param contentPadding the line's inset, so the first pill lines up with the page while
+//   the scroll still reaches the screen edge.
+@Composable
+fun SuggestionChips(
+    suggestions: List<Suggestion>,
+    onSelect: (Suggestion) -> Unit,
+    modifier: Modifier = Modifier,
+    wrap: Boolean = false,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(),
+)
+```
+
 ## components/closebutton
 
 ### `CloseButton` — `import com.gearui.components.closebutton.*`

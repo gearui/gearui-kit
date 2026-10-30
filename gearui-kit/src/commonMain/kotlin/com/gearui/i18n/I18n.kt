@@ -38,6 +38,14 @@ object I18n {
 
     val languageTag: String
         @Composable get() = LocalLanguageTag.current
+
+    /** Work in progress: statuses, reasoning, tool calls, steps. Added in 1.1. */
+    val activity: ActivityStrings
+        @Composable get() = resolvedActivityStrings()
+
+    /** Generic content actions: copy, expand, more options. Added in 1.1. */
+    val actions: ActionStrings
+        @Composable get() = resolvedActionStrings()
 }
 
 /**

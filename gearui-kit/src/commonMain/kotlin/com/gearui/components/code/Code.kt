@@ -11,6 +11,7 @@ import com.gearui.components.button.ButtonType
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.TextStyle
+import com.gearui.foundation.typography.codeTextStyle
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.lazy.LazyRow
@@ -19,7 +20,7 @@ import com.tencent.kuikly.compose.ui.Modifier
 
 /** Inline source or command text; typography can be replaced with the app's monospace token. */
 @Composable
-fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace"))) {
+fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = codeTextStyle()) {
     // A box carries the chip: on a KuiklyUI text node padding does not move the glyphs.
     Box(
         modifier.background(Theme.colors.muted, Theme.shapes.sm).padding(horizontal = Spacing.sm, vertical = Spacing.xs),
@@ -32,7 +33,7 @@ fun Code(text: String, modifier: Modifier = Modifier, style: TextStyle = Theme.t
 /** Scrollable source block. The host supplies clipboard behavior and its localized action label. */
 @Composable
 fun Snippet(text: String, modifier: Modifier = Modifier, copyLabel: String? = null,
-    onCopy: ((String) -> Unit)? = null, style: TextStyle = Theme.typography.bodySmall.copy(fontFamily = listOf("monospace"))) {
+    onCopy: ((String) -> Unit)? = null, style: TextStyle = codeTextStyle()) {
     Column(modifier.fillMaxWidth().background(Theme.colors.muted, Theme.shapes.md).padding(Spacing.md),
         verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
         val scroll = rememberLazyListState()

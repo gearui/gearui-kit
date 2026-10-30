@@ -49,6 +49,15 @@ fun MyComponent(
 
 不要提议重命名——这是冻结边界，不是历史遗留的不一致。
 
+### 2.1 1.0 之后如何扩展 API
+
+1.0 的 API 已冻结：只能新增。两条做法保证这一点：
+
+- **公开模型用普通 `class`，不用 `data class`**（`QuestionnaireItem`、`AgentStep`、`Suggestion`）。
+  data class 的 `copy` 与 `componentN` 属于 ABI，加字段会破坏所有调用方；普通类可以通过新增构造重载加字段。
+  `TimelineItem`、`SwipeBackConfig` 是 1.0 的 data class，保持原形态。
+- **新参数通过新增重载提供**，不要给现有函数追加默认参数：默认参数会改变编译后的签名。
+
 ## 3. 状态与交互
 
 - 状态反馈遵循 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) 的家族
@@ -81,6 +90,17 @@ fun MyComponent(
 beta7 发布前删除：分段键入日期/时间（`DateField`、`TimeField`）——桌面键盘录入模式，触控下
 目标小、要弹键盘；`YearPicker`——它就是 `DatePickerInput(precision = YEAR)`；`SubMenu`——在面板里逐级进入的
 操作菜单，操作与 `ActionSheet` 重叠、逐级钻取与 `Cascader` 重叠，而移动端操作菜单应保持一层。
+
+### 3.1 内容块的性能规则
+
+用于展示长度不定的内容（代码、思考过程、工具输出、执行步骤）的组件：
+
+1. **收起的正文不组合**：Collapse、Reasoning、ToolCallCard、AgentTrace 收起时正文不在组合树里。
+2. **长文本用一个文本节点**，不按行拆分。CodeBlock 不论多长都只有行号和代码两个节点；代码不换行，
+   每行自然与行号对齐，不需要逐行测量。
+3. **长度不定的内容默认截断**：CodeBlock 先显示 `CodeBlockDefaults.CollapsedLines` 行，用户要求再展开。
+4. **同时只跑一个动画**：AgentTrace 只有运行中的步骤转圈，运行结束后折叠成一行。
+5. **流式内容就是字符串变长**：内容块接受不断变长的 `String`，组合过程中不做解析；列表项用稳定 id 作 key。
 
 ## 4. 无障碍
 

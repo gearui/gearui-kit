@@ -31,14 +31,14 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**83 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**88 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
-| 基础（9） | `Button`、`Icon`、`Link`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
+| 基础（10） | `Button`、`Icon`、`Link`、`SuggestionChips`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
 | 表单（23） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`Questionnaire`、`ColorPicker` |
 | 导航（8） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar` |
-| 数据展示（21） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`Kbd` |
+| 数据展示（25） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`CodeBlock`、`Reasoning`、`ToolCallCard`、`AgentTrace`、`Kbd` |
 | 反馈（15） | `SwipeCell`、`ActionSheet`、`Toast`、`Dialog`、`Tooltip`、`ContextMenu`、`Loading`、`Alert`、`NoticeBar`、`Notification`、`Snackbar`、`Popup`、`Popover`、`Result`、`Tour` |
 | 布局（7） | `Grid`、`Swiper`、`SearchBar`、`PullRefresh`、`LoadMore`、`BottomSheet`、`BackTop` |
 
@@ -52,6 +52,7 @@
 | `Button` | 按钮 | 用于触发操作 |
 | `Icon` | 图标 | 图标展示 |
 | `Link` | 链接 | 文本链接与链接按钮 |
+| `SuggestionChips` | 推荐问题 | 快捷回复与推荐问题 |
 | `CloseButton` | 关闭按钮 | 统一的关闭/移除按钮 |
 | `PressableFeedback` | 按压反馈 | 任意可点区域的缩放与高亮 |
 | `Text` | 文本 | 文本展示 |
@@ -124,6 +125,10 @@
 | `Meter` | 计量值 | 已知上下限的计量值 |
 | `User` | 用户摘要 | 头像、名称与说明的身份摘要 |
 | `Code` | 代码块 | 行内代码与可复制的代码块 |
+| `CodeBlock` | 代码块 | 行号、复制、diff、超长截断 |
+| `Reasoning` | 思考过程 | 思考中展开，结束后收起 |
+| `ToolCallCard` | 工具调用 | Agent 的一次工具调用：参数与结果 |
+| `AgentTrace` | 执行步骤 | Agent 执行步骤与状态 |
 | `Kbd` | 快捷键标记 | Web 与外接键盘的按键提示 |
 
 **反馈**

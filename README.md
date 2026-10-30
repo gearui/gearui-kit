@@ -32,14 +32,14 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**83 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**88 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
-| Basic (9) | `Button`, `Icon`, `Link`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
+| Basic (10) | `Button`, `Icon`, `Link`, `SuggestionChips`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (23) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader`, `ListBox`, `Questionnaire`, `ColorPicker` |
 | Navigation (8) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented`, `Toolbar` |
-| Data display (21) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark`, `Meter`, `User`, `Code`, `Kbd` |
+| Data display (25) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark`, `Meter`, `User`, `Code`, `CodeBlock`, `Reasoning`, `ToolCallCard`, `AgentTrace`, `Kbd` |
 | Feedback (15) | `SwipeCell`, `ActionSheet`, `Toast`, `Dialog`, `Tooltip`, `ContextMenu`, `Loading`, `Alert`, `NoticeBar`, `Notification`, `Snackbar`, `Popup`, `Popover`, `Result`, `Tour` |
 | Layout (7) | `Grid`, `Swiper`, `SearchBar`, `PullRefresh`, `LoadMore`, `BottomSheet`, `BackTop` |
 
@@ -53,6 +53,7 @@ component follows both without any per-screen wiring.
 | `Button` | Trigger actions |
 | `Icon` | Icon display |
 | `Link` | Link and LinkButton |
+| `SuggestionChips` | Quick replies and suggested questions |
 | `CloseButton` | Unified dismiss button |
 | `PressableFeedback` | Scale and highlight for any tappable area |
 | `Text` | Text display |
@@ -125,6 +126,10 @@ component follows both without any per-screen wiring.
 | `Meter` | A measurement within known bounds |
 | `User` | Avatar, name and description |
 | `Code` | Inline code and copyable snippets |
+| `CodeBlock` | Line numbers, copy, diff, long-code cut |
+| `Reasoning` | Model reasoning that closes when done |
+| `ToolCallCard` | One tool call: input and output |
+| `AgentTrace` | An agent run, step by step |
 | `Kbd` | Web and external-keyboard shortcut hint |
 
 **Feedback**

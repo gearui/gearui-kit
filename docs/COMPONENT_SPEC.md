@@ -55,6 +55,18 @@ enabled/disabled polarity is a frozen semantic boundary, enforced by
 Do not propose renaming these — it is a frozen boundary, not legacy
 inconsistency.
 
+### 2.1 Growing the API after 1.0
+
+The 1.0 API is frozen: a change may only add. Two shapes make that possible:
+
+- **Public models are plain `class`es, not `data class`es** (`QuestionnaireItem`,
+  `AgentStep`, `Suggestion`). A data class's `copy` and `componentN` are part of its ABI,
+  so adding a field breaks every caller; a plain class takes a new field through an added
+  constructor overload. `TimelineItem` and `SwipeBackConfig` are 1.0 data classes and keep
+  their shapes.
+- **New parameters come with a new overload**, never as a default added to an existing
+  function: a default parameter changes the compiled signature.
+
 ## 3. State And Interaction
 
 - State feedback follows the family table in
@@ -93,6 +105,22 @@ Removed before beta7 shipped: segmented keyboard date/time fields (`DateField`,
 `YearPicker`, which was `DatePickerInput(precision = YEAR)`; and `SubMenu`, a sheet of
 nested actions that overlapped `ActionSheet` for actions and `Cascader` for drilling
 into a hierarchy, where a mobile action menu should stay one level deep.
+
+### 3.1 Performance rules for content blocks
+
+For components that show content of unbounded size — code, reasoning, tool output, steps:
+
+1. **A closed body is not composed.** Disclosures (Collapse, Reasoning, ToolCallCard,
+   AgentTrace) drop their body from the composition when closed.
+2. **Long text is one text node**, not one per line. CodeBlock is two nodes — numbers and
+   code — at any length; its lines do not wrap, so they stay beside their numbers without
+   measuring each.
+3. **Unbounded content is cut by default**: CodeBlock shows `CodeBlockDefaults.CollapsedLines`
+   lines until asked for the rest.
+4. **One animation at a time**: in AgentTrace only the running step spins, and a finished
+   run closes into one line.
+5. **Streaming is plain growth**: a block takes a `String` that grows and does no parsing
+   in composition; list items are keyed by a stable id.
 
 ## 4. Accessibility
 

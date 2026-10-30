@@ -124,6 +124,53 @@ fun BottomNavBar(
     selectionStyle: BottomNavSelectionStyle = BottomNavSelectionStyle.TINT,
     visible: Boolean = true
 )
+
+// A separate round button at the bar's end — iOS 26 puts Search there, apart from the tabs.
+class BottomNavAction(
+    val icon: IconSource,
+    val label: String,
+    val onClick: () -> Unit,
+)
+
+// [BottomNavBar] with an [accessory] — content that stays above the tabs, such as a mini
+// player, an ongoing call or an upload in progress — and an optional [trailingAction],
+// a round button after the tabs (Search). The accessory slides away with the bar when
+// [visible] turns false.
+@Composable
+fun BottomNavBar(
+    items: List<BottomNavItem>,
+    selectedId: String?,
+    onSelect: (String) -> Unit,
+    accessory: (@Composable () -> Unit)?,
+    modifier: Modifier = Modifier,
+    trailingAction: BottomNavAction? = null,
+    safeAreaExtraBottom: Dp = 0.dp,
+    showTopDivider: Boolean = true,
+    height: Dp = ControlGeometry.bottomNavHeight,
+    backgroundColor: Color? = null,
+    activeColor: Color? = null,
+    inactiveColor: Color? = null,
+    selectionStyle: BottomNavSelectionStyle = BottomNavSelectionStyle.TINT,
+    visible: Boolean = true,
+)
+```
+
+### `HideOnScroll` — `import com.gearui.components.bottomnavbar.*`
+
+Source: `commonMain/kotlin/com/gearui/components/bottomnavbar/HideOnScroll.kt`
+
+```kotlin
+// Whether a bar should show while [state] scrolls: hidden while the content moves up (the
+// user reads on), shown again as soon as it moves down or reaches the top. Pass it as
+// [BottomNavBar]'s `visible`, so a list gets the screen while it is read — iOS 26's tab
+// bar does the same. Movements under [threshold] are ignored, so a resting finger does
+// not flicker the bar.
+@Composable
+fun rememberHideOnScroll(state: LazyListState, threshold: Dp = Spacing.md): Boolean
+
+// [rememberHideOnScroll] for a kit [ScrollState] (a ScrollView's).
+@Composable
+fun rememberHideOnScroll(state: ScrollState, threshold: Dp = Spacing.md): Boolean
 ```
 
 ## components/tabs

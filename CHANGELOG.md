@@ -5,6 +5,13 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **`BottomNavBar`, iOS 26 behaviours** (a new overload; the 1.0 one is unchanged):
+  `accessory` — content kept above the tabs (a mini player, an ongoing call) that moves with
+  the bar; `trailingAction` (`BottomNavAction`) — a separate round button after the tabs, as
+  iOS 26 places Search. New `rememberHideOnScroll(listState)` (also for a ScrollView's
+  `ScrollState`) returns the bar's `visible`: hidden while the user reads on, back on the
+  way up or at the top, ignoring movements under a threshold.
+
 - **New: `ButtonGroup`, `SplitButton`, `FabMenu`** (M3 Expressive patterns, for phones):
   - `ButtonGroup`: related actions as one connected row — pill outside, nearly square where
     segments meet (both from the theme's shapes, so a square theme squares it); `block`

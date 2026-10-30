@@ -8,6 +8,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.gearui.components.bottomnavbar.BottomNavBar
 import com.gearui.components.bottomnavbar.BottomNavItem
+import com.gearui.components.bottomnavbar.BottomNavAction
+import com.gearui.components.bottomnavbar.rememberHideOnScroll
+import com.gearui.components.button.Button
+import com.gearui.components.button.ButtonShape
+import com.gearui.components.button.ButtonTheme
+import com.gearui.components.button.ButtonType
+import com.gearui.foundation.layout.Spacing
+import com.gearui.foundation.primitives.GearLazyColumn
+import com.tencent.kuikly.compose.foundation.background
+import com.tencent.kuikly.compose.foundation.layout.*
+import com.tencent.kuikly.compose.foundation.lazy.rememberLazyListState
+import com.tencent.kuikly.compose.foundation.lazy.items
+import com.tencent.kuikly.compose.ui.Alignment
+import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.draw.clip
 import com.gearui.components.icon.Icons
 import com.gearui.foundation.primitives.Text
 import com.gearui.sample.config.ComponentInfo
@@ -103,5 +118,61 @@ fun BottomNavBarExample(
                 onSelect = { selectedId = it }
             )
         }
-    }
+    
+        ExampleSection(
+            title = "附件位与搜索按钮",
+            description = "accessory：标签栏上方常驻的内容（迷你播放器、通话中）；trailingAction：末尾独立的圆形按钮",
+            surface = SectionSurface.Plain
+        ) {
+            var selectedId by remember { mutableStateOf("messages") }
+            var playing by remember { mutableStateOf(true) }
+            var searches by remember { mutableStateOf(0) }
+            BottomNavBar(
+                items = listOf(
+                    BottomNavItem(id = "messages", label = "消息", icon = Icons.chats),
+                    BottomNavItem(id = "contacts", label = "通讯录", icon = Icons.addressBook),
+                    BottomNavItem(id = "me", label = "我", icon = Icons.userCircle),
+                ),
+                selectedId = selectedId,
+                onSelect = { selectedId = it },
+                accessory = {
+                    Row(
+                        Modifier.fillMaxWidth().background(colors.muted, Theme.shapes.full)
+                            .padding(start = Spacing.lg, end = Spacing.xs),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text("正在播放：晴天", style = Theme.typography.bodySmall, color = colors.foreground, modifier = Modifier.weight(1f))
+                        Button(onClick = { playing = !playing }, icon = if (playing) Icons.pause else Icons.play,
+                            shape = ButtonShape.CIRCLE, theme = ButtonTheme.DEFAULT, type = ButtonType.TEXT,
+                            contentDescription = if (playing) "暂停" else "播放")
+                    }
+                },
+                trailingAction = BottomNavAction(Icons.magnifyingGlass, "搜索") { searches++ },
+            )
+            Text("搜索按钮点击：$searches 次", style = Theme.typography.bodySmall, color = colors.mutedForeground)
+        }
+        ExampleSection(
+            title = "滚动收起",
+            description = "rememberHideOnScroll(listState)：往下读时收起，往回滚或到顶部时出现",
+            surface = SectionSurface.Plain
+        ) {
+            val listState = rememberLazyListState()
+            var selectedId by remember { mutableStateOf("messages") }
+            Box(Modifier.fillMaxWidth().height(Spacing.massive * 5).clip(Theme.shapes.md).background(colors.surface)) {
+                GearLazyColumn(Modifier.fillMaxSize(), state = listState) {
+                    items(40) { i -> Text("第 ${i + 1} 条消息", modifier = Modifier.padding(Spacing.lg)) }
+                }
+                BottomNavBar(
+                    items = listOf(
+                        BottomNavItem(id = "messages", label = "消息", icon = Icons.chats),
+                        BottomNavItem(id = "me", label = "我", icon = Icons.userCircle),
+                    ),
+                    selectedId = selectedId,
+                    onSelect = { selectedId = it },
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    visible = rememberHideOnScroll(listState),
+                )
+            }
+        }
+}
 }

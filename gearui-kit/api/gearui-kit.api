@@ -246,8 +246,17 @@ public final class com/gearui/components/backtop/BackTopTheme : java/lang/Enum {
 	public static fun values ()[Lcom/gearui/components/backtop/BackTopTheme;
 }
 
+public final class com/gearui/components/bottomnavbar/BottomNavAction {
+	public static final field $stable I
+	public fun <init> (Lcom/gearui/components/icon/IconSource;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public final fun getIcon ()Lcom/gearui/components/icon/IconSource;
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getOnClick ()Lkotlin/jvm/functions/Function0;
+}
+
 public final class com/gearui/components/bottomnavbar/BottomNavBarKt {
 	public static final fun BottomNavBar-h8JutnM (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lcom/tencent/kuikly/compose/ui/Modifier;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;ZLandroidx/compose/runtime/Composer;III)V
+	public static final fun BottomNavBar-nsbeSQA (Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lcom/tencent/kuikly/compose/ui/Modifier;Lcom/gearui/components/bottomnavbar/BottomNavAction;FZFLcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/tencent/kuikly/compose/ui/graphics/Color;Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;ZLandroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/gearui/components/bottomnavbar/BottomNavItem {
@@ -283,6 +292,11 @@ public final class com/gearui/components/bottomnavbar/BottomNavSelectionStyle : 
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
 	public static fun values ()[Lcom/gearui/components/bottomnavbar/BottomNavSelectionStyle;
+}
+
+public final class com/gearui/components/bottomnavbar/HideOnScrollKt {
+	public static final fun rememberHideOnScroll-JCfxT1c (Lcom/gearui/foundation/scroll/ScrollState;FLandroidx/compose/runtime/Composer;II)Z
+	public static final fun rememberHideOnScroll-JCfxT1c (Lcom/tencent/kuikly/compose/foundation/lazy/LazyListState;FLandroidx/compose/runtime/Composer;II)Z
 }
 
 public final class com/gearui/components/bottomsheet/BottomSheet {

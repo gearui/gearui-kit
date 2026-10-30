@@ -34,6 +34,7 @@ import com.tencent.kuikly.compose.ui.graphics.Color
 import com.tencent.kuikly.compose.ui.unit.Dp
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.foundation.border.BorderWidth
+import com.gearui.foundation.interaction.IconActionButton
 import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.typography.IconSizes
 import com.gearui.runtime.rememberSafeAreaInset
@@ -96,6 +97,58 @@ fun BottomNavBar(
     inactiveColor: Color? = null,
     selectionStyle: BottomNavSelectionStyle = BottomNavSelectionStyle.TINT,
     visible: Boolean = true
+) = BottomNavBarImpl(items, selectedId, onSelect, modifier, safeAreaExtraBottom, showTopDivider, height,
+    backgroundColor, activeColor, inactiveColor, selectionStyle, visible, accessory = null, trailingAction = null)
+
+/** A separate round button at the bar's end — iOS 26 puts Search there, apart from the tabs. */
+class BottomNavAction(
+    val icon: IconSource,
+    /** Its name for a screen reader. */
+    val label: String,
+    val onClick: () -> Unit,
+)
+
+/**
+ * [BottomNavBar] with an [accessory] — content that stays above the tabs, such as a mini
+ * player, an ongoing call or an upload in progress — and an optional [trailingAction],
+ * a round button after the tabs (Search). The accessory slides away with the bar when
+ * [visible] turns false.
+ */
+@Composable
+fun BottomNavBar(
+    items: List<BottomNavItem>,
+    selectedId: String?,
+    onSelect: (String) -> Unit,
+    accessory: (@Composable () -> Unit)?,
+    modifier: Modifier = Modifier,
+    trailingAction: BottomNavAction? = null,
+    safeAreaExtraBottom: Dp = 0.dp,
+    showTopDivider: Boolean = true,
+    height: Dp = ControlGeometry.bottomNavHeight,
+    backgroundColor: Color? = null,
+    activeColor: Color? = null,
+    inactiveColor: Color? = null,
+    selectionStyle: BottomNavSelectionStyle = BottomNavSelectionStyle.TINT,
+    visible: Boolean = true,
+) = BottomNavBarImpl(items, selectedId, onSelect, modifier, safeAreaExtraBottom, showTopDivider, height,
+    backgroundColor, activeColor, inactiveColor, selectionStyle, visible, accessory, trailingAction)
+
+@Composable
+private fun BottomNavBarImpl(
+    items: List<BottomNavItem>,
+    selectedId: String?,
+    onSelect: (String) -> Unit,
+    modifier: Modifier,
+    safeAreaExtraBottom: Dp,
+    showTopDivider: Boolean,
+    height: Dp,
+    backgroundColor: Color?,
+    activeColor: Color?,
+    inactiveColor: Color?,
+    selectionStyle: BottomNavSelectionStyle,
+    visible: Boolean,
+    accessory: (@Composable () -> Unit)?,
+    trailingAction: BottomNavAction?,
 ) {
     val colors = Theme.colors
     val runtimeFlags = LocalRuntimeFlags.current
@@ -131,6 +184,9 @@ fun BottomNavBar(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
+            if (accessory != null) {
+                Box(Modifier.fillMaxWidth().padding(horizontal = Spacing.md, vertical = Spacing.sm)) { accessory() }
+            }
             if (showTopDivider) {
                 Box(
                     modifier = Modifier
@@ -261,6 +317,19 @@ fun BottomNavBar(
                                 )
                             }
                         }
+                    }
+                }
+                trailingAction?.let { action ->
+                    Box(Modifier.fillMaxHeight().padding(end = Spacing.md), contentAlignment = Alignment.Center) {
+                        IconActionButton(
+                            icon = action.icon,
+                            contentDescription = action.label,
+                            onClick = action.onClick,
+                            size = ControlGeometry.closeButtonSize,
+                            iconSize = IconSizes.Default.xl,
+                            background = colors.muted,
+                            tint = colors.foreground,
+                        )
                     }
                 }
             }

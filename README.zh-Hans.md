@@ -31,11 +31,11 @@
 ## 组件一览
 
 <!-- component-index:begin -->
-**88 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
+**90 个组件**，分 6 类，每一个在 sample 里都有对应演示页。
 
 | 分类 | 组件 |
 | --- | --- |
-| 基础（10） | `Button`、`Icon`、`Link`、`SuggestionChips`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
+| 基础（12） | `Button`、`ButtonGroup`、`FabMenu`、`Icon`、`Link`、`SuggestionChips`、`CloseButton`、`PressableFeedback`、`Text`、`Tag`、`Badge`、`Divider` |
 | 表单（23） | `Input`、`Checkbox`、`AgreementCheckbox`、`Radio`、`InputOTP`、`ComboBox`、`NumberField`、`ToggleButton`、`InputGroup`、`Switch`、`Slider`、`Stepper`、`Textarea`、`Rate`、`Select`、`Picker`、`DatePicker`、`Upload`、`Form`、`Cascader`、`ListBox`、`Questionnaire`、`ColorPicker` |
 | 导航（8） | `NavBar`、`BottomNavBar`、`Tabs`、`Drawer`、`Steps`、`IndexBar`、`Segmented`、`Toolbar` |
 | 数据展示（25） | `List`、`Card`、`Cell`、`CellGroup`、`Table`、`Image`、`ImageViewer`、`Avatar`、`ScrollShadow`、`Collapse`、`Progress`、`Empty`、`Skeleton`、`Timeline`、`Calendar`、`Format`、`Watermark`、`Meter`、`User`、`Code`、`CodeBlock`、`Reasoning`、`ToolCallCard`、`AgentTrace`、`Kbd` |
@@ -50,6 +50,8 @@
 | 组件 | 中文名 | 用途 |
 | --- | --- | --- |
 | `Button` | 按钮 | 用于触发操作 |
+| `ButtonGroup` | 按钮组 | 相连按钮组与分体按钮 |
+| `FabMenu` | 浮动按钮菜单 | 浮动按钮展开一组操作 |
 | `Icon` | 图标 | 图标展示 |
 | `Link` | 链接 | 文本链接与链接按钮 |
 | `SuggestionChips` | 推荐问题 | 快捷回复与推荐问题 |

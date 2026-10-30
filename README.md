@@ -32,11 +32,11 @@ component follows both without any per-screen wiring.
 ## Components
 
 <!-- component-index:begin -->
-**88 components** in 6 categories. Every one of them ships a demo page in the sample app.
+**90 components** in 6 categories. Every one of them ships a demo page in the sample app.
 
 | Category | Components |
 | --- | --- |
-| Basic (10) | `Button`, `Icon`, `Link`, `SuggestionChips`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
+| Basic (12) | `Button`, `ButtonGroup`, `FabMenu`, `Icon`, `Link`, `SuggestionChips`, `CloseButton`, `PressableFeedback`, `Text`, `Tag`, `Badge`, `Divider` |
 | Form (23) | `Input`, `Checkbox`, `AgreementCheckbox`, `Radio`, `InputOTP`, `ComboBox`, `NumberField`, `ToggleButton`, `InputGroup`, `Switch`, `Slider`, `Stepper`, `Textarea`, `Rate`, `Select`, `Picker`, `DatePicker`, `Upload`, `Form`, `Cascader`, `ListBox`, `Questionnaire`, `ColorPicker` |
 | Navigation (8) | `NavBar`, `BottomNavBar`, `Tabs`, `Drawer`, `Steps`, `IndexBar`, `Segmented`, `Toolbar` |
 | Data display (25) | `List`, `Card`, `Cell`, `CellGroup`, `Table`, `Image`, `ImageViewer`, `Avatar`, `ScrollShadow`, `Collapse`, `Progress`, `Empty`, `Skeleton`, `Timeline`, `Calendar`, `Format`, `Watermark`, `Meter`, `User`, `Code`, `CodeBlock`, `Reasoning`, `ToolCallCard`, `AgentTrace`, `Kbd` |
@@ -51,6 +51,8 @@ component follows both without any per-screen wiring.
 | Component | Purpose |
 | --- | --- |
 | `Button` | Trigger actions |
+| `ButtonGroup` | Connected buttons and split button |
+| `FabMenu` | A floating button that opens actions |
 | `Icon` | Icon display |
 | `Link` | Link and LinkButton |
 | `SuggestionChips` | Quick replies and suggested questions |

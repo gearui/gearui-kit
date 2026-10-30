@@ -27,6 +27,8 @@ object ComponentConfig {
     val all: List<ComponentInfo> = listOf(
         // Basic components
         ComponentInfo("button", "按钮", "Button", ComponentCategory.BASIC, "/components/button", "用于触发操作", "Trigger actions"),
+        ComponentInfo("button-group", "按钮组", "ButtonGroup", ComponentCategory.BASIC, "/components/buttongroup", "相连按钮组与分体按钮", "Connected buttons and split button"),
+        ComponentInfo("fab-menu", "浮动按钮菜单", "FabMenu", ComponentCategory.BASIC, "/components/fabmenu", "浮动按钮展开一组操作", "A floating button that opens actions"),
         ComponentInfo("icon", "图标", "Icon", ComponentCategory.BASIC, "/components/icon", "图标展示", "Icon display"),
         ComponentInfo("icon-render", "图标渲染验证", "Icon Render", ComponentCategory.BASIC, "/components/icon-render", "PNG/SVG 资源渲染能力验证", "PNG/SVG resource rendering"),
         ComponentInfo("link", "链接", "Link", ComponentCategory.BASIC, "/components/link", "文本链接与链接按钮", "Link and LinkButton"),

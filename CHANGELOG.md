@@ -5,6 +5,18 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **New: `ButtonGroup`, `SplitButton`, `FabMenu`** (M3 Expressive patterns, for phones):
+  - `ButtonGroup`: related actions as one connected row — pill outside, nearly square where
+    segments meet (both from the theme's shapes, so a square theme squares it); `block`
+    shares the width. Icon-only segments need a `contentDescription`.
+  - `SplitButton`: a main action with its alternatives behind a chevron, which opens them in
+    an action sheet; destructive choices in red.
+  - `FabMenu`: a floating button that opens its actions above itself over a dimmed page; the
+    close button lands where the floating button was. Back, a tap outside, or a choice
+    closes it; screen readers and the Web keyboard stay inside while it is open.
+  Each segment and menu entry is a real `Button` (`Button`'s body is now shared internally;
+  its API is unchanged).
+
 - **New: AI content blocks** — pieces that go inside any message, independent of the chat
   UI around them:
   - `CodeBlock`: language label, line numbers, copy (the host writes the clipboard),

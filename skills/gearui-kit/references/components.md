@@ -8,6 +8,8 @@ read its signatures in the file named in the last column.
 | Component | Purpose | Signatures |
 | --- | --- | --- |
 | `Button` | Trigger actions / 用于触发操作 | api/components-basic.md |
+| `ButtonGroup` | Connected buttons and split button / 相连按钮组与分体按钮 | api/components-basic.md |
+| `FabMenu` | A floating button that opens actions / 浮动按钮展开一组操作 | api/components-basic.md |
 | `Icon` | Icon display / 图标展示 | api/components-basic.md |
 | `Link` | Link and LinkButton / 文本链接与链接按钮 | api/components-basic.md |
 | `SuggestionChips` | Quick replies and suggested questions / 快捷回复与推荐问题 | api/components-basic.md |

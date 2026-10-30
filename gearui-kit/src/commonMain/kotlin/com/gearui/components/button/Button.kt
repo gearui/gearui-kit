@@ -87,6 +87,32 @@ fun Button(
     iconPosition: ButtonIconPosition = ButtonIconPosition.LEFT,
     iconTextSpacing: Dp = Dp.Unspecified,
     contentDescription: String? = null,
+) = ButtonImpl(text, onClick, modifier, theme, type, size, shape, disabled, loading, block, icon,
+    iconWidget, iconPosition, iconTextSpacing, contentDescription)
+
+/**
+ * [Button]'s body. [shapeOverride] replaces the shape [shape] would give — a segment of a
+ * ButtonGroup or SplitButton, square on the side it shares — so a group's segments are
+ * real buttons, with their colours, press feedback, focus ring and 44 hit region.
+ */
+@Composable
+internal fun ButtonImpl(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    theme: ButtonTheme,
+    type: ButtonType,
+    size: ButtonSize,
+    shape: ButtonShape,
+    disabled: Boolean,
+    loading: Boolean,
+    block: Boolean,
+    icon: IconSource?,
+    iconWidget: (@Composable () -> Unit)?,
+    iconPosition: ButtonIconPosition,
+    iconTextSpacing: Dp,
+    contentDescription: String?,
+    shapeOverride: Shape? = null,
 ) {
     val colors = Theme.colors
     val interactionSource = remember { MutableInteractionSource() }
@@ -153,7 +179,7 @@ fun Button(
     }
 
     // Shape configuration
-    val buttonShape: Shape = when (shape) {
+    val buttonShape: Shape = shapeOverride ?: when (shape) {
         ButtonShape.RECTANGLE -> Theme.shapes.full
         // Capsules are the theme's `full` role, so a square-corner theme squares them too.
         ButtonShape.ROUND -> Theme.shapes.full

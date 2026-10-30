@@ -4,6 +4,8 @@ import com.gearui.sample.examples.refresh.LoadMoreExample
 import com.gearui.sample.examples.format.FormatExample
 import com.gearui.sample.examples.questionnaire.QuestionnaireExample
 import com.gearui.sample.examples.aiblocks.*
+import com.gearui.sample.examples.buttongroup.ButtonGroupExample
+import com.gearui.sample.examples.buttongroup.FabMenuExample
 import com.gearui.sample.examples.indexbar.IndexBarExample
 import com.gearui.sample.examples.agreement.AgreementExample
 import com.gearui.sample.examples.runtime.PerformanceExample
@@ -135,6 +137,8 @@ object NavigationManager {
             "tool-call" -> ToolCallExample(component, onBack)
             "agent-trace" -> AgentTraceExample(component, onBack)
             "suggestion" -> SuggestionExample(component, onBack)
+            "button-group" -> ButtonGroupExample(component, onBack)
+            "fab-menu" -> FabMenuExample(component, onBack)
             "typed-form" -> TypedFormExample(component, onBack)
             "toolbar" -> ToolbarExample(component, onBack)
             "kbd" -> KbdExample(component, onBack)

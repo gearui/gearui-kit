@@ -96,6 +96,94 @@ fun ButtonGroup(
 fun ButtonGroupDivider()
 ```
 
+## components/buttongroup
+
+### `ButtonGroup` — `import com.gearui.components.buttongroup.*`
+
+Source: `commonMain/kotlin/com/gearui/components/buttongroup/ButtonGroup.kt`
+
+```kotlin
+// One button of a [ButtonGroup]: text, an icon, or both.
+class ButtonGroupItem(
+    val text: String = "",
+    val onClick: () -> Unit,
+    val icon: IconSource? = null,
+    val disabled: Boolean = false,
+    val contentDescription: String? = null,
+)
+
+// Related actions as one connected row — "Reply · Forward · Delete", "Bold Italic
+// Underline": pill-shaped on the outside, nearly square where neighbours meet, a hairline
+// gap between them. Each segment is a real Button (colours, press feedback, 44 hit
+// region). With [block] the row fills the width and the segments share it equally.
+@Composable
+fun ButtonGroup(
+    items: List<ButtonGroupItem>,
+    modifier: Modifier = Modifier,
+    theme: ButtonTheme = ButtonTheme.DEFAULT,
+    type: ButtonType = ButtonType.OUTLINE,
+    size: ButtonSize = ButtonSize.MEDIUM,
+    block: Boolean = false,
+)
+
+// One choice in a [SplitButton]'s menu.
+class SplitButtonItem(
+    val label: String,
+    val onClick: () -> Unit,
+    val icon: IconSource? = null,
+    val destructive: Boolean = false,
+    val disabled: Boolean = false,
+)
+
+// A main action with its alternatives behind it — "Send · ▾ (schedule, send as file)":
+// the left part does [onClick]; the right part opens the [menuItems] in an action sheet,
+// as a phone presents a menu. The two parts are connected like a [ButtonGroup].
+@Composable
+fun SplitButton(
+    text: String,
+    onClick: () -> Unit,
+    menuItems: List<SplitButtonItem>,
+    modifier: Modifier = Modifier,
+    theme: ButtonTheme = ButtonTheme.PRIMARY,
+    type: ButtonType = ButtonType.FILL,
+    size: ButtonSize = ButtonSize.MEDIUM,
+    icon: IconSource? = null,
+    disabled: Boolean = false,
+    menuDescription: String? = null,
+)
+```
+
+## components/fabmenu
+
+### `FabMenu` — `import com.gearui.components.fabmenu.*`
+
+Source: `commonMain/kotlin/com/gearui/components/fabmenu/FabMenu.kt`
+
+```kotlin
+// One action of a [FabMenu].
+class FabMenuItem(
+    val label: String,
+    val icon: IconSource,
+    val onClick: () -> Unit,
+)
+
+// A floating button that opens a short list of actions above itself — "new chat, new
+// group, scan". Opened, the page dims, the actions rise from the button, and the button
+// turns into a close button in the same place. Back, a tap on the dimmed page, the close
+// button or choosing an action closes it. While open, screen readers and the Web
+// keyboard stay in the menu.
+//
+// Place it where the floating button belongs — usually bottom-end of the page, above the
+// tab bar.
+@Composable
+fun FabMenu(
+    icon: IconSource,
+    items: List<FabMenuItem>,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+)
+```
+
 ## components/icon
 
 ### `IconSource` — `import com.gearui.components.icon.*`

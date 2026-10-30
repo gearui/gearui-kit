@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
+Central is 1.0.0.
+
 - **New: `Questionnaire`** — questions asked one at a time, answered by choosing, typing, or
   both: an agent's clarifying question before it acts, a setup wizard, a short survey.
   Choices are cards with an optional description and badge ("Recommended"), as radios or,

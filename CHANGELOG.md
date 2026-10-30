@@ -5,6 +5,15 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **New: `Haptics.selectionChanged()`** (`com.gearui.system`): the platform's lightest
+  "moved one step" tap, following the user's touch-feedback setting. iOS needs nothing; an
+  Android host registers `Haptics.host = AndroidHapticFeedback(context)` and declares
+  `android.permission.VIBRATE`. Without them it does nothing.
+- **`IndexBar`** (behaviour, API unchanged): press and slide are one gesture, taken even if the
+  list underneath saw the press first; the letter under the finger is marked with a filled
+  circle and taps once per letter (`Haptics`); a bar with fewer than two letters is not
+  shown. privchat-ui's own index bar is merged into this one.
+
 - **`BottomNavBar`, iOS 26 behaviours** (a new overload; the 1.0 one is unchanged):
   `accessory` — content kept above the tabs (a mini player, an ongoing call) that moves with
   the bar; `trailingAction` (`BottomNavAction`) — a separate round button after the tabs, as

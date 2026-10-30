@@ -8,6 +8,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.gearui.runtime.RuntimeInsetsBridge
+import com.gearui.system.AndroidHapticFeedback
+import com.gearui.system.Haptics
 import com.tencent.kuikly.compose.ui.unit.dp
 import com.gearui.sample.adapter.SampleImageAdapter
 import com.gearui.sample.adapter.SampleThreadAdapter
@@ -51,6 +53,8 @@ class MainActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate 
 
         // Register the status bar controller
         StatusBarControllerImpl.register(this)
+        // Haptic feedback: iOS needs nothing; Android needs a Context.
+        Haptics.host = AndroidHapticFeedback(this)
 
         if (KuiklyRenderAdapterManager.krImageAdapter == null) {
             KuiklyRenderAdapterManager.krImageAdapter = SampleImageAdapter(applicationContext)

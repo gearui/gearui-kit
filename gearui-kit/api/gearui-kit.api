@@ -6688,6 +6688,25 @@ public final class com/gearui/runtime/SafeArea {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/gearui/system/AndroidHapticFeedback : com/gearui/system/HapticFeedback {
+	public static final field $stable I
+	public static final field TICK_MILLIS J
+	public fun <init> (Landroid/content/Context;)V
+	public fun selectionChanged ()V
+}
+
+public abstract interface class com/gearui/system/HapticFeedback {
+	public abstract fun selectionChanged ()V
+}
+
+public final class com/gearui/system/Haptics {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/gearui/system/Haptics;
+	public final fun getHost ()Lcom/gearui/system/HapticFeedback;
+	public final fun selectionChanged ()V
+	public final fun setHost (Lcom/gearui/system/HapticFeedback;)V
+}
+
 public final class com/gearui/system/NoOpStatusBarController : com/gearui/system/StatusBarController {
 	public static final field $stable I
 	public static final field INSTANCE Lcom/gearui/system/NoOpStatusBarController;

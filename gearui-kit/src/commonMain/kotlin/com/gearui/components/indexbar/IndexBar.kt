@@ -1,5 +1,10 @@
 package com.gearui.components.indexbar
 
+import com.tencent.kuikly.compose.ui.graphics.Color
+import com.tencent.kuikly.compose.ui.input.pointer.PointerEventPass
+import com.tencent.kuikly.compose.foundation.gestures.awaitFirstDown
+import com.tencent.kuikly.compose.foundation.gestures.awaitEachGesture
+import com.gearui.system.Haptics
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,8 +16,6 @@ import com.gearui.foundation.layout.Spacing
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
 import com.tencent.kuikly.compose.foundation.background
-import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
-import com.tencent.kuikly.compose.foundation.gestures.detectVerticalDragGestures
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.Row
@@ -63,22 +66,28 @@ fun IndexBar(
     modifier: Modifier = Modifier,
     active: String? = null,
 ) {
+    // One letter indexes nothing — the list is already there — and a lone letter
+    // floating mid-edge reads as a rendering error.
+    if (indexes.size < 2) return
     val colors = Theme.colors
     val density = LocalDensity.current
     val select by rememberUpdatedState(onSelect)
-    var touched by remember { mutableStateOf<Int?>(null) }
+    var touched by remember(indexes) { mutableStateOf<Int?>(null) }
     val itemPx = with(density) { ControlGeometry.indexBarItemHeight.toPx() }
 
     fun touch(y: Float) {
         val index = indexAt(y, itemPx, indexes.size) ?: return
         if (index != touched) {
             touched = index
+            // The finger covers the letter: the tap is how the user knows it moved.
+            Haptics.selectionChanged()
             select(indexes[index])
         }
     }
 
     Row(modifier = modifier, verticalAlignment = Alignment.Top) {
-        // The bubble rides level with the touched letter, beside the strip.
+        // The bubble rides level with the touched letter, beside the strip, where the
+        // finger does not cover it.
         Box(modifier = Modifier.width(ControlGeometry.indexBarBubbleSize)) {
             touched?.let { index ->
                 val center = ControlGeometry.indexBarItemHeight * index + ControlGeometry.indexBarItemHeight / 2
@@ -98,33 +107,34 @@ fun IndexBar(
         Column(
             modifier = Modifier
                 .width(ControlGeometry.indexBarWidth)
+                // One gesture from press to release: a tap and a slide are the same
+                // touch. The press is taken even if consumed — the list underneath may see
+                // it first, and a press on the strip belongs to the strip.
                 .pointerInput(indexes) {
-                    detectTapGestures(
-                        onPress = { offset ->
-                            touch(offset.y)
-                            tryAwaitRelease()
-                            touched = null
-                        },
-                    )
-                }
-                .pointerInput(indexes) {
-                    detectVerticalDragGestures(
-                        onDragStart = { touch(it.y) },
-                        onDragEnd = { touched = null },
-                        onDragCancel = { touched = null },
-                        onVerticalDrag = { change, _ -> touch(change.position.y) },
-                    )
+                    awaitEachGesture {
+                        val down = awaitFirstDown(requireUnconsumed = false)
+                        down.consume()
+                        touch(down.position.y)
+                        while (true) {
+                            val change = awaitPointerEvent(PointerEventPass.Main).changes.firstOrNull() ?: break
+                            if (!change.pressed) break
+                            change.consume()
+                            touch(change.position.y)
+                        }
+                        touched = null
+                    }
                 },
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             indexes.forEachIndexed { i, letter ->
-                val on = letter == active || i == touched
+                val pressed = i == touched
+                val on = letter == active || pressed
                 Box(
                     modifier = Modifier
                         .height(ControlGeometry.indexBarItemHeight)
                         .width(ControlGeometry.indexBarWidth)
                         // Each letter is its own element for a screen reader; the strip's
-                        // gestures serve touch.
+                        // gesture serves touch.
                         .clearAndSetSemantics {
                             role = Role.Button
                             contentDescription = letter
@@ -132,11 +142,22 @@ fun IndexBar(
                         },
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(
-                        text = letter,
-                        style = Theme.typography.bodyExtraSmall,
-                        color = if (on) colors.primarySoftForeground else colors.mutedForeground,
-                    )
+                    // The letter under the finger is marked, not only tinted.
+                    Box(
+                        Modifier.size(ControlGeometry.indexBarItemHeight).clip(CircleShape)
+                            .background(if (pressed) colors.primary else Color.Transparent),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = letter,
+                            style = Theme.typography.bodyExtraSmall,
+                            color = when {
+                                pressed -> colors.primaryForeground
+                                on -> colors.primarySoftForeground
+                                else -> colors.mutedForeground
+                            },
+                        )
+                    }
                 }
             }
         }

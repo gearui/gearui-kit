@@ -4,7 +4,7 @@
 
 由 `scripts/component_spec.py` 从 `tokens/controls.tokens.json` 生成，请勿手改：改 token 及其 `$extensions."com.gearui.source"` 后重新生成。取值规则见 [VISUAL_SPEC.zh-Hans.md](./VISUAL_SPEC.zh-Hans.md) §2。理由（Why）列保持英文原文。
 
-已标注来源：**182 / 221** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
+已标注来源：**183 / 222** 个控件 token。其余列在 `tokens/provenance-baseline.txt`，该清单只能缩小。
 
 ## accordion
 
@@ -19,6 +19,7 @@
 
 | Token | GearUI | HeroUI Native | iOS | 取值依据 | 理由 |
 | --- | ---: | ---: | ---: | --- | --- |
+| `actionSheetCardRow` | 57 | — | 57 | iOS |  |
 | `actionSheetDescriptionRow` | 60 | | | _尚未标注_ | |
 | `actionSheetGridRow` | 96 | | | _尚未标注_ | |
 | `actionSheetRow` | 40 | | | _尚未标注_ | |
@@ -518,6 +519,7 @@
 - heroui-native 1.0.9 accordion.css trigger surface padding-inline
 - heroui-native 1.0.9 accordion.css trigger gap
 - heroui-native 1.0.9 accordion.css trigger padding-block
+- UIKit UIAlertController .actionSheet button height (57pt)
 - heroui-native 1.0.9 alert.css root gap
 - heroui-native 1.0.9 alert.constants.ts DEFAULT_ICON_SIZE
 - heroui-native 1.0.9 alert.css indicator padding-top

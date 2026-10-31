@@ -44,6 +44,7 @@ fun ActionSheetExample(
     var showLeftBadgeList by remember { mutableStateOf(false) }
     var showLeftIconList by remember { mutableStateOf(false) }
 
+    val destructive = Theme.colors.destructive
     Box(modifier = Modifier.fillMaxSize()) {
         ExamplePage(
             component = component,
@@ -64,6 +65,14 @@ fun ActionSheetExample(
                         SheetRow("带图标列表") { showIconList = true },
                         SheetRow("带徽标列表") { showBadgeList = true },
                         SheetRow("带选项描述列表", "每个选项下方带描述") { showItemDescList = true },
+                        SheetRow("任务操作（8 项）", "多项操作 + 危险项，iOS 卡片样式") {
+                            ActionSheet.showList(
+                                items = listOf("重新分配开发", "手动发起评审", "确认评审结果", "确认验收完成", "编辑任务", "追加记录", "更改状态…")
+                                    .map { ActionSheetItem(label = it) } +
+                                    ActionSheetItem(label = "结束并取消任务", textColor = destructive),
+                                description = "任务操作",
+                            )
+                        },
                     )
                 )
             }

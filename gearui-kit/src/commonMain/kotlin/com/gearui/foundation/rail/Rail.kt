@@ -10,22 +10,19 @@ import com.tencent.kuikly.compose.foundation.layout.Arrangement
 import com.tencent.kuikly.compose.foundation.layout.Box
 import com.tencent.kuikly.compose.foundation.layout.Column
 import com.tencent.kuikly.compose.foundation.layout.ColumnScope
-import com.tencent.kuikly.compose.foundation.layout.IntrinsicSize
-import com.tencent.kuikly.compose.foundation.layout.Row
-import com.tencent.kuikly.compose.foundation.layout.fillMaxHeight
-import com.tencent.kuikly.compose.foundation.layout.fillMaxWidth
-import com.tencent.kuikly.compose.foundation.layout.height
-import com.tencent.kuikly.compose.foundation.layout.heightIn
 import com.tencent.kuikly.compose.foundation.layout.padding
-import com.tencent.kuikly.compose.foundation.layout.width
-import com.tencent.kuikly.compose.ui.Alignment
 import com.tencent.kuikly.compose.ui.Modifier
+import com.tencent.kuikly.compose.ui.layout.Layout
+import com.tencent.kuikly.compose.ui.unit.Constraints
 
 /**
  * One entry on a vertical rail: a [marker] on the axis, a connector down to the next
- * entry unless [isLast], and [content] beside it. The row is as tall as its content and
- * the connector fills it (IntrinsicSize.Min, as Timeline does), so it reaches the next
- * marker however long the content is.
+ * entry unless [isLast], and [content] beside it. The connector runs the full height of
+ * the content, so it reaches the next marker however long the content is.
+ *
+ * Measured by hand rather than with IntrinsicSize: content may hold lazy layouts (a
+ * CodeBlock scrolls sideways in a LazyRow), and asking a lazy layout for its intrinsic
+ * size throws — opening a trace whose step held a code block crashed.
  */
 @Composable
 internal fun RailRow(
@@ -35,24 +32,34 @@ internal fun RailRow(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = Theme.colors
-    Row(modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-        Column(
-            Modifier.width(ControlGeometry.timelineAxisWidth).fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            marker()
-            if (!isLast) {
-                Box(
-                    Modifier.width(BorderWidth.thin).weight(1f)
-                        .heightIn(min = ControlGeometry.timelineConnectorMinHeight)
-                        .background(colors.border),
-                )
-            }
-        }
-        Column(
-            Modifier.weight(1f).padding(bottom = if (isLast) Spacing.none else Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
-            content = content,
+    Layout(
+        modifier = modifier,
+        content = {
+            Box { marker() }
+            if (!isLast) Box(Modifier.background(colors.border))
+            Column(
+                Modifier.padding(bottom = if (isLast) Spacing.none else Spacing.md),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                content = content,
+            )
+        },
+    ) { measurables, constraints ->
+        val axis = ControlGeometry.timelineAxisWidth.roundToPx()
+        val gap = Spacing.md.roundToPx()
+        val line = BorderWidth.thin.roundToPx().coerceAtLeast(1)
+        val markerP = measurables[0].measure(Constraints(maxWidth = axis))
+        val contentP = measurables.last().measure(
+            constraints.copy(minWidth = 0, maxWidth = (constraints.maxWidth - axis - gap).coerceAtLeast(0), minHeight = 0),
         )
+        val height = maxOf(contentP.height, markerP.height)
+        val lineP = if (isLast) null else measurables[1].measure(
+            Constraints.fixed(line, (height - markerP.height).coerceAtLeast(0)),
+        )
+        val width = if (constraints.hasBoundedWidth) constraints.maxWidth else axis + gap + contentP.width
+        layout(width, height) {
+            markerP.place((axis - markerP.width) / 2, 0)
+            lineP?.place((axis - line) / 2, markerP.height)
+            contentP.place(axis + gap, 0)
+        }
     }
 }

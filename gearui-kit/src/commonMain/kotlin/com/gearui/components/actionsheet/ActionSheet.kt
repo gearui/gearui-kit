@@ -133,7 +133,7 @@ object ActionSheet {
     fun showList(
         items: List<ActionSheetItem>,
         description: String? = null,
-        align: ActionSheetAlign = ActionSheetAlign.LEFT,
+        align: ActionSheetAlign = ActionSheetAlign.CENTER,
         showCancel: Boolean = true,
         cancelText: String? = null,
         onSelected: ((ActionSheetItem, Int) -> Unit)? = null,
@@ -231,7 +231,7 @@ fun ActionSheetContent(
     visible: Boolean,
     items: List<ActionSheetItem>,
     theme: ActionSheetTheme = ActionSheetTheme.LIST,
-    align: ActionSheetAlign = ActionSheetAlign.LEFT,
+    align: ActionSheetAlign = ActionSheetAlign.CENTER,
     description: String? = null,
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,
@@ -307,6 +307,17 @@ private fun ActionSheetSurface(
 ) {
     val colors = Theme.colors
 
+    // A list of actions is iOS's action sheet: grouped cards floating above the bottom
+    // edge, not a sheet. The grid stays a sheet (a share sheet is one).
+    if (theme == ActionSheetTheme.LIST) {
+        ActionSheetCards(items, align, description, showCancel, cancelText, maxListHeight, onSelected,
+            onDismiss = {
+                onCancel?.invoke()
+                onDismiss()
+            })
+        return
+    }
+
     // The sheet chrome is BottomSheet's: grabber, entrance, drag-to-dismiss, safe area
     // and the cancel button. ActionSheet used to draw its own, and drifted — it appeared
     // without animating, had no grabber, and could not be dragged away, so the two
@@ -344,166 +355,11 @@ private fun ActionSheetSurface(
             }
         },
     ) {
-        when (theme) {
-            ActionSheetTheme.LIST -> ActionSheetList(
-                items = items,
-                align = align,
-                maxHeight = maxListHeight,
-                onSelected = onSelected
-            )
-            ActionSheetTheme.GRID -> ActionSheetGrid(
-                items = items,
-                columns = gridColumns,
-                onSelected = onSelected
-            )
-        }
-    }
-}
-
-/**
- * List-style content, scrollable
- */
-@Composable
-private fun ActionSheetList(
-    items: List<ActionSheetItem>,
-    align: ActionSheetAlign,
-    maxHeight: Dp,
-    onSelected: ((ActionSheetItem, Int) -> Unit)?
-) {
-    val colors = Theme.colors
-
-    // List height: 56dp per item, 78dp when it has a description, capped at maxHeight
-    val itemHeightNormal = ControlGeometry.actionSheetRow.value
-    val itemHeightWithDesc = ControlGeometry.actionSheetDescriptionRow.value
-    var totalHeightValue = 0f
-    items.forEach { item ->
-        totalHeightValue += if (item.description != null) itemHeightWithDesc else itemHeightNormal
-    }
-    // Plus the gaps between rows: the reference spaces the items of a sheet-presented
-    // menu apart rather than ruling lines between them, and flush rows read as one block.
-    totalHeightValue += ControlGeometry.sheetMenuRowGap.value * (items.size - 1).coerceAtLeast(0)
-    val totalHeight = totalHeightValue.dp
-    val listHeight = if (totalHeight.value > maxHeight.value) maxHeight else totalHeight
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(listHeight)
-            .padding(horizontal = ControlGeometry.sheetMenuPaddingInline),
-        verticalArrangement = Arrangement.spacedBy(ControlGeometry.sheetMenuRowGap),
-    ) {
-        itemsIndexed(items) { index, item ->
-            ActionSheetListItem(
-                item = item,
-                align = align,
-                onClick = {
-                    if (!item.disabled) {
-                        onSelected?.invoke(item, index)
-                    }
-                }
-            )
-        }
-    }
-}
-
-/**
- * List item, with press feedback
- */
-@Composable
-private fun ActionSheetListItem(
-    item: ActionSheetItem,
-    align: ActionSheetAlign,
-    onClick: () -> Unit
-) {
-    val colors = Theme.colors
-    val shapes = Theme.shapes
-    val sheetTokens = ActionSheetDefaults.Default
-    val interaction = remember { MutableInteractionSource() }
-
-    val textColor = when {
-        item.disabled -> colors.mutedForeground
-        // A danger row passes `colors.destructive`; as text it reads in its text form.
-        item.textColor == colors.destructive -> colors.destructiveSoftForeground
-        item.textColor != null -> item.textColor
-        else -> colors.foreground
-    }
-
-    val horizontalArrangement = when (align) {
-        ActionSheetAlign.CENTER -> Arrangement.Center
-        ActionSheetAlign.LEFT -> Arrangement.Start
-    }
-
-    val itemHeight = if (item.description != null) ControlGeometry.actionSheetDescriptionRow else ControlGeometry.actionSheetRow
-    val danger = item.textColor == colors.destructive
-
-    // Reference `.menu__item`: radius 16, padding 10, gap 10, animated press fill.
-    // No separators between rows.
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(itemHeight)
-            .rowPressFeedback(
-                interaction = interaction,
-                shape = RoundedCornerShape(ControlGeometry.radiusMenuItem),
-                enabled = !item.disabled,
-                danger = danger,
-            )
-            .clickable(enabled = !item.disabled, interactionSource = interaction, indication = null) {
-                onClick()
-            }
-            .padding(horizontal = ControlGeometry.menuItemPaddingInline)
-            .alpha(if (item.disabled) FeedbackDefaults.disabledOpacity else 1f),
-        horizontalArrangement = when (align) {
-            ActionSheetAlign.CENTER -> Arrangement.spacedBy(ControlGeometry.menuItemGap, Alignment.CenterHorizontally)
-            ActionSheetAlign.LEFT -> Arrangement.spacedBy(ControlGeometry.menuItemGap)
-        },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (item.icon != null) {
-            Icon(item.icon,
-                size = IconSizes.Default.lg,
-                tint = if (item.textColor != null && !item.disabled) textColor else colors.foreground,
-            )
-        }
-
-        Column(
-            horizontalAlignment = when (align) {
-                ActionSheetAlign.CENTER -> Alignment.CenterHorizontally
-                ActionSheetAlign.LEFT -> Alignment.Start
-            }
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = item.label,
-                    style = Theme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-                    color = if (item.disabled) colors.foreground else textColor
-                )
-
-                if (item.badge != null) {
-                    Spacer(modifier = Modifier.width(Spacing.sm))
-                    Badge(type = BadgeType.Message, message = item.badge)
-                }
-
-                if (item.showRedPoint && item.badge == null) {
-                    Spacer(modifier = Modifier.width(Spacing.xs))
-                    Box(
-                        modifier = Modifier
-                            .size(sheetTokens.redDot)
-                            .clip(CircleShape)
-                            .background(colors.destructive)
-                    )
-                }
-            }
-
-            // Reference `.menu__item-description`: small, muted.
-            if (item.description != null) {
-                Text(
-                    text = item.description,
-                    style = Theme.typography.bodySmall,
-                    color = colors.mutedForeground
-                )
-            }
-        }
+        ActionSheetGrid(
+            items = items,
+            columns = gridColumns,
+            onSelected = onSelected
+        )
     }
 }
 

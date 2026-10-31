@@ -85,6 +85,22 @@
         "unit": "px"
       }
     },
+    "actionSheetCardRow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 57,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.gearui.source": {
+          "ios": {
+            "value": 57,
+            "ref": "UIKit UIAlertController .actionSheet button height (57pt)"
+          },
+          "basis": "ios"
+        }
+      }
+    },
     "alertActionTop": {
       "$value": {
         "value": 8,
@@ -1682,7 +1698,10 @@
       },
       "$extensions": {
         "com.gearui.source": {
-          "ios": {"value": 44, "ref": "Apple HIG, Buttons: hit region at least 44x44 pt"},
+          "ios": {
+            "value": 44,
+            "ref": "Apple HIG, Buttons: hit region at least 44x44 pt"
+          },
           "basis": "ios",
           "why": "The 44 HIG hit region around one 24 icon. Side by side, two icons sit 20 apart, as in iOS bars; a 56 slot left 32 between them, wider than iOS and Material (24) alike. Both sides take the same slots, so a one-sided bar still centres its title."
         }

@@ -5,6 +5,25 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **Fix: opening an `AgentTrace` whose step held a `CodeBlock` crashed** (IllegalStateException):
+  the step rail measured its row with IntrinsicSize, which lazy layouts (the code block's
+  sideways scroll) refuse. The rail now measures the content and sizes the connector to it;
+  steps also sit closer together.
+- **Fix (iOS): the runtime safe area followed Kuikly's only on a page-size change.** Kuikly
+  keeps `safeAreaInsets` in its own reactive property, not Compose state; on iOS the first
+  frame reports 0 and the real insets arrive with the same page size, so the kit kept
+  `bottom = 0` and a status-bar fallback for `top` for the life of the page. Bottom bars,
+  sheets and action sheets sat on the home indicator. The runtime now observes the property.
+  Expect iOS bottom chrome to move above the home indicator, and top chrome to the real
+  inset (62pt on Dynamic Island phones, not 54).
+- **`ActionSheet` list style follows iOS** (`UIAlertController` `.actionSheet`): actions in a
+  rounded card inset 8 from the edges, 57-tall rows divided by hairlines, labels in the accent
+  colour (destructive in red, disabled muted), the description as a small centred heading in
+  the card, and Cancel on its own card in bold. It rises from the bottom and closes on Back or
+  a tap outside; no grabber or drag. Rows are centred by default (`ActionSheetAlign.CENTER`);
+  `LEFT` lines labels up behind a shared icon column. A long list scrolls only beyond 65% of
+  the screen. The grid style is unchanged. New control token `actionSheetCardRow` (57, iOS).
+
 - **New: `Haptics.selectionChanged()`** (`com.gearui.system`): the platform's lightest
   "moved one step" tap, following the user's touch-feedback setting. iOS needs nothing; an
   Android host registers `Haptics.host = AndroidHapticFeedback(context)` and declares

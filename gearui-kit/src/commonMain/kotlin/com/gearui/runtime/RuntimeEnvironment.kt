@@ -1,5 +1,10 @@
 package com.gearui.runtime
 
+import com.tencent.kuikly.core.reactive.ReactiveObserver
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -137,7 +142,18 @@ fun ProvideRuntimeEnvironment(
     content: @Composable () -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val safeInsets = configuration.safeAreaInsets
+    // Kuikly keeps safeAreaInsets in its own reactive property, not in Compose state, and
+    // updates it only on a page-size event. On iOS the first frame reports 0 and the real
+    // insets arrive with the same page size, so nothing recomposed and the runtime kept
+    // bottom = 0 for the life of the page (sheets and action sheets sat on the home
+    // indicator). Mirror the property into Compose state.
+    val pageData = configuration.pageData
+    var safeInsets by remember(pageData) { mutableStateOf(pageData.safeAreaInsets) }
+    DisposableEffect(pageData) {
+        val owner = Any()
+        ReactiveObserver.bindValueChange(owner) { safeInsets = pageData.safeAreaInsets }
+        onDispose { ReactiveObserver.unbindValueChange(owner) }
+    }
     val baseSafeArea = SafeArea(
         top = safeInsets.top.dp,
         bottom = safeInsets.bottom.dp,

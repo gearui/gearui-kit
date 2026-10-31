@@ -8,6 +8,7 @@ internal object ControlGeometry {
     val accordionSurfacePadding = 20.dp
     val accordionTriggerGap = 16.dp
     val accordionVerticalPadding = 16.dp
+    val actionSheetCardRow = 57.dp
     val actionSheetDescriptionRow = 60.dp
     val actionSheetGridRow = 96.dp
     val actionSheetRow = 40.dp

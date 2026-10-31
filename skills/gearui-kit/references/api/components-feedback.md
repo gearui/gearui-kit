@@ -121,7 +121,7 @@ data class ActionSheetItem(
 
 // ActionSheet state
 object ActionSheet
-    // members: fun showList( items: List<ActionSheetItem>, description: String? = null, align: ActionSheetAlign = ActionSheetAlign.LEFT, showCancel: Boolean = true, cancelText: String? = null, onSelected: ((ActionSheetItem, Int) -> Unit)? = null, onCancel: (() -> Unit)? = null )
+    // members: fun showList( items: List<ActionSheetItem>, description: String? = null, align: ActionSheetAlign = ActionSheetAlign.CENTER, showCancel: Boolean = true, cancelText: String? = null, onSelected: ((ActionSheetItem, Int) -> Unit)? = null, onCancel: (() -> Unit)? = null )
     //   fun showGrid( items: List<ActionSheetItem>, description: String? = null, columns: Int = 4, showCancel: Boolean = true, cancelText: String? = null, onSelected: ((ActionSheetItem, Int) -> Unit)? = null, onCancel: (() -> Unit)? = null )
     //   fun dismiss()
     //   fun Host()
@@ -132,7 +132,7 @@ fun ActionSheetContent(
     visible: Boolean,
     items: List<ActionSheetItem>,
     theme: ActionSheetTheme = ActionSheetTheme.LIST,
-    align: ActionSheetAlign = ActionSheetAlign.LEFT,
+    align: ActionSheetAlign = ActionSheetAlign.CENTER,
     description: String? = null,
     showCancel: Boolean = true,
     cancelText: String = I18n.strings.common.cancel,

@@ -270,20 +270,20 @@ fun PullRefreshIndicator(progress: Float, refreshing: Boolean)
 Source: `commonMain/kotlin/com/gearui/components/bottomsheet/BottomSheet.kt`
 
 ```kotlin
-// BottomSheet - bottom action panel built on the overlay system
+// BottomSheet - a list of options in an iOS sheet.
 //
-// Built on the GearUI overlay system, so it presents full-screen wherever it is called from.
+// Presented as iOS 26 presents a sheet: a rounded panel rising from the bottom over a
+// scrim, inset from the screen edges, with a grabber; the title centred in its title bar
+// with the [description] under it, and a close button at the end of the bar. The options
+// are an inset-grouped list — rows on a card, divided by hairlines — with a destructive
+// one in red.
 //
-// Features:
-// - global presentation through the overlay system
-// - panel rising from the bottom
-// - list of options, scrollable
-// - optional cancel button
-// - optional title and description
-// - dismiss by tapping the scrim
-// - destructive items highlighted
+// It closes on the close button, Back, a tap on the scrim (unless [closeOnClickOutside]
+// is false), choosing an option, or a drag down: anywhere on the sheet when the options
+// fit, on the grabber and title bar when they scroll.
 //
 // @param visible whether it is shown
+// @param onDismiss dismissal callback
 // …
 @Composable
 fun BottomSheet(
@@ -301,18 +301,18 @@ fun BottomSheet(
 
 // BottomSheet with arbitrary content instead of an option list.
 //
-// Same presentation, scrim, drag-to-dismiss and safe-area handling as the
-// item-list overload; the caller owns what goes inside. Use this when the body
-// is not a list of tappable labels — a paginated roster, a form, a chart.
+// The same sheet, title bar and close button as the item-list overload; the caller owns
+// what goes in the body. Use this when the body is not a list of tappable labels — a
+// paginated roster, a form, a chart.
 //
-// The body is responsible for its own height and scrolling: the sheet does not
-// clamp it, because a LazyColumn inside a height-clamped parent stops scrolling.
+// The body is responsible for its own height and scrolling: the sheet does not clamp
+// it, because a LazyColumn inside a height-clamped parent stops scrolling. Since the body
+// may scroll, the sheet is dragged away by its grabber and title bar.
 //
 // @param visible whether it is shown
 // @param onDismiss dismissal callback
 // @param title title
-// @param description description
-// @param showCancel whether to show a cancel button
+// @param description a line under the title
 // …
 @Composable
 fun BottomSheet(
@@ -336,9 +336,10 @@ data class BottomSheetItem(
     val data: Any? = null
 )
 
-// BottomSheet.Host - general bottom sheet container built on the Overlay system
+// BottomSheet.Host - the sheet around content that draws everything itself.
 //
-// For bottom sheets holding custom content
+// The same iOS sheet — rising, floating, with the grabber, dragged away by the grabber —
+// on the surface colour, with no title bar: the content draws its own.
 object BottomSheet
     // members: fun Host( visible: Boolean, onDismiss: () -> Unit, closeOnClickOutside: Boolean = true, content: @Composable () -> Unit )
 

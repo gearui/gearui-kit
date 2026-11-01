@@ -62,7 +62,7 @@ fun BottomSheetExample(
                     SheetRow("带图标面板", "选项可以带有图标") { iconSheetState.show() },
                     SheetRow("危险操作面板", "危险操作项会高亮显示") { dangerSheetState.show() },
                     SheetRow("带禁用项面板", "某些选项可以设置为禁用状态") { disabledSheetVisible = true },
-                    SheetRow("无取消按钮面板", "showCancel = false 隐藏底部的取消按钮") { noCancelSheetState.show() },
+                    SheetRow("无取消按钮面板", "showCancel = false 不显示标题栏的关闭按钮") { noCancelSheetState.show() },
                     SheetRow("多选项面板", "支持多个选项") { manyItemsSheetState.show() },
                     SheetRow("自定义取消面板", "cancelText 自定义取消按钮的文字") { customCancelSheetVisible = true },
                 )

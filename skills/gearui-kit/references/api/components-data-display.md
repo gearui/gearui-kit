@@ -768,7 +768,7 @@ Source: `commonMain/kotlin/com/gearui/components/calendar/CalendarPopup.kt`
 //
 // Presents the calendar picker as a popup
 //
-// Note: this component requires an OverlayRoot
+// Shown as an iOS sheet through the overlay system (the app root provides it).
 //
 // Example:
 // ```kotlin

@@ -5,6 +5,19 @@
 Main is `1.1.0-beta1` (not published; consumed from source). The latest release on Maven
 Central is 1.0.0.
 
+- **Sheets follow iOS 26** (`BottomSheet` in all three forms, `Picker` / `DatePicker` /
+  `TimePicker`, `Cascader`, `CalendarPopup`, the grid `ActionSheet`; APIs unchanged): one shared
+  sheet — a rounded panel floating above the bottom edge, inset 8 from the sides, rising on the
+  iOS sheet curve. The title bar is iOS's: the title centred, the description under it, a round
+  × close button at its end (`showCancel` / `cancelText` now drive it; the full-width Cancel at
+  the bottom is gone); pickers keep Cancel / title / OK, in the accent colour, OK bold.
+  `BottomSheet` options are an inset-grouped list (52-tall rows on a card, hairlines, destructive
+  in red). Drag to dismiss: on the grabber and title bar, and anywhere on a sheet whose content
+  does not scroll; past a third of the height or on a fling it closes, otherwise it springs back;
+  dragging up stretches against resistance; the scrim lightens with the drag.
+  `CalendarPopup` now presents through the overlay system — it animates, and closes on Back.
+  The list `ActionSheet` takes the same motion and stays undraggable (iOS action sheets are);
+  its labels use the readable accent (`primarySoftForeground`).
 - **Fix: opening an `AgentTrace` whose step held a `CodeBlock` crashed** (IllegalStateException):
   the step rail measured its row with IntrinsicSize, which lazy layouts (the code block's
   sideways scroll) refuse. The rail now measures the content and sizes the connector to it;

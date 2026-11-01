@@ -318,41 +318,15 @@ private fun ActionSheetSurface(
         return
     }
 
-    // The sheet chrome is BottomSheet's: grabber, entrance, drag-to-dismiss, safe area
-    // and the cancel button. ActionSheet used to draw its own, and drifted — it appeared
-    // without animating, had no grabber, and could not be dragged away, so the two
-    // sheets in one app behaved differently for no reason the user could see.
+    // A grid of actions is a share sheet: BottomSheet's chrome — grabber, drag to
+    // dismiss, the description as the title bar's line, Cancel as its close button.
     BottomSheetSurface(
+        description = description,
         showCancel = showCancel,
         cancelText = cancelText,
         onDismiss = {
             onCancel?.invoke()
             onDismiss()
-        },
-        header = description?.let {
-            {
-                // Reference `.menu__label`: small, medium weight, muted, on the row's
-                // own left edge.
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
-                            end = ControlGeometry.sheetMenuPaddingInline + ControlGeometry.menuItemPaddingInline,
-                            bottom = ControlGeometry.menuItemPaddingBlock,
-                        ),
-                    contentAlignment = when (align) {
-                        ActionSheetAlign.CENTER -> Alignment.Center
-                        ActionSheetAlign.LEFT -> Alignment.CenterStart
-                    }
-                ) {
-                    Text(
-                        text = it,
-                        style = Theme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                        color = colors.mutedForeground
-                    )
-                }
-            }
         },
     ) {
         ActionSheetGrid(

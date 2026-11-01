@@ -12,7 +12,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
-import com.gearui.components.bottomsheet.BottomSheet
+import com.gearui.foundation.sheet.SheetContainer
+import com.gearui.foundation.sheet.SheetHeader
+import com.gearui.foundation.sheet.SheetOverlay
 import com.gearui.components.button.Button
 import com.gearui.components.button.ButtonSize
 import com.gearui.components.button.ButtonType
@@ -149,19 +151,31 @@ fun Cascader(
         FieldErrorText(error)
     }
 
-    BottomSheet.Host(visible = open && enabled, onDismiss = { open = false }) {
-        CascaderSheet(
-            title = title ?: placeholder,
-            options = options,
-            initialPath = selectedPath,
-            loaded = loaded,
-            loadChildren = loadChildren,
-            onComplete = { path ->
-                open = false
-                onSelect(path)
+    val sheetTitle = title ?: placeholder
+    SheetOverlay(visible = open && enabled, onDismiss = { open = false }) {
+        SheetContainer(
+            onDismiss = { open = false },
+            background = colors.surface,
+            // The level lists scroll; the sheet is dragged by its grabber and title bar.
+            dragWholeSheet = false,
+            header = {
+                SheetHeader(
+                    title = sheetTitle,
+                    trailing = { CloseButton(onClick = { open = false }) },
+                )
             },
-            onClose = { open = false },
-        )
+        ) {
+            CascaderSheet(
+                options = options,
+                initialPath = selectedPath,
+                loaded = loaded,
+                loadChildren = loadChildren,
+                onComplete = { path ->
+                    open = false
+                    onSelect(path)
+                },
+            )
+        }
     }
 }
 
@@ -244,13 +258,11 @@ internal fun cascaderLabels(
 
 @Composable
 private fun CascaderSheet(
-    title: String,
     options: List<CascaderOption>,
     initialPath: List<String>,
     loaded: SnapshotStateMap<String, LevelState>,
     loadChildren: (suspend (CascaderOption) -> List<CascaderOption>)?,
     onComplete: (List<String>) -> Unit,
-    onClose: () -> Unit,
 ) {
     val colors = Theme.colors
     val strings = I18n.strings
@@ -286,19 +298,6 @@ private fun CascaderSheet(
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier.fillMaxWidth().height(ControlGeometry.controlLarge).padding(horizontal = Spacing.lg),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(text = title, style = Theme.typography.titleMedium, color = colors.foreground)
-            // Shifted by half the hit region's margin so the drawn button keeps its place.
-            CloseButton(
-                onClick = onClose,
-                modifier = Modifier.align(Alignment.CenterEnd)
-                    .offset(x = (ControlGeometry.selectionTouchTarget - ControlGeometry.closeButtonSize) / 2),
-            )
-        }
-
         val chosen = cascaderLabels(options, draft) { key -> (loaded[key] as? LevelState.Loaded)?.children }
         // A tab per level chosen, and "请选择" for the next one until a leaf ends the path.
         val complete = draft.isNotEmpty() && nodeAt(draft.lastIndex)?.isLeaf == true

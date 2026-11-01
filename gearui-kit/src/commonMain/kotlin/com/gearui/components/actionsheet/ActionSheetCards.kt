@@ -1,7 +1,6 @@
 package com.gearui.components.actionsheet
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,8 +14,7 @@ import com.gearui.foundation.motion.rowPressFeedback
 import com.gearui.foundation.primitives.Icon
 import com.gearui.foundation.primitives.Text
 import com.gearui.foundation.typography.IconSizes
-import com.gearui.overlay.LocalOverlayVisible
-import com.gearui.overlay.OverlayDefaults
+import com.gearui.foundation.sheet.rememberSheetMotion
 import com.gearui.overlay.LocalOverlayViewportSize
 import com.tencent.kuikly.compose.ui.platform.LocalDensity
 import com.gearui.primitives.Divider
@@ -24,8 +22,6 @@ import com.gearui.runtime.LocalRuntimeFlags
 import com.gearui.runtime.SafeAreaEdge
 import com.gearui.runtime.rememberSafeAreaInset
 import com.gearui.theme.Theme
-import com.tencent.kuikly.compose.animation.core.Animatable
-import com.tencent.kuikly.compose.animation.core.tween
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
 import com.tencent.kuikly.compose.foundation.gestures.detectTapGestures
@@ -85,23 +81,9 @@ internal fun ActionSheetCards(
         consume = LocalRuntimeFlags.current.actionSheetConsumesBottomSafeArea,
         minimum = Spacing.sm,
     )
-    // Rises by its own height, as a sheet does; the host fades the scrim.
-    val presented = LocalOverlayVisible.current
-    val offset = remember { Animatable(0f) }
-    var heightPx by remember { mutableStateOf(0f) }
-    var entered by remember { mutableStateOf(false) }
-    LaunchedEffect(presented, heightPx) {
-        if (heightPx <= 0f) return@LaunchedEffect
-        if (presented) {
-            if (!entered) {
-                offset.snapTo(heightPx)
-                entered = true
-            }
-            offset.animateTo(0f, tween(OverlayDefaults.transitionDurationMillis))
-        } else {
-            offset.animateTo(heightPx, tween(OverlayDefaults.transitionDurationMillis))
-        }
-    }
+    // Rises and drops like a sheet, on the same curve; no drag — an action sheet is a
+    // question, answered by a choice, Cancel or a tap outside.
+    val sheet = rememberSheetMotion(onDismiss)
     val shape = Theme.shapes.lg
     // Rows with icons line their labels up behind a shared icon column.
     val withIcons = items.any { it.icon != null }
@@ -110,8 +92,8 @@ internal fun ActionSheetCards(
         Column(
             Modifier
                 .fillMaxWidth()
-                .onSizeChanged { heightPx = it.height.toFloat() }
-                .offset { IntOffset(0, offset.value.roundToInt()) }
+                .onSizeChanged { sheet.heightPx = it.height.toFloat() }
+                .offset { IntOffset(0, sheet.offset.value.roundToInt()) }
                 .padding(start = Spacing.sm, end = Spacing.sm, bottom = bottomInset)
                 // Taps on the cards are theirs, not the scrim's.
                 .pointerInput(Unit) { detectTapGestures { } },
@@ -152,7 +134,7 @@ internal fun ActionSheetCards(
                         Text(
                             cancelText,
                             style = Theme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                            color = colors.primary,
+                            color = colors.primarySoftForeground,
                         )
                     }
                 }
@@ -170,7 +152,7 @@ private fun ActionSheetCardRow(item: ActionSheetItem, align: ActionSheetAlign, w
         item.disabled -> colors.mutedForeground
         danger -> colors.destructive
         item.textColor != null -> item.textColor
-        else -> colors.primary
+        else -> colors.primarySoftForeground
     }
     val center = align == ActionSheetAlign.CENTER
     CardButton(onClick, enabled = !item.disabled, danger = danger, center = center) {

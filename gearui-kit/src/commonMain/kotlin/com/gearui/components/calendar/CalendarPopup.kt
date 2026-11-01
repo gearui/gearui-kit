@@ -1,5 +1,9 @@
 package com.gearui.components.calendar
 
+import com.gearui.components.closebutton.CloseButton
+import com.gearui.foundation.sheet.SheetOverlay
+import com.gearui.foundation.sheet.SheetHeader
+import com.gearui.foundation.sheet.SheetContainer
 import androidx.compose.runtime.*
 import com.tencent.kuikly.compose.foundation.background
 import com.tencent.kuikly.compose.foundation.clickable
@@ -25,7 +29,7 @@ import com.gearui.foundation.typography.IconSizes
  *
  * Presents the calendar picker as a popup
  *
- * Note: this component requires an OverlayRoot
+ * Shown as an iOS sheet through the overlay system (the app root provides it).
  *
  * Example:
  * ```kotlin
@@ -70,111 +74,77 @@ fun CalendarPopup(
     /** Show lunar dates under the days; see [Calendar]. */
     lunar: Boolean = false
 ) {
-    if (!visible) return
-
     val colors = Theme.colors
 
-    // Internal state
-    var selectedDate by remember(initialDate) { mutableStateOf(initialDate) }
-    var selectedDates by remember(initialDates) { mutableStateOf(initialDates) }
-    var rangeStart by remember(initialRangeStart) { mutableStateOf(initialRangeStart) }
-    var rangeEnd by remember(initialRangeEnd) { mutableStateOf(initialRangeEnd) }
+    // Internal state, fresh for each opening.
+    var selectedDate by remember(initialDate, visible) { mutableStateOf(initialDate) }
+    var selectedDates by remember(initialDates, visible) { mutableStateOf(initialDates) }
+    var rangeStart by remember(initialRangeStart, visible) { mutableStateOf(initialRangeStart) }
+    var rangeEnd by remember(initialRangeEnd, visible) { mutableStateOf(initialRangeEnd) }
 
-    // Scrim + content
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        // Scrim
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(OverlayDefaults.scrimColor)
-                .clickable {
-                    if (autoClose) onDismiss()
-                }
-        )
-
-        // Calendar content - slides up from the bottom
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .clip(OverlayDefaults.sheetShape)
-                .background(colors.surface)
-                .padding(Spacing.lg)
+    // An iOS sheet like every other picker: it rises over the scrim, closes on Back, the
+    // close button, a tap outside or a drag on its title bar.
+    SheetOverlay(visible, onDismiss, closeOnClickOutside = autoClose) {
+        SheetContainer(
+            onDismiss = onDismiss,
+            background = colors.surface,
+            dragWholeSheet = false,
+            modifier = modifier,
+            header = { SheetHeader(title = title, trailing = { CloseButton(onClick = onDismiss) }) },
         ) {
-        // Title bar
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = title,
-                    style = Theme.typography.titleMedium,
-                    color = colors.foreground
-                )
-
-                // Close button
-                com.gearui.components.closebutton.CloseButton(onClick = onDismiss)
-            }
-
-            Spacer(modifier = Modifier.height(Spacing.lg))
-
-            // The calendar itself
-            Calendar(
-                type = type,
-                lunar = lunar,
-                selectedDate = selectedDate,
-                onDateSelect = { date ->
-                    selectedDate = date
-                    if (autoClose && !showConfirmButton) {
-                        onConfirm?.invoke(date)
-                        onDismiss()
-                    }
-                },
-                selectedDates = selectedDates,
-                onDatesChange = { dates ->
-                    selectedDates = dates
-                },
-                rangeStart = rangeStart,
-                rangeEnd = rangeEnd,
-                onRangeSelect = { start, end ->
-                    rangeStart = start
-                    rangeEnd = end
-                },
-                minDate = minDate,
-                maxDate = maxDate,
-                showTitle = false
-            )
-
-            // Confirm button
-            if (showConfirmButton) {
-                Spacer(modifier = Modifier.height(Spacing.lg))
-
-                Button(
-                    text = confirmText,
-                    theme = ButtonTheme.PRIMARY,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        when (type) {
-                            CalendarType.Single -> {
-                                selectedDate?.let { onConfirm?.invoke(it) }
-                            }
-                            CalendarType.Multiple -> {
-                                onConfirmMultiple?.invoke(selectedDates)
-                            }
-                            CalendarType.Range -> {
-                                onConfirmRange?.invoke(rangeStart, rangeEnd)
-                            }
+            Column(modifier = Modifier.fillMaxWidth().padding(start = Spacing.lg, end = Spacing.lg, bottom = Spacing.lg)) {
+                // The calendar itself
+                Calendar(
+                    type = type,
+                    lunar = lunar,
+                    selectedDate = selectedDate,
+                    onDateSelect = { date ->
+                        selectedDate = date
+                        if (autoClose && !showConfirmButton) {
+                            onConfirm?.invoke(date)
+                            onDismiss()
                         }
-                        if (autoClose) onDismiss()
-                    }
+                    },
+                    selectedDates = selectedDates,
+                    onDatesChange = { dates ->
+                        selectedDates = dates
+                    },
+                    rangeStart = rangeStart,
+                    rangeEnd = rangeEnd,
+                    onRangeSelect = { start, end ->
+                        rangeStart = start
+                        rangeEnd = end
+                    },
+                    minDate = minDate,
+                    maxDate = maxDate,
+                    showTitle = false
                 )
-            }
 
-        // Bottom safe area
-            Spacer(modifier = Modifier.height(Spacing.lg))
+                // Confirm button
+                if (showConfirmButton) {
+                    Spacer(modifier = Modifier.height(Spacing.lg))
+
+                    Button(
+                        text = confirmText,
+                        theme = ButtonTheme.PRIMARY,
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            when (type) {
+                                CalendarType.Single -> {
+                                    selectedDate?.let { onConfirm?.invoke(it) }
+                                }
+                                CalendarType.Multiple -> {
+                                    onConfirmMultiple?.invoke(selectedDates)
+                                }
+                                CalendarType.Range -> {
+                                    onConfirmRange?.invoke(rangeStart, rangeEnd)
+                                }
+                            }
+                            if (autoClose) onDismiss()
+                        }
+                    )
+                }
+            }
         }
     }
 }

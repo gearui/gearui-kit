@@ -22,7 +22,10 @@ import com.gearui.foundation.material.tintedMask
 import com.gearui.foundation.material.verticalBrush
 import com.gearui.foundation.primitives.Text
 import com.gearui.theme.Theme
-import com.gearui.components.bottomsheet.BottomSheet
+import com.gearui.foundation.sheet.SheetContainer
+import com.gearui.foundation.sheet.SheetHeader
+import com.gearui.foundation.sheet.SheetOverlay
+import com.gearui.foundation.sheet.SheetTextAction
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import com.gearui.i18n.I18n
@@ -169,10 +172,22 @@ internal fun PickerSheet(
     confirmEnabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    BottomSheet.Host(visible = visible, onDismiss = onDismiss) {
-        Column(modifier = Modifier.fillMaxWidth().background(Theme.colors.surface)) {
-            PickerHeader(title = title, onCancel = onCancel, onConfirm = onConfirm, confirmEnabled = confirmEnabled)
+    SheetOverlay(visible, onDismiss) {
+        SheetContainer(
+            onDismiss = onDismiss,
+            background = Theme.colors.surface,
+            // The wheels scroll; the sheet is dragged by its grabber and title bar.
+            dragWholeSheet = false,
+            header = {
+                SheetHeader(
+                    title = title,
+                    leading = { SheetTextAction(I18n.strings.common.cancel, onCancel) },
+                    trailing = { SheetTextAction(I18n.strings.common.ok, onConfirm, emphasized = true, enabled = confirmEnabled) },
+                )
+            },
+        ) {
             content()
+            Spacer(Modifier.height(Spacing.sm))
         }
     }
 }
@@ -216,66 +231,6 @@ internal fun PickerWheels(
                 .fillMaxWidth()
                 .height(ControlGeometry.pickerFadeHeight)
                 .background(brush = MaterialDefaults.pickerBottomMask.tintedMask(colors.surface).verticalBrush())
-        )
-    }
-}
-
-/**
- * Picker header
- */
-@Composable
-private fun PickerHeader(
-    title: String?,
-    onCancel: () -> Unit,
-    onConfirm: () -> Unit,
-    confirmEnabled: Boolean = true,
-) {
-    val colors = Theme.colors
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(ControlGeometry.controlLarge)
-            .padding(horizontal = Spacing.lg),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Cancel button
-        val cancelInteraction = remember { MutableInteractionSource() }
-        val cancelPressed by cancelInteraction.collectIsPressedAsState()
-        Text(
-            text = I18n.strings.common.cancel,
-            style = Theme.typography.bodyLarge,
-            color = colors.mutedForeground,
-            modifier = Modifier
-                .pressScale(cancelPressed)
-                .clickable(interactionSource = cancelInteraction, indication = null) { onCancel() }
-        )
-
-        // Title
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            if (title != null) {
-                Text(
-                    text = title,
-                    style = Theme.typography.titleMedium,
-                    color = colors.foreground
-                )
-            }
-        }
-
-        // Confirm button
-        val confirmInteraction = remember { MutableInteractionSource() }
-        val confirmPressed by confirmInteraction.collectIsPressedAsState()
-        Text(
-            text = I18n.strings.common.ok,
-            style = Theme.typography.bodyLarge,
-            color = colors.primarySoftForeground,
-            modifier = Modifier
-                .pressScale(confirmPressed)
-                .disabledAppearance(!confirmEnabled)
-                .clickable(enabled = confirmEnabled, interactionSource = confirmInteraction, indication = null) { onConfirm() }
         )
     }
 }

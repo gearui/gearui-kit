@@ -1,5 +1,8 @@
 package com.gearui.overlay
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import com.gearui.foundation.a11y.AccessibilityLayer
 import com.gearui.foundation.a11y.AccessibilityLayerBox
 import com.gearui.foundation.interaction.consumeNativeTouches
@@ -68,6 +71,17 @@ val LocalInputBlockedByOverlay = staticCompositionLocalOf { false }
  * has passed, which is the budget that motion has to fit in.
  */
 val LocalOverlayVisible = staticCompositionLocalOf { true }
+
+/**
+ * How much of its scrim an overlay shows, 0 to 1, set by the surface. A sheet being
+ * dragged away lowers it with the drag, so the page brightens as the sheet leaves — as
+ * iOS does — instead of staying dim until the sheet is gone.
+ */
+internal class OverlayScrim {
+    var fraction by mutableStateOf(1f)
+}
+
+internal val LocalOverlayScrim = staticCompositionLocalOf<OverlayScrim?> { null }
 
 /** Actual root geometry for anchored controls; never infer it from device size. */
 internal val LocalOverlayViewportSize = staticCompositionLocalOf { IntSize.Zero }
@@ -259,6 +273,7 @@ private fun OverlayItemLayout(
     val transition = options.resolvedTransition
     val visible = !item.exiting.value
     val progress = remember { Animatable(if (transition == OverlayTransition.None) 1f else 0f) }
+    val scrim = remember { OverlayScrim() }
     LaunchedEffect(visible) {
         val target = if (visible) 1f else 0f
         when {
@@ -341,7 +356,7 @@ private fun OverlayItemLayout(
                 Box(
                     Modifier
                         .fillMaxSize()
-                        .alpha(progress.value)
+                        .alpha(progress.value * scrim.fraction)
                         .background(options.maskColor ?: OverlayDefaults.scrimColor)
                         .consumeNativeTouches()
                         // Consume every pointer change up front so a LazyColumn behind
@@ -463,7 +478,7 @@ private fun OverlayItemLayout(
                                 bottom = safeBottom
                             )
                     ) {
-                        CompositionLocalProvider(LocalOverlayVisible provides visible) {
+                        CompositionLocalProvider(LocalOverlayVisible provides visible, LocalOverlayScrim provides scrim) {
                             item.content()
                         }
                     }
@@ -509,7 +524,7 @@ private fun OverlayItemLayout(
                             detectTapGestures(onTap = { })
                         }
                 ) {
-                    CompositionLocalProvider(LocalOverlayVisible provides visible) {
+                    CompositionLocalProvider(LocalOverlayVisible provides visible, LocalOverlayScrim provides scrim) {
                         item.content()
                     }
                 }

@@ -31,7 +31,6 @@ import com.tencent.kuikly.compose.ui.input.pointer.pointerInput
 import com.tencent.kuikly.compose.ui.input.pointer.positionChange
 import com.tencent.kuikly.compose.ui.platform.LocalFocusManager
 import com.tencent.kuikly.compose.ui.unit.dp
-import com.gearui.overlay.LocalInputBlockedByOverlay
 import com.gearui.overlay.OverlayManager
 import kotlin.math.abs
 
@@ -157,9 +156,10 @@ fun GearLazyColumn(
         contentPadding = paddedContent,
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment,
-        // 🔴 An overlay covering the page freezes this list — a native scroll view
-        // ignores consumed pointer events, so this flag is the only thing that stops it.
-        userScrollEnabled = userScrollEnabled && !LocalInputBlockedByOverlay.current,
+        // Not switched off under an overlay: on KuiklyUI toggling it makes the native list
+        // draw nothing until it is switched back, blanking the page behind every dialog.
+        // The overlay's own layers take the native touches instead (OverlayHost).
+        userScrollEnabled = userScrollEnabled,
         content = content
     )
     }
@@ -213,9 +213,10 @@ fun GearLazyRow(
         contentPadding = contentPadding,
         horizontalArrangement = horizontalArrangement,
         verticalAlignment = verticalAlignment,
-        // 🔴 An overlay covering the page freezes this list — a native scroll view
-        // ignores consumed pointer events, so this flag is the only thing that stops it.
-        userScrollEnabled = userScrollEnabled && !LocalInputBlockedByOverlay.current,
+        // Not switched off under an overlay: on KuiklyUI toggling it makes the native list
+        // draw nothing until it is switched back, blanking the page behind every dialog.
+        // The overlay's own layers take the native touches instead (OverlayHost).
+        userScrollEnabled = userScrollEnabled,
         content = content
     )
 }

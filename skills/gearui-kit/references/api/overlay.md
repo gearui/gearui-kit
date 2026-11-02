@@ -120,19 +120,14 @@ Source: `commonMain/kotlin/com/gearui/overlay/OverlayHost.kt`
 ```kotlin
 // True while an overlay is covering the page and the page must not react to touches.
 //
-// 🔴 Consuming pointer events is not enough to stop a Kuikly list from scrolling.
+// Page content that drives its own gestures can read this to stand down. Lists do not:
+// a KuiklyUI lazy list is a native scroll view, and switching its `userScrollEnabled`
+// off made it draw nothing until switched back — every dialog blanked the page behind
+// it. The overlay's layers take the native touches instead ([consumeNativeTouches] on
+// the full-screen layer and on anchored panels), so a drag on a sheet or its scrim never
+// reaches the scroll view underneath, while a list inside the sheet still scrolls.
 //
-// Kuikly renders a lazy list as a **native** scroll view, and a native scroll view
-// scrolls on the platform's own touch handling — it never asks the Compose pointer
-// pipeline for permission. Consuming in the Initial pass blocks Compose-level
-// gestures (clicks, drags wired through pointerInput) and nothing else: with a sheet
-// open, dragging on the scrim still scrolled the conversation behind it.
-//
-// So scrollable containers have to stand down themselves. [com.gearui.foundation.primitives.GearLazyColumn]
-// and friends read this and turn `userScrollEnabled` off; that is the whole reason
-// those wrappers exist rather than calling LazyColumn directly.
-//
-// …
+// Only page content sees `true` — overlay content is composed outside the provider.
 val LocalInputBlockedByOverlay = staticCompositionLocalOf { false }
 
 // Whether the overlay containing this content is on its way in or on its way out.
